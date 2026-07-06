@@ -1,0 +1,50 @@
+---
+const plans = [
+  {
+    modifier: "price-green",
+    name: "A1 and A2",
+    price: "PHP 45.000",
+    note: "for each level",
+    details: [
+      "<strong>Beginner Course:</strong> Understand and use familiar everyday expressions — 120h, 6 weeks",
+      "<strong>Elementary German:</strong> Understand sentences and frequently used expressions and communicate with simple and direct exchange of information — 120h, 6 weeks",
+    ],
+  },
+  {
+    modifier: "price-orange",
+    name: "B1",
+    price: "PHP 55.000",
+    note: null,
+    details: [
+      "<strong>Intermediate German:</strong> Understand main points of familiar matters regularly encountered in work, school, and leisure — 200h, 10 weeks",
+    ],
+  },
+  {
+    modifier: "price-teal",
+    name: "B2 Pflege",
+    price: "PHP 60.000",
+    note: null,
+    details: [
+      "<strong>&ldquo;Pflege&rdquo; Professional Level for Nurses:</strong> Understand and write complex texts used to document patient care. Communicate professionally without strain with doctors, pharmacists, and superiors — 200h, 10 weeks",
+    ],
+  },
+];
+---
+<section id="pricing" class="section pricing">
+  <div class="container">
+    <p class="eyebrow">Pricing Table</p>
+    <h3>Our Prices are separated in three different categories</h3>
+    <div class="price-grid">
+      {plans.map((plan) => (
+        <div class={`price-card ${plan.modifier}`}>
+          <h4>{plan.name}</h4>
+          <div class="price-amount">
+            {plan.price}
+            {plan.note && <span>{plan.note}</span>}
+          </div>
+          {plan.details.map((detail) => <p set:html={detail} />)}
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

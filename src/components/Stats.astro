@@ -1,0 +1,21 @@
+---
+const stats = [
+  { num: "116", label: "Students assigned" },
+  { num: "424", label: "Coffee Cups" },
+  { num: "4", label: "Classes that finished" },
+  { num: "94", label: "Students that passed" },
+];
+---
+<section class="section stats">
+  <div class="container stats-grid">
+    <p class="stats-title">Some Numbers About Us</p>
+    <div class="stats-row">
+      {stats.map((stat) => (
+        <div class="stat">
+          <span class="stat-num">{stat.num}</span>
+          <span>{stat.label}</span>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

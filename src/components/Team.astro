@@ -1,0 +1,21 @@
+---
+const team = [
+  { image: "/assets/man-1209494_1280.jpg", name: "Jürgen Rathauer", role: "our tech-brain and coordinator" },
+  { image: "/assets/pointing-2649315_640.jpg", name: "Katharina Witte", role: "the german teacher with a hand for new methods" },
+  { image: "/assets/24131072_1795942800439611_5443296098085989269_n.jpg", name: "Edgar Kretschmann", role: "the witted usher of the classrooms" },
+];
+---
+<section id="nurses" class="section team">
+  <div class="container">
+    <p class="eyebrow">Our Team</p>
+    <div class="team-grid">
+      {team.map((member) => (
+        <div class="team-card">
+          <img src={member.image} alt={member.name} />
+          <h4>{member.name}</h4>
+          <p>{member.role}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

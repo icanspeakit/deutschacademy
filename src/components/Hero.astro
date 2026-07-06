@@ -1,0 +1,19 @@
+---
+const slides = [
+  { image: "/assets/letsdoit.jpg", caption: "Let’s do it together!" },
+  { image: "/assets/online-is-futur.jpg", caption: "Online Classes are the Future" },
+  { image: "/assets/methods.jpg", caption: "We know how to teach in the new way!" },
+];
+---
+<section id="top" class="hero">
+  {slides.map((slide) => (
+    <div class="hero-slide" style={`background-image:url('${slide.image}')`}>
+      <div class="hero-caption">
+        <h2>Deutsch Academy</h2>
+        <p>{slide.caption}</p>
+      </div>
+    </div>
+  ))}
+</section>
+
+<p class="tagline">Working In Germany Opens Up A Lot Of Opportunities!</p>

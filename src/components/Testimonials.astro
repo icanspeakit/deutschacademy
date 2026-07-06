@@ -1,0 +1,33 @@
+---
+const quotes = [
+  {
+    text: "German isn’t always easy, and especially because I have a big family I can’t study undisturbed at home. Luckily DeutschAcademy made it work.",
+    name: "Richard Gustavo Volente",
+  },
+  {
+    text: "Thank you very much! I thought German is so hard but nevertheless I made it! And you guys helped me.",
+    name: "Kenneth Coribella",
+  },
+  {
+    text: "Why would I have to sit in front of the computer for 4 hours and learn? But I understood after a little while, that there was a reason for it.",
+    name: "Precious Lima",
+  },
+  {
+    text: "Ugh, German can be very hard. I really had different expectations and had to burn my night candle to make it. But it was worth it.",
+    name: "Gusta Delgado",
+  },
+];
+---
+<section class="section testimonials">
+  <div class="container">
+    <p class="eyebrow">What Our Clients Say</p>
+    <div class="testimonial-grid">
+      {quotes.map((quote) => (
+        <blockquote>
+          <p>{quote.text}</p>
+          <cite>{quote.name}</cite>
+        </blockquote>
+      ))}
+    </div>
+  </div>
+</section>

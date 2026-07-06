@@ -1,0 +1,43 @@
+---
+const cards = [
+  {
+    image: "/assets/bricks-2181920_1280.jpg",
+    title: "Ongoing Support after Class",
+    text: "Your success is not only depending on your class, but also how fast we get your papers done. We will support you with the complexity of getting you through all the levels.",
+  },
+  {
+    image: "/assets/foto-buero-2.jpg",
+    title: "Cultural Understanding",
+    text: "We know exactly how difficult it is to learn German and we have the experience it takes to be considerate about the adaptation you are going through. In other words: We hear you!",
+  },
+  {
+    image: "/assets/laptop-3196481_1920.jpg",
+    title: "Newest Online Teaching Methods",
+    text: "What makes good online teaching? It is a mix of technical savvy and didactic skill.",
+  },
+  {
+    image: null,
+    title: "State of the Art Online Classes",
+    text: "Online Classes can be made so effective that they even surpass face to face class performances.",
+  },
+];
+---
+<section class="section why-us">
+  <div class="container">
+    <p class="eyebrow">Why Us?</p>
+    <h3>We want to make things better!</h3>
+    <div class="why-grid">
+      {cards.map((card) => (
+        <div class="why-card">
+          {card.image ? (
+            <img src={card.image} alt="" />
+          ) : (
+            <div class="why-card-placeholder">💻</div>
+          )}
+          <h4>{card.title}</h4>
+          <p>{card.text}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

@@ -17,6 +17,10 @@ const quotes = [
     name: "Gusta Delgado",
   },
 ];
+
+function initials(name: string) {
+  return name.split(" ").map((w) => w[0]).slice(0, 2).join("");
+}
 ---
 <section class="section testimonials">
   <div class="container">
@@ -24,8 +28,13 @@ const quotes = [
     <div class="testimonial-grid">
       {quotes.map((quote) => (
         <blockquote>
-          <p>{quote.text}</p>
-          <cite>{quote.name}</cite>
+          <div class="testimonial-body">
+            <p>{quote.text}</p>
+            <div class="testimonial-author">
+              <span class="avatar-initials">{initials(quote.name)}</span>
+              <cite>{quote.name}</cite>
+            </div>
+          </div>
         </blockquote>
       ))}
     </div>

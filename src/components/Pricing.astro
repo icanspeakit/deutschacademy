@@ -1,7 +1,9 @@
 ---
 const plans = [
   {
-    modifier: "price-green",
+    tier: "tier-1",
+    color: "var(--brand-blue-light)",
+    badge: "A1·A2",
     name: "A1 and A2",
     price: "PHP 45.000",
     note: "for each level",
@@ -11,7 +13,9 @@ const plans = [
     ],
   },
   {
-    modifier: "price-orange",
+    tier: "tier-2",
+    color: "var(--brand-blue)",
+    badge: "B1",
     name: "B1",
     price: "PHP 55.000",
     note: null,
@@ -20,7 +24,9 @@ const plans = [
     ],
   },
   {
-    modifier: "price-teal",
+    tier: "tier-3",
+    color: "var(--brand-blue-dark)",
+    badge: "B2",
     name: "B2 Pflege",
     price: "PHP 60.000",
     note: null,
@@ -36,7 +42,8 @@ const plans = [
     <h3>Our Prices are separated in three different categories</h3>
     <div class="price-grid">
       {plans.map((plan) => (
-        <div class={`price-card ${plan.modifier}`}>
+        <div class={`price-card ${plan.tier}`} style={`--tier-color: ${plan.color}`}>
+          <div class="price-badge">{plan.badge}</div>
           <h4>{plan.name}</h4>
           <div class="price-amount">
             {plan.price}

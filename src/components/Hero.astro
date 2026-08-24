@@ -4,16 +4,22 @@ const slides = [
   { image: "/assets/online-is-futur.jpg", caption: "Online Classes are the Future" },
   { image: "/assets/methods.jpg", caption: "We know how to teach in the new way!" },
 ];
+const [main, ...rest] = slides;
 ---
-<section id="top" class="hero">
-  {slides.map((slide) => (
-    <div class="hero-slide" style={`background-image:url('${slide.image}')`}>
-      <div class="hero-caption">
-        <h2>Deutsch Academy</h2>
-        <p>{slide.caption}</p>
-      </div>
-    </div>
-  ))}
+<section id="top" class="hero" style={`background-image:url('${main.image}')`}>
+  <div class="container hero-content">
+    <h1>Working In Germany Opens Up A Lot Of Opportunities!</h1>
+    <a href="#about" class="btn-cta">{main.caption}</a>
+  </div>
 </section>
 
-<p class="tagline">Working In Germany Opens Up A Lot Of Opportunities!</p>
+<div class="hero-strip">
+  <div class="container hero-strip-grid">
+    {rest.map((slide) => (
+      <div class="hero-strip-item">
+        <img src={slide.image} alt="" />
+        <p>{slide.caption}</p>
+      </div>
+    ))}
+  </div>
+</div>

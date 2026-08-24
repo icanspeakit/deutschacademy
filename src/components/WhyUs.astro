@@ -32,7 +32,13 @@ const cards = [
           {card.image ? (
             <img src={card.image} alt="" />
           ) : (
-            <div class="why-card-placeholder">💻</div>
+            <div class="why-card-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2.5" y="4" width="19" height="13" rx="2"></rect>
+                <path d="M8 21h8"></path>
+                <path d="M12 17v4"></path>
+              </svg>
+            </div>
           )}
           <h4>{card.title}</h4>
           <p>{card.text}</p>

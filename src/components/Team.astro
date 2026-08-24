@@ -11,7 +11,9 @@ const team = [
     <div class="team-grid">
       {team.map((member) => (
         <div class="team-card">
-          <img src={member.image} alt={member.name} />
+          <div class="team-photo-ring">
+            <img src={member.image} alt={member.name} />
+          </div>
           <h4>{member.name}</h4>
           <p>{member.role}</p>
         </div>

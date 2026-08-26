@@ -1,25 +1,315 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import Header from "../components/Header.astro";
-import Hero from "../components/Hero.astro";
-import WhatYouDo from "../components/WhatYouDo.astro";
-import Classes from "../components/Classes.astro";
-import WhyUs from "../components/WhyUs.astro";
-import Pricing from "../components/Pricing.astro";
-import Testimonials from "../components/Testimonials.astro";
-import Team from "../components/Team.astro";
-import Stats from "../components/Stats.astro";
-import Footer from "../components/Footer.astro";
+import "../styles/landing.css";
 ---
 <Layout>
-  <Header />
-  <Hero />
-  <WhatYouDo />
-  <Classes />
-  <WhyUs />
-  <Pricing />
-  <Testimonials />
-  <Team />
-  <Stats />
-  <Footer />
+  <div class="lp">
+    <!-- NAV -->
+    <nav class="lp-nav">
+      <div class="lp-nav-row">
+        <div class="lp-nav-left">
+          <a href="/"><img src="/assets/logo.png" alt="DeutschAcademy" /></a>
+          <div class="lp-nav-links">
+            <span>Courses</span>
+            <span>Authentic German</span>
+            <span>Exam Prep</span>
+            <span>Community</span>
+            <span>Pricing</span>
+          </div>
+        </div>
+        <div class="lp-nav-right">
+          <span class="lp-nav-login">Log in</span>
+          <a href="#" class="lp-btn lp-btn--primary">Start Free</a>
+        </div>
+      </div>
+    </nav>
+
+    <!-- HERO -->
+    <section class="lp-hero">
+      <div class="lp-wrap lp-hero-inner">
+        <div class="lp-hero-copy">
+          <div class="lp-eyebrow">Lorem ipsum · dolor sit amet</div>
+          <h1>Lorem ipsum dolor sit amet consectetur adipiscing</h1>
+          <p class="lp-hero-lead">Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore.</p>
+          <p class="lp-hero-sub">Lorem ipsum dolor sit amet consectetur. Adipiscing elit sed do eiusmod tempor incididunt.</p>
+          <div class="lp-hero-actions">
+            <a href="#" class="lp-btn lp-btn--primary">Start Learning Free</a>
+            <a href="#" class="lp-btn lp-btn--outline">See How It Works</a>
+          </div>
+          <div class="lp-hero-note">Lorem ipsum dolor · sit amet consectetur</div>
+        </div>
+        <div class="lp-hero-media" style="background-image:url('/assets/laptop-3196481_1920.jpg')">
+          <div class="lp-hero-play">
+            <div class="lp-hero-play-circle"><div class="lp-hero-play-triangle"></div></div>
+          </div>
+          <div class="lp-hero-badge">▶ Lorem ipsum · 0:00</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TRUST BAR -->
+    <section class="lp-trust">
+      <div class="lp-wrap lp-trust-grid">
+        <div class="lp-trust-item"><div class="lp-trust-num">000</div><div class="lp-trust-label">Lorem ipsum dolor sit amet consectetur adipiscing elit.</div></div>
+        <div class="lp-trust-item"><div class="lp-trust-num">00–00</div><div class="lp-trust-label">Lorem ipsum dolor sit amet</div></div>
+        <div class="lp-trust-item"><div class="lp-trust-num">000+</div><div class="lp-trust-label">Consectetur adipiscing elit</div></div>
+        <div class="lp-trust-item"><div class="lp-trust-num">0000</div><div class="lp-trust-label">Sed do eiusmod tempor</div></div>
+      </div>
+    </section>
+
+    <!-- VALUE PROPS -->
+    <section class="lp-section">
+      <div class="lp-wrap">
+        <div class="lp-section-head">
+          <div class="lp-eyebrow">Lorem ipsum</div>
+          <h2>Lorem ipsum dolor sit amet consectetur</h2>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod.</p>
+        </div>
+        <div class="lp-value-grid">
+          <div class="lp-value-card">
+            <img src="/assets/bricks-2181920_1280.jpg" alt="" />
+            <div class="lp-value-card-body"><h3>Lorem ipsum dolor sit</h3><p>Lorem ipsum dolor sit amet consectetur adipiscing.</p></div>
+          </div>
+          <div class="lp-value-card">
+            <img src="/assets/online-is-futur.jpg" alt="" />
+            <div class="lp-value-card-body"><h3>Consectetur adipiscing elit</h3><p>Sed do eiusmod tempor incididunt ut labore.</p></div>
+          </div>
+          <div class="lp-value-card">
+            <img src="/assets/letsdoit.jpg" alt="" />
+            <div class="lp-value-card-body"><h3>Sed do eiusmod tempor</h3><p>Ut enim ad minim veniam quis nostrud exercitation.</p></div>
+          </div>
+          <div class="lp-value-card">
+            <img src="/assets/foto-buero-1.jpg" alt="" />
+            <div class="lp-value-card-body"><h3>Ut labore et dolore</h3><p>Duis aute irure dolor in reprehenderit voluptate.</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section class="lp-section lp-section--alt">
+      <div class="lp-wrap">
+        <div class="lp-section-head" style="max-width:560px">
+          <div class="lp-eyebrow">Lorem ipsum</div>
+          <h2>Lorem ipsum dolor sit amet</h2>
+        </div>
+        <div class="lp-steps">
+          <div class="lp-step">
+            <div class="lp-step-num">1</div>
+            <h3>Lorem ipsum dolor</h3>
+            <p>Lorem ipsum dolor sit amet consectetur adipiscing.</p>
+          </div>
+          <div class="lp-step-arrow">→</div>
+          <div class="lp-step">
+            <div class="lp-step-num">2</div>
+            <h3>Consectetur adipiscing</h3>
+            <p>Sed do eiusmod tempor incididunt ut labore magna.</p>
+          </div>
+          <div class="lp-step-arrow">→</div>
+          <div class="lp-step">
+            <div class="lp-step-num">3</div>
+            <h3>Sed do eiusmod tempor</h3>
+            <p>Ut enim ad minim veniam quis nostrud exercitation.</p>
+          </div>
+          <div class="lp-step-arrow">→</div>
+          <div class="lp-step">
+            <div class="lp-step-num lp-step-num--dark">4</div>
+            <h3>Ut labore et dolore</h3>
+            <p>Duis aute irure dolor in reprehenderit voluptate velit.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRODUCT SHOWCASE -->
+    <section class="lp-section">
+      <div class="lp-wrap lp-showcase">
+        <div class="lp-browser">
+          <div class="lp-browser-bar">
+            <div class="lp-browser-dot"></div><div class="lp-browser-dot"></div><div class="lp-browser-dot"></div>
+            <div class="lp-browser-url">deutschacademy.com/dashboard</div>
+          </div>
+          <div class="lp-browser-body">
+            <div class="lp-sidebar">
+              <img src="/assets/logo.png" alt="" />
+              <div class="lp-sidebar-link lp-sidebar-link--active">Dashboard</div>
+              <div class="lp-sidebar-link">My courses</div>
+              <div class="lp-sidebar-link">Authentic German</div>
+              <div class="lp-sidebar-link">Exam prep</div>
+              <div class="lp-sidebar-link">Community</div>
+              <div class="lp-sidebar-upsell">
+                <strong>Go Premium</strong>
+                <span>Unlock exam prep and corrections.</span>
+              </div>
+            </div>
+            <div class="lp-dash">
+              <div class="lp-dash-header">
+                <div class="lp-dash-greeting"><strong>Guten Morgen, Ana</strong><span>Day 34 · B1.2 in progress</span></div>
+                <div class="lp-avatar-initials">A</div>
+              </div>
+              <div class="lp-progress-card">
+                <div class="lp-progress-row"><span>Level B1 · Selbstständig</span><span class="pct">62%</span></div>
+                <div class="lp-progress-track"><div class="lp-progress-fill" style="width:62%"></div></div>
+                <div class="lp-progress-note">18 of 29 lessons · next: Termin beim Amt</div>
+              </div>
+              <div class="lp-mini-grid">
+                <div class="lp-mini-card">
+                  <img src="/assets/methods.jpg" alt="" />
+                  <div class="lp-mini-card-body"><span>A2 · Alltag</span><div class="lp-mini-bar"><div class="lp-mini-bar-fill" style="width:100%;background:var(--brand-blue-light)"></div></div></div>
+                </div>
+                <div class="lp-mini-card">
+                  <img src="/assets/foto-buero-2.jpg" alt="" />
+                  <div class="lp-mini-card-body"><span>B1 · Beruf</span><div class="lp-mini-bar"><div class="lp-mini-bar-fill" style="width:62%;background:var(--brand-blue)"></div></div></div>
+                </div>
+                <div class="lp-mini-card">
+                  <img src="/assets/online-is-futur.jpg" alt="" />
+                  <div class="lp-mini-card-body"><span>Authentic clips</span><div class="lp-mini-bar"><div class="lp-mini-bar-fill" style="width:24%;background:var(--brand-cyan)"></div></div></div>
+                </div>
+                <div class="lp-locked-card">
+                  <div class="icon">🔒</div>
+                  <strong>Goethe B2 prep</strong>
+                  <span>Premium</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="lp-showcase-copy">
+          <div class="lp-eyebrow">Inside the platform</div>
+          <h2>One dashboard, one next lesson</h2>
+          <p>No streaks, no leaderboards. Just where you are, what's next, and who to ask when you're stuck.</p>
+          <div class="lp-checklist">
+            <div class="lp-check-item"><div class="lp-check-icon">✓</div><div><strong>Free — the full core course</strong><span>Every A1–C1 lesson, transcripts and audio.</span></div></div>
+            <div class="lp-check-item"><div class="lp-check-icon">✓</div><div><strong>Free — placement test and path</strong><span>Your level and sequence, from day one.</span></div></div>
+            <div class="lp-check-item"><div class="lp-check-icon lp-check-icon--premium">✓</div><div><strong>Premium — exam preparation</strong><span>Goethe and telc formats with mock sittings.</span></div></div>
+            <div class="lp-check-item"><div class="lp-check-icon lp-check-icon--premium">✓</div><div><strong>Premium — human corrections</strong><span>Writing marked by an instructor, not a model.</span></div></div>
+          </div>
+          <div class="lp-showcase-actions">
+            <a href="#" class="lp-btn lp-btn--primary">Start Free</a>
+            <a href="#" class="lp-btn lp-btn--outline">Compare plans</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- DEEP DIVE -->
+    <section class="lp-section lp-section--alt">
+      <div class="lp-wrap">
+        <div class="lp-section-head" style="max-width:600px">
+          <div class="lp-eyebrow">Lorem ipsum</div>
+          <h2>Lorem ipsum dolor sit amet consectetur adipiscing</h2>
+        </div>
+        <div class="lp-deepdive-grid">
+          <div class="lp-deep-card">
+            <div class="lp-deep-icon">01</div>
+            <div class="lp-deep-head"><h3>Lorem ipsum dolor</h3><p>Lorem ipsum dolor sit amet consectetur adipiscing.</p></div>
+            <div class="lp-deep-list">
+              <div class="lp-deep-item"><span class="lp-check-icon">✓</span><span>Lorem ipsum dolor sit amet</span></div>
+              <div class="lp-deep-item"><span class="lp-check-icon">✓</span><span>Consectetur adipiscing elit sed</span></div>
+              <div class="lp-deep-item"><span class="lp-check-icon">✓</span><span>Sed do eiusmod tempor incididunt</span></div>
+              <div class="lp-deep-item"><span class="lp-check-icon">✓</span><span>Ut labore et dolore magna</span></div>
+            </div>
+            <div class="lp-deep-cta">Start free</div>
+          </div>
+          <div class="lp-deep-card lp-deep-card--featured">
+            <div class="lp-deep-icon lp-deep-icon--featured">02</div>
+            <div class="lp-deep-head"><h3>Dolor sit amet</h3><p>Lorem ipsum dolor sit amet consectetur adipiscing.</p></div>
+            <div class="lp-deep-list">
+              <div class="lp-deep-item"><span class="lp-check-icon lp-check-icon--premium">✓</span><span>Lorem ipsum dolor sit amet</span></div>
+              <div class="lp-deep-item"><span class="lp-check-icon lp-check-icon--premium">✓</span><span>Consectetur adipiscing elit sed</span></div>
+              <div class="lp-deep-item"><span class="lp-check-icon lp-check-icon--premium">✓</span><span>Sed do eiusmod tempor incididunt</span></div>
+              <div class="lp-deep-item"><span class="lp-check-icon lp-check-icon--premium">✓</span><span>Ut labore et dolore magna</span></div>
+              <div class="lp-deep-item"><span class="lp-check-icon lp-check-icon--premium">✓</span><span>Enim ad minim veniam quis</span></div>
+            </div>
+            <div class="lp-deep-cta lp-deep-cta--featured">Go Premium</div>
+          </div>
+          <div class="lp-deep-card lp-deep-card--cyan">
+            <div class="lp-deep-icon">03</div>
+            <div class="lp-deep-head"><h3>Sed do eiusmod</h3><p>Lorem ipsum dolor sit amet consectetur adipiscing.</p></div>
+            <div class="lp-deep-list">
+              <div class="lp-deep-item"><span class="lp-check-icon">✓</span><span>Lorem ipsum dolor sit amet</span></div>
+              <div class="lp-deep-item"><span class="lp-check-icon">✓</span><span>Consectetur adipiscing elit sed</span></div>
+              <div class="lp-deep-item"><span class="lp-check-icon">✓</span><span>Sed do eiusmod tempor incididunt</span></div>
+              <div class="lp-deep-item"><span class="lp-check-icon">✓</span><span>Ut labore et dolore magna aliqua</span></div>
+            </div>
+            <div class="lp-deep-cta">Join the community</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRICING -->
+    <section class="lp-section">
+      <div class="lp-wrap">
+        <div class="lp-section-head" style="max-width:560px">
+          <div class="lp-eyebrow">Lorem ipsum</div>
+          <h2>Lorem ipsum dolor sit amet consectetur</h2>
+          <p>Lorem ipsum dolor sit amet consectetur adipiscing elit.</p>
+        </div>
+        <div class="lp-pricing-grid">
+          <div class="lp-price-card">
+            <div class="lp-price-name">Free</div>
+            <div class="lp-price-amount"><strong>€00</strong><span>lorem</span></div>
+            <div class="lp-price-desc">Lorem ipsum dolor sit amet consectetur adipiscing.</div>
+            <div class="lp-price-divider"></div>
+            <div class="lp-price-list">
+              <div class="lp-price-item"><span class="lp-check-icon">✓</span><span>Lorem ipsum dolor sit amet</span></div>
+              <div class="lp-price-item"><span class="lp-check-icon">✓</span><span>Consectetur adipiscing elit sed</span></div>
+              <div class="lp-price-item"><span class="lp-check-icon">✓</span><span>Sed do eiusmod tempor incididunt</span></div>
+              <div class="lp-price-item lp-price-item--off"><span class="lp-check-icon">—</span><span>Ut labore et dolore magna aliqua</span></div>
+              <div class="lp-price-item lp-price-item--off"><span class="lp-check-icon">—</span><span>Enim ad minim veniam quis</span></div>
+            </div>
+            <div class="lp-price-cta">Start Free</div>
+          </div>
+          <div class="lp-price-card lp-price-card--featured">
+            <div class="lp-price-badge">MOST POPULAR</div>
+            <div class="lp-price-name">Premium Membership</div>
+            <div class="lp-price-amount"><strong>€00</strong><span>per ipsum</span></div>
+            <div class="lp-price-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do.</div>
+            <div class="lp-price-divider"></div>
+            <div class="lp-price-list">
+              <div class="lp-price-item"><span class="lp-check-icon lp-check-icon--premium">✓</span><span>Lorem ipsum dolor sit amet</span></div>
+              <div class="lp-price-item"><span class="lp-check-icon lp-check-icon--premium">✓</span><span>Consectetur adipiscing elit sed</span></div>
+              <div class="lp-price-item"><span class="lp-check-icon lp-check-icon--premium">✓</span><span>Sed do eiusmod tempor incididunt</span></div>
+              <div class="lp-price-item"><span class="lp-check-icon lp-check-icon--premium">✓</span><span>Ut labore et dolore magna</span></div>
+              <div class="lp-price-item"><span class="lp-check-icon lp-check-icon--premium">✓</span><span>Enim ad minim veniam quis</span></div>
+            </div>
+            <div class="lp-price-cta lp-price-cta--featured">Start Premium</div>
+          </div>
+        </div>
+        <div class="lp-pricing-note">Lorem ipsum dolor sit amet · consectetur adipiscing</div>
+      </div>
+    </section>
+
+    <!-- FINAL CTA -->
+    <section class="lp-final-cta">
+      <div class="lp-wrap lp-final-cta-inner">
+        <h2>Lorem ipsum dolor sit amet consectetur adipiscing elit</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor incididunt.</p>
+        <a href="#" class="lp-final-cta-btn">Start Free Today</a>
+        <div class="lp-final-cta-login">Already have an account? <b>Log in</b></div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="lp-footer">
+      <div class="lp-wrap lp-footer-inner">
+        <div class="lp-footer-grid">
+          <div class="lp-footer-brand">
+            <img src="/assets/logo.png" alt="DeutschAcademy" />
+            <strong>Da für Dich!</strong>
+            <p>Lorem ipsum dolor sit amet consectetur adipiscing elit sed.</p>
+          </div>
+          <div class="lp-footer-col"><h5>Product</h5><span>Lorem ipsum</span><span>Dolor sit</span><span>Amet consectetur</span><span>Adipiscing</span></div>
+          <div class="lp-footer-col"><h5>Company</h5><span>Lorem ipsum</span><span>Dolor sit</span><span>Amet consectetur</span><span>Adipiscing</span></div>
+          <div class="lp-footer-col"><h5>Support</h5><span>Lorem ipsum</span><span>Dolor sit</span><span>Amet consectetur</span><span>Adipiscing</span></div>
+          <div class="lp-footer-col"><h5>Legal</h5><span>Lorem ipsum</span><span>Dolor sit</span><span>Amet consectetur</span><span>Adipiscing</span></div>
+        </div>
+        <div class="lp-footer-bottom">
+          <div class="lp-footer-copyright">© 2026 Lorem ipsum. Dolor sit amet.</div>
+          <div class="lp-footer-lang">🌐 English<span class="caret">▾</span></div>
+        </div>
+      </div>
+    </footer>
+  </div>
 </Layout>

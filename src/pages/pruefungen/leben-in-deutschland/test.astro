@@ -1,38 +1,70 @@
 ---
-// 36-question self-scoring practice quiz for "Leben in Deutschland", sourced from the same
-// PDFs as fakten.astro — see docs/section-prompts-v1.md section 14.
+// Self-scoring practice quiz for "Leben in Deutschland": 30 federal questions (same for every
+// Bundesland, sourced from the Bayern-edition PDFs — see docs/section-prompts-v1.md section 14)
+// plus 3 state-specific questions for the selected Bundesland. Bayern additionally keeps its
+// original 6 sourced state questions instead of 3 generated ones, since real DeutschAcademy
+// source material exists for it; the other 15 states use general-knowledge questions built from
+// bundeslaender in leben-in-deutschland.json — see that file's stateFactsNote for what's sourced
+// vs. general public knowledge.
 import Layout from "../../../layouts/Layout.astro";
 import PracticeHeader from "../../../components/PracticeHeader.astro";
 import "../../../styles/practice.css";
 import "../../../styles/pruefungen.css";
 import lid from "../../../data/leben-in-deutschland.json";
 
-const { questions, meta } = lid;
+const { questions, meta, bundeslaender } = lid;
 ---
 <Layout
   title="Leben in Deutschland: Test – DeutschAcademy"
-  description="36 Übungsfragen zu 'Leben in Deutschland' — Demokratie, Wahlen, Bayern, Grundrechte, Geschichte, Arbeit und Familie, mit sofortiger Auswertung."
+  description="Übungsfragen zu 'Leben in Deutschland' für alle 16 Bundesländer — Demokratie, Wahlen, Grundrechte, Geschichte, Arbeit, Familie und dein Bundesland, mit sofortiger Auswertung."
 >
   <PracticeHeader title="Leben in Deutschland" />
   <main class="practice-main">
     <div class="practice-hero">
       <p class="eyebrow">Leben in Deutschland · Übungstest</p>
-      <h1>{questions.length} Übungsfragen</h1>
+      <h1>Übungsfragen für dein Bundesland</h1>
       <p>
-        Fragen aus echtem Unterrichtsmaterial (Bayern-Ausgabe) — kein offizieller BAMF-Fragenkatalog.
-        Der echte Einbürgerungstest hat {meta.totalQuestions} Fragen ({meta.federalQuestions} bundesweit + {meta.stateQuestions} landesspezifisch), {meta.minutes} Minuten Zeit, bestanden ab {meta.passScore} richtigen Antworten.
+        {meta.federalQuestions} bundesweite Fragen aus echtem Unterrichtsmaterial, plus {meta.stateQuestions} Fragen zu deinem Bundesland.
+        Der echte Einbürgerungstest hat {meta.totalQuestions} Fragen, {meta.minutes} Minuten Zeit, bestanden ab {meta.passScore} richtigen Antworten.
         Noch unsicher bei den Fakten? Erst die <a href="/pruefungen/leben-in-deutschland/fakten">Fakten-Seite</a> durchgehen.
       </p>
     </div>
+
+    <div class="topic-tabs" id="land-tabs">
+      {bundeslaender.map((l) => (
+        <button class="topic-tab" type="button" data-land={l.id}>{l.name}</button>
+      ))}
+    </div>
+    <p class="format-note" id="land-note"></p>
 
     <div class="quiz-card" id="quiz-root"></div>
   </main>
 
   <script type="application/json" id="questions-data" set:html={JSON.stringify(questions)}></script>
+  <script type="application/json" id="laender-data" set:html={JSON.stringify(bundeslaender)}></script>
   <script type="module">
     import { mountQuiz } from "../../../lib/quiz.js";
-    const questions = JSON.parse(document.getElementById("questions-data").textContent);
+    const federal = JSON.parse(document.getElementById("questions-data").textContent);
+    const laender = JSON.parse(document.getElementById("laender-data").textContent);
+    const tabsEl = document.getElementById("land-tabs");
+    const note = document.getElementById("land-note");
     const root = document.getElementById("quiz-root");
-    mountQuiz(root, questions, { mode: "choice" });
+
+    function loadLand(id) {
+      const l = laender.find((x) => x.id === id) || laender[0];
+      [...tabsEl.children].forEach((b) => b.classList.toggle("active", b.dataset.land === l.id));
+      note.textContent = l.sourced
+        ? `${l.name}: ${l.stateQuestions.length} Fragen aus echtem DeutschAcademy-Unterrichtsmaterial + ${federal.length} bundesweite Fragen.`
+        : `${l.name}: ${federal.length} bundesweite Fragen (Unterrichtsmaterial) + ${l.stateQuestions.length} Fragen zu ${l.name} (allgemein bekannte, öffentliche Fakten, keine DeutschAcademy-Quelle).`;
+      const combined = [...federal, ...l.stateQuestions];
+      mountQuiz(root, combined, { mode: "choice" });
+    }
+
+    tabsEl.addEventListener("click", (e) => {
+      const btn = e.target.closest("[data-land]");
+      if (btn) loadLand(btn.dataset.land);
+    });
+
+    loadLand("bayern");
   </script>
 </Layout>

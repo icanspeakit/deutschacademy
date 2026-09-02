@@ -1,19 +1,24 @@
 ---
-// Facts page for "Leben in Deutschland", sourced from Leben_in_Deutschland_Bayern_A2.pdf,
+// Facts page for "Leben in Deutschland". The federal chapters (Demokratie, Wahlen, Grundrechte,
+// Geschichte, Arbeit, Familie) are sourced from Leben_in_Deutschland_Bayern_A2.pdf,
 // Leben_in_Deutschland_Bayern_B1.pdf and Leben_in_Deutschland_Bayern_B1_A.pdf (Deutsch v3
-// folder) — see docs/section-prompts-v1.md section 14. All three PDFs cover the same facts
-// at different levels of detail; content here follows the fullest (B1) version.
+// folder) — see docs/section-prompts-v1.md section 14. The Bayern entry in `bundeslaender`
+// carries that same sourced material. The other 15 Bundesländer have no DeutschAcademy source
+// material in the project: their basic facts (capital, parliament name, head-of-government
+// title) are general public knowledge, not teaching-material sourced — see meta.stateFactsNote,
+// shown on this page. Deliberately excludes officeholder names and exact election-cycle lengths,
+// which change over time and aren't worth the risk of going stale on a citizenship-test page.
 import Layout from "../../../layouts/Layout.astro";
 import PracticeHeader from "../../../components/PracticeHeader.astro";
 import "../../../styles/practice.css";
 import "../../../styles/pruefungen.css";
 import lid from "../../../data/leben-in-deutschland.json";
 
-const { topics, glossary, meta } = lid;
+const { topics, glossary, meta, bundeslaender } = lid;
 ---
 <Layout
   title="Leben in Deutschland: Fakten – DeutschAcademy"
-  description="Die wichtigsten Fakten für den Einbürgerungstest 'Leben in Deutschland' — Demokratie, Wahlen, Bayern, Grundrechte, Geschichte, Arbeit und Familie."
+  description="Die wichtigsten Fakten für den Einbürgerungstest 'Leben in Deutschland' — Demokratie, Wahlen, Grundrechte, Geschichte, Arbeit, Familie und alle 16 Bundesländer."
 >
   <PracticeHeader title="Leben in Deutschland" />
   <main class="practice-main">
@@ -21,8 +26,8 @@ const { topics, glossary, meta } = lid;
       <p class="eyebrow">Leben in Deutschland · Fakten</p>
       <h1>Fakten zum Lernen</h1>
       <p>
-        Fakten aus echtem Unterrichtsmaterial (Bayern-Ausgabe), gegliedert nach Themen —
-        zum Nachschlagen und Wiederholen, bevor du den <a href="/pruefungen/leben-in-deutschland/test">36-Fragen-Test</a> übst.
+        Bundesweite Fakten aus echtem Unterrichtsmaterial, gegliedert nach Themen, plus die Grunddaten
+        zu deinem Bundesland — zum Nachschlagen und Wiederholen, bevor du den <a href="/pruefungen/leben-in-deutschland/test">Übungstest</a> übst.
       </p>
       <p class="format-note">{meta.sourceNote}</p>
     </div>
@@ -32,6 +37,7 @@ const { topics, glossary, meta } = lid;
         <button class="topic-tab" type="button" data-topic={i}>{t.title}</button>
       ))}
       <button class="topic-tab" type="button" data-topic="glossar">Glossar</button>
+      <button class="topic-tab" type="button" data-topic="bundesland">Dein Bundesland</button>
     </div>
 
     <div class="reading-block" id="topic-panel"></div>
@@ -43,7 +49,7 @@ const { topics, glossary, meta } = lid;
           <thead><tr><th>Teil</th><th>Umfang</th></tr></thead>
           <tbody>
             <tr><td>Bundesweiter Teil</td><td>{meta.federalQuestions} von {meta.totalQuestions} Fragen</td></tr>
-            <tr><td>Landesspezifischer Teil (hier: Bayern)</td><td>{meta.stateQuestions} von {meta.totalQuestions} Fragen</td></tr>
+            <tr><td>Landesspezifischer Teil</td><td>{meta.stateQuestions} von {meta.totalQuestions} Fragen</td></tr>
             <tr><td>Zeit</td><td>{meta.minutes} Minuten</td></tr>
             <tr><td>Bestehen ab</td><td>{meta.passScore} richtigen Antworten</td></tr>
           </tbody>
@@ -53,16 +59,20 @@ const { topics, glossary, meta } = lid;
 
     <div class="mock-cta">
       <h2>Jetzt testen</h2>
-      <p>36 Multiple-Choice-Fragen aus genau diesen Fakten, mit sofortiger Auswertung.</p>
-      <a class="quiz-btn quiz-btn--primary" href="/pruefungen/leben-in-deutschland/test">Zum 36-Fragen-Test →</a>
+      <p>Multiple-Choice-Fragen aus genau diesen Fakten, mit sofortiger Auswertung — wähle dein Bundesland auf der Testseite.</p>
+      <a class="quiz-btn quiz-btn--primary" href="/pruefungen/leben-in-deutschland/test">Zum Übungstest →</a>
     </div>
   </main>
 
   <script type="application/json" id="topics-data" set:html={JSON.stringify(topics)}></script>
   <script type="application/json" id="glossary-data" set:html={JSON.stringify(glossary)}></script>
+  <script type="application/json" id="laender-data" set:html={JSON.stringify(bundeslaender)}></script>
+  <script type="application/json" id="meta-data" set:html={JSON.stringify(meta)}></script>
   <script type="module">
     const topics = JSON.parse(document.getElementById("topics-data").textContent);
     const glossary = JSON.parse(document.getElementById("glossary-data").textContent);
+    const laender = JSON.parse(document.getElementById("laender-data").textContent);
+    const meta = JSON.parse(document.getElementById("meta-data").textContent);
     const tabsEl = document.getElementById("topic-tabs");
     const panel = document.getElementById("topic-panel");
 
@@ -87,10 +97,39 @@ const { topics, glossary, meta } = lid;
         </dl>`;
     }
 
+    function renderLand(id) {
+      const l = laender.find((x) => x.id === id) || laender[0];
+      const borders = l.borderCountries.length ? l.borderCountries.join(", ") : "keine Auslandsgrenze";
+      panel.innerHTML = `
+        <h3>${esc(l.name)}</h3>
+        <div class="topic-intro" style="margin:0 0 14px;">
+          ${l.sourced
+            ? "Aus echtem DeutschAcademy-Unterrichtsmaterial."
+            : "Allgemein bekannte, öffentliche Fakten — keine DeutschAcademy-Quelle. " + esc(meta.stateFactsNote)}
+        </div>
+        <ul class="fact-list">
+          <li><strong>Hauptstadt:</strong> ${esc(l.capital)}</li>
+          <li><strong>Typ:</strong> ${esc(l.type)}</li>
+          <li><strong>Einwohner:</strong> ${esc(l.population)}</li>
+          <li><strong>Grenzt an (Ausland):</strong> ${esc(borders)}</li>
+          <li><strong>Landesparlament:</strong> ${esc(l.parliamentName)}</li>
+          <li><strong>Spitze der Landesregierung:</strong> ${esc(l.executiveTitle)}</li>
+        </ul>
+        ${l.sourceFacts ? `<h4 style="margin:18px 0 8px;">Vertiefung aus dem Unterrichtsmaterial</h4><ul class="fact-list">${l.sourceFacts.map((f) => `<li>${esc(f)}</li>`).join("")}</ul>` : ""}
+        <div class="topic-tabs" id="land-picker" style="margin-top:20px;justify-content:flex-start;">
+          ${laender.map((x) => `<button class="topic-tab${x.id === l.id ? " active" : ""}" type="button" data-land="${x.id}">${esc(x.name)}</button>`).join("")}
+        </div>`;
+      panel.querySelector("#land-picker").addEventListener("click", (e) => {
+        const btn = e.target.closest("[data-land]");
+        if (btn) renderLand(btn.dataset.land);
+      });
+    }
+
     [...tabsEl.children].forEach((btn, i) => {
       btn.addEventListener("click", () => {
         [...tabsEl.children].forEach((b) => b.classList.toggle("active", b === btn));
         if (btn.dataset.topic === "glossar") renderGlossary();
+        else if (btn.dataset.topic === "bundesland") renderLand("bayern");
         else renderTopic(+btn.dataset.topic);
       });
     });

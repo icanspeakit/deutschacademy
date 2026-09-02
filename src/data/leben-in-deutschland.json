@@ -5,7 +5,8 @@
     "federalQuestions": 30,
     "stateQuestions": 3,
     "minutes": 60,
-    "passScore": 17
+    "passScore": 17,
+    "stateFactsNote": "Die Grunddaten für Bayern (Kapitel, Einwohnerzahl, Grenzen) stammen aus echtem DeutschAcademy-Unterrichtsmaterial. Für die anderen 15 Bundesländer gibt es kein solches Material im Projekt — Hauptstadt, Parlamentsname und Amtstitel der Landesregierung sind daher allgemein bekannte, öffentliche Fakten (keine erfundenen Details, aber auch keine DeutschAcademy-Quelle). Amtsinhaber und genaue Wahlzyklen ändern sich und werden hier bewusst nicht genannt — dafür gilt die offizielle Landeswahlleitung."
   },
   "topics": [
     {
@@ -25,25 +26,12 @@
       "title": "Wahlen",
       "facts": [
         "Bundestagswahl: alle 4 Jahre. Das Volk wählt die Abgeordneten für den Bundestag.",
-        "Landtagswahl: alle 5 Jahre in Bayern. Die Bürger wählen die Abgeordneten für den Bayerischen Landtag.",
+        "Landtagswahl: Das jeweilige Bundesland wählt die Abgeordneten für sein Landesparlament (in Bayern z. B. alle 5 Jahre für den Bayerischen Landtag) — der genaue Rhythmus ist von Bundesland zu Bundesland unterschiedlich geregelt.",
         "Kommunalwahl: die Menschen wählen die Bürgermeister und Gemeinderäte in ihrer Stadt oder Gemeinde.",
         "Wahlen sind frei: Niemand darf dich zwingen, wen du wählst.",
         "Wahlen sind geheim: Niemand sieht, wen du wählst.",
         "Wahlen sind gleich: Jede Stimme hat die gleiche Kraft, egal ob arm oder reich, Frau oder Mann.",
         "Wahlen sind allgemein: Ab 18 Jahren darf fast jeder Erwachsene wählen, der deutscher Bürger/deutsche Bürgerin ist oder aus der EU kommt."
-      ]
-    },
-    {
-      "id": "bayern",
-      "title": "Bayern — dein Bundesland",
-      "facts": [
-        "Bayern ist eines von 16 Bundesländern in Deutschland und das größte Bundesland.",
-        "Die Hauptstadt von Bayern ist München. Weitere große Städte: Nürnberg, Augsburg.",
-        "Bayern hat etwa 13 Millionen Einwohner.",
-        "Bayern grenzt an Österreich und Tschechien.",
-        "Bayern hat einen eigenen Ministerpräsidenten/eine eigene Ministerpräsidentin — wie ein kleiner Bundeskanzler/eine kleine Bundeskanzlerin, aber nur für Bayern.",
-        "Der Bayerische Landtag sind die Abgeordneten, die für Bayern Gesetze machen — er funktioniert wie der Bundestag, aber auf Landesebene.",
-        "Bayern ist ein wichtiges Wirtschaftszentrum mit vielen großen Firmen und Fabriken, neben Bier, Lederhosen und den Alpen."
       ]
     },
     {
@@ -123,6 +111,180 @@
     { "term": "Wahlen", "def": "Der Prozess, bei dem das Volk entscheidet, wer regieren soll — frei, geheim und gleich." },
     { "term": "Wiedervereinigung", "def": "1990: Die Vereinigung von Ost- und Westdeutschland zu einem Land." }
   ],
+  "bundeslaender": [
+    {
+      "id": "baden-wuerttemberg", "name": "Baden-Württemberg", "type": "Flächenland", "capital": "Stuttgart",
+      "population": "etwa 11 Millionen", "borderCountries": ["Frankreich", "Schweiz"],
+      "parliamentName": "Landtag von Baden-Württemberg", "executiveTitle": "Ministerpräsident/in", "sourced": false,
+      "stateQuestions": [
+        { "prompt": "Was ist die Hauptstadt von Baden-Württemberg?", "options": ["Stuttgart", "München", "Mainz", "Wiesbaden"], "answer": "Stuttgart" },
+        { "prompt": "Wie heißt das Landesparlament von Baden-Württemberg?", "options": ["Landtag von Baden-Württemberg", "Hessischer Landtag", "Sächsischer Landtag", "Thüringer Landtag"], "answer": "Landtag von Baden-Württemberg" },
+        { "prompt": "Welchen Titel trägt die Person an der Spitze der Landesregierung von Baden-Württemberg?", "options": ["Ministerpräsident/in", "Regierender Bürgermeister/Regierende Bürgermeisterin", "Bundeskanzler/in", "Erster Bürgermeister/Erste Bürgermeisterin"], "answer": "Ministerpräsident/in" }
+      ]
+    },
+    {
+      "id": "bayern", "name": "Bayern", "type": "Flächenland", "capital": "München",
+      "population": "etwa 13 Millionen", "borderCountries": ["Österreich", "Tschechien"],
+      "parliamentName": "Bayerischer Landtag", "executiveTitle": "Ministerpräsident/in", "sourced": true,
+      "sourceFacts": [
+        "Bayern ist eines von 16 Bundesländern in Deutschland und das größte Bundesland.",
+        "Die Hauptstadt von Bayern ist München. Weitere große Städte: Nürnberg, Augsburg.",
+        "Bayern hat etwa 13 Millionen Einwohner.",
+        "Bayern grenzt an Österreich und Tschechien.",
+        "Bayern hat einen eigenen Ministerpräsidenten/eine eigene Ministerpräsidentin — wie ein kleiner Bundeskanzler/eine kleine Bundeskanzlerin, aber nur für Bayern.",
+        "Der Bayerische Landtag sind die Abgeordneten, die für Bayern Gesetze machen — er funktioniert wie der Bundestag, aber auf Landesebene.",
+        "Bayern ist ein wichtiges Wirtschaftszentrum mit vielen großen Firmen und Fabriken, neben Bier, Lederhosen und den Alpen."
+      ],
+      "stateQuestions": [
+        { "prompt": "Wie oft finden Landtagswahlen in Bayern statt?", "options": ["Alle 5 Jahre", "Alle 4 Jahre", "Alle 3 Jahre", "Alle 6 Jahre"], "answer": "Alle 5 Jahre" },
+        { "prompt": "Was ist die Hauptstadt von Bayern?", "options": ["München", "Nürnberg", "Augsburg", "Regensburg"], "answer": "München" },
+        { "prompt": "Wie viele Einwohner hat Bayern ungefähr?", "options": ["Etwa 13 Millionen", "Etwa 5 Millionen", "Etwa 20 Millionen", "Etwa 8 Millionen"], "answer": "Etwa 13 Millionen" },
+        { "prompt": "An welche Länder grenzt Bayern?", "options": ["Österreich und Tschechien", "Frankreich und die Schweiz", "Polen und Dänemark", "Belgien und die Niederlande"], "answer": "Österreich und Tschechien" },
+        { "prompt": "Wer leitet die bayerische Landesregierung?", "options": ["Der Ministerpräsident/die Ministerpräsidentin", "Der Bundeskanzler/die Bundeskanzlerin", "Der Bürgermeister von München", "Der Bundespräsident"], "answer": "Der Ministerpräsident/die Ministerpräsidentin" },
+        { "prompt": "Wie heißt das Landesparlament von Bayern?", "options": ["Bayerischer Landtag", "Bayerischer Bundesrat", "Bayerischer Bundestag", "Bayerischer Senat"], "answer": "Bayerischer Landtag" }
+      ]
+    },
+    {
+      "id": "berlin", "name": "Berlin", "type": "Stadtstaat", "capital": "Berlin",
+      "population": "etwa 3,8 Millionen", "borderCountries": [],
+      "parliamentName": "Abgeordnetenhaus von Berlin", "executiveTitle": "Regierender Bürgermeister/Regierende Bürgermeisterin", "sourced": false,
+      "stateQuestions": [
+        { "prompt": "Berlin ist nicht nur die Bundeshauptstadt, sondern auch ein eigenes Bundesland. Wie heißt sein Landesparlament?", "options": ["Abgeordnetenhaus von Berlin", "Bayerischer Landtag", "Bundestag", "Bremische Bürgerschaft"], "answer": "Abgeordnetenhaus von Berlin" },
+        { "prompt": "Welchen Titel trägt die Person an der Spitze der Berliner Landesregierung?", "options": ["Regierender Bürgermeister/Regierende Bürgermeisterin", "Ministerpräsident/in", "Bundeskanzler/in", "Präsident des Senats (Bürgermeister/in)"], "answer": "Regierender Bürgermeister/Regierende Bürgermeisterin" },
+        { "prompt": "Berlin ist ein Stadtstaat. Welches Bundesland umgibt Berlin vollständig?", "options": ["Brandenburg", "Sachsen", "Mecklenburg-Vorpommern", "Sachsen-Anhalt"], "answer": "Brandenburg" }
+      ]
+    },
+    {
+      "id": "brandenburg", "name": "Brandenburg", "type": "Flächenland", "capital": "Potsdam",
+      "population": "etwa 2,5 Millionen", "borderCountries": ["Polen"],
+      "parliamentName": "Landtag Brandenburg", "executiveTitle": "Ministerpräsident/in", "sourced": false,
+      "stateQuestions": [
+        { "prompt": "Was ist die Hauptstadt von Brandenburg?", "options": ["Potsdam", "Berlin", "Dresden", "Magdeburg"], "answer": "Potsdam" },
+        { "prompt": "Wie heißt das Landesparlament von Brandenburg?", "options": ["Landtag Brandenburg", "Sächsischer Landtag", "Landtag von Sachsen-Anhalt", "Thüringer Landtag"], "answer": "Landtag Brandenburg" },
+        { "prompt": "Welchen Titel trägt die Person an der Spitze der Landesregierung von Brandenburg?", "options": ["Ministerpräsident/in", "Regierender Bürgermeister/Regierende Bürgermeisterin", "Bundeskanzler/in", "Erster Bürgermeister/Erste Bürgermeisterin"], "answer": "Ministerpräsident/in" }
+      ]
+    },
+    {
+      "id": "bremen", "name": "Bremen", "type": "Stadtstaat", "capital": "Bremen",
+      "population": "etwa 680.000", "borderCountries": [],
+      "parliamentName": "Bremische Bürgerschaft", "executiveTitle": "Präsident des Senats (Bürgermeister/in)", "sourced": false,
+      "stateQuestions": [
+        { "prompt": "Bremen ist das kleinste Bundesland und ein Stadtstaat. Wie heißt sein Landesparlament?", "options": ["Bremische Bürgerschaft", "Hamburgische Bürgerschaft", "Abgeordnetenhaus von Berlin", "Landtag Bremen"], "answer": "Bremische Bürgerschaft" },
+        { "prompt": "Welchen Titel trägt die Person an der Spitze der Bremer Landesregierung?", "options": ["Präsident des Senats (Bürgermeister/in)", "Ministerpräsident/in", "Bundeskanzler/in", "Regierender Bürgermeister/Regierende Bürgermeisterin"], "answer": "Präsident des Senats (Bürgermeister/in)" },
+        { "prompt": "Welches Bundesland umgibt den Stadtstaat Bremen vollständig?", "options": ["Niedersachsen", "Schleswig-Holstein", "Nordrhein-Westfalen", "Hessen"], "answer": "Niedersachsen" }
+      ]
+    },
+    {
+      "id": "hamburg", "name": "Hamburg", "type": "Stadtstaat", "capital": "Hamburg",
+      "population": "etwa 1,9 Millionen", "borderCountries": [],
+      "parliamentName": "Hamburgische Bürgerschaft", "executiveTitle": "Erster Bürgermeister/Erste Bürgermeisterin", "sourced": false,
+      "stateQuestions": [
+        { "prompt": "Wie heißt das Landesparlament von Hamburg?", "options": ["Hamburgische Bürgerschaft", "Bremische Bürgerschaft", "Abgeordnetenhaus von Berlin", "Schleswig-Holsteinischer Landtag"], "answer": "Hamburgische Bürgerschaft" },
+        { "prompt": "Welchen Titel trägt die Person an der Spitze der Hamburger Landesregierung?", "options": ["Erster Bürgermeister/Erste Bürgermeisterin", "Regierender Bürgermeister/Regierende Bürgermeisterin", "Ministerpräsident/in", "Bundeskanzler/in"], "answer": "Erster Bürgermeister/Erste Bürgermeisterin" },
+        { "prompt": "Hamburg ist wie Berlin und Bremen ein Stadtstaat. Was bedeutet das?", "options": ["Die Stadt ist gleichzeitig ein eigenes Bundesland.", "Die Stadt hat kein eigenes Parlament.", "Die Stadt gehört zu einem anderen Bundesland.", "Die Stadt wird direkt vom Bundeskanzler regiert."], "answer": "Die Stadt ist gleichzeitig ein eigenes Bundesland." }
+      ]
+    },
+    {
+      "id": "hessen", "name": "Hessen", "type": "Flächenland", "capital": "Wiesbaden",
+      "population": "etwa 6,3 Millionen", "borderCountries": [],
+      "parliamentName": "Hessischer Landtag", "executiveTitle": "Ministerpräsident/in", "sourced": false,
+      "stateQuestions": [
+        { "prompt": "Was ist die Hauptstadt von Hessen?", "options": ["Wiesbaden", "Frankfurt am Main", "Mainz", "Kassel"], "answer": "Wiesbaden" },
+        { "prompt": "Wie heißt das Landesparlament von Hessen?", "options": ["Hessischer Landtag", "Landtag Rheinland-Pfalz", "Thüringer Landtag", "Niedersächsischer Landtag"], "answer": "Hessischer Landtag" },
+        { "prompt": "Welchen Titel trägt die Person an der Spitze der Landesregierung von Hessen?", "options": ["Ministerpräsident/in", "Erster Bürgermeister/Erste Bürgermeisterin", "Bundeskanzler/in", "Präsident des Senats (Bürgermeister/in)"], "answer": "Ministerpräsident/in" }
+      ]
+    },
+    {
+      "id": "mecklenburg-vorpommern", "name": "Mecklenburg-Vorpommern", "type": "Flächenland", "capital": "Schwerin",
+      "population": "etwa 1,6 Millionen", "borderCountries": ["Polen"],
+      "parliamentName": "Landtag Mecklenburg-Vorpommern", "executiveTitle": "Ministerpräsident/in", "sourced": false,
+      "stateQuestions": [
+        { "prompt": "Was ist die Hauptstadt von Mecklenburg-Vorpommern?", "options": ["Schwerin", "Rostock", "Stralsund", "Neubrandenburg"], "answer": "Schwerin" },
+        { "prompt": "Wie heißt das Landesparlament von Mecklenburg-Vorpommern?", "options": ["Landtag Mecklenburg-Vorpommern", "Landtag Brandenburg", "Schleswig-Holsteinischer Landtag", "Sächsischer Landtag"], "answer": "Landtag Mecklenburg-Vorpommern" },
+        { "prompt": "Welchen Titel trägt die Person an der Spitze der Landesregierung von Mecklenburg-Vorpommern?", "options": ["Ministerpräsident/in", "Regierender Bürgermeister/Regierende Bürgermeisterin", "Bundeskanzler/in", "Präsident des Senats (Bürgermeister/in)"], "answer": "Ministerpräsident/in" }
+      ]
+    },
+    {
+      "id": "niedersachsen", "name": "Niedersachsen", "type": "Flächenland", "capital": "Hannover",
+      "population": "etwa 8 Millionen", "borderCountries": ["Niederlande"],
+      "parliamentName": "Niedersächsischer Landtag", "executiveTitle": "Ministerpräsident/in", "sourced": false,
+      "stateQuestions": [
+        { "prompt": "Was ist die Hauptstadt von Niedersachsen?", "options": ["Hannover", "Bremen", "Braunschweig", "Osnabrück"], "answer": "Hannover" },
+        { "prompt": "Wie heißt das Landesparlament von Niedersachsen?", "options": ["Niedersächsischer Landtag", "Landtag Nordrhein-Westfalen", "Hessischer Landtag", "Landtag Rheinland-Pfalz"], "answer": "Niedersächsischer Landtag" },
+        { "prompt": "Welchen Titel trägt die Person an der Spitze der Landesregierung von Niedersachsen?", "options": ["Ministerpräsident/in", "Erster Bürgermeister/Erste Bürgermeisterin", "Bundeskanzler/in", "Regierender Bürgermeister/Regierende Bürgermeisterin"], "answer": "Ministerpräsident/in" }
+      ]
+    },
+    {
+      "id": "nordrhein-westfalen", "name": "Nordrhein-Westfalen", "type": "Flächenland", "capital": "Düsseldorf",
+      "population": "etwa 18 Millionen", "borderCountries": ["Niederlande", "Belgien"],
+      "parliamentName": "Landtag Nordrhein-Westfalen", "executiveTitle": "Ministerpräsident/in", "sourced": false,
+      "stateQuestions": [
+        { "prompt": "Was ist die Hauptstadt von Nordrhein-Westfalen?", "options": ["Düsseldorf", "Köln", "Dortmund", "Essen"], "answer": "Düsseldorf" },
+        { "prompt": "Wie heißt das Landesparlament von Nordrhein-Westfalen?", "options": ["Landtag Nordrhein-Westfalen", "Niedersächsischer Landtag", "Hessischer Landtag", "Landtag Rheinland-Pfalz"], "answer": "Landtag Nordrhein-Westfalen" },
+        { "prompt": "Welchen Titel trägt die Person an der Spitze der Landesregierung von Nordrhein-Westfalen?", "options": ["Ministerpräsident/in", "Regierender Bürgermeister/Regierende Bürgermeisterin", "Bundeskanzler/in", "Erster Bürgermeister/Erste Bürgermeisterin"], "answer": "Ministerpräsident/in" }
+      ]
+    },
+    {
+      "id": "rheinland-pfalz", "name": "Rheinland-Pfalz", "type": "Flächenland", "capital": "Mainz",
+      "population": "etwa 4,1 Millionen", "borderCountries": ["Frankreich", "Luxemburg", "Belgien"],
+      "parliamentName": "Landtag Rheinland-Pfalz", "executiveTitle": "Ministerpräsident/in", "sourced": false,
+      "stateQuestions": [
+        { "prompt": "Was ist die Hauptstadt von Rheinland-Pfalz?", "options": ["Mainz", "Koblenz", "Trier", "Ludwigshafen"], "answer": "Mainz" },
+        { "prompt": "Wie heißt das Landesparlament von Rheinland-Pfalz?", "options": ["Landtag Rheinland-Pfalz", "Landtag des Saarlandes", "Hessischer Landtag", "Landtag von Baden-Württemberg"], "answer": "Landtag Rheinland-Pfalz" },
+        { "prompt": "Welchen Titel trägt die Person an der Spitze der Landesregierung von Rheinland-Pfalz?", "options": ["Ministerpräsident/in", "Bundeskanzler/in", "Erster Bürgermeister/Erste Bürgermeisterin", "Präsident des Senats (Bürgermeister/in)"], "answer": "Ministerpräsident/in" }
+      ]
+    },
+    {
+      "id": "saarland", "name": "Saarland", "type": "Flächenland", "capital": "Saarbrücken",
+      "population": "etwa 1 Million", "borderCountries": ["Frankreich", "Luxemburg"],
+      "parliamentName": "Landtag des Saarlandes", "executiveTitle": "Ministerpräsident/in", "sourced": false,
+      "stateQuestions": [
+        { "prompt": "Was ist die Hauptstadt des Saarlandes?", "options": ["Saarbrücken", "Mainz", "Trier", "Kaiserslautern"], "answer": "Saarbrücken" },
+        { "prompt": "Wie heißt das Landesparlament des Saarlandes?", "options": ["Landtag des Saarlandes", "Landtag Rheinland-Pfalz", "Landtag von Baden-Württemberg", "Hessischer Landtag"], "answer": "Landtag des Saarlandes" },
+        { "prompt": "Welchen Titel trägt die Person an der Spitze der Landesregierung des Saarlandes?", "options": ["Ministerpräsident/in", "Bundeskanzler/in", "Regierender Bürgermeister/Regierende Bürgermeisterin", "Präsident des Senats (Bürgermeister/in)"], "answer": "Ministerpräsident/in" }
+      ]
+    },
+    {
+      "id": "sachsen", "name": "Sachsen", "type": "Flächenland", "capital": "Dresden",
+      "population": "etwa 4 Millionen", "borderCountries": ["Polen", "Tschechien"],
+      "parliamentName": "Sächsischer Landtag", "executiveTitle": "Ministerpräsident/in", "sourced": false,
+      "stateQuestions": [
+        { "prompt": "Was ist die Hauptstadt von Sachsen?", "options": ["Dresden", "Leipzig", "Chemnitz", "Zwickau"], "answer": "Dresden" },
+        { "prompt": "Wie heißt das Landesparlament von Sachsen?", "options": ["Sächsischer Landtag", "Landtag von Sachsen-Anhalt", "Thüringer Landtag", "Landtag Brandenburg"], "answer": "Sächsischer Landtag" },
+        { "prompt": "Welchen Titel trägt die Person an der Spitze der Landesregierung von Sachsen?", "options": ["Ministerpräsident/in", "Bundeskanzler/in", "Erster Bürgermeister/Erste Bürgermeisterin", "Regierender Bürgermeister/Regierende Bürgermeisterin"], "answer": "Ministerpräsident/in" }
+      ]
+    },
+    {
+      "id": "sachsen-anhalt", "name": "Sachsen-Anhalt", "type": "Flächenland", "capital": "Magdeburg",
+      "population": "etwa 2,2 Millionen", "borderCountries": [],
+      "parliamentName": "Landtag von Sachsen-Anhalt", "executiveTitle": "Ministerpräsident/in", "sourced": false,
+      "stateQuestions": [
+        { "prompt": "Was ist die Hauptstadt von Sachsen-Anhalt?", "options": ["Magdeburg", "Halle (Saale)", "Dessau-Roßlau", "Wittenberg"], "answer": "Magdeburg" },
+        { "prompt": "Wie heißt das Landesparlament von Sachsen-Anhalt?", "options": ["Landtag von Sachsen-Anhalt", "Sächsischer Landtag", "Landtag Brandenburg", "Thüringer Landtag"], "answer": "Landtag von Sachsen-Anhalt" },
+        { "prompt": "Welchen Titel trägt die Person an der Spitze der Landesregierung von Sachsen-Anhalt?", "options": ["Ministerpräsident/in", "Bundeskanzler/in", "Präsident des Senats (Bürgermeister/in)", "Erster Bürgermeister/Erste Bürgermeisterin"], "answer": "Ministerpräsident/in" }
+      ]
+    },
+    {
+      "id": "schleswig-holstein", "name": "Schleswig-Holstein", "type": "Flächenland", "capital": "Kiel",
+      "population": "etwa 2,9 Millionen", "borderCountries": ["Dänemark"],
+      "parliamentName": "Schleswig-Holsteinischer Landtag", "executiveTitle": "Ministerpräsident/in", "sourced": false,
+      "stateQuestions": [
+        { "prompt": "Was ist die Hauptstadt von Schleswig-Holstein?", "options": ["Kiel", "Lübeck", "Flensburg", "Neumünster"], "answer": "Kiel" },
+        { "prompt": "Wie heißt das Landesparlament von Schleswig-Holstein?", "options": ["Schleswig-Holsteinischer Landtag", "Niedersächsischer Landtag", "Landtag Mecklenburg-Vorpommern", "Hamburgische Bürgerschaft"], "answer": "Schleswig-Holsteinischer Landtag" },
+        { "prompt": "Welchen Titel trägt die Person an der Spitze der Landesregierung von Schleswig-Holstein?", "options": ["Ministerpräsident/in", "Erster Bürgermeister/Erste Bürgermeisterin", "Bundeskanzler/in", "Regierender Bürgermeister/Regierende Bürgermeisterin"], "answer": "Ministerpräsident/in" }
+      ]
+    },
+    {
+      "id": "thueringen", "name": "Thüringen", "type": "Flächenland", "capital": "Erfurt",
+      "population": "etwa 2,1 Millionen", "borderCountries": [],
+      "parliamentName": "Thüringer Landtag", "executiveTitle": "Ministerpräsident/in", "sourced": false,
+      "stateQuestions": [
+        { "prompt": "Was ist die Hauptstadt von Thüringen?", "options": ["Erfurt", "Jena", "Gera", "Weimar"], "answer": "Erfurt" },
+        { "prompt": "Wie heißt das Landesparlament von Thüringen?", "options": ["Thüringer Landtag", "Sächsischer Landtag", "Landtag von Sachsen-Anhalt", "Hessischer Landtag"], "answer": "Thüringer Landtag" },
+        { "prompt": "Welchen Titel trägt die Person an der Spitze der Landesregierung von Thüringen?", "options": ["Ministerpräsident/in", "Bundeskanzler/in", "Regierender Bürgermeister/Regierende Bürgermeisterin", "Präsident des Senats (Bürgermeister/in)"], "answer": "Ministerpräsident/in" }
+      ]
+    }
+  ],
   "questions": [
     { "prompt": "Was bedeutet \"Demokratie\"?", "options": ["Die Macht geht vom Volk aus.", "Eine Person entscheidet allein.", "Der König entscheidet.", "Nur reiche Menschen dürfen wählen."], "answer": "Die Macht geht vom Volk aus." },
     { "prompt": "Was ist das Gegenteil von Demokratie?", "options": ["Diktatur", "Monarchie", "Republik", "Föderalismus"], "answer": "Diktatur" },
@@ -130,16 +292,10 @@
     { "prompt": "Wer führt die Gesetze aus (Exekutive)?", "options": ["Die Regierung", "Der Bundestag", "Die Gerichte", "Der Bundespräsident allein"], "answer": "Die Regierung" },
     { "prompt": "Wer prüft, ob Gesetze eingehalten werden (Judikative)?", "options": ["Die Gerichte und Richter", "Der Bundestag", "Die Regierung", "Der Bundesrat"], "answer": "Die Gerichte und Richter" },
     { "prompt": "Wie oft finden Bundestagswahlen statt?", "options": ["Alle 4 Jahre", "Alle 2 Jahre", "Alle 5 Jahre", "Alle 6 Jahre"], "answer": "Alle 4 Jahre" },
-    { "prompt": "Wie oft finden Landtagswahlen in Bayern statt?", "options": ["Alle 5 Jahre", "Alle 4 Jahre", "Alle 3 Jahre", "Alle 6 Jahre"], "answer": "Alle 5 Jahre" },
     { "prompt": "Welches Wahlprinzip bedeutet: \"Niemand sieht, wen du wählst\"?", "options": ["geheim", "frei", "gleich", "allgemein"], "answer": "geheim" },
     { "prompt": "Welches Wahlprinzip bedeutet: \"Jede Stimme hat die gleiche Kraft\"?", "options": ["gleich", "frei", "geheim", "allgemein"], "answer": "gleich" },
     { "prompt": "Ab welchem Alter darf man in Deutschland wählen?", "options": ["Ab 18 Jahren", "Ab 16 Jahren", "Ab 21 Jahren", "Ab 14 Jahren"], "answer": "Ab 18 Jahren" },
     { "prompt": "Wie viele Bundesländer hat Deutschland?", "options": ["16", "13", "20", "9"], "answer": "16" },
-    { "prompt": "Was ist die Hauptstadt von Bayern?", "options": ["München", "Nürnberg", "Augsburg", "Regensburg"], "answer": "München" },
-    { "prompt": "Wie viele Einwohner hat Bayern ungefähr?", "options": ["Etwa 13 Millionen", "Etwa 5 Millionen", "Etwa 20 Millionen", "Etwa 8 Millionen"], "answer": "Etwa 13 Millionen" },
-    { "prompt": "An welche Länder grenzt Bayern?", "options": ["Österreich und Tschechien", "Frankreich und die Schweiz", "Polen und Dänemark", "Belgien und die Niederlande"], "answer": "Österreich und Tschechien" },
-    { "prompt": "Wer leitet die bayerische Landesregierung?", "options": ["Der Ministerpräsident/die Ministerpräsidentin", "Der Bundeskanzler/die Bundeskanzlerin", "Der Bürgermeister von München", "Der Bundespräsident"], "answer": "Der Ministerpräsident/die Ministerpräsidentin" },
-    { "prompt": "Wie heißt das Landesparlament von Bayern?", "options": ["Bayerischer Landtag", "Bayerischer Bundesrat", "Bayerischer Bundestag", "Bayerischer Senat"], "answer": "Bayerischer Landtag" },
     { "prompt": "Was ist laut Lernmaterial \"die erste und wichtigste Regel in Deutschland\"?", "options": ["Die Menschenwürde ist unantastbar.", "Jeder muss wählen gehen.", "Jeder muss eine Religion haben.", "Jeder muss Deutsch sprechen."], "answer": "Die Menschenwürde ist unantastbar." },
     { "prompt": "Welches Grundrecht erlaubt es, die eigene Meinung frei zu sagen und zu schreiben?", "options": ["Meinungsfreiheit", "Versammlungsfreiheit", "Religionsfreiheit", "Gleichheit vor dem Gesetz"], "answer": "Meinungsfreiheit" },
     { "prompt": "Welches Grundrecht erlaubt es, sich mit anderen zu treffen und zu demonstrieren?", "options": ["Versammlungsfreiheit", "Meinungsfreiheit", "Religionsfreiheit", "Schulpflicht"], "answer": "Versammlungsfreiheit" },

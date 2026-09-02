@@ -6,7 +6,7 @@ import "../../styles/practice.css";
 import "../../styles/pruefungen.css";
 import lid from "../../data/leben-in-deutschland.json";
 
-const { meta, questions } = lid;
+const { meta, questions, bundeslaender } = lid;
 ---
 <Layout
   title="Leben in Deutschland – DeutschAcademy"
@@ -56,13 +56,13 @@ const { meta, questions } = lid;
       </div>
       <p class="format-note">
         Multiple-Choice, {meta.totalQuestions} Fragen aus dem offiziellen BAMF-Fragenkatalog, Zeitlimit {meta.minutes} Minuten, bestanden ab {meta.passScore} richtigen Antworten.
-        Unsere <a href="/pruefungen/leben-in-deutschland/fakten">Fakten-Seite</a> und unser <a href="/pruefungen/leben-in-deutschland/test">{questions.length}-Fragen-Übungstest</a> basieren auf echtem DeutschAcademy-Unterrichtsmaterial für Bayern — nicht auf dem offiziellen Fragenkatalog selbst. {meta.sourceNote}
+        Unsere <a href="/pruefungen/leben-in-deutschland/fakten">Fakten-Seite</a> und unser <a href="/pruefungen/leben-in-deutschland/test">Übungstest</a> decken alle 16 Bundesländer ab: {questions.length} bundesweite Fragen aus echtem DeutschAcademy-Unterrichtsmaterial für Bayern, plus {meta.stateQuestions} Fragen zu deinem Bundesland — nicht identisch mit dem offiziellen Fragenkatalog selbst. {meta.sourceNote} {meta.stateFactsNote}
       </p>
     </section>
 
     <div class="mock-cta">
-      <h2>{questions.length} Übungsfragen</h2>
-      <p>Aus echtem Unterrichtsmaterial: Demokratie, Wahlen, Bayern, Grundrechte, Geschichte, Arbeit und Familie.</p>
+      <h2>{questions.length} bundesweite + {meta.stateQuestions} Bundesland-Fragen</h2>
+      <p>Aus echtem Unterrichtsmaterial: Demokratie, Wahlen, Grundrechte, Geschichte, Arbeit und Familie — wähle dein Bundesland ({bundeslaender.length} zur Auswahl) auf der Testseite.</p>
       <div class="exam-meta-row">
         <a class="quiz-btn quiz-btn--primary" href="/pruefungen/leben-in-deutschland/fakten">Fakten lernen →</a>
         <a class="quiz-btn quiz-btn--primary" href="/pruefungen/leben-in-deutschland/test">Zum Übungstest →</a>

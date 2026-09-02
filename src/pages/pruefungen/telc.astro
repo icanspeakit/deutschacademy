@@ -1,0 +1,75 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import PracticeHeader from "../../components/PracticeHeader.astro";
+import ExamPractice from "../../components/ExamPractice.astro";
+import "../../styles/practice.css";
+import "../../styles/pruefungen.css";
+---
+<Layout
+  title="telc – DeutschAcademy"
+  description="telc Deutsch: Niveaustufen A1–C2, Prüfungsaufbau und kostenlose Grammatik- und Wortschatzübungen."
+>
+  <PracticeHeader title="telc" />
+  <main class="practice-main">
+    <div class="practice-hero">
+      <p class="eyebrow">Prüfung</p>
+      <h1>telc Deutsch</h1>
+      <p>The European Language Certificates — ein modulares Prüfungssystem, das von vielen Arbeitgebern, Behörden und einigen Hochschulen anerkannt wird.</p>
+    </div>
+
+    <section class="exam-section">
+      <h2>Für wen ist telc?</h2>
+      <div class="exam-meta-row">
+        <span class="exam-meta-badge">Niveau A1–C2</span>
+        <span class="exam-meta-badge">Modulares System</span>
+      </div>
+      <p>
+        telc-Prüfungen gibt es für fast jedes CEFR-Niveau und für einige berufsbezogene Varianten
+        (z. B. telc Deutsch B1·B2 Beruf, telc Deutsch C1 Hochschule für die Studienzulassung). Sie werden
+        häufig für Arbeitsverhältnisse, Aufenthaltstitel und — bei den Hochschul-Varianten — für die
+        Zulassung zum Studium verlangt.
+      </p>
+    </section>
+
+    <section class="exam-section">
+      <h2>Geprüfte Fertigkeiten</h2>
+      <div class="skill-grid">
+        <div class="skill-card"><div class="skill-card-icon">📖</div><h4>Lesen</h4><p>Leseverstehen</p></div>
+        <div class="skill-card"><div class="skill-card-icon">🎧</div><h4>Hören</h4><p>Hörverstehen</p></div>
+        <div class="skill-card"><div class="skill-card-icon">✍️</div><h4>Schreiben</h4><p>Schriftlicher Ausdruck</p></div>
+        <div class="skill-card"><div class="skill-card-icon">🗣️</div><h4>Sprechen</h4><p>Mündliche Prüfung, meist paarweise</p></div>
+      </div>
+    </section>
+
+    <section class="exam-section">
+      <!-- GENERIC FORMAT INFO: no deutschacademy source material for this exam yet -->
+      <h2>Format</h2>
+      <div class="format-table-wrap">
+        <table class="format-table">
+          <thead><tr><th>Teil</th><th>Was wird geprüft</th><th>Dauer / Umfang</th></tr></thead>
+          <tbody>
+            <tr><td>Schriftliche Prüfung</td><td>Lesen, Hören, Schreiben (Sprachbausteine)</td><td>Variiert je nach Niveau/Modul</td></tr>
+            <tr><td>Mündliche Prüfung</td><td>Sprechen, meist mit einem zweiten Teilnehmer</td><td>Variiert je nach Niveau/Modul</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="format-note">
+        Genaue Zeiten, Aufgabenzahlen und Bestehensgrenzen unterscheiden sich je nach Niveau und Modul
+        (A1 ist deutlich kürzer als C2). Es liegt uns kein eigenes telc-Quellmaterial vor — die Angaben
+        hier sind allgemein bekannte, öffentliche Informationen zum telc-System, keine erfundenen Details.
+        Für die genauen Werte deines Moduls prüfe den offiziellen telc-Modellsatz.
+      </p>
+    </section>
+
+    <div class="mock-cta mock-cta--soon">
+      <h2>Mock-Test: bald verfügbar</h2>
+      <p>Uns liegt kein eigenes telc-Quellmaterial vor, aus dem wir einen echten telc-Mock-Test bauen könnten. Statt erfundener Prüfungsfragen gibt es hier vorerst keinen Mock-Test — nur die allgemeinen Übungstools unten.</p>
+    </div>
+
+    <ExamPractice
+      heading="Üben für telc"
+      intro="Es gibt noch keine telc-spezifischen Übungen. Diese drei Tools sind niveau- und prüfungsübergreifend nützlich — sie stammen aus dem DTZ-Unterrichtsmaterial, prüfen aber allgemeine Artikel-, Grammatik- und Wortschatzkenntnisse, keinen telc-spezifischen Inhalt."
+      tools={["artikel", "grammatik", "wortschatz"]}
+    />
+  </main>
+</Layout>

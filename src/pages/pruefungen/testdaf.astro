@@ -1,0 +1,78 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import PracticeHeader from "../../components/PracticeHeader.astro";
+import ExamPractice from "../../components/ExamPractice.astro";
+import "../../styles/practice.css";
+import "../../styles/pruefungen.css";
+---
+<Layout
+  title="TestDaF – DeutschAcademy"
+  description="TestDaF (TDN 3–5): der Sprachnachweis für ein Hochschulstudium in Deutschland — Aufbau, Bewertung und Übungen."
+>
+  <PracticeHeader title="TestDaF" />
+  <main class="practice-main">
+    <div class="practice-hero">
+      <p class="eyebrow">Prüfung</p>
+      <h1>TestDaF</h1>
+      <p>Test Deutsch als Fremdsprache — der Standardnachweis für ein Hochschulstudium in Deutschland.</p>
+    </div>
+
+    <section class="exam-section">
+      <h2>Für wen ist TestDaF?</h2>
+      <div class="exam-meta-row">
+        <span class="exam-meta-badge">Ergebnis: TDN 3–5 (≈ B2–C1)</span>
+        <span class="exam-meta-badge">Ein Prüfungsformat</span>
+      </div>
+      <p>
+        TestDaF richtet sich vor allem an internationale Studieninteressierte: Das Ergebnis ist der
+        gängige Sprachnachweis für die Zulassung an deutschen Hochschulen. Anders als Goethe oder telc
+        gibt es kein "Niveau, das man bucht" — alle Teilnehmenden schreiben dieselbe Prüfung, und jede
+        der vier Fertigkeiten wird einzeln mit einer TestDaF-Niveaustufe (TDN 3, 4 oder 5) bewertet.
+      </p>
+    </section>
+
+    <section class="exam-section">
+      <h2>Geprüfte Fertigkeiten</h2>
+      <div class="skill-grid">
+        <div class="skill-card"><div class="skill-card-icon">📖</div><h4>Lesen</h4><p>Leseverstehen</p></div>
+        <div class="skill-card"><div class="skill-card-icon">🎧</div><h4>Hören</h4><p>Hörverstehen</p></div>
+        <div class="skill-card"><div class="skill-card-icon">✍️</div><h4>Schreiben</h4><p>Schriftlicher Ausdruck</p></div>
+        <div class="skill-card"><div class="skill-card-icon">🗣️</div><h4>Sprechen</h4><p>Mündlicher Ausdruck</p></div>
+      </div>
+    </section>
+
+    <section class="exam-section">
+      <!-- GENERIC FORMAT INFO: no deutschacademy source material for this exam yet -->
+      <h2>Format</h2>
+      <div class="format-table-wrap">
+        <table class="format-table">
+          <thead><tr><th>Teil</th><th>Was wird geprüft</th><th>Dauer (ca.)</th></tr></thead>
+          <tbody>
+            <tr><td>Leseverstehen</td><td>Textverständnis, mehrere Texte</td><td>ca. 60 Min.</td></tr>
+            <tr><td>Hörverstehen</td><td>Gesprächs- und Vortragsverständnis</td><td>ca. 40 Min.</td></tr>
+            <tr><td>Schriftlicher Ausdruck</td><td>Ein zusammenhängender Text zu einer Grafik/Statistik</td><td>ca. 60 Min.</td></tr>
+            <tr><td>Mündlicher Ausdruck</td><td>Kurze gesprochene Antworten, meist aufgezeichnet</td><td>ca. 35 Min.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="format-note">
+        Es gibt keine einfache Bestehensgrenze in Prozent — jede Fertigkeit wird separat als TDN 3, 4
+        oder 5 eingestuft, und Hochschulen legen selbst fest, welche Kombination sie verlangen. Es liegt
+        uns kein eigenes TestDaF-Quellmaterial vor; die Angaben hier sind allgemein bekannte, öffentliche
+        Informationen zum Prüfungsformat, keine erfundenen Details. Für die genauen aktuellen Zeiten
+        prüfe den offiziellen TestDaF-Modellsatz.
+      </p>
+    </section>
+
+    <div class="mock-cta mock-cta--soon">
+      <h2>Mock-Test: bald verfügbar</h2>
+      <p>Uns liegt kein eigenes TestDaF-Quellmaterial vor, aus dem wir einen echten TestDaF-Mock-Test bauen könnten. Statt erfundener Prüfungsfragen gibt es hier vorerst keinen Mock-Test — nur die allgemeinen Übungstools unten.</p>
+    </div>
+
+    <ExamPractice
+      heading="Üben für TestDaF"
+      intro="Es gibt noch keine TestDaF-spezifischen Übungen. Diese drei Tools sind niveau- und prüfungsübergreifend nützlich — sie stammen aus dem DTZ-Unterrichtsmaterial, prüfen aber allgemeine Artikel-, Grammatik- und Wortschatzkenntnisse, keinen TestDaF-spezifischen Inhalt."
+      tools={["artikel", "grammatik", "wortschatz"]}
+    />
+  </main>
+</Layout>

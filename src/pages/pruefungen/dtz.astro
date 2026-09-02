@@ -1,0 +1,81 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import PracticeHeader from "../../components/PracticeHeader.astro";
+import ExamPractice from "../../components/ExamPractice.astro";
+import "../../styles/practice.css";
+import "../../styles/pruefungen.css";
+---
+<Layout
+  title="DTZ – DeutschAcademy"
+  description="Deutsch-Test für Zuwanderer (DTZ): Niveau, Prüfungsteile und ein kostenloser, sourcierter Mock-Test zum Leseverstehen."
+>
+  <PracticeHeader title="DTZ" />
+  <main class="practice-main">
+    <div class="practice-hero">
+      <p class="eyebrow">Prüfung</p>
+      <h1>Deutsch-Test für Zuwanderer (DTZ)</h1>
+      <p>Die Abschlussprüfung eines staatlich geförderten Integrationskurses — Ergebnis auf Niveau A2 oder B1.</p>
+    </div>
+
+    <section class="exam-section">
+      <h2>Für wen ist der DTZ?</h2>
+      <div class="exam-meta-row">
+        <span class="exam-meta-badge">Ergebnis: A2 oder B1</span>
+        <span class="exam-meta-badge">Ende des Integrationskurses</span>
+      </div>
+      <p>
+        Der DTZ steht am Ende eines Integrationskurses und ist für viele Zuwanderer in Deutschland
+        relevant — unter anderem für den Nachweis von Deutschkenntnissen bei einem unbefristeten
+        Aufenthaltstitel. Je nach erreichter Punktzahl wird entweder das Sprachniveau A2 oder B1
+        bescheinigt.
+      </p>
+    </section>
+
+    <section class="exam-section">
+      <h2>Geprüfte Fertigkeiten</h2>
+      <div class="skill-grid">
+        <div class="skill-card"><div class="skill-card-icon">📖</div><h4>Lesen</h4><p>Leseverstehen</p></div>
+        <div class="skill-card"><div class="skill-card-icon">🎧</div><h4>Hören</h4><p>Hörverstehen</p></div>
+        <div class="skill-card"><div class="skill-card-icon">✍️</div><h4>Schreiben</h4><p>Zwei Schreibaufgaben</p></div>
+        <div class="skill-card"><div class="skill-card-icon">🗣️</div><h4>Sprechen</h4><p>Mündliche Prüfung, meist paarweise</p></div>
+      </div>
+    </section>
+
+    <section class="exam-section">
+      <h2>Format</h2>
+      <div class="format-table-wrap">
+        <table class="format-table">
+          <thead><tr><th>Teil</th><th>Was wird geprüft</th><th>Quelle</th></tr></thead>
+          <tbody>
+            <tr><td>Lesen: Anzeigen zuordnen</td><td>Kurze Anzeigen passenden Personenbeschreibungen zuordnen</td><td>Eigenes Unterrichtsmaterial</td></tr>
+            <tr><td>Lesen: Richtig/Falsch</td><td>Zeitungsartikel verstehen und Aussagen bewerten</td><td>Eigenes Unterrichtsmaterial</td></tr>
+            <tr><td>Lesen: Forum &amp; Interview</td><td>Aussagen Personen zuordnen; Interview verstehen</td><td>Eigenes Unterrichtsmaterial</td></tr>
+            <tr><td>Lesen: Formular</td><td>Informationen aus einer E-Mail in ein Formular übertragen</td><td>Eigenes Unterrichtsmaterial</td></tr>
+            <tr><td>Schreiben</td><td>Persönliche Antwort-Mail + formeller Brief</td><td>Eigenes Unterrichtsmaterial</td></tr>
+            <tr><td>Sprechen, Teil 2: Bildbeschreibung</td><td>Ein Bild beschreiben, dann persönliche Nachfragen beantworten</td><td>Eigenes Unterrichtsmaterial — 90 Sek. Beschreibung + 90 Sek. Nachfragen</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="format-note">
+        Die Aufgabentypen oben stammen aus dem eigenen DTZ-Unterrichtsmaterial, das auch unsere
+        interaktive <a href="/uebungen/lesen-schreiben">Lesen &amp; Schreiben</a>- und
+        <a href="/uebungen/sprechen">Sprechen</a>-Übung speist. Uns liegt dagegen keine eigene Quelle für
+        die offizielle Gesamtdauer oder die genaue Punkte-/Bestehensgrenze des DTZ vor — dafür gilt: der
+        Test führt je nach Ergebnis zu A2 oder B1, es gibt keine einzelne "Bestehensgrenze" in Prozent.
+        Für die offiziellen Zeiten prüfe den Modellsatz des BAMF/telc.
+      </p>
+    </section>
+
+    <div class="mock-cta">
+      <h2>Mock-Test: Lesen (Aufgabe 1–4)</h2>
+      <p>Alle vier Lese-Aufgaben der DTZ-Simulation als ein zusammenhängender Test mit Gesamtergebnis am Ende — aus echtem DTZ-Unterrichtsmaterial.</p>
+      <a class="quiz-btn quiz-btn--primary" href="/pruefungen/dtz/mock-test">Mock-Test starten →</a>
+    </div>
+
+    <ExamPractice
+      heading="Üben für den DTZ"
+      intro="Alle fünf Übungstools stammen aus echtem DTZ-Unterrichtsmaterial — die reichhaltigsten Übungen der ganzen Seite."
+      tools={["artikel", "grammatik", "wortschatz", "sprechen", "lesen"]}
+    />
+  </main>
+</Layout>

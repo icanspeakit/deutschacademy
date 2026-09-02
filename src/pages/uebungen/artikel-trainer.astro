@@ -1,0 +1,29 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import PracticeHeader from "../../components/PracticeHeader.astro";
+import "../../styles/practice.css";
+import artikel from "../../data/artikel.json";
+
+const questions = artikel.map((n) => ({
+  prompt: `___ <strong>${n.word}</strong>?`,
+  answer: n.gender,
+  explain: `${n.gender} ${n.word}`,
+}));
+---
+<Layout title="der/die/das-Trainer – DeutschAcademy">
+  <PracticeHeader title="der/die/das-Trainer" />
+  <main class="practice-main">
+    <div class="practice-hero">
+      <p class="eyebrow">Artikel-Training</p>
+      <h1>der, die oder das?</h1>
+      <p>Tippe den richtigen Artikel und drücke Enter. Basiert auf der Artikelübersicht A1 und echten Beispielsätzen aus dem Unterricht.</p>
+    </div>
+    <div class="quiz-card" id="quiz-root"></div>
+  </main>
+  <script type="application/json" id="quiz-data" set:html={JSON.stringify(questions)}></script>
+  <script type="module">
+    import { mountQuiz } from "../../lib/quiz.js";
+    const data = JSON.parse(document.getElementById("quiz-data").textContent);
+    mountQuiz(document.getElementById("quiz-root"), data, { mode: "text" });
+  </script>
+</Layout>

@@ -1,0 +1,79 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import PracticeHeader from "../../components/PracticeHeader.astro";
+import "../../styles/practice.css";
+import sprechen from "../../data/sprechen.json";
+---
+<Layout title="Sprechen: Bildbeschreibung – DeutschAcademy">
+  <PracticeHeader title="Sprechen: Bildbeschreibung" />
+  <main class="practice-main">
+    <div class="practice-hero">
+      <p class="eyebrow">DTZ Sprechen, Teil 2</p>
+      <h1>Bildbeschreibung üben</h1>
+      <p>Echte Prüferfragen aus dem Unterricht. In der echten Prüfung hast du 90 Sekunden für die Beschreibung und 90 Sekunden für die Nachfragen — so wie hier.</p>
+    </div>
+    <div class="prompt-card" id="prompt-root"></div>
+  </main>
+  <script type="application/json" id="sprechen-data" set:html={JSON.stringify(sprechen)}></script>
+  <script type="module">
+    const prompts = JSON.parse(document.getElementById("sprechen-data").textContent);
+    const root = document.getElementById("prompt-root");
+    let idx = 0;
+    let timerId = null;
+    let seconds = 90;
+
+    function stopTimer() {
+      if (timerId) clearInterval(timerId);
+      timerId = null;
+    }
+
+    function render() {
+      stopTimer();
+      seconds = 90;
+      const p = prompts[idx];
+      root.innerHTML = `
+        <h3>${p.title}</h3>
+        <div class="prompt-timer" id="timer">90</div>
+        <button class="quiz-btn quiz-btn--primary prompt-reveal-btn" id="start-timer" type="button">▶ Beschreibung starten (90s)</button>
+        <div class="prompt-section-label">Beschreibungsfragen</div>
+        <ul>${p.beschreibung.map((q) => `<li>${q}</li>`).join("")}</ul>
+        <div id="persoenlich-wrap" style="display:none;">
+          <div class="prompt-section-label">Persönliche Fragen (Nachfragen)</div>
+          <ul>${p.persoenlich.map((q) => `<li>${q}</li>`).join("")}</ul>
+        </div>
+        <button class="quiz-btn prompt-reveal-btn" id="reveal-personal" type="button">Persönliche Fragen anzeigen</button>
+        <div class="prompt-nav">
+          <button class="quiz-btn" id="prev-prompt" type="button">← Vorheriges Bild</button>
+          <button class="quiz-btn" id="next-prompt" type="button">Nächstes Bild →</button>
+        </div>`;
+
+      document.getElementById("start-timer").addEventListener("click", (e) => {
+        stopTimer();
+        seconds = 90;
+        const timerEl = document.getElementById("timer");
+        e.target.disabled = true;
+        timerId = setInterval(() => {
+          seconds--;
+          timerEl.textContent = String(seconds);
+          if (seconds <= 0) {
+            stopTimer();
+            timerEl.textContent = "Zeit um!";
+            e.target.disabled = false;
+          }
+        }, 1000);
+      });
+      document.getElementById("reveal-personal").addEventListener("click", () => {
+        document.getElementById("persoenlich-wrap").style.display = "block";
+      });
+      document.getElementById("prev-prompt").addEventListener("click", () => {
+        idx = (idx - 1 + prompts.length) % prompts.length;
+        render();
+      });
+      document.getElementById("next-prompt").addEventListener("click", () => {
+        idx = (idx + 1) % prompts.length;
+        render();
+      });
+    }
+    render();
+  </script>
+</Layout>

@@ -1,0 +1,79 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import PracticeHeader from "../../components/PracticeHeader.astro";
+import "../../styles/practice.css";
+import lesen from "../../data/lesen.json";
+
+const { groups, formTask, writingPrompt, errorHunt } = lesen;
+---
+<Layout title="Lesen & Schreiben – DeutschAcademy">
+  <PracticeHeader title="Lesen & Schreiben" />
+  <main class="practice-main">
+    <div class="practice-hero">
+      <p class="eyebrow">DTZ-Simulation</p>
+      <h1>Lesen & Schreiben üben</h1>
+      <p>Eine vollständige Leseverstehen-Simulation (Thema: Online-Unterricht und Integration, Niveau B1) mit echtem Lösungsschlüssel, plus zwei Schreibaufgaben.</p>
+    </div>
+
+    {groups.map((g, gi) => (
+      <div class="reading-block">
+        <h3>{g.title}</h3>
+        <div class="reading-level">{g.level}</div>
+        <div class="reading-text">{g.text}</div>
+        <div class="quiz-card" data-group={gi}></div>
+      </div>
+    ))}
+
+    <div class="reading-block">
+      <h3>{formTask.title}</h3>
+      <div class="reading-text">{formTask.email}</div>
+      <p>Klicke auf ein Feld, um deine Antwort mit der Lösung zu vergleichen.</p>
+      <div id="form-fields">
+        {formTask.fields.map((f, fi) => (
+          <div class="form-field" data-field={fi}>
+            <span>{f.label}</span>
+            <span class="form-field-answer">{f.answer}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <div class="reading-block">
+      <h3>{writingPrompt.title}</h3>
+      <p>{writingPrompt.context}</p>
+      <div class="reading-text">{writingPrompt.email}</div>
+      <div class="prompt-section-label">Schreib etwas zu folgenden Punkten</div>
+      <ul>{writingPrompt.points.map((pt) => <li>{pt}</li>)}</ul>
+      <textarea class="writing-area" id="writing-area" placeholder="Schreib deine Antwort hier..."></textarea>
+      <div class="word-count" id="word-count">0 Wörter</div>
+      <div class="tips-box">{writingPrompt.tips}</div>
+    </div>
+
+    <div class="reading-block">
+      <h3>{errorHunt.title}</h3>
+      <p>{errorHunt.context}</p>
+      <div class="reading-text">{errorHunt.text}</div>
+    </div>
+  </main>
+
+  <script type="application/json" id="groups-data" set:html={JSON.stringify(groups)}></script>
+  <script type="module">
+    import { mountQuiz } from "../../lib/quiz.js";
+    const groups = JSON.parse(document.getElementById("groups-data").textContent);
+    document.querySelectorAll(".quiz-card[data-group]").forEach((el) => {
+      const g = groups[+el.dataset.group];
+      mountQuiz(el, g.questions, { mode: "choice", shuffle: false });
+    });
+
+    document.querySelectorAll(".form-field").forEach((el) => {
+      el.addEventListener("click", () => el.classList.toggle("revealed"));
+    });
+
+    const textarea = document.getElementById("writing-area");
+    const wordCount = document.getElementById("word-count");
+    textarea.addEventListener("input", () => {
+      const words = textarea.value.trim().split(/\s+/).filter(Boolean).length;
+      wordCount.textContent = `${words} Wörter${words < 60 ? " (Ziel: mindestens 60–80)" : " ✓"}`;
+    });
+  </script>
+</Layout>

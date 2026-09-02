@@ -1,0 +1,71 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import PracticeHeader from "../../components/PracticeHeader.astro";
+import "../../styles/practice.css";
+import artikel from "../../data/artikel.json";
+import grammatik from "../../data/grammatik.json";
+import wortschatz from "../../data/wortschatz.json";
+import sprechen from "../../data/sprechen.json";
+import lesen from "../../data/lesen.json";
+
+const grammarQuestionCount = grammatik.reduce((sum, t) => sum + t.questions.length, 0);
+const readingQuestionCount = lesen.groups.reduce((sum, g) => sum + g.questions.length, 0);
+
+const tools = [
+  {
+    href: "/uebungen/artikel-trainer",
+    icon: "🎯",
+    title: "der/die/das-Trainer",
+    desc: "Schnelles Artikel-Training: der, die oder das? Tippe die Antwort, sofortiges Feedback.",
+    count: `${artikel.length} Nomen`,
+  },
+  {
+    href: "/uebungen/grammatik",
+    icon: "📚",
+    title: "Grammatik-Quiz",
+    desc: "Lückentext-Übungen zu Akkusativ, Dativ, Passiv, Konjunktiv II, Relativpronomen und trennbaren Verben.",
+    count: `${grammatik.length} Themen · ${grammarQuestionCount} Fragen`,
+  },
+  {
+    href: "/uebungen/wortschatz",
+    icon: "🗂️",
+    title: "Wortschatz & Redemittel",
+    desc: "Karteikarten mit nützlichen Redemitteln und Alltagsvokabeln zum Umdrehen und Wiederholen.",
+    count: `${wortschatz.length} Karten`,
+  },
+  {
+    href: "/uebungen/sprechen",
+    icon: "🗣️",
+    title: "Sprechen: Bildbeschreibung",
+    desc: "Echte DTZ-Prüferfragen zur Bildbeschreibung, mit 90-Sekunden-Timer wie in der echten Prüfung.",
+    count: `${sprechen.length} Bilder`,
+  },
+  {
+    href: "/uebungen/lesen-schreiben",
+    icon: "✍️",
+    title: "Lesen & Schreiben",
+    desc: "Eine vollständige DTZ-Leseverstehen-Simulation mit Lösungen, plus Schreibaufgaben zum Üben.",
+    count: `${readingQuestionCount} Leseaufgaben`,
+  },
+];
+---
+<Layout title="Übungen – DeutschAcademy">
+  <PracticeHeader title="Übungen" />
+  <main class="practice-main">
+    <div class="practice-hero">
+      <p class="eyebrow">Kostenlos üben</p>
+      <h1>Selbstständig Deutsch üben</h1>
+      <p>Fünf interaktive Übungstypen, gebaut aus echtem Unterrichtsmaterial — nicht aus generischen App-Fragen.</p>
+    </div>
+    <div class="tool-grid">
+      {tools.map((t) => (
+        <a class="tool-card" href={t.href}>
+          <div class="tool-card-icon">{t.icon}</div>
+          <h3>{t.title}</h3>
+          <p>{t.desc}</p>
+          <span class="tool-card-count">{t.count}</span>
+        </a>
+      ))}
+    </div>
+  </main>
+</Layout>

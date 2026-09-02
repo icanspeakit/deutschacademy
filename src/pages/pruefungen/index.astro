@@ -1,0 +1,223 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import PracticeHeader from "../../components/PracticeHeader.astro";
+import "../../styles/practice.css";
+import "../../styles/pruefungen.css";
+
+const exams = [
+  {
+    href: "/pruefungen/telc",
+    icon: "📄",
+    title: "telc",
+    level: "A1–C2",
+    desc: "The European Language Certificates — modular exams accepted for jobs, visas and some universities.",
+  },
+  {
+    href: "/pruefungen/goethe",
+    icon: "🏛️",
+    title: "Goethe-Zertifikat",
+    level: "A1–C2",
+    desc: "The Goethe-Institut's own exams — widely recognized for visas, universities and employers.",
+  },
+  {
+    href: "/pruefungen/testdaf",
+    icon: "🎓",
+    title: "TestDaF",
+    level: "TDN 3–5 (≈ B2–C1)",
+    desc: "The standard German-language proof for university admission in Germany.",
+  },
+  {
+    href: "/pruefungen/dtz",
+    icon: "🧾",
+    title: "DTZ",
+    level: "A2 / B1",
+    desc: "Deutsch-Test für Zuwanderer — the exam at the end of a state-funded Integrationskurs.",
+  },
+  {
+    href: "/pruefungen/leben-in-deutschland",
+    icon: "🇩🇪",
+    title: "Leben in Deutschland",
+    level: "Orientierungskurs / citizenship",
+    desc: "The civics test on German society, history and law — required for naturalization.",
+  },
+];
+
+// CEFR levels each exam page (built in Tier 1) states it covers. telc and Goethe explicitly
+// list A1–C2 on their own detail pages, so the picker covers A1–C2, not just A1–C1 as an
+// earlier draft of this tier assumed — see docs/exams-hub-tier4-v1.md.
+// Leben in Deutschland has no CEFR level (it's a knowledge/civics test, not a language
+// level) per its own page, so it's intentionally absent from every level row here.
+const levels = [
+  {
+    level: "A1",
+    desc: "Erste Schritte — einfache, alltägliche Ausdrücke verstehen und benutzen.",
+    exams: [
+      { name: "telc A1", href: "/pruefungen/telc" },
+      { name: "Goethe A1 (Start Deutsch 1)", href: "/pruefungen/goethe" },
+    ],
+  },
+  {
+    level: "A2",
+    desc: "Elementare Sprachverwendung — einfache, direkte Informationen austauschen.",
+    exams: [
+      { name: "telc A2", href: "/pruefungen/telc" },
+      { name: "Goethe A2", href: "/pruefungen/goethe" },
+      { name: "DTZ (Ergebnis A2)", href: "/pruefungen/dtz" },
+    ],
+  },
+  {
+    level: "B1",
+    desc: "Selbstständige Sprachverwendung — vertraute Themen in Alltag, Beruf und Schule.",
+    exams: [
+      { name: "telc B1", href: "/pruefungen/telc" },
+      { name: "Goethe B1", href: "/pruefungen/goethe" },
+      { name: "DTZ (Ergebnis B1)", href: "/pruefungen/dtz" },
+    ],
+  },
+  {
+    level: "B2",
+    desc: "Selbstständige Sprachverwendung, fortgeschritten.",
+    exams: [
+      { name: "telc B2", href: "/pruefungen/telc" },
+      { name: "Goethe B2", href: "/pruefungen/goethe" },
+      { name: "TestDaF (TDN 3 ≈ B2)", href: "/pruefungen/testdaf" },
+    ],
+  },
+  {
+    level: "C1",
+    desc: "Fachkundige Sprachkenntnisse — komplexe Themen, Studium und Beruf.",
+    exams: [
+      { name: "telc C1", href: "/pruefungen/telc" },
+      { name: "Goethe C1", href: "/pruefungen/goethe" },
+      { name: "TestDaF (TDN 4–5 ≈ C1)", href: "/pruefungen/testdaf" },
+    ],
+  },
+  {
+    level: "C2",
+    desc: "Annähernd muttersprachliche Kompetenz.",
+    exams: [
+      { name: "telc C2", href: "/pruefungen/telc" },
+      { name: "Goethe C2", href: "/pruefungen/goethe" },
+    ],
+  },
+];
+
+// Comparison table — every cell restates a claim already made (and sourced-or-flagged)
+// on that exam's own Tier 1 detail page; nothing new is asserted here.
+const comparison = [
+  { exam: "telc", levels: "A1–C2", forWhom: "Job, Aufenthaltstitel, teils Hochschulzulassung", format: "Schriftlich + mündlich, modular je Niveau" },
+  { exam: "Goethe-Zertifikat", levels: "A1–C2", forWhom: "Visa (A1: Familiennachzug), Studium, Beruf, Einbürgerung", format: "Lesen/Hören/Schreiben an einem Termin + separate mündliche Prüfung" },
+  { exam: "TestDaF", levels: "TDN 3–5 (≈ B2–C1)", forWhom: "Internationale Studieninteressierte", format: "Eine Prüfung für alle, jede Fertigkeit einzeln als TDN 3/4/5 bewertet" },
+  { exam: "DTZ", levels: "A2 / B1", forWhom: "Abschluss Integrationskurs, Aufenthaltstitel", format: "Lesen, Hören, Schreiben, Sprechen — Ergebnis A2 oder B1" },
+  { exam: "Leben in Deutschland", levels: "Kein Sprachniveau (Wissenstest)", forWhom: "Einbürgerung", format: "33 Multiple-Choice-Fragen, 60 Minuten" },
+];
+---
+<Layout
+  title="Prüfungen – DeutschAcademy"
+  description="Vergleiche telc, Goethe-Zertifikat, TestDaF, DTZ und Leben in Deutschland — nach Prüfung oder nach Niveau, mit Format-Vergleich."
+>
+  <PracticeHeader title="Prüfungen" />
+  <main class="practice-main">
+    <div class="practice-hero">
+      <p class="eyebrow">Prüfungsvorbereitung</p>
+      <h1>Welche Prüfung machst du?</h1>
+      <p>Ein Überblick über die fünf wichtigsten deutschen Sprach- und Integrationsprüfungen — Niveau, Aufbau und wie du dich vorbereiten kannst.</p>
+    </div>
+
+    <div class="topic-tabs" id="hub-view-tabs">
+      <button class="topic-tab active" type="button" data-view="exam">Nach Prüfung</button>
+      <button class="topic-tab" type="button" data-view="level">Nach Niveau</button>
+    </div>
+
+    <div id="view-exam" class="hub-view">
+      <div class="exam-grid">
+        {exams.map((e) => (
+          <a class="exam-card" href={e.href}>
+            <div class="exam-card-icon">{e.icon}</div>
+            <h3>{e.title}</h3>
+            <p>{e.desc}</p>
+            <span class="exam-card-level">{e.level}</span>
+          </a>
+        ))}
+      </div>
+    </div>
+
+    <div id="view-level" class="hub-view" hidden>
+      <div class="level-grid">
+        {levels.map((l) => (
+          <div class="level-card">
+            <div class="level-card-badge">{l.level}</div>
+            <p>{l.desc}</p>
+            <div class="level-card-exams">
+              {l.exams.map((e) => <a href={e.href}>{e.name}</a>)}
+            </div>
+          </div>
+        ))}
+      </div>
+      <p class="format-note" style="max-width:780px;margin:20px auto 0;">
+        „Leben in Deutschland“ hat kein CEFR-Sprachniveau — es ist ein Wissenstest zu Gesellschaft,
+        Geschichte und Recht, kein Sprachtest. Deshalb erscheint er in keiner Niveau-Zeile oben; siehe
+        die <a href="/pruefungen/leben-in-deutschland">eigene Prüfungsseite</a>.
+      </p>
+    </div>
+
+    <section class="exam-section" style="margin-top:48px;">
+      <h2>Prüfungen im Vergleich</h2>
+      <div class="format-table-wrap">
+        <table class="format-table">
+          <thead><tr><th>Prüfung</th><th>Niveau</th><th>Für wen</th><th>Format</th></tr></thead>
+          <tbody>
+            {comparison.map((c) => (
+              <tr>
+                <td>{c.exam}</td>
+                <td>{c.levels}</td>
+                <td>{c.forWhom}</td>
+                <td>{c.format}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <div class="exam-cta pricing-tie">
+      <h2>Kostenlos üben, mit Premium für die Prüfung bereit werden</h2>
+      <p>Dieselben zwei Stufen wie auf der Startseite — keine neuen Preise, keine neuen Versprechen.</p>
+      <div class="pricing-tie-grid">
+        <div class="pricing-tie-card">
+          <h3>Free</h3>
+          <div class="tie-price">€0 für immer</div>
+          <ul>
+            <li>Voller A1–C1-Kernkurs</li>
+            <li>Alle Übungstools auf dieser Seite</li>
+            <li>60+ Grammatik-Themen</li>
+          </ul>
+        </div>
+        <div class="pricing-tie-card">
+          <h3>Premium Membership</h3>
+          <div class="tie-price">€XX / Monat (TBD)</div>
+          <ul>
+            <li>Exam-format mock sittings (Goethe &amp; telc)</li>
+            <li>Human corrections on every writing task</li>
+            <li>Speaking &amp; role-play practice sessions</li>
+          </ul>
+        </div>
+      </div>
+      <a class="quiz-btn quiz-btn--primary" href="/#pricing">Alle Preise ansehen →</a>
+    </div>
+  </main>
+
+  <script type="module">
+    const tabs = document.getElementById("hub-view-tabs");
+    const views = { exam: document.getElementById("view-exam"), level: document.getElementById("view-level") };
+    tabs.querySelectorAll(".topic-tab").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        tabs.querySelectorAll(".topic-tab").forEach((b) => b.classList.toggle("active", b === btn));
+        const target = btn.dataset.view;
+        Object.entries(views).forEach(([key, el]) => {
+          el.hidden = key !== target;
+        });
+      });
+    });
+  </script>
+</Layout>

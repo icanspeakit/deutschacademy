@@ -1,0 +1,76 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import PracticeHeader from "../../components/PracticeHeader.astro";
+import ExamPractice from "../../components/ExamPractice.astro";
+import "../../styles/practice.css";
+import "../../styles/pruefungen.css";
+---
+<Layout
+  title="Leben in Deutschland – DeutschAcademy"
+  description="Der Einbürgerungstest 'Leben in Deutschland': Format, Fragenkatalog und wie du dich vorbereiten kannst."
+>
+  <PracticeHeader title="Leben in Deutschland" />
+  <main class="practice-main">
+    <div class="practice-hero">
+      <p class="eyebrow">Prüfung</p>
+      <h1>Leben in Deutschland</h1>
+      <p>Der Einbürgerungstest: ein schriftlicher Multiple-Choice-Test zu Gesellschaft, Geschichte und Recht in Deutschland.</p>
+    </div>
+
+    <section class="exam-section">
+      <h2>Für wen ist der Test "Leben in Deutschland"?</h2>
+      <div class="exam-meta-row">
+        <span class="exam-meta-badge">Kein CEFR-Sprachniveau — Wissenstest</span>
+        <span class="exam-meta-badge">Einbürgerung / Orientierungskurs</span>
+      </div>
+      <p>
+        Anders als telc, Goethe, TestDaF oder DTZ prüft "Leben in Deutschland" kein Deutschniveau,
+        sondern Wissen über Gesellschaft, Geschichte und Rechtsordnung — er ist Voraussetzung für die
+        Einbürgerung und schließt oft den Orientierungskurs eines Integrationskurses ab.
+      </p>
+    </section>
+
+    <section class="exam-section">
+      <h2>Geprüfte Fertigkeiten</h2>
+      <div class="skill-grid">
+        <div class="skill-card"><div class="skill-card-icon">📖</div><h4>Lesen</h4><p>Fragen lesen und verstehen</p></div>
+        <div class="skill-card skill-card--na"><div class="skill-card-icon">🎧</div><h4>Hören</h4><p>Kein Hörverstehen im Test</p></div>
+        <div class="skill-card skill-card--na"><div class="skill-card-icon">✍️</div><h4>Schreiben</h4><p>Kein Schreibteil — nur Ankreuzen</p></div>
+        <div class="skill-card skill-card--na"><div class="skill-card-icon">🗣️</div><h4>Sprechen</h4><p>Kein separater Sprechteil in diesem Test</p></div>
+      </div>
+    </section>
+
+    <section class="exam-section">
+      <!-- GENERIC FORMAT INFO: no deutschacademy source material for this exam yet -->
+      <h2>Format</h2>
+      <div class="format-table-wrap">
+        <table class="format-table">
+          <thead><tr><th>Teil</th><th>Was wird geprüft</th><th>Umfang</th></tr></thead>
+          <tbody>
+            <tr><td>Bundesweiter Teil</td><td>Fragen zu Demokratie, Geschichte und Gesellschaft in Deutschland, aus einem veröffentlichten Fragenkatalog</td><td>30 von insgesamt 33 Fragen</td></tr>
+            <tr><td>Landesspezifischer Teil</td><td>Fragen zum jeweiligen Bundesland</td><td>3 von 33 Fragen</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="format-note">
+        Öffentlich bekannt: Multiple-Choice, 33 Fragen aus einem Katalog von 300 veröffentlichten Fragen,
+        Zeitlimit 60 Minuten, bestanden ab 15 richtigen Antworten. Uns liegt kein eigenes
+        deutschacademy-Quellmaterial zu "Leben in Deutschland" vor — anders als ursprünglich für diesen
+        Tier angenommen (siehe Sourcing-Hinweis unten), gibt es dafür kein eigenes Unterrichtsmaterial
+        im Projekt. Die Angaben hier sind daher allgemein bekannte, öffentliche Informationen, keine
+        erfundenen Details. Für die genauen aktuellen Werte prüfe den offiziellen BAMF-Fragenkatalog.
+      </p>
+    </section>
+
+    <div class="mock-cta mock-cta--soon">
+      <h2>Mock-Test: bald verfügbar</h2>
+      <p>Uns liegt kein eigenes Quellmaterial zum offiziellen Fragenkatalog von "Leben in Deutschland" vor, aus dem wir einen echten Mock-Test bauen könnten. Statt erfundener Prüfungsfragen gibt es hier vorerst keinen Mock-Test — nur die allgemeinen Übungstools unten.</p>
+    </div>
+
+    <ExamPractice
+      heading='Üben für "Leben in Deutschland"'
+      intro='Es gibt noch keine testspezifischen Übungsfragen. Diese drei Tools helfen dabei, die Fragen und Antwortoptionen des Fragenkatalogs sprachlich zu verstehen. Die Sprechen- und Lesen-&-Schreiben-Tools sind hier bewusst nicht verlinkt: sie stammen aus dem DTZ-Material (mündliche Bildbeschreibung, Schreibaufgaben) — "Leben in Deutschland" hat aber weder einen Sprech- noch einen Schreibteil, siehe oben.'
+      tools={["artikel", "grammatik", "wortschatz"]}
+    />
+  </main>
+</Layout>

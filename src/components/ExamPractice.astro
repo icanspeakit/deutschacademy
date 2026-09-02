@@ -1,0 +1,76 @@
+---
+// Renders a "practice for this exam" section on a /pruefungen detail page,
+// reusing the existing /uebungen tool catalog. `tools` picks which of the five
+// existing tools to show — see docs/exams-hub-tier2-v1.md for which exams get which,
+// and why (DTZ-authentic tools aren't shown as exam-authentic for exams they don't match).
+import artikel from "../data/artikel.json";
+import grammatik from "../data/grammatik.json";
+import wortschatz from "../data/wortschatz.json";
+import sprechen from "../data/sprechen.json";
+import lesen from "../data/lesen.json";
+
+interface Props {
+  heading: string;
+  intro: string;
+  tools: Array<"artikel" | "grammatik" | "wortschatz" | "sprechen" | "lesen">;
+}
+const { heading, intro, tools } = Astro.props;
+
+const grammarQuestionCount = grammatik.reduce((sum, t) => sum + t.questions.length, 0);
+const readingQuestionCount = lesen.groups.reduce((sum, g) => sum + g.questions.length, 0);
+
+const catalog = {
+  artikel: {
+    href: "/uebungen/artikel-trainer",
+    icon: "🎯",
+    title: "der/die/das-Trainer",
+    desc: "Schnelles Artikel-Training mit sofortigem Feedback.",
+    count: `${artikel.length} Nomen`,
+  },
+  grammatik: {
+    href: "/uebungen/grammatik",
+    icon: "📚",
+    title: "Grammatik-Quiz",
+    desc: "Lückentext-Übungen zu Akkusativ, Dativ, Passiv, Konjunktiv II und mehr.",
+    count: `${grammatik.length} Themen · ${grammarQuestionCount} Fragen`,
+  },
+  wortschatz: {
+    href: "/uebungen/wortschatz",
+    icon: "🗂️",
+    title: "Wortschatz & Redemittel",
+    desc: "Karteikarten mit nützlichen Redemitteln und Alltagsvokabeln.",
+    count: `${wortschatz.length} Karten`,
+  },
+  sprechen: {
+    href: "/uebungen/sprechen",
+    icon: "🗣️",
+    title: "Sprechen: Bildbeschreibung",
+    desc: "Echte DTZ-Prüferfragen zur Bildbeschreibung, mit 90-Sekunden-Timer.",
+    count: `${sprechen.length} Bilder`,
+  },
+  lesen: {
+    href: "/uebungen/lesen-schreiben",
+    icon: "✍️",
+    title: "Lesen & Schreiben",
+    desc: "Vollständige DTZ-Leseverstehen-Simulation mit Lösungen, plus Schreibaufgaben.",
+    count: `${readingQuestionCount} Leseaufgaben`,
+  },
+};
+---
+<section class="exam-practice">
+  <h2>{heading}</h2>
+  <p>{intro}</p>
+  <div class="tool-grid">
+    {tools.map((key) => {
+      const t = catalog[key];
+      return (
+        <a class="tool-card" href={t.href}>
+          <div class="tool-card-icon">{t.icon}</div>
+          <h3>{t.title}</h3>
+          <p>{t.desc}</p>
+          <span class="tool-card-count">{t.count}</span>
+        </a>
+      );
+    })}
+  </div>
+</section>

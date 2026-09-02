@@ -1,0 +1,103 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import PracticeHeader from "../../components/PracticeHeader.astro";
+import "../../styles/practice.css";
+import wortschatz from "../../data/wortschatz.json";
+
+const languages = [
+  { code: "en", label: "English" },
+  { code: "ar", label: "العربية", rtl: true },
+  { code: "ru", label: "Русский" },
+  { code: "tr", label: "Türkçe" },
+];
+
+const testSet = wortschatz.slice(0, 5);
+---
+<Layout title="Wortschatz & Redemittel – DeutschAcademy">
+  <PracticeHeader title="Wortschatz & Redemittel" />
+  <main class="practice-main">
+    <div class="practice-hero">
+      <p class="eyebrow">Karteikarten</p>
+      <h1>Redemittel & Alltagsvokabeln</h1>
+      <p>Drei Übungsarten für dieselben Karten: klassisch umdrehen, im Lernmodus einprägen oder dich im Testmodus abfragen lassen.</p>
+    </div>
+    <div class="topic-tabs" id="mode-tabs">
+      <button class="topic-tab active" type="button" data-mode="fc">🗂️ Karteikarten</button>
+      <button class="topic-tab" type="button" data-mode="lrn">🧠 Lernen</button>
+      <button class="topic-tab" type="button" data-mode="test">✅ Testen</button>
+    </div>
+    <p class="topic-intro" id="mode-intro"></p>
+    <div class="fc-wrap" id="fc-root"></div>
+    <div class="fc-wrap" id="lrn-root" hidden></div>
+    <div class="quiz-card" id="test-root" hidden></div>
+  </main>
+  <script type="application/json" id="fc-data" set:html={JSON.stringify(wortschatz)}></script>
+  <script type="application/json" id="test-data" set:html={JSON.stringify(testSet)}></script>
+  <script type="application/json" id="fc-langs" set:html={JSON.stringify(languages)}></script>
+  <script type="module">
+    import { mountFlashcards } from "../../lib/flashcards.js";
+    import { mountLearn } from "../../lib/learn.js";
+    import { mountQuiz } from "../../lib/quiz.js";
+
+    const cards = JSON.parse(document.getElementById("fc-data").textContent);
+    const testCards = JSON.parse(document.getElementById("test-data").textContent);
+    const languages = JSON.parse(document.getElementById("fc-langs").textContent);
+
+    const LANG_KEY = "da-fc-lang";
+    function currentLang() {
+      let stored = null;
+      try { stored = localStorage.getItem(LANG_KEY); } catch {}
+      return languages.some((l) => l.code === stored) ? stored : languages[0]?.code ?? null;
+    }
+
+    function buildChoiceQuestions(deck, lang) {
+      return deck.map((card, i) => {
+        const others = deck.filter((_, j) => j !== i).map((c) => c.front);
+        const distractors = others.sort(() => Math.random() - 0.5).slice(0, 3);
+        const options = [card.front, ...distractors].sort(() => Math.random() - 0.5);
+        const prompt = (lang ? card.translations?.[lang] : "") || "Übersetzung folgt";
+        return { prompt, answer: card.front, options, explain: card.note };
+      });
+    }
+
+    const tabs = document.getElementById("mode-tabs");
+    const intro = document.getElementById("mode-intro");
+    const fcRoot = document.getElementById("fc-root");
+    const lrnRoot = document.getElementById("lrn-root");
+    const testRoot = document.getElementById("test-root");
+
+    const intros = {
+      fc: "Klicke auf die Karte zum Umdrehen. Wähle oben deine Sprache für die Übersetzung.",
+      lrn: "Klicke auf die Karte, um die Antwort zu sehen, und schätze dann selbst ein, ob du sie wusstest.",
+      test: "UI/UX-Test mit einem kleinen Beispiel-Set (5 Karten) — Multiple-Choice auf Deutsch. Mehr Inhalt folgt.",
+    };
+
+    const mounted = { fc: false, lrn: false };
+
+    function showMode(mode) {
+      [...tabs.children].forEach((btn) => btn.classList.toggle("active", btn.dataset.mode === mode));
+      intro.textContent = intros[mode];
+      fcRoot.hidden = mode !== "fc";
+      lrnRoot.hidden = mode !== "lrn";
+      testRoot.hidden = mode !== "test";
+
+      if (mode === "fc" && !mounted.fc) {
+        mountFlashcards(fcRoot, cards, { languages });
+        mounted.fc = true;
+      }
+      if (mode === "lrn" && !mounted.lrn) {
+        mountLearn(lrnRoot, cards, { languages });
+        mounted.lrn = true;
+      }
+      if (mode === "test") {
+        mountQuiz(testRoot, buildChoiceQuestions(testCards, currentLang()), { mode: "choice" });
+      }
+    }
+
+    [...tabs.children].forEach((btn) => {
+      btn.addEventListener("click", () => showMode(btn.dataset.mode));
+    });
+
+    showMode("fc");
+  </script>
+</Layout>

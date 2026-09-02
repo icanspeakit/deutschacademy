@@ -1,0 +1,75 @@
+[
+  {
+    "id": "akkusativ",
+    "name": "Akkusativ",
+    "intro": "Nominativ → Akkusativ: der → den, die → die, das → das, die (Pl.) → die. Nach haben, brauchen, sehen.",
+    "questions": [
+      { "prompt": "Ich habe ___ Computer. <em>(der Computer)</em>", "answer": "den" },
+      { "prompt": "Ich habe ___ Tasche. <em>(die Tasche)</em>", "answer": "die" },
+      { "prompt": "Ich habe ___ Haus. <em>(das Haus)</em>", "answer": "das" },
+      { "prompt": "Ich sehe ___ Baum. <em>(der Baum)</em>", "answer": "den" },
+      { "prompt": "Was siehst du? Ich sehe ___ Auto. <em>(das Auto)</em>", "answer": "das" },
+      { "prompt": "Ich habe ___ Schlüssel. <em>(der Schlüssel)</em>", "answer": "den" },
+      { "prompt": "Das ist ein Computer. Ich habe ___ Computer.", "answer": "einen" }
+    ]
+  },
+  {
+    "id": "dativ",
+    "name": "Dativ",
+    "intro": "Dativpronomen: ich→mir, du→dir, er/es→ihm, sie→ihr, wir→uns, ihr→euch, sie/Sie→ihnen/Ihnen. Bestimmter Artikel: der/das→dem, die→der.",
+    "questions": [
+      { "prompt": "Wie geht es dir? – Es geht ___ gut. <em>(ich)</em>", "answer": "mir" },
+      { "prompt": "Wie geht es Kostja? – Es geht ___ gut. <em>(er)</em>", "answer": "ihm" },
+      { "prompt": "Wie geht es Shoeiva? – Es geht ___ gut. <em>(sie)</em>", "answer": "ihr" },
+      { "prompt": "Ich stehe zwischen ___ Dom (m.) und dem Bahnhof. <em>(zwischen + Dativ)</em>", "answer": "dem" },
+      { "prompt": "Nominativ 'die Frau' → Dativ: ich helfe ___ Frau.", "answer": "der" },
+      { "prompt": "Nominativ 'das Kind' → Dativ: ich helfe ___ Kind.", "answer": "dem" }
+    ]
+  },
+  {
+    "id": "passiv",
+    "name": "Passiv mit Modalverben",
+    "intro": "Aktiv → Passiv mit Modalverb: Subjekt + Modalverb + ... + Partizip II + werden. \"Ich buche das Hotel.\" → \"Das Hotel muss gebucht werden.\"",
+    "questions": [
+      { "prompt": "Das Hotel ___ gebucht werden. <em>(müssen)</em>", "answer": "muss" },
+      { "prompt": "Es ___ ein Auto gemietet werden. <em>(müssen)</em>", "answer": "muss" },
+      { "prompt": "Die Koffer müssen ___ werden. <em>(packen)</em>", "answer": "gepackt" },
+      { "prompt": "Aktiv: \"Ich buche das Hotel.\" → Passiv: \"Das Hotel ___ gebucht.\"", "answer": "wird" },
+      { "prompt": "Die Instrumente müssen ___ werden. <em>(einpacken)</em>", "answer": "eingepackt" }
+    ]
+  },
+  {
+    "id": "konjunktiv2",
+    "name": "Konjunktiv II",
+    "intro": "Irrealer Wunsch / Vorwurf im Perfekt: hätte/wäre + Partizip II (+ sollen). \"Was hättest du machen sollen?\"",
+    "questions": [
+      { "prompt": "Was ___ du machen sollen? <em>(haben)</em>", "answer": "hättest" },
+      { "prompt": "Ich ___ ein Taxi nehmen sollen. <em>(haben, ich)</em>", "answer": "hätte" },
+      { "prompt": "___ ich doch vorsichtiger gewesen! <em>(sein)</em>", "answer": "Wäre" },
+      { "prompt": "Perfekt: \"Ich bin geflogen.\" → Konjunktiv II: \"Ich ___ geflogen.\"", "answer": "wäre" }
+    ]
+  },
+  {
+    "id": "relativpronomen",
+    "name": "Relativpronomen",
+    "intro": "Das Relativpronomen richtet sich nach Genus/Numerus des Bezugsworts und nach dem Fall im Relativsatz. Verb steht am Ende.",
+    "questions": [
+      { "prompt": "Herr B. ist der Kollege, ___ ich oft im Bus treffe. <em>(Akkusativ, maskulin)</em>", "answer": "den" },
+      { "prompt": "Frau Weiß ist die Kollegin, ___ wir neulich gesehen haben. <em>(Akkusativ, feminin)</em>", "answer": "die" },
+      { "prompt": "Hans ist der Mann, ___ seine Kündigung bekommen hat. <em>(Nominativ, maskulin)</em>", "answer": "der" },
+      { "prompt": "Ich esse eine Pizza, ___ aus Sauerteig ist. <em>(Nominativ, feminin)</em>", "answer": "die" }
+    ]
+  },
+  {
+    "id": "trennbare-verben",
+    "name": "Trennbare Verben",
+    "intro": "Präfix wandert ans Satzende: fern|sehen, ein|steigen, aus|steigen, an|rufen, an|kommen.",
+    "questions": [
+      { "prompt": "Ich steige aus dem Zug ___. <em>(aussteigen)</em>", "answer": "aus" },
+      { "prompt": "Ich steige in den Bus ___. <em>(einsteigen)</em>", "answer": "ein" },
+      { "prompt": "Ich rufe meinen Freund ___. <em>(anrufen)</em>", "answer": "an" },
+      { "prompt": "Ich sehe jeden Tag ___. <em>(fernsehen)</em>", "answer": "fern" },
+      { "prompt": "Ich komme am Bahnhof ___. <em>(ankommen)</em>", "answer": "an" }
+    ]
+  }
+]

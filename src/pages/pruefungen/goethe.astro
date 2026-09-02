@@ -1,0 +1,75 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import PracticeHeader from "../../components/PracticeHeader.astro";
+import ExamPractice from "../../components/ExamPractice.astro";
+import "../../styles/practice.css";
+import "../../styles/pruefungen.css";
+---
+<Layout
+  title="Goethe-Zertifikat – DeutschAcademy"
+  description="Goethe-Zertifikat A1–C2: für wen es zählt, wie es aufgebaut ist, und kostenlose Übungen für jedes Niveau."
+>
+  <PracticeHeader title="Goethe-Zertifikat" />
+  <main class="practice-main">
+    <div class="practice-hero">
+      <p class="eyebrow">Prüfung</p>
+      <h1>Goethe-Zertifikat</h1>
+      <p>Die eigenen Prüfungen des Goethe-Instituts — weltweit anerkannt für Visa, Studium und Arbeitgeber.</p>
+    </div>
+
+    <section class="exam-section">
+      <h2>Für wen ist das Goethe-Zertifikat?</h2>
+      <div class="exam-meta-row">
+        <span class="exam-meta-badge">Niveau A1–C2</span>
+        <span class="exam-meta-badge">Ein Zertifikat pro Niveau</span>
+      </div>
+      <p>
+        Anders als telc ist jedes Goethe-Zertifikat eine eigenständige Prüfung für genau ein Niveau
+        (z. B. Goethe-Zertifikat B1, nicht "B1 oder B2"). Goethe-Zertifikat A1 ("Start Deutsch 1") wird
+        häufig für den Ehegattennachzug (Familienzusammenführung) verlangt; höhere Niveaus werden für
+        Studium, Beruf und Einbürgerung genutzt.
+      </p>
+    </section>
+
+    <section class="exam-section">
+      <h2>Geprüfte Fertigkeiten</h2>
+      <div class="skill-grid">
+        <div class="skill-card"><div class="skill-card-icon">📖</div><h4>Lesen</h4><p>Leseverstehen</p></div>
+        <div class="skill-card"><div class="skill-card-icon">🎧</div><h4>Hören</h4><p>Hörverstehen</p></div>
+        <div class="skill-card"><div class="skill-card-icon">✍️</div><h4>Schreiben</h4><p>Schriftlicher Ausdruck</p></div>
+        <div class="skill-card"><div class="skill-card-icon">🗣️</div><h4>Sprechen</h4><p>Mündliche Prüfung, meist paarweise</p></div>
+      </div>
+    </section>
+
+    <section class="exam-section">
+      <!-- GENERIC FORMAT INFO: no deutschacademy source material for this exam yet -->
+      <h2>Format</h2>
+      <div class="format-table-wrap">
+        <table class="format-table">
+          <thead><tr><th>Teil</th><th>Was wird geprüft</th><th>Dauer / Umfang</th></tr></thead>
+          <tbody>
+            <tr><td>Lesen, Hören, Schreiben</td><td>An einem Termin, schriftlich</td><td>Variiert stark nach Niveau — bei A1 insgesamt gut eine Stunde, bei höheren Niveaus mehrere Stunden</td></tr>
+            <tr><td>Sprechen</td><td>Mündliche Prüfung, oft im Paar</td><td>Wenige Minuten bei A1, länger bei höheren Niveaus</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="format-note">
+        Es liegt uns kein eigenes Goethe-Quellmaterial vor. Die Angaben hier sind allgemein bekannte,
+        öffentliche Informationen zum Goethe-Zertifikat-System, bewusst ohne erfundene Detailzahlen.
+        Für die genauen Zeiten und Bestehensgrenzen deines Niveaus prüfe den offiziellen Modellsatz des
+        Goethe-Instituts.
+      </p>
+    </section>
+
+    <div class="mock-cta mock-cta--soon">
+      <h2>Mock-Test: bald verfügbar</h2>
+      <p>Uns liegt kein eigenes Goethe-Quellmaterial vor, aus dem wir einen echten Goethe-Mock-Test bauen könnten. Statt erfundener Prüfungsfragen gibt es hier vorerst keinen Mock-Test — nur die allgemeinen Übungstools unten.</p>
+    </div>
+
+    <ExamPractice
+      heading="Üben für das Goethe-Zertifikat"
+      intro="Es gibt noch keine Goethe-spezifischen Übungen. Diese drei Tools sind niveau- und prüfungsübergreifend nützlich — sie stammen aus dem DTZ-Unterrichtsmaterial, prüfen aber allgemeine Artikel-, Grammatik- und Wortschatzkenntnisse, keinen Goethe-spezifischen Inhalt."
+      tools={["artikel", "grammatik", "wortschatz"]}
+    />
+  </main>
+</Layout>

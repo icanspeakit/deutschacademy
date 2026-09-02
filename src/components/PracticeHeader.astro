@@ -1,0 +1,13 @@
+---
+interface Props {
+  title: string;
+}
+const { title } = Astro.props;
+---
+<header class="practice-header">
+  <div class="practice-header-inner">
+    <a href="/uebungen" class="practice-back">← Alle Übungen</a>
+    <span class="practice-header-title">{title}</span>
+    <a href="/" class="practice-back">Startseite</a>
+  </div>
+</header>

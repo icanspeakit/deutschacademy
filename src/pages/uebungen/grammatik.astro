@@ -1,0 +1,44 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import PracticeHeader from "../../components/PracticeHeader.astro";
+import "../../styles/practice.css";
+import grammatik from "../../data/grammatik.json";
+---
+<Layout title="Grammatik-Quiz – DeutschAcademy">
+  <PracticeHeader title="Grammatik-Quiz" />
+  <main class="practice-main">
+    <div class="practice-hero">
+      <p class="eyebrow">Grammatik üben</p>
+      <h1>Lückentext-Quiz nach Thema</h1>
+      <p>Jede Frage stammt aus echten Beispielsätzen und Tabellen aus dem Unterricht — kein generischer Grammatik-Bot.</p>
+    </div>
+    <div class="topic-tabs" id="topic-tabs">
+      {grammatik.map((t, i) => (
+        <button class="topic-tab" type="button" data-topic={i}>{t.name}</button>
+      ))}
+    </div>
+    <p class="topic-intro" id="topic-intro"></p>
+    <div class="quiz-card" id="quiz-root"></div>
+  </main>
+  <script type="application/json" id="topics-data" set:html={JSON.stringify(grammatik)}></script>
+  <script type="module">
+    import { mountQuiz } from "../../lib/quiz.js";
+    const topics = JSON.parse(document.getElementById("topics-data").textContent);
+    const tabsEl = document.getElementById("topic-tabs");
+    const introEl = document.getElementById("topic-intro");
+    const quizRoot = document.getElementById("quiz-root");
+
+    function loadTopic(index) {
+      const topic = topics[index];
+      [...tabsEl.children].forEach((btn, i) => btn.classList.toggle("active", i === index));
+      introEl.textContent = topic.intro;
+      mountQuiz(quizRoot, topic.questions, { mode: "text" });
+    }
+
+    [...tabsEl.children].forEach((btn, i) => {
+      btn.addEventListener("click", () => loadTopic(i));
+    });
+
+    loadTopic(0);
+  </script>
+</Layout>

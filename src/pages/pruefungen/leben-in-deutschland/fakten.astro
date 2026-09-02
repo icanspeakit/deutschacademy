@@ -1,0 +1,101 @@
+---
+// Facts page for "Leben in Deutschland", sourced from Leben_in_Deutschland_Bayern_A2.pdf,
+// Leben_in_Deutschland_Bayern_B1.pdf and Leben_in_Deutschland_Bayern_B1_A.pdf (Deutsch v3
+// folder) — see docs/section-prompts-v1.md section 14. All three PDFs cover the same facts
+// at different levels of detail; content here follows the fullest (B1) version.
+import Layout from "../../../layouts/Layout.astro";
+import PracticeHeader from "../../../components/PracticeHeader.astro";
+import "../../../styles/practice.css";
+import "../../../styles/pruefungen.css";
+import lid from "../../../data/leben-in-deutschland.json";
+
+const { topics, glossary, meta } = lid;
+---
+<Layout
+  title="Leben in Deutschland: Fakten – DeutschAcademy"
+  description="Die wichtigsten Fakten für den Einbürgerungstest 'Leben in Deutschland' — Demokratie, Wahlen, Bayern, Grundrechte, Geschichte, Arbeit und Familie."
+>
+  <PracticeHeader title="Leben in Deutschland" />
+  <main class="practice-main">
+    <div class="practice-hero">
+      <p class="eyebrow">Leben in Deutschland · Fakten</p>
+      <h1>Fakten zum Lernen</h1>
+      <p>
+        Fakten aus echtem Unterrichtsmaterial (Bayern-Ausgabe), gegliedert nach Themen —
+        zum Nachschlagen und Wiederholen, bevor du den <a href="/pruefungen/leben-in-deutschland/test">36-Fragen-Test</a> übst.
+      </p>
+      <p class="format-note">{meta.sourceNote}</p>
+    </div>
+
+    <div class="topic-tabs" id="topic-tabs">
+      {topics.map((t, i) => (
+        <button class="topic-tab" type="button" data-topic={i}>{t.title}</button>
+      ))}
+      <button class="topic-tab" type="button" data-topic="glossar">Glossar</button>
+    </div>
+
+    <div class="reading-block" id="topic-panel"></div>
+
+    <section class="exam-section">
+      <h2>Testformat</h2>
+      <div class="format-table-wrap">
+        <table class="format-table">
+          <thead><tr><th>Teil</th><th>Umfang</th></tr></thead>
+          <tbody>
+            <tr><td>Bundesweiter Teil</td><td>{meta.federalQuestions} von {meta.totalQuestions} Fragen</td></tr>
+            <tr><td>Landesspezifischer Teil (hier: Bayern)</td><td>{meta.stateQuestions} von {meta.totalQuestions} Fragen</td></tr>
+            <tr><td>Zeit</td><td>{meta.minutes} Minuten</td></tr>
+            <tr><td>Bestehen ab</td><td>{meta.passScore} richtigen Antworten</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <div class="mock-cta">
+      <h2>Jetzt testen</h2>
+      <p>36 Multiple-Choice-Fragen aus genau diesen Fakten, mit sofortiger Auswertung.</p>
+      <a class="quiz-btn quiz-btn--primary" href="/pruefungen/leben-in-deutschland/test">Zum 36-Fragen-Test →</a>
+    </div>
+  </main>
+
+  <script type="application/json" id="topics-data" set:html={JSON.stringify(topics)}></script>
+  <script type="application/json" id="glossary-data" set:html={JSON.stringify(glossary)}></script>
+  <script type="module">
+    const topics = JSON.parse(document.getElementById("topics-data").textContent);
+    const glossary = JSON.parse(document.getElementById("glossary-data").textContent);
+    const tabsEl = document.getElementById("topic-tabs");
+    const panel = document.getElementById("topic-panel");
+
+    function esc(s) {
+      const div = document.createElement("div");
+      div.textContent = s;
+      return div.innerHTML;
+    }
+
+    function renderTopic(index) {
+      const t = topics[index];
+      panel.innerHTML = `
+        <h3>${esc(t.title)}</h3>
+        <ul class="fact-list">${t.facts.map((f) => `<li>${esc(f)}</li>`).join("")}</ul>`;
+    }
+
+    function renderGlossary() {
+      panel.innerHTML = `
+        <h3>Glossar</h3>
+        <dl class="glossary-list">
+          ${glossary.map((g) => `<dt>${esc(g.term)}</dt><dd>${esc(g.def)}</dd>`).join("")}
+        </dl>`;
+    }
+
+    [...tabsEl.children].forEach((btn, i) => {
+      btn.addEventListener("click", () => {
+        [...tabsEl.children].forEach((b) => b.classList.toggle("active", b === btn));
+        if (btn.dataset.topic === "glossar") renderGlossary();
+        else renderTopic(+btn.dataset.topic);
+      });
+    });
+
+    tabsEl.children[0].classList.add("active");
+    renderTopic(0);
+  </script>
+</Layout>

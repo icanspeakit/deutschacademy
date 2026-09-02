@@ -1,0 +1,38 @@
+---
+// 36-question self-scoring practice quiz for "Leben in Deutschland", sourced from the same
+// PDFs as fakten.astro — see docs/section-prompts-v1.md section 14.
+import Layout from "../../../layouts/Layout.astro";
+import PracticeHeader from "../../../components/PracticeHeader.astro";
+import "../../../styles/practice.css";
+import "../../../styles/pruefungen.css";
+import lid from "../../../data/leben-in-deutschland.json";
+
+const { questions, meta } = lid;
+---
+<Layout
+  title="Leben in Deutschland: Test – DeutschAcademy"
+  description="36 Übungsfragen zu 'Leben in Deutschland' — Demokratie, Wahlen, Bayern, Grundrechte, Geschichte, Arbeit und Familie, mit sofortiger Auswertung."
+>
+  <PracticeHeader title="Leben in Deutschland" />
+  <main class="practice-main">
+    <div class="practice-hero">
+      <p class="eyebrow">Leben in Deutschland · Übungstest</p>
+      <h1>{questions.length} Übungsfragen</h1>
+      <p>
+        Fragen aus echtem Unterrichtsmaterial (Bayern-Ausgabe) — kein offizieller BAMF-Fragenkatalog.
+        Der echte Einbürgerungstest hat {meta.totalQuestions} Fragen ({meta.federalQuestions} bundesweit + {meta.stateQuestions} landesspezifisch), {meta.minutes} Minuten Zeit, bestanden ab {meta.passScore} richtigen Antworten.
+        Noch unsicher bei den Fakten? Erst die <a href="/pruefungen/leben-in-deutschland/fakten">Fakten-Seite</a> durchgehen.
+      </p>
+    </div>
+
+    <div class="quiz-card" id="quiz-root"></div>
+  </main>
+
+  <script type="application/json" id="questions-data" set:html={JSON.stringify(questions)}></script>
+  <script type="module">
+    import { mountQuiz } from "../../../lib/quiz.js";
+    const questions = JSON.parse(document.getElementById("questions-data").textContent);
+    const root = document.getElementById("quiz-root");
+    mountQuiz(root, questions, { mode: "choice" });
+  </script>
+</Layout>

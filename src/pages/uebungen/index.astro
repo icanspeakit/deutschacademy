@@ -7,6 +7,7 @@ import grammatik from "../../data/grammatik.json";
 import wortschatz from "../../data/wortschatz.json";
 import sprechen from "../../data/sprechen.json";
 import lesen from "../../data/lesen.json";
+import kultur from "../../data/kultur.json";
 
 const grammarQuestionCount = grammatik.reduce((sum, t) => sum + t.questions.length, 0);
 const readingQuestionCount = lesen.groups.reduce((sum, g) => sum + g.questions.length, 0);
@@ -47,6 +48,13 @@ const tools = [
     desc: "Eine vollständige DTZ-Leseverstehen-Simulation mit Lösungen, plus Schreibaufgaben zum Üben.",
     count: `${readingQuestionCount} Leseaufgaben`,
   },
+  {
+    href: "/uebungen/kultur",
+    icon: "🗺️",
+    title: "Kulturwissen",
+    desc: "Kurze Einblicke in Gesellschaft und Alltag in Deutschland, aus echten Unterrichtsgesprächen.",
+    count: `${kultur.length} Thema${kultur.length === 1 ? "" : "n"}`,
+  },
 ];
 ---
 <Layout title="Übungen – DeutschAcademy">
@@ -55,7 +63,7 @@ const tools = [
     <div class="practice-hero">
       <p class="eyebrow">Kostenlos üben</p>
       <h1>Selbstständig Deutsch üben</h1>
-      <p>Fünf interaktive Übungstypen, gebaut aus echtem Unterrichtsmaterial — nicht aus generischen App-Fragen.</p>
+      <p>Sechs interaktive Übungstypen, gebaut aus echtem Unterrichtsmaterial — nicht aus generischen App-Fragen.</p>
     </div>
     <div class="tool-grid">
       {tools.map((t) => (

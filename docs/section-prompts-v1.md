@@ -417,6 +417,48 @@ a starting baseline once that exists.
 
 ---
 
+## 14. Leben in Deutschland — facts page + 36-question practice quiz
+
+*Status: partially built, generic-only — `docs/exams-hub-tier1-v1.md` already shipped `src/pages/pruefungen/leben-in-deutschland.astro` with a format table, but it's marked internally with a `<!-- GENERIC FORMAT INFO: no deutschacademy source material for this exam yet -->` comment because that build session couldn't find real LiD source material in the repo. It exists — see the Source material note above: `Leben_in_Deutschland_Bayern_A2.pdf`, `Leben_in_Deutschland_Bayern_B1.pdf`, `Leben_in_Deutschland_Bayern_B1_A.pdf`, and `LiD DTZ und mehr.docx`, all in the Deutsch v3 folder.*
+
+```
+Tier 1 — Scope:
+Read Leben_in_Deutschland_Bayern_A2.pdf, Leben_in_Deutschland_Bayern_B1.pdf,
+Leben_in_Deutschland_Bayern_B1_A.pdf, and LiD DTZ und mehr.docx from the Deutsch v3
+folder (see the Source material note above for the full path). Confirm how much
+real fact/question content they contain — enough for a genuine "facts useful for
+passing" page and a 36-question practice quiz, without inventing any civics,
+history, or legal facts not actually in the source. Flag explicitly that these
+files are Bayern (Bavaria) state-specific: the real Einbürgerungstest is 30 generic
+federal questions + 3 state-specific ones per Bundesland, so a quiz built purely
+from this source is Bayern-slanted — decide (or flag for Edgar to decide) whether
+to label it as such, keep it general-federal-only, or offer a state picker later.
+Also read the existing src/pages/pruefungen/leben-in-deutschland.astro so this work
+replaces/extends it instead of duplicating a second LiD page.
+```
+
+```
+Tier 2 — Build:
+Build a facts page sourced from the confirmed material (real dates, institutions,
+laws, civic facts — not invented, not summarized from general knowledge where the
+source doesn't cover it) and a 36-question quiz using the existing quiz.js engine
+and src/data/ JSON pattern, self-scoring like the other /uebungen tools. Where the
+source material doesn't cover a topic real LiD tests do (e.g. if it's Bayern-only
+and thin on federal-level content), leave it out rather than filling the gap from
+outside knowledge, and note the gap in your output.
+```
+
+```
+Tier 3 — Integrate & polish:
+Replace the GENERIC FORMAT INFO placeholder content on
+src/pages/pruefungen/leben-in-deutschland.astro with real sourced facts and a link
+to the new facts page + quiz. Cross-link from section 11 (Alltag/practical life) if
+that section exists by the time this runs — the two overlap. Verify the quiz
+self-scores correctly against the source material's own stated answers.
+```
+
+---
+
 ## Open scope decision to resolve before running these
 
-Sections 4 (cultural knowledge), 5 (insider tips), and 11 (Alltag/practical life) overlap conceptually. Each Tier 1 prompt above flags this, but it's worth Edgar deciding the three-way boundary once up front rather than having each section's Tier 1 re-litigate it independently.
+Sections 4 (cultural knowledge), 5 (insider tips), and 11 (Alltag/practical life) overlap conceptually. Section 14 (Leben in Deutschland) also overlaps with 11 and with section 3's DTZ scope question. Each Tier 1 prompt above flags this, but it's worth Edgar deciding the boundaries once up front rather than having each section's Tier 1 re-litigate it independently.

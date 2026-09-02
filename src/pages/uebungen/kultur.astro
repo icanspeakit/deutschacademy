@@ -1,0 +1,60 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import PracticeHeader from "../../components/PracticeHeader.astro";
+import "../../styles/practice.css";
+import kultur from "../../data/kultur.json";
+---
+<Layout
+  title="Kulturwissen – DeutschAcademy"
+  description="Kurze, echte Einblicke in Gesellschaft und Alltag in Deutschland — aus echtem Unterrichtsmaterial, nicht aus generischem Trivia."
+>
+  <PracticeHeader title="Kulturwissen" />
+  <main class="practice-main">
+    <div class="practice-hero">
+      <p class="eyebrow">Landeskunde</p>
+      <h1>Kulturwissen</h1>
+      <p>Kurze Themen aus echten Unterrichtsgesprächen bei DeutschAcademy — kein generisches KI-Trivia.</p>
+    </div>
+
+    {kultur.map((note) => (
+      <article class="culture-card">
+        <p class="eyebrow">{note.eyebrow}</p>
+        <h3>{note.title}</h3>
+        <p>{note.intro}</p>
+        <p class="culture-question">{note.question}</p>
+        <div class="culture-pros-cons">
+          <div>
+            <h4>{note.pros.label}</h4>
+            <ul>{note.pros.items.map((item: string) => <li>{item}</li>)}</ul>
+          </div>
+          <div>
+            <h4>{note.cons.label}</h4>
+            <ul>{note.cons.items.map((item: string) => <li>{item}</li>)}</ul>
+          </div>
+        </div>
+        <p>{note.context}</p>
+        <details class="culture-table-wrap">
+          <summary>{note.broadcasterTable.label}</summary>
+          <table>
+            <thead><tr><th>Land</th><th>Sender</th></tr></thead>
+            <tbody>
+              {note.broadcasterTable.rows.map((row: { country: string; broadcaster: string }) => (
+                <tr><td>{row.country}</td><td>{row.broadcaster}</td></tr>
+              ))}
+            </tbody>
+          </table>
+        </details>
+        <p class="culture-source">{note.sourceNote}</p>
+        <div class="culture-links">
+          <a class="quiz-btn" href="/uebungen/grammatik#passiv">Die Passiv-Sätze dazu üben →</a>
+          <a class="quiz-btn" href="/uebungen/wortschatz">Deine Meinung dazu äußern (Redemittel) →</a>
+        </div>
+      </article>
+    ))}
+
+    <p class="culture-more-note">
+      Weitere Themen (Feiertage, regionale Bräuche, Alltagsetikette) folgen, sobald echtes
+      Quellmaterial dafür vorliegt — wir erfinden keine kulturellen Behauptungen.
+    </p>
+  </main>
+</Layout>

@@ -18,6 +18,10 @@ import grammatik from "../../data/grammatik.json";
       ))}
     </div>
     <p class="topic-intro" id="topic-intro"></p>
+    <p class="topic-crosslink" id="topic-crosslink" hidden>
+      Diese Passiv-Sätze stammen aus einer echten Unterrichtsdiskussion über Medien in Deutschland —
+      mehr dazu im <a href="/uebungen/kultur">Kulturwissen: Wer bezahlt ARD und ZDF?</a>
+    </p>
     <div class="quiz-card" id="quiz-root"></div>
   </main>
   <script type="application/json" id="topics-data" set:html={JSON.stringify(grammatik)}></script>
@@ -26,12 +30,14 @@ import grammatik from "../../data/grammatik.json";
     const topics = JSON.parse(document.getElementById("topics-data").textContent);
     const tabsEl = document.getElementById("topic-tabs");
     const introEl = document.getElementById("topic-intro");
+    const crosslinkEl = document.getElementById("topic-crosslink");
     const quizRoot = document.getElementById("quiz-root");
 
     function loadTopic(index) {
       const topic = topics[index];
       [...tabsEl.children].forEach((btn, i) => btn.classList.toggle("active", i === index));
       introEl.textContent = topic.intro;
+      crosslinkEl.hidden = topic.id !== "passiv";
       mountQuiz(quizRoot, topic.questions, { mode: "text" });
     }
 
@@ -39,6 +45,8 @@ import grammatik from "../../data/grammatik.json";
       btn.addEventListener("click", () => loadTopic(i));
     });
 
-    loadTopic(0);
+    const hashId = window.location.hash.replace("#", "");
+    const startIndex = topics.findIndex((t) => t.id === hashId);
+    loadTopic(startIndex >= 0 ? startIndex : 0);
   </script>
 </Layout>

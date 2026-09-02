@@ -1,35 +1,41 @@
+/* Concept 9 · Infographic/Roadmap palette — Sora, teal/orange (see /concepts) */
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&display=swap');
+
 /* Design tokens (from DeutschAcademy design system) */
 :root {
-  --brand-blue-light: #7ec9ea;
-  --brand-cyan:       #6fe3e0;
-  --brand-blue:       #3ba9d9;
-  --brand-blue-dark:  #256f96;
+  --brand-blue-light: #5eead4;
+  --brand-cyan:       #f97316;
+  --brand-blue:       #0d9488;
+  --brand-blue-dark:  #0f766e;
+  --accent:           #f97316;
+  --accent-dark:      #c2410c;
 
-  --blue-50:  #f2f9fd;
-  --blue-100: #e2f2fa;
-  --blue-200: #c2e5f4;
-  --blue-300: #9ed6ee;
-  --blue-400: #7ec9ea;
-  --blue-500: #3ba9d9;
-  --blue-600: #2f8cb8;
-  --blue-700: #256f96;
-  --blue-800: #1d5674;
-  --blue-900: #163f55;
+  --blue-50:  #f0fdfa;
+  --blue-100: #ccfbf1;
+  --blue-200: #99f6e4;
+  --blue-300: #5eead4;
+  --blue-400: #2dd4bf;
+  --blue-500: #14b8a6;
+  --blue-600: #0d9488;
+  --blue-700: #0f766e;
+  --blue-800: #115e59;
+  --blue-900: #134e4a;
 
-  --ink:        #1c2b3f;
-  --ink-deep:   #0f1a27;
-  --muted:      #5c6b7e;
-  --muted-soft: #8b98a8;
-  --border:     #e1e8f0;
-  --border-strong: #c9d5e2;
-  --surface:    #f5f9fc;
+  --ink:        #1a2230;
+  --ink-deep:   #0f141c;
+  --muted:      #4b5768;
+  --muted-soft: #94a0b0;
+  --border:     #e7e9ee;
+  --border-strong: #cbd2db;
+  --surface:    #f7f8fa;
 
-  --gradient-brand: linear-gradient(135deg, var(--brand-blue-light), var(--brand-cyan) 50%, var(--brand-blue));
-  --gradient-brand-soft: linear-gradient(135deg, var(--blue-100), #eafbfa 50%, var(--blue-200));
-  --gradient-hero-scrim: linear-gradient(120deg, rgba(28,43,63,.82), rgba(59,169,217,.55));
+  --gradient-brand: linear-gradient(135deg, #2dd4bf, var(--brand-blue));
+  --gradient-brand-soft: linear-gradient(135deg, var(--blue-100), #f0fdfa 50%, var(--blue-200));
+  --gradient-accent-soft: linear-gradient(135deg, #ffedd5, #fff7ed 50%, #fed7aa);
+  --gradient-hero-scrim: linear-gradient(120deg, rgba(26,34,48,.82), rgba(13,148,136,.55));
 
-  --font-body: "Aktiv Grotesk", "Segoe UI", Arial, sans-serif;
-  --font-display: "Comfortaa", "Aktiv Grotesk", sans-serif;
+  --font-body: "Sora", "Segoe UI", Arial, sans-serif;
+  --font-display: "Sora", "Segoe UI", Arial, sans-serif;
 
   --radius-sm: 10px;
   --radius: 14px;
@@ -183,19 +189,40 @@
 .lp-value-card-body h3 { margin: 0; font-size: 17.5px; font-weight: 700; line-height: 1.3; color: var(--ink); }
 .lp-value-card-body p { margin: 0; font-size: 13.5px; line-height: 1.55; color: var(--muted); }
 
-/* How it works */
-.lp-steps { display: grid; grid-template-columns: 1fr 44px 1fr 44px 1fr 44px 1fr; align-items: start; }
-.lp-step { display: flex; flex-direction: column; align-items: center; gap: 14px; text-align: center; padding: 0 10px; }
-.lp-step-num {
-  width: 64px; height: 64px; border-radius: 50%;
-  background: var(--gradient-brand); color: #fff;
+/* How it works — Concept 9 roadmap track */
+.lp-track { position: relative; display: flex; justify-content: space-between; padding-top: 26px; max-width: 900px; margin: 0 auto; }
+.lp-track::before { content: ""; position: absolute; top: 13px; left: 5%; right: 5%; height: 3px; background: var(--border); }
+.lp-road-step { flex: 1; text-align: center; padding: 0 16px; position: relative; }
+.lp-road-node {
+  width: 28px; height: 28px; border-radius: 50%;
+  background: var(--brand-blue); color: #fff;
   display: flex; align-items: center; justify-content: center;
-  font-family: var(--font-display); font-weight: 700; font-size: 24px;
+  font-family: var(--font-display); font-weight: 700; font-size: 13px;
+  margin: 0 auto 18px; position: relative; z-index: 1;
 }
-.lp-step-num--dark { background: var(--brand-blue-dark); }
-.lp-step h3 { margin: 0; font-size: 16.5px; font-weight: 700; line-height: 1.3; color: var(--ink); }
-.lp-step p { margin: 0; font-size: 13.5px; line-height: 1.55; color: var(--muted); }
-.lp-step-arrow { display: flex; align-items: center; justify-content: center; height: 64px; font-size: 24px; color: var(--brand-blue-light); }
+.lp-road-step:nth-child(2) .lp-road-node { background: var(--accent); }
+.lp-road-label { font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted-soft); margin-bottom: 8px; font-weight: 700; }
+.lp-road-step h3 { margin: 0 0 8px; font-size: 17px; font-weight: 700; color: var(--ink); }
+.lp-road-step p { margin: 0; font-size: 13.5px; line-height: 1.55; color: var(--muted); }
+@media (max-width: 900px) { .lp-track { flex-direction: column; gap: 30px; } .lp-track::before { display: none; } }
+
+/* Hero progress bar (Concept 9) */
+.lp-hero-progress { display: flex; gap: 6px; max-width: 260px; margin: 4px 0 0; }
+.lp-hero-progress span { flex: 1; height: 6px; border-radius: 3px; background: var(--border); }
+.lp-hero-progress span:nth-child(1) { background: var(--brand-blue); }
+.lp-hero-progress span:nth-child(2) { background: var(--accent); }
+
+/* Tools grid */
+.lp-tools-group { margin-bottom: 40px; }
+.lp-tools-group:last-child { margin-bottom: 0; }
+.lp-tools-label { font-family: var(--font-display); font-weight: 700; font-size: 12.5px; letter-spacing: .07em; text-transform: uppercase; color: var(--muted-soft); margin-bottom: 16px; }
+.lp-tools-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; }
+.lp-tool-card { display: flex; flex-direction: column; gap: 12px; border: 1px solid var(--border); border-radius: var(--radius); padding: 20px 18px; background: #fff; transition: border-color .2s ease, box-shadow .2s ease, transform .2s ease; }
+.lp-tool-card:hover { border-color: var(--brand-blue); box-shadow: var(--shadow-hover); transform: translateY(-2px); }
+.lp-tool-chip { width: 36px; height: 36px; border-radius: 10px; background: var(--blue-100); display: flex; align-items: center; justify-content: center; font-size: 16px; }
+.lp-tools-group--exams .lp-tool-chip { background: var(--gradient-accent-soft); }
+.lp-tool-card h4 { margin: 0; font-size: 14.5px; font-weight: 700; color: var(--ink); line-height: 1.3; }
+.lp-tool-card p { margin: 0; font-size: 12.5px; line-height: 1.5; color: var(--muted); }
 
 /* Product showcase */
 .lp-showcase { display: grid; grid-template-columns: 1.3fr 1fr; gap: 56px; align-items: center; }
@@ -342,6 +369,7 @@
   .lp-deepdive-grid { grid-template-columns: 1fr; }
   .lp-footer-grid { grid-template-columns: repeat(2, 1fr); }
   .lp-showcase { grid-template-columns: 1fr; }
+  .lp-tools-grid { grid-template-columns: repeat(3, 1fr); }
 }
 
 @media (max-width: 900px) {
@@ -359,6 +387,7 @@
   .lp-mini-grid { grid-template-columns: 1fr; }
   .lp-pricing-grid { grid-template-columns: 1fr; }
   .lp-footer-grid { grid-template-columns: 1fr; }
+  .lp-tools-grid { grid-template-columns: repeat(2, 1fr); }
   .lp-section { padding: 56px 0; }
   .lp-hero-inner { padding: 48px 0 56px; }
   .lp-final-cta-inner { padding: 64px 0; }

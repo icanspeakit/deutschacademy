@@ -1,0 +1,760 @@
+---
+// INTERNAL DRAFT — 10 competing homepage redesign concepts, for side-by-side comparison only.
+// Not linked from real nav, noindex, and deliberately self-contained: no imports from
+// ../layouts, ../components or ../styles, so nothing here can leak into or depend on the
+// real site. Facts (general German learning: Grammatik, Alltagsdeutsch, Sprechpraxis;
+// audience = general German learners preparing for everyday life and exams like Goethe/telc)
+// are identical across all 10 — only layout, palette, type and voice vary. No stats, prices
+// or testimonials are invented.
+---
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Homepage-Konzepte (internes Vergleichsdraft)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&family=Fraunces:opsz,wght@9..144,300;9..144,500;9..144,600&family=Archivo+Black&family=Space+Grotesk:wght@400;500;700&family=Baloo+2:wght@500;600;800&family=Cormorant+Garamond:wght@300;400;600&family=Roboto+Slab:wght@400;600;700&family=Abril+Fatface&family=Sora:wght@400;600;800&family=Caveat:wght@500;600;700&display=swap"
+    rel="stylesheet"
+  />
+  <style>
+    /* ========== SHARED BASE (switcher chrome + resets only — no site styles reused) ========== */
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body { background: #f4f4f4; }
+    img { max-width: 100%; display: block; }
+    a { text-decoration: none; }
+    button { font: inherit; }
+
+    .switcher {
+      position: sticky; top: 0; z-index: 1000;
+      background: #111318; border-bottom: 1px solid #2a2e37;
+      padding: 10px 16px; display: flex; gap: 8px; flex-wrap: wrap; align-items: center;
+      font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    }
+    .switcher-title { color: #8a8f9c; font-size: .72rem; margin-right: 10px; white-space: nowrap; line-height: 1.3; max-width: 220px; }
+    .switcher-tabs { display: flex; gap: 6px; flex-wrap: wrap; }
+    .switcher button {
+      background: #1c1f27; color: #c7cbd4; border: 1px solid #30343f;
+      padding: 7px 13px; border-radius: 999px; font-size: .76rem; cursor: pointer; white-space: nowrap;
+    }
+    .switcher button:hover { border-color: #4a4f5c; }
+    .switcher button.active { background: #fff; color: #111; font-weight: 700; border-color: #fff; }
+
+    .annot {
+      background: #16181d; color: #b7bcc7; font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+      font-size: .82rem; line-height: 1.5; padding: 12px 20px;
+    }
+    .annot b { color: #fff; }
+
+    .concept-panel { display: none; }
+    .concept-panel.active { display: block; }
+
+    .ph-tag {
+      position: absolute; bottom: 8px; right: 8px; font-size: .62rem; letter-spacing: .04em;
+      padding: 3px 8px; border-radius: 4px; background: rgba(0,0,0,.6); color: #fff;
+      font-family: system-ui, sans-serif; text-transform: uppercase; pointer-events: none;
+    }
+    .img-wrap { position: relative; }
+
+    /* ========== 1. SWISS GRID / CLINICAL MINIMALIST ========== */
+    #concept-1 { background: #ffffff; color: #12181f; font-family: 'Inter', sans-serif; }
+    #concept-1 .nav { display: flex; align-items: center; justify-content: space-between; padding: 22px 6vw; border-bottom: 1px solid #e4e7ea; }
+    #concept-1 .logo { font-weight: 900; letter-spacing: -.02em; font-size: 1.15rem; }
+    #concept-1 .navlinks { display: flex; gap: 32px; font-size: .85rem; color: #4a5560; }
+    #concept-1 .cta { background: #0f7a6d; color: #fff; padding: 11px 22px; font-weight: 600; font-size: .85rem; }
+    #concept-1 .hero { display: grid; grid-template-columns: 1.1fr .9fr; gap: 0; align-items: stretch; border-bottom: 1px solid #e4e7ea; }
+    #concept-1 .hero-copy { padding: 8vh 6vw; display: flex; flex-direction: column; justify-content: center; }
+    #concept-1 .eyebrow { font-family: 'Inter', monospace; font-size: .72rem; letter-spacing: .12em; text-transform: uppercase; color: #0f7a6d; font-weight: 700; margin-bottom: 18px; }
+    #concept-1 h1 { font-size: clamp(2.1rem, 4.2vw, 3.4rem); line-height: 1.08; letter-spacing: -.02em; margin: 0 0 20px; font-weight: 900; }
+    #concept-1 .sub { font-size: 1.05rem; color: #4a5560; line-height: 1.6; max-width: 46ch; margin: 0 0 28px; }
+    #concept-1 .hero-img { position: relative; background: #0f7a6d; overflow: hidden; min-height: 420px; }
+    #concept-1 .hero-img img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(1) contrast(1.05); mix-blend-mode: luminosity; }
+    #concept-1 .pillars { display: grid; grid-template-columns: repeat(3, 1fr); }
+    #concept-1 .pillar { padding: 6vh 4vw; border-right: 1px solid #e4e7ea; }
+    #concept-1 .pillar:last-child { border-right: none; }
+    #concept-1 .pillar .num { font-family: monospace; font-size: .78rem; color: #9aa2ab; margin-bottom: 14px; display: block; }
+    #concept-1 .pillar h3 { font-size: 1.15rem; margin: 0 0 10px; font-weight: 700; }
+    #concept-1 .pillar p { color: #4a5560; font-size: .92rem; line-height: 1.6; margin: 0; }
+    #concept-1 footer { padding: 18px 6vw; border-top: 1px solid #e4e7ea; font-size: .78rem; color: #9aa2ab; }
+    @media (max-width: 760px) { #concept-1 .hero, #concept-1 .pillars { grid-template-columns: 1fr; } #concept-1 .pillar { border-right: none; border-bottom: 1px solid #e4e7ea; } }
+
+    /* ========== 2. EDITORIAL STORY / WARM HUMAN ========== */
+    #concept-2 { background: #faf3ea; color: #2b2018; font-family: Georgia, 'Times New Roman', serif; }
+    #concept-2 .nav { text-align: center; padding: 28px 6vw 20px; }
+    #concept-2 .logo { font-family: 'Fraunces', serif; font-size: 1.3rem; font-weight: 600; }
+    #concept-2 .hero { max-width: 640px; margin: 0 auto; text-align: center; padding: 4vh 6vw 6vh; }
+    #concept-2 .kicker { font-style: italic; color: #c1602f; font-size: .95rem; margin-bottom: 14px; }
+    #concept-2 h1 { font-family: 'Fraunces', serif; font-weight: 600; font-size: clamp(2rem, 4.6vw, 3.1rem); line-height: 1.15; margin: 0 0 22px; }
+    #concept-2 .sub { font-size: 1.15rem; line-height: 1.75; color: #4a3c2e; margin: 0 0 26px; }
+    #concept-2 .cta-link { display: inline-block; border-bottom: 2px solid #c1602f; font-weight: 700; padding-bottom: 2px; }
+    #concept-2 .hero-photo { max-width: 980px; margin: 0 auto; padding: 0 6vw; }
+    #concept-2 .hero-photo img { width: 100%; border-radius: 4px; filter: sepia(.18) saturate(1.05); }
+    #concept-2 .story { max-width: 900px; margin: 8vh auto; padding: 0 6vw; display: flex; flex-direction: column; gap: 7vh; }
+    #concept-2 .row { display: grid; grid-template-columns: 1fr 1.2fr; gap: 5vw; align-items: center; }
+    #concept-2 .row.rev { grid-template-columns: 1.2fr 1fr; }
+    #concept-2 .row.rev .txt { order: 2; }
+    #concept-2 .row .ph-box { background: #efe2d1; aspect-ratio: 4/3; display: flex; align-items: center; justify-content: center; color: #a8926f; font-size: .8rem; border-radius: 4px; position: relative; overflow: hidden; }
+    #concept-2 .row .ph-box img { width: 100%; height: 100%; object-fit: cover; filter: sepia(.25); }
+    #concept-2 .chapter { font-style: italic; color: #c1602f; font-size: .85rem; margin-bottom: 8px; }
+    #concept-2 .row h3 { font-family: 'Fraunces', serif; font-size: 1.5rem; margin: 0 0 10px; }
+    #concept-2 .row p { line-height: 1.7; color: #4a3c2e; margin: 0; }
+    #concept-2 .closing { text-align: center; padding: 8vh 6vw; background: #f0e3d2; }
+    #concept-2 .closing p { font-family: 'Fraunces', serif; font-size: clamp(1.4rem, 3vw, 2rem); max-width: 720px; margin: 0 auto 24px; line-height: 1.4; }
+    @media (max-width: 760px) { #concept-2 .row, #concept-2 .row.rev { grid-template-columns: 1fr; } #concept-2 .row.rev .txt { order: 0; } }
+
+    /* ========== 3. BRUTALIST ========== */
+    #concept-3 { background: #000; color: #fff; font-family: 'Archivo Black', Arial, sans-serif; }
+    #concept-3 .nav { display: flex; justify-content: space-between; align-items: center; padding: 20px 5vw; border-bottom: 4px solid #fff; }
+    #concept-3 .logo { font-size: 1.2rem; }
+    #concept-3 .cta { background: #e8ff00; color: #000; padding: 12px 22px; font-family: 'Archivo Black', sans-serif; font-size: .85rem; }
+    #concept-3 .hero { position: relative; padding: 6vh 5vw 8vh; overflow: hidden; }
+    #concept-3 h1 { font-size: clamp(2.6rem, 8vw, 5.2rem); line-height: .95; margin: 0 0 30px; text-transform: uppercase; }
+    #concept-3 h1 span { background: #e8ff00; color: #000; padding: 0 8px; display: inline-block; }
+    #concept-3 .sub-box { background: #fff; color: #000; display: inline-block; padding: 14px 20px; font-family: Arial, sans-serif; font-weight: 700; font-size: 1rem; transform: rotate(-1deg); margin-bottom: 30px; box-shadow: 8px 8px 0 #e8ff00; }
+    #concept-3 .hero-img { max-width: 420px; margin-top: 20px; transform: rotate(2deg); border: 6px solid #fff; box-shadow: 12px 12px 0 #ff2d2d; overflow: hidden; }
+    #concept-3 .hero-img img { filter: grayscale(1) contrast(1.3); }
+    #concept-3 .big-cta { display: block; background: #e8ff00; color: #000; text-align: center; padding: 18px; font-size: 1.1rem; margin-top: 30px; max-width: 340px; border: 4px solid #000; }
+    #concept-3 .pillars { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 4px solid #fff; }
+    #concept-3 .pillar { padding: 6vh 4vw; position: relative; overflow: hidden; border-right: 4px solid #fff; }
+    #concept-3 .pillar:nth-child(2) { background: #e8ff00; color: #000; }
+    #concept-3 .pillar:nth-child(3) { background: #ff2d2d; color: #000; border-right: none; }
+    #concept-3 .pillar .bignum { position: absolute; top: -.4em; right: -.1em; font-size: 7rem; opacity: .15; line-height: 1; }
+    #concept-3 .pillar h3 { font-size: 1.3rem; margin: 0 0 12px; text-transform: uppercase; position: relative; }
+    #concept-3 .pillar p { font-family: Arial, sans-serif; font-weight: 700; font-size: .95rem; line-height: 1.5; margin: 0; position: relative; }
+    @media (max-width: 760px) { #concept-3 .pillars { grid-template-columns: 1fr; } #concept-3 .pillar { border-right: none; border-bottom: 4px solid #fff; } }
+
+    /* ========== 4. DARK TECH / SAAS ========== */
+    #concept-4 {
+      background: #0b0f19; color: #e8ecf3; font-family: 'Space Grotesk', sans-serif; position: relative; overflow: hidden;
+    }
+    #concept-4 .mesh { position: absolute; inset: 0; z-index: 0; pointer-events: none;
+      background:
+        radial-gradient(600px 400px at 15% 10%, rgba(34,211,238,.22), transparent 60%),
+        radial-gradient(500px 400px at 85% 30%, rgba(167,139,250,.22), transparent 60%),
+        radial-gradient(700px 500px at 50% 90%, rgba(34,211,238,.12), transparent 60%);
+      filter: blur(10px);
+    }
+    #concept-4 .stage { position: relative; z-index: 1; }
+    #concept-4 .nav { display: flex; justify-content: space-between; align-items: center; padding: 20px 6vw; backdrop-filter: blur(6px); border-bottom: 1px solid rgba(255,255,255,.08); }
+    #concept-4 .logo { font-weight: 700; }
+    #concept-4 .navlinks { display: flex; gap: 26px; font-size: .85rem; color: #a7afc0; }
+    #concept-4 .cta-pill { background: linear-gradient(90deg, #22d3ee, #a78bfa); color: #06121a; font-weight: 700; padding: 10px 20px; border-radius: 999px; font-size: .85rem; }
+    #concept-4 .hero { text-align: center; padding: 9vh 6vw 5vh; max-width: 780px; margin: 0 auto; }
+    #concept-4 .eyebrow { font-size: .75rem; letter-spacing: .12em; text-transform: uppercase; color: #22d3ee; margin-bottom: 16px; }
+    #concept-4 h1 { font-size: clamp(2.1rem, 4.6vw, 3.3rem); line-height: 1.12; margin: 0 0 20px; font-weight: 700; background: linear-gradient(90deg, #fff, #b9c2d6); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    #concept-4 .sub { color: #a7afc0; font-size: 1.05rem; line-height: 1.6; margin: 0 0 30px; }
+    #concept-4 .glass { background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.12); backdrop-filter: blur(14px); border-radius: 16px; }
+    #concept-4 .cta-pill.lg { display: inline-block; padding: 13px 28px; font-size: .95rem; }
+    #concept-4 .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; max-width: 1000px; margin: 4vh auto 10vh; padding: 0 6vw; }
+    #concept-4 .card { padding: 30px 24px; }
+    #concept-4 .chip { width: 40px; height: 40px; border-radius: 10px; background: linear-gradient(135deg, #22d3ee, #a78bfa); margin-bottom: 18px; }
+    #concept-4 .card h3 { font-size: 1.05rem; margin: 0 0 10px; }
+    #concept-4 .card p { color: #a7afc0; font-size: .9rem; line-height: 1.6; margin: 0; }
+    @media (max-width: 760px) { #concept-4 .grid { grid-template-columns: 1fr; } }
+
+    /* ========== 5. PLAYFUL ========== */
+    #concept-5 { background: #fff6d8; color: #2c2410; font-family: 'Baloo 2', system-ui, sans-serif; }
+    #concept-5 .nav { display: flex; justify-content: space-between; align-items: center; padding: 18px 5vw; }
+    #concept-5 .logo { background: #3ecf8e; color: #fff; padding: 8px 16px; border-radius: 999px; font-weight: 800; font-size: 1rem; }
+    #concept-5 .cta-pill { background: #ff6f61; color: #fff; padding: 12px 24px; border-radius: 999px; font-weight: 700; box-shadow: 4px 4px 0 #2c2410; }
+    #concept-5 .hero { text-align: center; padding: 4vh 6vw 3vh; position: relative; }
+    #concept-5 h1 { font-size: clamp(2.1rem, 5vw, 3.2rem); line-height: 1.15; font-weight: 800; margin: 0 0 18px; }
+    #concept-5 h1 .w1 { color: #ff6f61; } #concept-5 h1 .w2 { color: #3fb6ff; } #concept-5 h1 .w3 { color: #3ecf8e; }
+    #concept-5 .sub { font-size: 1.1rem; max-width: 52ch; margin: 0 auto 26px; line-height: 1.5; }
+    #concept-5 .blob-wrap { position: relative; max-width: 360px; margin: 30px auto 0; }
+    #concept-5 .blob { width: 100%; aspect-ratio: 1; clip-path: path('M300,150C300,220,240,300,150,300C60,300,0,220,0,150C0,70,70,0,150,0C230,0,300,70,300,150Z'); overflow: hidden; background: #3fb6ff; }
+    #concept-5 .blob img { width: 100%; height: 100%; object-fit: cover; }
+    #concept-5 .sticker { position: absolute; background: #fff; border-radius: 999px; padding: 10px 14px; font-size: 1.4rem; box-shadow: 3px 3px 0 #2c2410; }
+    #concept-5 .s1 { top: -10px; left: -20px; transform: rotate(-8deg); }
+    #concept-5 .s2 { bottom: 10px; right: -24px; transform: rotate(10deg); }
+    #concept-5 .path { display: flex; justify-content: center; align-items: flex-start; gap: 0; max-width: 900px; margin: 8vh auto; padding: 0 6vw; position: relative; }
+    #concept-5 .node { flex: 1; text-align: center; position: relative; padding: 0 12px; }
+    #concept-5 .node::after { content: ''; position: absolute; top: 34px; left: 50%; width: 100%; height: 3px; background-image: linear-gradient(90deg, #2c2410 40%, transparent 40%); background-size: 12px 3px; z-index: 0; }
+    #concept-5 .node:last-child::after { display: none; }
+    #concept-5 .circle { width: 68px; height: 68px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.7rem; margin: 0 auto 14px; position: relative; z-index: 1; box-shadow: 3px 3px 0 #2c2410; }
+    #concept-5 .node:nth-child(1) .circle { background: #ffd166; } #concept-5 .node:nth-child(2) .circle { background: #3fb6ff; } #concept-5 .node:nth-child(3) .circle { background: #3ecf8e; }
+    #concept-5 .node h3 { font-size: 1.05rem; margin: 0 0 6px; }
+    #concept-5 .node p { font-family: system-ui, sans-serif; font-size: .85rem; line-height: 1.5; margin: 0; color: #4a4020; }
+    #concept-5 .banner { max-width: 900px; margin: 2vh auto 8vh; padding: 5vh 6vw; background: #3ecf8e; border-radius: 28px; text-align: center; color: #fff; margin-left: 6vw; margin-right: 6vw; }
+    #concept-5 .banner h3 { font-size: 1.6rem; margin: 0 0 18px; }
+    #concept-5 .banner .cta-pill { background: #fff; color: #2c2410; }
+    @media (max-width: 760px) { #concept-5 .path { flex-direction: column; gap: 30px; } #concept-5 .node::after { display: none; } }
+
+    /* ========== 6. LUXURY / PREMIUM ========== */
+    #concept-6 { background: #0a0a0a; color: #f5f1e8; font-family: 'Cormorant Garamond', serif; }
+    #concept-6 .nav { text-align: center; padding: 26px 6vw 10px; }
+    #concept-6 .logo { letter-spacing: .22em; text-transform: uppercase; font-size: .95rem; font-weight: 600; }
+    #concept-6 .hairline { width: 60px; height: 1px; background: #c9a86a; margin: 14px auto 0; }
+    #concept-6 .hero { position: relative; min-height: 78vh; display: flex; align-items: center; justify-content: center; text-align: center; }
+    #concept-6 .hero-bg { position: absolute; inset: 0; z-index: 0; }
+    #concept-6 .hero-bg img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(1) brightness(.55); }
+    #concept-6 .hero-bg::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(10,10,10,.4), rgba(10,10,10,.85)); }
+    #concept-6 .hero-copy { position: relative; z-index: 1; max-width: 720px; padding: 0 6vw; }
+    #concept-6 h1 { font-weight: 300; font-size: clamp(2.4rem, 5vw, 4rem); line-height: 1.2; margin: 0 0 22px; }
+    #concept-6 .sub { letter-spacing: .05em; font-size: 1.15rem; color: #cfc7b5; margin: 0 0 34px; line-height: 1.6; }
+    #concept-6 .cta-outline { display: inline-block; border: 1px solid #c9a86a; color: #f5f1e8; padding: 13px 34px; letter-spacing: .12em; text-transform: uppercase; font-size: .78rem; }
+    #concept-6 .list { max-width: 780px; margin: 9vh auto; padding: 0 6vw; }
+    #concept-6 .item { display: grid; grid-template-columns: 90px 1fr; gap: 30px; padding: 32px 0; border-bottom: 1px solid rgba(201,168,106,.25); align-items: center; }
+    #concept-6 .item:last-child { border-bottom: none; }
+    #concept-6 .roman { font-size: 2.2rem; color: #c9a86a; font-weight: 300; }
+    #concept-6 .item h3 { font-size: 1.4rem; margin: 0 0 8px; font-weight: 500; }
+    #concept-6 .item p { color: #cfc7b5; font-size: 1rem; line-height: 1.6; margin: 0; }
+    #concept-6 .closing { text-align: center; padding: 8vh 6vw 10vh; }
+    #concept-6 .closing p { font-size: 1.3rem; margin: 0 0 26px; color: #cfc7b5; }
+    @media (max-width: 760px) { #concept-6 .item { grid-template-columns: 1fr; text-align: center; } }
+
+    /* ========== 7. GOVERNMENT / OFFICIAL TRUST ========== */
+    #concept-7 { background: #eef1f4; color: #1c2733; font-family: Arial, Helvetica, sans-serif; }
+    #concept-7 .topstrip { background: #1b3a5c; color: #dbe4ec; font-size: .74rem; padding: 6px 6vw; }
+    #concept-7 .nav { display: flex; justify-content: space-between; align-items: center; padding: 16px 6vw; background: #fff; border-bottom: 3px solid #1b3a5c; }
+    #concept-7 .logo { font-family: 'Roboto Slab', serif; font-weight: 700; font-size: 1.05rem; color: #1b3a5c; }
+    #concept-7 .navlinks { display: flex; gap: 22px; font-size: .82rem; }
+    #concept-7 .navlinks a { color: #1c2733; border-bottom: 1px solid transparent; }
+    #concept-7 .navlinks a:hover { border-color: #1b3a5c; }
+    #concept-7 .portal { max-width: 760px; margin: 5vh auto; padding: 0 6vw; }
+    #concept-7 .card { background: #fff; border: 1px solid #c7d0d8; border-radius: 3px; padding: 5vh 5vw; }
+    #concept-7 .doc-icon { width: 34px; height: 34px; border: 2px solid #1b3a5c; border-radius: 3px; margin-bottom: 18px; position: relative; }
+    #concept-7 .doc-icon::before, #concept-7 .doc-icon::after { content: ''; position: absolute; left: 6px; right: 6px; height: 2px; background: #1b3a5c; }
+    #concept-7 .doc-icon::before { top: 10px; } #concept-7 .doc-icon::after { top: 18px; }
+    #concept-7 h1 { font-family: 'Roboto Slab', serif; font-size: clamp(1.5rem, 3vw, 2.1rem); line-height: 1.3; margin: 0 0 14px; color: #12202e; }
+    #concept-7 .sub { font-size: .98rem; line-height: 1.65; color: #3a4854; margin: 0 0 26px; }
+    #concept-7 .cta-official { display: inline-block; background: #1b3a5c; color: #fff; padding: 11px 22px; font-size: .85rem; font-weight: 700; border: 1px solid #12293f; border-radius: 2px; }
+    #concept-7 .overview { max-width: 760px; margin: 0 auto 6vh; padding: 0 6vw; }
+    #concept-7 .overview-box { background: #fff; border: 1px solid #c7d0d8; border-radius: 3px; padding: 4vh 5vw; }
+    #concept-7 .overview-box h2 { font-family: 'Roboto Slab', serif; font-size: 1.1rem; margin: 0 0 20px; color: #1b3a5c; text-transform: uppercase; letter-spacing: .03em; }
+    #concept-7 .check-row { display: flex; gap: 14px; padding: 14px 0; border-bottom: 1px solid #e2e7eb; }
+    #concept-7 .check-row:last-child { border-bottom: none; }
+    #concept-7 .check { width: 22px; height: 22px; flex: none; border: 2px solid #2e7d4f; border-radius: 3px; display: flex; align-items: center; justify-content: center; color: #2e7d4f; font-weight: 700; font-size: .85rem; }
+    #concept-7 .check-row h4 { margin: 0 0 4px; font-size: .95rem; }
+    #concept-7 .check-row p { margin: 0; font-size: .85rem; color: #3a4854; line-height: 1.5; }
+    #concept-7 footer { text-align: center; padding: 16px; font-size: .72rem; color: #7c8894; background: #fff; border-top: 1px solid #c7d0d8; }
+
+    /* ========== 8. VINTAGE POSTER ========== */
+    #concept-8 { background: #f0e6d2; color: #3a2a1c; font-family: Georgia, serif; position: relative; }
+    #concept-8 .nav { text-align: center; padding: 24px 6vw 6px; }
+    #concept-8 .ribbon { display: inline-block; background: #c1521c; color: #f0e6d2; padding: 8px 22px; font-size: .8rem; letter-spacing: .1em; text-transform: uppercase; }
+    #concept-8 .hero { text-align: center; padding: 5vh 6vw 3vh; }
+    #concept-8 h1 { font-family: 'Abril Fatface', serif; font-size: clamp(1.9rem, 5.2vw, 3.4rem); line-height: 1.2; margin: 0 0 20px; color: #3c5b41; text-transform: uppercase; }
+    #concept-8 h1 .accent { color: #c1521c; }
+    #concept-8 .sub { font-size: 1.05rem; max-width: 46ch; margin: 0 auto 26px; line-height: 1.6; font-style: italic; }
+    #concept-8 .stamp { display: inline-block; border: 3px dashed #c1521c; border-radius: 50%; padding: 16px 26px; color: #c1521c; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; font-size: .8rem; transform: rotate(-6deg); font-family: Georgia, serif; }
+    #concept-8 .postcard { max-width: 340px; margin: 5vh auto 6vh; padding: 10px 10px 26px; background: #fff; box-shadow: 0 10px 24px rgba(58,42,28,.25); transform: rotate(-2deg); }
+    #concept-8 .postcard img { width: 100%; filter: sepia(.4) contrast(1.05); }
+    #concept-8 .postcard figcaption { text-align: center; font-size: .75rem; color: #7a6a55; margin-top: 8px; font-style: italic; }
+    #concept-8 .menu { max-width: 640px; margin: 0 auto 8vh; padding: 0 6vw; }
+    #concept-8 .menu-box { border: 2px solid #3c5b41; padding: 4vh 5vw; background: #f7f0e2; }
+    #concept-8 .menu-box h2 { text-align: center; font-family: 'Abril Fatface', serif; font-size: 1.4rem; color: #3c5b41; margin: 0 0 26px; }
+    #concept-8 .menu-item { display: flex; align-items: baseline; gap: 8px; margin-bottom: 22px; }
+    #concept-8 .menu-item .badge { flex: none; width: 30px; height: 30px; border-radius: 50%; border: 2px dashed #c1521c; display: flex; align-items: center; justify-content: center; font-size: .78rem; color: #c1521c; font-weight: 700; }
+    #concept-8 .menu-item .title { font-weight: 700; color: #3c5b41; white-space: nowrap; }
+    #concept-8 .menu-item .leader { flex: 1; border-bottom: 2px dotted #a89475; height: 0; margin: 0 2px 5px; }
+    #concept-8 .menu-item .desc { font-size: .82rem; color: #5e4c39; }
+
+    /* ========== 9. INFOGRAPHIC / ROADMAP ========== */
+    #concept-9 { background: #ffffff; color: #1a2230; font-family: 'Sora', sans-serif; }
+    #concept-9 .nav { display: flex; justify-content: space-between; align-items: center; padding: 20px 6vw; border-bottom: 1px solid #e7e9ee; }
+    #concept-9 .logo { display: flex; align-items: center; gap: 8px; font-weight: 700; }
+    #concept-9 .logo-mark { width: 10px; height: 22px; background: #0d9488; border-radius: 2px; position: relative; }
+    #concept-9 .logo-mark::after { content: ''; position: absolute; left: 14px; bottom: 0; width: 10px; height: 14px; background: #f97316; border-radius: 2px; }
+    #concept-9 .cta-solid { background: #0d9488; color: #fff; padding: 10px 20px; border-radius: 8px; font-weight: 600; font-size: .85rem; }
+    #concept-9 .hero { display: flex; gap: 6vw; align-items: center; padding: 8vh 6vw 6vh; max-width: 1100px; margin: 0 auto; }
+    #concept-9 .hero-copy { flex: 1.2; }
+    #concept-9 .eyebrow { font-size: .78rem; letter-spacing: .08em; text-transform: uppercase; color: #0d9488; font-weight: 700; margin-bottom: 14px; }
+    #concept-9 h1 { font-size: clamp(2rem, 4vw, 2.9rem); line-height: 1.15; font-weight: 800; margin: 0 0 18px; }
+    #concept-9 .sub { color: #4b5768; font-size: 1.02rem; line-height: 1.6; margin: 0 0 26px; }
+    #concept-9 .progress { display: flex; gap: 6px; margin-bottom: 26px; max-width: 260px; }
+    #concept-9 .progress span { flex: 1; height: 6px; border-radius: 3px; background: #e7e9ee; }
+    #concept-9 .progress span:nth-child(1) { background: #0d9488; }
+    #concept-9 .progress span:nth-child(2) { background: #f97316; }
+    #concept-9 .hero-graphic { flex: 1; display: flex; flex-direction: column; gap: 14px; }
+    #concept-9 .ghost-row { height: 14px; border-radius: 7px; background: #eef1f4; }
+    #concept-9 .ghost-row.w1 { width: 90%; } #concept-9 .ghost-row.w2 { width: 65%; } #concept-9 .ghost-row.w3 { width: 78%; }
+    #concept-9 .roadmap { max-width: 1100px; margin: 4vh auto 9vh; padding: 0 6vw; }
+    #concept-9 .track { position: relative; display: flex; justify-content: space-between; padding-top: 26px; }
+    #concept-9 .track::before { content: ''; position: absolute; top: 12px; left: 5%; right: 5%; height: 3px; background: #e7e9ee; }
+    #concept-9 .step { flex: 1; text-align: center; padding: 0 16px; position: relative; }
+    #concept-9 .node { width: 26px; height: 26px; border-radius: 50%; background: #0d9488; color: #fff; font-weight: 700; font-size: .8rem; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; position: relative; z-index: 1; }
+    #concept-9 .step:nth-child(2) .node { background: #f97316; }
+    #concept-9 .step-label { font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; color: #94a0b0; margin-bottom: 6px; }
+    #concept-9 .step h3 { font-size: 1.05rem; margin: 0 0 8px; }
+    #concept-9 .step p { font-size: .85rem; color: #4b5768; line-height: 1.55; margin: 0; }
+    #concept-9 .dash-mock { flex: 1; border: 1px solid #e7e9ee; border-radius: 14px; overflow: hidden; box-shadow: 0 24px 60px rgba(20,30,45,.09); background: #fff; }
+    #concept-9 .dash-bar { display: flex; align-items: center; gap: 6px; padding: 10px 14px; border-bottom: 1px solid #eef1f4; background: #fafbfc; }
+    #concept-9 .dash-dot { width: 8px; height: 8px; border-radius: 50%; background: #e7e9ee; }
+    #concept-9 .dash-url { margin-left: 8px; font-size: .68rem; color: #94a0b0; font-family: system-ui, sans-serif; }
+    #concept-9 .dash-body { display: flex; }
+    #concept-9 .dash-side { width: 128px; flex: none; border-right: 1px solid #eef1f4; padding: 16px 10px; display: flex; flex-direction: column; gap: 3px; }
+    #concept-9 .dash-link { font-size: .7rem; color: #6b7688; padding: 7px 9px; border-radius: 6px; }
+    #concept-9 .dash-link.active { background: #e7f7f4; color: #0d9488; font-weight: 700; }
+    #concept-9 .dash-main { flex: 1; padding: 16px 18px 18px; min-width: 0; }
+    #concept-9 .dash-greet { font-size: .8rem; font-weight: 700; margin: 0 0 2px; }
+    #concept-9 .dash-greet-sub { font-size: .66rem; color: #94a0b0; }
+    #concept-9 .dash-prog { margin-top: 12px; background: #f7f8fa; border-radius: 9px; padding: 10px 12px; }
+    #concept-9 .dash-prog-row { display: flex; justify-content: space-between; font-size: .68rem; font-weight: 600; margin-bottom: 6px; }
+    #concept-9 .dash-track { height: 5px; border-radius: 3px; background: #e7e9ee; }
+    #concept-9 .dash-fill { height: 100%; border-radius: 3px; background: #0d9488; }
+    #concept-9 .dash-mini-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 12px; }
+    #concept-9 .dash-mini { background: #f7f8fa; border-radius: 8px; padding: 9px; font-size: .6rem; color: #4b5768; font-weight: 600; }
+    #concept-9 .dash-mini-bar { height: 4px; border-radius: 2px; background: #e7e9ee; margin-top: 7px; }
+    #concept-9 .dash-mini-fill { height: 100%; border-radius: 2px; }
+    #concept-9 .section-head { max-width: 640px; margin: 0 auto 34px; padding: 0 6vw; text-align: left; }
+    #concept-9 .section-head h2 { font-size: clamp(1.5rem, 3vw, 2.1rem); font-weight: 800; margin: 0 0 10px; }
+    #concept-9 .section-head p { color: #4b5768; font-size: .95rem; line-height: 1.6; margin: 0; }
+    #concept-9 .tools { max-width: 1100px; margin: 6vh auto 2vh; }
+    #concept-9 .tools-group { max-width: 1100px; margin: 0 auto 7vh; padding: 0 6vw; }
+    #concept-9 .tools-label { font-size: .74rem; letter-spacing: .08em; text-transform: uppercase; font-weight: 700; color: #94a0b0; margin-bottom: 16px; }
+    #concept-9 .tools-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; }
+    #concept-9 .tool-card { border: 1px solid #e7e9ee; border-radius: 12px; padding: 20px 16px; }
+    #concept-9 .tool-chip { width: 34px; height: 34px; border-radius: 9px; display: flex; align-items: center; justify-content: center; font-size: 1rem; margin-bottom: 14px; background: #e7f7f4; }
+    #concept-9 .tools-group.exams .tool-chip { background: #fef1e7; }
+    #concept-9 .tool-card h4 { font-size: .9rem; margin: 0 0 6px; }
+    #concept-9 .tool-card p { font-size: .78rem; color: #4b5768; line-height: 1.5; margin: 0; }
+    #concept-9 .tiers { max-width: 900px; margin: 0 auto 9vh; padding: 0 6vw; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    #concept-9 .tier-card { border: 1px solid #e7e9ee; border-radius: 14px; padding: 30px 26px; }
+    #concept-9 .tier-card.featured { border-color: #0d9488; box-shadow: 0 10px 28px rgba(13,148,136,.12); position: relative; }
+    #concept-9 .tier-badge { position: absolute; top: -12px; right: 24px; background: #0d9488; color: #fff; font-size: .66rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; padding: 5px 12px; border-radius: 999px; }
+    #concept-9 .tier-name { font-size: .76rem; text-transform: uppercase; letter-spacing: .08em; color: #94a0b0; font-weight: 700; margin-bottom: 12px; }
+    #concept-9 .tier-price { font-size: 1.9rem; font-weight: 800; margin-bottom: 16px; }
+    #concept-9 .tier-price span { font-size: .82rem; font-weight: 500; color: #94a0b0; margin-left: 6px; }
+    #concept-9 .tier-list { display: flex; flex-direction: column; gap: 9px; margin-bottom: 22px; }
+    #concept-9 .tier-item { font-size: .84rem; color: #4b5768; display: flex; gap: 9px; align-items: flex-start; line-height: 1.4; }
+    #concept-9 .tier-item .ok { color: #0d9488; font-weight: 700; flex: none; }
+    #concept-9 .tier-item .off { color: #c3cad3; font-weight: 700; flex: none; }
+    #concept-9 .tier-item.off-item { color: #94a0b0; }
+    #concept-9 .tier-cta { display: inline-block; padding: 11px 20px; border-radius: 8px; font-size: .84rem; font-weight: 700; border: 1px solid #d7dce3; color: #1a2230; }
+    #concept-9 .tier-cta.featured { background: #0d9488; color: #fff; border-color: #0d9488; }
+    #concept-9 .final { text-align: center; padding: 9vh 6vw; background: linear-gradient(135deg, #0d9488, #0a6d63); color: #fff; }
+    #concept-9 .final h2 { font-size: clamp(1.6rem, 3.4vw, 2.3rem); margin: 0 0 16px; font-weight: 800; }
+    #concept-9 .final p { opacity: .92; margin: 0 0 26px; font-size: 1rem; }
+    #concept-9 .final .cta-solid { background: #fff; color: #0d9488; }
+    #concept-9 .foot { padding: 26px 6vw; font-size: .76rem; color: #94a0b0; text-align: center; border-top: 1px solid #e7e9ee; }
+    @media (max-width: 900px) { #concept-9 .tools-grid { grid-template-columns: repeat(3, 1fr); } }
+    @media (max-width: 760px) {
+      #concept-9 .hero { flex-direction: column; }
+      #concept-9 .track { flex-direction: column; gap: 30px; }
+      #concept-9 .track::before { display: none; }
+      #concept-9 .tools-grid { grid-template-columns: repeat(2, 1fr); }
+      #concept-9 .tiers { grid-template-columns: 1fr; }
+    }
+
+    /* ========== 10. NOTEBOOK / JOURNAL ========== */
+    #concept-10 {
+      background: #fdf8ec; color: #2b3a67; font-family: system-ui, sans-serif; position: relative;
+      background-image: repeating-linear-gradient(#fdf8ec 0 31px, #e3dcc8 31px 32px);
+      padding-left: 46px;
+    }
+    #concept-10 .margin-line { position: absolute; top: 0; bottom: 0; left: 34px; width: 2px; background: #d1495b; opacity: .6; }
+    #concept-10 .nav { padding: 26px 6vw 6px; display: flex; justify-content: space-between; align-items: center; }
+    #concept-10 .logo { font-family: 'Caveat', cursive; font-size: 1.6rem; font-weight: 700; }
+    #concept-10 .tape-btn { background: #ffe9a8; color: #2b3a67; padding: 9px 18px; font-family: system-ui, sans-serif; font-weight: 700; font-size: .82rem; box-shadow: 0 3px 6px rgba(0,0,0,.15); transform: rotate(-3deg); display: inline-block; }
+    #concept-10 .hero { padding: 4vh 6vw 2vh; max-width: 820px; }
+    #concept-10 h1 { font-family: 'Caveat', cursive; font-size: clamp(2.2rem, 5vw, 3.4rem); font-weight: 700; margin: 0 0 6px; line-height: 1.1; }
+    #concept-10 .pasted { background: #fff; box-shadow: 0 3px 10px rgba(0,0,0,.12); padding: 16px 20px; max-width: 46ch; transform: rotate(1deg); margin: 18px 0 26px; font-size: .98rem; line-height: 1.6; }
+    #concept-10 .cta-scribble { display: inline-block; font-family: 'Caveat', cursive; font-size: 1.3rem; font-weight: 700; color: #d1495b; border-bottom: 2px solid #d1495b; }
+    #concept-10 .polaroids { display: flex; gap: 24px; padding: 2vh 6vw 5vh; flex-wrap: wrap; }
+    #concept-10 .polaroid { background: #fff; padding: 10px 10px 30px; box-shadow: 0 6px 14px rgba(0,0,0,.15); width: 200px; position: relative; }
+    #concept-10 .polaroid:nth-child(1) { transform: rotate(-4deg); }
+    #concept-10 .polaroid:nth-child(2) { transform: rotate(3deg); margin-top: 20px; }
+    #concept-10 .polaroid:nth-child(3) { transform: rotate(-2deg); }
+    #concept-10 .polaroid img { width: 100%; filter: sepia(.15); }
+    #concept-10 .polaroid .tape { position: absolute; top: -10px; left: 50%; transform: translateX(-50%) rotate(-4deg); width: 60px; height: 22px; background: rgba(255,230,150,.7); }
+    #concept-10 .polaroid figcaption { font-family: 'Caveat', cursive; font-size: 1.05rem; text-align: center; margin-top: 8px; color: #2b3a67; }
+    #concept-10 .notes { display: flex; gap: 24px; flex-wrap: wrap; padding: 2vh 6vw 8vh; }
+    #concept-10 .sticky { width: 220px; padding: 20px; font-size: .9rem; line-height: 1.5; box-shadow: 2px 4px 8px rgba(0,0,0,.15); position: relative; }
+    #concept-10 .sticky:nth-child(1) { background: #fff3a3; transform: rotate(-3deg); }
+    #concept-10 .sticky:nth-child(2) { background: #ffd6e0; transform: rotate(2deg); margin-top: 16px; }
+    #concept-10 .sticky:nth-child(3) { background: #cfeaff; transform: rotate(-2deg); }
+    #concept-10 .sticky .pin { position: absolute; top: -10px; left: 50%; transform: translateX(-50%); font-size: 1.1rem; }
+    #concept-10 .sticky h4 { font-family: 'Caveat', cursive; font-size: 1.3rem; margin: 0 0 8px; }
+    #concept-10 .sticky p { margin: 0; }
+    #concept-10 .checklist { max-width: 480px; margin: 0 6vw 9vh; font-size: 1.15rem; }
+    #concept-10 .checklist div { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; font-family: 'Caveat', cursive; font-size: 1.3rem; }
+    #concept-10 .checklist .box { width: 22px; height: 22px; border: 2px solid #2b3a67; flex: none; }
+  </style>
+</head>
+<body>
+  <div class="switcher">
+    <span class="switcher-title">Homepage-Konzepte — internes Vergleichsdraft, nicht live, noindex</span>
+    <div class="switcher-tabs" id="tabs">
+      <button data-target="concept-1">1 · Swiss Grid</button>
+      <button data-target="concept-2">2 · Editorial</button>
+      <button data-target="concept-3">3 · Brutalist</button>
+      <button data-target="concept-4">4 · Dark Tech</button>
+      <button data-target="concept-5">5 · Playful</button>
+      <button data-target="concept-6">6 · Luxury</button>
+      <button data-target="concept-7">7 · Official</button>
+      <button data-target="concept-8">8 · Vintage</button>
+      <button data-target="concept-9">9 · Roadmap</button>
+      <button data-target="concept-10">10 · Notebook</button>
+    </div>
+  </div>
+
+  <main>
+
+    <!-- ================= 1. SWISS GRID ================= -->
+    <section id="concept-1" class="concept-panel">
+      <div class="annot"><b>1 · Swiss Grid / Clinical Minimalist</b> — strict grid, restrained teal accent, Inter type. Conveys precision and clinical trustworthiness.</div>
+      <nav class="nav">
+        <div class="logo">DeutschAcademy</div>
+        <div class="navlinks"><span>Kurse</span><span>Prüfung</span><span>Preise</span></div>
+        <a class="cta">Jetzt starten</a>
+      </nav>
+      <div class="hero">
+        <div class="hero-copy">
+          <span class="eyebrow">Deutsch von A1 bis C1</span>
+          <h1>Strukturiert Deutsch lernen, ohne Umwege.</h1>
+          <p class="sub">Grammatik, Alltagsdeutsch und Sprechpraxis — systematisch aufgebaut für alle, die Deutsch wirklich sprechen wollen.</p>
+          <a class="cta" style="align-self:flex-start;">Kostenlos starten</a>
+        </div>
+        <div class="hero-img img-wrap">
+          <img src="https://picsum.photos/seed/swiss-german/900/1100" alt="" />
+          <span class="ph-tag">Platzhalterbild · Lorem Picsum</span>
+        </div>
+      </div>
+      <div class="pillars">
+        <div class="pillar"><span class="num">01</span><h3>Grammatik</h3><p>60+ Grammatikthemen von Dativ bis Konjunktiv II — klar erklärt und geübt.</p></div>
+        <div class="pillar"><span class="num">02</span><h3>Alltagsdeutsch</h3><p>Echte Alltagsszenarien statt Lehrbuchdialoge: Ämter, Wohnungssuche, der Alltag.</p></div>
+        <div class="pillar"><span class="num">03</span><h3>Sprechpraxis</h3><p>Rollenspiele, Partnerübungen und Bildbeschreibungen, bevor es ernst wird.</p></div>
+      </div>
+      <footer>DeutschAcademy — Deutsch lernen von A1 bis C1</footer>
+    </section>
+
+    <!-- ================= 2. EDITORIAL STORY ================= -->
+    <section id="concept-2" class="concept-panel">
+      <div class="annot"><b>2 · Editorial Story / Warm Human</b> — magazine narrative, Fraunces serif, terracotta palette, alternating photo/text blocks. Conveys empathy and story.</div>
+      <nav class="nav"><div class="logo">DeutschAcademy</div></nav>
+      <div class="hero">
+        <div class="kicker">Für alle, die Deutsch wirklich sprechen wollen</div>
+        <h1>Vom ersten Satz bis zur bestandenen Prüfung.</h1>
+        <p class="sub">Du bringst die Motivation mit — wir bringen dir die Sprache dafür bei: Grammatik, Alltagsdeutsch und echte Gespräche, für Goethe und telc.</p>
+        <a class="cta-link">Kostenlos starten →</a>
+      </div>
+      <div class="hero-photo img-wrap">
+        <img src="https://picsum.photos/seed/story-german/1200/700" alt="" />
+        <span class="ph-tag">Platzhalterbild · Lorem Picsum</span>
+      </div>
+      <div class="story">
+        <div class="row">
+          <div class="ph-box img-wrap"><img src="https://picsum.photos/seed/story-vocab/700/525" alt="" /><span class="ph-tag">Platzhalter</span></div>
+          <div class="txt"><div class="chapter">Kapitel eins — Grammatik</div><h3>Die Sprache wirklich verstehen</h3><p>60+ Grammatikthemen — von Dativ und Genitiv bis Passiv und Konjunktiv II — nicht abstrakt, sondern anwendbar.</p></div>
+        </div>
+        <div class="row rev">
+          <div class="ph-box img-wrap"><img src="https://picsum.photos/seed/story-alltag/700/525" alt="" /><span class="ph-tag">Platzhalter</span></div>
+          <div class="txt"><div class="chapter">Kapitel zwei — Alltagsdeutsch</div><h3>Sätze, die im echten Leben ankommen</h3><p>Alltagsszenarien wie Behördengänge, Wohnungssuche und das Café um die Ecke — statt Lehrbuchdialogen.</p></div>
+        </div>
+        <div class="row">
+          <div class="ph-box img-wrap"><img src="https://picsum.photos/seed/story-sprechen/700/525" alt="" /><span class="ph-tag">Platzhalter</span></div>
+          <div class="txt"><div class="chapter">Kapitel drei — Sprechpraxis</div><h3>Sprechen, bevor es zählt</h3><p>Rollenspiele, Partnerübungen und Bildbeschreibungen in Ruhe üben, bevor es die echte Prüfung ist.</p></div>
+        </div>
+      </div>
+      <div class="closing">
+        <p>Deine Reise zu fließendem Deutsch beginnt mit der ersten Seite.</p>
+        <a class="cta-link">Jetzt loslegen →</a>
+      </div>
+    </section>
+
+    <!-- ================= 3. BRUTALIST ================= -->
+    <section id="concept-3" class="concept-panel">
+      <div class="annot"><b>3 · Brutalist</b> — raw, high-contrast, imperative. Black/yellow/red, Archivo Black, hard offset shadows. Conveys urgency and directness.</div>
+      <nav class="nav"><div class="logo">DEUTSCHACADEMY</div><a class="cta">START</a></nav>
+      <div class="hero">
+        <h1>LERN <span>DEUTSCH</span> RICHTIG.</h1>
+        <div class="sub-box">Grammatik. Alltagsdeutsch. Sprechpraxis. Kein Umweg.</div>
+        <div class="hero-img img-wrap"><img src="https://picsum.photos/seed/brutal-german/800/900" alt="" /><span class="ph-tag">Platzhalter · Picsum</span></div>
+        <a class="big-cta">JETZT STARTEN →</a>
+      </div>
+      <div class="pillars">
+        <div class="pillar"><span class="bignum">1</span><h3>Grammatik</h3><p>60+ Grammatikthemen — von Dativ bis Konjunktiv II.</p></div>
+        <div class="pillar"><span class="bignum">2</span><h3>Alltagsdeutsch</h3><p>Echte Situationen statt Lehrbuchdialoge.</p></div>
+        <div class="pillar"><span class="bignum">3</span><h3>Sprechpraxis</h3><p>Rollenspiele und Bildbeschreibungen — geübt, nicht improvisiert.</p></div>
+      </div>
+    </section>
+
+    <!-- ================= 4. DARK TECH ================= -->
+    <section id="concept-4" class="concept-panel">
+      <div class="annot"><b>4 · Dark Tech / SaaS</b> — dark glassmorphism, gradient mesh, Space Grotesk. Deliberately photo-free (abstract imagery, not stock photography). Conveys modern product confidence.</div>
+      <div class="mesh"></div>
+      <div class="stage">
+        <nav class="nav">
+          <div class="logo">DeutschAcademy</div>
+          <div class="navlinks"><span>Produkt</span><span>Prüfung</span><span>Preise</span></div>
+          <a class="cta-pill">Start →</a>
+        </nav>
+        <div class="hero">
+          <div class="eyebrow">Deutsch von A1 bis C1</div>
+          <h1>Deine Sprach-Infrastruktur fürs Deutschlernen.</h1>
+          <p class="sub">Ein System für echtes Deutsch: Grammatiktraining, Alltagsszenarien und simulierte Sprechpraxis — an einem Ort.</p>
+          <a class="cta-pill lg">Kostenlos starten</a>
+        </div>
+        <div class="grid">
+          <div class="card glass"><div class="chip"></div><h3>Grammatik</h3><p>60+ Grammatikthemen — von Dativ bis Konjunktiv II, mit durchdachten Übungen.</p></div>
+          <div class="card glass"><div class="chip"></div><h3>Alltagsdeutsch</h3><p>Echte Alltagsszenarien statt Lehrbuchdialoge: Ämter, Wohnungssuche, der Alltag.</p></div>
+          <div class="card glass"><div class="chip"></div><h3>Sprechpraxis</h3><p>Simulierte Rollenspiele, Partnerübungen und Bildbeschreibungen.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= 5. PLAYFUL ================= -->
+    <section id="concept-5" class="concept-panel">
+      <div class="annot"><b>5 · Playful</b> — bright rounded shapes, Baloo 2, blob imagery, step-path layout. Conveys approachability and low pressure.</div>
+      <nav class="nav"><div class="logo">DeutschAcademy</div><a class="cta-pill">Los geht's</a></nav>
+      <div class="hero">
+        <h1>Bereit für <span class="w1">dein</span> <span class="w2">nächstes</span> <span class="w3">Level</span>? 🇩🇪</h1>
+        <p class="sub">Übe Grammatik, probier echte Alltagsszenarien aus und leg los mit Sprechpraxis — Schritt für Schritt, ganz ohne Stress.</p>
+        <div class="blob-wrap">
+          <div class="blob img-wrap"><img src="https://picsum.photos/seed/playful-german/700/700" alt="" /></div>
+          <div class="sticker s1">📚</div>
+          <div class="sticker s2">💬</div>
+        </div>
+        <div style="text-align:center;font-size:.7rem;color:#7a6b30;margin-top:8px;">Platzhalterbild · Lorem Picsum</div>
+      </div>
+      <div class="path">
+        <div class="node"><div class="circle">📚</div><h3>Grammatik</h3><p>60+ Grammatikthemen von Dativ bis Konjunktiv II lernen.</p></div>
+        <div class="node"><div class="circle">🗺️</div><h3>Alltagsdeutsch</h3><p>Echte Alltagsszenarien statt Lehrbuchdialoge üben.</p></div>
+        <div class="node"><div class="circle">💬</div><h3>Sprechpraxis</h3><p>Rollenspiele und Bildbeschreibungen spielerisch üben.</p></div>
+      </div>
+      <div class="banner">
+        <h3>Starte kostenlos — dein Tempo, dein Deutsch.</h3>
+        <a class="cta-pill">Jetzt loslegen 🎉</a>
+      </div>
+    </section>
+
+    <!-- ================= 6. LUXURY ================= -->
+    <section id="concept-6" class="concept-panel">
+      <div class="annot"><b>6 · Luxury / Premium</b> — black/gold, Cormorant Garamond, full-bleed photography, generous negative space. Conveys prestige and exclusivity.</div>
+      <nav class="nav"><div class="logo">DeutschAcademy</div><div class="hairline"></div></nav>
+      <div class="hero">
+        <div class="hero-bg img-wrap"><img src="https://picsum.photos/seed/luxury-german/1600/900" alt="" /><span class="ph-tag">Platzhalterbild · Lorem Picsum</span></div>
+        <div class="hero-copy">
+          <h1>Dein Weg zu fließendem Deutsch verdient eine erstklassige Vorbereitung.</h1>
+          <p class="sub">Grammatik, Alltagsdeutsch und Sprechpraxis — sorgfältig, präzise, auf deinem Niveau.</p>
+          <a class="cta-outline">Jetzt beginnen</a>
+        </div>
+      </div>
+      <div class="list">
+        <div class="item"><div class="roman">I</div><div><h3>Grammatik</h3><p>60+ Grammatikthemen — von Dativ bis Konjunktiv II.</p></div></div>
+        <div class="item"><div class="roman">II</div><div><h3>Alltagsdeutsch</h3><p>Echte Alltagsszenarien statt Lehrbuchdialoge.</p></div></div>
+        <div class="item"><div class="roman">III</div><div><h3>Sprechpraxis</h3><p>Rollenspiele und Bildbeschreibungen — geübt in aller Ruhe.</p></div></div>
+      </div>
+      <div class="closing"><p>Bereit für den nächsten Schritt.</p><a class="cta-outline">Jetzt starten</a></div>
+    </section>
+
+    <!-- ================= 7. GOVERNMENT / OFFICIAL ================= -->
+    <section id="concept-7" class="concept-panel">
+      <div class="annot"><b>7 · Government / Official Trust</b> — muted blue/grey, Roboto Slab, checklist structure resembling an official portal. Conveys credibility and procedure.</div>
+      <div class="topstrip">Informationsangebot zum strukturierten Deutschlernen — A1 bis C1</div>
+      <nav class="nav">
+        <div class="logo">DeutschAcademy</div>
+        <div class="navlinks"><a href="#">Übersicht</a><a href="#">Prüfung</a><a href="#">Kontakt</a></div>
+      </nav>
+      <div class="portal">
+        <div class="card">
+          <div class="doc-icon"></div>
+          <h1>Deutsch lernen — strukturiert, von A1 bis C1</h1>
+          <p class="sub">Ein strukturiertes Lernangebot für alle, die Deutsch wirklich sprechen wollen: Grammatik, Alltagsdeutsch und Sprechpraxis.</p>
+          <a class="cta-official">Jetzt beginnen</a>
+        </div>
+      </div>
+      <div class="overview">
+        <div class="overview-box">
+          <h2>Leistungsübersicht</h2>
+          <div class="check-row"><div class="check">✓</div><div><h4>Grammatik</h4><p>60+ Grammatikthemen — von Dativ bis Konjunktiv II, mit durchdachten Übungen.</p></div></div>
+          <div class="check-row"><div class="check">✓</div><div><h4>Alltagsdeutsch</h4><p>Echte Alltagsszenarien statt Lehrbuchdialoge: Ämter, Wohnungssuche, der Alltag.</p></div></div>
+          <div class="check-row"><div class="check">✓</div><div><h4>Sprechpraxis</h4><p>Rollenspiele, Partnerübungen und Bildbeschreibungen üben.</p></div></div>
+        </div>
+      </div>
+      <footer>DeutschAcademy — Lernangebot für Deutsch als Fremdsprache. Kein amtliches Angebot.</footer>
+    </section>
+
+    <!-- ================= 8. VINTAGE POSTER ================= -->
+    <section id="concept-8" class="concept-panel">
+      <div class="annot"><b>8 · Vintage Poster</b> — 1970s travel-poster nostalgia, Abril Fatface, mustard/terracotta/forest palette, postcard framing. Conveys optimism and journey.</div>
+      <nav class="nav"><div class="ribbon">DeutschAcademy</div></nav>
+      <div class="hero">
+        <h1>Auf nach <span class="accent">Deutschland</span> — sprachlich gut vorbereitet.</h1>
+        <p class="sub">Dein Weg zu fließendem Deutsch: Grammatik, Alltagsdeutsch und Sprechpraxis.</p>
+        <div class="stamp">Jetzt starten</div>
+        <figure class="postcard img-wrap">
+          <img src="https://picsum.photos/seed/vintage-german/700/900" alt="" />
+          <figcaption>Platzhalterbild · Lorem Picsum</figcaption>
+        </figure>
+      </div>
+      <div class="menu">
+        <div class="menu-box">
+          <h2>Was dich erwartet</h2>
+          <div class="menu-item"><div class="badge">1</div><div class="title">Grammatik</div><div class="leader"></div></div>
+          <p class="desc" style="margin:-14px 0 18px 38px;">60+ Grammatikthemen — von Dativ bis Konjunktiv II, mit durchdachten Übungen.</p>
+          <div class="menu-item"><div class="badge">2</div><div class="title">Alltagsdeutsch</div><div class="leader"></div></div>
+          <p class="desc" style="margin:-14px 0 18px 38px;">Echte Alltagsszenarien statt Lehrbuchdialoge: Ämter, Wohnungssuche, der Alltag.</p>
+          <div class="menu-item"><div class="badge">3</div><div class="title">Sprechpraxis</div><div class="leader"></div></div>
+          <p class="desc" style="margin:-14px 0 0 38px;">Rollenspiele, Partnerübungen und Bildbeschreibungen üben.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= 9. INFOGRAPHIC / ROADMAP ================= -->
+    <section id="concept-9" class="concept-panel">
+      <div class="annot"><b>9 · Infographic / Roadmap</b> — step-based horizontal timeline, Sora, teal/orange. Deliberately photo-free (diagram-led, not stock photography). Conveys clarity and process.</div>
+      <nav class="nav">
+        <div class="logo"><span class="logo-mark"></span>DeutschAcademy</div>
+        <a class="cta-solid">Jetzt starten</a>
+      </nav>
+      <div class="hero">
+        <div class="hero-copy">
+          <div class="eyebrow">Deutsch von A1 bis C1</div>
+          <h1>Dein Weg zu fließendem Deutsch — in drei klaren Schritten.</h1>
+          <p class="sub">Grammatik aufbauen, Alltagsdeutsch üben, Sprechpraxis meistern — ein klarer Ablauf statt loser Übungen.</p>
+          <div class="progress"><span></span><span></span><span style="background:#e7e9ee;"></span></div>
+          <a class="cta-solid">Kostenlos starten</a>
+        </div>
+        <div class="dash-mock">
+          <div class="dash-bar">
+            <div class="dash-dot"></div><div class="dash-dot"></div><div class="dash-dot"></div>
+            <div class="dash-url">deutschacademy.com/dashboard</div>
+          </div>
+          <div class="dash-body">
+            <div class="dash-side">
+              <div class="dash-link active">Dashboard</div>
+              <div class="dash-link">Grammatik</div>
+              <div class="dash-link">Wortschatz</div>
+              <div class="dash-link">Sprechen</div>
+              <div class="dash-link">Prüfungen</div>
+            </div>
+            <div class="dash-main">
+              <div class="dash-greet">Guten Morgen, Ana</div>
+              <div class="dash-greet-sub">Tag 34 · B1.2 in Bearbeitung</div>
+              <div class="dash-prog">
+                <div class="dash-prog-row"><span>Niveau B1 · Selbstständig</span><span>62%</span></div>
+                <div class="dash-track"><div class="dash-fill" style="width:62%"></div></div>
+              </div>
+              <div class="dash-mini-grid">
+                <div class="dash-mini">A2 · Alltag<div class="dash-mini-bar"><div class="dash-mini-fill" style="width:100%;background:#0d9488;"></div></div></div>
+                <div class="dash-mini">B1 · Beruf<div class="dash-mini-bar"><div class="dash-mini-fill" style="width:62%;background:#f97316;"></div></div></div>
+                <div class="dash-mini">Sprechpraxis<div class="dash-mini-bar"><div class="dash-mini-fill" style="width:24%;background:#0d9488;"></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="roadmap">
+        <div class="track">
+          <div class="step"><div class="node">1</div><div class="step-label">Schritt 1</div><h3>Grammatik</h3><p>60+ Grammatikthemen — von Dativ bis Konjunktiv II, mit durchdachten Übungen.</p></div>
+          <div class="step"><div class="node">2</div><div class="step-label">Schritt 2</div><h3>Alltagsdeutsch</h3><p>Echte Alltagsszenarien statt Lehrbuchdialoge: Ämter, Wohnungssuche, der Alltag.</p></div>
+          <div class="step"><div class="node">3</div><div class="step-label">Schritt 3</div><h3>Sprechpraxis</h3><p>Rollenspiele, Partnerübungen und Bildbeschreibungen üben.</p></div>
+        </div>
+      </div>
+
+      <div class="section-head">
+        <h2>Alle Werkzeuge, an einem Ort</h2>
+        <p>Kein Zusammensuchen zwischen Apps und Karteikarten — Übungen und Prüfungsvorbereitung leben im selben Dashboard.</p>
+      </div>
+      <div class="tools-group">
+        <div class="tools-label">Übungen</div>
+        <div class="tools-grid">
+          <div class="tool-card"><div class="tool-chip">🧩</div><h4>Grammatik</h4><p>60+ Themen von Dativ bis Konjunktiv II, mit Übungen zu jedem Kapitel.</p></div>
+          <div class="tool-card"><div class="tool-chip">📚</div><h4>Wortschatz</h4><p>Vokabeltraining nach Themen und Niveau, zum Wiederholen und Festigen.</p></div>
+          <div class="tool-card"><div class="tool-chip">🔤</div><h4>Artikel-Trainer</h4><p>Der, die, das gezielt üben — der Teil, der am längsten hängen bleibt.</p></div>
+          <div class="tool-card"><div class="tool-chip">✍️</div><h4>Lesen &amp; Schreiben</h4><p>Texte verstehen und eigene Texte verfassen, im Prüfungsformat.</p></div>
+          <div class="tool-card"><div class="tool-chip">🗣️</div><h4>Sprechen</h4><p>Rollenspiele, Partnerübungen und Bildbeschreibungen üben.</p></div>
+        </div>
+      </div>
+      <div class="tools-group exams">
+        <div class="tools-label">Prüfungen</div>
+        <div class="tools-grid">
+          <div class="tool-card"><div class="tool-chip">🎓</div><h4>Goethe</h4><p>Vorbereitung im Format der Goethe-Prüfungen.</p></div>
+          <div class="tool-card"><div class="tool-chip">📝</div><h4>telc</h4><p>Vorbereitung im Format der telc-Prüfungen.</p></div>
+          <div class="tool-card"><div class="tool-chip">🎓</div><h4>TestDaF</h4><p>Vorbereitung auf den TestDaF für Studium und Beruf.</p></div>
+          <div class="tool-card"><div class="tool-chip">🪪</div><h4>DTZ</h4><p>Vorbereitung auf den Deutsch-Test für Zuwanderer.</p></div>
+          <div class="tool-card"><div class="tool-chip">🏛️</div><h4>Leben in Deutschland</h4><p>Vorbereitung auf den Orientierungskurs-Test.</p></div>
+        </div>
+      </div>
+
+      <div class="section-head">
+        <h2>Kostenlos starten, aufrüsten, wenn die Prüfung ansteht</h2>
+        <p>Der komplette Grundkurs ist frei. Premium schaltet die Prüfungsvorbereitung frei.</p>
+      </div>
+      <div class="tiers">
+        <div class="tier-card">
+          <div class="tier-name">Free</div>
+          <div class="tier-price">€0<span>für immer</span></div>
+          <div class="tier-list">
+            <div class="tier-item"><span class="ok">✓</span><span>Vollständiger A1–C1-Grundkurs</span></div>
+            <div class="tier-item"><span class="ok">✓</span><span>Einstufungstest &amp; strukturierter Lernpfad</span></div>
+            <div class="tier-item"><span class="ok">✓</span><span>60+ Grammatikthemen im Detail</span></div>
+            <div class="tier-item off-item"><span class="off">—</span><span>Prüfungssimulationen</span></div>
+            <div class="tier-item off-item"><span class="off">—</span><span>Korrektur durch echte Lehrkräfte</span></div>
+          </div>
+          <a class="tier-cta">Kostenlos starten</a>
+        </div>
+        <div class="tier-card featured">
+          <div class="tier-badge">Beliebt</div>
+          <div class="tier-name">Premium</div>
+          <div class="tier-price">€XX<span>/Monat (TBD)</span></div>
+          <div class="tier-list">
+            <div class="tier-item"><span class="ok">✓</span><span>Alles aus Free</span></div>
+            <div class="tier-item"><span class="ok">✓</span><span>Prüfungssimulationen (Goethe &amp; telc)</span></div>
+            <div class="tier-item"><span class="ok">✓</span><span>Schreibkorrektur durch echte Lehrkräfte</span></div>
+            <div class="tier-item"><span class="ok">✓</span><span>Sprech- und Rollenspielpraxis</span></div>
+          </div>
+          <a class="tier-cta featured">Premium starten</a>
+        </div>
+      </div>
+
+      <div class="final">
+        <h2>Dein nächster Schritt zu fließendem Deutsch.</h2>
+        <p>Kostenlos starten, dein Niveau testen, in deinem Tempo weitermachen.</p>
+        <a class="cta-solid">Kostenlos starten</a>
+      </div>
+      <div class="foot">DeutschAcademy — Deutsch lernen von A1 bis C1</div>
+    </section>
+
+    <!-- ================= 10. NOTEBOOK / JOURNAL ================= -->
+    <section id="concept-10" class="concept-panel">
+      <div class="annot"><b>10 · Notebook / Journal</b> — handwritten scrapbook diary, Caveat, ruled paper, sticky notes and polaroids. Conveys intimacy and personal progress.</div>
+      <div class="margin-line"></div>
+      <nav class="nav"><div class="logo">Mein Deutsch-Tagebuch</div><span class="tape-btn">Jetzt starten</span></nav>
+      <div class="hero">
+        <h1>Liebes Tagebuch: heute übe ich Deutsch.</h1>
+        <div class="pasted">Meine Notizen zu Grammatik, Alltagsszenarien und Sprechpraxis — Seite für Seite, bis Deutsch kein Rätsel mehr ist.</div>
+        <a class="cta-scribble">Jetzt anfangen →</a>
+      </div>
+      <div class="polaroids">
+        <figure class="polaroid"><div class="tape"></div><img src="https://picsum.photos/seed/notebook-german-1/300/300" alt="" /><figcaption>Grammatik, Tag 1</figcaption></figure>
+        <figure class="polaroid"><div class="tape"></div><img src="https://picsum.photos/seed/notebook-german-2/300/340" alt="" /><figcaption>Alltagsdeutsch geübt</figcaption></figure>
+        <figure class="polaroid"><div class="tape"></div><img src="https://picsum.photos/seed/notebook-german-3/300/300" alt="" /><figcaption>Erstes Gespräch</figcaption></figure>
+      </div>
+      <div style="padding:0 6vw;font-size:.7rem;color:#7a86a8;margin-top:-40px;margin-bottom:20px;">Platzhalterbilder · Lorem Picsum</div>
+      <div class="notes">
+        <div class="sticky"><span class="pin">📌</span><h4>Grammatik</h4><p>60+ Grammatikthemen — von Dativ bis Konjunktiv II, mit durchdachten Übungen.</p></div>
+        <div class="sticky"><span class="pin">📌</span><h4>Alltagsdeutsch</h4><p>Echte Alltagsszenarien statt Lehrbuchdialoge: Ämter, Wohnungssuche, der Alltag.</p></div>
+        <div class="sticky"><span class="pin">📌</span><h4>Sprechpraxis</h4><p>Rollenspiele, Partnerübungen und Bildbeschreibungen üben.</p></div>
+      </div>
+      <div class="checklist">
+        <div><span class="box"></span> Grammatik üben</div>
+        <div><span class="box"></span> Alltagsszenario üben</div>
+        <div><span class="box"></span> Rollenspiel spielen</div>
+      </div>
+    </section>
+
+  </main>
+
+  <script type="module">
+    const buttons = [...document.querySelectorAll('#tabs button[data-target]')];
+    const panels = [...document.querySelectorAll('.concept-panel')];
+    function show(id) {
+      panels.forEach((p) => p.classList.toggle('active', p.id === id));
+      buttons.forEach((b) => b.classList.toggle('active', b.dataset.target === id));
+      window.scrollTo(0, 0);
+      try { localStorage.setItem('concepts-active', id); } catch (e) {}
+    }
+    buttons.forEach((b) => b.addEventListener('click', () => show(b.dataset.target)));
+    let saved = null;
+    try { saved = localStorage.getItem('concepts-active'); } catch (e) {}
+    show(saved && document.getElementById(saved) ? saved : 'concept-1');
+  </script>
+</body>
+</html>

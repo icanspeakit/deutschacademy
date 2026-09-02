@@ -4,6 +4,9 @@ import PracticeHeader from "../../components/PracticeHeader.astro";
 import ExamPractice from "../../components/ExamPractice.astro";
 import "../../styles/practice.css";
 import "../../styles/pruefungen.css";
+import lid from "../../data/leben-in-deutschland.json";
+
+const { meta, questions } = lid;
 ---
 <Layout
   title="Leben in Deutschland – DeutschAcademy"
@@ -41,35 +44,34 @@ import "../../styles/pruefungen.css";
     </section>
 
     <section class="exam-section">
-      <!-- GENERIC FORMAT INFO: no deutschacademy source material for this exam yet -->
       <h2>Format</h2>
       <div class="format-table-wrap">
         <table class="format-table">
           <thead><tr><th>Teil</th><th>Was wird geprüft</th><th>Umfang</th></tr></thead>
           <tbody>
-            <tr><td>Bundesweiter Teil</td><td>Fragen zu Demokratie, Geschichte und Gesellschaft in Deutschland, aus einem veröffentlichten Fragenkatalog</td><td>30 von insgesamt 33 Fragen</td></tr>
-            <tr><td>Landesspezifischer Teil</td><td>Fragen zum jeweiligen Bundesland</td><td>3 von 33 Fragen</td></tr>
+            <tr><td>Bundesweiter Teil</td><td>Fragen zu Demokratie, Geschichte, Grundrechten, Arbeit und Gesellschaft in Deutschland</td><td>{meta.federalQuestions} von insgesamt {meta.totalQuestions} Fragen</td></tr>
+            <tr><td>Landesspezifischer Teil</td><td>Fragen zum jeweiligen Bundesland</td><td>{meta.stateQuestions} von {meta.totalQuestions} Fragen</td></tr>
           </tbody>
         </table>
       </div>
       <p class="format-note">
-        Öffentlich bekannt: Multiple-Choice, 33 Fragen aus einem Katalog von 300 veröffentlichten Fragen,
-        Zeitlimit 60 Minuten, bestanden ab 15 richtigen Antworten. Uns liegt kein eigenes
-        deutschacademy-Quellmaterial zu "Leben in Deutschland" vor — anders als ursprünglich für diesen
-        Tier angenommen (siehe Sourcing-Hinweis unten), gibt es dafür kein eigenes Unterrichtsmaterial
-        im Projekt. Die Angaben hier sind daher allgemein bekannte, öffentliche Informationen, keine
-        erfundenen Details. Für die genauen aktuellen Werte prüfe den offiziellen BAMF-Fragenkatalog.
+        Multiple-Choice, {meta.totalQuestions} Fragen aus dem offiziellen BAMF-Fragenkatalog, Zeitlimit {meta.minutes} Minuten, bestanden ab {meta.passScore} richtigen Antworten.
+        Unsere <a href="/pruefungen/leben-in-deutschland/fakten">Fakten-Seite</a> und unser <a href="/pruefungen/leben-in-deutschland/test">{questions.length}-Fragen-Übungstest</a> basieren auf echtem DeutschAcademy-Unterrichtsmaterial für Bayern — nicht auf dem offiziellen Fragenkatalog selbst. {meta.sourceNote}
       </p>
     </section>
 
-    <div class="mock-cta mock-cta--soon">
-      <h2>Mock-Test: bald verfügbar</h2>
-      <p>Uns liegt kein eigenes Quellmaterial zum offiziellen Fragenkatalog von "Leben in Deutschland" vor, aus dem wir einen echten Mock-Test bauen könnten. Statt erfundener Prüfungsfragen gibt es hier vorerst keinen Mock-Test — nur die allgemeinen Übungstools unten.</p>
+    <div class="mock-cta">
+      <h2>{questions.length} Übungsfragen</h2>
+      <p>Aus echtem Unterrichtsmaterial: Demokratie, Wahlen, Bayern, Grundrechte, Geschichte, Arbeit und Familie.</p>
+      <div class="exam-meta-row">
+        <a class="quiz-btn quiz-btn--primary" href="/pruefungen/leben-in-deutschland/fakten">Fakten lernen →</a>
+        <a class="quiz-btn quiz-btn--primary" href="/pruefungen/leben-in-deutschland/test">Zum Übungstest →</a>
+      </div>
     </div>
 
     <ExamPractice
-      heading='Üben für "Leben in Deutschland"'
-      intro='Es gibt noch keine testspezifischen Übungsfragen. Diese drei Tools helfen dabei, die Fragen und Antwortoptionen des Fragenkatalogs sprachlich zu verstehen. Die Sprechen- und Lesen-&-Schreiben-Tools sind hier bewusst nicht verlinkt: sie stammen aus dem DTZ-Material (mündliche Bildbeschreibung, Schreibaufgaben) — "Leben in Deutschland" hat aber weder einen Sprech- noch einen Schreibteil, siehe oben.'
+      heading='Sprachlich vorbereiten'
+      intro='"Leben in Deutschland" prüft Wissen, kein Sprachniveau — aber du musst die Fragen und Antwortoptionen verstehen können. Diese drei Tools helfen dabei sprachlich. Die Sprechen- und Lesen-&-Schreiben-Tools sind hier bewusst nicht verlinkt: sie stammen aus dem DTZ-Material (mündliche Bildbeschreibung, Schreibaufgaben) — "Leben in Deutschland" hat aber weder einen Sprech- noch einen Schreibteil, siehe oben.'
       tools={["artikel", "grammatik", "wortschatz"]}
     />
   </main>

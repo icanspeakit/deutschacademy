@@ -1,0 +1,249 @@
+---
+// /layout — homepage redesign test bed. Not linked from live nav; compare against "/".
+import Layout from "../../layouts/Layout.astro";
+import "../../styles/layout-redesign.css";
+import artikel from "../../data/artikel.json";
+import grammatik from "../../data/grammatik.json";
+import wortschatz from "../../data/wortschatz.json";
+import sprechen from "../../data/sprechen.json";
+import lesen from "../../data/lesen.json";
+import kultur from "../../data/kultur.json";
+import lid from "../../data/leben-in-deutschland.json";
+
+const grammarQuestionCount = grammatik.reduce((sum, t) => sum + t.questions.length, 0);
+const readingQuestionCount = lesen.groups.reduce((sum, g) => sum + g.questions.length, 0);
+
+const tools = [
+  { href: "/uebungen/artikel-trainer", icon: "🎯", title: "der/die/das-Trainer", desc: "Artikel gezielt üben, mit sofortigem Feedback.", count: `${artikel.length} Nomen` },
+  { href: "/uebungen/grammatik", icon: "📚", title: "Grammatik-Quiz", desc: "Lückentext-Übungen zu Akkusativ, Dativ, Passiv und mehr.", count: `${grammatik.length} Themen · ${grammarQuestionCount} Fragen` },
+  { href: "/uebungen/wortschatz", icon: "🗂️", title: "Wortschatz & Redemittel", desc: "Karteikarten zum Umdrehen und Wiederholen.", count: `${wortschatz.length} Karten` },
+  { href: "/uebungen/aussprache", icon: "🔊", title: "Aussprache-Training", desc: "Wörter anhören und im Langsam-Modus üben.", count: `${wortschatz.length + artikel.length} Wörter` },
+  { href: "/uebungen/sprechen", icon: "🗣️", title: "Sprechen: Bildbeschreibung", desc: "Echte DTZ-Prüferfragen, mit 90-Sekunden-Timer.", count: `${sprechen.length} Bilder` },
+  { href: "/uebungen/lesen-schreiben", icon: "✍️", title: "Lesen & Schreiben", desc: "DTZ-Leseverstehen-Simulation plus Schreibaufgaben.", count: `${readingQuestionCount} Aufgaben` },
+  { href: "/uebungen/kultur", icon: "🗺️", title: "Kulturwissen", desc: "Einblicke aus echten Unterrichtsgesprächen.", count: `${kultur.length} Thema${kultur.length === 1 ? "" : "n"}` },
+];
+
+const exams = [
+  { href: "/pruefungen/telc", icon: "📄", title: "telc", level: "A1–C2" },
+  { href: "/pruefungen/goethe", icon: "🏛️", title: "Goethe-Zertifikat", level: "A1–C2" },
+  { href: "/pruefungen/testdaf", icon: "🎓", title: "TestDaF", level: "≈ B2–C1" },
+  { href: "/pruefungen/dtz", icon: "🧾", title: "DTZ", level: "A2 / B1" },
+  { href: "/pruefungen/leben-in-deutschland", icon: "🇩🇪", title: "Leben in Deutschland", level: `${lid.bundeslaender.length} Bundesländer` },
+];
+
+const stats = [
+  { num: `${tools.length}`, label: "Übungstools, alle kostenlos" },
+  { num: `${exams.length}`, label: "Prüfungen im Überblick" },
+  { num: `${lid.bundeslaender.length}`, label: "Bundesländer beim Einbürgerungstest" },
+  { num: "0€", label: "für den A1–C1-Grundkurs" },
+];
+---
+<Layout title="Deutsch Academy – Da für Dich!" description="Deutsch lernen mit echtem Unterrichtsmaterial: kostenlose Übungen und Prüfungsvorbereitung für telc, Goethe-Zertifikat, TestDaF, DTZ und Leben in Deutschland.">
+  <div class="hp">
+    <div class="hp-banner">🧪 <strong>Layout-Testseite</strong> — Entwurf einer neuen Startseite, noch nicht live. Vergleiche mit <a href="/">der aktuellen Startseite</a>.</div>
+
+    <!-- NAV -->
+    <nav class="hp-nav">
+      <div class="hp-nav-row">
+        <div class="hp-nav-left">
+          <a href="/layout"><img src="/assets/logo.png" alt="DeutschAcademy" /></a>
+          <div class="hp-nav-links">
+            <a href="/uebungen">Übungen</a>
+            <a href="/pruefungen">Prüfungen</a>
+            <a href="#preise">Preise</a>
+          </div>
+        </div>
+        <div class="hp-nav-right">
+          <a href="/uebungen" class="hp-btn hp-btn--outline">Übungen ansehen</a>
+          <a href="/pruefungen" class="hp-btn hp-btn--primary">Prüfung wählen</a>
+        </div>
+      </div>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hp-hero">
+      <div class="hp-wrap hp-hero-inner">
+        <div class="hp-hero-copy">
+          <div class="hp-eyebrow">Kostenlos · A1 bis C1</div>
+          <h1>Deutsch lernen, wie es <em>wirklich</em> gesprochen wird</h1>
+          <p class="hp-hero-lead">Grammatik, Alltagsdeutsch und Sprechpraxis — aus echtem Unterrichtsmaterial, nicht kalt für eine App geschrieben. Plus Prüfungsvorbereitung für telc, Goethe, TestDaF, DTZ und Leben in Deutschland.</p>
+          <div class="hp-hero-actions">
+            <a href="/uebungen" class="hp-btn hp-btn--primary">Jetzt kostenlos üben</a>
+            <a href="/pruefungen" class="hp-btn hp-btn--outline">Prüfungen ansehen</a>
+          </div>
+          <div class="hp-hero-note">Kein Konto nötig · alle Übungen sofort nutzbar</div>
+        </div>
+
+        <div class="hp-preview">
+          <div class="hp-preview-bar">
+            <div class="hp-preview-dot"></div><div class="hp-preview-dot"></div><div class="hp-preview-dot"></div>
+            <span class="hp-preview-label">Aus dem Grammatik-Quiz</span>
+          </div>
+          <div class="hp-preview-body">
+            <div class="hp-preview-kicker">Akkusativ</div>
+            <p class="hp-preview-prompt">Ich habe <span class="blank">___</span> Computer.</p>
+            <p class="hp-preview-hint">(der Computer)</p>
+            <div class="hp-preview-choices">
+              <span class="hp-preview-choice">der</span>
+              <span class="hp-preview-choice hp-preview-choice--correct">den</span>
+              <span class="hp-preview-choice">das</span>
+            </div>
+            <div class="hp-preview-foot">
+              <span>Thema 1 von {grammatik.length} · {grammarQuestionCount} Fragen insgesamt</span>
+              <a href="/uebungen/grammatik">Quiz starten →</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- STATS -->
+    <section class="hp-stats">
+      <div class="hp-wrap hp-stats-grid">
+        {stats.map((s) => (
+          <div class="hp-stat">
+            <div class="hp-stat-num">{s.num}</div>
+            <div class="hp-stat-label">{s.label}</div>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- VALUE PROPS -->
+    <section class="hp-section">
+      <div class="hp-wrap">
+        <div class="hp-section-head">
+          <div class="hp-eyebrow">Warum DeutschAcademy</div>
+          <h2>Aus echten Klassen, nicht aus Vorlagen</h2>
+          <p>Jede Übung unten wurde bereits echten Lernenden beigebracht — nicht kalt für eine Plattform geschrieben.</p>
+        </div>
+        <div class="hp-value-grid">
+          <div class="hp-value-card">
+            <div class="hp-value-icon">📖</div>
+            <h3>Grammatik richtig erklärt</h3>
+            <p>Akkusativ, Dativ, Passiv, Konjunktiv II und mehr — mit durchdachten Übungen statt schnellen Tipps.</p>
+          </div>
+          <div class="hp-value-card">
+            <div class="hp-value-icon">💬</div>
+            <h3>Alltagsdeutsch, kein Lehrbuch-Dialog</h3>
+            <p>Szenarien aus dem echten Leben: Behördengänge, Wohnungssuche, der Alltag — nicht erfundene Beispiele.</p>
+          </div>
+          <div class="hp-value-card">
+            <div class="hp-value-icon">🗣️</div>
+            <h3>Sprechpraxis eingebaut</h3>
+            <p>Bildbeschreibung mit echten Prüferfragen und Timer — der Teil, der sonst nur im Präsenzunterricht geübt wird.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TOOLS -->
+    <section class="hp-section hp-section--alt">
+      <div class="hp-wrap">
+        <div class="hp-section-head" style="max-width:600px">
+          <div class="hp-eyebrow">Alle Werkzeuge</div>
+          <h2>Übungen und Prüfungsvorbereitung, an einem Ort</h2>
+          <p>Kein Zusammensuchen zwischen Apps und Karteikarten — alles ist von hier aus erreichbar.</p>
+        </div>
+
+        <div class="hp-tools-group">
+          <div class="hp-tools-head">
+            <div class="hp-tools-label">Übungen</div>
+            <a href="/uebungen" class="hp-tools-viewall">Alle Übungen →</a>
+          </div>
+          <div class="hp-tools-grid">
+            {tools.map((t) => (
+              <a href={t.href} class="hp-tool-card">
+                <div class="hp-tool-chip">{t.icon}</div>
+                <h4>{t.title}</h4>
+                <p>{t.desc}</p>
+                <span class="hp-tool-card-count">{t.count}</span>
+              </a>
+            ))}
+          </div>
+        </div>
+
+        <div class="hp-tools-group">
+          <div class="hp-tools-head">
+            <div class="hp-tools-label">Prüfungen</div>
+            <a href="/pruefungen" class="hp-tools-viewall">Alle Prüfungen →</a>
+          </div>
+          <div class="hp-tools-grid hp-tools-grid--exams">
+            {exams.map((e) => (
+              <a href={e.href} class="hp-tool-card">
+                <div class="hp-tool-chip">{e.icon}</div>
+                <h4>{e.title}</h4>
+                <p>{e.level}</p>
+              </a>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRICING -->
+    <section class="hp-section" id="preise">
+      <div class="hp-wrap">
+        <div class="hp-section-head" style="max-width:560px">
+          <div class="hp-eyebrow">Preise</div>
+          <h2>Der Grundkurs ist kostenlos. Für alles Weitere arbeiten wir noch an den Preisen.</h2>
+          <p>Kein verstecktes Kleingedrucktes — was heute nicht fertig ist, bieten wir auch nicht zum Kauf an.</p>
+        </div>
+        <div class="hp-pricing-grid">
+          <div class="hp-price-card hp-price-card--live">
+            <div class="hp-price-top"><span class="hp-price-name">Free</span><span class="hp-price-tag hp-price-tag--live">Jetzt verfügbar</span></div>
+            <div class="hp-price-amount"><strong>€0</strong><span>für immer</span></div>
+            <p class="hp-price-desc">Alles, was oben aufgeführt ist: der volle A1–C1-Kernkurs und alle sieben Übungstools.</p>
+            <div class="hp-price-list">
+              <div class="hp-price-item"><span class="hp-check">✓</span><span>Voller A1–C1-Grundkurs</span></div>
+              <div class="hp-price-item"><span class="hp-check">✓</span><span>Alle Übungstools dieser Seite</span></div>
+              <div class="hp-price-item"><span class="hp-check">✓</span><span>Alle fünf Prüfungsübersichten</span></div>
+            </div>
+            <a href="/uebungen" class="hp-price-cta hp-btn--primary">Kostenlos starten</a>
+          </div>
+          <div class="hp-price-card hp-price-card--soon">
+            <div class="hp-price-top"><span class="hp-price-name">Exam Coaching</span><span class="hp-price-tag hp-price-tag--soon">In Arbeit</span></div>
+            <div class="hp-price-amount"><strong>—</strong><span>Preis noch offen</span></div>
+            <p class="hp-price-desc">Korrigierte Prüfungssimulationen mit einem echten Lehrer. Noch nicht buchbar.</p>
+            <div class="hp-price-list">
+              <div class="hp-price-item hp-price-item--soon"><span class="hp-check">·</span><span>Prüfungssimulationen im Goethe-/telc-Format</span></div>
+              <div class="hp-price-item hp-price-item--soon"><span class="hp-check">·</span><span>Schriftliche Korrektur durch einen Lehrer</span></div>
+              <div class="hp-price-item hp-price-item--soon"><span class="hp-check">·</span><span>Live-Sprechpraxis in kleinen Gruppen</span></div>
+            </div>
+            <span class="hp-price-cta hp-btn--disabled">Noch nicht verfügbar</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FINAL CTA -->
+    <section class="hp-final">
+      <div class="hp-wrap hp-final-inner">
+        <h2>Dein nächster Schritt zu fließendem Deutsch</h2>
+        <p>Kostenlos starten, mit echtem Unterrichtsmaterial üben, in deinem Tempo weitermachen.</p>
+        <a href="/uebungen" class="hp-final-btn">Kostenlos üben</a>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="hp-footer">
+      <div class="hp-wrap hp-footer-inner">
+        <div class="hp-footer-grid">
+          <div class="hp-footer-brand">
+            <img src="/assets/logo.png" alt="DeutschAcademy" />
+            <p>Deutsch lernen mit echtem Unterrichtsmaterial — kostenlose Übungen und Prüfungsvorbereitung für telc, Goethe, TestDaF, DTZ und Leben in Deutschland.</p>
+          </div>
+          <div class="hp-footer-col">
+            <h5>Übungen</h5>
+            {tools.slice(0, 5).map((t) => <a href={t.href}>{t.title}</a>)}
+          </div>
+          <div class="hp-footer-col">
+            <h5>Prüfungen</h5>
+            {exams.map((e) => <a href={e.href}>{e.title}</a>)}
+          </div>
+        </div>
+        <div class="hp-footer-bottom">© 2026 DeutschAcademy</div>
+      </div>
+    </footer>
+  </div>
+</Layout>

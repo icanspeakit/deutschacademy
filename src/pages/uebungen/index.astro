@@ -35,6 +35,13 @@ const tools = [
     count: `${wortschatz.length} Karten`,
   },
   {
+    href: "/uebungen/aussprache",
+    icon: "🔊",
+    title: "Aussprache-Training",
+    desc: "Wörter und Redemittel anhören und die Aussprache üben, mit Langsam-Modus für schwierige Laute.",
+    count: `${wortschatz.length + artikel.length} Wörter & Phrasen`,
+  },
+  {
     href: "/uebungen/sprechen",
     icon: "🗣️",
     title: "Sprechen: Bildbeschreibung",
@@ -63,7 +70,7 @@ const tools = [
     <div class="practice-hero">
       <p class="eyebrow">Kostenlos üben</p>
       <h1>Selbstständig Deutsch üben</h1>
-      <p>Sechs interaktive Übungstypen, gebaut aus echtem Unterrichtsmaterial — nicht aus generischen App-Fragen.</p>
+      <p>Sieben interaktive Übungstypen, gebaut aus echtem Unterrichtsmaterial — nicht aus generischen App-Fragen.</p>
     </div>
     <div class="tool-grid">
       {tools.map((t) => (

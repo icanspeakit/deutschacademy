@@ -1,0 +1,54 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import PracticeHeader from "../../components/PracticeHeader.astro";
+import "../../styles/practice.css";
+import wortschatz from "../../data/wortschatz.json";
+import artikel from "../../data/artikel.json";
+import { slugify } from "../../lib/audioSlug.js";
+
+function toAudioItem(text) {
+  return { text, audioSrc: `/audio/aussprache/${slugify(text)}.mp3` };
+}
+
+const wortschatzItems = wortschatz.map((w) => toAudioItem(w.front));
+const artikelItems = artikel.map((a) => toAudioItem(`${a.gender} ${a.word}`));
+---
+<Layout title="Aussprache-Training – DeutschAcademy">
+  <PracticeHeader title="Aussprache-Training" />
+  <main class="practice-main">
+    <div class="practice-hero">
+      <p class="eyebrow">Hören & nachsprechen</p>
+      <h1>Aussprache trainieren</h1>
+      <p>Klicke auf ein Wort oder eine Phrase, um sie dir vorlesen zu lassen. Mit dem Langsam-Modus hörst du jede Silbe deutlicher.</p>
+    </div>
+    <div class="topic-tabs" id="mode-tabs">
+      <button class="topic-tab active" type="button" data-mode="wortschatz">🗂️ Wortschatz</button>
+      <button class="topic-tab" type="button" data-mode="artikel">🎯 Artikel</button>
+    </div>
+    <div class="fc-wrap" id="pron-root"></div>
+  </main>
+  <script type="application/json" id="pron-wortschatz" set:html={JSON.stringify(wortschatzItems)}></script>
+  <script type="application/json" id="pron-artikel" set:html={JSON.stringify(artikelItems)}></script>
+  <script type="module">
+    import { mountPronunciation } from "../../lib/pronunciation.js";
+
+    const sets = {
+      wortschatz: JSON.parse(document.getElementById("pron-wortschatz").textContent),
+      artikel: JSON.parse(document.getElementById("pron-artikel").textContent),
+    };
+
+    const tabs = document.getElementById("mode-tabs");
+    const root = document.getElementById("pron-root");
+
+    function showMode(mode) {
+      [...tabs.children].forEach((btn) => btn.classList.toggle("active", btn.dataset.mode === mode));
+      mountPronunciation(root, sets[mode]);
+    }
+
+    [...tabs.children].forEach((btn) => {
+      btn.addEventListener("click", () => showMode(btn.dataset.mode));
+    });
+
+    showMode("wortschatz");
+  </script>
+</Layout>

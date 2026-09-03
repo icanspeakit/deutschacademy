@@ -9,9 +9,15 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "generate:fakten-pdf": "node scripts/generate-fakten-pdf.mjs",
+    "generate:audio": "node --env-file=.env.local scripts/generate-audio.mjs"
   },
   "dependencies": {
     "astro": "^7.0.6"
+  },
+  "devDependencies": {
+    "@types/pdfkit": "^0.17.6",
+    "pdfkit": "^0.20.2"
   }
 }

@@ -1,69 +1,46 @@
-@font-face {
-  font-family: "Aktiv Grotesk";
-  src: url("/fonts/aktiv-grotesk/AktivGrotesk-Light.ttf") format("truetype");
-  font-weight: 300; font-style: normal; font-display: swap;
-}
-@font-face {
-  font-family: "Aktiv Grotesk";
-  src: url("/fonts/aktiv-grotesk/AktivGrotesk-LightItalic.ttf") format("truetype");
-  font-weight: 300; font-style: italic; font-display: swap;
-}
-@font-face {
-  font-family: "Aktiv Grotesk";
-  src: url("/fonts/aktiv-grotesk/AktivGrotesk-Regular.ttf") format("truetype");
-  font-weight: 400; font-style: normal; font-display: swap;
-}
-@font-face {
-  font-family: "Aktiv Grotesk";
-  src: url("/fonts/aktiv-grotesk/AktivGrotesk-Italic.ttf") format("truetype");
-  font-weight: 400; font-style: italic; font-display: swap;
-}
-@font-face {
-  font-family: "Aktiv Grotesk";
-  src: url("/fonts/aktiv-grotesk/AktivGrotesk-Medium.ttf") format("truetype");
-  font-weight: 500; font-style: normal; font-display: swap;
-}
-@font-face {
-  font-family: "Aktiv Grotesk";
-  src: url("/fonts/aktiv-grotesk/AktivGrotesk-MediumItalic.ttf") format("truetype");
-  font-weight: 500; font-style: italic; font-display: swap;
-}
-@font-face {
-  font-family: "Aktiv Grotesk";
-  src: url("/fonts/aktiv-grotesk/AktivGrotesk-Bold.ttf") format("truetype");
-  font-weight: 700; font-style: normal; font-display: swap;
-}
-@font-face {
-  font-family: "Aktiv Grotesk";
-  src: url("/fonts/aktiv-grotesk/AktivGrotesk-BoldItalic.ttf") format("truetype");
-  font-weight: 700; font-style: italic; font-display: swap;
-}
-@font-face {
-  font-family: "Aktiv Grotesk";
-  src: url("/fonts/aktiv-grotesk/AktivGrotesk-Black.ttf") format("truetype");
-  font-weight: 900; font-style: normal; font-display: swap;
-}
-@font-face {
-  font-family: "Aktiv Grotesk";
-  src: url("/fonts/aktiv-grotesk/AktivGrotesk-BlackItalic.ttf") format("truetype");
-  font-weight: 900; font-style: italic; font-display: swap;
-}
-
 :root {
-  --brand-blue-light: #7ec9ea;
-  --brand-cyan: #6fe3e0;
-  --brand-blue: #3ba9d9;
-  --brand-blue-dark: #256f96;
-  --ink: #1c2b3f;
-  --muted: #5c6b7e;
-  --surface: #f5f9fc;
-  --border: #e1e8f0;
+  --brand-blue-light: #5eead4;
+  --brand-cyan:       #f97316;
+  --brand-blue:       #0d9488;
+  --brand-blue-dark:  #0f766e;
+  --accent:           #f97316;
+  --accent-dark:      #c2410c;
 
-  --font-body: "Aktiv Grotesk", "Segoe UI", Arial, sans-serif;
-  --font-display: "Comfortaa", "Aktiv Grotesk", sans-serif;
+  --blue-50:  #f0fdfa;
+  --blue-100: #ccfbf1;
+  --blue-200: #99f6e4;
+  --blue-300: #5eead4;
+  --blue-400: #2dd4bf;
+  --blue-500: #14b8a6;
+  --blue-600: #0d9488;
+  --blue-700: #0f766e;
+  --blue-800: #115e59;
+  --blue-900: #134e4a;
 
+  --ink:        #1a2230;
+  --ink-deep:   #0f141c;
+  --muted:      #4b5768;
+  --muted-soft: #94a0b0;
+  --border:     #e7e9ee;
+  --border-strong: #cbd2db;
+  --surface:    #f7f8fa;
+
+  --gradient-brand: linear-gradient(135deg, #2dd4bf, var(--brand-blue));
+  --gradient-brand-soft: linear-gradient(135deg, var(--blue-100), #f0fdfa 50%, var(--blue-200));
+  --gradient-accent-soft: linear-gradient(135deg, #ffedd5, #fff7ed 50%, #fed7aa);
+  --gradient-hero-scrim: linear-gradient(120deg, rgba(26,34,48,.82), rgba(13,148,136,.55));
+
+  --font-body: "Sora", "Segoe UI", Arial, sans-serif;
+  --font-display: "Sora", "Segoe UI", Arial, sans-serif;
+
+  --radius-sm: 10px;
   --radius: 14px;
-  --gradient-brand: linear-gradient(135deg, var(--brand-blue-light), var(--brand-cyan) 50%, var(--brand-blue));
+  --radius-lg: 20px;
+  --radius-pill: 999px;
+
+  --shadow-hover: 0 12px 28px rgba(28,43,63,.10);
+  --shadow-cta: 0 8px 20px rgba(59,169,217,.35);
+  --shadow-raised: 0 18px 44px rgba(28,43,63,.14);
 }
 
 * { box-sizing: border-box; }

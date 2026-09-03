@@ -50,35 +50,43 @@ export function mountQuiz(root, questions, { mode = "text", shuffle = true, onDo
       if (form) [...form.elements].forEach((el) => (el.disabled = true));
     }
 
-    function checkAnswer(given) {
-      const norm = (s) => String(s).trim().toLowerCase();
-      const accepted = [q.answer, ...(q.alt || [])].map(norm);
-      const ok = accepted.includes(norm(given));
-      if (ok) score++;
-      feedback.innerHTML = ok
-        ? `<span class="quiz-ok">✓ Richtig!</span>`
-        : `<span class="quiz-no">✗ Nicht ganz — richtig: <strong>${q.answer}</strong></span>`;
-      if (q.explain) feedback.innerHTML += `<div class="quiz-explain">${q.explain}</div>`;
-      const nextBtn = document.createElement("button");
-      nextBtn.className = "quiz-btn quiz-btn--next";
-      nextBtn.type = "button";
-      nextBtn.textContent = pos + 1 < total ? "Weiter →" : "Ergebnis anzeigen →";
-      nextBtn.addEventListener("click", () => {
-        pos++;
-        render();
-      });
-      feedback.appendChild(nextBtn);
+    const ANSWER_DELAY_MS = 600;
+
+    function checkAnswer(given, chosenBtn) {
       lockInputs();
-      if (mode === "choice") {
-        root.querySelectorAll(".quiz-choice").forEach((b) => {
-          if (norm(b.textContent) === norm(q.answer)) b.classList.add("quiz-choice--correct");
+      if (chosenBtn) chosenBtn.classList.add("quiz-choice--pending");
+
+      setTimeout(() => {
+        const norm = (s) => String(s).trim().toLowerCase();
+        const accepted = [q.answer, ...(q.alt || [])].map(norm);
+        const ok = accepted.includes(norm(given));
+        if (ok) score++;
+        feedback.innerHTML = ok
+          ? `<span class="quiz-ok">✓ Richtig!</span>`
+          : `<span class="quiz-no">✗ Nicht ganz — richtig: <strong>${q.answer}</strong></span>`;
+        if (q.explain) feedback.innerHTML += `<div class="quiz-explain">${q.explain}</div>`;
+        const nextBtn = document.createElement("button");
+        nextBtn.className = "quiz-btn quiz-btn--next";
+        nextBtn.type = "button";
+        nextBtn.textContent = pos + 1 < total ? "Weiter →" : "Ergebnis anzeigen →";
+        nextBtn.addEventListener("click", () => {
+          pos++;
+          render();
         });
-      }
+        feedback.appendChild(nextBtn);
+        if (mode === "choice") {
+          root.querySelectorAll(".quiz-choice").forEach((b) => {
+            b.classList.remove("quiz-choice--pending");
+            if (norm(b.textContent) === norm(q.answer)) b.classList.add("quiz-choice--correct");
+            else if (b === chosenBtn && !ok) b.classList.add("quiz-choice--incorrect");
+          });
+        }
+      }, ANSWER_DELAY_MS);
     }
 
     if (mode === "choice") {
       root.querySelectorAll(".quiz-choice").forEach((btn) => {
-        btn.addEventListener("click", () => checkAnswer(q.options[+btn.dataset.opt]));
+        btn.addEventListener("click", () => checkAnswer(q.options[+btn.dataset.opt], btn));
       });
     } else {
       const form = root.querySelector("#quiz-form");

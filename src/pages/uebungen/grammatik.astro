@@ -22,6 +22,10 @@ import grammatik from "../../data/grammatik.json";
       Diese Passiv-Sätze stammen aus einer echten Unterrichtsdiskussion über Medien in Deutschland —
       mehr dazu im <a href="/uebungen/kultur">Kulturwissen: Wer bezahlt ARD und ZDF?</a>
     </p>
+    <p class="topic-crosslink" id="topic-crosslink-akkusativ" hidden>
+      Für Akkusativ gibt es einen eigenen Übungsraum mit Fokus- und Testmodus, Schwierigkeitsstufen
+      und Deklinationstabelle: <a href="/uebungen/grammatik/akkusativ">Akkusativ-Workspace öffnen</a>
+    </p>
     <div class="quiz-card" id="quiz-root"></div>
   </main>
   <script type="application/json" id="topics-data" set:html={JSON.stringify(grammatik)}></script>
@@ -31,6 +35,7 @@ import grammatik from "../../data/grammatik.json";
     const tabsEl = document.getElementById("topic-tabs");
     const introEl = document.getElementById("topic-intro");
     const crosslinkEl = document.getElementById("topic-crosslink");
+    const crosslinkAkkusativEl = document.getElementById("topic-crosslink-akkusativ");
     const quizRoot = document.getElementById("quiz-root");
 
     function loadTopic(index) {
@@ -38,6 +43,7 @@ import grammatik from "../../data/grammatik.json";
       [...tabsEl.children].forEach((btn, i) => btn.classList.toggle("active", i === index));
       introEl.textContent = topic.intro;
       crosslinkEl.hidden = topic.id !== "passiv";
+      crosslinkAkkusativEl.hidden = topic.id !== "akkusativ";
       mountQuiz(quizRoot, topic.questions, { mode: "text" });
     }
 

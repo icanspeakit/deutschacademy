@@ -1,0 +1,19 @@
+[
+  { "id": "akk-l1", "difficulty": "leicht", "prompt": "Ich habe ___ Computer.", "options": ["der", "den", "dem"], "answer": "den", "change": "der → den", "explain": "haben verlangt den Akkusativ – „Computer“ ist maskulin. Maskuline Artikel ändern sich im Akkusativ." },
+  { "id": "akk-l2", "difficulty": "leicht", "prompt": "Ich sehe ___ Baum.", "options": ["der", "den", "dem"], "answer": "den", "change": "der → den", "explain": "sehen verlangt den Akkusativ – „Baum“ ist maskulin. Maskuline Artikel ändern sich im Akkusativ." },
+  { "id": "akk-l3", "difficulty": "leicht", "prompt": "Wir brauchen ___ Stift.", "options": ["der", "den", "des"], "answer": "den", "change": "der → den", "explain": "brauchen verlangt den Akkusativ – „Stift“ ist maskulin. Maskuline Artikel ändern sich im Akkusativ." },
+  { "id": "akk-l4", "difficulty": "leicht", "prompt": "Sie hat ___ Tasche.", "options": ["die", "der", "den"], "answer": "die", "change": "die → die", "explain": "haben verlangt den Akkusativ – aber „Tasche“ ist feminin. Feminine Artikel bleiben im Akkusativ gleich." },
+  { "id": "akk-l5", "difficulty": "leicht", "prompt": "Wir kaufen ___ Auto.", "options": ["das", "den", "dem"], "answer": "das", "change": "das → das", "explain": "kaufen verlangt den Akkusativ – aber „Auto“ ist neutrum. Neutrale Artikel bleiben im Akkusativ gleich." },
+
+  { "id": "akk-m1", "difficulty": "mittel", "prompt": "Das ist ein Computer. Ich habe ___ Computer.", "options": ["ein", "einen", "einem"], "answer": "einen", "change": "ein → einen", "explain": "Unbestimmter Artikel, maskulin: nach ein-Wörtern ändert sich die Endung im Akkusativ." },
+  { "id": "akk-m2", "difficulty": "mittel", "prompt": "Sie besucht ___ Freundin.", "options": ["die", "der", "den"], "answer": "die", "change": "die → die", "explain": "besuchen verlangt den Akkusativ – aber „Freundin“ ist feminin. Feminine Artikel bleiben im Akkusativ gleich." },
+  { "id": "akk-m3", "difficulty": "mittel", "prompt": "Dort drüben sehe ich ___ Mann.", "options": ["ein", "einen", "einer"], "answer": "einen", "change": "ein → einen", "explain": "Unbestimmter Artikel, maskulin: nach ein-Wörtern ändert sich die Endung im Akkusativ." },
+  { "id": "akk-m4", "difficulty": "mittel", "prompt": "Kennst du ___ Bruder?", "options": ["mein", "meinen", "meinem"], "answer": "meinen", "change": "mein → meinen", "explain": "Possessivartikel folgen dem Muster von ein: maskulin ändert sich die Endung im Akkusativ." },
+  { "id": "akk-m5", "difficulty": "mittel", "prompt": "Ich rufe ___ heute Abend an.", "options": ["er", "ihn", "ihm"], "answer": "ihn", "change": "er → ihn", "explain": "Personalpronomen, maskulin: im Akkusativ wird aus er die Form ihn." },
+
+  { "id": "akk-s1", "difficulty": "schwer", "prompt": "Das Geschenk ist ___ dich.", "options": ["für", "mit", "bei"], "answer": "für", "change": "für + Akkusativ", "explain": "„für“ steht immer mit Akkusativ, unabhängig vom Genus." },
+  { "id": "akk-s2", "difficulty": "schwer", "prompt": "Wir gehen ___ den Park.", "options": ["durch", "in", "an"], "answer": "durch", "change": "durch + Akkusativ", "explain": "„durch“ steht immer mit Akkusativ, unabhängig vom Genus." },
+  { "id": "akk-s3", "difficulty": "schwer", "prompt": "Er ist ___ diesen Plan.", "options": ["gegen", "bei", "zu"], "answer": "gegen", "change": "gegen + Akkusativ", "explain": "„gegen“ steht immer mit Akkusativ, unabhängig vom Genus." },
+  { "id": "akk-s4", "difficulty": "schwer", "prompt": "Wir laufen einmal ___ den Block.", "options": ["um", "an", "auf"], "answer": "um", "change": "um + Akkusativ", "explain": "„um“ steht immer mit Akkusativ, unabhängig vom Genus." },
+  { "id": "akk-s5", "difficulty": "schwer", "prompt": "Sie kommt ___ ihren Regenschirm.", "options": ["ohne", "mit", "aus"], "answer": "ohne", "change": "ohne + Akkusativ", "explain": "„ohne“ steht immer mit Akkusativ, unabhängig vom Genus." }
+]

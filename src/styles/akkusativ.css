@@ -1,0 +1,401 @@
+/* Akkusativ practice workspace — deliberately its own visual system:
+   Fira Sans/Mono, ink-blue + paper-white, signal-amber reserved for active UI state only. */
+
+.akk {
+  --akk-ink: #10233d;
+  --akk-ink-2: #1c3a5e;
+  --akk-paper: #f5f7fb;
+  --akk-surface: #ffffff;
+  --akk-line: #d7dee7;
+  --akk-line-strong: #b7c2d1;
+  --akk-muted: #55697f;
+  --akk-amber: #f2a900;
+  --akk-amber-bg: #fef3da;
+  --akk-amber-ink: #7a4b00;
+  --akk-green: #1a7a44;
+  --akk-green-bg: #e6f5ea;
+  --akk-red: #b23a24;
+  --akk-red-bg: #fbeae5;
+  --akk-font: "Fira Sans", "Segoe UI", Arial, sans-serif;
+  --akk-mono: "Fira Mono", ui-monospace, Consolas, monospace;
+
+  font-family: var(--akk-font);
+  background: var(--akk-paper);
+  color: var(--akk-ink);
+  min-height: 100vh;
+}
+
+.akk * { box-sizing: border-box; }
+
+/* Motion */
+@keyframes akk-fade-slide-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes akk-pop {
+  0% { transform: scale(1); }
+  35% { transform: scale(1.06); }
+  100% { transform: scale(1); }
+}
+@keyframes akk-shake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-4px); }
+  40% { transform: translateX(4px); }
+  60% { transform: translateX(-3px); }
+  80% { transform: translateX(3px); }
+}
+.akk-anim-in { animation: akk-fade-slide-in 0.28s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.akk-pill--pop { animation: akk-pop 0.32s ease; }
+.akk-pill--shake { animation: akk-shake 0.32s ease; }
+.akk-rail-seg { transition: background-color 0.3s ease; }
+.akk-test-badge { transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease; }
+.akk-pill { transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease, opacity 0.2s ease; }
+
+@media (prefers-reduced-motion: reduce) {
+  .akk-anim-in, .akk-pill--pop, .akk-pill--shake { animation: none; }
+  .akk-rail-seg, .akk-test-badge, .akk-pill, .akk-ring-fill, .akk-test-rail-fill { transition: none; }
+}
+
+/* Top bar */
+.akk-topbar {
+  background: var(--akk-ink);
+  color: #fff;
+  border-bottom: 3px solid var(--akk-amber);
+}
+.akk-topbar-inner {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 16px 20px;
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.akk-wordmark {
+  font-weight: 800;
+  font-size: 1.05rem;
+  letter-spacing: -0.01em;
+}
+.akk-breadcrumb {
+  font-size: 0.82rem;
+  color: #c7d2e0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.akk-breadcrumb a { color: #c7d2e0; text-decoration: none; }
+.akk-breadcrumb a:hover { color: #fff; text-decoration: underline; }
+.akk-crumb-sep { color: #5b7398; }
+.akk-crumb-current { color: #fff; font-weight: 600; }
+
+/* Main */
+.akk-main { max-width: 760px; margin: 0 auto; padding: 28px 20px 40px; }
+
+.akk-card {
+  background: var(--akk-surface);
+  border: 1px solid var(--akk-line);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+/* Card header: AKK tag + title (left), difficulty control (right) */
+.akk-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 20px 20px 16px;
+}
+.akk-title-group { display: flex; align-items: center; gap: 10px; }
+.akk-title { margin: 0; font-size: 1.25rem; font-weight: 800; color: var(--akk-ink); }
+
+.akk-difficulty {
+  display: inline-flex;
+  border: 1px solid var(--akk-line-strong);
+  border-radius: 999px;
+  padding: 3px;
+  gap: 2px;
+}
+.akk-diff-btn {
+  font-family: var(--akk-font);
+  font-weight: 700;
+  font-size: 0.88rem;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--akk-muted);
+  cursor: pointer;
+  min-height: 40px;
+}
+.akk-diff-btn.active { background: var(--akk-amber); color: var(--akk-ink); }
+.akk-diff-btn:hover:not(.active) { color: var(--akk-ink); }
+
+/* Übung / Regel segmented control */
+.akk-tabs {
+  display: flex;
+  gap: 0;
+  margin: 0 20px 16px;
+  border: 1px solid var(--akk-line-strong);
+  border-radius: 10px;
+  overflow: hidden;
+}
+.akk-tab {
+  flex: 1;
+  font-family: var(--akk-font);
+  font-weight: 700;
+  font-size: 0.95rem;
+  padding: 14px 16px;
+  border: none;
+  background: var(--akk-surface);
+  color: var(--akk-ink);
+  cursor: pointer;
+}
+.akk-tab + .akk-tab { border-left: 1px solid var(--akk-line-strong); }
+.akk-tab.active { background: var(--akk-amber); border-color: var(--akk-amber); }
+.akk-tab:hover:not(.active) { background: var(--akk-paper); }
+
+/* Mode control: visually secondary, sits below the tabs */
+.akk-mode-row { padding: 0 20px 16px; border-bottom: 1px solid var(--akk-line); }
+.akk-mode {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.82rem;
+}
+.akk-mode-label {
+  color: var(--akk-muted);
+  font-family: var(--akk-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 0.7rem;
+  margin-right: 4px;
+}
+.akk-mode-btn {
+  font-family: var(--akk-font);
+  font-weight: 500;
+  font-size: 0.85rem;
+  padding: 6px 4px;
+  border: none;
+  background: none;
+  color: var(--akk-muted);
+  cursor: pointer;
+  min-height: 32px;
+}
+.akk-mode-btn.active { color: var(--akk-ink); font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
+.akk-mode-sep { color: var(--akk-line-strong); }
+
+/* Tag: transit-style line-code label, e.g. "AKK" */
+.akk-tag {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--akk-mono);
+  font-weight: 700;
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  color: #fff;
+  background: var(--akk-ink);
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+.akk-counter {
+  font-family: var(--akk-mono);
+  font-size: 0.82rem;
+  color: var(--akk-muted);
+  white-space: nowrap;
+}
+
+/* Fokus-Modus position rail: one segment per question */
+.akk-focus-progress { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+.akk-rail { flex: 1; display: flex; gap: 4px; }
+.akk-rail-seg { flex: 1; height: 6px; border-radius: 999px; background: var(--akk-line); }
+.akk-rail-seg--current { background: var(--akk-amber); }
+.akk-rail-seg--done { background: var(--akk-ink); }
+
+/* Exercise area */
+#akk-exercise-root { padding: 24px 20px 28px; }
+
+/* Fokus-Modus */
+.akk-focus-card { padding: 8px 0 4px; }
+.akk-focus-sentence {
+  font-size: 1.55rem;
+  line-height: 1.5;
+  margin: 0 0 24px;
+}
+.akk-blank {
+  display: inline-block;
+  min-width: 2.6em;
+  border-bottom: 3px dashed var(--akk-ink-2);
+  color: transparent;
+  text-align: center;
+}
+.akk-focus-instruction {
+  color: var(--akk-muted);
+  font-size: 0.9rem;
+  margin: 16px 0 0;
+}
+
+.akk-pills { display: flex; flex-wrap: wrap; gap: 10px; }
+.akk-pill {
+  font-family: var(--akk-font);
+  font-weight: 600;
+  font-size: 1rem;
+  padding: 12px 22px;
+  min-height: 48px;
+  border: 1px solid var(--akk-line-strong);
+  border-radius: 999px;
+  background: var(--akk-surface);
+  color: var(--akk-ink);
+  cursor: pointer;
+}
+.akk-pill:hover:not(:disabled) { border-color: var(--akk-ink-2); }
+.akk-pill:disabled { cursor: default; }
+.akk-pill--correct { background: var(--akk-green-bg); border-color: var(--akk-green); color: var(--akk-green); }
+.akk-pill--incorrect { background: var(--akk-red-bg); border-color: var(--akk-red); color: var(--akk-red); }
+.akk-pill--dim { opacity: 0.5; }
+
+.akk-feedback { margin-top: 16px; }
+.akk-feedback-row { display: flex; align-items: center; justify-content: space-between; gap: 14px; flex-wrap: wrap; }
+.akk-feedback--correct { font-weight: 700; color: var(--akk-green); }
+.akk-feedback--incorrect { font-weight: 700; color: var(--akk-red); }
+
+.akk-why {
+  margin-top: 14px;
+  background: var(--akk-surface);
+  border: 1px solid var(--akk-line-strong);
+  border-radius: 10px;
+  padding: 16px 18px;
+}
+.akk-why .akk-tag { margin-bottom: 10px; }
+.akk-why-text { margin: 0 0 10px; font-size: 0.92rem; line-height: 1.5; color: var(--akk-ink); }
+.akk-why-chip {
+  display: inline-block;
+  font-family: var(--akk-mono);
+  font-size: 0.85rem;
+  background: var(--akk-paper);
+  border: 1px solid var(--akk-line);
+  border-radius: 6px;
+  padding: 4px 10px;
+  color: var(--akk-ink-2);
+}
+
+.akk-focus-done { text-align: center; padding: 20px 0; }
+.akk-focus-done-score { font-family: var(--akk-mono); font-size: 2.2rem; font-weight: 700; color: var(--akk-ink); }
+.akk-focus-done p { color: var(--akk-muted); margin: 6px 0 20px; }
+
+/* Testmodus */
+.akk-test-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 20px;
+}
+.akk-test-count { font-family: var(--akk-mono); font-weight: 700; font-size: 0.9rem; white-space: nowrap; }
+.akk-test-rail { flex: 1; height: 6px; background: var(--akk-line); border-radius: 999px; overflow: hidden; }
+.akk-test-rail-fill { display: block; height: 100%; background: var(--akk-green); border-radius: 999px; transition: width 0.25s ease; }
+
+.akk-test-row {
+  display: flex;
+  gap: 14px;
+  padding: 16px 0;
+  border-top: 1px solid var(--akk-line);
+}
+.akk-test-row:first-child { border-top: none; }
+.akk-test-badge {
+  flex: 0 0 auto;
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  border: 1px solid var(--akk-line-strong);
+  color: var(--akk-muted);
+  font-family: var(--akk-mono);
+  font-size: 0.78rem;
+  font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+}
+.akk-test-badge--solved { background: var(--akk-green); border-color: var(--akk-green); color: #fff; }
+.akk-test-badge--revealed { border-color: var(--akk-red); color: var(--akk-red); }
+.akk-test-body { flex: 1; min-width: 0; }
+.akk-test-sentence { font-size: 1rem; line-height: 1.5; margin: 0 0 12px; }
+.akk-test-row .akk-pill { font-size: 0.9rem; padding: 9px 16px; min-height: 42px; }
+.akk-test-row .akk-why { margin-top: 12px; }
+
+/* Regel view */
+#akk-regel-view { padding: 24px 20px 28px; }
+.akk-regel-intro { color: var(--akk-ink); font-size: 0.98rem; line-height: 1.6; margin: 0 0 20px; }
+.akk-decl-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+  font-size: 0.92rem;
+}
+.akk-decl-table th, .akk-decl-table td {
+  border: 1px solid var(--akk-line);
+  padding: 10px 12px;
+  text-align: left;
+}
+.akk-decl-table th {
+  font-family: var(--akk-mono);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--akk-muted);
+  background: var(--akk-paper);
+}
+.akk-decl-table td:first-child { font-weight: 700; color: var(--akk-ink-2); background: var(--akk-paper); }
+.akk-decl-change {
+  font-weight: 800;
+  color: var(--akk-amber-ink);
+  background: var(--akk-amber-bg);
+  border: 1px solid var(--akk-amber) !important;
+}
+.akk-regel-note { color: var(--akk-muted); font-size: 0.92rem; line-height: 1.6; margin: 0 0 24px; }
+.akk-btn {
+  font-family: var(--akk-font);
+  font-weight: 700;
+  font-size: 0.92rem;
+  padding: 12px 22px;
+  min-height: 48px;
+  border-radius: 999px;
+  border: 1px solid var(--akk-line-strong);
+  background: var(--akk-surface);
+  color: var(--akk-ink);
+  cursor: pointer;
+}
+.akk-btn-primary { background: var(--akk-ink); border-color: var(--akk-ink); color: #fff; }
+
+/* Footer */
+.akk-footer {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 20px;
+  padding-top: 16px;
+}
+.akk-session-ring { flex: 0 0 auto; position: relative; width: 56px; height: 56px; }
+.akk-session-ring svg { width: 56px; height: 56px; transform: rotate(-90deg); }
+.akk-ring-track { fill: none; stroke: var(--akk-line); stroke-width: 5; }
+.akk-ring-fill { fill: none; stroke: var(--akk-green); stroke-width: 5; stroke-linecap: round; transition: stroke-dashoffset 0.3s ease; }
+.akk-ring-num {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--akk-mono); font-weight: 700; font-size: 0.78rem; color: var(--akk-ink);
+}
+.akk-session-text { flex: 1; min-width: 0; }
+.akk-session-label { display: block; font-family: var(--akk-mono); font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--akk-muted); margin-bottom: 2px; }
+.akk-session-stats { margin: 0; font-size: 0.88rem; color: var(--akk-ink-2); }
+.akk-session-badge {
+  flex: 0 0 auto;
+  font-family: var(--akk-mono);
+  font-size: 0.72rem;
+  color: var(--akk-muted);
+  white-space: nowrap;
+}
+
+@media (max-width: 560px) {
+  .akk-focus-sentence { font-size: 1.3rem; }
+  .akk-controls-row { flex-direction: column; align-items: flex-start; }
+  .akk-difficulty { width: 100%; justify-content: space-between; }
+  .akk-diff-btn { flex: 1; text-align: center; }
+}

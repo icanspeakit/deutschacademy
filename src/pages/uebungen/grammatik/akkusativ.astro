@@ -1,0 +1,174 @@
+---
+import Layout from "../../../layouts/Layout.astro";
+import "../../../styles/akkusativ.css";
+import akkusativQuestions from "../../../data/akkusativ.json";
+
+const total = akkusativQuestions.filter((q) => q.difficulty === "leicht").length;
+---
+<Layout title="Akkusativ üben – DeutschAcademy">
+  <Fragment slot="head">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@400;500;600;700;800&family=Fira+Mono:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+  </Fragment>
+
+  <div class="akk">
+    <header class="akk-topbar">
+      <div class="akk-topbar-inner">
+        <span class="akk-wordmark">DeutschAcademy</span>
+        <nav class="akk-breadcrumb" aria-label="Breadcrumb">
+          <a href="/uebungen">Übungen</a><span class="akk-crumb-sep">›</span>
+          <a href="/uebungen/grammatik">Grammatik</a><span class="akk-crumb-sep">›</span>
+          <span class="akk-crumb-current">Akkusativ</span>
+        </nav>
+      </div>
+    </header>
+
+    <main class="akk-main">
+      <div class="akk-card">
+        <div class="akk-card-header">
+          <div class="akk-title-group">
+            <span class="akk-tag">AKK</span>
+            <h1 class="akk-title">Akkusativ</h1>
+          </div>
+          <div class="akk-difficulty" role="group" aria-label="Schwierigkeit">
+            <button class="akk-diff-btn active" data-diff="leicht" type="button">Leicht</button>
+            <button class="akk-diff-btn" data-diff="mittel" type="button">Mittel</button>
+            <button class="akk-diff-btn" data-diff="schwer" type="button">Schwer</button>
+          </div>
+        </div>
+
+        <div class="akk-tabs" role="tablist">
+          <button class="akk-tab active" id="akk-tab-uebung" type="button" role="tab" aria-selected="true">Übung</button>
+          <button class="akk-tab" id="akk-tab-regel" type="button" role="tab" aria-selected="false">Regel</button>
+        </div>
+
+        <div id="akk-uebung-view">
+          <div class="akk-mode-row">
+            <div class="akk-mode" role="group" aria-label="Übungsmodus">
+              <span class="akk-mode-label">Modus</span>
+              <button class="akk-mode-btn active" data-mode="fokus" type="button">Fokus-Modus</button>
+              <span class="akk-mode-sep">·</span>
+              <button class="akk-mode-btn" data-mode="test" type="button">Testmodus</button>
+            </div>
+          </div>
+          <div id="akk-exercise-root"></div>
+        </div>
+
+        <div id="akk-regel-view" hidden>
+          <p class="akk-regel-intro">
+            Im Akkusativ ändert sich nur der bestimmte Artikel im Maskulinum: <strong>der → den</strong>.
+            Feminin, Neutrum und Plural bleiben gleich wie im Nominativ. Der Akkusativ steht u. a. nach
+            <em>haben, brauchen, sehen, suchen</em> und nach Präpositionen wie <em>für, durch, gegen, um, ohne</em>.
+          </p>
+          <table class="akk-decl-table">
+            <thead>
+              <tr>
+                <th>Fall</th>
+                <th>Maskulin</th>
+                <th>Feminin</th>
+                <th>Neutrum</th>
+                <th>Plural</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Nominativ</td>
+                <td>der</td>
+                <td>die</td>
+                <td>das</td>
+                <td>die</td>
+              </tr>
+              <tr>
+                <td>Akkusativ</td>
+                <td class="akk-decl-change">den</td>
+                <td>die</td>
+                <td>das</td>
+                <td>die</td>
+              </tr>
+            </tbody>
+          </table>
+          <p class="akk-regel-note">
+            Beispiel: <em>der Computer</em> (Nominativ) → <em>Ich habe den Computer.</em> (Akkusativ)
+          </p>
+          <button class="akk-btn akk-btn-primary" id="akk-back-to-uebung" type="button">Zurück zur Übung</button>
+        </div>
+      </div>
+
+      <footer class="akk-footer">
+        <div class="akk-session-ring">
+          <svg viewBox="0 0 56 56">
+            <circle class="akk-ring-track" cx="28" cy="28" r="24" />
+            <circle class="akk-ring-fill" id="akk-ring-fill" cx="28" cy="28" r="24" stroke-dasharray="150.8" stroke-dashoffset="150.8" />
+          </svg>
+          <span class="akk-ring-num" id="akk-ring-num">0%</span>
+        </div>
+        <div class="akk-session-text">
+          <span class="akk-session-label">Diese Sitzung</span>
+          <p class="akk-session-stats" id="akk-session-stats">0 von {total} beantwortet · 0 richtig · 0 Hinweise</p>
+        </div>
+        <span class="akk-session-badge">lokal · ohne Konto</span>
+      </footer>
+    </main>
+  </div>
+
+  <script type="application/json" id="akk-data" set:html={JSON.stringify(akkusativQuestions)}></script>
+  <script type="module">
+    import { mountAkkusativPractice } from "../../../lib/akkusativPractice.js";
+
+    const questions = JSON.parse(document.getElementById("akk-data").textContent);
+    const exerciseRoot = document.getElementById("akk-exercise-root");
+
+    const ringFill = document.getElementById("akk-ring-fill");
+    const ringNum = document.getElementById("akk-ring-num");
+    const statsText = document.getElementById("akk-session-stats");
+    const RING_CIRCUMFERENCE = 150.8;
+
+    function onSessionUpdate({ answered, correct, hints, total }) {
+      const pct = total ? Math.round((correct / total) * 100) : 0;
+      ringFill.style.strokeDashoffset = String(RING_CIRCUMFERENCE * (1 - pct / 100));
+      ringNum.textContent = `${pct}%`;
+      statsText.textContent = `${answered} von ${total} beantwortet · ${correct} richtig · ${hints} Hinweise`;
+    }
+
+    const practice = mountAkkusativPractice(exerciseRoot, questions, { onSessionUpdate });
+
+    const tabUebung = document.getElementById("akk-tab-uebung");
+    const tabRegel = document.getElementById("akk-tab-regel");
+    const uebungView = document.getElementById("akk-uebung-view");
+    const regelView = document.getElementById("akk-regel-view");
+
+    function showView(view) {
+      const isUebung = view === "uebung";
+      uebungView.hidden = !isUebung;
+      regelView.hidden = isUebung;
+      tabUebung.classList.toggle("active", isUebung);
+      tabRegel.classList.toggle("active", !isUebung);
+      tabUebung.setAttribute("aria-selected", String(isUebung));
+      tabRegel.setAttribute("aria-selected", String(!isUebung));
+    }
+
+    tabUebung.addEventListener("click", () => showView("uebung"));
+    tabRegel.addEventListener("click", () => showView("regel"));
+    document.getElementById("akk-back-to-uebung").addEventListener("click", () => showView("uebung"));
+
+    document.querySelectorAll(".akk-diff-btn").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        document.querySelectorAll(".akk-diff-btn").forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+        practice.setDifficulty(btn.dataset.diff);
+      });
+    });
+
+    document.querySelectorAll(".akk-mode-btn").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        document.querySelectorAll(".akk-mode-btn").forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+        practice.setMode(btn.dataset.mode);
+      });
+    });
+  </script>
+</Layout>

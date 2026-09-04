@@ -1,29 +1,199 @@
 ---
 import Layout from "../../layouts/Layout.astro";
-import PracticeHeader from "../../components/PracticeHeader.astro";
-import "../../styles/practice.css";
+import "../../styles/akkusativ.css";
 import artikel from "../../data/artikel.json";
 
-const questions = artikel.map((n) => ({
-  prompt: `___ <strong>${n.word}</strong>?`,
+function explainArtikel(word, gender) {
+  const lower = word.toLowerCase();
+  if (word === "Mann" || word === "Arzt") return `„${word}“ bezeichnet eine männliche Person – solche Wörter sind maskulin.`;
+  if (word === "Frau") return `„${word}“ bezeichnet eine weibliche Person – solche Wörter sind feminin.`;
+  if (word === "Kind") return `„Kind“ ist ein Sonderfall: Es bezieht sich auf Jungen und Mädchen, ist aber grammatisch neutrum.`;
+  if (word === "Kollege") return `„Kollege“ endet zwar auf -e, bezeichnet aber eine männliche Person – solche Personenbezeichnungen bleiben maskulin.`;
+  if (lower.endsWith("in")) return `Die Endung -in kennzeichnet die weibliche Form (z. B. Ärztin, Kollegin) – solche Wörter sind feminin.`;
+  if (lower.endsWith("chen") || lower.endsWith("lein")) return `Verkleinerungsformen auf -chen oder -lein sind immer neutrum.`;
+  if (lower.endsWith("e")) return `Viele zweisilbige Wörter auf -e sind feminin (z. B. Tasche, Sonne, Katze).`;
+  if (lower.endsWith("er")) return `Viele Wörter auf -er – Werkzeuge, Geräte und männliche Personenbezeichnungen – sind maskulin.`;
+  if (lower.endsWith("el")) return `Viele Wörter auf -el sind maskulin (z. B. Schlüssel, Apfel).`;
+  return `Für „${word}“ gibt es keine feste Regel – der Artikel wird mit dem Wort zusammen gelernt.`;
+}
+
+const questions = artikel.map((n, i) => ({
+  id: `art-${i}`,
+  prompt: `___ ${n.word}?`,
+  options: ["der", "die", "das"],
   answer: n.gender,
-  explain: `${n.gender} ${n.word}`,
+  explain: explainArtikel(n.word, n.gender),
+  change: `${n.gender} ${n.word}`,
 }));
+const total = questions.length;
 ---
-<Layout title="der/die/das-Trainer – DeutschAcademy">
-  <PracticeHeader title="der/die/das-Trainer" />
-  <main class="practice-main">
-    <div class="practice-hero">
-      <p class="eyebrow">Artikel-Training</p>
-      <h1>der, die oder das?</h1>
-      <p>Tippe den richtigen Artikel und drücke Enter. Basiert auf der Artikelübersicht A1 und echten Beispielsätzen aus dem Unterricht.</p>
-    </div>
-    <div class="quiz-card" id="quiz-root"></div>
-  </main>
-  <script type="application/json" id="quiz-data" set:html={JSON.stringify(questions)}></script>
+<Layout title="Artikel-Trainer – DeutschAcademy">
+  <Fragment slot="head">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@400;500;600;700;800&family=Fira+Mono:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+  </Fragment>
+
+  <div class="akk">
+    <header class="akk-topbar">
+      <div class="akk-topbar-inner">
+        <span class="akk-wordmark">DeutschAcademy</span>
+        <nav class="akk-breadcrumb" aria-label="Breadcrumb">
+          <a href="/uebungen">Übungen</a><span class="akk-crumb-sep">›</span>
+          <span class="akk-crumb-current">Artikel-Trainer</span>
+        </nav>
+      </div>
+    </header>
+
+    <main class="akk-main">
+      <div class="akk-card">
+        <div class="akk-card-header">
+          <div class="akk-title-group">
+            <span class="akk-tag">ART</span>
+            <h1 class="akk-title">Artikel-Trainer</h1>
+          </div>
+        </div>
+
+        <div class="akk-tabs" role="tablist">
+          <button class="akk-tab active" id="akk-tab-uebung" type="button" role="tab" aria-selected="true">Übung</button>
+          <button class="akk-tab" id="akk-tab-regel" type="button" role="tab" aria-selected="false">Regel</button>
+        </div>
+
+        <div id="akk-uebung-view">
+          <div class="akk-mode-row">
+            <div class="akk-mode" role="group" aria-label="Übungsmodus">
+              <span class="akk-mode-label">Modus</span>
+              <button class="akk-mode-btn active" data-mode="fokus" type="button">Fokus-Modus</button>
+              <span class="akk-mode-sep">·</span>
+              <button class="akk-mode-btn" data-mode="test" type="button">Testmodus</button>
+            </div>
+          </div>
+          <div id="akk-exercise-root"></div>
+        </div>
+
+        <div id="akk-regel-view" hidden>
+          <p class="akk-regel-intro">
+            Der Artikel eines deutschen Nomens ist meist nicht am Genus der Sache erkennbar – aber manche
+            Wortendungen geben einen zuverlässigen Hinweis. Die folgenden Muster helfen beim Raten, wenn
+            das Wort noch unbekannt ist.
+          </p>
+          <table class="akk-decl-table">
+            <thead>
+              <tr>
+                <th>Endung</th>
+                <th>meist</th>
+                <th>Beispiel</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>-e</td>
+                <td>feminin</td>
+                <td>die Tasche, die Sonne</td>
+              </tr>
+              <tr>
+                <td>-in</td>
+                <td>feminin</td>
+                <td>die Ärztin, die Kollegin</td>
+              </tr>
+              <tr>
+                <td>-chen / -lein</td>
+                <td>neutrum</td>
+                <td>das Mädchen, das Kaninchen</td>
+              </tr>
+              <tr>
+                <td>-er</td>
+                <td>maskulin</td>
+                <td>der Computer, der Lehrer</td>
+              </tr>
+              <tr>
+                <td>-el</td>
+                <td>maskulin</td>
+                <td>der Schlüssel, der Apfel</td>
+              </tr>
+            </tbody>
+          </table>
+          <p class="akk-regel-note">
+            Männliche Personenbezeichnungen bleiben maskulin, auch wenn sie auf -e enden (z. B. der Kollege,
+            der Junge). Bei vielen Wörtern gibt es kein Muster – der Artikel muss einfach mitgelernt werden.
+          </p>
+          <button class="akk-btn akk-btn-primary" id="akk-back-to-uebung" type="button">Zurück zur Übung</button>
+        </div>
+      </div>
+
+      <footer class="akk-footer">
+        <div class="akk-session-ring">
+          <svg viewBox="0 0 56 56">
+            <circle class="akk-ring-track" cx="28" cy="28" r="24" />
+            <circle class="akk-ring-fill" id="akk-ring-fill" cx="28" cy="28" r="24" stroke-dasharray="150.8" stroke-dashoffset="150.8" />
+          </svg>
+          <span class="akk-ring-num" id="akk-ring-num">0%</span>
+        </div>
+        <div class="akk-session-text">
+          <span class="akk-session-label">Diese Sitzung</span>
+          <p class="akk-session-stats" id="akk-session-stats">0 von {total} beantwortet · 0 richtig · 0 Hinweise</p>
+        </div>
+        <span class="akk-session-badge">lokal · ohne Konto</span>
+      </footer>
+    </main>
+  </div>
+
+  <script type="application/json" id="akk-data" set:html={JSON.stringify(questions)}></script>
   <script type="module">
-    import { mountQuiz } from "../../lib/quiz.js";
-    const data = JSON.parse(document.getElementById("quiz-data").textContent);
-    mountQuiz(document.getElementById("quiz-root"), data, { mode: "text" });
+    import { mountPracticeWorkspace } from "../../lib/practiceWorkspace.js";
+
+    const questions = JSON.parse(document.getElementById("akk-data").textContent);
+    const exerciseRoot = document.getElementById("akk-exercise-root");
+
+    const ringFill = document.getElementById("akk-ring-fill");
+    const ringNum = document.getElementById("akk-ring-num");
+    const statsText = document.getElementById("akk-session-stats");
+    const RING_CIRCUMFERENCE = 150.8;
+
+    function onSessionUpdate({ answered, correct, hints, total }) {
+      const pct = total ? Math.round((correct / total) * 100) : 0;
+      ringFill.style.strokeDashoffset = String(RING_CIRCUMFERENCE * (1 - pct / 100));
+      ringNum.textContent = `${pct}%`;
+      statsText.textContent = `${answered} von ${total} beantwortet · ${correct} richtig · ${hints} Hinweise`;
+    }
+
+    const practice = mountPracticeWorkspace(exerciseRoot, questions, { onSessionUpdate });
+
+    const tabUebung = document.getElementById("akk-tab-uebung");
+    const tabRegel = document.getElementById("akk-tab-regel");
+    const uebungView = document.getElementById("akk-uebung-view");
+    const regelView = document.getElementById("akk-regel-view");
+
+    function playEnter(el) {
+      el.classList.remove("akk-anim-in");
+      void el.offsetWidth;
+      el.classList.add("akk-anim-in");
+    }
+
+    function showView(view) {
+      const isUebung = view === "uebung";
+      uebungView.hidden = !isUebung;
+      regelView.hidden = isUebung;
+      tabUebung.classList.toggle("active", isUebung);
+      tabRegel.classList.toggle("active", !isUebung);
+      tabUebung.setAttribute("aria-selected", String(isUebung));
+      tabRegel.setAttribute("aria-selected", String(!isUebung));
+      playEnter(isUebung ? uebungView : regelView);
+    }
+
+    tabUebung.addEventListener("click", () => showView("uebung"));
+    tabRegel.addEventListener("click", () => showView("regel"));
+    document.getElementById("akk-back-to-uebung").addEventListener("click", () => showView("uebung"));
+
+    document.querySelectorAll(".akk-mode-btn").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        document.querySelectorAll(".akk-mode-btn").forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+        practice.setMode(btn.dataset.mode);
+      });
+    });
   </script>
 </Layout>

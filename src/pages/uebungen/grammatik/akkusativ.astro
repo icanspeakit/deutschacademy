@@ -117,7 +117,7 @@ const total = akkusativQuestions.filter((q) => q.difficulty === "leicht").length
 
   <script type="application/json" id="akk-data" set:html={JSON.stringify(akkusativQuestions)}></script>
   <script type="module">
-    import { mountAkkusativPractice } from "../../../lib/akkusativPractice.js";
+    import { mountPracticeWorkspace } from "../../../lib/practiceWorkspace.js";
 
     const questions = JSON.parse(document.getElementById("akk-data").textContent);
     const exerciseRoot = document.getElementById("akk-exercise-root");
@@ -134,12 +134,18 @@ const total = akkusativQuestions.filter((q) => q.difficulty === "leicht").length
       statsText.textContent = `${answered} von ${total} beantwortet · ${correct} richtig · ${hints} Hinweise`;
     }
 
-    const practice = mountAkkusativPractice(exerciseRoot, questions, { onSessionUpdate });
+    const practice = mountPracticeWorkspace(exerciseRoot, questions, { onSessionUpdate });
 
     const tabUebung = document.getElementById("akk-tab-uebung");
     const tabRegel = document.getElementById("akk-tab-regel");
     const uebungView = document.getElementById("akk-uebung-view");
     const regelView = document.getElementById("akk-regel-view");
+
+    function playEnter(el) {
+      el.classList.remove("akk-anim-in");
+      void el.offsetWidth;
+      el.classList.add("akk-anim-in");
+    }
 
     function showView(view) {
       const isUebung = view === "uebung";
@@ -149,6 +155,7 @@ const total = akkusativQuestions.filter((q) => q.difficulty === "leicht").length
       tabRegel.classList.toggle("active", !isUebung);
       tabUebung.setAttribute("aria-selected", String(isUebung));
       tabRegel.setAttribute("aria-selected", String(!isUebung));
+      playEnter(isUebung ? uebungView : regelView);
     }
 
     tabUebung.addEventListener("click", () => showView("uebung"));

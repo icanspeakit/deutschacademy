@@ -1,12 +1,14 @@
 {
   "meta": {
     "sourceNote": "Fakten aus Lernmaterial 'Leben in Deutschland – für Bayern' (A2 und B1, DeutschAcademy-Unterrichtsmaterial). Das Material ist auf Bayern zugeschnitten: die bundesweiten Fakten (Demokratie, Geschichte, Grundrechte, Arbeit, Familie) gelten für den gesamten Einbürgerungstest, die Bayern-Kapitel decken nur den landesspezifischen Teil ab, der für andere Bundesländer anders ausfällt.",
+    "sourceNoteEasy": "Diese Fakten kommen aus dem Lernmaterial 'Leben in Deutschland – für Bayern'. Die Themen Demokratie, Geschichte, Grundrechte, Arbeit und Familie gelten für ganz Deutschland. Die Bayern-Fakten gelten nur für Bayern.",
     "totalQuestions": 33,
     "federalQuestions": 30,
     "stateQuestions": 3,
     "minutes": 60,
     "passScore": 17,
-    "stateFactsNote": "Die Grunddaten für Bayern (Kapitel, Einwohnerzahl, Grenzen) stammen aus echtem DeutschAcademy-Unterrichtsmaterial. Für die anderen 15 Bundesländer gibt es kein solches Material im Projekt — Hauptstadt, Parlamentsname und Amtstitel der Landesregierung sind daher allgemein bekannte, öffentliche Fakten (keine erfundenen Details, aber auch keine DeutschAcademy-Quelle). Amtsinhaber und genaue Wahlzyklen ändern sich und werden hier bewusst nicht genannt — dafür gilt die offizielle Landeswahlleitung."
+    "stateFactsNote": "Die Grunddaten für Bayern (Kapitel, Einwohnerzahl, Grenzen) stammen aus echtem DeutschAcademy-Unterrichtsmaterial. Für die anderen 15 Bundesländer gibt es kein solches Material im Projekt — Hauptstadt, Parlamentsname und Amtstitel der Landesregierung sind daher allgemein bekannte, öffentliche Fakten (keine erfundenen Details, aber auch keine DeutschAcademy-Quelle). Amtsinhaber und genaue Wahlzyklen ändern sich und werden hier bewusst nicht genannt — dafür gilt die offizielle Landeswahlleitung.",
+    "stateFactsNoteEasy": "Die Fakten für Bayern kommen aus echtem Lernmaterial. Für die anderen 15 Bundesländer sind das bekannte, öffentliche Fakten."
   },
   "topics": [
     {
@@ -19,6 +21,14 @@
         "Legislative (Gesetzgebung): Der Bundestag und der Bundesrat machen die Gesetze.",
         "Exekutive (Ausführung): Die Regierung führt die Gesetze aus. Der Bundeskanzler/die Bundeskanzlerin leitet die Regierung.",
         "Judikative (Rechtsprechung): Die Gerichte und Richter prüfen, ob Gesetze eingehalten werden, und entscheiden über Strafen."
+      ],
+      "factsEasy": [
+        "Demokratie heißt: Das Volk hat die Macht. Die Menschen wählen, wer das Land regiert.",
+        "Eine Diktatur ist das Gegenteil von Demokratie. Dort bestimmt nur eine Person oder eine kleine Gruppe.",
+        "In Deutschland gibt es drei Teile der Macht. Das heißt Gewaltenteilung.",
+        "Legislative: Bundestag und Bundesrat machen die Gesetze.",
+        "Exekutive: Die Regierung macht die Arbeit. Der Bundeskanzler oder die Bundeskanzlerin führt die Regierung.",
+        "Judikative: Gerichte und Richter kontrollieren die Gesetze. Sie entscheiden auch über Strafen."
       ]
     },
     {
@@ -32,6 +42,15 @@
         "Wahlen sind geheim: Niemand sieht, wen du wählst.",
         "Wahlen sind gleich: Jede Stimme hat die gleiche Kraft, egal ob arm oder reich, Frau oder Mann.",
         "Wahlen sind allgemein: Ab 18 Jahren darf fast jeder Erwachsene wählen, der deutscher Bürger/deutsche Bürgerin ist oder aus der EU kommt."
+      ],
+      "factsEasy": [
+        "Bundestagswahl: Das ist alle 4 Jahre. Die Menschen wählen die Abgeordneten für den Bundestag.",
+        "Landtagswahl: Jedes Bundesland wählt sein eigenes Parlament. In Bayern ist das zum Beispiel alle 5 Jahre.",
+        "Kommunalwahl: Die Menschen wählen den Bürgermeister und den Gemeinderat in ihrer Stadt.",
+        "Wahlen sind frei: Niemand darf dir sagen, wen du wählen musst.",
+        "Wahlen sind geheim: Niemand sieht, wen du wählst.",
+        "Wahlen sind gleich: Jede Stimme zählt gleich viel. Es ist egal, ob du arm oder reich bist.",
+        "Wahlen sind allgemein: Fast alle Erwachsenen ab 18 Jahren dürfen wählen. Sie müssen Deutsche sein oder aus der EU kommen."
       ]
     },
     {
@@ -46,6 +65,16 @@
         "Pflicht: Alle müssen die Gesetze befolgen — das ist nicht optional.",
         "Pflicht: Wenn du Geld verdienst, musst du Einkommensteuer zahlen. Das Geld finanziert Schulen, Straßen und andere öffentliche Dinge.",
         "Pflicht: Kinder müssen zur Schule gehen — Schulpflicht in Deutschland dauert normalerweise 9 oder 10 Jahre."
+      ],
+      "factsEasy": [
+        "Die wichtigste Regel in Deutschland: Die Würde des Menschen ist geschützt. Niemand darf dich schlecht behandeln.",
+        "Meinungsfreiheit: Du darfst deine Meinung frei sagen und schreiben.",
+        "Versammlungsfreiheit: Du darfst dich mit anderen Menschen treffen. Ihr dürft auch zusammen demonstrieren.",
+        "Religionsfreiheit: Du darfst eine Religion haben. Du darfst auch keine Religion haben.",
+        "Gleichheit vor dem Gesetz: Alle Menschen haben die gleichen Rechte. Hautfarbe, Religion oder Geschlecht spielen keine Rolle.",
+        "Pflicht: Alle Menschen müssen die Gesetze befolgen.",
+        "Pflicht: Wenn du arbeitest, zahlst du Steuern. Der Staat bezahlt damit zum Beispiel Schulen und Straßen.",
+        "Pflicht: Kinder müssen in die Schule gehen. Das sind meistens 9 oder 10 Jahre."
       ]
     },
     {
@@ -60,6 +89,16 @@
         "Ostdeutschland (Deutsche Demokratische Republik, DDR), kontrolliert von der Sowjetunion, mit Diktatur und Planwirtschaft.",
         "Die Berliner Mauer trennte Ost- und Westdeutschland; Menschen versuchten zu fliehen.",
         "Wiedervereinigung: 1989 fiel die Berliner Mauer. Am 3. Oktober 1990 wurde Deutschland wieder ein Land — dieser Tag ist heute der Tag der Deutschen Einheit, ein nationaler Feiertag."
+      ],
+      "factsEasy": [
+        "Weimarer Republik (1919–1933): Nach dem Ersten Weltkrieg gab es die erste Demokratie in Deutschland. Es gab viele Probleme, zum Beispiel keine Arbeit und wenig Geld.",
+        "NS-Zeit (1933–1945): 1933 bekam Adolf Hitler die Macht. Die Demokratie war zu Ende. Es gab jetzt eine Diktatur ohne Grundrechte.",
+        "Die Regierung verfolgte jüdische Menschen und andere Gruppen. Das war eine sehr schlimme Zeit.",
+        "1939–1945: Der Zweite Weltkrieg. Deutschland begann den Krieg. Millionen Menschen starben.",
+        "Teilung (1945–1990): Nach dem Krieg gab es zwei deutsche Staaten. Der Westen hieß Bundesrepublik Deutschland (BRD). Dort gab es Demokratie.",
+        "Der Osten hieß Deutsche Demokratische Republik (DDR). Dort gab es eine Diktatur.",
+        "Die Berliner Mauer trennte Ost und West. Viele Menschen wollten von Ost nach West fliehen.",
+        "Wiedervereinigung: 1989 fiel die Berliner Mauer. Am 3. Oktober 1990 wurde Deutschland wieder ein Land. Dieser Tag heißt Tag der Deutschen Einheit."
       ]
     },
     {
@@ -75,6 +114,17 @@
         "Arbeitslosenversicherung: zahlt Arbeitslosengeld, wenn du deinen Job verlierst.",
         "Rentenversicherung: zahlt Rente, wenn du alt bist und nicht mehr arbeiten kannst.",
         "Pflegeversicherung: hilft mit den Kosten, wenn du pflegebedürftig wirst."
+      ],
+      "factsEasy": [
+        "Es gibt einen Mindestlohn. Der Chef muss mindestens so viel Geld zahlen.",
+        "Normale Arbeitszeit: 8 Stunden pro Tag. Das sind 40 Stunden pro Woche.",
+        "Arbeitnehmer haben Urlaub. Das sind mindestens 20 Tage pro Jahr.",
+        "Kündigungsschutz: Der Chef kann dich nicht einfach kündigen. Er braucht einen guten Grund.",
+        "Deutschland ist ein Sozialstaat. Der Staat hilft Menschen in Not.",
+        "Krankenversicherung: Sie zahlt den Arzt und die Medikamente, wenn du krank bist.",
+        "Arbeitslosenversicherung: Sie zahlt Geld, wenn du deine Arbeit verlierst.",
+        "Rentenversicherung: Sie zahlt Geld, wenn du alt bist und nicht mehr arbeitest.",
+        "Pflegeversicherung: Sie hilft, wenn du Hilfe im Alltag brauchst."
       ]
     },
     {
@@ -86,30 +136,37 @@
         "Kinderarbeit ist verboten: Kleine Kinder dürfen nicht arbeiten. Ab 15 Jahren können sie leichte Jobs machen, aber mit Grenzen.",
         "In Deutschland können Menschen heiraten, unabhängig von Geschlecht oder Religion. Ehe und Familie stehen unter dem besonderen Schutz des Staates.",
         "Eltern tragen Verantwortung für ihre Kinder: sie versorgen, erziehen und schützen sie."
+      ],
+      "factsEasy": [
+        "Schulpflicht: Alle Kinder müssen zur Schule gehen. Die Eltern melden ihr Kind an.",
+        "Schutz vor Gewalt: Eltern dürfen ihre Kinder nicht schlagen. Das ist verboten.",
+        "Kinderarbeit ist verboten. Ab 15 Jahren dürfen Kinder leichte Jobs machen.",
+        "In Deutschland dürfen alle Menschen heiraten. Das Geschlecht und die Religion spielen keine Rolle. Der Staat schützt Ehe und Familie.",
+        "Eltern sind verantwortlich für ihre Kinder. Sie sorgen für sie, erziehen sie und schützen sie."
       ]
     }
   ],
   "glossary": [
-    { "term": "Abgeordnete", "def": "Menschen, die vom Volk gewählt wurden und im Parlament sitzen." },
-    { "term": "Bundesrat", "def": "Das Organ mit Vertretern aus den Bundesländern." },
-    { "term": "Bundestag", "def": "Das deutsche Parlament. Hier sitzen die Abgeordneten und machen Gesetze." },
-    { "term": "Demokratie", "def": "Eine Regierungsform, bei der die Macht vom Volk ausgeht." },
-    { "term": "Diktatur", "def": "Eine Regierungsform, bei der eine Person oder kleine Gruppe allein die Macht hat." },
-    { "term": "Exekutive", "def": "Die ausführende Gewalt — Regierung und Bundeskanzler/in führen die Gesetze aus." },
-    { "term": "Grundgesetz", "def": "Die Verfassung Deutschlands — das wichtigste Regelwerk." },
-    { "term": "Grundrechte", "def": "Wichtige Rechte, die jeder Mensch hat, z. B. Meinungsfreiheit, Religionsfreiheit." },
-    { "term": "Judikative", "def": "Die Rechtsprechung — Gerichte und Richter prüfen, ob Gesetze eingehalten werden." },
-    { "term": "Koalition", "def": "Wenn zwei oder mehr Parteien zusammenarbeiten, um eine Mehrheit zu haben und zu regieren." },
-    { "term": "Landtag", "def": "Das Parlament eines Bundeslandes. In Bayern: Bayerischer Landtag." },
-    { "term": "Legislative", "def": "Die Gesetzgebung — Bundestag und Bundesrat machen die Gesetze." },
-    { "term": "Menschenwürde", "def": "Der Wert und die Würde, die jeder Mensch hat. Sie ist unantastbar." },
-    { "term": "Mindestlohn", "def": "Der niedrigste Lohn, den ein Arbeitgeber zahlen muss — geregelt durch Gesetz." },
-    { "term": "Rechtsstaat", "def": "Ein Staat, in dem Gesetze für alle gelten — auch für die Regierung." },
-    { "term": "Rente", "def": "Geld, das man im Alter bekommt, nachdem man während der Arbeit eingezahlt hat." },
-    { "term": "Sozialstaat", "def": "Ein Staat, der seine Bürger unterstützt — bei Krankheit, Arbeitslosigkeit, Alter." },
-    { "term": "Verfassung", "def": "Die oberste Regel eines Staates. In Deutschland ist das das Grundgesetz." },
-    { "term": "Wahlen", "def": "Der Prozess, bei dem das Volk entscheidet, wer regieren soll — frei, geheim und gleich." },
-    { "term": "Wiedervereinigung", "def": "1990: Die Vereinigung von Ost- und Westdeutschland zu einem Land." }
+    { "term": "Abgeordnete", "def": "Menschen, die vom Volk gewählt wurden und im Parlament sitzen.", "defEasy": "Menschen im Parlament. Das Volk wählt sie." },
+    { "term": "Bundesrat", "def": "Das Organ mit Vertretern aus den Bundesländern.", "defEasy": "Hier sitzen Vertreter aus allen Bundesländern." },
+    { "term": "Bundestag", "def": "Das deutsche Parlament. Hier sitzen die Abgeordneten und machen Gesetze.", "defEasy": "Das deutsche Parlament. Hier machen die Abgeordneten die Gesetze." },
+    { "term": "Demokratie", "def": "Eine Regierungsform, bei der die Macht vom Volk ausgeht.", "defEasy": "Das Volk hat die Macht." },
+    { "term": "Diktatur", "def": "Eine Regierungsform, bei der eine Person oder kleine Gruppe allein die Macht hat.", "defEasy": "Eine Person oder kleine Gruppe hat allein die Macht." },
+    { "term": "Exekutive", "def": "Die ausführende Gewalt — Regierung und Bundeskanzler/in führen die Gesetze aus.", "defEasy": "Die Regierung. Sie macht die Arbeit und führt die Gesetze aus." },
+    { "term": "Grundgesetz", "def": "Die Verfassung Deutschlands — das wichtigste Regelwerk.", "defEasy": "Das wichtigste Gesetz in Deutschland." },
+    { "term": "Grundrechte", "def": "Wichtige Rechte, die jeder Mensch hat, z. B. Meinungsfreiheit, Religionsfreiheit.", "defEasy": "Wichtige Rechte für alle Menschen, zum Beispiel freie Meinung und freie Religion." },
+    { "term": "Judikative", "def": "Die Rechtsprechung — Gerichte und Richter prüfen, ob Gesetze eingehalten werden.", "defEasy": "Die Gerichte. Richter prüfen, ob die Gesetze stimmen." },
+    { "term": "Koalition", "def": "Wenn zwei oder mehr Parteien zusammenarbeiten, um eine Mehrheit zu haben und zu regieren.", "defEasy": "Zwei oder mehr Parteien arbeiten zusammen und regieren gemeinsam." },
+    { "term": "Landtag", "def": "Das Parlament eines Bundeslandes. In Bayern: Bayerischer Landtag.", "defEasy": "Das Parlament von einem Bundesland." },
+    { "term": "Legislative", "def": "Die Gesetzgebung — Bundestag und Bundesrat machen die Gesetze.", "defEasy": "Bundestag und Bundesrat. Sie machen die Gesetze." },
+    { "term": "Menschenwürde", "def": "Der Wert und die Würde, die jeder Mensch hat. Sie ist unantastbar.", "defEasy": "Jeder Mensch hat einen Wert. Niemand darf diesen Wert verletzen." },
+    { "term": "Mindestlohn", "def": "Der niedrigste Lohn, den ein Arbeitgeber zahlen muss — geregelt durch Gesetz.", "defEasy": "Der niedrigste Lohn. Das Gesetz sagt, wie viel das ist." },
+    { "term": "Rechtsstaat", "def": "Ein Staat, in dem Gesetze für alle gelten — auch für die Regierung.", "defEasy": "Ein Staat mit Gesetzen für alle Menschen. Auch die Regierung muss die Gesetze befolgen." },
+    { "term": "Rente", "def": "Geld, das man im Alter bekommt, nachdem man während der Arbeit eingezahlt hat.", "defEasy": "Geld für alte Menschen. Sie haben vorher lange gearbeitet und eingezahlt." },
+    { "term": "Sozialstaat", "def": "Ein Staat, der seine Bürger unterstützt — bei Krankheit, Arbeitslosigkeit, Alter.", "defEasy": "Ein Staat, der den Menschen hilft. Zum Beispiel bei Krankheit oder im Alter." },
+    { "term": "Verfassung", "def": "Die oberste Regel eines Staates. In Deutschland ist das das Grundgesetz.", "defEasy": "Die wichtigste Regel von einem Staat." },
+    { "term": "Wahlen", "def": "Der Prozess, bei dem das Volk entscheidet, wer regieren soll — frei, geheim und gleich.", "defEasy": "Das Volk wählt, wer das Land regiert." },
+    { "term": "Wiedervereinigung", "def": "1990: Die Vereinigung von Ost- und Westdeutschland zu einem Land.", "defEasy": "1990: Ost-Deutschland und West-Deutschland wurden wieder ein Land." }
   ],
   "bundeslaender": [
     {
@@ -134,6 +191,15 @@
         "Bayern hat einen eigenen Ministerpräsidenten/eine eigene Ministerpräsidentin — wie ein kleiner Bundeskanzler/eine kleine Bundeskanzlerin, aber nur für Bayern.",
         "Der Bayerische Landtag sind die Abgeordneten, die für Bayern Gesetze machen — er funktioniert wie der Bundestag, aber auf Landesebene.",
         "Bayern ist ein wichtiges Wirtschaftszentrum mit vielen großen Firmen und Fabriken, neben Bier, Lederhosen und den Alpen."
+      ],
+      "sourceFactsEasy": [
+        "Bayern ist eines von 16 Bundesländern. Es ist das größte Bundesland.",
+        "Die Hauptstadt von Bayern ist München. Weitere große Städte: Nürnberg, Augsburg.",
+        "Bayern hat etwa 13 Millionen Einwohner.",
+        "Bayern grenzt an Österreich und Tschechien.",
+        "Bayern hat eine eigene Regierung. Der Ministerpräsident oder die Ministerpräsidentin führt sie.",
+        "Der Bayerische Landtag macht die Gesetze für Bayern.",
+        "Bayern hat viele Firmen und Fabriken. Bayern ist auch bekannt für Bier, Lederhosen und die Alpen."
       ],
       "stateQuestions": [
         { "prompt": "Wie oft finden Landtagswahlen in Bayern statt?", "options": ["Alle 5 Jahre", "Alle 4 Jahre", "Alle 3 Jahre", "Alle 6 Jahre"], "answer": "Alle 5 Jahre" },

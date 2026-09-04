@@ -1,0 +1,202 @@
+/* Leben in Deutschland: Fakten page.
+   Visual design is fixed ("minimal": flat, near-monochrome, Inter + JetBrains Mono) — baked
+   into .fk-page below via the same shared custom properties (--ink, --brand-blue-dark,
+   --font-display, --radius, …) the rest of the site's components already read, so everything
+   re-themes without touching practice.css/pruefungen.css.
+
+   The one remaining user-facing control is "Ansicht" (.fk-view-switcher): a small icon-only
+   dial fixed to the bottom-right corner that swaps between three structural layouts (Tabs is
+   the default). See the crossfade + sliding-indicator mechanics near the bottom of this file. */
+
+.fk-page {
+  --ink: #111111;
+  --muted: #666666;
+  --border: #e2e2e2;
+  --border-strong: #cccccc;
+  --surface: #fafafa;
+  --brand-blue: #2563eb;
+  --brand-blue-dark: #1d4ed8;
+  --gradient-brand: #2563eb;
+  --font-display: "Inter", "Segoe UI", Arial, sans-serif;
+  --font-body: "Inter", "Segoe UI", Arial, sans-serif;
+  --radius-sm: 4px;
+  --radius: 6px;
+  --radius-lg: 8px;
+  --radius-pill: 6px;
+  --fk-page-bg: #ffffff;
+  --fk-header-bg: #ffffff;
+  --fk-card-bg: #ffffff;
+
+  font-family: var(--font-body);
+  color: var(--ink);
+  background: var(--fk-page-bg);
+}
+
+.fk-page .eyebrow,
+.fk-page .fk-fact-card-count,
+.fk-page .format-note {
+  font-family: "JetBrains Mono", "Consolas", monospace;
+  letter-spacing: .01em;
+}
+
+/* Surfaces that are hard-coded #fff in shared stylesheets — re-themed here. */
+.fk-page .practice-header { background: var(--fk-header-bg); }
+.fk-page .format-table,
+.fk-page .mock-cta { background: var(--fk-card-bg); }
+.fk-page .quiz-btn:not(.quiz-btn--primary) { background: var(--fk-card-bg); }
+
+/* ================= Hero ================= */
+
+.fk-hero { text-align: center; margin-bottom: 24px; }
+.fk-hero .eyebrow { text-align: center; }
+.fk-hero h1 { font-family: var(--font-display); font-size: clamp(1.6rem, 4vw, 2.2rem); color: var(--ink); margin: 0 0 10px; }
+.fk-hero p { color: var(--muted); max-width: 560px; margin: 0 auto; line-height: 1.55; }
+.fk-hero p a { color: var(--brand-blue-dark); font-weight: 600; }
+
+.fk-source-note { max-width: 560px; margin: 14px auto 0; text-align: left; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 10px 16px; }
+.fk-source-note summary { cursor: pointer; font-weight: 600; color: var(--brand-blue-dark); font-size: .88rem; }
+.fk-source-note p { margin: 10px 0 0; color: var(--muted); font-size: .85rem; text-align: left; max-width: none; line-height: 1.5; }
+
+/* ================= Sprache: Standard / In einfachem Deutsch ================= */
+
+.fk-page:not([data-lang="easy"]) .fk-easy { display: none; }
+.fk-page[data-lang="easy"] .fk-std { display: none; }
+
+.fk-lang-toggle { display: flex; justify-content: center; gap: 6px; margin: 0 0 28px; }
+.fk-lang-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  border: 1px solid var(--border);
+  background: var(--fk-card-bg);
+  color: var(--muted);
+  padding: 9px 18px;
+  border-radius: var(--radius-pill);
+  font-weight: 600;
+  font-size: .9rem;
+  cursor: pointer;
+  font-family: var(--font-body);
+  transition: background .15s ease, color .15s ease, border-color .15s ease;
+}
+.fk-lang-btn:hover { border-color: var(--border-strong); color: var(--ink); }
+.fk-lang-btn.active { background: #ecfdf5; border-color: #6ee7b7; color: #047857; }
+.fk-lang-btn.active svg { color: #047857; }
+.fk-lang-btn[data-lang="standard"].active { background: var(--surface); border-color: var(--border-strong); color: var(--ink); }
+
+/* ================= Ansicht: corner view switcher ================= */
+
+.fk-view-switcher {
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--fk-card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  padding: 5px 8px;
+  box-shadow: 0 4px 18px rgba(0,0,0,.09);
+}
+.fk-view-switcher-icon { display: flex; color: var(--border-strong); padding: 0 2px; }
+.fk-view-switcher-track { position: relative; display: inline-flex; gap: 2px; }
+.fk-view-switcher-indicator {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 32px;
+  background: var(--gradient-brand);
+  border-radius: var(--radius-sm);
+  transition: transform .3s cubic-bezier(.4,0,.2,1), width .3s cubic-bezier(.4,0,.2,1);
+  z-index: 0;
+}
+.fk-view-btn {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: var(--muted);
+  border-radius: var(--radius-sm);
+  transition: color .2s ease;
+}
+.fk-view-btn:hover { color: var(--ink); }
+.fk-view-btn.active { color: #fff; }
+
+@media (max-width: 640px) {
+  .fk-view-switcher { right: 12px; bottom: 12px; }
+  .fk-view-switcher-icon { display: none; }
+}
+
+/* Crossfade between layout sections on switch (skipped for prefers-reduced-motion, see JS). */
+.fk-layout { opacity: 1; transform: translateY(0); transition: opacity .18s ease, transform .18s ease; }
+.fk-layout.fk-anim-out { opacity: 0; transform: translateY(6px); }
+.fk-layout.fk-anim-in { opacity: 0; transform: translateY(6px); }
+.fk-layout[hidden] { display: none; }
+@media (prefers-reduced-motion: reduce) {
+  .fk-layout { transition: none; }
+}
+
+/* ---------- Layout 1: Tabs (default) ---------- */
+.fk-tabbar { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; justify-content: center; }
+.fk-tab { border: 1px solid var(--border); background: var(--fk-card-bg); color: var(--ink); padding: 8px 16px; border-radius: var(--radius-pill); font-weight: 600; font-size: .88rem; cursor: pointer; font-family: var(--font-body); }
+.fk-tab:hover { border-color: var(--brand-blue); }
+.fk-tab.active { background: var(--gradient-brand); color: #fff; border-color: transparent; }
+.fk-tab-panel { display: none; background: var(--fk-card-bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 28px; max-width: 780px; margin: 0 auto; }
+.fk-tab-panel.active { display: block; }
+.fk-tab-panel h3 { text-align: left; margin: 0 0 14px; font-family: var(--font-display); color: var(--ink); }
+
+.fk-downloads-list { display: flex; flex-wrap: wrap; gap: 10px; }
+
+/* ---------- Layout 2: Sidebar / doc ---------- */
+.fk-doc-grid { display: grid; grid-template-columns: 220px 1fr; gap: 32px; align-items: start; }
+.fk-doc-nav { position: sticky; top: 24px; }
+.fk-doc-nav-label { font-size: .76rem; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); margin: 18px 0 8px; }
+.fk-doc-nav-label:first-child { margin-top: 0; }
+.fk-doc-nav ul { list-style: none; margin: 0; padding: 0; }
+.fk-doc-nav li { margin-bottom: 2px; }
+.fk-doc-nav a { display: block; padding: 6px 10px; border-radius: 8px; color: var(--ink); text-decoration: none; font-size: .89rem; font-weight: 600; }
+.fk-doc-nav a:hover { background: var(--fk-card-bg); color: var(--brand-blue-dark); }
+.fk-doc-nav-downloads a { font-weight: 500; color: var(--brand-blue-dark); font-size: .84rem; }
+.fk-doc-section { background: var(--fk-card-bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 26px 28px; margin-bottom: 18px; scroll-margin-top: 20px; }
+.fk-doc-section h3 { text-align: left; margin: 0 0 14px; font-family: var(--font-display); color: var(--ink); }
+
+@media (max-width: 720px) {
+  .fk-doc-grid { grid-template-columns: 1fr; }
+  .fk-doc-nav { position: static; }
+  .fk-doc-nav ul { display: flex; flex-wrap: wrap; gap: 6px; }
+  .fk-doc-nav-label { display: none; }
+  .fk-doc-nav a { background: var(--surface); border-radius: var(--radius-pill); padding: 6px 12px; }
+  .fk-doc-nav-downloads { display: flex; flex-wrap: wrap; gap: 6px; }
+}
+
+/* ---------- Layout 3: Cards ---------- */
+.fk-card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-bottom: 16px; align-items: start; }
+.fk-card-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; margin-bottom: 16px; align-items: start; }
+.fk-fact-card { background: var(--fk-card-bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 4px 22px; }
+.fk-fact-card summary { list-style: none; cursor: pointer; display: flex; align-items: center; justify-content: space-between; padding: 18px 0; gap: 10px; }
+.fk-fact-card summary::-webkit-details-marker { display: none; }
+.fk-fact-card-title { font-family: var(--font-display); font-weight: 700; color: var(--ink); }
+.fk-fact-card-count { font-size: .76rem; font-weight: 700; color: var(--brand-blue-dark); background: var(--surface); border-radius: var(--radius-pill); padding: 4px 10px; white-space: nowrap; }
+.fk-fact-card[open] summary { border-bottom: 1px solid var(--border); }
+.fk-fact-card .fact-list { padding: 18px 0 20px 20px; margin: 0; }
+.fk-fact-card--wide { padding: 4px 22px 20px; }
+
+.fk-glossary-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 12px; }
+.fk-glossary-item strong { display: block; color: var(--brand-blue-dark); margin-bottom: 2px; font-size: .92rem; }
+.fk-glossary-item span { color: var(--muted); font-size: .86rem; }
+
+.fk-downloads-card { background: var(--fk-card-bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 4px 22px; }
+.fk-downloads-card summary { list-style: none; cursor: pointer; font-weight: 700; color: var(--brand-blue-dark); padding: 16px 0; }
+.fk-downloads-card summary::-webkit-details-marker { display: none; }
+.fk-downloads-card .fk-downloads-list { padding-bottom: 18px; }
+
+/* ---------- Shared: Bundesland picker ---------- */
+.fk-land-select { border: 1px solid var(--border); border-radius: 10px; padding: 8px 14px; font-family: var(--font-body); font-size: .95rem; margin-bottom: 4px; background: var(--fk-card-bg); color: var(--ink); }

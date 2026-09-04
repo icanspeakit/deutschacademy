@@ -8,46 +8,224 @@
 // title) are general public knowledge, not teaching-material sourced — see meta.stateFactsNote,
 // shown on this page. Deliberately excludes officeholder names and exact election-cycle lengths,
 // which change over time and aren't worth the risk of going stale on a citizenship-test page.
+//
+// Visual design is fixed to the "minimal" concept (flat, near-monochrome, Inter + JetBrains
+// Mono) baked directly into .fk-page in fakten-layouts.css — no design switcher.
+//
+// "Ansicht" (structural layout: Tabs default / Inhaltsverzeichnis / Karten) is a small icon-only
+// control fixed to the bottom-right corner (.fk-view-switcher) so it stays out of the reading
+// flow. Switching layouts crossfades the old/new section (see the .fk-anim-out/.fk-anim-in
+// classes and the setLayout() logic below) instead of an instant swap, and a sliding indicator
+// behind the active icon reinforces which view is active.
+//
+// "Sprache" (Standard / In einfachem Deutsch) is a second, content-level toggle shown prominently
+// under the hero — it swaps every fact/definition/source-note to its A1–A2 simplified rewrite
+// (data.*Easy fields in leben-in-deutschland.json). Implementation: every piece of togglable text
+// is rendered TWICE server-side, once wrapped in .fk-std and once in .fk-easy; fakten-layouts.css
+// shows only the one matching .fk-page[data-lang]. This works identically across all three
+// structural layouts with no extra JS beyond flipping the attribute (see setLang() below), except
+// for the Bundesland detail panel, which is built client-side and re-rendered on language change.
+// generate-fakten-pdf.mjs reads the same *Easy fields to build the parallel "einfach" PDF.
 import Layout from "../../../layouts/Layout.astro";
 import PracticeHeader from "../../../components/PracticeHeader.astro";
 import "../../../styles/practice.css";
 import "../../../styles/pruefungen.css";
+import "../../../styles/fakten-layouts.css";
 import lid from "../../../data/leben-in-deutschland.json";
 
 const { topics, glossary, meta, bundeslaender } = lid;
+const downloads = [
+  { href: "/downloads/leben-in-deutschland-fakten.pdf", label: "Fakten als PDF ↓" },
+  { href: "/downloads/leben-in-deutschland-fakten-einfach.pdf", label: "Fakten in einfachem Deutsch (PDF) ↓" },
+  { href: "/downloads/leben-in-deutschland-bayern-a2.pdf", label: "Bayern A2 ↓" },
+  { href: "/downloads/leben-in-deutschland-bayern-b1.pdf", label: "Bayern B1 ↓" },
+  { href: "/downloads/leben-in-deutschland-bayern-b1-grafiken.pdf", label: "Bayern B1, mit Grafiken ↓" },
+];
 ---
 <Layout
   title="Leben in Deutschland: Fakten – DeutschAcademy"
   description="Die wichtigsten Fakten für den Einbürgerungstest 'Leben in Deutschland' — Demokratie, Wahlen, Grundrechte, Geschichte, Arbeit, Familie und alle 16 Bundesländer."
 >
+  <Fragment slot="head">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet" />
+  </Fragment>
+  <div class="fk-page" id="fk-page" data-lang="standard">
   <PracticeHeader title="Leben in Deutschland" />
+
+  <div class="fk-view-switcher" role="tablist" aria-label="Ansicht wählen">
+    <span class="fk-view-switcher-icon" aria-hidden="true">
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 3 8l9 5 9-5-9-5Z"/><path d="M3 12l9 5 9-5"/><path d="M3 16.5l9 5 9-5"/></svg>
+    </span>
+    <div class="fk-view-switcher-track">
+      <span class="fk-view-switcher-indicator" aria-hidden="true"></span>
+      <button type="button" class="fk-view-btn" data-layout="tabs" title="Tabs" aria-label="Ansicht: Tabs">
+        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8V6.5A1.5 1.5 0 0 1 4.5 5h4l2 2h9A1.5 1.5 0 0 1 21 8.5v9A1.5 1.5 0 0 1 19.5 19h-15A1.5 1.5 0 0 1 3 17.5V8Z"/></svg>
+      </button>
+      <button type="button" class="fk-view-btn" data-layout="sidebar" title="Inhaltsverzeichnis" aria-label="Ansicht: Inhaltsverzeichnis">
+        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="1.5"/><line x1="9.5" y1="4" x2="9.5" y2="20"/></svg>
+      </button>
+      <button type="button" class="fk-view-btn" data-layout="cards" title="Karten" aria-label="Ansicht: Karten">
+        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.2"/><rect x="14" y="3" width="7" height="7" rx="1.2"/><rect x="3" y="14" width="7" height="7" rx="1.2"/><rect x="14" y="14" width="7" height="7" rx="1.2"/></svg>
+      </button>
+    </div>
+  </div>
+
   <main class="practice-main">
-    <div class="practice-hero">
+    <div class="fk-hero">
       <p class="eyebrow">Leben in Deutschland · Fakten</p>
       <h1>Fakten zum Lernen</h1>
       <p>
         Bundesweite Fakten aus echtem Unterrichtsmaterial, gegliedert nach Themen, plus die Grunddaten
-        zu deinem Bundesland — zum Nachschlagen und Wiederholen, bevor du den <a href="/pruefungen/leben-in-deutschland/test">Übungstest</a> übst.
+        zu deinem Bundesland — bevor du den <a href="/pruefungen/leben-in-deutschland/test">Übungstest</a> übst.
       </p>
-      <p class="format-note">{meta.sourceNote}</p>
-      <a class="quiz-btn" style="display:inline-block;margin-top:16px;" href="/downloads/leben-in-deutschland-fakten.pdf" download>Fakten als PDF herunterladen ↓</a>
-      <p class="format-note" style="margin-top:20px;">Original-Unterrichtsmaterial für Bayern, als PDF:</p>
-      <div class="exam-meta-row">
-        <a class="quiz-btn" href="/downloads/leben-in-deutschland-bayern-a2.pdf" download>Bayern A2 ↓</a>
-        <a class="quiz-btn" href="/downloads/leben-in-deutschland-bayern-b1.pdf" download>Bayern B1 ↓</a>
-        <a class="quiz-btn" href="/downloads/leben-in-deutschland-bayern-b1-grafiken.pdf" download>Bayern B1, mit Grafiken ↓</a>
+      <details class="fk-source-note">
+        <summary>Über die Quelle</summary>
+        <p><span class="fk-std">{meta.sourceNote}</span><span class="fk-easy">{meta.sourceNoteEasy}</span></p>
+      </details>
+    </div>
+
+    <div class="fk-lang-toggle" role="tablist" aria-label="Sprachniveau wählen">
+      <button type="button" class="fk-lang-btn" data-lang="standard">
+        Standard
+      </button>
+      <button type="button" class="fk-lang-btn" data-lang="easy">
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5V6a2 2 0 0 1 2-2h13.5v15H6a2 2 0 0 0-2 2Z"/><path d="M19.5 19.5H6a2 2 0 0 1 0-4h13.5"/></svg>
+        In einfachem Deutsch
+      </button>
+    </div>
+
+    <!-- ================= Layout 1: Tabs ================= -->
+    <section class="fk-layout fk-layout--tabs" id="fk-tabs" data-layout-panel="tabs">
+      <div class="fk-tabbar" role="tablist">
+        {topics.map((t) => (
+          <button class="fk-tab" type="button" data-target={`fkt-${t.id}`}>{t.title}</button>
+        ))}
+        <button class="fk-tab" type="button" data-target="fkt-glossar">Glossar</button>
+        <button class="fk-tab" type="button" data-target="fkt-bundesland">Dein Bundesland</button>
+        <button class="fk-tab" type="button" data-target="fkt-downloads">Downloads</button>
       </div>
-    </div>
 
-    <div class="topic-tabs" id="topic-tabs">
       {topics.map((t, i) => (
-        <button class="topic-tab" type="button" data-topic={i}>{t.title}</button>
+        <div class={`fk-tab-panel${i === 0 ? " active" : ""}`} id={`fkt-${t.id}`}>
+          <h3>{t.title}</h3>
+          <ul class="fact-list">{t.facts.map((f, fi) => <li><span class="fk-std">{f}</span><span class="fk-easy">{t.factsEasy[fi]}</span></li>)}</ul>
+        </div>
       ))}
-      <button class="topic-tab" type="button" data-topic="glossar">Glossar</button>
-      <button class="topic-tab" type="button" data-topic="bundesland">Dein Bundesland</button>
-    </div>
 
-    <div class="reading-block" id="topic-panel"></div>
+      <div class="fk-tab-panel" id="fkt-glossar">
+        <h3>Glossar</h3>
+        <dl class="glossary-list">
+          {glossary.map((g) => (<><dt>{g.term}</dt><dd><span class="fk-std">{g.def}</span><span class="fk-easy">{g.defEasy}</span></dd></>))}
+        </dl>
+      </div>
+
+      <div class="fk-tab-panel" id="fkt-bundesland">
+        <h3>Dein Bundesland</h3>
+        <div data-land-wrap>
+          <select class="fk-land-select">
+            {bundeslaender.map((l) => <option value={l.id} selected={l.id === "bayern"}>{l.name}</option>)}
+          </select>
+          <div class="fk-land-detail"></div>
+        </div>
+      </div>
+
+      <div class="fk-tab-panel" id="fkt-downloads">
+        <h3>Downloads</h3>
+        <div class="fk-downloads-list">
+          {downloads.map((d) => <a class="quiz-btn" href={d.href} download>{d.label}</a>)}
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= Layout 2: Sidebar / Inhaltsverzeichnis ================= -->
+    <section class="fk-layout fk-layout--sidebar" id="fk-sidebar" data-layout-panel="sidebar" hidden>
+      <div class="fk-doc-grid">
+        <nav class="fk-doc-nav">
+          <p class="fk-doc-nav-label">Themen</p>
+          <ul>
+            {topics.map((t) => <li><a href={`#fks-${t.id}`}>{t.title}</a></li>)}
+            <li><a href="#fks-glossar">Glossar</a></li>
+            <li><a href="#fks-bundesland">Dein Bundesland</a></li>
+          </ul>
+          <p class="fk-doc-nav-label">Downloads</p>
+          <ul class="fk-doc-nav-downloads">
+            {downloads.map((d) => <li><a href={d.href} download>{d.label.replace(" ↓", "")}</a></li>)}
+          </ul>
+        </nav>
+
+        <div class="fk-doc-content">
+          {topics.map((t) => (
+            <article class="fk-doc-section" id={`fks-${t.id}`}>
+              <h3>{t.title}</h3>
+              <ul class="fact-list">{t.facts.map((f, fi) => <li><span class="fk-std">{f}</span><span class="fk-easy">{t.factsEasy[fi]}</span></li>)}</ul>
+            </article>
+          ))}
+
+          <article class="fk-doc-section" id="fks-glossar">
+            <h3>Glossar</h3>
+            <dl class="glossary-list">
+              {glossary.map((g) => (<><dt>{g.term}</dt><dd><span class="fk-std">{g.def}</span><span class="fk-easy">{g.defEasy}</span></dd></>))}
+            </dl>
+          </article>
+
+          <article class="fk-doc-section" id="fks-bundesland">
+            <h3>Dein Bundesland</h3>
+            <div data-land-wrap>
+              <select class="fk-land-select">
+                {bundeslaender.map((l) => <option value={l.id} selected={l.id === "bayern"}>{l.name}</option>)}
+              </select>
+              <div class="fk-land-detail"></div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= Layout 3: Cards ================= -->
+    <section class="fk-layout fk-layout--cards" id="fk-cards" data-layout-panel="cards" hidden>
+      <div class="fk-card-grid">
+        {topics.map((t, i) => (
+          <details class="fk-fact-card" open={i === 0}>
+            <summary>
+              <span class="fk-fact-card-title">{t.title}</span>
+              <span class="fk-fact-card-count">{t.facts.length} Fakten</span>
+            </summary>
+            <ul class="fact-list">{t.facts.map((f, fi) => <li><span class="fk-std">{f}</span><span class="fk-easy">{t.factsEasy[fi]}</span></li>)}</ul>
+          </details>
+        ))}
+      </div>
+
+      <div class="fk-card-row">
+        <details class="fk-fact-card fk-fact-card--wide">
+          <summary>
+            <span class="fk-fact-card-title">Glossar</span>
+            <span class="fk-fact-card-count">{glossary.length} Begriffe</span>
+          </summary>
+          <div class="fk-glossary-grid">
+            {glossary.map((g) => (
+              <div class="fk-glossary-item"><strong>{g.term}</strong><span class="fk-std">{g.def}</span><span class="fk-easy">{g.defEasy}</span></div>
+            ))}
+          </div>
+        </details>
+
+        <details class="fk-fact-card fk-fact-card--wide">
+          <summary><span class="fk-fact-card-title">Dein Bundesland</span></summary>
+          <div data-land-wrap>
+            <select class="fk-land-select">
+              {bundeslaender.map((l) => <option value={l.id} selected={l.id === "bayern"}>{l.name}</option>)}
+            </select>
+            <div class="fk-land-detail"></div>
+          </div>
+        </details>
+      </div>
+
+      <details class="fk-downloads-card">
+        <summary>Quellen &amp; Downloads</summary>
+        <div class="fk-downloads-list">
+          {downloads.map((d) => <a class="quiz-btn" href={d.href} download>{d.label}</a>)}
+        </div>
+      </details>
+    </section>
 
     <section class="exam-section">
       <h2>Testformat</h2>
@@ -70,18 +248,13 @@ const { topics, glossary, meta, bundeslaender } = lid;
       <a class="quiz-btn quiz-btn--primary" href="/pruefungen/leben-in-deutschland/test">Zum Übungstest →</a>
     </div>
   </main>
+  </div>
 
-  <script type="application/json" id="topics-data" set:html={JSON.stringify(topics)}></script>
-  <script type="application/json" id="glossary-data" set:html={JSON.stringify(glossary)}></script>
   <script type="application/json" id="laender-data" set:html={JSON.stringify(bundeslaender)}></script>
   <script type="application/json" id="meta-data" set:html={JSON.stringify(meta)}></script>
   <script type="module">
-    const topics = JSON.parse(document.getElementById("topics-data").textContent);
-    const glossary = JSON.parse(document.getElementById("glossary-data").textContent);
     const laender = JSON.parse(document.getElementById("laender-data").textContent);
     const meta = JSON.parse(document.getElementById("meta-data").textContent);
-    const tabsEl = document.getElementById("topic-tabs");
-    const panel = document.getElementById("topic-panel");
 
     function esc(s) {
       const div = document.createElement("div");
@@ -89,30 +262,22 @@ const { topics, glossary, meta, bundeslaender } = lid;
       return div.innerHTML;
     }
 
-    function renderTopic(index) {
-      const t = topics[index];
-      panel.innerHTML = `
-        <h3>${esc(t.title)}</h3>
-        <ul class="fact-list">${t.facts.map((f) => `<li>${esc(f)}</li>`).join("")}</ul>`;
+    const pageRoot = document.getElementById("fk-page");
+    function currentLang() {
+      return pageRoot.dataset.lang === "easy" ? "easy" : "standard";
     }
 
-    function renderGlossary() {
-      panel.innerHTML = `
-        <h3>Glossar</h3>
-        <dl class="glossary-list">
-          ${glossary.map((g) => `<dt>${esc(g.term)}</dt><dd>${esc(g.def)}</dd>`).join("")}
-        </dl>`;
-    }
-
-    function renderLand(id) {
+    function renderLand(container, id) {
       const l = laender.find((x) => x.id === id) || laender[0];
+      const easy = currentLang() === "easy";
       const borders = l.borderCountries.length ? l.borderCountries.join(", ") : "keine Auslandsgrenze";
-      panel.innerHTML = `
-        <h3>${esc(l.name)}</h3>
-        <div class="topic-intro" style="margin:0 0 14px;">
+      const stateNote = easy ? meta.stateFactsNoteEasy : meta.stateFactsNote;
+      const sourceFacts = (easy ? l.sourceFactsEasy : l.sourceFacts) || null;
+      container.innerHTML = `
+        <div class="topic-intro" style="margin:14px 0;">
           ${l.sourced
             ? "Aus echtem DeutschAcademy-Unterrichtsmaterial."
-            : "Allgemein bekannte, öffentliche Fakten — keine DeutschAcademy-Quelle. " + esc(meta.stateFactsNote)}
+            : "Allgemein bekannte, öffentliche Fakten — keine DeutschAcademy-Quelle. " + esc(stateNote)}
         </div>
         <ul class="fact-list">
           <li><strong>Hauptstadt:</strong> ${esc(l.capital)}</li>
@@ -122,26 +287,111 @@ const { topics, glossary, meta, bundeslaender } = lid;
           <li><strong>Landesparlament:</strong> ${esc(l.parliamentName)}</li>
           <li><strong>Spitze der Landesregierung:</strong> ${esc(l.executiveTitle)}</li>
         </ul>
-        ${l.sourceFacts ? `<h4 style="margin:18px 0 8px;">Vertiefung aus dem Unterrichtsmaterial</h4><ul class="fact-list">${l.sourceFacts.map((f) => `<li>${esc(f)}</li>`).join("")}</ul>` : ""}
-        <div class="topic-tabs" id="land-picker" style="margin-top:20px;justify-content:flex-start;">
-          ${laender.map((x) => `<button class="topic-tab${x.id === l.id ? " active" : ""}" type="button" data-land="${x.id}">${esc(x.name)}</button>`).join("")}
-        </div>`;
-      panel.querySelector("#land-picker").addEventListener("click", (e) => {
-        const btn = e.target.closest("[data-land]");
-        if (btn) renderLand(btn.dataset.land);
+        ${sourceFacts ? `<h4 style="margin:18px 0 8px;">Vertiefung aus dem Unterrichtsmaterial</h4><ul class="fact-list">${sourceFacts.map((f) => `<li>${esc(f)}</li>`).join("")}</ul>` : ""}
+      `;
+    }
+
+    document.querySelectorAll("[data-land-wrap]").forEach((wrap) => {
+      const select = wrap.querySelector(".fk-land-select");
+      const detail = wrap.querySelector(".fk-land-detail");
+      renderLand(detail, select.value);
+      select.addEventListener("change", () => renderLand(detail, select.value));
+    });
+
+    // Sprache (Standard / In einfachem Deutsch) — content-level toggle. .fk-std/.fk-easy spans
+    // are shown/hidden purely via CSS on [data-lang]; only the JS-built Bundesland panel needs
+    // an explicit re-render since its text isn't in the static DOM.
+    const langBtns = [...document.querySelectorAll(".fk-lang-btn")];
+    function setLang(key) {
+      pageRoot.dataset.lang = key;
+      langBtns.forEach((b) => b.classList.toggle("active", b.dataset.lang === key));
+      document.querySelectorAll("[data-land-wrap]").forEach((wrap) => {
+        const select = wrap.querySelector(".fk-land-select");
+        const detail = wrap.querySelector(".fk-land-detail");
+        renderLand(detail, select.value);
+      });
+      try { localStorage.setItem("fakten-lang", key); } catch {}
+    }
+    langBtns.forEach((b) => b.addEventListener("click", () => setLang(b.dataset.lang)));
+
+    let initialLang = "standard";
+    try { initialLang = localStorage.getItem("fakten-lang") || "standard"; } catch {}
+    setLang(initialLang);
+
+    // Layout 1: tabs
+    const tabsRoot = document.getElementById("fk-tabs");
+    if (tabsRoot) {
+      const tabBtns = [...tabsRoot.querySelectorAll(".fk-tab")];
+      const panels = [...tabsRoot.querySelectorAll(".fk-tab-panel")];
+      tabBtns[0].classList.add("active");
+      tabBtns.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          tabBtns.forEach((b) => b.classList.toggle("active", b === btn));
+          panels.forEach((p) => p.classList.toggle("active", p.id === btn.dataset.target));
+        });
       });
     }
 
-    [...tabsEl.children].forEach((btn, i) => {
-      btn.addEventListener("click", () => {
-        [...tabsEl.children].forEach((b) => b.classList.toggle("active", b === btn));
-        if (btn.dataset.topic === "glossar") renderGlossary();
-        else if (btn.dataset.topic === "bundesland") renderLand("bayern");
-        else renderTopic(+btn.dataset.topic);
-      });
-    });
+    // Ansicht (structural layout) switcher — Tabs is the default. Switching crossfades the old
+    // section out and the new one in (instead of an instant [hidden] swap) and slides a pill
+    // indicator behind the active icon, so the change reads as a transition rather than a snap.
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const ANIM_MS = 180;
+    const layoutBtns = [...document.querySelectorAll(".fk-view-btn")];
+    const track = document.querySelector(".fk-view-switcher-track");
+    const indicator = document.querySelector(".fk-view-switcher-indicator");
+    const layoutSections = {
+      tabs: document.getElementById("fk-tabs"),
+      sidebar: document.getElementById("fk-sidebar"),
+      cards: document.getElementById("fk-cards"),
+    };
+    let currentLayout = null;
+    let animating = false;
 
-    tabsEl.children[0].classList.add("active");
-    renderTopic(0);
+    function moveIndicator(key) {
+      const btn = layoutBtns.find((b) => b.dataset.layout === key);
+      if (!btn || !indicator || !track) return;
+      indicator.style.transform = `translateX(${btn.offsetLeft}px)`;
+      indicator.style.width = `${btn.offsetWidth}px`;
+    }
+
+    function setLayout(key) {
+      if (animating || key === currentLayout) return;
+      const target = layoutSections[key];
+      if (!target) return;
+
+      layoutBtns.forEach((b) => b.classList.toggle("active", b.dataset.layout === key));
+      moveIndicator(key);
+      try { localStorage.setItem("fakten-layout", key); } catch {}
+
+      const outgoing = currentLayout ? layoutSections[currentLayout] : null;
+      currentLayout = key;
+
+      if (!outgoing || reduceMotion) {
+        Object.entries(layoutSections).forEach(([k, el]) => { if (el) el.hidden = k !== key; });
+        return;
+      }
+
+      animating = true;
+      outgoing.classList.add("fk-anim-out");
+      window.setTimeout(() => {
+        outgoing.hidden = true;
+        outgoing.classList.remove("fk-anim-out");
+        target.hidden = false;
+        target.classList.add("fk-anim-in");
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            target.classList.remove("fk-anim-in");
+            animating = false;
+          });
+        });
+      }, ANIM_MS);
+    }
+    layoutBtns.forEach((b) => b.addEventListener("click", () => setLayout(b.dataset.layout)));
+    window.addEventListener("resize", () => currentLayout && moveIndicator(currentLayout));
+
+    let initialLayout = "tabs";
+    try { initialLayout = localStorage.getItem("fakten-layout") || "tabs"; } catch {}
+    setLayout(initialLayout);
   </script>
 </Layout>

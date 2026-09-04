@@ -24,19 +24,34 @@ function initials(name: string) {
 ---
 <section class="section testimonials">
   <div class="container">
-    <p class="eyebrow">What Our Clients Say</p>
-    <div class="testimonial-grid">
+    <div class="testimonials-head">
+      <p class="eyebrow">What Our Clients Say</p>
+      <div class="testimonial-switcher" role="tablist" aria-label="Ansicht wählen">
+        <button type="button" class="testimonial-switch-btn active" data-view="grid">Karten</button>
+        <button type="button" class="testimonial-switch-btn" data-view="list">Liste</button>
+      </div>
+    </div>
+    <div class="testimonial-grid" id="testimonial-grid">
       {quotes.map((quote) => (
         <blockquote>
-          <div class="testimonial-body">
-            <p>{quote.text}</p>
-            <div class="testimonial-author">
-              <span class="avatar-initials">{initials(quote.name)}</span>
-              <cite>{quote.name}</cite>
-            </div>
+          <p>{quote.text}</p>
+          <div class="testimonial-author">
+            <span class="avatar-initials">{initials(quote.name)}</span>
+            <cite>{quote.name}</cite>
           </div>
         </blockquote>
       ))}
     </div>
   </div>
 </section>
+
+<script>
+  const grid = document.getElementById("testimonial-grid");
+  const switchBtns = document.querySelectorAll(".testimonial-switch-btn");
+  switchBtns.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      switchBtns.forEach((b) => b.classList.toggle("active", b === btn));
+      grid?.classList.toggle("testimonial-grid--list", btn.dataset.view === "list");
+    });
+  });
+</script>

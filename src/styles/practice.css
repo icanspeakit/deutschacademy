@@ -214,6 +214,7 @@
 /* Speaking prompts */
 .prompt-card { background: #fff; border: 1px solid var(--border); border-radius: var(--radius); padding: 28px; max-width: 640px; margin: 0 auto; }
 .prompt-card h3 { text-align: left; margin: 0 0 6px; }
+.prompt-image { width: 100%; height: 280px; object-fit: cover; border-radius: 10px; margin: 0 0 16px; }
 .prompt-timer { font-family: var(--font-display); font-size: 2rem; color: var(--brand-blue-dark); text-align: center; margin: 12px 0; }
 .prompt-section-label { font-weight: 700; color: var(--brand-blue-dark); margin: 18px 0 6px; font-size: .85rem; text-transform: uppercase; letter-spacing: .04em; }
 .prompt-card ul { margin: 0; padding-left: 20px; }

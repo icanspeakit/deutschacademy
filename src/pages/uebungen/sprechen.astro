@@ -33,6 +33,7 @@ import sprechen from "../../data/sprechen.json";
       const p = prompts[idx];
       root.innerHTML = `
         <h3>${p.title}</h3>
+        <img class="prompt-image" src="${p.image}" alt="${p.title}" loading="lazy" />
         <div class="prompt-timer" id="timer">90</div>
         <button class="quiz-btn quiz-btn--primary prompt-reveal-btn" id="start-timer" type="button">▶ Beschreibung starten (90s)</button>
         <div class="prompt-section-label">Beschreibungsfragen</div>

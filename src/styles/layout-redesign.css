@@ -113,6 +113,20 @@
 .hp-nav .hp-btn--primary { padding: 11px 22px; font-size: 14px; }
 .hp-nav .hp-btn--outline { padding: 10px 20px; font-size: 14px; }
 
+/* Hero concept toggle */
+.hp-toggle-bar { background: var(--hp-ink-2); }
+.hp-toggle-row { display: flex; align-items: center; gap: 16px; padding: 10px 24px; flex-wrap: wrap; }
+.hp-toggle-label { font-size: 12.5px; font-weight: 600; color: #93a4b3; }
+.hp-toggle-group { display: inline-flex; gap: 4px; background: rgba(255,255,255,.08); border-radius: var(--hp-radius-pill); padding: 4px; }
+.hp-toggle-btn {
+  border: none; background: transparent; color: #b9c6d1; cursor: pointer;
+  font-family: var(--hp-font); font-size: 12.5px; font-weight: 700;
+  padding: 7px 14px; border-radius: var(--hp-radius-pill);
+  transition: background .15s ease, color .15s ease;
+}
+.hp-toggle-btn:hover { color: #fff; }
+.hp-toggle-btn.active { background: #fff; color: var(--hp-teal-700); }
+
 /* Hero */
 .hp-hero { background: linear-gradient(180deg, var(--hp-teal-50) 0%, #fff 62%); }
 .hp-hero-inner { padding: 68px 0 80px; display: grid; grid-template-columns: 1.05fr .95fr; gap: 56px; align-items: center; }
@@ -156,6 +170,43 @@
 .hp-preview-foot { margin-top: 24px; padding-top: 18px; border-top: 1px dashed var(--hp-border); display: flex; align-items: center; justify-content: space-between; }
 .hp-preview-foot span { font-size: 12.5px; color: var(--hp-faint); }
 .hp-preview-foot a { font-size: 13px; font-weight: 700; color: var(--hp-teal-700); }
+
+/* Hero visual variants share this wrapper */
+.hp-visual { width: 100%; }
+
+/* Concept 2: dashboard/browser mockup */
+.hp-dash { border-radius: var(--hp-radius-lg); border: 1px solid var(--hp-border); background: #fff; box-shadow: var(--hp-shadow-lg); overflow: hidden; }
+.hp-dash-body { display: grid; grid-template-columns: 168px 1fr; min-height: 360px; }
+.hp-dash-sidebar { border-right: 1px solid var(--hp-border); padding: 18px 12px; display: flex; flex-direction: column; gap: 4px; background: var(--hp-surface); }
+.hp-dash-link { padding: 10px 11px; font-size: 12px; font-weight: 600; color: var(--hp-muted); border-radius: 8px; }
+.hp-dash-link--active { background: #fff; border: 1px solid var(--hp-border); color: var(--hp-teal-700); box-shadow: var(--hp-shadow); }
+.hp-dash-main { padding: 26px 26px 24px; display: flex; flex-direction: column; gap: 20px; }
+.hp-dash-main-head { display: flex; align-items: baseline; justify-content: space-between; }
+.hp-dash-main-head strong { font-size: 16px; color: var(--hp-ink); }
+.hp-dash-main-head span { font-size: 12px; color: var(--hp-faint); }
+.hp-dash-stat-row { display: flex; gap: 10px; }
+.hp-dash-stat { flex: 1; border: 1px solid var(--hp-border); border-radius: 10px; padding: 12px; text-align: center; }
+.hp-dash-stat strong { display: block; font-size: 19px; color: var(--hp-ink); }
+.hp-dash-stat span { font-size: 11px; color: var(--hp-muted); }
+.hp-dash-question { border: 1px dashed var(--hp-border); border-radius: 12px; padding: 20px; }
+.hp-dash-question .hp-preview-prompt { font-size: 17px; margin: 10px 0 16px; }
+
+/* Concept 3: roadmap visual */
+.hp-roadmap { position: relative; padding: 8px 0 8px 22px; display: flex; flex-direction: column; gap: 34px; }
+.hp-roadmap-line { position: absolute; left: 21px; top: 22px; bottom: 22px; width: 2px; background: var(--hp-border); }
+.hp-roadmap-step { position: relative; display: flex; gap: 20px; align-items: flex-start; }
+.hp-roadmap-node {
+  position: relative; z-index: 1; flex: none;
+  width: 44px; height: 44px; border-radius: 50%;
+  background: var(--hp-gradient); color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700; font-size: 17px;
+  box-shadow: 0 0 0 6px #fff;
+}
+.hp-roadmap-step:nth-child(3) .hp-roadmap-node { background: linear-gradient(135deg, var(--hp-orange-500), var(--hp-orange-600)); }
+.hp-roadmap-body { padding-top: 6px; }
+.hp-roadmap-body h4 { margin: 0 0 6px; font-size: 18px; font-weight: 700; color: var(--hp-ink); }
+.hp-roadmap-body p { margin: 0; font-size: 14.5px; line-height: 1.55; color: var(--hp-muted); max-width: 40ch; }
 
 /* Stats */
 .hp-stats { border-top: 1px solid var(--hp-border); border-bottom: 1px solid var(--hp-border); background: #fff; }
@@ -237,6 +288,58 @@
 .hp-footer-col a:hover { color: #fff; }
 .hp-footer-bottom { margin-top: 40px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,.1); font-size: 12.5px; color: #7c8ba0; }
 
+/* Concept 2 — compact stat chips under hero */
+.hp-chipstats { display: flex; gap: 10px; flex-wrap: wrap; padding-top: 6px; }
+.hp-chip { display: inline-flex; align-items: baseline; gap: 6px; padding: 8px 14px; border-radius: var(--hp-radius-pill); background: var(--hp-teal-50); border: 1px solid var(--hp-teal-200); font-size: 12.5px; font-weight: 700; color: var(--hp-teal-700); }
+.hp-chip strong { font-size: 14px; }
+
+/* Concept 2 — tools tab switcher */
+.hp-tabbar-wrap { text-align: center; margin-bottom: 32px; }
+.hp-tabbar { display: inline-flex; gap: 4px; background: #fff; border: 1px solid var(--hp-border); border-radius: var(--hp-radius-pill); padding: 4px; }
+.hp-tab { border: none; background: transparent; font-family: var(--hp-font); font-size: 13.5px; font-weight: 700; color: var(--hp-muted); padding: 10px 22px; border-radius: var(--hp-radius-pill); cursor: pointer; }
+.hp-tab.active { background: var(--hp-surface); color: var(--hp-teal-700); }
+.hp-tab-panel[hidden] { display: none; }
+
+/* Concept 2 — comparison-table pricing */
+.hp-compare-wrap { overflow-x: auto; border: 1px solid var(--hp-border); border-radius: var(--hp-radius); background: #fff; }
+.hp-compare { width: 100%; border-collapse: collapse; font-size: 14px; min-width: 480px; }
+.hp-compare th, .hp-compare td { padding: 16px 22px; text-align: left; border-bottom: 1px solid var(--hp-border); }
+.hp-compare th { font-size: 11.5px; text-transform: uppercase; letter-spacing: .05em; color: var(--hp-faint); font-weight: 700; background: var(--hp-surface); }
+.hp-compare tr:last-child td { border-bottom: none; }
+.hp-compare td:first-child { font-weight: 700; color: var(--hp-ink); width: 46%; }
+.hp-compare-yes { color: var(--hp-teal-700); font-weight: 700; }
+.hp-compare-no { color: var(--hp-faint); }
+.hp-compare-foot { display: flex; gap: 12px; justify-content: center; padding: 22px; border-top: 1px solid var(--hp-border); flex-wrap: wrap; }
+
+/* Concept 2 — condensed inline "why" row (replaces value-prop cards) */
+.hp-value-inline { display: flex; gap: 30px; flex-wrap: wrap; justify-content: center; margin-top: 28px; }
+.hp-value-inline-item { display: flex; align-items: center; gap: 10px; font-size: 13.5px; font-weight: 600; color: var(--hp-ink-2); max-width: 260px; }
+.hp-value-inline-item .ic { flex: none; width: 32px; height: 32px; border-radius: 9px; background: var(--hp-teal-50); color: var(--hp-teal-700); display: flex; align-items: center; justify-content: center; font-size: 14px; }
+
+/* Concept 2 — compact CTA */
+.hp-cta-compact { border: 1px solid var(--hp-border); border-radius: var(--hp-radius-lg); background: var(--hp-surface); padding: 40px; display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
+.hp-cta-compact h3 { margin: 0 0 6px; font-size: 20px; font-weight: 700; color: var(--hp-ink); }
+.hp-cta-compact p { margin: 0; font-size: 14px; color: var(--hp-muted); }
+
+/* Concept 3 — journey section (tools nested inside steps) */
+.hp-journey { display: flex; flex-direction: column; max-width: 860px; margin: 0 auto; }
+.hp-journey-step { display: grid; grid-template-columns: 56px 1fr; gap: 24px; padding-bottom: 40px; position: relative; }
+.hp-journey-step:not(:last-child)::before { content: ""; position: absolute; left: 27px; top: 56px; bottom: 0; width: 2px; background: var(--hp-border); }
+.hp-journey-node { width: 56px; height: 56px; border-radius: 50%; background: var(--hp-gradient); color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 20px; z-index: 1; }
+.hp-journey-step:nth-child(3) .hp-journey-node { background: linear-gradient(135deg, var(--hp-orange-500), var(--hp-orange-600)); }
+.hp-journey-step:nth-child(4) .hp-journey-node { background: var(--hp-ink-2); }
+.hp-journey-body h3 { margin: 6px 0 6px; font-size: 20px; font-weight: 700; color: var(--hp-ink); }
+.hp-journey-body > p { margin: 0 0 16px; font-size: 14.5px; color: var(--hp-muted); line-height: 1.55; max-width: 56ch; }
+.hp-journey-tools { display: flex; flex-wrap: wrap; gap: 10px; }
+.hp-journey-chip { display: inline-flex; align-items: center; gap: 8px; padding: 9px 14px; border-radius: var(--hp-radius-pill); border: 1px solid var(--hp-border); background: #fff; font-size: 12.5px; font-weight: 700; color: var(--hp-ink-2); transition: border-color .15s ease, box-shadow .15s ease; }
+.hp-journey-chip:hover { border-color: var(--hp-teal-500); box-shadow: var(--hp-shadow); }
+.hp-journey-chip .count { color: var(--hp-teal-700); }
+
+/* Concept 3 — single-card pricing with teaser */
+.hp-price-solo { max-width: 460px; margin: 0 auto; }
+.hp-price-teaser { text-align: center; margin-top: 22px; font-size: 13.5px; color: var(--hp-muted); }
+.hp-price-teaser strong { color: var(--hp-ink-2); }
+
 /* Responsive */
 @media (max-width: 1024px) {
   .hp-hero-inner { grid-template-columns: 1fr; }
@@ -251,6 +354,8 @@
   .hp-nav-links { display: none; }
 }
 @media (max-width: 640px) {
+  .hp-dash-body { grid-template-columns: 1fr; }
+  .hp-dash-sidebar { flex-direction: row; flex-wrap: wrap; }
   .hp-value-grid { grid-template-columns: 1fr; }
   .hp-tools-grid, .hp-tools-grid--exams { grid-template-columns: repeat(2, 1fr); }
   .hp-stats-grid { grid-template-columns: 1fr; }
@@ -260,4 +365,7 @@
   .hp-section { padding: 56px 0; }
   .hp-hero-inner { padding: 44px 0 52px; }
   .hp-final-inner { padding: 60px 0; }
+  .hp-journey-step { grid-template-columns: 40px 1fr; gap: 14px; }
+  .hp-journey-node { width: 40px; height: 40px; font-size: 15px; }
+  .hp-cta-compact { flex-direction: column; text-align: center; }
 }

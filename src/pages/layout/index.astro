@@ -1,5 +1,7 @@
 ---
 // /layout — homepage redesign test bed. Not linked from live nav; compare against "/".
+// Toggle at the top swaps between three full page concepts (hero through footer body),
+// all sourced from the same real data so none of them overclaim what the site actually has.
 import Layout from "../../layouts/Layout.astro";
 import "../../styles/layout-redesign.css";
 import artikel from "../../data/artikel.json";
@@ -37,10 +39,17 @@ const stats = [
   { num: `${lid.bundeslaender.length}`, label: "Bundesländer beim Einbürgerungstest" },
   { num: "0€", label: "für den A1–C1-Grundkurs" },
 ];
+
+const byHref = (hrefs: string[]) => tools.filter((t) => hrefs.includes(t.href));
+const journey = [
+  { title: "Grammatik", desc: "Der Kern zuerst: Fälle, Zeiten, Sätze — mit durchdachten Übungen statt schnellen Tipps.", items: byHref(["/uebungen/grammatik", "/uebungen/artikel-trainer"]) },
+  { title: "Alltagsdeutsch", desc: "Echte Szenarien statt Lehrbuchdialoge: Ämter, Wohnungssuche, der Alltag.", items: byHref(["/uebungen/wortschatz", "/uebungen/aussprache", "/uebungen/lesen-schreiben", "/uebungen/kultur"]) },
+  { title: "Sprechpraxis", desc: "Der Teil, der sonst nur im Präsenzunterricht geübt wird.", items: byHref(["/uebungen/sprechen"]) },
+];
 ---
 <Layout title="Deutsch Academy – Da für Dich!" description="Deutsch lernen mit echtem Unterrichtsmaterial: kostenlose Übungen und Prüfungsvorbereitung für telc, Goethe-Zertifikat, TestDaF, DTZ und Leben in Deutschland.">
   <div class="hp">
-    <div class="hp-banner">🧪 <strong>Layout-Testseite</strong> — Entwurf einer neuen Startseite, noch nicht live. Vergleiche mit <a href="/">der aktuellen Startseite</a>.</div>
+    <div class="hp-banner">🧪 <strong>Layout-Testseite</strong> — drei Konzepte für eine neue Startseite, noch nicht live. Vergleiche mit <a href="/">der aktuellen Startseite</a>.</div>
 
     <!-- NAV -->
     <nav class="hp-nav">
@@ -50,7 +59,7 @@ const stats = [
           <div class="hp-nav-links">
             <a href="/uebungen">Übungen</a>
             <a href="/pruefungen">Prüfungen</a>
-            <a href="#preise">Preise</a>
+            <a href="#preise-1" class="hp-nav-preise-link">Preise</a>
           </div>
         </div>
         <div class="hp-nav-right">
@@ -60,170 +69,620 @@ const stats = [
       </div>
     </nav>
 
-    <!-- HERO -->
-    <section class="hp-hero">
-      <div class="hp-wrap hp-hero-inner">
-        <div class="hp-hero-copy">
-          <div class="hp-eyebrow">Kostenlos · A1 bis C1</div>
-          <h1>Deutsch lernen, wie es <em>wirklich</em> gesprochen wird</h1>
-          <p class="hp-hero-lead">Grammatik, Alltagsdeutsch und Sprechpraxis — aus echtem Unterrichtsmaterial, nicht kalt für eine App geschrieben. Plus Prüfungsvorbereitung für telc, Goethe, TestDaF, DTZ und Leben in Deutschland.</p>
-          <div class="hp-hero-actions">
-            <a href="/uebungen" class="hp-btn hp-btn--primary">Jetzt kostenlos üben</a>
-            <a href="/pruefungen" class="hp-btn hp-btn--outline">Prüfungen ansehen</a>
-          </div>
-          <div class="hp-hero-note">Kein Konto nötig · alle Übungen sofort nutzbar</div>
+    <!-- CONCEPT TOGGLE -->
+    <div class="hp-toggle-bar">
+      <div class="hp-wrap hp-toggle-row">
+        <span class="hp-toggle-label">Konzept testen (ganze Seite):</span>
+        <div class="hp-toggle-group" role="tablist" aria-label="Seitenkonzept">
+          <button type="button" class="hp-toggle-btn" data-concept="1">1 · Proof</button>
+          <button type="button" class="hp-toggle-btn" data-concept="2">2 · Dashboard</button>
+          <button type="button" class="hp-toggle-btn" data-concept="3">3 · Roadmap</button>
+          <button type="button" class="hp-toggle-btn" data-concept="4">4 · Proof + Dashboard</button>
         </div>
+      </div>
+    </div>
 
-        <div class="hp-preview">
-          <div class="hp-preview-bar">
-            <div class="hp-preview-dot"></div><div class="hp-preview-dot"></div><div class="hp-preview-dot"></div>
-            <span class="hp-preview-label">Aus dem Grammatik-Quiz</span>
-          </div>
-          <div class="hp-preview-body">
-            <div class="hp-preview-kicker">Akkusativ</div>
-            <p class="hp-preview-prompt">Ich habe <span class="blank">___</span> Computer.</p>
-            <p class="hp-preview-hint">(der Computer)</p>
-            <div class="hp-preview-choices">
-              <span class="hp-preview-choice">der</span>
-              <span class="hp-preview-choice hp-preview-choice--correct">den</span>
-              <span class="hp-preview-choice">das</span>
+    <!-- ======================================================= -->
+    <!-- CONCEPT 1 — "Proof": editorial, quiz-preview hero        -->
+    <!-- ======================================================= -->
+    <div class="hp-concept" data-concept="1">
+      <section class="hp-hero">
+        <div class="hp-wrap hp-hero-inner">
+          <div class="hp-hero-copy">
+            <div class="hp-eyebrow">Kostenlos · A1 bis C1</div>
+            <h1>Deutsch lernen, wie es <em>wirklich</em> gesprochen wird</h1>
+            <p class="hp-hero-lead">Grammatik, Alltagsdeutsch und Sprechpraxis — aus echtem Unterrichtsmaterial, nicht kalt für eine App geschrieben. Plus Prüfungsvorbereitung für telc, Goethe, TestDaF, DTZ und Leben in Deutschland.</p>
+            <div class="hp-hero-actions">
+              <a href="/uebungen" class="hp-btn hp-btn--primary">Jetzt kostenlos üben</a>
+              <a href="/pruefungen" class="hp-btn hp-btn--outline">Prüfungen ansehen</a>
             </div>
-            <div class="hp-preview-foot">
-              <span>Thema 1 von {grammatik.length} · {grammarQuestionCount} Fragen insgesamt</span>
-              <a href="/uebungen/grammatik">Quiz starten →</a>
+            <div class="hp-hero-note">Kein Konto nötig · alle Übungen sofort nutzbar</div>
+          </div>
+
+          <div class="hp-preview">
+            <div class="hp-preview-bar">
+              <div class="hp-preview-dot"></div><div class="hp-preview-dot"></div><div class="hp-preview-dot"></div>
+              <span class="hp-preview-label">Aus dem Grammatik-Quiz</span>
+            </div>
+            <div class="hp-preview-body">
+              <div class="hp-preview-kicker">Akkusativ</div>
+              <p class="hp-preview-prompt">Ich habe <span class="blank">___</span> Computer.</p>
+              <p class="hp-preview-hint">(der Computer)</p>
+              <div class="hp-preview-choices">
+                <span class="hp-preview-choice">der</span>
+                <span class="hp-preview-choice hp-preview-choice--correct">den</span>
+                <span class="hp-preview-choice">das</span>
+              </div>
+              <div class="hp-preview-foot">
+                <span>Thema 1 von {grammatik.length} · {grammarQuestionCount} Fragen insgesamt</span>
+                <a href="/uebungen/grammatik">Quiz starten →</a>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- STATS -->
-    <section class="hp-stats">
-      <div class="hp-wrap hp-stats-grid">
-        {stats.map((s) => (
-          <div class="hp-stat">
-            <div class="hp-stat-num">{s.num}</div>
-            <div class="hp-stat-label">{s.label}</div>
-          </div>
-        ))}
-      </div>
-    </section>
-
-    <!-- VALUE PROPS -->
-    <section class="hp-section">
-      <div class="hp-wrap">
-        <div class="hp-section-head">
-          <div class="hp-eyebrow">Warum DeutschAcademy</div>
-          <h2>Aus echten Klassen, nicht aus Vorlagen</h2>
-          <p>Jede Übung unten wurde bereits echten Lernenden beigebracht — nicht kalt für eine Plattform geschrieben.</p>
+      <section class="hp-stats">
+        <div class="hp-wrap hp-stats-grid">
+          {stats.map((s) => (
+            <div class="hp-stat">
+              <div class="hp-stat-num">{s.num}</div>
+              <div class="hp-stat-label">{s.label}</div>
+            </div>
+          ))}
         </div>
-        <div class="hp-value-grid">
-          <div class="hp-value-card">
-            <div class="hp-value-icon">📖</div>
-            <h3>Grammatik richtig erklärt</h3>
-            <p>Akkusativ, Dativ, Passiv, Konjunktiv II und mehr — mit durchdachten Übungen statt schnellen Tipps.</p>
+      </section>
+
+      <section class="hp-section">
+        <div class="hp-wrap">
+          <div class="hp-section-head">
+            <div class="hp-eyebrow">Warum DeutschAcademy</div>
+            <h2>Aus echten Klassen, nicht aus Vorlagen</h2>
+            <p>Jede Übung unten wurde bereits echten Lernenden beigebracht — nicht kalt für eine Plattform geschrieben.</p>
           </div>
-          <div class="hp-value-card">
-            <div class="hp-value-icon">💬</div>
-            <h3>Alltagsdeutsch, kein Lehrbuch-Dialog</h3>
-            <p>Szenarien aus dem echten Leben: Behördengänge, Wohnungssuche, der Alltag — nicht erfundene Beispiele.</p>
-          </div>
-          <div class="hp-value-card">
-            <div class="hp-value-icon">🗣️</div>
-            <h3>Sprechpraxis eingebaut</h3>
-            <p>Bildbeschreibung mit echten Prüferfragen und Timer — der Teil, der sonst nur im Präsenzunterricht geübt wird.</p>
+          <div class="hp-value-grid">
+            <div class="hp-value-card">
+              <div class="hp-value-icon">📖</div>
+              <h3>Grammatik richtig erklärt</h3>
+              <p>Akkusativ, Dativ, Passiv, Konjunktiv II und mehr — mit durchdachten Übungen statt schnellen Tipps.</p>
+            </div>
+            <div class="hp-value-card">
+              <div class="hp-value-icon">💬</div>
+              <h3>Alltagsdeutsch, kein Lehrbuch-Dialog</h3>
+              <p>Szenarien aus dem echten Leben: Behördengänge, Wohnungssuche, der Alltag — nicht erfundene Beispiele.</p>
+            </div>
+            <div class="hp-value-card">
+              <div class="hp-value-icon">🗣️</div>
+              <h3>Sprechpraxis eingebaut</h3>
+              <p>Bildbeschreibung mit echten Prüferfragen und Timer — der Teil, der sonst nur im Präsenzunterricht geübt wird.</p>
+            </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- TOOLS -->
-    <section class="hp-section hp-section--alt">
-      <div class="hp-wrap">
-        <div class="hp-section-head" style="max-width:600px">
-          <div class="hp-eyebrow">Alle Werkzeuge</div>
-          <h2>Übungen und Prüfungsvorbereitung, an einem Ort</h2>
-          <p>Kein Zusammensuchen zwischen Apps und Karteikarten — alles ist von hier aus erreichbar.</p>
-        </div>
-
-        <div class="hp-tools-group">
-          <div class="hp-tools-head">
-            <div class="hp-tools-label">Übungen</div>
-            <a href="/uebungen" class="hp-tools-viewall">Alle Übungen →</a>
+      <section class="hp-section hp-section--alt">
+        <div class="hp-wrap">
+          <div class="hp-section-head" style="max-width:600px">
+            <div class="hp-eyebrow">Alle Werkzeuge</div>
+            <h2>Übungen und Prüfungsvorbereitung, an einem Ort</h2>
+            <p>Kein Zusammensuchen zwischen Apps und Karteikarten — alles ist von hier aus erreichbar.</p>
           </div>
-          <div class="hp-tools-grid">
-            {tools.map((t) => (
-              <a href={t.href} class="hp-tool-card">
-                <div class="hp-tool-chip">{t.icon}</div>
-                <h4>{t.title}</h4>
-                <p>{t.desc}</p>
-                <span class="hp-tool-card-count">{t.count}</span>
-              </a>
+
+          <div class="hp-tools-group">
+            <div class="hp-tools-head">
+              <div class="hp-tools-label">Übungen</div>
+              <a href="/uebungen" class="hp-tools-viewall">Alle Übungen →</a>
+            </div>
+            <div class="hp-tools-grid">
+              {tools.map((t) => (
+                <a href={t.href} class="hp-tool-card">
+                  <div class="hp-tool-chip">{t.icon}</div>
+                  <h4>{t.title}</h4>
+                  <p>{t.desc}</p>
+                  <span class="hp-tool-card-count">{t.count}</span>
+                </a>
+              ))}
+            </div>
+          </div>
+
+          <div class="hp-tools-group">
+            <div class="hp-tools-head">
+              <div class="hp-tools-label">Prüfungen</div>
+              <a href="/pruefungen" class="hp-tools-viewall">Alle Prüfungen →</a>
+            </div>
+            <div class="hp-tools-grid hp-tools-grid--exams">
+              {exams.map((e) => (
+                <a href={e.href} class="hp-tool-card">
+                  <div class="hp-tool-chip">{e.icon}</div>
+                  <h4>{e.title}</h4>
+                  <p>{e.level}</p>
+                </a>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="hp-section" id="preise-1">
+        <div class="hp-wrap">
+          <div class="hp-section-head" style="max-width:560px">
+            <div class="hp-eyebrow">Preise</div>
+            <h2>Der Grundkurs ist kostenlos. Für alles Weitere arbeiten wir noch an den Preisen.</h2>
+            <p>Kein verstecktes Kleingedrucktes — was heute nicht fertig ist, bieten wir auch nicht zum Kauf an.</p>
+          </div>
+          <div class="hp-pricing-grid">
+            <div class="hp-price-card hp-price-card--live">
+              <div class="hp-price-top"><span class="hp-price-name">Free</span><span class="hp-price-tag hp-price-tag--live">Jetzt verfügbar</span></div>
+              <div class="hp-price-amount"><strong>€0</strong><span>für immer</span></div>
+              <p class="hp-price-desc">Alles, was oben aufgeführt ist: der volle A1–C1-Kernkurs und alle sieben Übungstools.</p>
+              <div class="hp-price-list">
+                <div class="hp-price-item"><span class="hp-check">✓</span><span>Voller A1–C1-Grundkurs</span></div>
+                <div class="hp-price-item"><span class="hp-check">✓</span><span>Alle Übungstools dieser Seite</span></div>
+                <div class="hp-price-item"><span class="hp-check">✓</span><span>Alle fünf Prüfungsübersichten</span></div>
+              </div>
+              <a href="/uebungen" class="hp-price-cta hp-btn--primary">Kostenlos starten</a>
+            </div>
+            <div class="hp-price-card hp-price-card--soon">
+              <div class="hp-price-top"><span class="hp-price-name">Exam Coaching</span><span class="hp-price-tag hp-price-tag--soon">In Arbeit</span></div>
+              <div class="hp-price-amount"><strong>—</strong><span>Preis noch offen</span></div>
+              <p class="hp-price-desc">Korrigierte Prüfungssimulationen mit einem echten Lehrer. Noch nicht buchbar.</p>
+              <div class="hp-price-list">
+                <div class="hp-price-item hp-price-item--soon"><span class="hp-check">·</span><span>Prüfungssimulationen im Goethe-/telc-Format</span></div>
+                <div class="hp-price-item hp-price-item--soon"><span class="hp-check">·</span><span>Schriftliche Korrektur durch einen Lehrer</span></div>
+                <div class="hp-price-item hp-price-item--soon"><span class="hp-check">·</span><span>Live-Sprechpraxis in kleinen Gruppen</span></div>
+              </div>
+              <span class="hp-price-cta hp-btn--disabled">Noch nicht verfügbar</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="hp-final">
+        <div class="hp-wrap hp-final-inner">
+          <h2>Dein nächster Schritt zu fließendem Deutsch</h2>
+          <p>Kostenlos starten, mit echtem Unterrichtsmaterial üben, in deinem Tempo weitermachen.</p>
+          <a href="/uebungen" class="hp-final-btn">Kostenlos üben</a>
+        </div>
+      </section>
+    </div>
+
+    <!-- ======================================================= -->
+    <!-- CONCEPT 2 — "Dashboard": product-tour, tabbed tools      -->
+    <!-- ======================================================= -->
+    <div class="hp-concept" data-concept="2" hidden>
+      <section class="hp-hero">
+        <div class="hp-wrap hp-hero-inner">
+          <div class="hp-hero-copy">
+            <div class="hp-eyebrow">Kostenlos · A1 bis C1</div>
+            <h1>Deutsch lernen, wie es <em>wirklich</em> gesprochen wird</h1>
+            <p class="hp-hero-lead">Grammatik, Alltagsdeutsch und Sprechpraxis — aus echtem Unterrichtsmaterial, nicht kalt für eine App geschrieben. Plus Prüfungsvorbereitung für telc, Goethe, TestDaF, DTZ und Leben in Deutschland.</p>
+            <div class="hp-hero-actions">
+              <a href="/uebungen" class="hp-btn hp-btn--primary">Jetzt kostenlos üben</a>
+              <a href="/pruefungen" class="hp-btn hp-btn--outline">Prüfungen ansehen</a>
+            </div>
+            <div class="hp-chipstats">
+              {stats.map((s) => <span class="hp-chip"><strong>{s.num}</strong> {s.label}</span>)}
+            </div>
+          </div>
+
+          <div class="hp-visual">
+            <div class="hp-dash">
+              <div class="hp-preview-bar">
+                <div class="hp-preview-dot"></div><div class="hp-preview-dot"></div><div class="hp-preview-dot"></div>
+                <span class="hp-preview-label">deutschacademy.com/uebungen</span>
+              </div>
+              <div class="hp-dash-body">
+                <div class="hp-dash-sidebar">
+                  <div class="hp-dash-link hp-dash-link--active">📚 Grammatik-Quiz</div>
+                  <div class="hp-dash-link">🎯 der/die/das-Trainer</div>
+                  <div class="hp-dash-link">🗂️ Wortschatz</div>
+                  <div class="hp-dash-link">🔊 Aussprache</div>
+                  <div class="hp-dash-link">🗣️ Sprechen</div>
+                  <div class="hp-dash-link">✍️ Lesen &amp; Schreiben</div>
+                  <div class="hp-dash-link">🗺️ Kulturwissen</div>
+                </div>
+                <div class="hp-dash-main">
+                  <div class="hp-dash-main-head"><strong>Grammatik-Quiz</strong><span>Thema 1 von {grammatik.length}</span></div>
+                  <div class="hp-dash-stat-row">
+                    <div class="hp-dash-stat"><strong>{grammarQuestionCount}</strong><span>Fragen</span></div>
+                    <div class="hp-dash-stat"><strong>{grammatik.length}</strong><span>Themen</span></div>
+                    <div class="hp-dash-stat"><strong>0€</strong><span>Kosten</span></div>
+                  </div>
+                  <div class="hp-dash-question">
+                    <span class="hp-preview-kicker">Akkusativ</span>
+                    <p class="hp-preview-prompt">Ich habe <span class="blank">___</span> Computer.</p>
+                    <div class="hp-preview-choices">
+                      <span class="hp-preview-choice">der</span>
+                      <span class="hp-preview-choice hp-preview-choice--correct">den</span>
+                      <span class="hp-preview-choice">das</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="hp-section">
+        <div class="hp-wrap">
+          <div class="hp-section-head" style="max-width:600px">
+            <div class="hp-eyebrow">Alle Werkzeuge</div>
+            <h2>Ein Tool-Set, keine App-Sammlung</h2>
+            <p>Übungen und Prüfungen leben im selben Bereich — wechsle einfach die Ansicht.</p>
+            <div class="hp-value-inline">
+              <div class="hp-value-inline-item"><span class="ic">📖</span>Echtes Unterrichtsmaterial, keine Vorlage</div>
+              <div class="hp-value-inline-item"><span class="ic">💬</span>Alltagsszenarien statt Lehrbuch-Dialoge</div>
+              <div class="hp-value-inline-item"><span class="ic">🗣️</span>Sprechpraxis mit echten Prüferfragen</div>
+            </div>
+          </div>
+
+          <div class="hp-tabbar-wrap">
+            <div class="hp-tabbar" data-tabgroup="c2-tools">
+              <button type="button" class="hp-tab active" data-tab="uebungen">Übungen ({tools.length})</button>
+              <button type="button" class="hp-tab" data-tab="pruefungen">Prüfungen ({exams.length})</button>
+            </div>
+          </div>
+
+          <div class="hp-tab-panel" data-tabgroup="c2-tools" data-panel="uebungen">
+            <div class="hp-tools-grid">
+              {tools.map((t) => (
+                <a href={t.href} class="hp-tool-card">
+                  <div class="hp-tool-chip">{t.icon}</div>
+                  <h4>{t.title}</h4>
+                  <p>{t.desc}</p>
+                  <span class="hp-tool-card-count">{t.count}</span>
+                </a>
+              ))}
+            </div>
+          </div>
+          <div class="hp-tab-panel" data-tabgroup="c2-tools" data-panel="pruefungen" hidden>
+            <div class="hp-tools-grid hp-tools-grid--exams">
+              {exams.map((e) => (
+                <a href={e.href} class="hp-tool-card">
+                  <div class="hp-tool-chip">{e.icon}</div>
+                  <h4>{e.title}</h4>
+                  <p>{e.level}</p>
+                </a>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="hp-section hp-section--alt" id="preise-2">
+        <div class="hp-wrap">
+          <div class="hp-section-head" style="max-width:560px">
+            <div class="hp-eyebrow">Preise</div>
+            <h2>Free vs. Exam Coaching</h2>
+            <p>Coaching ist in Arbeit — wir zeigen hier, was schon geht und was noch fehlt.</p>
+          </div>
+          <div class="hp-compare-wrap">
+            <table class="hp-compare">
+              <thead><tr><th>Leistung</th><th>Free</th><th>Exam Coaching</th></tr></thead>
+              <tbody>
+                <tr><td>A1–C1-Grundkurs</td><td class="hp-compare-yes">✓</td><td class="hp-compare-yes">✓</td></tr>
+                <tr><td>Alle {tools.length} Übungstools</td><td class="hp-compare-yes">✓</td><td class="hp-compare-yes">✓</td></tr>
+                <tr><td>Alle {exams.length} Prüfungsübersichten</td><td class="hp-compare-yes">✓</td><td class="hp-compare-yes">✓</td></tr>
+                <tr><td>Prüfungssimulationen (Goethe/telc)</td><td class="hp-compare-no">—</td><td class="hp-compare-no">in Arbeit</td></tr>
+                <tr><td>Korrektur durch einen Lehrer</td><td class="hp-compare-no">—</td><td class="hp-compare-no">in Arbeit</td></tr>
+                <tr><td>Preis</td><td class="hp-compare-yes">€0</td><td class="hp-compare-no">noch offen</td></tr>
+              </tbody>
+            </table>
+            <div class="hp-compare-foot">
+              <a href="/uebungen" class="hp-btn hp-btn--primary">Kostenlos starten</a>
+              <span class="hp-btn hp-btn--disabled">Coaching: noch nicht verfügbar</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="hp-section">
+        <div class="hp-wrap">
+          <div class="hp-cta-compact">
+            <div>
+              <h3>Dein nächster Schritt zu fließendem Deutsch</h3>
+              <p>Kostenlos starten, in deinem Tempo weitermachen.</p>
+            </div>
+            <a href="/uebungen" class="hp-btn hp-btn--primary">Kostenlos üben</a>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- ======================================================= -->
+    <!-- CONCEPT 3 — "Roadmap": journey-led, tools nested in path -->
+    <!-- ======================================================= -->
+    <div class="hp-concept" data-concept="3" hidden>
+      <section class="hp-hero">
+        <div class="hp-wrap hp-hero-inner">
+          <div class="hp-hero-copy">
+            <div class="hp-eyebrow">Kostenlos · A1 bis C1</div>
+            <h1>Deutsch lernen, wie es <em>wirklich</em> gesprochen wird</h1>
+            <p class="hp-hero-lead">Grammatik, Alltagsdeutsch und Sprechpraxis — aus echtem Unterrichtsmaterial, nicht kalt für eine App geschrieben. Plus Prüfungsvorbereitung für telc, Goethe, TestDaF, DTZ und Leben in Deutschland.</p>
+            <div class="hp-hero-actions">
+              <a href="/uebungen" class="hp-btn hp-btn--primary">Bei Schritt 1 starten</a>
+              <a href="/pruefungen" class="hp-btn hp-btn--outline">Prüfungen ansehen</a>
+            </div>
+            <div class="hp-hero-note">Kein Konto nötig · alle Übungen sofort nutzbar</div>
+          </div>
+
+          <div class="hp-visual">
+            <div class="hp-roadmap">
+              <div class="hp-roadmap-line"></div>
+              <div class="hp-roadmap-step">
+                <div class="hp-roadmap-node">1</div>
+                <div class="hp-roadmap-body"><h4>Grammatik</h4><p>{grammatik.length} Themen, {grammarQuestionCount} Fragen — Akkusativ bis Konjunktiv II.</p></div>
+              </div>
+              <div class="hp-roadmap-step">
+                <div class="hp-roadmap-node">2</div>
+                <div class="hp-roadmap-body"><h4>Alltagsdeutsch</h4><p>Echte Szenarien: Behördengänge, Wohnungssuche, der Alltag.</p></div>
+              </div>
+              <div class="hp-roadmap-step">
+                <div class="hp-roadmap-node">3</div>
+                <div class="hp-roadmap-body"><h4>Sprechpraxis</h4><p>Bildbeschreibung mit echten Prüferfragen, {sprechen.length} Bilder, 90-Sekunden-Timer.</p></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="hp-section hp-section--alt">
+        <div class="hp-wrap">
+          <div class="hp-section-head">
+            <div class="hp-eyebrow">Dein Weg</div>
+            <h2>Vier Schritte zu fließendem Deutsch</h2>
+            <p>Jeder Schritt verlinkt direkt zu den echten Übungen dahinter — keine Umwege.</p>
+          </div>
+          <div class="hp-journey">
+            {journey.map((step, i) => (
+              <div class="hp-journey-step">
+                <div class="hp-journey-node">{i + 1}</div>
+                <div class="hp-journey-body">
+                  <h3>{step.title}</h3>
+                  <p>{step.desc}</p>
+                  <div class="hp-journey-tools">
+                    {step.items.map((t) => (
+                      <a href={t.href} class="hp-journey-chip">{t.icon} {t.title} <span class="count">· {t.count}</span></a>
+                    ))}
+                  </div>
+                </div>
+              </div>
             ))}
-          </div>
-        </div>
-
-        <div class="hp-tools-group">
-          <div class="hp-tools-head">
-            <div class="hp-tools-label">Prüfungen</div>
-            <a href="/pruefungen" class="hp-tools-viewall">Alle Prüfungen →</a>
-          </div>
-          <div class="hp-tools-grid hp-tools-grid--exams">
-            {exams.map((e) => (
-              <a href={e.href} class="hp-tool-card">
-                <div class="hp-tool-chip">{e.icon}</div>
-                <h4>{e.title}</h4>
-                <p>{e.level}</p>
-              </a>
-            ))}
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- PRICING -->
-    <section class="hp-section" id="preise">
-      <div class="hp-wrap">
-        <div class="hp-section-head" style="max-width:560px">
-          <div class="hp-eyebrow">Preise</div>
-          <h2>Der Grundkurs ist kostenlos. Für alles Weitere arbeiten wir noch an den Preisen.</h2>
-          <p>Kein verstecktes Kleingedrucktes — was heute nicht fertig ist, bieten wir auch nicht zum Kauf an.</p>
-        </div>
-        <div class="hp-pricing-grid">
-          <div class="hp-price-card hp-price-card--live">
-            <div class="hp-price-top"><span class="hp-price-name">Free</span><span class="hp-price-tag hp-price-tag--live">Jetzt verfügbar</span></div>
-            <div class="hp-price-amount"><strong>€0</strong><span>für immer</span></div>
-            <p class="hp-price-desc">Alles, was oben aufgeführt ist: der volle A1–C1-Kernkurs und alle sieben Übungstools.</p>
-            <div class="hp-price-list">
-              <div class="hp-price-item"><span class="hp-check">✓</span><span>Voller A1–C1-Grundkurs</span></div>
-              <div class="hp-price-item"><span class="hp-check">✓</span><span>Alle Übungstools dieser Seite</span></div>
-              <div class="hp-price-item"><span class="hp-check">✓</span><span>Alle fünf Prüfungsübersichten</span></div>
+            <div class="hp-journey-step">
+              <div class="hp-journey-node">4</div>
+              <div class="hp-journey-body">
+                <h3>Prüfung</h3>
+                <p>Wenn du bereit bist: fünf Prüfungen im Überblick, mit Format und Niveau.</p>
+                <div class="hp-journey-tools">
+                  {exams.map((e) => (
+                    <a href={e.href} class="hp-journey-chip">{e.icon} {e.title} <span class="count">· {e.level}</span></a>
+                  ))}
+                </div>
+              </div>
             </div>
-            <a href="/uebungen" class="hp-price-cta hp-btn--primary">Kostenlos starten</a>
-          </div>
-          <div class="hp-price-card hp-price-card--soon">
-            <div class="hp-price-top"><span class="hp-price-name">Exam Coaching</span><span class="hp-price-tag hp-price-tag--soon">In Arbeit</span></div>
-            <div class="hp-price-amount"><strong>—</strong><span>Preis noch offen</span></div>
-            <p class="hp-price-desc">Korrigierte Prüfungssimulationen mit einem echten Lehrer. Noch nicht buchbar.</p>
-            <div class="hp-price-list">
-              <div class="hp-price-item hp-price-item--soon"><span class="hp-check">·</span><span>Prüfungssimulationen im Goethe-/telc-Format</span></div>
-              <div class="hp-price-item hp-price-item--soon"><span class="hp-check">·</span><span>Schriftliche Korrektur durch einen Lehrer</span></div>
-              <div class="hp-price-item hp-price-item--soon"><span class="hp-check">·</span><span>Live-Sprechpraxis in kleinen Gruppen</span></div>
-            </div>
-            <span class="hp-price-cta hp-btn--disabled">Noch nicht verfügbar</span>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- FINAL CTA -->
-    <section class="hp-final">
-      <div class="hp-wrap hp-final-inner">
-        <h2>Dein nächster Schritt zu fließendem Deutsch</h2>
-        <p>Kostenlos starten, mit echtem Unterrichtsmaterial üben, in deinem Tempo weitermachen.</p>
-        <a href="/uebungen" class="hp-final-btn">Kostenlos üben</a>
-      </div>
-    </section>
+      <section class="hp-section" id="preise-3">
+        <div class="hp-wrap">
+          <div class="hp-section-head" style="max-width:520px">
+            <div class="hp-eyebrow">Preise</div>
+            <h2>Starte kostenlos. Für immer.</h2>
+          </div>
+          <div class="hp-price-solo">
+            <div class="hp-price-card hp-price-card--live">
+              <div class="hp-price-top"><span class="hp-price-name">Free</span><span class="hp-price-tag hp-price-tag--live">Jetzt verfügbar</span></div>
+              <div class="hp-price-amount"><strong>€0</strong><span>für immer</span></div>
+              <p class="hp-price-desc">Der volle A1–C1-Grundkurs und alle {tools.length} Übungstools — alle vier Schritte oben.</p>
+              <div class="hp-price-list">
+                <div class="hp-price-item"><span class="hp-check">✓</span><span>Voller A1–C1-Grundkurs</span></div>
+                <div class="hp-price-item"><span class="hp-check">✓</span><span>Alle Übungstools dieser Seite</span></div>
+                <div class="hp-price-item"><span class="hp-check">✓</span><span>Alle fünf Prüfungsübersichten</span></div>
+              </div>
+              <a href="/uebungen" class="hp-price-cta hp-btn--primary">Kostenlos starten</a>
+            </div>
+          </div>
+          <p class="hp-price-teaser"><strong>Exam Coaching</strong> — korrigierte Prüfungssimulationen mit einem echten Lehrer — ist in Arbeit und noch nicht buchbar.</p>
+        </div>
+      </section>
+
+      <section class="hp-final">
+        <div class="hp-wrap hp-final-inner">
+          <h2>Bereit für Schritt 1?</h2>
+          <p>Kostenlos starten, mit echtem Unterrichtsmaterial üben, in deinem Tempo weitermachen.</p>
+          <a href="/uebungen" class="hp-final-btn">Jetzt starten</a>
+        </div>
+      </section>
+    </div>
+
+    <!-- ======================================================= -->
+    <!-- CONCEPT 4 — "Proof + Dashboard": dashboard hero (real     -->
+    <!-- quiz content inside the app-preview chrome) on Concept    -->
+    <!-- 1's already-built body                                    -->
+    <!-- ======================================================= -->
+    <div class="hp-concept" data-concept="4" hidden>
+      <section class="hp-hero">
+        <div class="hp-wrap hp-hero-inner">
+          <div class="hp-hero-copy">
+            <div class="hp-eyebrow">Kostenlos · A1 bis C1</div>
+            <h1>Deutsch lernen, wie es <em>wirklich</em> gesprochen wird</h1>
+            <p class="hp-hero-lead">Grammatik, Alltagsdeutsch und Sprechpraxis — aus echtem Unterrichtsmaterial, nicht kalt für eine App geschrieben. Plus Prüfungsvorbereitung für telc, Goethe, TestDaF, DTZ und Leben in Deutschland.</p>
+            <div class="hp-hero-actions">
+              <a href="/uebungen" class="hp-btn hp-btn--primary">Jetzt kostenlos üben</a>
+              <a href="/pruefungen" class="hp-btn hp-btn--outline">Prüfungen ansehen</a>
+            </div>
+            <div class="hp-hero-note">Kein Konto nötig · alle Übungen sofort nutzbar</div>
+          </div>
+
+          <div class="hp-visual">
+            <div class="hp-dash">
+              <div class="hp-preview-bar">
+                <div class="hp-preview-dot"></div><div class="hp-preview-dot"></div><div class="hp-preview-dot"></div>
+                <span class="hp-preview-label">deutschacademy.com/uebungen</span>
+              </div>
+              <div class="hp-dash-body">
+                <div class="hp-dash-sidebar">
+                  <div class="hp-dash-link hp-dash-link--active">📚 Grammatik-Quiz</div>
+                  <div class="hp-dash-link">🎯 der/die/das-Trainer</div>
+                  <div class="hp-dash-link">🗂️ Wortschatz</div>
+                  <div class="hp-dash-link">🔊 Aussprache</div>
+                  <div class="hp-dash-link">🗣️ Sprechen</div>
+                  <div class="hp-dash-link">✍️ Lesen &amp; Schreiben</div>
+                  <div class="hp-dash-link">🗺️ Kulturwissen</div>
+                </div>
+                <div class="hp-dash-main">
+                  <div class="hp-dash-main-head"><strong>Grammatik-Quiz</strong><span>Thema 1 von {grammatik.length}</span></div>
+                  <div class="hp-dash-stat-row">
+                    <div class="hp-dash-stat"><strong>{grammarQuestionCount}</strong><span>Fragen</span></div>
+                    <div class="hp-dash-stat"><strong>{grammatik.length}</strong><span>Themen</span></div>
+                    <div class="hp-dash-stat"><strong>0€</strong><span>Kosten</span></div>
+                  </div>
+                  <div class="hp-dash-question">
+                    <span class="hp-preview-kicker">Akkusativ</span>
+                    <p class="hp-preview-prompt">Ich habe <span class="blank">___</span> Computer.</p>
+                    <p class="hp-preview-hint">(der Computer)</p>
+                    <div class="hp-preview-choices">
+                      <span class="hp-preview-choice">der</span>
+                      <span class="hp-preview-choice hp-preview-choice--correct">den</span>
+                      <span class="hp-preview-choice">das</span>
+                    </div>
+                    <div class="hp-preview-foot">
+                      <span>Thema 1 von {grammatik.length} · {grammarQuestionCount} Fragen insgesamt</span>
+                      <a href="/uebungen/grammatik">Quiz starten →</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="hp-stats">
+        <div class="hp-wrap hp-stats-grid">
+          {stats.map((s) => (
+            <div class="hp-stat">
+              <div class="hp-stat-num">{s.num}</div>
+              <div class="hp-stat-label">{s.label}</div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section class="hp-section">
+        <div class="hp-wrap">
+          <div class="hp-section-head">
+            <div class="hp-eyebrow">Warum DeutschAcademy</div>
+            <h2>Aus echten Klassen, nicht aus Vorlagen</h2>
+            <p>Jede Übung unten wurde bereits echten Lernenden beigebracht — nicht kalt für eine Plattform geschrieben.</p>
+          </div>
+          <div class="hp-value-grid">
+            <div class="hp-value-card">
+              <div class="hp-value-icon">📖</div>
+              <h3>Grammatik richtig erklärt</h3>
+              <p>Akkusativ, Dativ, Passiv, Konjunktiv II und mehr — mit durchdachten Übungen statt schnellen Tipps.</p>
+            </div>
+            <div class="hp-value-card">
+              <div class="hp-value-icon">💬</div>
+              <h3>Alltagsdeutsch, kein Lehrbuch-Dialog</h3>
+              <p>Szenarien aus dem echten Leben: Behördengänge, Wohnungssuche, der Alltag — nicht erfundene Beispiele.</p>
+            </div>
+            <div class="hp-value-card">
+              <div class="hp-value-icon">🗣️</div>
+              <h3>Sprechpraxis eingebaut</h3>
+              <p>Bildbeschreibung mit echten Prüferfragen und Timer — der Teil, der sonst nur im Präsenzunterricht geübt wird.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="hp-section hp-section--alt">
+        <div class="hp-wrap">
+          <div class="hp-section-head" style="max-width:600px">
+            <div class="hp-eyebrow">Alle Werkzeuge</div>
+            <h2>Übungen und Prüfungsvorbereitung, an einem Ort</h2>
+            <p>Kein Zusammensuchen zwischen Apps und Karteikarten — alles ist von hier aus erreichbar.</p>
+          </div>
+
+          <div class="hp-tools-group">
+            <div class="hp-tools-head">
+              <div class="hp-tools-label">Übungen</div>
+              <a href="/uebungen" class="hp-tools-viewall">Alle Übungen →</a>
+            </div>
+            <div class="hp-tools-grid">
+              {tools.map((t) => (
+                <a href={t.href} class="hp-tool-card">
+                  <div class="hp-tool-chip">{t.icon}</div>
+                  <h4>{t.title}</h4>
+                  <p>{t.desc}</p>
+                  <span class="hp-tool-card-count">{t.count}</span>
+                </a>
+              ))}
+            </div>
+          </div>
+
+          <div class="hp-tools-group">
+            <div class="hp-tools-head">
+              <div class="hp-tools-label">Prüfungen</div>
+              <a href="/pruefungen" class="hp-tools-viewall">Alle Prüfungen →</a>
+            </div>
+            <div class="hp-tools-grid hp-tools-grid--exams">
+              {exams.map((e) => (
+                <a href={e.href} class="hp-tool-card">
+                  <div class="hp-tool-chip">{e.icon}</div>
+                  <h4>{e.title}</h4>
+                  <p>{e.level}</p>
+                </a>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="hp-section" id="preise-4">
+        <div class="hp-wrap">
+          <div class="hp-section-head" style="max-width:560px">
+            <div class="hp-eyebrow">Preise</div>
+            <h2>Der Grundkurs ist kostenlos. Für alles Weitere arbeiten wir noch an den Preisen.</h2>
+            <p>Kein verstecktes Kleingedrucktes — was heute nicht fertig ist, bieten wir auch nicht zum Kauf an.</p>
+          </div>
+          <div class="hp-pricing-grid">
+            <div class="hp-price-card hp-price-card--live">
+              <div class="hp-price-top"><span class="hp-price-name">Free</span><span class="hp-price-tag hp-price-tag--live">Jetzt verfügbar</span></div>
+              <div class="hp-price-amount"><strong>€0</strong><span>für immer</span></div>
+              <p class="hp-price-desc">Alles, was oben aufgeführt ist: der volle A1–C1-Kernkurs und alle sieben Übungstools.</p>
+              <div class="hp-price-list">
+                <div class="hp-price-item"><span class="hp-check">✓</span><span>Voller A1–C1-Grundkurs</span></div>
+                <div class="hp-price-item"><span class="hp-check">✓</span><span>Alle Übungstools dieser Seite</span></div>
+                <div class="hp-price-item"><span class="hp-check">✓</span><span>Alle fünf Prüfungsübersichten</span></div>
+              </div>
+              <a href="/uebungen" class="hp-price-cta hp-btn--primary">Kostenlos starten</a>
+            </div>
+            <div class="hp-price-card hp-price-card--soon">
+              <div class="hp-price-top"><span class="hp-price-name">Exam Coaching</span><span class="hp-price-tag hp-price-tag--soon">In Arbeit</span></div>
+              <div class="hp-price-amount"><strong>—</strong><span>Preis noch offen</span></div>
+              <p class="hp-price-desc">Korrigierte Prüfungssimulationen mit einem echten Lehrer. Noch nicht buchbar.</p>
+              <div class="hp-price-list">
+                <div class="hp-price-item hp-price-item--soon"><span class="hp-check">·</span><span>Prüfungssimulationen im Goethe-/telc-Format</span></div>
+                <div class="hp-price-item hp-price-item--soon"><span class="hp-check">·</span><span>Schriftliche Korrektur durch einen Lehrer</span></div>
+                <div class="hp-price-item hp-price-item--soon"><span class="hp-check">·</span><span>Live-Sprechpraxis in kleinen Gruppen</span></div>
+              </div>
+              <span class="hp-price-cta hp-btn--disabled">Noch nicht verfügbar</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="hp-final">
+        <div class="hp-wrap hp-final-inner">
+          <h2>Dein nächster Schritt zu fließendem Deutsch</h2>
+          <p>Kostenlos starten, mit echtem Unterrichtsmaterial üben, in deinem Tempo weitermachen.</p>
+          <a href="/uebungen" class="hp-final-btn">Kostenlos üben</a>
+        </div>
+      </section>
+    </div>
 
     <!-- FOOTER -->
     <footer class="hp-footer">
@@ -246,4 +705,49 @@ const stats = [
       </div>
     </footer>
   </div>
+
+  <script>
+    var toggleBtns = document.querySelectorAll(".hp-toggle-btn");
+    var concepts = document.querySelectorAll(".hp-concept");
+
+    var preiseLink = document.querySelector(".hp-nav-preise-link");
+
+    function showConcept(id) {
+      concepts.forEach(function (c) {
+        c.hidden = c.getAttribute("data-concept") !== id;
+      });
+      toggleBtns.forEach(function (b) {
+        b.classList.toggle("active", b.getAttribute("data-concept") === id);
+      });
+      if (preiseLink) { preiseLink.setAttribute("href", "#preise-" + id); }
+      try { localStorage.setItem("hp-concept", id); } catch (e) {}
+    }
+
+    toggleBtns.forEach(function (b) {
+      b.addEventListener("click", function () {
+        showConcept(b.getAttribute("data-concept"));
+      });
+    });
+
+    var savedConcept = "1";
+    try { savedConcept = localStorage.getItem("hp-concept") || "1"; } catch (e) {}
+    showConcept(savedConcept);
+
+    // Generic tab switcher (used by concept 2's Übungen/Prüfungen toggle)
+    document.querySelectorAll(".hp-tabbar[data-tabgroup]").forEach(function (bar) {
+      var group = bar.getAttribute("data-tabgroup");
+      var panels = document.querySelectorAll('.hp-tab-panel[data-tabgroup="' + group + '"]');
+      bar.querySelectorAll(".hp-tab").forEach(function (tab) {
+        tab.addEventListener("click", function () {
+          var target = tab.getAttribute("data-tab");
+          bar.querySelectorAll(".hp-tab").forEach(function (t) {
+            t.classList.toggle("active", t === tab);
+          });
+          panels.forEach(function (p) {
+            p.hidden = p.getAttribute("data-panel") !== target;
+          });
+        });
+      });
+    });
+  </script>
 </Layout>

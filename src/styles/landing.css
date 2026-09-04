@@ -169,13 +169,18 @@
 .lp-tools-group { margin-bottom: 40px; }
 .lp-tools-group:last-child { margin-bottom: 0; }
 .lp-tools-label { font-family: var(--font-display); font-weight: 700; font-size: 12.5px; letter-spacing: .07em; text-transform: uppercase; color: var(--muted-soft); margin-bottom: 16px; }
-.lp-tools-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; }
+.lp-tools-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+.lp-tools-grid--exams { grid-template-columns: repeat(5, 1fr); }
 .lp-tool-card { display: flex; flex-direction: column; gap: 12px; border: 1px solid var(--border); border-radius: var(--radius); padding: 20px 18px; background: #fff; transition: border-color .2s ease, box-shadow .2s ease, transform .2s ease; }
 .lp-tool-card:hover { border-color: var(--brand-blue); box-shadow: var(--shadow-hover); transform: translateY(-2px); }
+.lp-tool-card--soon { border-style: dashed; }
+.lp-tool-card--soon:hover { border-color: var(--border-strong); box-shadow: none; transform: none; }
 .lp-tool-chip { width: 36px; height: 36px; border-radius: 10px; background: var(--blue-100); display: flex; align-items: center; justify-content: center; font-size: 16px; }
 .lp-tools-group--exams .lp-tool-chip { background: var(--gradient-accent-soft); }
 .lp-tool-card h4 { margin: 0; font-size: 14.5px; font-weight: 700; color: var(--ink); line-height: 1.3; }
-.lp-tool-card p { margin: 0; font-size: 12.5px; line-height: 1.5; color: var(--muted); }
+.lp-tool-card p { margin: 0; font-size: 12.5px; line-height: 1.5; color: var(--muted); flex-grow: 1; }
+.lp-tool-card-count { font-size: 11px; font-weight: 700; color: var(--brand-blue-dark); }
+.lp-tool-card-count--soon { color: var(--muted-soft); }
 
 /* Product showcase */
 .lp-showcase { display: grid; grid-template-columns: 1.3fr 1fr; gap: 56px; align-items: center; }
@@ -201,6 +206,25 @@
   display: flex; align-items: center; justify-content: center;
   font-family: var(--font-display); font-weight: 700; font-size: 12px;
   border: 1px solid var(--border);
+}
+.lp-dash-stat-row { display: flex; gap: 10px; }
+.lp-dash-stat { flex: 1; border: 1px solid var(--border); border-radius: 10px; padding: 12px; text-align: center; }
+.lp-dash-stat strong { display: block; font-family: var(--font-display); font-weight: 700; font-size: 19px; color: var(--ink); }
+.lp-dash-stat span { font-size: 11px; color: var(--muted); }
+.lp-dash-question { border: 1px dashed var(--border-strong); border-radius: 12px; padding: 18px; }
+.lp-quiz-kicker { font-family: var(--font-display); font-size: 11.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--brand-blue-dark); margin-bottom: 10px; }
+.lp-quiz-prompt { margin: 0 0 4px; font-size: 16px; font-weight: 700; color: var(--ink); }
+.lp-quiz-prompt .blank { display: inline-block; min-width: 38px; border-bottom: 2px solid var(--brand-blue); }
+.lp-quiz-hint { margin: 0 0 14px; font-size: 12px; color: var(--muted-soft); }
+.lp-quiz-choices { display: flex; gap: 8px; flex-wrap: wrap; }
+.lp-quiz-choice { padding: 9px 16px; border-radius: var(--radius-pill); border: 1.5px solid var(--border); font-weight: 700; font-size: 13px; color: var(--ink); }
+.lp-quiz-choice--correct { border-color: var(--brand-blue); background: var(--blue-50, #f0fdfa); color: var(--brand-blue-dark); position: relative; }
+.lp-quiz-choice--correct::after {
+  content: "✓"; position: absolute; top: -7px; right: -6px;
+  width: 16px; height: 16px; border-radius: 50%;
+  background: var(--brand-blue); color: #fff;
+  font-size: 9px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
 }
 .lp-progress-card { border: 1px solid var(--border); border-radius: 12px; padding: 16px; display: flex; flex-direction: column; gap: 10px; }
 .lp-progress-row { display: flex; justify-content: space-between; font-size: 12.5px; font-weight: 700; color: var(--ink); }

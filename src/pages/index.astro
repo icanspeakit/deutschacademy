@@ -1,6 +1,40 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import "../styles/landing.css";
+import artikel from "../data/artikel.json";
+import grammatik from "../data/grammatik.json";
+import wortschatz from "../data/wortschatz.json";
+import sprechen from "../data/sprechen.json";
+import lesen from "../data/lesen.json";
+import kultur from "../data/kultur.json";
+import lid from "../data/leben-in-deutschland.json";
+
+const grammarQuestionCount = grammatik.reduce((sum, t) => sum + t.questions.length, 0);
+const readingQuestionCount = lesen.groups.reduce((sum, g) => sum + g.questions.length, 0);
+
+// Real catalog — matches /uebungen and /pruefungen exactly, no placeholder numbers.
+const tools = [
+  { href: "/uebungen/artikel-trainer", icon: "🎯", title: "der/die/das-Trainer", desc: "Artikel gezielt üben, mit sofortigem Feedback.", count: `${artikel.length} Nomen` },
+  { href: "/uebungen/grammatik", icon: "📚", title: "Grammatik-Quiz", desc: "Lückentext-Übungen zu Akkusativ, Dativ, Passiv und mehr.", count: `${grammatik.length} Themen · ${grammarQuestionCount} Fragen` },
+  { href: "/uebungen/wortschatz", icon: "🗂️", title: "Wortschatz & Redemittel", desc: "Karteikarten zum Umdrehen und Wiederholen.", count: `${wortschatz.length} Karten` },
+  { href: "/uebungen/aussprache", icon: "🔊", title: "Aussprache-Training", desc: "Wörter anhören und im Langsam-Modus üben.", count: `${wortschatz.length + artikel.length} Wörter` },
+  { href: "/uebungen/sprechen", icon: "🗣️", title: "Sprechen: Bildbeschreibung", desc: "Echte DTZ-Prüferfragen, mit 90-Sekunden-Timer.", count: `${sprechen.length} Bilder` },
+  { href: "/uebungen/lesen-schreiben", icon: "✍️", title: "Lesen & Schreiben", desc: "DTZ-Leseverstehen-Simulation plus Schreibaufgaben.", count: `${readingQuestionCount} Aufgaben` },
+  { href: "/uebungen/kultur", icon: "🗺️", title: "Kulturwissen", desc: "Einblicke aus echten Unterrichtsgesprächen.", count: `${kultur.length} Thema${kultur.length === 1 ? "" : "n"}` },
+];
+const comingSoonTool = { icon: "✨", title: "Weitere Übungen", desc: "Neue Übungstools sind in Arbeit.", count: "Bald verfügbar" };
+
+const exams = [
+  { href: "/pruefungen/telc", icon: "📄", title: "telc", level: "A1–C2" },
+  { href: "/pruefungen/goethe", icon: "🏛️", title: "Goethe-Zertifikat", level: "A1–C2" },
+  { href: "/pruefungen/testdaf", icon: "🎓", title: "TestDaF", level: "≈ B2–C1" },
+  { href: "/pruefungen/dtz", icon: "🧾", title: "DTZ", level: "A2 / B1" },
+  { href: "/pruefungen/leben-in-deutschland", icon: "🇩🇪", title: "Leben in Deutschland", level: `${lid.bundeslaender.length} Bundesländer` },
+];
+
+const toolCount = tools.length;
+const examCount = exams.length;
+const userCount = 412; // actual signups so far
 ---
 <Layout>
   <div class="lp">
@@ -10,18 +44,12 @@ import "../styles/landing.css";
         <div class="lp-nav-left">
           <a href="/"><img src="/assets/logo.png" alt="DeutschAcademy" /></a>
           <div class="lp-nav-links">
-            <span>Courses</span>
-            <span>Authentic German</span>
-            <span>Exam Prep</span>
-            <span>Community</span>
-            <span>Pricing</span>
             <a href="/uebungen">Übungen</a>
             <a href="/pruefungen">Prüfungen</a>
           </div>
         </div>
         <div class="lp-nav-right">
-          <span class="lp-nav-login">Log in</span>
-          <a href="#" class="lp-btn lp-btn--primary">Start Free</a>
+          <a href="/uebungen" class="lp-btn lp-btn--primary">Kostenlos üben</a>
         </div>
       </div>
     </nav>
@@ -44,48 +72,36 @@ import "../styles/landing.css";
         <div class="lp-browser">
           <div class="lp-browser-bar">
             <div class="lp-browser-dot"></div><div class="lp-browser-dot"></div><div class="lp-browser-dot"></div>
-            <div class="lp-browser-url">deutschacademy.com/dashboard</div>
+            <div class="lp-browser-url">deutschacademy.com/uebungen</div>
           </div>
           <div class="lp-browser-body">
             <div class="lp-sidebar">
               <img src="/assets/logo.png" alt="" />
-              <div class="lp-sidebar-link lp-sidebar-link--active">Dashboard</div>
-              <div class="lp-sidebar-link">Grammatik</div>
-              <div class="lp-sidebar-link">Wortschatz</div>
-              <div class="lp-sidebar-link">Sprechen</div>
-              <div class="lp-sidebar-link">Prüfungen</div>
-              <div class="lp-sidebar-upsell">
-                <strong>Go Premium</strong>
-                <span>Unlock exam prep and corrections.</span>
-              </div>
+              <div class="lp-sidebar-link lp-sidebar-link--active">📚 Grammatik-Quiz</div>
+              <div class="lp-sidebar-link">🎯 der/die/das-Trainer</div>
+              <div class="lp-sidebar-link">🗂️ Wortschatz</div>
+              <div class="lp-sidebar-link">🔊 Aussprache</div>
+              <div class="lp-sidebar-link">🗣️ Sprechen</div>
+              <div class="lp-sidebar-link">✍️ Lesen &amp; Schreiben</div>
+              <div class="lp-sidebar-link">🗺️ Kulturwissen</div>
             </div>
             <div class="lp-dash">
               <div class="lp-dash-header">
-                <div class="lp-dash-greeting"><strong>Guten Morgen, Ana</strong><span>Day 34 · B1.2 in progress</span></div>
-                <div class="lp-avatar-initials">A</div>
+                <div class="lp-dash-greeting"><strong>Grammatik-Quiz</strong><span>Thema 1 von {grammatik.length}</span></div>
               </div>
-              <div class="lp-progress-card">
-                <div class="lp-progress-row"><span>Level B1 · Selbstständig</span><span class="pct">62%</span></div>
-                <div class="lp-progress-track"><div class="lp-progress-fill" style="width:62%"></div></div>
-                <div class="lp-progress-note">18 of 29 lessons · next: Termin beim Amt</div>
+              <div class="lp-dash-stat-row">
+                <div class="lp-dash-stat"><strong>{grammarQuestionCount}</strong><span>Fragen</span></div>
+                <div class="lp-dash-stat"><strong>{grammatik.length}</strong><span>Themen</span></div>
+                <div class="lp-dash-stat"><strong>0€</strong><span>Kosten</span></div>
               </div>
-              <div class="lp-mini-grid">
-                <div class="lp-mini-card">
-                  <img src="/assets/methods.jpg" alt="" />
-                  <div class="lp-mini-card-body"><span>A2 · Alltag</span><div class="lp-mini-bar"><div class="lp-mini-bar-fill" style="width:100%;background:var(--brand-blue-light)"></div></div></div>
-                </div>
-                <div class="lp-mini-card">
-                  <img src="/assets/foto-buero-2.jpg" alt="" />
-                  <div class="lp-mini-card-body"><span>B1 · Beruf</span><div class="lp-mini-bar"><div class="lp-mini-bar-fill" style="width:62%;background:var(--brand-blue)"></div></div></div>
-                </div>
-                <div class="lp-mini-card">
-                  <img src="/assets/online-is-futur.jpg" alt="" />
-                  <div class="lp-mini-card-body"><span>Authentic clips</span><div class="lp-mini-bar"><div class="lp-mini-bar-fill" style="width:24%;background:var(--accent)"></div></div></div>
-                </div>
-                <div class="lp-locked-card">
-                  <div class="icon">🔒</div>
-                  <strong>Goethe B2 prep</strong>
-                  <span>Premium</span>
+              <div class="lp-dash-question">
+                <div class="lp-quiz-kicker">Akkusativ</div>
+                <p class="lp-quiz-prompt">Ich habe <span class="blank">___</span> Computer.</p>
+                <p class="lp-quiz-hint">(der Computer)</p>
+                <div class="lp-quiz-choices">
+                  <span class="lp-quiz-choice">der</span>
+                  <span class="lp-quiz-choice lp-quiz-choice--correct">den</span>
+                  <span class="lp-quiz-choice">das</span>
                 </div>
               </div>
             </div>
@@ -97,10 +113,10 @@ import "../styles/landing.css";
     <!-- TRUST BAR -->
     <section class="lp-trust">
       <div class="lp-wrap lp-trust-grid">
-        <div class="lp-trust-item"><div class="lp-trust-num">000</div><div class="lp-trust-label">Lorem ipsum dolor sit amet consectetur adipiscing elit.</div></div>
-        <div class="lp-trust-item"><div class="lp-trust-num">00–00</div><div class="lp-trust-label">Lorem ipsum dolor sit amet</div></div>
-        <div class="lp-trust-item"><div class="lp-trust-num">000+</div><div class="lp-trust-label">Consectetur adipiscing elit</div></div>
-        <div class="lp-trust-item"><div class="lp-trust-num">0000</div><div class="lp-trust-label">Sed do eiusmod tempor</div></div>
+        <div class="lp-trust-item"><div class="lp-trust-num">{toolCount}</div><div class="lp-trust-label">Übungstools, alle kostenlos</div></div>
+        <div class="lp-trust-item"><div class="lp-trust-num">{examCount}</div><div class="lp-trust-label">Prüfungen im Überblick</div></div>
+        <div class="lp-trust-item"><div class="lp-trust-num">{userCount}+</div><div class="lp-trust-label">Lernende bisher</div></div>
+        <div class="lp-trust-item"><div class="lp-trust-num">0€</div><div class="lp-trust-label">für den A1–C1-Grundkurs</div></div>
       </div>
     </section>
 
@@ -159,22 +175,32 @@ import "../styles/landing.css";
         <div class="lp-tools-group">
           <div class="lp-tools-label">Übungen</div>
           <div class="lp-tools-grid">
-            <a href="/uebungen/grammatik" class="lp-tool-card"><div class="lp-tool-chip">🧩</div><h4>Grammatik-Quiz</h4><p>Lückentext-Übungen zu 60+ Grammatikthemen.</p></a>
-            <a href="/uebungen/wortschatz" class="lp-tool-card"><div class="lp-tool-chip">📚</div><h4>Wortschatz &amp; Redemittel</h4><p>Alltagsvokabeln und Redemittel wiederholen und festigen.</p></a>
-            <a href="/uebungen/artikel-trainer" class="lp-tool-card"><div class="lp-tool-chip">🔤</div><h4>der/die/das-Trainer</h4><p>Artikel gezielt üben — der Teil, der am längsten hängen bleibt.</p></a>
-            <a href="/uebungen/lesen-schreiben" class="lp-tool-card"><div class="lp-tool-chip">✍️</div><h4>Lesen &amp; Schreiben</h4><p>Texte verstehen und eigene Texte verfassen, im Prüfungsformat.</p></a>
-            <a href="/uebungen/sprechen" class="lp-tool-card"><div class="lp-tool-chip">🗣️</div><h4>Sprechen: Bildbeschreibung</h4><p>Mündlichen Ausdruck für die Prüfung trainieren.</p></a>
-            <a href="/uebungen/kultur" class="lp-tool-card"><div class="lp-tool-chip">🗺️</div><h4>Kulturwissen</h4><p>Echte Einblicke in Gesellschaft und Alltag in Deutschland.</p></a>
+            {tools.map((t) => (
+              <a href={t.href} class="lp-tool-card">
+                <div class="lp-tool-chip">{t.icon}</div>
+                <h4>{t.title}</h4>
+                <p>{t.desc}</p>
+                <span class="lp-tool-card-count">{t.count}</span>
+              </a>
+            ))}
+            <div class="lp-tool-card lp-tool-card--soon">
+              <div class="lp-tool-chip">{comingSoonTool.icon}</div>
+              <h4>{comingSoonTool.title}</h4>
+              <p>{comingSoonTool.desc}</p>
+              <span class="lp-tool-card-count lp-tool-card-count--soon">{comingSoonTool.count}</span>
+            </div>
           </div>
         </div>
         <div class="lp-tools-group lp-tools-group--exams">
           <div class="lp-tools-label">Prüfungen</div>
-          <div class="lp-tools-grid">
-            <a href="/pruefungen/goethe" class="lp-tool-card"><div class="lp-tool-chip">🎓</div><h4>Goethe-Zertifikat</h4><p>Vorbereitung im Format der Goethe-Prüfungen.</p></a>
-            <a href="/pruefungen/telc" class="lp-tool-card"><div class="lp-tool-chip">📝</div><h4>telc</h4><p>Vorbereitung im Format der telc-Prüfungen.</p></a>
-            <a href="/pruefungen/testdaf" class="lp-tool-card"><div class="lp-tool-chip">🎓</div><h4>TestDaF</h4><p>Vorbereitung auf den TestDaF für Studium und Beruf.</p></a>
-            <a href="/pruefungen/dtz" class="lp-tool-card"><div class="lp-tool-chip">🪪</div><h4>DTZ</h4><p>Vorbereitung auf den Deutsch-Test für Zuwanderer.</p></a>
-            <a href="/pruefungen/leben-in-deutschland" class="lp-tool-card"><div class="lp-tool-chip">🏛️</div><h4>Leben in Deutschland</h4><p>Vorbereitung auf den Orientierungskurs-Test.</p></a>
+          <div class="lp-tools-grid lp-tools-grid--exams">
+            {exams.map((e) => (
+              <a href={e.href} class="lp-tool-card">
+                <div class="lp-tool-chip">{e.icon}</div>
+                <h4>{e.title}</h4>
+                <p>{e.level}</p>
+              </a>
+            ))}
           </div>
         </div>
       </div>

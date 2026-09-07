@@ -38,6 +38,7 @@ const testSet = wortschatz.slice(0, 5);
     import { mountFlashcards } from "../../lib/flashcards.js";
     import { mountLearn } from "../../lib/learn.js";
     import { mountQuiz } from "../../lib/quiz.js";
+    import { recordAttempt, recordSession } from "../../lib/progress.js";
 
     const cards = JSON.parse(document.getElementById("fc-data").textContent);
     const testCards = JSON.parse(document.getElementById("test-data").textContent);
@@ -83,14 +84,21 @@ const testSet = wortschatz.slice(0, 5);
 
       if (mode === "fc" && !mounted.fc) {
         mountFlashcards(fcRoot, cards, { languages });
+        recordSession("wortschatz");
         mounted.fc = true;
       }
       if (mode === "lrn" && !mounted.lrn) {
-        mountLearn(lrnRoot, cards, { languages });
+        mountLearn(lrnRoot, cards, {
+          languages,
+          onAnswer: (knew, front) => recordAttempt({ skill: "wortschatz", correct: knew, id: front, trackVocab: true }),
+        });
         mounted.lrn = true;
       }
       if (mode === "test") {
-        mountQuiz(testRoot, buildChoiceQuestions(testCards, currentLang()), { mode: "choice" });
+        mountQuiz(testRoot, buildChoiceQuestions(testCards, currentLang()), {
+          mode: "choice",
+          onAnswer: (ok) => recordAttempt({ skill: "wortschatz", correct: ok }),
+        });
       }
     }
 

@@ -43,16 +43,46 @@ const userCount = 412; // actual signups so far
       <div class="lp-nav-row">
         <div class="lp-nav-left">
           <a href="/"><img src="/assets/logo.png" alt="DeutschAcademy" /></a>
-          <div class="lp-nav-links">
+          <div class="lp-nav-links" id="lp-nav-links">
             <a href="/uebungen">Übungen</a>
             <a href="/pruefungen">Prüfungen</a>
           </div>
         </div>
         <div class="lp-nav-right">
           <a href="/uebungen" class="lp-btn lp-btn--primary">Kostenlos üben</a>
+          <button
+            class="lp-nav-toggle"
+            type="button"
+            aria-expanded="false"
+            aria-controls="lp-nav-links"
+            aria-label="Menü öffnen"
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <line x1="3" y1="12" x2="21" y2="12"></line>
+              <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+          </button>
         </div>
       </div>
     </nav>
+
+    <script>
+      const lpToggle = document.querySelector(".lp-nav-toggle");
+      const lpLinks = document.getElementById("lp-nav-links");
+
+      lpToggle?.addEventListener("click", () => {
+        const isOpen = lpLinks?.classList.toggle("lp-nav-links--open");
+        lpToggle.setAttribute("aria-expanded", String(!!isOpen));
+      });
+
+      lpLinks?.addEventListener("click", (e) => {
+        if ((e.target as HTMLElement).tagName === "A") {
+          lpLinks.classList.remove("lp-nav-links--open");
+          lpToggle?.setAttribute("aria-expanded", "false");
+        }
+      });
+    </script>
 
     <!-- HERO: dashboard advertisement -->
     <section class="lp-hero">

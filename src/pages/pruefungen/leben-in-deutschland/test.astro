@@ -44,6 +44,7 @@ const { questions, meta, bundeslaender } = lid;
   <script type="application/json" id="laender-data" set:html={JSON.stringify(bundeslaender)}></script>
   <script type="module">
     import { mountQuiz } from "../../../lib/quiz.js";
+    import { recordAttempt } from "../../../lib/progress.js";
     const federal = JSON.parse(document.getElementById("questions-data").textContent);
     const laender = JSON.parse(document.getElementById("laender-data").textContent);
     const tabsEl = document.getElementById("land-tabs");
@@ -57,7 +58,10 @@ const { questions, meta, bundeslaender } = lid;
         ? `${l.name}: ${l.stateQuestions.length} Fragen aus echtem DeutschAcademy-Unterrichtsmaterial + ${federal.length} bundesweite Fragen.`
         : `${l.name}: ${federal.length} bundesweite Fragen (Unterrichtsmaterial) + ${l.stateQuestions.length} Fragen zu ${l.name} (allgemein bekannte, öffentliche Fakten, keine DeutschAcademy-Quelle).`;
       const combined = [...federal, ...l.stateQuestions];
-      mountQuiz(root, combined, { mode: "choice" });
+      mountQuiz(root, combined, {
+        mode: "choice",
+        onAnswer: (ok) => recordAttempt({ skill: "pruefungen", correct: ok }),
+      });
     }
 
     tabsEl.addEventListener("click", (e) => {

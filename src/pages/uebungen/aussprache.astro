@@ -31,6 +31,7 @@ const artikelItems = artikel.map((a) => toAudioItem(`${a.gender} ${a.word}`));
   <script type="application/json" id="pron-artikel" set:html={JSON.stringify(artikelItems)}></script>
   <script type="module">
     import { mountPronunciation } from "../../lib/pronunciation.js";
+    import { recordSession } from "../../lib/progress.js";
 
     const sets = {
       wortschatz: JSON.parse(document.getElementById("pron-wortschatz").textContent),
@@ -43,6 +44,7 @@ const artikelItems = artikel.map((a) => toAudioItem(`${a.gender} ${a.word}`));
     function showMode(mode) {
       [...tabs.children].forEach((btn) => btn.classList.toggle("active", btn.dataset.mode === mode));
       mountPronunciation(root, sets[mode]);
+      recordSession("hoeren");
     }
 
     [...tabs.children].forEach((btn) => {

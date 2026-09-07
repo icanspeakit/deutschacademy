@@ -1,0 +1,336 @@
+---
+// Living style guide — internal reference for the DeutschAcademy design system.
+// Renders the actual tokens/components from src/styles/global.css and
+// src/styles/components.css, not a mockup, so it stays honest as those evolve.
+// Not linked from the public nav; not indexed.
+import Layout from "../layouts/Layout.astro";
+import "../styles/design-system.css";
+
+const brandColors = [
+  { name: "--brand-blue", hex: "#0d9488" },
+  { name: "--brand-blue-dark", hex: "#0f766e" },
+  { name: "--brand-blue-light", hex: "#5eead4" },
+  { name: "--accent", hex: "#f97316" },
+  { name: "--accent-dark", hex: "#c2410c" },
+];
+
+const blueScale = [
+  ["--blue-50", "#f0fdfa"], ["--blue-100", "#ccfbf1"], ["--blue-200", "#99f6e4"],
+  ["--blue-300", "#5eead4"], ["--blue-400", "#2dd4bf"], ["--blue-500", "#14b8a6"],
+  ["--blue-600", "#0d9488"], ["--blue-700", "#0f766e"], ["--blue-800", "#115e59"],
+  ["--blue-900", "#134e4a"],
+].map(([name, hex]) => ({ name, hex }));
+
+const neutrals = [
+  { name: "--ink", hex: "#1a2230" },
+  { name: "--ink-deep", hex: "#0f141c" },
+  { name: "--muted", hex: "#4b5768" },
+  { name: "--muted-soft", hex: "#94a0b0" },
+  { name: "--border", hex: "#e7e9ee" },
+  { name: "--border-strong", hex: "#cbd2db" },
+  { name: "--surface", hex: "#f7f8fa" },
+];
+
+const semantic = [
+  { name: "--success", hex: "#047857" },
+  { name: "--warning", hex: "#f2a900" },
+  { name: "--danger", hex: "#c1462f" },
+  { name: "--info", hex: "#2563eb" },
+];
+
+const typeScale = [
+  ["--text-5xl", "clamp(1.8rem, 4vw, 2.8rem)"], ["--text-4xl", "clamp(1.8rem, 4vw, 2.25rem)"],
+  ["--text-3xl", "1.875rem"], ["--text-2xl", "1.5rem"], ["--text-xl", "1.25rem"],
+  ["--text-lg", "1.125rem"], ["--text-base", "1rem"], ["--text-sm", ".875rem"], ["--text-xs", ".75rem"],
+];
+
+const weights = [
+  ["--fw-regular", "400"], ["--fw-medium", "500"], ["--fw-semibold", "600"],
+  ["--fw-bold", "700"], ["--fw-extrabold", "800"],
+];
+
+const spacing = [
+  ["--space-1", 4], ["--space-2", 8], ["--space-3", 12], ["--space-4", 16], ["--space-5", 20],
+  ["--space-6", 24], ["--space-7", 28], ["--space-8", 32], ["--space-9", 36], ["--space-10", 40],
+  ["--space-11", 44], ["--space-12", 48], ["--space-14", 56], ["--space-16", 64], ["--space-20", 80],
+  ["--space-24", 96],
+];
+
+const radii = ["--radius-sm", "--radius", "--radius-lg", "--radius-pill"];
+const shadows = ["--shadow-sm", "--shadow-hover", "--shadow-raised", "--shadow-cta"];
+---
+<Layout title="Design System – Deutsch Academy" description="Internal design system reference.">
+  <Fragment slot="head">
+    <meta name="robots" content="noindex, nofollow" />
+  </Fragment>
+
+  <main class="ds-page">
+    <div class="ds-hero">
+      <div class="container">
+        <p class="eyebrow">Internal reference</p>
+        <h1>DeutschAcademy Design System</h1>
+        <p>
+          The tokens and components that back the site's UI, rendered live from
+          <code>src/styles/global.css</code> and <code>src/styles/components.css</code>.
+          Existing pages keep their own bespoke classes — treat this as the shared
+          vocabulary for new or refactored work, not a forced migration.
+        </p>
+      </div>
+    </div>
+
+    <nav class="ds-nav">
+      <div class="container ds-row">
+        <a href="#colors">Colors</a>
+        <a href="#typography">Typography</a>
+        <a href="#spacing">Spacing</a>
+        <a href="#radius-shadow">Radius &amp; Shadow</a>
+        <a href="#buttons">Buttons</a>
+        <a href="#badges">Badges</a>
+        <a href="#alerts">Alerts</a>
+        <a href="#forms">Forms</a>
+        <a href="#tabs">Tabs</a>
+        <a href="#progress">Progress</a>
+        <a href="#cards">Cards</a>
+      </div>
+    </nav>
+
+    <section id="colors" class="ds-section">
+      <div class="container">
+        <h2>Colors</h2>
+        <p class="ds-section-desc">Brand teal is the primary identity color; orange is the sparing accent. Semantic colors are formalized from shades already in organic use across the exercise pages — prefer them over new one-off hex values.</p>
+
+        <h3 style="text-align:left; font-size: var(--text-base); margin: 0 0 12px;">Brand</h3>
+        <div class="ds-swatch-grid" style="margin-bottom: var(--space-8);">
+          {brandColors.map((c) => (
+            <div class="ds-swatch">
+              <div class="ds-swatch-color" style={`background:${c.hex}`}></div>
+              <div class="ds-swatch-label">
+                <span class="ds-swatch-name">{c.name}</span>
+                <span class="ds-swatch-hex">{c.hex}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <h3 style="text-align:left; font-size: var(--text-base); margin: 0 0 12px;">Teal scale</h3>
+        <div class="ds-swatch-grid" style="margin-bottom: var(--space-8);">
+          {blueScale.map((c) => (
+            <div class="ds-swatch">
+              <div class="ds-swatch-color" style={`background:${c.hex}`}></div>
+              <div class="ds-swatch-label">
+                <span class="ds-swatch-name">{c.name}</span>
+                <span class="ds-swatch-hex">{c.hex}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <h3 style="text-align:left; font-size: var(--text-base); margin: 0 0 12px;">Neutrals</h3>
+        <div class="ds-swatch-grid" style="margin-bottom: var(--space-8);">
+          {neutrals.map((c) => (
+            <div class="ds-swatch">
+              <div class="ds-swatch-color" style={`background:${c.hex}`}></div>
+              <div class="ds-swatch-label">
+                <span class="ds-swatch-name">{c.name}</span>
+                <span class="ds-swatch-hex">{c.hex}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <h3 style="text-align:left; font-size: var(--text-base); margin: 0 0 12px;">Semantic</h3>
+        <div class="ds-swatch-grid">
+          {semantic.map((c) => (
+            <div class="ds-swatch">
+              <div class="ds-swatch-color" style={`background:${c.hex}`}></div>
+              <div class="ds-swatch-label">
+                <span class="ds-swatch-name">{c.name}</span>
+                <span class="ds-swatch-hex">{c.hex}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section id="typography" class="ds-section">
+      <div class="container">
+        <h2>Typography</h2>
+        <p class="ds-section-desc">Sora is the only typeface, used for both body and display text at different weights.</p>
+
+        <div style="margin-bottom: var(--space-8);">
+          {typeScale.map(([name, val]) => (
+            <div class="ds-type-row">
+              <code>{name}</code>
+              <p class="ds-type-sample" style={`font-size: var(${name}); font-weight: 700;`}>Ich lerne Deutsch</p>
+            </div>
+          ))}
+        </div>
+
+        <h3 style="text-align:left; font-size: var(--text-base); margin: 0 0 12px;">Weights</h3>
+        <div>
+          {weights.map(([name, val]) => (
+            <div class="ds-weight-row">
+              <code>{name} ({val})</code>
+              <p class="ds-type-sample" style={`font-weight: var(${name});`}>Ich lerne Deutsch</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section id="spacing" class="ds-section">
+      <div class="container">
+        <h2>Spacing</h2>
+        <p class="ds-section-desc">4px-based scale. Existing pages use nearby ad hoc values (10px, 18px, 22px…) — new work should snap to this scale.</p>
+        {spacing.map(([name, px]) => (
+          <div class="ds-space-row">
+            <code>{name} ({px}px)</code>
+            <div class="ds-space-bar" style={`width: ${px}px`}></div>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <section id="radius-shadow" class="ds-section">
+      <div class="container">
+        <h2>Radius &amp; Shadow</h2>
+        <p class="ds-section-desc">Corner radii and elevation used across cards, buttons and surfaces.</p>
+        <div class="ds-flat-grid" style="margin-bottom: var(--space-8);">
+          {radii.map((name) => (
+            <div class="ds-flat-box" style={`border-radius: var(${name});`}>{name}</div>
+          ))}
+        </div>
+        <div class="ds-flat-grid">
+          {shadows.map((name) => (
+            <div class="ds-shadow-box" style={`box-shadow: var(${name});`}>{name}</div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section id="buttons" class="ds-section">
+      <div class="container">
+        <h2>Buttons</h2>
+        <p class="ds-section-desc"><code>.btn-cta</code> (the existing pill CTA) stays as-is for the marketing pages. <code>.btn-*</code> is the general-purpose set for everything else.</p>
+        <div class="ds-row" style="margin-bottom: var(--space-6);">
+          <button class="btn btn-primary">Primary</button>
+          <button class="btn btn-secondary">Secondary</button>
+          <button class="btn btn-ghost">Ghost</button>
+          <button class="btn btn-danger">Danger</button>
+          <button class="btn btn-primary" disabled>Disabled</button>
+        </div>
+        <div class="ds-row">
+          <button class="btn btn-primary btn-sm">Small</button>
+          <button class="btn btn-primary">Base</button>
+          <button class="btn btn-primary btn-lg">Large</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="badges" class="ds-section">
+      <div class="container">
+        <h2>Badges</h2>
+        <p class="ds-section-desc">Small status/labeling pills.</p>
+        <div class="ds-row">
+          <span class="badge badge-brand">Brand</span>
+          <span class="badge badge-neutral">Neutral</span>
+          <span class="badge badge-success">Richtig</span>
+          <span class="badge badge-warning">In Arbeit</span>
+          <span class="badge badge-danger">Falsch</span>
+          <span class="badge badge-info">Info</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="alerts" class="ds-section">
+      <div class="container">
+        <h2>Alerts</h2>
+        <p class="ds-section-desc">Semantic feedback boxes — a reusable version of the correct/incorrect states used in quizzes.</p>
+        <div class="ds-col" style="max-width: 480px;">
+          <div class="alert alert-success">
+            <div><div class="alert-title">Richtig!</div>Der Nominativ passt hier.</div>
+          </div>
+          <div class="alert alert-danger">
+            <div><div class="alert-title">Nicht ganz.</div>Versuch es mit dem Akkusativ.</div>
+          </div>
+          <div class="alert alert-warning">
+            <div><div class="alert-title">Fast geschafft.</div>Noch 2 Fragen übrig.</div>
+          </div>
+          <div class="alert alert-info">
+            <div><div class="alert-title">Tipp</div>Trennbare Verben stehen am Satzende.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="forms" class="ds-section">
+      <div class="container">
+        <h2>Forms</h2>
+        <p class="ds-section-desc">Base input, textarea and select styling with a shared focus ring.</p>
+        <div class="ds-col">
+          <div class="field">
+            <label for="ds-name">Name</label>
+            <input class="input" id="ds-name" type="text" placeholder="Anna Müller" />
+          </div>
+          <div class="field">
+            <label for="ds-msg">Nachricht</label>
+            <textarea class="textarea" id="ds-msg" placeholder="Deine Nachricht…"></textarea>
+            <span class="field-hint">Optional</span>
+          </div>
+          <div class="field">
+            <label for="ds-level">Niveau</label>
+            <select class="select" id="ds-level">
+              <option>A1</option>
+              <option>A2</option>
+              <option>B1</option>
+              <option>B2</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="tabs" class="ds-section">
+      <div class="container">
+        <h2>Tabs</h2>
+        <p class="ds-section-desc">Segmented pill control, generalized from the testimonial switcher.</p>
+        <div class="tabs">
+          <button class="tab-btn active">Karten</button>
+          <button class="tab-btn">Liste</button>
+          <button class="tab-btn">Statistik</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="progress" class="ds-section">
+      <div class="container">
+        <h2>Progress</h2>
+        <p class="ds-section-desc">Track/fill pattern, generalized from the dashboard's weekly-goal and per-skill bars.</p>
+        <div class="ds-col">
+          <div class="progress-track"><span class="progress-fill" style="width: 64%"></span></div>
+          <div class="progress-track progress-track-sm"><span class="progress-fill" style="width: 40%"></span></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="cards" class="ds-section">
+      <div class="container">
+        <h2>Cards</h2>
+        <p class="ds-section-desc">Generic surface for grouping content; use the size modifiers or hover lift as needed.</p>
+        <div class="ds-swatch-grid">
+          <div class="card card-hover">
+            <strong>Grammatik-Quiz</strong>
+            <p style="color: var(--muted); font-size: var(--text-sm); margin: 8px 0 0;">Lückentext-Übungen zu Akkusativ, Dativ, Passiv.</p>
+          </div>
+          <div class="card card-sm">
+            <strong>Card sm</strong>
+          </div>
+          <div class="card card-lg">
+            <strong>Card lg</strong>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</Layout>

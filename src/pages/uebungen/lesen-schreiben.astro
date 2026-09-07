@@ -59,10 +59,15 @@ const { groups, formTask, writingPrompt, errorHunt } = lesen;
   <script type="application/json" id="groups-data" set:html={JSON.stringify(groups)}></script>
   <script type="module">
     import { mountQuiz } from "../../lib/quiz.js";
+    import { recordAttempt } from "../../lib/progress.js";
     const groups = JSON.parse(document.getElementById("groups-data").textContent);
     document.querySelectorAll(".quiz-card[data-group]").forEach((el) => {
       const g = groups[+el.dataset.group];
-      mountQuiz(el, g.questions, { mode: "choice", shuffle: false });
+      mountQuiz(el, g.questions, {
+        mode: "choice",
+        shuffle: false,
+        onAnswer: (ok) => recordAttempt({ skill: "schreiben", correct: ok }),
+      });
     });
 
     document.querySelectorAll(".form-field").forEach((el) => {

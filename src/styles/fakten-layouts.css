@@ -130,9 +130,11 @@
 .fk-view-btn:hover { color: var(--ink); }
 .fk-view-btn.active { color: #fff; }
 
-@media (max-width: 640px) {
+@media (max-width: 768px) {
   .fk-view-switcher { right: 12px; bottom: 12px; }
   .fk-view-switcher-icon { display: none; }
+  .fk-view-switcher-indicator { width: 44px; }
+  .fk-view-btn { width: 44px; height: 44px; }
 }
 
 /* Crossfade between layout sections on switch (skipped for prefers-reduced-motion, see JS). */
@@ -146,7 +148,7 @@
 
 /* ---------- Layout 1: Tabs (default) ---------- */
 .fk-tabbar { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; justify-content: center; }
-.fk-tab { border: 1px solid var(--border); background: var(--fk-card-bg); color: var(--ink); padding: 8px 16px; border-radius: var(--radius-pill); font-weight: 600; font-size: .88rem; cursor: pointer; font-family: var(--font-body); }
+.fk-tab { border: 1px solid var(--border); background: var(--fk-card-bg); color: var(--ink); padding: 12px 16px; border-radius: var(--radius-pill); font-weight: 600; font-size: .88rem; cursor: pointer; font-family: var(--font-body); }
 .fk-tab:hover { border-color: var(--brand-blue); }
 .fk-tab.active { background: var(--gradient-brand); color: #fff; border-color: transparent; }
 .fk-tab-panel { display: none; background: var(--fk-card-bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 28px; max-width: 780px; margin: 0 auto; }

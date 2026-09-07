@@ -2,7 +2,7 @@
 // Unknown cards get requeued a few positions later; known cards are removed until the deck is empty.
 const LANG_STORAGE_KEY = "da-fc-lang";
 
-export function mountLearn(root, cards, { languages = [] } = {}) {
+export function mountLearn(root, cards, { languages = [], onAnswer } = {}) {
   let queue = cards.map((_, i) => i).sort(() => Math.random() - 0.5);
   const total = queue.length;
   let mastered = 0;
@@ -79,6 +79,7 @@ export function mountLearn(root, cards, { languages = [] } = {}) {
         return;
       }
       const idx = queue.shift();
+      if (onAnswer) onAnswer(knew, cards[idx].front);
       if (knew) {
         mastered++;
       } else {

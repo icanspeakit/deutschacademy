@@ -30,17 +30,87 @@
   --gradient-accent-soft: linear-gradient(135deg, #ffedd5, #fff7ed 50%, #fed7aa);
   --gradient-hero-scrim: linear-gradient(120deg, rgba(26,34,48,.82), rgba(13,148,136,.55));
 
+  /* Semantic status colors — formalized from colors already organically in use
+     across practice.css/akkusativ.css/fakten-layouts.css. New/refactored UI
+     should reference these instead of one-off hex values. */
+  --success:      #047857;
+  --success-soft: #ecfdf5;
+  --success-border: #6ee7b7;
+  --danger:       #c1462f;
+  --danger-soft:  #fdeeea;
+  --danger-border: #f3c8bd;
+  --warning:      #f2a900;
+  --warning-soft: #fff7e0;
+  --warning-border: #f6dd99;
+  --info:         #2563eb;
+  --info-soft:    #eff6ff;
+  --info-border:  #bfdbfe;
+
   --font-body: "Sora", "Segoe UI", Arial, sans-serif;
   --font-display: "Sora", "Segoe UI", Arial, sans-serif;
+
+  /* Type scale */
+  --text-xs:   .75rem;
+  --text-sm:   .875rem;
+  --text-base: 1rem;
+  --text-lg:   1.125rem;
+  --text-xl:   1.25rem;
+  --text-2xl:  1.5rem;
+  --text-3xl:  1.875rem;
+  --text-4xl:  clamp(1.8rem, 4vw, 2.25rem);
+  --text-5xl:  clamp(1.8rem, 4vw, 2.8rem);
+
+  --fw-regular:   400;
+  --fw-medium:    500;
+  --fw-semibold:  600;
+  --fw-bold:      700;
+  --fw-extrabold: 800;
+
+  /* Spacing scale (4px base) */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-7: 28px;
+  --space-8: 32px;
+  --space-9: 36px;
+  --space-10: 40px;
+  --space-11: 44px;
+  --space-12: 48px;
+  --space-14: 56px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-24: 96px;
 
   --radius-sm: 10px;
   --radius: 14px;
   --radius-lg: 20px;
   --radius-pill: 999px;
 
+  --shadow-sm: 0 2px 8px rgba(28,43,63,.06);
   --shadow-hover: 0 12px 28px rgba(28,43,63,.10);
   --shadow-cta: 0 8px 20px rgba(59,169,217,.35);
   --shadow-raised: 0 18px 44px rgba(28,43,63,.14);
+
+  /* Motion */
+  --ease-standard: cubic-bezier(.4, 0, .2, 1);
+  --duration-fast: .15s;
+  --duration-base: .2s;
+  --duration-slow: .4s;
+
+  /* Z-index scale */
+  --z-header: 10;
+  --z-dropdown: 20;
+  --z-modal: 50;
+  --z-toast: 60;
+
+  /* Breakpoints (reference only — CSS can't read custom properties inside
+     @media, so keep any new media queries aligned to these three). */
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 860px;
+  --breakpoint-lg: 1024px;
 }
 
 * { box-sizing: border-box; }
@@ -83,6 +153,21 @@ h3 { text-align: center; font-weight: 700; }
   transition: box-shadow .2s ease, transform .2s ease;
 }
 .btn-cta:hover { box-shadow: 0 8px 20px rgba(59,169,217,.35); transform: translateY(-1px); }
+
+.nav-toggle {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: none;
+  background: none;
+  color: var(--ink);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+.nav-toggle svg { width: 24px; height: 24px; }
 
 /* Hero */
 .hero {
@@ -296,6 +381,19 @@ blockquote cite { font-weight: 600; color: var(--brand-blue-dark); font-style: n
 
 @media (max-width: 860px) {
   .two-col, .why-grid, .price-grid, .testimonial-grid, .team-grid, .stats-row, .footer-grid, .hero-strip-grid { grid-template-columns: minmax(0, 1fr); }
-  .main-nav { display: none; }
   .hero { min-height: 460px; }
+
+  .header-row { flex-wrap: wrap; row-gap: 8px; }
+  .nav-toggle { display: inline-flex; order: 3; margin-left: 12px; }
+  .btn-cta { order: 2; }
+  .main-nav {
+    display: none;
+    order: 4;
+    flex-direction: column;
+    width: 100%;
+    padding-top: 8px;
+    border-top: 1px solid var(--border);
+  }
+  .main-nav.main-nav--open { display: flex; }
+  .main-nav a { margin-left: 0; padding: 12px 4px; }
 }

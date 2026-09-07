@@ -1,0 +1,100 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&display=swap">
+  <style>
+    :root{
+      --brand-blue:#0d9488; --brand-blue-dark:#0f766e; --brand-blue-light:#5eead4;
+      --accent:#f97316; --accent-dark:#c2410c;
+      --blue-50:#f0fdfa; --blue-100:#ccfbf1; --blue-200:#99f6e4; --blue-300:#5eead4; --blue-400:#2dd4bf;
+      --blue-500:#14b8a6; --blue-600:#0d9488; --blue-700:#0f766e; --blue-800:#115e59; --blue-900:#134e4a;
+      --ink:#1a2230; --ink-deep:#0f141c; --muted:#4b5768; --muted-soft:#94a0b0;
+      --border:#e7e9ee; --border-strong:#cbd2db; --surface:#f7f8fa;
+      --success:#047857; --success-soft:#ecfdf5; --success-border:#6ee7b7;
+      --danger:#c1462f; --danger-soft:#fdeeea; --danger-border:#f3c8bd;
+      --warning:#f2a900; --warning-soft:#fff7e0; --warning-border:#f6dd99;
+      --info:#2563eb; --info-soft:#eff6ff; --info-border:#bfdbfe;
+      --gradient-brand: linear-gradient(135deg, #2dd4bf, var(--brand-blue));
+      --gradient-brand-soft: linear-gradient(135deg, var(--blue-100), #f0fdfa 50%, var(--blue-200));
+      --font-body: "Sora", "Segoe UI", Arial, sans-serif;
+      --radius-sm:10px; --radius:14px; --radius-lg:20px; --radius-pill:999px;
+    }
+    * { box-sizing: border-box; }
+    body { margin:0; font-family: var(--font-body); color: var(--ink); background:#fff; }
+    a { color: var(--brand-blue-dark); text-decoration: none; } a:hover { color: var(--brand-blue); }
+    .mono { font-family: "SFMono-Regular", Consolas, monospace; }
+    .swatch { border:1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+    .swatch-fill { height:72px; }
+    .swatch-label { padding:12px; }
+    .swatch-name { display:block; font-size:12px; font-weight:700; color:var(--ink); }
+    .swatch-hex { display:block; font-size:12px; color:var(--muted); margin-top:2px; }
+    .section-label { font-size:18px; font-weight:800; color:var(--ink); margin:0 0 12px; }
+  </style>
+</helmet>
+<div style="width:1160px; padding:64px; font-family:var(--font-body);">
+
+  <div style="margin-bottom:40px;">
+    <div style="font-size:12px; font-weight:800; letter-spacing:.08em; text-transform:uppercase; color:var(--brand-blue-dark); margin-bottom:10px;">DeutschAcademy Design System</div>
+    <h1 style="margin:0 0 12px; font-size:36px; font-weight:800; color:var(--ink); line-height:1.15;">Real tokens, not a new visual language</h1>
+    <p style="margin:0; color:var(--muted); font-size:16px; max-width:680px; line-height:1.6;">This canvas documents the component library that already ships on deutschacademy.com &mdash; pulled directly from <span class="mono" style="color:var(--ink);">src/styles/global.css</span> and <span class="mono" style="color:var(--ink);">src/styles/components.css</span>. Nothing here is invented; the live reference page at <span class="mono" style="color:var(--ink);">/design-system</span> renders these same values.</p>
+  </div>
+
+  <div style="margin-bottom:40px;">
+    <p class="section-label">Brand</p>
+    <div style="display:grid; grid-template-columns: repeat(5, 1fr); gap:20px;">
+      <div class="swatch"><div class="swatch-fill" style="background:var(--brand-blue);"></div><div class="swatch-label"><span class="swatch-name">--brand-blue</span><span class="swatch-hex">#0d9488</span></div></div>
+      <div class="swatch"><div class="swatch-fill" style="background:var(--brand-blue-dark);"></div><div class="swatch-label"><span class="swatch-name">--brand-blue-dark</span><span class="swatch-hex">#0f766e</span></div></div>
+      <div class="swatch"><div class="swatch-fill" style="background:var(--brand-blue-light);"></div><div class="swatch-label"><span class="swatch-name">--brand-blue-light</span><span class="swatch-hex">#5eead4</span></div></div>
+      <div class="swatch"><div class="swatch-fill" style="background:var(--accent);"></div><div class="swatch-label"><span class="swatch-name">--accent</span><span class="swatch-hex">#f97316</span></div></div>
+      <div class="swatch"><div class="swatch-fill" style="background:var(--accent-dark);"></div><div class="swatch-label"><span class="swatch-name">--accent-dark</span><span class="swatch-hex">#c2410c</span></div></div>
+    </div>
+  </div>
+
+  <div style="margin-bottom:40px;">
+    <p class="section-label">Semantic</p>
+    <div style="display:grid; grid-template-columns: repeat(4, 1fr); gap:20px;">
+      <div class="swatch"><div class="swatch-fill" style="background:var(--success);"></div><div class="swatch-label"><span class="swatch-name">--success</span><span class="swatch-hex">#047857</span></div></div>
+      <div class="swatch"><div class="swatch-fill" style="background:var(--warning);"></div><div class="swatch-label"><span class="swatch-name">--warning</span><span class="swatch-hex">#f2a900</span></div></div>
+      <div class="swatch"><div class="swatch-fill" style="background:var(--danger);"></div><div class="swatch-label"><span class="swatch-name">--danger</span><span class="swatch-hex">#c1462f</span></div></div>
+      <div class="swatch"><div class="swatch-fill" style="background:var(--info);"></div><div class="swatch-label"><span class="swatch-name">--info</span><span class="swatch-hex">#2563eb</span></div></div>
+    </div>
+  </div>
+
+  <div style="margin-bottom:40px;">
+    <p class="section-label">Gradients</p>
+    <div style="display:grid; grid-template-columns: repeat(2, 1fr); gap:20px;">
+      <div class="swatch"><div class="swatch-fill" style="background:var(--gradient-brand);"></div><div class="swatch-label"><span class="swatch-name">--gradient-brand</span><span class="swatch-hex">buttons, hero, stats band</span></div></div>
+      <div class="swatch"><div class="swatch-fill" style="background:var(--gradient-brand-soft);"></div><div class="swatch-label"><span class="swatch-name">--gradient-brand-soft</span><span class="swatch-hex">dashboard hero panel</span></div></div>
+    </div>
+  </div>
+
+  <div style="margin-bottom:40px;">
+    <p class="section-label">Teal scale</p>
+    <div style="display:grid; grid-template-columns: repeat(10, 1fr); gap:8px;">
+      <div><div style="height:56px; border-radius:8px; border:1px solid var(--border); background:var(--blue-50);"></div><div class="mono" style="font-size:10px; color:var(--muted); margin-top:6px;">50</div></div>
+      <div><div style="height:56px; border-radius:8px; border:1px solid var(--border); background:var(--blue-100);"></div><div class="mono" style="font-size:10px; color:var(--muted); margin-top:6px;">100</div></div>
+      <div><div style="height:56px; border-radius:8px; border:1px solid var(--border); background:var(--blue-200);"></div><div class="mono" style="font-size:10px; color:var(--muted); margin-top:6px;">200</div></div>
+      <div><div style="height:56px; border-radius:8px; border:1px solid var(--border); background:var(--blue-300);"></div><div class="mono" style="font-size:10px; color:var(--muted); margin-top:6px;">300</div></div>
+      <div><div style="height:56px; border-radius:8px; border:1px solid var(--border); background:var(--blue-400);"></div><div class="mono" style="font-size:10px; color:var(--muted); margin-top:6px;">400</div></div>
+      <div><div style="height:56px; border-radius:8px; background:var(--blue-500);"></div><div class="mono" style="font-size:10px; color:var(--muted); margin-top:6px;">500</div></div>
+      <div><div style="height:56px; border-radius:8px; background:var(--blue-600);"></div><div class="mono" style="font-size:10px; color:var(--muted); margin-top:6px;">600</div></div>
+      <div><div style="height:56px; border-radius:8px; background:var(--blue-700);"></div><div class="mono" style="font-size:10px; color:var(--muted); margin-top:6px;">700</div></div>
+      <div><div style="height:56px; border-radius:8px; background:var(--blue-800);"></div><div class="mono" style="font-size:10px; color:var(--muted); margin-top:6px;">800</div></div>
+      <div><div style="height:56px; border-radius:8px; background:var(--blue-900);"></div><div class="mono" style="font-size:10px; color:var(--muted); margin-top:6px;">900</div></div>
+    </div>
+  </div>
+
+  <div style="background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:20px 24px;">
+    <p style="margin:0; color:var(--muted); font-size:14px; line-height:1.6;">Typeface, buttons/badges/alerts/forms, and two real composed patterns from the site are on the next three artboards &mdash; Typography, Components, Patterns.</p>
+  </div>
+
+</div>
+</x-dc>
+</body>
+</html>

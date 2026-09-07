@@ -21,7 +21,7 @@ function whyHtml(question) {
     </div>`;
 }
 
-export function mountPracticeWorkspace(root, allQuestions, { onSessionUpdate } = {}) {
+export function mountPracticeWorkspace(root, allQuestions, { onSessionUpdate, onAnswer } = {}) {
   const hasTiers = allQuestions.some((q) => q.difficulty);
   const groups = hasTiers
     ? [...new Set(allQuestions.map((q) => q.difficulty))].sort(
@@ -169,12 +169,14 @@ export function mountPracticeWorkspace(root, allQuestions, { onSessionUpdate } =
             if (b !== btn) b.classList.add("akk-pill--dim");
           });
           root.querySelector("#akk-focus-feedback").innerHTML = `<span class="akk-feedback--correct">Richtig.</span>`;
+          if (onAnswer) onAnswer(true, question.id);
           updateSession();
           setTimeout(() => goToFocusIndex(state.focusIndex[state.group] + 1), CORRECT_ADVANCE_DELAY_MS);
         } else {
           p.wrongCount++;
           if (p.wrongCount >= WRONG_ATTEMPTS_BEFORE_REVEAL) {
             p.revealed = true;
+            if (onAnswer) onAnswer(false, question.id);
             updateSession();
             render();
           } else {
@@ -275,6 +277,7 @@ export function mountPracticeWorkspace(root, allQuestions, { onSessionUpdate } =
             });
             badge.textContent = "✓";
             badge.classList.add("akk-test-badge--solved", "akk-pill--pop");
+            if (onAnswer) onAnswer(true, question.id);
             updateSession();
             updateTestToolbar();
           } else {
@@ -288,6 +291,7 @@ export function mountPracticeWorkspace(root, allQuestions, { onSessionUpdate } =
               badge.classList.add("akk-test-badge--revealed", "akk-pill--pop");
               whyBox.innerHTML = whyHtml(question);
               whyBox.firstElementChild.classList.add("akk-anim-in");
+              if (onAnswer) onAnswer(false, question.id);
               updateSession();
             } else {
               btn.classList.add("akk-pill--incorrect", "akk-pill--shake");

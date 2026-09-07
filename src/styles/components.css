@@ -1,0 +1,147 @@
+/* Design-system component primitives.
+   Reusable, token-driven building blocks for new/refactored UI. These sit
+   alongside the existing page-specific classes (dash-*, price-*, quiz-*, …)
+   without replacing them — adopt incrementally. See /design-system. */
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  font-family: var(--font-body);
+  font-weight: var(--fw-bold);
+  font-size: var(--text-sm);
+  line-height: 1;
+  border-radius: var(--radius-pill);
+  padding: 12px 24px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: box-shadow var(--duration-base) var(--ease-standard),
+              transform var(--duration-base) var(--ease-standard),
+              background var(--duration-base) var(--ease-standard),
+              color var(--duration-base) var(--ease-standard);
+}
+.btn-sm { padding: 8px 16px; font-size: var(--text-xs); }
+.btn-lg { padding: 15px 30px; font-size: var(--text-base); }
+
+.btn-primary { background: var(--gradient-brand); color: #fff; }
+.btn-primary:hover { box-shadow: var(--shadow-cta); transform: translateY(-1px); }
+
+.btn-secondary { background: #fff; color: var(--ink); border-color: var(--border-strong); }
+.btn-secondary:hover { border-color: var(--brand-blue); color: var(--brand-blue-dark); }
+
+.btn-ghost { background: none; color: var(--brand-blue-dark); }
+.btn-ghost:hover { background: var(--blue-50); }
+
+.btn-danger { background: var(--danger); color: #fff; }
+.btn-danger:hover { box-shadow: 0 8px 20px rgba(193,70,47,.35); transform: translateY(-1px); }
+
+.btn:disabled, .btn[aria-disabled="true"] { opacity: .5; cursor: not-allowed; transform: none; box-shadow: none; }
+
+/* Cards */
+.card {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: var(--space-6);
+}
+.card-hover { transition: box-shadow var(--duration-base) var(--ease-standard), transform var(--duration-base) var(--ease-standard); }
+.card-hover:hover { box-shadow: var(--shadow-hover); transform: translateY(-2px); }
+.card-sm { padding: var(--space-4); border-radius: var(--radius-sm); }
+.card-lg { padding: var(--space-8); border-radius: var(--radius-lg); }
+
+/* Badges / pills */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-body);
+  font-weight: var(--fw-bold);
+  font-size: var(--text-xs);
+  line-height: 1;
+  padding: 6px 12px;
+  border-radius: var(--radius-pill);
+  border: 1px solid transparent;
+  white-space: nowrap;
+}
+.badge-brand   { background: var(--blue-50); color: var(--brand-blue-dark); border-color: var(--blue-200); }
+.badge-neutral { background: var(--surface); color: var(--ink); border-color: var(--border); }
+.badge-success { background: var(--success-soft); color: var(--success); border-color: var(--success-border); }
+.badge-warning { background: var(--warning-soft); color: #92660a; border-color: var(--warning-border); }
+.badge-danger  { background: var(--danger-soft); color: var(--danger); border-color: var(--danger-border); }
+.badge-info    { background: var(--info-soft); color: var(--info); border-color: var(--info-border); }
+
+/* Alerts / callouts — semantic feedback boxes (e.g. quiz right/wrong states) */
+.alert {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  padding: var(--space-4) var(--space-5);
+  font-size: var(--text-sm);
+  line-height: 1.5;
+}
+.alert p, .alert div { margin: 0; }
+.alert-title { font-weight: var(--fw-bold); margin-bottom: 2px; }
+.alert-success { background: var(--success-soft); border-color: var(--success-border); color: var(--success); }
+.alert-warning { background: var(--warning-soft); border-color: var(--warning-border); color: #92660a; }
+.alert-danger  { background: var(--danger-soft); border-color: var(--danger-border); color: var(--danger); }
+.alert-info    { background: var(--info-soft); border-color: var(--info-border); color: var(--info); }
+
+/* Form controls */
+.field { display: flex; flex-direction: column; gap: 6px; }
+.field label { font-size: var(--text-sm); font-weight: var(--fw-semibold); color: var(--ink); }
+.field-hint { font-size: var(--text-xs); color: var(--muted); }
+
+.input, .textarea, .select {
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  color: var(--ink);
+  background: #fff;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  padding: 10px 14px;
+  width: 100%;
+  transition: border-color var(--duration-base) var(--ease-standard), box-shadow var(--duration-base) var(--ease-standard);
+}
+.textarea { resize: vertical; min-height: 96px; }
+.input:focus, .textarea:focus, .select:focus {
+  outline: none;
+  border-color: var(--brand-blue);
+  box-shadow: 0 0 0 3px var(--blue-100);
+}
+.input:disabled, .textarea:disabled, .select:disabled { background: var(--surface); color: var(--muted-soft); cursor: not-allowed; }
+
+/* Tabs / segmented control (generalized from .testimonial-switcher) */
+.tabs {
+  display: inline-flex;
+  gap: 4px;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  padding: 3px;
+}
+.tab-btn {
+  border: none;
+  background: none;
+  padding: 7px 16px;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-body);
+  font-weight: var(--fw-semibold);
+  font-size: var(--text-sm);
+  color: var(--muted);
+  cursor: pointer;
+  transition: background var(--duration-fast) ease, color var(--duration-fast) ease;
+}
+.tab-btn:hover { color: var(--ink); }
+.tab-btn.active { background: var(--gradient-brand); color: #fff; }
+
+/* Progress bar (generalized from .dash-progress-*) */
+.progress-track { height: 10px; border-radius: var(--radius-pill); background: var(--blue-100); overflow: hidden; }
+.progress-track-sm { height: 6px; }
+.progress-fill { display: block; height: 100%; border-radius: var(--radius-pill); background: var(--gradient-brand); transition: width var(--duration-slow) ease; }

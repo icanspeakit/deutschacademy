@@ -31,6 +31,7 @@ import grammatik from "../../data/grammatik.json";
   <script type="application/json" id="topics-data" set:html={JSON.stringify(grammatik)}></script>
   <script type="module">
     import { mountQuiz } from "../../lib/quiz.js";
+    import { recordAttempt } from "../../lib/progress.js";
     const topics = JSON.parse(document.getElementById("topics-data").textContent);
     const tabsEl = document.getElementById("topic-tabs");
     const introEl = document.getElementById("topic-intro");
@@ -44,7 +45,10 @@ import grammatik from "../../data/grammatik.json";
       introEl.textContent = topic.intro;
       crosslinkEl.hidden = topic.id !== "passiv";
       crosslinkAkkusativEl.hidden = topic.id !== "akkusativ";
-      mountQuiz(quizRoot, topic.questions, { mode: "text" });
+      mountQuiz(quizRoot, topic.questions, {
+        mode: "text",
+        onAnswer: (ok) => recordAttempt({ skill: "grammatik", correct: ok }),
+      });
     }
 
     [...tabsEl.children].forEach((btn, i) => {

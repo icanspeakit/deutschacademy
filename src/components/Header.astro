@@ -3,7 +3,20 @@
 <header class="site-header">
   <div class="container header-row">
     <a href="#top" class="brand"><img src="/assets/logo.png" alt="Deutsch Academy" /></a>
-    <nav class="main-nav">
+    <button
+      class="nav-toggle"
+      type="button"
+      aria-expanded="false"
+      aria-controls="main-nav"
+      aria-label="Menü öffnen"
+    >
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+        <line x1="3" y1="6" x2="21" y2="6"></line>
+        <line x1="3" y1="12" x2="21" y2="12"></line>
+        <line x1="3" y1="18" x2="21" y2="18"></line>
+      </svg>
+    </button>
+    <nav class="main-nav" id="main-nav">
       <a href="#top">Home</a>
       <a href="#about">About us</a>
       <a href="#classes">Course Structure</a>
@@ -14,3 +27,20 @@
     <a href="#contact" class="btn-cta">Contact Us</a>
   </div>
 </header>
+
+<script>
+  const toggle = document.querySelector(".nav-toggle");
+  const nav = document.getElementById("main-nav");
+
+  toggle?.addEventListener("click", () => {
+    const isOpen = nav?.classList.toggle("main-nav--open");
+    toggle.setAttribute("aria-expanded", String(!!isOpen));
+  });
+
+  nav?.addEventListener("click", (e) => {
+    if ((e.target as HTMLElement).tagName === "A") {
+      nav.classList.remove("main-nav--open");
+      toggle?.setAttribute("aria-expanded", "false");
+    }
+  });
+</script>

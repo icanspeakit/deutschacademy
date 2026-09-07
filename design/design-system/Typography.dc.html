@@ -1,0 +1,59 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&display=swap">
+  <style>
+    :root{
+      --ink:#1a2230; --muted:#4b5768; --border:#e7e9ee; --brand-blue-dark:#0f766e;
+      --font-body: "Sora", "Segoe UI", Arial, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body { margin:0; font-family: var(--font-body); color: var(--ink); background:#fff; }
+    .mono { font-family: "SFMono-Regular", Consolas, monospace; }
+    .row { display:flex; align-items:baseline; gap:24px; padding:16px 0; border-bottom:1px solid var(--border); }
+    .row:last-child { border-bottom:none; }
+    .row-label { width:150px; flex-shrink:0; font-size:12px; color:var(--muted); }
+    .sample { margin:0; color:var(--ink); }
+    .section-label { font-size:18px; font-weight:800; color:var(--ink); margin:0 0 12px; }
+  </style>
+</helmet>
+<div style="width:1160px; padding:64px; font-family:var(--font-body);">
+
+  <div style="margin-bottom:40px;">
+    <div style="font-size:12px; font-weight:800; letter-spacing:.08em; text-transform:uppercase; color:var(--brand-blue-dark); margin-bottom:10px;">DeutschAcademy Design System</div>
+    <h1 style="margin:0 0 12px; font-size:36px; font-weight:800; color:var(--ink);">Typography</h1>
+    <p style="margin:0; color:var(--muted); font-size:16px; max-width:680px; line-height:1.6;">Sora is the only typeface on the site &mdash; body copy and display headings both use it, at different weights. Loaded from Google Fonts, weights 400&ndash;800.</p>
+  </div>
+
+  <p class="section-label">Scale</p>
+  <div style="margin-bottom:40px;">
+    <div class="row"><div class="row-label mono">--text-5xl<br>44.8px</div><p class="sample" style="font-size:44.8px; font-weight:700;">Ich lerne Deutsch</p></div>
+    <div class="row"><div class="row-label mono">--text-4xl<br>36px</div><p class="sample" style="font-size:36px; font-weight:700;">Ich lerne Deutsch</p></div>
+    <div class="row"><div class="row-label mono">--text-3xl<br>30px</div><p class="sample" style="font-size:30px; font-weight:700;">Ich lerne Deutsch</p></div>
+    <div class="row"><div class="row-label mono">--text-2xl<br>24px</div><p class="sample" style="font-size:24px; font-weight:700;">Ich lerne Deutsch</p></div>
+    <div class="row"><div class="row-label mono">--text-xl<br>20px</div><p class="sample" style="font-size:20px; font-weight:700;">Ich lerne Deutsch</p></div>
+    <div class="row"><div class="row-label mono">--text-lg<br>18px</div><p class="sample" style="font-size:18px; font-weight:700;">Ich lerne Deutsch</p></div>
+    <div class="row"><div class="row-label mono">--text-base<br>16px</div><p class="sample" style="font-size:16px; font-weight:700;">Ich lerne Deutsch</p></div>
+    <div class="row"><div class="row-label mono">--text-sm<br>14px</div><p class="sample" style="font-size:14px; font-weight:700;">Ich lerne Deutsch</p></div>
+    <div class="row"><div class="row-label mono">--text-xs<br>12px</div><p class="sample" style="font-size:12px; font-weight:700;">Ich lerne Deutsch</p></div>
+  </div>
+
+  <p class="section-label">Weight</p>
+  <div>
+    <div class="row"><div class="row-label mono">--fw-regular · 400</div><p class="sample" style="font-size:20px; font-weight:400;">Ich lerne Deutsch</p></div>
+    <div class="row"><div class="row-label mono">--fw-medium · 500</div><p class="sample" style="font-size:20px; font-weight:500;">Ich lerne Deutsch</p></div>
+    <div class="row"><div class="row-label mono">--fw-semibold · 600</div><p class="sample" style="font-size:20px; font-weight:600;">Ich lerne Deutsch</p></div>
+    <div class="row"><div class="row-label mono">--fw-bold · 700</div><p class="sample" style="font-size:20px; font-weight:700;">Ich lerne Deutsch</p></div>
+    <div class="row"><div class="row-label mono">--fw-extrabold · 800</div><p class="sample" style="font-size:20px; font-weight:800;">Ich lerne Deutsch</p></div>
+  </div>
+
+</div>
+</x-dc>
+</body>
+</html>

@@ -1,5 +1,5 @@
 // Shared quiz engine: mode "text" (typed answer) or "choice" (buttons).
-export function mountQuiz(root, questions, { mode = "text", shuffle = true, onDone } = {}) {
+export function mountQuiz(root, questions, { mode = "text", shuffle = true, onDone, onAnswer } = {}) {
   let order = questions.map((_, i) => i);
   if (shuffle) order = order.sort(() => Math.random() - 0.5);
   let pos = 0;
@@ -61,6 +61,7 @@ export function mountQuiz(root, questions, { mode = "text", shuffle = true, onDo
         const accepted = [q.answer, ...(q.alt || [])].map(norm);
         const ok = accepted.includes(norm(given));
         if (ok) score++;
+        if (onAnswer) onAnswer(ok);
         feedback.innerHTML = ok
           ? `<span class="quiz-ok">✓ Richtig!</span>`
           : `<span class="quiz-no">✗ Nicht ganz — richtig: <strong>${q.answer}</strong></span>`;

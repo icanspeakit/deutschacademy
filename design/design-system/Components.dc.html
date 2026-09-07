@@ -1,0 +1,167 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&display=swap">
+  <style>
+    :root{
+      --brand-blue:#0d9488; --brand-blue-dark:#0f766e;
+      --blue-50:#f0fdfa; --blue-100:#ccfbf1; --blue-200:#99f6e4;
+      --ink:#1a2230; --muted:#4b5768; --border:#e7e9ee; --border-strong:#cbd2db; --surface:#f7f8fa;
+      --success:#047857; --success-soft:#ecfdf5; --success-border:#6ee7b7;
+      --danger:#c1462f; --danger-soft:#fdeeea; --danger-border:#f3c8bd;
+      --warning:#f2a900; --warning-soft:#fff7e0; --warning-border:#f6dd99;
+      --info:#2563eb; --info-soft:#eff6ff; --info-border:#bfdbfe;
+      --gradient-brand: linear-gradient(135deg, #2dd4bf, var(--brand-blue));
+      --font-body: "Sora", "Segoe UI", Arial, sans-serif;
+      --radius-sm:10px; --radius:14px; --radius-lg:20px; --radius-pill:999px;
+      --shadow-hover: 0 12px 28px rgba(28,43,63,.10);
+    }
+    * { box-sizing: border-box; }
+    body { margin:0; font-family: var(--font-body); color: var(--ink); background:#fff; }
+    a { color: var(--brand-blue-dark); text-decoration: none; } a:hover { color: var(--brand-blue); }
+
+    .section-label { font-size:18px; font-weight:800; color:var(--ink); margin:0 0 4px; }
+    .section-desc { margin:0 0 16px; color:var(--muted); font-size:13px; }
+
+    .btn { display:inline-flex; align-items:center; justify-content:center; gap:8px; font-family:var(--font-body); font-weight:700; font-size:14px; line-height:1; border-radius:var(--radius-pill); padding:12px 24px; border:1px solid transparent; }
+    .btn-sm{padding:8px 16px;font-size:12px;} .btn-lg{padding:15px 30px;font-size:16px;}
+    .btn-primary{background:var(--gradient-brand);color:#fff;}
+    .btn-secondary{background:#fff;color:var(--ink);border-color:var(--border-strong);}
+    .btn-ghost{background:none;color:var(--brand-blue-dark);}
+    .btn-danger{background:var(--danger);color:#fff;}
+    .btn-disabled{opacity:.5;}
+
+    .badge{display:inline-flex;align-items:center;gap:6px;font-family:var(--font-body);font-weight:700;font-size:12px;line-height:1;padding:6px 12px;border-radius:var(--radius-pill);border:1px solid transparent;}
+    .badge-brand{background:var(--blue-50);color:var(--brand-blue-dark);border-color:var(--blue-200);}
+    .badge-neutral{background:var(--surface);color:var(--ink);border-color:var(--border);}
+    .badge-success{background:var(--success-soft);color:var(--success);border-color:var(--success-border);}
+    .badge-warning{background:var(--warning-soft);color:#92660a;border-color:var(--warning-border);}
+    .badge-danger{background:var(--danger-soft);color:var(--danger);border-color:var(--danger-border);}
+    .badge-info{background:var(--info-soft);color:var(--info);border-color:var(--info-border);}
+
+    .alert{display:flex;flex-direction:column;gap:2px;border-radius:var(--radius);border:1px solid var(--border);background:var(--surface);padding:14px 18px;font-size:13px;line-height:1.5;}
+    .alert-title{font-weight:700;}
+    .alert-success{background:var(--success-soft);border-color:var(--success-border);color:var(--success);}
+    .alert-warning{background:var(--warning-soft);border-color:var(--warning-border);color:#92660a;}
+    .alert-danger{background:var(--danger-soft);border-color:var(--danger-border);color:var(--danger);}
+    .alert-info{background:var(--info-soft);border-color:var(--info-border);color:var(--info);}
+
+    label { font-size:13px; font-weight:600; color:var(--ink); display:block; margin-bottom:6px; }
+    .hint { font-size:11px; color:var(--muted); margin-top:4px; }
+    .input, .select { font-family:var(--font-body); font-size:13px; color:var(--ink); background:#fff; border:1px solid var(--border-strong); border-radius:var(--radius-sm); padding:10px 14px; width:100%; }
+
+    .tabs{display:inline-flex;gap:4px;background:#fff;border:1px solid var(--border);border-radius:var(--radius-pill);padding:3px;}
+    .tab-btn{border:none;background:none;padding:7px 16px;border-radius:var(--radius-pill);font-family:var(--font-body);font-weight:600;font-size:13px;color:var(--muted);}
+    .tab-btn.active{background:var(--gradient-brand);color:#fff;}
+
+    .progress-track{height:10px;border-radius:var(--radius-pill);background:var(--blue-100);overflow:hidden;}
+    .progress-track-sm{height:6px;}
+    .progress-fill{display:block;height:100%;border-radius:var(--radius-pill);background:var(--gradient-brand);}
+
+    .card{background:#fff;border:1px solid var(--border);border-radius:var(--radius);padding:20px;}
+    .card-hover{box-shadow:var(--shadow-hover);}
+    .card-sm{padding:14px;border-radius:var(--radius-sm);}
+    .card-lg{padding:28px;border-radius:var(--radius-lg);}
+  </style>
+</helmet>
+<div style="width:1160px; padding:64px; font-family:var(--font-body);">
+
+  <div style="margin-bottom:36px;">
+    <div style="font-size:12px; font-weight:800; letter-spacing:.08em; text-transform:uppercase; color:var(--brand-blue-dark); margin-bottom:10px;">DeutschAcademy Design System</div>
+    <h1 style="margin:0 0 12px; font-size:36px; font-weight:800; color:var(--ink);">Components</h1>
+    <p style="margin:0; color:var(--muted); font-size:16px; max-width:680px; line-height:1.6;">Reusable primitives from <span style="font-family:monospace; color:var(--ink);">src/styles/components.css</span>. Existing pages keep their own bespoke classes (dash-*, quiz-*) &mdash; these are the shared vocabulary for new or refactored work.</p>
+  </div>
+
+  <div style="margin-bottom:32px;">
+    <p class="section-label">Buttons</p>
+    <p class="section-desc">.btn-primary / secondary / ghost / danger, three sizes.</p>
+    <div style="display:flex; align-items:center; gap:14px; flex-wrap:wrap; margin-bottom:14px;">
+      <div class="btn btn-primary">Primary</div>
+      <div class="btn btn-secondary">Secondary</div>
+      <div class="btn btn-ghost">Ghost</div>
+      <div class="btn btn-danger">Danger</div>
+      <div class="btn btn-primary btn-disabled">Disabled</div>
+    </div>
+    <div style="display:flex; align-items:center; gap:14px;">
+      <div class="btn btn-primary btn-sm">Small</div>
+      <div class="btn btn-primary">Base</div>
+      <div class="btn btn-primary btn-lg">Large</div>
+    </div>
+  </div>
+
+  <div style="display:grid; grid-template-columns: 1fr 1fr; gap:32px; margin-bottom:32px;">
+    <div>
+      <p class="section-label">Badges</p>
+      <p class="section-desc">Status &amp; labeling pills.</p>
+      <div style="display:flex; gap:10px; flex-wrap:wrap;">
+        <span class="badge badge-brand">Brand</span>
+        <span class="badge badge-neutral">Neutral</span>
+        <span class="badge badge-success">Richtig</span>
+        <span class="badge badge-warning">In Arbeit</span>
+        <span class="badge badge-danger">Falsch</span>
+        <span class="badge badge-info">Info</span>
+      </div>
+    </div>
+    <div>
+      <div style="margin-bottom:24px;">
+        <p class="section-label">Tabs</p>
+        <p class="section-desc">Segmented pill control.</p>
+        <div class="tabs">
+          <div class="tab-btn active">Karten</div>
+          <div class="tab-btn">Liste</div>
+          <div class="tab-btn">Statistik</div>
+        </div>
+      </div>
+      <div>
+        <p class="section-label">Progress</p>
+        <p class="section-desc">Track / fill pattern.</p>
+        <div style="display:flex; flex-direction:column; gap:10px;">
+          <div class="progress-track"><div class="progress-fill" style="width:64%;"></div></div>
+          <div class="progress-track progress-track-sm"><div class="progress-fill" style="width:40%;"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="display:grid; grid-template-columns: 1fr 1fr; gap:32px; margin-bottom:32px;">
+    <div>
+      <p class="section-label">Alerts</p>
+      <p class="section-desc">Semantic feedback boxes.</p>
+      <div style="display:flex; flex-direction:column; gap:10px;">
+        <div class="alert alert-success"><span class="alert-title">Richtig!</span><span>Der Nominativ passt hier.</span></div>
+        <div class="alert alert-danger"><span class="alert-title">Nicht ganz.</span><span>Versuch es mit dem Akkusativ.</span></div>
+        <div class="alert alert-warning"><span class="alert-title">Fast geschafft.</span><span>Noch 2 Fragen übrig.</span></div>
+        <div class="alert alert-info"><span class="alert-title">Tipp</span><span>Trennbare Verben stehen am Satzende.</span></div>
+      </div>
+    </div>
+    <div>
+      <p class="section-label">Forms</p>
+      <p class="section-desc">Input, textarea, select.</p>
+      <div style="display:flex; flex-direction:column; gap:14px;">
+        <div><label>Name</label><input class="input" type="text" value="Anna Müller" readonly></div>
+        <div><label>Niveau</label><select class="select"><option>A1</option></select></div>
+        <div><label>Nachricht</label><input class="input" type="text" placeholder="Deine Nachricht…"><div class="hint">Optional</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <p class="section-label">Cards</p>
+    <p class="section-desc">Generic surface, with size &amp; hover modifiers.</p>
+    <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:20px;">
+      <div class="card card-hover"><strong style="font-size:14px;">Grammatik-Quiz</strong><p style="color:var(--muted); font-size:13px; margin:8px 0 0;">Lückentext-Übungen zu Akkusativ, Dativ, Passiv.</p></div>
+      <div class="card card-sm"><strong style="font-size:14px;">Card sm</strong></div>
+      <div class="card card-lg"><strong style="font-size:14px;">Card lg</strong></div>
+    </div>
+  </div>
+
+</div>
+</x-dc>
+</body>
+</html>

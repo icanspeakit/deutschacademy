@@ -39,6 +39,7 @@ const totalQuestions = tasks.reduce((sum, t) => sum + t.questions.length, 0);
   <script type="application/json" id="mock-tasks-data" set:html={JSON.stringify(tasks)}></script>
   <script type="module">
     import { mountQuiz } from "../../../lib/quiz.js";
+    import { recordAttempt } from "../../../lib/progress.js";
 
     const tasks = JSON.parse(document.getElementById("mock-tasks-data").textContent);
     const root = document.getElementById("mock-test-root");
@@ -66,6 +67,7 @@ const totalQuestions = tasks.reduce((sum, t) => sum + t.questions.length, 0);
       mountQuiz(quizEl, t.questions, {
         mode: "choice",
         shuffle: false,
+        onAnswer: (ok) => recordAttempt({ skill: "pruefungen", correct: ok }),
         onDone: (score, total) => {
           results.push({ title: t.title, score, total });
           quizEl.innerHTML = `

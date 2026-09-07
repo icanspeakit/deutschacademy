@@ -118,6 +118,7 @@ const total = akkusativQuestions.filter((q) => q.difficulty === "leicht").length
   <script type="application/json" id="akk-data" set:html={JSON.stringify(akkusativQuestions)}></script>
   <script type="module">
     import { mountPracticeWorkspace } from "../../../lib/practiceWorkspace.js";
+    import { recordAttempt } from "../../../lib/progress.js";
 
     const questions = JSON.parse(document.getElementById("akk-data").textContent);
     const exerciseRoot = document.getElementById("akk-exercise-root");
@@ -134,7 +135,10 @@ const total = akkusativQuestions.filter((q) => q.difficulty === "leicht").length
       statsText.textContent = `${answered} von ${total} beantwortet · ${correct} richtig · ${hints} Hinweise`;
     }
 
-    const practice = mountPracticeWorkspace(exerciseRoot, questions, { onSessionUpdate });
+    const practice = mountPracticeWorkspace(exerciseRoot, questions, {
+      onSessionUpdate,
+      onAnswer: (ok) => recordAttempt({ skill: "grammatik", correct: ok }),
+    });
 
     const tabUebung = document.getElementById("akk-tab-uebung");
     const tabRegel = document.getElementById("akk-tab-regel");

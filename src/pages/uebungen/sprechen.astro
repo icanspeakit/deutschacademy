@@ -16,6 +16,8 @@ import sprechen from "../../data/sprechen.json";
   </main>
   <script type="application/json" id="sprechen-data" set:html={JSON.stringify(sprechen)}></script>
   <script type="module">
+    import { recordSession } from "../../lib/progress.js";
+
     const prompts = JSON.parse(document.getElementById("sprechen-data").textContent);
     const root = document.getElementById("prompt-root");
     let idx = 0;
@@ -60,6 +62,7 @@ import sprechen from "../../data/sprechen.json";
             stopTimer();
             timerEl.textContent = "Zeit um!";
             e.target.disabled = false;
+            recordSession("sprechen");
           }
         }, 1000);
       });

@@ -84,7 +84,7 @@
   gap: 6px;
   flex-wrap: wrap;
 }
-.akk-breadcrumb a { color: #c7d2e0; text-decoration: none; }
+.akk-breadcrumb a { color: #c7d2e0; text-decoration: none; display: inline-block; padding: 10px 2px; margin: -10px -2px; }
 .akk-breadcrumb a:hover { color: #fff; text-decoration: underline; }
 .akk-crumb-sep { color: #5b7398; }
 .akk-crumb-current { color: #fff; font-weight: 600; }
@@ -128,7 +128,7 @@
   background: transparent;
   color: var(--akk-muted);
   cursor: pointer;
-  min-height: 40px;
+  min-height: 44px;
 }
 .akk-diff-btn.active { background: var(--akk-amber); color: var(--akk-ink); }
 .akk-diff-btn:hover:not(.active) { color: var(--akk-ink); }
@@ -177,12 +177,13 @@
   font-family: var(--akk-font);
   font-weight: 500;
   font-size: 0.85rem;
-  padding: 6px 4px;
+  padding: 12px 4px;
+  margin: -6px -4px;
   border: none;
   background: none;
   color: var(--akk-muted);
   cursor: pointer;
-  min-height: 32px;
+  min-height: 44px;
 }
 .akk-mode-btn.active { color: var(--akk-ink); font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
 .akk-mode-sep { color: var(--akk-line-strong); }
@@ -329,6 +330,8 @@
   border-collapse: collapse;
   margin-bottom: 20px;
   font-size: 0.92rem;
+  display: block;
+  overflow-x: auto;
 }
 .akk-decl-table th, .akk-decl-table td {
   border: 1px solid var(--akk-line);

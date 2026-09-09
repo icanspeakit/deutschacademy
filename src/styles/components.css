@@ -125,6 +125,8 @@
   border: 1px solid var(--border);
   border-radius: var(--radius-pill);
   padding: 3px;
+  max-width: 100%;
+  overflow-x: auto;
 }
 .tab-btn {
   border: none;
@@ -136,6 +138,8 @@
   font-size: var(--text-sm);
   color: var(--muted);
   cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
   transition: background var(--duration-fast) ease, color var(--duration-fast) ease;
 }
 .tab-btn:hover { color: var(--ink); }

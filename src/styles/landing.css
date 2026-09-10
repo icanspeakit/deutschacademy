@@ -253,7 +253,7 @@
 .lp-progress-note { font-size: 11px; color: var(--muted-soft); }
 .lp-mini-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
 .lp-mini-card { border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
-.lp-mini-card img { width: 100%; height: 56px; object-fit: cover; }
+.lp-mini-card img { width: 100%; height: 56px; object-fit: cover; object-position: top; }
 .lp-mini-card-body { padding: 12px; display: flex; flex-direction: column; gap: 7px; }
 .lp-mini-card-body span { font-size: 12.5px; font-weight: 700; color: var(--ink); }
 .lp-mini-bar { height: 6px; border-radius: var(--radius-pill); background: var(--blue-100); }

@@ -117,6 +117,7 @@
   margin: 0 auto;
 }
 .quiz-progress { font-size: .85rem; color: var(--muted); font-weight: 600; margin-bottom: 14px; }
+.quiz-progress--split { display: flex; justify-content: space-between; gap: 12px; }
 .quiz-prompt { font-size: 1.15rem; line-height: 1.5; margin-bottom: 20px; }
 .quiz-prompt em { color: var(--brand-blue-dark); font-style: normal; font-weight: 600; }
 .quiz-form { display: flex; gap: 10px; }
@@ -169,8 +170,6 @@
 
 /* Flashcards */
 .fc-wrap { max-width: 480px; margin: 0 auto; text-align: center; }
-.fc-lang-picker { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-bottom: 16px; }
-.fc-lang-btn { padding: 6px 14px; font-size: .85rem; }
 .fc-progress { font-size: .85rem; color: var(--muted); font-weight: 600; margin-bottom: 12px; }
 .fc-card {
   perspective: 1200px;
@@ -191,34 +190,25 @@
   background: #fff;
   overflow-y: auto;
 }
-.fc-face--front { background: var(--gradient-brand); color: #fff; font-weight: 700; transform: rotateY(0deg); }
+.fc-face--front { transform: rotateY(0deg); }
 .fc-face--back { transform: rotateY(180deg); }
 .fc-card--flipped .fc-face--front { transform: rotateY(-180deg); }
 .fc-card--flipped .fc-face--back { transform: rotateY(0deg); }
 .fc-back-content { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+.fc-eyebrow { font-size: .78rem; font-weight: 700; letter-spacing: .06em; color: var(--brand-blue-dark); text-transform: uppercase; }
+.fc-phrase { font-size: 1.4rem; font-weight: 700; color: var(--ink); }
 .fc-back-text--rtl { font-size: 1.3rem; font-family: "Noto Sans Arabic", "Segoe UI", Tahoma, Arial, sans-serif; }
-.fc-note { font-size: .85rem; color: var(--muted); line-height: 1.4; }
-.fc-controls { display: flex; gap: 10px; justify-content: center; margin-top: 20px; }
-
-/* Learn mode */
-.lrn-progress { display: flex; align-items: center; gap: 10px; margin: 0 0 20px; }
-.lrn-progress-dot {
-  flex: 0 0 auto; width: 28px; height: 28px; border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  font-size: .8rem; font-weight: 700;
+.fc-note { font-size: .85rem; color: var(--muted); line-height: 1.4; font-weight: 400; }
+.fc-controls { display: flex; align-items: center; justify-content: space-between; margin-top: 20px; }
+.fc-link {
+  background: none; border: none; padding: 4px; cursor: pointer;
+  font-family: var(--font-body); font-size: .95rem; font-weight: 600; color: var(--muted);
 }
-.lrn-progress-dot--start { background: var(--brand-blue-dark); color: #fff; }
-.lrn-progress-dot--end { background: var(--surface); color: var(--muted); border: 1px solid var(--border); }
-.lrn-progress-track { flex: 1; height: 8px; background: var(--surface); border-radius: 999px; overflow: hidden; }
-.lrn-progress-fill { display: block; height: 100%; background: var(--gradient-brand); border-radius: 999px; transition: width .3s ease; }
-.lrn-card {
-  background: #fff; border: 1px solid var(--border); border-radius: var(--radius);
-  min-height: 260px; display: flex; align-items: center; justify-content: center;
-  padding: 32px; text-align: center; font-size: 1.3rem; line-height: 1.5; cursor: pointer;
-}
-.lrn-answer { font-weight: 700; color: var(--brand-blue-dark); }
-.lrn-controls { display: flex; gap: 12px; justify-content: center; margin-top: 20px; }
-.lrn-btn--no { border-color: #c1462f; color: #c1462f; }
+.fc-link:hover { color: var(--ink); }
+.fc-link--primary { color: var(--brand-blue-dark); }
+.fc-link--primary:hover { color: var(--brand-blue-dark); }
+.fc-link--ghost { display: block; margin: 14px auto 0; font-size: .85rem; font-weight: 400; color: var(--muted); text-decoration: underline; }
+.fc-kbd-hint { font-size: .78rem; color: var(--muted-soft); margin-top: 14px; }
 
 /* Speaking prompts */
 .prompt-card { background: #fff; border: 1px solid var(--border); border-radius: var(--radius); padding: 28px; max-width: 640px; margin: 0 auto; }

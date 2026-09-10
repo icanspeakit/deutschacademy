@@ -1,9 +1,10 @@
 // Shared quiz engine: mode "text" (typed answer) or "choice" (buttons).
-export function mountQuiz(root, questions, { mode = "text", shuffle = true, onDone, onAnswer } = {}) {
+export function mountQuiz(root, questions, { mode = "text", shuffle = true, onDone, onAnswer, showWrongCount = false } = {}) {
   let order = questions.map((_, i) => i);
   if (shuffle) order = order.sort(() => Math.random() - 0.5);
   let pos = 0;
   let score = 0;
+  let wrong = 0;
   const total = order.length;
 
   function render() {
@@ -36,8 +37,11 @@ export function mountQuiz(root, questions, { mode = "text", shuffle = true, onDo
           <button type="submit" class="quiz-btn quiz-btn--primary">Prüfen</button>
         </form>`;
     }
+    const progress = showWrongCount
+      ? `<div class="quiz-progress quiz-progress--split"><span>Frage ${pos + 1} / ${total}</span><span>${score} richtig · ${wrong} falsch</span></div>`
+      : `<div class="quiz-progress">Frage ${pos + 1} / ${total} · ${score} richtig</div>`;
     root.innerHTML = `
-      <div class="quiz-progress">Frage ${pos + 1} / ${total} · ${score} richtig</div>
+      ${progress}
       <div class="quiz-prompt">${q.prompt}</div>
       ${inputHtml}
       <div class="quiz-feedback" id="quiz-feedback"></div>`;
@@ -57,11 +61,19 @@ export function mountQuiz(root, questions, { mode = "text", shuffle = true, onDo
       if (chosenBtn) chosenBtn.classList.add("quiz-choice--pending");
 
       setTimeout(() => {
-        const norm = (s) => String(s).trim().toLowerCase();
+        const norm = (s) =>
+          String(s)
+            .trim()
+            .toLowerCase()
+            .replace(/ä/g, "ae")
+            .replace(/ö/g, "oe")
+            .replace(/ü/g, "ue")
+            .replace(/ß/g, "ss");
         const accepted = [q.answer, ...(q.alt || [])].map(norm);
         const ok = accepted.includes(norm(given));
         if (ok) score++;
-        if (onAnswer) onAnswer(ok);
+        else wrong++;
+        if (onAnswer) onAnswer(ok, q);
         feedback.innerHTML = ok
           ? `<span class="quiz-ok">✓ Richtig!</span>`
           : `<span class="quiz-no">✗ Nicht ganz — richtig: <strong>${q.answer}</strong></span>`;

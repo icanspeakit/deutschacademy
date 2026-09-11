@@ -117,10 +117,42 @@ export function mountWortschatzApp(els, cards, languages, { onAnswer, onSessionS
     render();
   }
 
+  // Patch the affected row's classes in place instead of calling render(): renderList()
+  // rebuilds the whole .vt-content node, which replays the tab-swap fade/slide animation
+  // across the entire list. Picking a word should only animate that word's checkmark dot.
+  function updateListRow(i) {
+    const row = contentEl.querySelector(`.vt-list-row[data-i="${i}"]`);
+    if (!row) return;
+    const selected = !!state.selected[i];
+    row.classList.toggle("is-selected", selected);
+    const box = row.querySelector(".vt-list-box");
+    if (!box) return;
+    box.classList.remove("is-selected");
+    if (selected) {
+      void box.offsetWidth;
+      box.classList.add("is-selected");
+    }
+  }
+
+  function updateSelBar() {
+    const selIds = selectedIds();
+    const label = contentEl.querySelector(".vt-sel-label");
+    if (label) {
+      label.textContent = selIds.length
+        ? `${selIds.length} von ${cards.length} Wörtern ausgewählt`
+        : "Tippe Wörter an, um eine eigene Runde zusammenzustellen.";
+    }
+    const startBtn = contentEl.querySelector("#vt-sel-start");
+    if (startBtn) startBtn.classList.toggle("is-active", !!selIds.length);
+    const allBtn = contentEl.querySelector("#vt-sel-all");
+    if (allBtn) allBtn.textContent = selIds.length === cards.length ? "Auswahl aufheben" : "Alle auswählen";
+  }
+
   function toggleSelect(i) {
     if (state.selected[i]) delete state.selected[i];
     else state.selected[i] = true;
-    render();
+    updateListRow(i);
+    updateSelBar();
   }
 
   function jumpTo(i) {
@@ -140,13 +172,19 @@ export function mountWortschatzApp(els, cards, languages, { onAnswer, onSessionS
     render();
   }
 
-  function clearSelection() { state.selected = {}; render(); }
+  function clearSelection() {
+    const prev = selectedIds();
+    state.selected = {};
+    prev.forEach(updateListRow);
+    updateSelBar();
+  }
 
   function selectAll() {
     const all = Object.keys(state.selected).length === cards.length;
     state.selected = {};
     if (!all) cards.forEach((_, i) => (state.selected[i] = true));
-    render();
+    cards.forEach((_, i) => updateListRow(i));
+    updateSelBar();
   }
 
   function selectedIds() {

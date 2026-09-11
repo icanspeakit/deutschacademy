@@ -78,7 +78,15 @@ export function mountWortschatzApp(els, cards, languages, { onAnswer, onSessionS
     render();
   }
 
-  function flip() { state.flipped = !state.flipped; render(); }
+  function flip() {
+    state.flipped = !state.flipped;
+    // Toggle the class on the existing element rather than re-rendering: a fresh
+    // .vt-flip-inner created via innerHTML already starts in its target rotation, so the
+    // CSS transition never has a "from" state to animate — the flip just snaps instantly.
+    const inner = state.mode === "cards" ? contentEl.querySelector(".vt-flip-inner") : null;
+    if (inner) inner.classList.toggle("is-flipped", state.flipped);
+    else render();
+  }
 
   function setMode(mode) {
     reset({ mode });

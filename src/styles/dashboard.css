@@ -25,9 +25,9 @@
 .dash-progress-label { font-size: .85rem; font-weight: 700; color: var(--brand-blue-dark); white-space: nowrap; }
 
 .dash-hero-actions { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
-.dash-link-btn { background: none; border: none; padding: 10px 4px; margin: -10px -4px; color: var(--brand-blue-dark); font-weight: 600; font-size: .85rem; cursor: pointer; text-decoration: underline; font-family: var(--font-body); }
+.dash-link-btn { background: none; border: none; padding: 15px 4px; margin: -15px -4px; color: var(--brand-blue-dark); font-weight: 600; font-size: .85rem; cursor: pointer; text-decoration: underline; font-family: var(--font-body); }
 .dash-inline-edit { display: inline-flex; align-items: center; gap: 6px; }
-.dash-inline-edit input { border: 1px solid var(--border); border-radius: 8px; padding: 5px 8px; font-size: .85rem; font-family: var(--font-body); width: 130px; }
+.dash-inline-edit input { border: 1px solid var(--border); border-radius: 8px; padding: 8px 10px; font-size: 1rem; font-family: var(--font-body); width: 140px; }
 .dash-inline-edit button { border: none; background: var(--brand-blue); color: #fff; border-radius: 8px; padding: 5px 10px; font-size: .8rem; font-weight: 600; cursor: pointer; font-family: var(--font-body); }
 
 .dash-stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }

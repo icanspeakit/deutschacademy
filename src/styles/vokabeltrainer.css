@@ -42,7 +42,7 @@
   --vt-wrong-bg: #3a1f1a;
   --vt-wrong-border: #c1462f;
 }
-.vt-inner { width: 100%; margin: 0 auto; padding: 36px 40px 64px; box-sizing: border-box; }
+.vt-inner { max-width: 860px; margin: 0 auto; padding: 48px 32px 64px; box-sizing: border-box; }
 
 .vt-tabs { display: flex; flex-wrap: wrap; gap: 6px 22px; border-bottom: 1px solid var(--vt-border); margin: 0 0 26px; }
 .vt-tab {
@@ -103,7 +103,7 @@
 .vt-flip { perspective: 1400px; cursor: pointer; }
 .vt-flip-inner {
   position: relative; min-height: 300px;
-  transform-style: preserve-3d; transition: transform .6s cubic-bezier(.2,.8,.25,1);
+  transform-style: preserve-3d; transition: transform 1.1s cubic-bezier(.2,.8,.25,1);
 }
 .vt-flip-inner.is-flipped { transform: rotateX(-180deg); }
 .vt-face {

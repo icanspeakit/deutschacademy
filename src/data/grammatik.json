@@ -2,6 +2,7 @@
   {
     "id": "akkusativ",
     "name": "Akkusativ",
+    "level": "A1",
     "intro": "Nominativ → Akkusativ: der → den, die → die, das → das, die (Pl.) → die. Nach haben, brauchen, sehen.",
     "questions": [
       { "prompt": "Ich habe ___ Computer. <em>(der Computer)</em>", "answer": "den" },
@@ -16,6 +17,7 @@
   {
     "id": "dativ",
     "name": "Dativ",
+    "level": "A2",
     "intro": "Dativpronomen: ich→mir, du→dir, er/es→ihm, sie→ihr, wir→uns, ihr→euch, sie/Sie→ihnen/Ihnen. Bestimmter Artikel: der/das→dem, die→der.",
     "questions": [
       { "prompt": "Wie geht es dir? – Es geht ___ gut. <em>(ich)</em>", "answer": "mir" },
@@ -27,8 +29,23 @@
     ]
   },
   {
+    "id": "praepositionen",
+    "name": "Verben mit Präpositionen",
+    "level": "B1",
+    "intro": "Manche Verben brauchen eine feste Präposition: sich freuen auf, warten auf, sich interessieren für, träumen von, denken an.",
+    "questions": [
+      { "prompt": "Ich freue mich schon sehr ___ den Sommerurlaub. <em>(sich freuen auf)</em>", "answer": "auf" },
+      { "prompt": "Er denkt noch oft ___ seine erste Deutschlehrerin. <em>(denken an)</em>", "answer": "an" },
+      { "prompt": "Sie träumt ___ einem eigenen Café in Hamburg. <em>(träumen von)</em>", "answer": "von" },
+      { "prompt": "Sie ärgert sich ___ den Verkehr. <em>(sich ärgern über)</em>", "answer": "über" },
+      { "prompt": "Er interessiert sich sehr ___ moderne Kunst. <em>(sich interessieren für)</em>", "answer": "für" },
+      { "prompt": "Wir warten schon eine Stunde ___ den Bus. <em>(warten auf)</em>", "answer": "auf" }
+    ]
+  },
+  {
     "id": "passiv",
     "name": "Passiv mit Modalverben",
+    "level": "B1",
     "intro": "Aktiv → Passiv mit Modalverb: Subjekt + Modalverb + ... + Partizip II + werden. \"Ich buche das Hotel.\" → \"Das Hotel muss gebucht werden.\"",
     "questions": [
       { "prompt": "Das Hotel ___ gebucht werden. <em>(müssen)</em>", "answer": "muss" },
@@ -41,6 +58,7 @@
   {
     "id": "konjunktiv2",
     "name": "Konjunktiv II",
+    "level": "B2",
     "intro": "Irrealer Wunsch / Vorwurf im Perfekt: hätte/wäre + Partizip II (+ sollen). \"Was hättest du machen sollen?\"",
     "questions": [
       { "prompt": "Was ___ du machen sollen? <em>(haben)</em>", "answer": "hättest" },
@@ -52,6 +70,7 @@
   {
     "id": "relativpronomen",
     "name": "Relativpronomen",
+    "level": "B1",
     "intro": "Das Relativpronomen richtet sich nach Genus/Numerus des Bezugsworts und nach dem Fall im Relativsatz. Verb steht am Ende.",
     "questions": [
       { "prompt": "Herr B. ist der Kollege, ___ ich oft im Bus treffe. <em>(Akkusativ, maskulin)</em>", "answer": "den" },
@@ -63,6 +82,7 @@
   {
     "id": "trennbare-verben",
     "name": "Trennbare Verben",
+    "level": "A2",
     "intro": "Präfix wandert ans Satzende: fern|sehen, ein|steigen, aus|steigen, an|rufen, an|kommen.",
     "questions": [
       { "prompt": "Ich steige aus dem Zug ___. <em>(aussteigen)</em>", "answer": "aus" },

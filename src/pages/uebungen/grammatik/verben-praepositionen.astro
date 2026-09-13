@@ -1,0 +1,146 @@
+---
+import Layout from "../../../layouts/Layout.astro";
+import PracticeHeader from "../../../components/PracticeHeader.astro";
+import "../../../styles/practice.css";
+import "../../../styles/verben-praepositionen.css";
+import data from "../../../data/verben-praepositionen.json";
+---
+<Layout title="Verben mit Präpositionen – DeutschAcademy">
+  <PracticeHeader title="Verben mit Präpositionen" />
+
+  <main class="vp-page">
+    <a href="/uebungen/grammatik" class="vp-back-link" data-i18n="header.back">← Zurück zur Übersicht</a>
+
+    <div class="vp-hero">
+      <div class="vp-hero-badges">
+        <span class="badge badge-brand" data-i18n="grammatik.hero.eyebrow">GRAMMATIK ÜBEN</span>
+        <span class="badge badge-info">B1</span>
+      </div>
+      <h1>Verben mit Präpositionen</h1>
+      <p data-i18n="vp.hero.subtitle">Manche Verben brauchen eine feste Präposition. Lerne das Muster, dann übe es in fünf verschiedenen Aufgabentypen — wie auf einer Kursbuchseite.</p>
+    </div>
+
+    <div class="vp-card">
+      <div class="vp-card-label" data-i18n="vp.howItWorks">Wie funktioniert das?</div>
+
+      <div class="vp-flow">
+        <div class="vp-flow-step">Subjekt</div>
+        <span class="vp-flow-arrow">→</span>
+        <div class="vp-flow-step vp-flow-step--verb">Verb (+ sich)</div>
+        <span class="vp-flow-arrow">→</span>
+        <div class="vp-flow-step vp-flow-step--prep">Präposition + Objekt</div>
+      </div>
+
+      <p class="vp-example">Sie <span class="vp-verb">ärgert sich</span> <span class="vp-prep">über den Verkehr</span>.</p>
+
+      <div class="vp-qa-grid">
+        <div class="vp-qa-item"><strong>Worüber</strong> ärgert sie sich? — Über den Verkehr. <span style="color:var(--muted)">(Sache)</span></div>
+        <div class="vp-qa-item"><strong>Über wen</strong> ärgert sie sich? — Über ihren Chef. <span style="color:var(--muted)">(Person)</span></div>
+      </div>
+
+      <p class="vp-note">Fragewort für Sachen: <em>wo(r) + Präposition</em>, z. B. <em>worüber</em>. Fragewort für Personen: <em>Präposition + wen/wem</em>, z. B. <em>über wen</em>.</p>
+
+      <button type="button" class="vp-toggle-ref" id="vp-toggle-ref">Referenzliste anzeigen ▼</button>
+
+      <div class="vp-ref-grid" id="vp-ref-grid" hidden>
+        <div class="vp-ref-box vp-ref-box--akk">
+          <span class="badge badge-brand">Präposition + Akkusativ</span>
+          <ul>{data.akkVerbs.map((v) => <li>{v}</li>)}</ul>
+        </div>
+        <div class="vp-ref-box vp-ref-box--dat">
+          <span class="badge badge-info">Präposition + Dativ</span>
+          <ul>{data.datVerbs.map((v) => <li>{v}</li>)}</ul>
+        </div>
+      </div>
+    </div>
+
+    <h2 class="vp-section-title" data-i18n="nav.exercises">Übungen</h2>
+
+    <div class="vp-card">
+      <div class="vp-ex-head">
+        <span class="badge badge-neutral">1</span>
+        <h3>Ergänzen Sie die passende Präposition.</h3>
+      </div>
+      <div id="vp-ex1-root"></div>
+    </div>
+
+    <div class="vp-card">
+      <div class="vp-ex-head">
+        <span class="badge badge-neutral">2</span>
+        <h3>Ordnen Sie zu: Frage und Antwort.</h3>
+      </div>
+      <p class="vp-ex-hint">Klicke erst eine Frage, dann die passende Antwort.</p>
+      <div id="vp-ex2-root"></div>
+    </div>
+
+    <div class="vp-card">
+      <div class="vp-ex-head">
+        <span class="badge badge-neutral">3</span>
+        <h3>Ergänzen Sie die Präposition.</h3>
+      </div>
+      <div id="vp-ex3-root"></div>
+    </div>
+
+    <div class="vp-card">
+      <div class="vp-ex-head">
+        <span class="badge badge-neutral">4</span>
+        <h3>Lückentext: Ergänzen Sie die Präpositionen.</h3>
+      </div>
+      <div id="vp-ex4-root"></div>
+    </div>
+
+    <div class="vp-card">
+      <div class="vp-ex-head">
+        <span class="badge badge-neutral">5</span>
+        <h3>Bauen Sie den Satz aus den Wortgruppen.</h3>
+      </div>
+      <div id="vp-ex5-root"></div>
+    </div>
+  </main>
+
+  <script type="application/json" id="vp-data" set:html={JSON.stringify(data)}></script>
+  <script type="module">
+    import { mountPrepositionWorkspace } from "../../../lib/prepositionWorkspace.js";
+    import { recordAttempt } from "../../../lib/progress.js";
+    import { getLang, loadDict, onLangChange } from "../../../lib/i18n.js";
+
+    let dict = {};
+    function tr(key) {
+      return dict[key] ?? key;
+    }
+
+    const data = JSON.parse(document.getElementById("vp-data").textContent);
+
+    mountPrepositionWorkspace(
+      {
+        fillRoot: document.getElementById("vp-ex1-root"),
+        matchRoot: document.getElementById("vp-ex2-root"),
+        tableRoot: document.getElementById("vp-ex3-root"),
+        storyRoot: document.getElementById("vp-ex4-root"),
+        buildRoot: document.getElementById("vp-ex5-root"),
+      },
+      data,
+      { onAnswer: (ok) => recordAttempt({ skill: "grammatik", correct: ok }) }
+    );
+
+    const toggleRefBtn = document.getElementById("vp-toggle-ref");
+    const refGrid = document.getElementById("vp-ref-grid");
+    function renderToggleLabel() {
+      toggleRefBtn.textContent = refGrid.hidden ? tr("vp.toggleRef.show") : tr("vp.toggleRef.hide");
+    }
+    toggleRefBtn.addEventListener("click", () => {
+      refGrid.hidden = !refGrid.hidden;
+      renderToggleLabel();
+    });
+
+    async function bootI18n() {
+      dict = await loadDict(getLang());
+      renderToggleLabel();
+    }
+    onLangChange((code, newDict) => {
+      dict = newDict;
+      renderToggleLabel();
+    });
+    bootI18n();
+  </script>
+</Layout>

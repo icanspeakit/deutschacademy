@@ -1,0 +1,71 @@
+---
+import Layout from "../../../layouts/Layout.astro";
+import PracticeHeader from "../../../components/PracticeHeader.astro";
+import "../../../styles/practice.css";
+import grammatik from "../../../data/grammatik.json";
+---
+<Layout title="Grammatik-Quiz – DeutschAcademy">
+  <PracticeHeader title="Grammatik-Quiz" />
+  <main class="practice-main">
+    <a href="/uebungen/grammatik" class="practice-back-link" data-i18n="header.back">← Zurück zur Übersicht</a>
+    <div class="practice-hero">
+      <p class="eyebrow" data-i18n="grammatik.hero.eyebrow">Grammatik üben</p>
+      <h1 data-i18n="quiz.hero.title">Lückentext-Quiz nach Thema</h1>
+      <p data-i18n="quiz.hero.subtitle">Jede Frage stammt aus echten Beispielsätzen und Tabellen aus dem Unterricht — kein generischer Grammatik-Bot.</p>
+    </div>
+    <div class="topic-tabs" id="topic-tabs">
+      {grammatik.map((t, i) => (
+        <button class="topic-tab" type="button" data-topic={i}>{t.name}</button>
+      ))}
+    </div>
+    <p class="topic-intro" id="topic-intro"></p>
+    <p class="topic-crosslink" id="topic-crosslink" hidden data-i18n-html="quiz.crosslink.passiv">
+      Diese Passiv-Sätze stammen aus einer echten Unterrichtsdiskussion über Medien in Deutschland —
+      mehr dazu im <a href="/uebungen/kultur">Kulturwissen: Wer bezahlt ARD und ZDF?</a>
+    </p>
+    <p class="topic-crosslink" id="topic-crosslink-akkusativ" hidden data-i18n-html="quiz.crosslink.akkusativ">
+      Für Akkusativ gibt es einen eigenen Übungsraum mit Fokus- und Testmodus, Schwierigkeitsstufen
+      und Deklinationstabelle: <a href="/uebungen/grammatik/akkusativ">Akkusativ-Workspace öffnen</a>
+    </p>
+    <p class="topic-crosslink" id="topic-crosslink-praepositionen" hidden data-i18n-html="quiz.crosslink.praepositionen">
+      Für Verben mit Präpositionen gibt es einen eigenen Übungsraum mit fünf Aufgabentypen —
+      Lückensatz, Zuordnen, Tabelle, Lückentext und Satzbau:
+      <a href="/uebungen/grammatik/verben-praepositionen">Workspace öffnen</a>
+    </p>
+    <div class="quiz-card" id="quiz-root"></div>
+  </main>
+  <script type="application/json" id="topics-data" set:html={JSON.stringify(grammatik)}></script>
+  <script type="module">
+    import { mountQuiz } from "../../../lib/quiz.js";
+    import { recordAttempt } from "../../../lib/progress.js";
+    const topics = JSON.parse(document.getElementById("topics-data").textContent);
+    const tabsEl = document.getElementById("topic-tabs");
+    const introEl = document.getElementById("topic-intro");
+    const crosslinkEl = document.getElementById("topic-crosslink");
+    const crosslinkAkkusativEl = document.getElementById("topic-crosslink-akkusativ");
+    const crosslinkPraepositionenEl = document.getElementById("topic-crosslink-praepositionen");
+    const quizRoot = document.getElementById("quiz-root");
+
+    function loadTopic(index) {
+      const topic = topics[index];
+      [...tabsEl.children].forEach((btn, i) => btn.classList.toggle("active", i === index));
+      introEl.textContent = topic.intro;
+      crosslinkEl.hidden = topic.id !== "passiv";
+      crosslinkAkkusativEl.hidden = topic.id !== "akkusativ";
+      crosslinkPraepositionenEl.hidden = topic.id !== "praepositionen";
+      mountQuiz(quizRoot, topic.questions, {
+        mode: "text",
+        onAnswer: (ok) => recordAttempt({ skill: "grammatik", correct: ok }),
+      });
+    }
+
+    [...tabsEl.children].forEach((btn, i) => {
+      btn.addEventListener("click", () => loadTopic(i));
+    });
+
+    const params = new URLSearchParams(window.location.search);
+    const wantedId = params.get("topic") || window.location.hash.replace("#", "");
+    const startIndex = topics.findIndex((t) => t.id === wantedId);
+    loadTopic(startIndex >= 0 ? startIndex : 0);
+  </script>
+</Layout>

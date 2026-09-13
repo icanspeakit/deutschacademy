@@ -1,0 +1,56 @@
+---
+import Layout from "../../../layouts/Layout.astro";
+import PracticeHeader from "../../../components/PracticeHeader.astro";
+import "../../../styles/practice.css";
+import "../../../styles/verben-praepositionen.css";
+import grammatik from "../../../data/grammatik.json";
+
+export function getStaticPaths() {
+  // akkusativ and praepositionen have their own bespoke pages (akkusativ.astro,
+  // verben-praepositionen.astro) — every other topic gets this shared workspace layout.
+  const dedicatedPages = new Set(["akkusativ", "praepositionen"]);
+  return grammatik
+    .filter((t) => !dedicatedPages.has(t.id))
+    .map((t) => ({ params: { id: t.id }, props: { topic: t } }));
+}
+
+const { topic } = Astro.props;
+---
+<Layout title={`${topic.name} – DeutschAcademy`}>
+  <PracticeHeader title={topic.name} />
+
+  <main class="vp-page">
+    <a href="/uebungen/grammatik" class="vp-back-link" data-i18n="header.back">← Zurück zur Übersicht</a>
+
+    <div class="vp-hero">
+      <div class="vp-hero-badges">
+        <span class="badge badge-brand" data-i18n="grammatik.hero.eyebrow">GRAMMATIK ÜBEN</span>
+        <span class="badge badge-info">{topic.level}</span>
+      </div>
+      <h1>{topic.name}</h1>
+      <p>{topic.intro}</p>
+    </div>
+
+    <h2 class="vp-section-title" data-i18n="nav.exercises">Übungen</h2>
+
+    <div class="vp-card">
+      <div class="vp-ex-head">
+        <span class="badge badge-neutral">1</span>
+        <h3>Lückentext: Ergänzen Sie.</h3>
+      </div>
+      <div id="quiz-root"></div>
+    </div>
+  </main>
+
+  <script type="application/json" id="topic-data" set:html={JSON.stringify(topic)}></script>
+  <script type="module">
+    import { mountQuiz } from "../../../lib/quiz.js";
+    import { recordAttempt } from "../../../lib/progress.js";
+
+    const topic = JSON.parse(document.getElementById("topic-data").textContent);
+    mountQuiz(document.getElementById("quiz-root"), topic.questions, {
+      mode: "text",
+      onAnswer: (ok) => recordAttempt({ skill: "grammatik", correct: ok }),
+    });
+  </script>
+</Layout>

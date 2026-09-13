@@ -1,0 +1,127 @@
+/* "Verben mit Präpositionen" grammar workspace — built directly on the site's global.css
+   tokens and components.css primitives (.badge, .btn, .card), unlike the older, bespoke
+   akkusativ.css system. This is the intended scaffold for future dedicated grammar pages. */
+
+.vp-page { max-width: 880px; margin: 0 auto; padding: clamp(20px, 5vw, 40px) clamp(14px, 4vw, 24px) 96px; }
+
+.vp-back-link { display: inline-block; margin-bottom: 20px; font-weight: 600; font-size: .875rem; color: var(--brand-blue-dark); text-decoration: none; }
+.vp-back-link:hover { color: var(--accent-dark); }
+
+.vp-hero { text-align: center; margin-bottom: 32px; }
+.vp-hero-badges { display: flex; justify-content: center; gap: 8px; margin-bottom: 14px; }
+.vp-hero h1 { font-family: var(--font-body); font-weight: var(--fw-extrabold); font-size: clamp(1.75rem, 4vw, 2.375rem); color: var(--ink); margin: 0 0 12px; }
+.vp-hero p { color: var(--muted); max-width: 560px; margin: 0 auto; font-size: 1rem; line-height: 1.6; }
+
+.vp-card { background: #fff; border: 1px solid var(--border); border-radius: var(--radius-lg); padding: var(--space-7); margin-bottom: 20px; }
+.vp-card-label { font-family: var(--font-mono); font-weight: var(--fw-semibold); font-size: .8125rem; letter-spacing: .04em; color: var(--brand-blue-dark); text-transform: uppercase; margin-bottom: 14px; }
+
+.vp-flow { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; row-gap: 12px; margin-bottom: 22px; }
+.vp-flow-step { border: 1px solid var(--border-strong); border-radius: var(--radius-sm); padding: 10px 16px; font-weight: var(--fw-semibold); color: var(--muted); white-space: nowrap; }
+.vp-flow-step--verb { border-color: var(--accent); background: #fff7ed; font-weight: var(--fw-bold); color: var(--accent-dark); }
+.vp-flow-step--prep { border-color: var(--blue-300); background: var(--blue-50); font-weight: var(--fw-bold); color: var(--brand-blue-dark); }
+.vp-flow-arrow { color: var(--muted-soft); }
+
+.vp-example { font-size: 1.1875rem; line-height: 1.8; margin: 0 0 16px; }
+.vp-example .vp-verb { font-weight: var(--fw-bold); color: var(--accent-dark); }
+.vp-example .vp-prep { font-weight: var(--fw-bold); color: var(--brand-blue-dark); }
+
+.vp-qa-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin-bottom: 18px; }
+.vp-qa-item { background: var(--surface); border-radius: var(--radius-sm); padding: 12px 16px; font-size: .875rem; color: var(--ink); }
+.vp-qa-item strong { color: var(--brand-blue-dark); }
+
+.vp-note { font-size: .8125rem; color: var(--muted); margin: 0; }
+
+.vp-toggle-ref {
+  margin-top: 20px; background: none; border: 1px solid var(--border-strong); border-radius: var(--radius-pill);
+  padding: 10px 20px; font-weight: var(--fw-bold); font-size: .8125rem; color: var(--brand-blue-dark);
+  cursor: pointer; font-family: var(--font-body);
+}
+.vp-toggle-ref:hover { border-color: var(--brand-blue); }
+
+.vp-ref-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin-top: 18px; }
+.vp-ref-grid[hidden] { display: none; }
+.vp-ref-box { border-radius: var(--radius); padding: 18px 20px; }
+.vp-ref-box--akk { background: var(--blue-50); border: 1px solid var(--blue-200); }
+.vp-ref-box--dat { background: var(--info-soft); border: 1px solid var(--info-border); }
+.vp-ref-box ul { margin: 14px 0 0; padding-left: 18px; font-size: .875rem; line-height: 1.9; color: var(--ink); }
+
+.vp-section-title { font-weight: var(--fw-extrabold); font-size: 1.375rem; color: var(--ink); margin: 36px 0 18px; }
+
+.vp-ex-head { display: flex; align-items: center; gap: 10px; margin-bottom: 18px; }
+.vp-ex-head h3 { font-weight: var(--fw-bold); font-size: 1.0625rem; color: var(--ink); margin: 0; }
+.vp-ex-hint { font-size: .8125rem; color: var(--muted); margin: 0 0 18px; }
+
+/* Shared exercise controls */
+.vp-input {
+  border: 1px solid var(--border-strong); border-radius: var(--radius-sm); padding: 10px 14px;
+  font-size: .9375rem; font-family: var(--font-body); box-sizing: border-box;
+  transition: border-color .2s ease, background-color .2s ease;
+}
+.vp-input:focus { outline: none; border-color: var(--brand-blue); }
+.vp-input:disabled { opacity: .85; }
+.vp-input.is-correct { border-color: var(--success-border); background: var(--success-soft); }
+.vp-input.is-wrong { border-color: var(--danger-border); background: var(--danger-soft); }
+.vp-input-sm { width: 130px; padding: 9px 12px; font-size: .875rem; }
+.vp-input-blank { width: 64px; text-align: center; border: none; border-bottom: 2px solid var(--border-strong); background: var(--surface); padding: 4px 6px; font-size: .9375rem; font-weight: var(--fw-semibold); color: var(--ink); border-radius: 4px; }
+.vp-input-blank.is-correct { border-bottom-color: var(--success); background: var(--success-soft); }
+.vp-input-blank.is-wrong { border-bottom-color: var(--danger); background: var(--danger-soft); }
+
+.vp-btn-check {
+  background: var(--gradient-brand); color: #fff; border: none; border-radius: var(--radius-pill);
+  padding: 10px 22px; font-weight: var(--fw-bold); font-size: .8125rem; cursor: pointer; font-family: var(--font-body);
+  transition: opacity .2s ease;
+}
+.vp-btn-check:disabled { opacity: .5; cursor: not-allowed; }
+.vp-link-btn { background: none; border: none; color: var(--muted); text-decoration: underline; font-size: .8125rem; cursor: pointer; font-family: var(--font-body); }
+.vp-link-btn:hover { color: var(--ink); }
+
+.vp-feedback { font-weight: var(--fw-bold); font-size: .875rem; display: inline-block; animation: vp-fade-in .25s ease; }
+.vp-feedback.is-correct { color: var(--success); }
+.vp-feedback.is-wrong { color: var(--danger); }
+
+.vp-actions { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; margin-top: 14px; }
+
+/* Exercise 1: Lückensatz */
+.vp-fill-item { padding: 16px 0; border-top: 1px solid var(--border); }
+.vp-fill-item:first-child { border-top: none; padding-top: 0; }
+.vp-fill-prompt { font-size: 1rem; line-height: 1.6; margin: 0 0 4px; color: var(--ink); }
+.vp-fill-hint { font-size: .8125rem; color: var(--muted); margin: 0 0 12px; }
+.vp-fill-row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+.vp-fill-row .vp-input { width: 140px; }
+
+/* Exercise 2: Zuordnen */
+.vp-match-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 16px; }
+.vp-match-col { display: flex; flex-direction: column; gap: 10px; }
+.vp-match-btn {
+  text-align: left; border-radius: var(--radius-sm); padding: 12px 14px; font-size: .875rem; font-family: var(--font-body);
+  cursor: pointer; border: 1px solid var(--border-strong); background: #fff; color: var(--ink);
+}
+.vp-match-btn strong { margin-right: 6px; }
+.vp-match-btn.is-selected { border-color: var(--brand-blue); box-shadow: 0 0 0 1px var(--brand-blue) inset; }
+.vp-match-btn.is-solved { border-color: var(--success-border); background: var(--success-soft); color: var(--success); cursor: default; }
+.vp-match-btn:disabled { cursor: default; }
+
+/* Exercise 3: Tabelle */
+.vp-table-row { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 14px 0; border-top: 1px solid var(--border); }
+.vp-table-row:first-child { border-top: none; padding-top: 0; }
+.vp-table-verb { font-weight: var(--fw-semibold); color: var(--ink); font-size: .9375rem; }
+
+/* Exercise 4: Geschichte */
+.vp-story-text { font-size: 1rem; line-height: 2.1; color: var(--ink); }
+
+/* Exercise 5: Satzbau */
+.vp-build-item { padding: 18px 0; border-top: 1px solid var(--border); }
+.vp-build-item:first-child { border-top: none; padding-top: 0; }
+.vp-build-strip { display: flex; flex-wrap: wrap; gap: 8px; min-height: 44px; background: var(--surface); border-radius: var(--radius-sm); padding: 10px; margin-bottom: 10px; }
+.vp-build-pool { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
+.vp-chip { border: 1px solid var(--border-strong); background: #fff; color: var(--ink); border-radius: var(--radius-sm); padding: 8px 12px; font-size: .875rem; font-weight: var(--fw-semibold); cursor: pointer; font-family: var(--font-body); }
+.vp-chip-chosen { border-color: var(--blue-300); background: var(--blue-50); color: var(--brand-blue-dark); }
+
+@keyframes vp-pop { 0% { transform: scale(1); } 45% { transform: scale(1.08); } 100% { transform: scale(1); } }
+@keyframes vp-shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } }
+@keyframes vp-fade-in { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+
+@media (max-width: 640px) {
+  .vp-hero-badges { flex-wrap: wrap; }
+  .vp-flow { justify-content: center; }
+}

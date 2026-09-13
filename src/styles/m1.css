@@ -1,0 +1,89 @@
+/* "Hero Cross" — interleaves the two homepage hero pitches (dashboard / quiz)
+   into one 2x2 grid instead of two stacked full-width sections. */
+
+/* Whole cross needs to fit above the fold — tight, no gap between the two
+   rows where the diagonal crosses over. */
+.m1-cross-section { padding: 6px 0 4px; }
+.m1-cross {
+  display: grid;
+  grid-template-columns: 1.05fr 1fr;
+  grid-template-areas:
+    "copy1 mock1"
+    "mock2 copy2";
+  column-gap: 36px;
+  row-gap: 0;
+  align-items: start;
+}
+
+.m1-copy-1 { grid-area: copy1; }
+.m1-mock-1 { grid-area: mock1; }
+.m1-mock-2 { grid-area: mock2; }
+.m1-copy-2 { grid-area: copy2; }
+
+/* Center each copy block against the full height of its row's mock, since
+   align-items:start alone would pin it to the top. */
+.m1-copy-1, .m1-copy-2 { height: 100%; display: flex; flex-direction: column; justify-content: center; gap: 8px; }
+
+/* The two mockups sit on a diagonal, so keep their h1s from touching
+   full-bleed width at the narrower cross columns, and keep the whole
+   block compact enough to clear the fold. */
+.m1-copy-1 h1, .m1-copy-2 h1 { font-size: clamp(1.3rem, 2.2vw, 1.8rem); margin: 2px 0 4px; line-height: 1.15; }
+.m1-copy-1 .lp-eyebrow, .m1-copy-2 .lp-eyebrow { font-size: 10px; }
+.m1-copy-1 .lp-hero-lead, .m1-copy-2 .lp-hero-lead { font-size: 13px; line-height: 1.35; margin: 0; }
+.m1-copy-1 .lp-hero-actions, .m1-copy-2 .lp-hero-actions { padding-top: 0; }
+.m1-copy-1 .lp-btn, .m1-copy-2 .lp-btn { padding: 9px 18px; font-size: 14px; }
+.m1-copy-2 .lp-hero-progress { margin-top: 0; }
+
+/* Fill the column instead of hugging the middle — no zoom shrink now, height
+   stays compact via the explicit small paddings/gaps/image-heights below
+   (width alone doesn't add height, since the sidebar column is a fixed
+   186px and the rest is fluid). */
+.m1-mock-1 .lp-browser, .m1-mock-2 .lp-browser { max-width: none; width: 100%; }
+.m1-mock-1 .lp-dash, .m1-mock-2 .lp-dash { padding: 10px; gap: 7px; }
+.m1-mock-1 .lp-mini-grid { gap: 8px; }
+.m1-mock-1 .lp-mini-card img { height: 46px; }
+.m1-mock-1 .lp-mini-card-body, .m1-mock-1 .lp-locked-card { padding: 6px; }
+.m1-mock-1 .lp-locked-card { min-height: 56px; }
+.m1-mock-1 .lp-sidebar, .m1-mock-2 .lp-sidebar { padding: 10px 8px; gap: 3px; }
+.m1-mock-2 .lp-dash-question { padding: 9px; }
+
+/* Mobile — device-frame preview from the dc.html's #mobile-hero, swapped in
+   for the desktop cross (which doesn't read well recompressed to one
+   column: two full browser-chrome mockups stacked is a lot of scrolling
+   for what should be a quick pitch). */
+.m1-mobile-hero { display: none; justify-content: center; padding: 32px 0 56px; background: var(--surface); }
+
+.m1-phone {
+  position: relative;
+  width: 360px;
+  max-width: 88vw;
+  background: #0f141c;
+  border-radius: 44px;
+  padding: 12px;
+  box-shadow: 0 30px 60px rgba(15, 20, 28, 0.28), 0 0 0 1px rgba(15, 20, 28, 0.06);
+}
+.m1-phone-notch {
+  position: absolute; top: 20px; left: 50%; transform: translateX(-50%);
+  width: 110px; height: 26px; background: #0f141c; border-radius: 14px; z-index: 2;
+}
+.m1-phone-home {
+  position: absolute; bottom: 8px; left: 50%; transform: translateX(-50%);
+  width: 120px; height: 5px; background: rgba(255, 255, 255, 0.45); border-radius: 3px; z-index: 2;
+}
+.m1-phone-screen { position: relative; background: #fff; border-radius: 32px; overflow: hidden; }
+.m1-phone-content { padding: 56px 22px 28px; display: flex; flex-direction: column; gap: 14px; }
+.m1-phone-block .lp-eyebrow { font-size: 11px; }
+.m1-phone-block h1 {
+  font-family: var(--font-display); font-weight: 700; font-size: 1.5rem;
+  line-height: 1.15; margin: 6px 0; color: var(--ink);
+}
+.m1-phone-block p { font-size: 13.5px; line-height: 1.4; color: var(--muted); margin: 0 0 14px; }
+.m1-phone-block .lp-btn { width: 100%; padding: 13px; font-size: 15px; }
+.m1-phone-block--divider { margin-top: 6px; padding-top: 20px; border-top: 1px solid var(--border); }
+.m1-phone-shot { border-radius: 14px; overflow: hidden; border: 1px solid var(--border); }
+.m1-phone-shot img { width: 100%; height: 190px; object-fit: cover; display: block; }
+
+@media (max-width: 900px) {
+  .m1-cross-section { display: none; }
+  .m1-mobile-hero { display: flex; }
+}

@@ -1,0 +1,214 @@
+---
+// Test page: "Hero Cross" layout imported from the Claude Design project
+// (claude.ai/design/p/5b82b702-859d-4a08-bf09-88fda071479b, file
+// "DeutschAcademy Hero Cross.dc.html"). Interleaves the homepage's two
+// existing hero sections (dashboard pitch + quiz pitch) into one compact
+// 2x2 grid instead of two stacked full-width sections. Real content/data,
+// not the mockup's static numbers — same source as index.astro so the two
+// pages never drift apart on facts.
+// Not linked from nav; noindex; a design candidate to fold into index.astro
+// once approved, not a page users should land on.
+import Layout from "../layouts/Layout.astro";
+import LanguageSwitcher from "../components/LanguageSwitcher.astro";
+import "../styles/landing.css";
+import "../styles/m1.css";
+import grammatik from "../data/grammatik.json";
+
+const grammarQuestionCount = grammatik.reduce((sum, t) => sum + t.questions.length, 0);
+---
+<Layout title="Hero Cross (Vorschau) – DeutschAcademy" description="Designvorschau: gekreuzte Hero-Sektion.">
+  <Fragment slot="head">
+    <meta name="robots" content="noindex, nofollow" />
+  </Fragment>
+
+  <div class="lp">
+    <nav class="lp-nav">
+      <div class="lp-nav-row">
+        <div class="lp-nav-left">
+          <a href="/"><img src="/assets/logo.png" alt="DeutschAcademy" /></a>
+          <div class="lp-nav-links" id="m1-nav-links">
+            <a href="/uebungen">Übungen</a>
+            <a href="/pruefungen">Prüfungen</a>
+          </div>
+        </div>
+        <div class="lp-nav-right">
+          <a href="/uebungen" class="lp-btn lp-btn--primary">Kostenlos üben</a>
+          <LanguageSwitcher />
+          <button class="lp-nav-toggle" type="button" aria-expanded="false" aria-controls="m1-nav-links" aria-label="Menü öffnen">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <line x1="3" y1="12" x2="21" y2="12"></line>
+              <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </nav>
+
+    <script>
+      const toggle = document.querySelector(".lp-nav-toggle");
+      const links = document.getElementById("m1-nav-links");
+      toggle?.addEventListener("click", () => {
+        const isOpen = links?.classList.toggle("lp-nav-links--open");
+        toggle.setAttribute("aria-expanded", String(!!isOpen));
+      });
+    </script>
+
+    <section class="m1-cross-section">
+      <div class="lp-wrap m1-cross">
+
+        <div class="lp-hero-copy m1-copy-1">
+          <div class="lp-eyebrow" data-i18n="home.hero1.eyebrow">Dein Dashboard</div>
+          <h1 data-i18n="home.hero1.title">Dein Fortschritt, immer im Blick</h1>
+          <p class="lp-hero-lead" data-i18n="home.hero1.lead">Level, erledigte Lektionen und nächste Schritte an einem Ort — damit du bei jedem Login genau weißt, woran du weitermachst.</p>
+          <div class="lp-hero-actions">
+            <a href="/uebungen" class="lp-btn lp-btn--primary" data-i18n="home.cta.startFree">Kostenlos starten</a>
+            <span class="lp-nav-login" data-i18n="home.hero1.login">Bereits dabei? Log in</span>
+          </div>
+        </div>
+
+        <div class="m1-mock-1">
+          <div class="lp-browser">
+            <div class="lp-browser-bar">
+              <div class="lp-browser-dot"></div><div class="lp-browser-dot"></div><div class="lp-browser-dot"></div>
+              <div class="lp-browser-url">deutschacademy.com/dashboard</div>
+            </div>
+            <div class="lp-browser-body">
+              <div class="lp-sidebar">
+                <img src="/assets/logo.png" alt="" />
+                <div class="lp-sidebar-link lp-sidebar-link--active" data-i18n="home.mock.dashboard">Dashboard</div>
+                <div class="lp-sidebar-link" data-i18n="home.mock.grammatikShort">Grammatik</div>
+                <div class="lp-sidebar-link" data-i18n="home.mock.wortschatzShort">Wortschatz</div>
+                <div class="lp-sidebar-link" data-i18n="home.mock.sprechenShort">Sprechen</div>
+                <div class="lp-sidebar-link" data-i18n="nav.exams">Prüfungen</div>
+                <div class="lp-sidebar-upsell">
+                  <strong data-i18n="home.mock.goPremium">Go Premium</strong>
+                  <span data-i18n="home.mock.unlockDesc">Unlock exam prep and corrections.</span>
+                </div>
+              </div>
+              <div class="lp-dash">
+                <div class="lp-dash-header">
+                  <div class="lp-dash-greeting"><strong data-i18n="home.mock.greeting">Guten Morgen, Ana</strong><span data-i18n="home.mock.dayProgress">Day 34 · B1.2 in progress</span></div>
+                  <div class="lp-avatar-initials">A</div>
+                </div>
+                <div class="lp-progress-card">
+                  <div class="lp-progress-row"><span>Level B1 · Selbstständig</span><span class="pct">62%</span></div>
+                  <div class="lp-progress-track"><div class="lp-progress-fill" style="width:62%"></div></div>
+                  <div class="lp-progress-note">18 of 29 lessons · next: Termin beim Amt</div>
+                </div>
+                <div class="lp-mini-grid">
+                  <div class="lp-mini-card">
+                    <img src="/assets/methods.jpg" alt="" />
+                    <div class="lp-mini-card-body"><span data-i18n="home.mock.a2Alltag">A2 · Alltag</span><div class="lp-mini-bar"><div class="lp-mini-bar-fill" style="width:100%;background:var(--brand-blue-light)"></div></div></div>
+                  </div>
+                  <div class="lp-mini-card">
+                    <img src="/assets/foto-buero-2.jpg" alt="" style="object-position: 50% 25%;" />
+                    <div class="lp-mini-card-body"><span data-i18n="home.mock.b1Beruf">B1 · Beruf</span><div class="lp-mini-bar"><div class="lp-mini-bar-fill" style="width:62%;background:var(--brand-blue)"></div></div></div>
+                  </div>
+                  <div class="lp-mini-card">
+                    <img src="/assets/online-is-futur.jpg" alt="" />
+                    <div class="lp-mini-card-body"><span data-i18n="home.mock.authenticClips">Authentic clips</span><div class="lp-mini-bar"><div class="lp-mini-bar-fill" style="width:24%;background:var(--accent)"></div></div></div>
+                  </div>
+                  <div class="lp-locked-card">
+                    <div class="icon">🔒</div>
+                    <strong data-i18n="home.mock.goetheB2Prep">Goethe B2 prep</strong>
+                    <span data-i18n="home.word.premium">Premium</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="m1-mock-2">
+          <div class="lp-browser">
+            <div class="lp-browser-bar">
+              <div class="lp-browser-dot"></div><div class="lp-browser-dot"></div><div class="lp-browser-dot"></div>
+              <div class="lp-browser-url">deutschacademy.com/uebungen</div>
+            </div>
+            <div class="lp-browser-body">
+              <div class="lp-sidebar">
+                <img src="/assets/logo.png" alt="" />
+                <div class="lp-sidebar-link lp-sidebar-link--active">📚 <span data-i18n="tool.grammatik.title">Grammatik-Quiz</span></div>
+                <div class="lp-sidebar-link">🎯 <span data-i18n="tool.artikel.title">der/die/das-Trainer</span></div>
+                <div class="lp-sidebar-link">🗂️ <span data-i18n="home.mock.wortschatzShort">Wortschatz</span></div>
+                <div class="lp-sidebar-link">🔊 <span data-i18n="tool.aussprache.title">Aussprache</span></div>
+                <div class="lp-sidebar-link">🗣️ <span data-i18n="home.mock.sprechenShort">Sprechen</span></div>
+                <div class="lp-sidebar-link">✍️ <span data-i18n="tool.lesen.title">Lesen &amp; Schreiben</span></div>
+                <div class="lp-sidebar-link">🗺️ <span data-i18n="tool.kultur.title">Kulturwissen</span></div>
+              </div>
+              <div class="lp-dash">
+                <div class="lp-dash-header">
+                  <div class="lp-dash-greeting"><strong data-i18n="tool.grammatik.title">Grammatik-Quiz</strong><span>Thema 1 von {grammatik.length}</span></div>
+                </div>
+                <div class="lp-dash-stat-row">
+                  <div class="lp-dash-stat"><strong>{grammarQuestionCount}</strong><span data-i18n="home.mock.questionsLabel">Fragen</span></div>
+                  <div class="lp-dash-stat"><strong>{grammatik.length}</strong><span data-i18n="home.mock.topicsLabel">Themen</span></div>
+                  <div class="lp-dash-stat"><strong>0€</strong><span data-i18n="home.mock.costLabel">Kosten</span></div>
+                </div>
+                <div class="lp-dash-question">
+                  <div class="lp-quiz-kicker">Akkusativ</div>
+                  <p class="lp-quiz-prompt">Ich habe <span class="blank">___</span> Computer.</p>
+                  <p class="lp-quiz-hint">(der Computer)</p>
+                  <div class="lp-quiz-choices">
+                    <span class="lp-quiz-choice">der</span>
+                    <span class="lp-quiz-choice lp-quiz-choice--correct">den</span>
+                    <span class="lp-quiz-choice">das</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="lp-hero-copy m1-copy-2">
+          <div class="lp-eyebrow" data-i18n="home.hero2.eyebrow">Deutsch von A1 bis C1</div>
+          <h1 data-i18n="home.hero2.title">Deutsch lernen, wie es wirklich gesprochen wird</h1>
+          <p class="lp-hero-lead" data-i18n="home.hero2.lead">Grammatik, Alltagsdeutsch und Sprechpraxis — aufgebaut aus echtem Unterrichtsmaterial, nicht kalt für eine Plattform geschrieben.</p>
+          <div class="lp-hero-actions">
+            <a href="#" class="lp-btn lp-btn--primary" data-i18n="home.hero2.cta1">Start Learning Free</a>
+            <a href="#" class="lp-btn lp-btn--outline" data-i18n="home.hero2.cta2">See How It Works</a>
+          </div>
+          <div class="lp-hero-progress"><span></span><span></span></div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Mobile: the "DeutschAcademy Hero Cross" dc.html's #mobile-hero — a
+         single stacked device-frame preview instead of the 2x2 cross,
+         which doesn't read well at phone width. Real photos, not the
+         mockup's <image-slot> placeholders. -->
+    <section class="m1-mobile-hero">
+      <div class="m1-phone">
+        <div class="m1-phone-notch"></div>
+        <div class="m1-phone-home"></div>
+        <div class="m1-phone-screen">
+          <div class="m1-phone-content">
+
+            <div class="m1-phone-block">
+              <div class="lp-eyebrow" data-i18n="home.hero1.eyebrow">Dein Dashboard</div>
+              <h1 data-i18n="home.hero1.title">Dein Fortschritt, immer im Blick</h1>
+              <p data-i18n="home.hero1.lead">Level, erledigte Lektionen und nächste Schritte an einem Ort.</p>
+              <a href="/uebungen" class="lp-btn lp-btn--primary" data-i18n="home.cta.startFree">Kostenlos starten</a>
+            </div>
+            <div class="m1-phone-shot">
+              <img src="/assets/methods.jpg" alt="" />
+            </div>
+
+            <div class="m1-phone-block m1-phone-block--divider">
+              <div class="lp-eyebrow" data-i18n="home.hero2.eyebrow">Deutsch von A1 bis C1</div>
+              <h1 data-i18n="home.hero2.title">Deutsch lernen, wie es wirklich gesprochen wird</h1>
+              <p data-i18n="home.hero2.lead">Grammatik, Alltagsdeutsch und Sprechpraxis.</p>
+              <a href="#" class="lp-btn lp-btn--primary" data-i18n="home.hero2.cta1">Start Learning Free</a>
+            </div>
+            <div class="m1-phone-shot">
+              <img src="/assets/foto-buero-2.jpg" alt="" style="object-position: 50% 25%;" />
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</Layout>

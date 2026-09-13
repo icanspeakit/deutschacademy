@@ -1,0 +1,99 @@
+---
+// Design preview: static, non-personalized restyle of /uebungen from the
+// "DA für Dich – Übungsseite" mockup. Not linked from the public nav, kept
+// side-by-side with the real (personalized-dashboard) /uebungen page rather
+// than replacing it — see conversation for why.
+import Layout from "../layouts/Layout.astro";
+import "../styles/uebungen-vorschau.css";
+import artikel from "../data/artikel.json";
+import grammatik from "../data/grammatik.json";
+import wortschatz from "../data/wortschatz.json";
+import sprechen from "../data/sprechen.json";
+import lesen from "../data/lesen.json";
+import kultur from "../data/kultur.json";
+import lid from "../data/leben-in-deutschland.json";
+
+const grammarQuestionCount = grammatik.reduce((sum, t) => sum + t.questions.length, 0);
+const readingQuestionCount = lesen.groups.reduce((sum, g) => sum + g.questions.length, 0);
+
+const tools = [
+  { href: "/uebungen/artikel-trainer", icon: "🎯", title: "der/die/das-Trainer", desc: "Artikel gezielt üben, mit sofortigem Feedback.", count: `${artikel.length} Nomen` },
+  { href: "/uebungen/grammatik", icon: "📚", title: "Grammatik-Quiz", desc: "Lückentext-Übungen zu Akkusativ, Dativ, Passiv und mehr.", count: `${grammatik.length} Themen · ${grammarQuestionCount} Fragen` },
+  { href: "/uebungen/wortschatz", icon: "🗂️", title: "Wortschatz & Redemittel", desc: "Karteikarten zum Umdrehen und Wiederholen.", count: `${wortschatz.length} Karten` },
+  { href: "/uebungen/aussprache", icon: "🔊", title: "Aussprache-Training", desc: "Wörter anhören und im Langsam-Modus üben.", count: `${wortschatz.length + artikel.length} Wörter` },
+  { href: "/uebungen/sprechen", icon: "🗣️", title: "Sprechen: Bildbeschreibung", desc: "Echte DTZ-Prüferfragen, mit 90-Sekunden-Timer.", count: `${sprechen.length} Bilder` },
+  { href: "/uebungen/lesen-schreiben", icon: "✍️", title: "Lesen & Schreiben", desc: "DTZ-Leseverstehen-Simulation plus Schreibaufgaben.", count: `${readingQuestionCount} Aufgaben` },
+  { href: "/uebungen/kultur", icon: "🗺️", title: "Kulturwissen", desc: "Einblicke aus echten Unterrichtsgesprächen.", count: `${kultur.length} Thema${kultur.length === 1 ? "" : "n"}` },
+];
+const comingSoonTool = { title: "Weitere Übungen", desc: "Neue Übungstools sind in Arbeit.", count: "Bald verfügbar" };
+
+const exams = [
+  { href: "/pruefungen/telc", icon: "📄", title: "telc", level: "A1–C2" },
+  { href: "/pruefungen/goethe", icon: "🏛️", title: "Goethe-Zertifikat", level: "A1–C2" },
+  { href: "/pruefungen/testdaf", icon: "🎓", title: "TestDaF", level: "≈ B2–C1" },
+  { href: "/pruefungen/dtz", icon: "🧾", title: "DTZ", level: "A2 / B1" },
+  { href: "/pruefungen/leben-in-deutschland", icon: "🇩🇪", title: "Leben in Deutschland", level: `${lid.bundeslaender.length} Bundesländer` },
+];
+---
+<Layout title="Übungen (Vorschau) – DeutschAcademy" description="Designvorschau der Übungsseite.">
+  <Fragment slot="head">
+    <meta name="robots" content="noindex, nofollow" />
+  </Fragment>
+
+  <div class="uv">
+    <nav class="uv-nav">
+      <div class="uv-nav-row">
+        <a href="/" class="uv-brand"><img src="/assets/logo.png" alt="DeutschAcademy" /></a>
+        <div class="uv-nav-links">
+          <a href="/uebungen">Übungen</a>
+          <a href="/pruefungen">Prüfungen</a>
+        </div>
+        <a href="/uebungen" class="uv-btn uv-btn--primary">Kostenlos üben</a>
+      </div>
+    </nav>
+
+    <header class="uv-hero">
+      <div class="uv-hero-inner">
+        <div>
+          <h1>Bereit zu üben?</h1>
+          <p>Wähle eine Übung oder starte direkt mit deiner nächsten Prüfungsvorbereitung.</p>
+        </div>
+        <div class="uv-hero-pills">
+          <span class="uv-pill uv-pill--ghost">{tools.length + 1} Übungen</span>
+          <span class="uv-pill uv-pill--ghost">{exams.length} Prüfungen</span>
+        </div>
+      </div>
+    </header>
+
+    <main class="uv-main">
+      <p class="uv-eyebrow">Übungen</p>
+      <div class="uv-grid">
+        {tools.map((t) => (
+          <a class="uv-card" href={t.href}>
+            <div class="uv-card-icon">{t.icon}</div>
+            <h3>{t.title}</h3>
+            <p>{t.desc}</p>
+            <span class="uv-pill">{t.count}</span>
+          </a>
+        ))}
+        <div class="uv-card uv-card--soon">
+          <div class="uv-card-icon uv-card-icon--soon">+</div>
+          <h3>{comingSoonTool.title}</h3>
+          <p>{comingSoonTool.desc}</p>
+          <span class="uv-pill">{comingSoonTool.count}</span>
+        </div>
+      </div>
+
+      <p class="uv-eyebrow">Prüfungen</p>
+      <div class="uv-grid uv-grid--exams">
+        {exams.map((e) => (
+          <a class="uv-card uv-card--exam" href={e.href}>
+            <div class="uv-card-icon uv-card-icon--exam">{e.icon}</div>
+            <h3>{e.title}</h3>
+            <span class="uv-pill uv-pill--exam">{e.level}</span>
+          </a>
+        ))}
+      </div>
+    </main>
+  </div>
+</Layout>

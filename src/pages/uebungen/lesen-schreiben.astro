@@ -10,9 +10,9 @@ const { groups, formTask, writingPrompt, errorHunt } = lesen;
   <PracticeHeader title="Lesen & Schreiben" />
   <main class="practice-main">
     <div class="practice-hero">
-      <p class="eyebrow">DTZ-Simulation</p>
-      <h1>Lesen & Schreiben üben</h1>
-      <p>Eine vollständige Leseverstehen-Simulation (Thema: Online-Unterricht und Integration, Niveau B1) mit echtem Lösungsschlüssel, plus zwei Schreibaufgaben.</p>
+      <p class="eyebrow" data-i18n="lesen.hero.eyebrow">DTZ-Simulation</p>
+      <h1 data-i18n="lesen.hero.title">Lesen & Schreiben üben</h1>
+      <p data-i18n="lesen.hero.subtitle">Eine vollständige Leseverstehen-Simulation (Thema: Online-Unterricht und Integration, Niveau B1) mit echtem Lösungsschlüssel, plus zwei Schreibaufgaben.</p>
     </div>
 
     {groups.map((g, gi) => (
@@ -27,7 +27,7 @@ const { groups, formTask, writingPrompt, errorHunt } = lesen;
     <div class="reading-block">
       <h3>{formTask.title}</h3>
       <div class="reading-text">{formTask.email}</div>
-      <p>Klicke auf ein Feld, um deine Antwort mit der Lösung zu vergleichen.</p>
+      <p data-i18n="lesen.formTask.hint">Klicke auf ein Feld, um deine Antwort mit der Lösung zu vergleichen.</p>
       <div id="form-fields">
         {formTask.fields.map((f, fi) => (
           <div class="form-field" data-field={fi}>
@@ -42,9 +42,9 @@ const { groups, formTask, writingPrompt, errorHunt } = lesen;
       <h3>{writingPrompt.title}</h3>
       <p>{writingPrompt.context}</p>
       <div class="reading-text">{writingPrompt.email}</div>
-      <div class="prompt-section-label">Schreib etwas zu folgenden Punkten</div>
+      <div class="prompt-section-label" data-i18n="lesen.writingPrompt.pointsLabel">Schreib etwas zu folgenden Punkten</div>
       <ul>{writingPrompt.points.map((pt) => <li>{pt}</li>)}</ul>
-      <textarea class="writing-area" id="writing-area" placeholder="Schreib deine Antwort hier..."></textarea>
+      <textarea class="writing-area" id="writing-area" placeholder="Schreib deine Antwort hier..." data-i18n-attr="placeholder:lesen.writingPrompt.placeholder"></textarea>
       <div class="word-count" id="word-count">0 Wörter</div>
       <div class="tips-box">{writingPrompt.tips}</div>
     </div>
@@ -60,6 +60,16 @@ const { groups, formTask, writingPrompt, errorHunt } = lesen;
   <script type="module">
     import { mountQuiz } from "../../lib/quiz.js";
     import { recordAttempt } from "../../lib/progress.js";
+    import { getLang, loadDict, onLangChange } from "../../lib/i18n.js";
+
+    let dict = {};
+    function tr(key, vars) {
+      const str = dict[key];
+      if (str == null) return key;
+      if (!vars) return str;
+      return str.replace(/\{(\w+)\}/g, (m, k) => (k in vars ? String(vars[k]) : m));
+    }
+
     const groups = JSON.parse(document.getElementById("groups-data").textContent);
     document.querySelectorAll(".quiz-card[data-group]").forEach((el) => {
       const g = groups[+el.dataset.group];
@@ -76,9 +86,20 @@ const { groups, formTask, writingPrompt, errorHunt } = lesen;
 
     const textarea = document.getElementById("writing-area");
     const wordCount = document.getElementById("word-count");
-    textarea.addEventListener("input", () => {
+    function renderWordCount() {
       const words = textarea.value.trim().split(/\s+/).filter(Boolean).length;
-      wordCount.textContent = `${words} Wörter${words < 60 ? " (Ziel: mindestens 60–80)" : " ✓"}`;
+      wordCount.textContent = tr("lesen.wordCount", { n: words }) + (words < 60 ? ` (${tr("lesen.wordCount.goal")})` : " ✓");
+    }
+    textarea.addEventListener("input", renderWordCount);
+
+    async function bootI18n() {
+      dict = await loadDict(getLang());
+      renderWordCount();
+    }
+    onLangChange((code, newDict) => {
+      dict = newDict;
+      renderWordCount();
     });
+    bootI18n();
   </script>
 </Layout>

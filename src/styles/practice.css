@@ -35,6 +35,9 @@
 
 .practice-main { max-width: 880px; margin: 0 auto; padding: 40px 24px 80px; }
 
+.practice-back-link { display: inline-block; margin-bottom: 20px; font-weight: 600; font-size: .875rem; color: var(--brand-blue-dark); text-decoration: none; }
+.practice-back-link:hover { color: var(--accent-dark); }
+
 .practice-hero { text-align: center; margin-bottom: 40px; }
 .practice-hero .eyebrow { text-align: center; }
 .practice-hero h1 {
@@ -62,18 +65,31 @@
   display: block;
   transition: transform .15s ease, box-shadow .15s ease;
 }
-.tool-card:hover { transform: translateY(-3px); box-shadow: 0 12px 28px rgba(28,43,63,.1); }
-.tool-card-icon { font-size: 2rem; margin-bottom: 12px; }
+.tool-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-hover); }
+.tool-card-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--gradient-brand);
+  color: #fff;
+  font-size: 1.2rem;
+  margin-bottom: 16px;
+  box-shadow: 0 6px 14px rgba(13, 148, 136, .14);
+}
 .tool-card h3 { text-align: left; margin: 0 0 8px; font-family: var(--font-display); }
-.tool-card p { margin: 0; color: var(--muted); font-size: .95rem; }
+.tool-card p { margin: 0 0 16px; color: var(--muted); font-size: .95rem; }
 .tool-card-count {
-  display: inline-block;
-  margin-top: 12px;
+  display: inline-flex;
+  align-items: center;
+  background: var(--blue-100);
+  color: var(--brand-blue-dark);
   font-size: .8rem;
   font-weight: 700;
-  color: var(--brand-blue-dark);
-  text-transform: uppercase;
-  letter-spacing: .04em;
+  padding: 4px 12px;
+  border-radius: var(--radius-pill);
 }
 
 /* Topic tabs (grammar page) */

@@ -3,6 +3,7 @@
 // reusing the existing /uebungen tool catalog. `tools` picks which of the five
 // existing tools to show — see docs/exams-hub-tier2-v1.md for which exams get which,
 // and why (DTZ-authentic tools aren't shown as exam-authentic for exams they don't match).
+import Icon from "./Icon.astro";
 import artikel from "../data/artikel.json";
 import grammatik from "../data/grammatik.json";
 import wortschatz from "../data/wortschatz.json";
@@ -22,35 +23,35 @@ const readingQuestionCount = lesen.groups.reduce((sum, g) => sum + g.questions.l
 const catalog = {
   artikel: {
     href: "/uebungen/artikel-trainer",
-    icon: "🎯",
+    icon: "target",
     title: "der/die/das-Trainer",
     desc: "Schnelles Artikel-Training mit sofortigem Feedback.",
     count: `${artikel.length} Nomen`,
   },
   grammatik: {
     href: "/uebungen/grammatik",
-    icon: "📚",
-    title: "Grammatik-Quiz",
-    desc: "Lückentext-Übungen zu Akkusativ, Dativ, Passiv, Konjunktiv II und mehr.",
+    icon: "book",
+    title: "Grammatik",
+    desc: "Themen nach Niveau: Akkusativ, Dativ, Passiv, Konjunktiv II und mehr.",
     count: `${grammatik.length} Themen · ${grammarQuestionCount} Fragen`,
   },
   wortschatz: {
     href: "/uebungen/wortschatz",
-    icon: "🗂️",
+    icon: "folder",
     title: "Wortschatz & Redemittel",
     desc: "Karteikarten mit nützlichen Redemitteln und Alltagsvokabeln.",
     count: `${wortschatz.length} Karten`,
   },
   sprechen: {
     href: "/uebungen/sprechen",
-    icon: "🗣️",
+    icon: "mic",
     title: "Sprechen: Bildbeschreibung",
     desc: "Echte DTZ-Prüferfragen zur Bildbeschreibung, mit 90-Sekunden-Timer.",
     count: `${sprechen.length} Bilder`,
   },
   lesen: {
     href: "/uebungen/lesen-schreiben",
-    icon: "✍️",
+    icon: "pencil",
     title: "Lesen & Schreiben",
     desc: "Vollständige DTZ-Leseverstehen-Simulation mit Lösungen, plus Schreibaufgaben.",
     count: `${readingQuestionCount} Leseaufgaben`,
@@ -65,7 +66,7 @@ const catalog = {
       const t = catalog[key];
       return (
         <a class="tool-card" href={t.href}>
-          <div class="tool-card-icon">{t.icon}</div>
+          <div class="tool-card-icon"><Icon name={t.icon} /></div>
           <h3>{t.title}</h3>
           <p>{t.desc}</p>
           <span class="tool-card-count">{t.count}</span>

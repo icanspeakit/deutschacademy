@@ -3,60 +3,120 @@ import Layout from "../../layouts/Layout.astro";
 import PracticeHeader from "../../components/PracticeHeader.astro";
 import "../../styles/practice.css";
 import grammatik from "../../data/grammatik.json";
+
+const WORKSPACE_HREF = {
+  akkusativ: "/uebungen/grammatik/akkusativ",
+  praepositionen: "/uebungen/grammatik/verben-praepositionen",
+  dativ: "/uebungen/grammatik/dativ",
+  passiv: "/uebungen/grammatik/passiv",
+  konjunktiv2: "/uebungen/grammatik/konjunktiv2",
+  relativpronomen: "/uebungen/grammatik/relativpronomen",
+  "trennbare-verben": "/uebungen/grammatik/trennbare-verben",
+};
+
+const ICON = {
+  akkusativ: "🎯",
+  dativ: "🤝",
+  praepositionen: "🔗",
+  passiv: "🔄",
+  konjunktiv2: "💭",
+  relativpronomen: "🧩",
+  "trennbare-verben": "✂️",
+};
+
+const LEVEL_ORDER = ["A1", "A2", "B1", "B2", "C1"];
+const levels = LEVEL_ORDER.filter((lvl) => grammatik.some((t) => t.level === lvl));
+
+// Every level row is padded with placeholder cards up to this width, so a level with only
+// one real topic (e.g. A1 today) doesn't stretch into one giant card or look lopsided next
+// to a fuller level. 4 comfortably covers the busiest level (B1, 3 topics) with room to grow.
+const ROW_WIDTH = 4;
 ---
-<Layout title="Grammatik-Quiz – DeutschAcademy">
-  <PracticeHeader title="Grammatik-Quiz" />
+<Layout title="Grammatik – DeutschAcademy">
+  <PracticeHeader title="Grammatik" />
   <main class="practice-main">
-    <div class="practice-hero">
-      <p class="eyebrow">Grammatik üben</p>
-      <h1>Lückentext-Quiz nach Thema</h1>
-      <p>Jede Frage stammt aus echten Beispielsätzen und Tabellen aus dem Unterricht — kein generischer Grammatik-Bot.</p>
+    <div class="grammatik-hero">
+      <p class="eyebrow" data-i18n="grammatik.hero.eyebrow">Grammatik üben</p>
+      <h1 data-i18n="grammatik.hero.title">Themen nach Niveau</h1>
+      <p data-i18n="grammatik.hero.subtitle">Wähle ein Thema. Für Akkusativ und Verben mit Präpositionen gibt es einen eigenen Übungsraum mit mehreren Aufgabentypen — die anderen Themen übst du im Lückentext-Quiz.</p>
     </div>
-    <div class="topic-tabs" id="topic-tabs">
-      {grammatik.map((t, i) => (
-        <button class="topic-tab" type="button" data-topic={i}>{t.name}</button>
-      ))}
-    </div>
-    <p class="topic-intro" id="topic-intro"></p>
-    <p class="topic-crosslink" id="topic-crosslink" hidden>
-      Diese Passiv-Sätze stammen aus einer echten Unterrichtsdiskussion über Medien in Deutschland —
-      mehr dazu im <a href="/uebungen/kultur">Kulturwissen: Wer bezahlt ARD und ZDF?</a>
-    </p>
-    <p class="topic-crosslink" id="topic-crosslink-akkusativ" hidden>
-      Für Akkusativ gibt es einen eigenen Übungsraum mit Fokus- und Testmodus, Schwierigkeitsstufen
-      und Deklinationstabelle: <a href="/uebungen/grammatik/akkusativ">Akkusativ-Workspace öffnen</a>
-    </p>
-    <div class="quiz-card" id="quiz-root"></div>
+
+    {levels.map((level) => (
+      <section class="level-section">
+        <div class="level-heading">
+          <span class="badge badge-info">{level}</span>
+        </div>
+        <div class="tool-grid">
+          {grammatik.filter((t) => t.level === level).map((t) => {
+            const href = WORKSPACE_HREF[t.id] || `/uebungen/grammatik/quiz?topic=${t.id}`;
+            const isWorkspace = Boolean(WORKSPACE_HREF[t.id]);
+            return (
+              <a class="tool-card" href={href}>
+                <div class="tool-card-icon">{ICON[t.id] || "📚"}</div>
+                <h3>{t.name}</h3>
+                <p>{t.intro}</p>
+                {isWorkspace ? (
+                  <span class="tool-card-count" data-i18n="grammatik.card.workspace">Übungsraum</span>
+                ) : (
+                  <span class="tool-card-count" data-i18n="grammatik.card.questions" data-i18n-vars={JSON.stringify({ n: t.questions.length })}>{t.questions.length} Fragen</span>
+                )}
+              </a>
+            );
+          })}
+          {Array.from({ length: Math.max(0, ROW_WIDTH - grammatik.filter((t) => t.level === level).length) }).map(() => (
+            <div class="tool-card tool-card--placeholder" aria-hidden="true">
+              <div class="tool-card-icon tool-card-icon--placeholder">+</div>
+              <h3 data-i18n="grammatik.card.comingSoonTitle">Weiteres Thema</h3>
+              <p data-i18n="grammatik.card.comingSoonDesc">Noch nicht verfügbar.</p>
+              <span class="tool-card-count tool-card-count--placeholder" data-i18n="tool.comingSoon.count">Bald verfügbar</span>
+            </div>
+          ))}
+        </div>
+      </section>
+    ))}
   </main>
-  <script type="application/json" id="topics-data" set:html={JSON.stringify(grammatik)}></script>
-  <script type="module">
-    import { mountQuiz } from "../../lib/quiz.js";
-    import { recordAttempt } from "../../lib/progress.js";
-    const topics = JSON.parse(document.getElementById("topics-data").textContent);
-    const tabsEl = document.getElementById("topic-tabs");
-    const introEl = document.getElementById("topic-intro");
-    const crosslinkEl = document.getElementById("topic-crosslink");
-    const crosslinkAkkusativEl = document.getElementById("topic-crosslink-akkusativ");
-    const quizRoot = document.getElementById("quiz-root");
-
-    function loadTopic(index) {
-      const topic = topics[index];
-      [...tabsEl.children].forEach((btn, i) => btn.classList.toggle("active", i === index));
-      introEl.textContent = topic.intro;
-      crosslinkEl.hidden = topic.id !== "passiv";
-      crosslinkAkkusativEl.hidden = topic.id !== "akkusativ";
-      mountQuiz(quizRoot, topic.questions, {
-        mode: "text",
-        onAnswer: (ok) => recordAttempt({ skill: "grammatik", correct: ok }),
-      });
-    }
-
-    [...tabsEl.children].forEach((btn, i) => {
-      btn.addEventListener("click", () => loadTopic(i));
-    });
-
-    const hashId = window.location.hash.replace("#", "");
-    const startIndex = topics.findIndex((t) => t.id === hashId);
-    loadTopic(startIndex >= 0 ? startIndex : 0);
-  </script>
 </Layout>
+
+<style>
+  .grammatik-hero {
+    background: var(--gradient-brand);
+    border-radius: var(--radius-lg);
+    padding: 36px 40px;
+    margin-bottom: 8px;
+    text-align: center;
+  }
+  .grammatik-hero .eyebrow { color: rgba(255,255,255,.85); }
+  .grammatik-hero h1 {
+    font-family: var(--font-display);
+    font-size: clamp(1.6rem, 4vw, 2.4rem);
+    color: #fff;
+    margin: 0 0 10px;
+  }
+  .grammatik-hero p { color: rgba(255,255,255,.92); margin: 0 auto; max-width: 560px; }
+
+  .level-section { margin-top: 40px; }
+  .level-section:first-of-type { margin-top: 0; }
+  .level-heading { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
+
+  /* Fixed column count (instead of the shared tool-grid's auto-fit) so every level lines up
+     the same way, whether it has 1 topic or a full row of them. */
+  .tool-grid { grid-template-columns: repeat(4, 1fr); }
+  @media (max-width: 900px) { .tool-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 560px) { .tool-grid { grid-template-columns: 1fr; } }
+
+  .tool-card--placeholder {
+    background: var(--surface);
+    border-style: dashed;
+    border-color: var(--border-strong);
+    cursor: default;
+  }
+  .tool-card--placeholder:hover { transform: none; box-shadow: none; }
+  .tool-card--placeholder h3, .tool-card--placeholder p { color: var(--muted-soft); }
+  .tool-card-icon--placeholder {
+    background: var(--border);
+    color: var(--muted-soft);
+    font-size: 1.4rem;
+    font-weight: 700;
+  }
+  .tool-card-count--placeholder { background: var(--surface); color: var(--muted-soft); border: 1px solid var(--border-strong); }
+</style>

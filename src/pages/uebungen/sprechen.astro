@@ -8,15 +8,24 @@ import sprechen from "../../data/sprechen.json";
   <PracticeHeader title="Sprechen: Bildbeschreibung" />
   <main class="practice-main">
     <div class="practice-hero">
-      <p class="eyebrow">DTZ Sprechen, Teil 2</p>
-      <h1>Bildbeschreibung üben</h1>
-      <p>Echte Prüferfragen aus dem Unterricht. In der echten Prüfung hast du 90 Sekunden für die Beschreibung und 90 Sekunden für die Nachfragen — so wie hier.</p>
+      <p class="eyebrow" data-i18n="sprechen.hero.eyebrow">DTZ Sprechen, Teil 2</p>
+      <h1 data-i18n="sprechen.hero.title">Bildbeschreibung üben</h1>
+      <p data-i18n="sprechen.hero.subtitle">Echte Prüferfragen aus dem Unterricht. In der echten Prüfung hast du 90 Sekunden für die Beschreibung und 90 Sekunden für die Nachfragen — so wie hier.</p>
     </div>
     <div class="prompt-card" id="prompt-root"></div>
   </main>
   <script type="application/json" id="sprechen-data" set:html={JSON.stringify(sprechen)}></script>
   <script type="module">
     import { recordSession } from "../../lib/progress.js";
+    import { getLang, loadDict, onLangChange } from "../../lib/i18n.js";
+
+    let dict = {};
+    function tr(key, vars) {
+      const str = dict[key];
+      if (str == null) return key;
+      if (!vars) return str;
+      return str.replace(/\{(\w+)\}/g, (m, k) => (k in vars ? String(vars[k]) : m));
+    }
 
     const prompts = JSON.parse(document.getElementById("sprechen-data").textContent);
     const root = document.getElementById("prompt-root");
@@ -37,17 +46,17 @@ import sprechen from "../../data/sprechen.json";
         <h3>${p.title}</h3>
         <img class="prompt-image" src="${p.image}" alt="${p.title}" loading="lazy" />
         <div class="prompt-timer" id="timer">90</div>
-        <button class="quiz-btn quiz-btn--primary prompt-reveal-btn" id="start-timer" type="button">▶ Beschreibung starten (90s)</button>
-        <div class="prompt-section-label">Beschreibungsfragen</div>
+        <button class="quiz-btn quiz-btn--primary prompt-reveal-btn" id="start-timer" type="button">${tr("sprechen.startTimer")}</button>
+        <div class="prompt-section-label">${tr("sprechen.descQuestions")}</div>
         <ul>${p.beschreibung.map((q) => `<li>${q}</li>`).join("")}</ul>
         <div id="persoenlich-wrap" style="display:none;">
-          <div class="prompt-section-label">Persönliche Fragen (Nachfragen)</div>
+          <div class="prompt-section-label">${tr("sprechen.personalQuestions")}</div>
           <ul>${p.persoenlich.map((q) => `<li>${q}</li>`).join("")}</ul>
         </div>
-        <button class="quiz-btn prompt-reveal-btn" id="reveal-personal" type="button">Persönliche Fragen anzeigen</button>
+        <button class="quiz-btn prompt-reveal-btn" id="reveal-personal" type="button">${tr("sprechen.revealPersonal")}</button>
         <div class="prompt-nav">
-          <button class="quiz-btn" id="prev-prompt" type="button">← Vorheriges Bild</button>
-          <button class="quiz-btn" id="next-prompt" type="button">Nächstes Bild →</button>
+          <button class="quiz-btn" id="prev-prompt" type="button">${tr("sprechen.prevImage")}</button>
+          <button class="quiz-btn" id="next-prompt" type="button">${tr("sprechen.nextImage")}</button>
         </div>`;
 
       document.getElementById("start-timer").addEventListener("click", (e) => {
@@ -60,7 +69,7 @@ import sprechen from "../../data/sprechen.json";
           timerEl.textContent = String(seconds);
           if (seconds <= 0) {
             stopTimer();
-            timerEl.textContent = "Zeit um!";
+            timerEl.textContent = tr("sprechen.timeUp");
             e.target.disabled = false;
             recordSession("sprechen");
           }
@@ -78,6 +87,14 @@ import sprechen from "../../data/sprechen.json";
         render();
       });
     }
-    render();
+    async function bootI18n() {
+      dict = await loadDict(getLang());
+      render();
+    }
+    onLangChange((code, newDict) => {
+      dict = newDict;
+      render();
+    });
+    bootI18n();
   </script>
 </Layout>

@@ -5,12 +5,11 @@
 
 #vt-eyebrow { font-family: "IBM Plex Mono", "SFMono-Regular", Consolas, monospace; letter-spacing: .08em; text-align: left; }
 
-.vt-hero { text-align: left; margin-bottom: 40px; }
+.vt-hero { text-align: left; margin-bottom: 18px; }
 .vt-hero h1 {
-  font-family: var(--font-display); font-size: clamp(1.6rem, 4vw, 2.4rem);
-  color: var(--vt-ink); margin: 0 0 12px;
+  font-family: var(--font-display); font-size: clamp(1.05rem, 1.8vw, 1.25rem); font-weight: 500;
+  color: var(--vt-muted); margin: 2px 0 0;
 }
-.vt-hero p { color: var(--vt-muted); max-width: 640px; margin: 0; }
 
 /* Full-bleed working surface: breaks out of .practice-main's 880px column so the tool
    (tabs/toolbar/card) spans the whole viewport and the night-mode background reaches the
@@ -42,7 +41,13 @@
   --vt-wrong-bg: #3a1f1a;
   --vt-wrong-border: #c1462f;
 }
-.vt-inner { max-width: 860px; margin: 0 auto; padding: 48px 32px 64px; box-sizing: border-box; }
+.vt-inner { max-width: 90vw; margin: 0 auto; padding: 32px 32px 64px; box-sizing: border-box; }
+
+/* Tabs + toolbar + active card: the working surface itself, sized to dominate the
+   viewport (~90%) now that the hero above it has been cut down to a small label. */
+.vt-tool { display: flex; flex-direction: column; min-height: 90vh; }
+.vt-tool #vt-content { flex: 1; display: flex; flex-direction: column; }
+.vt-tool .vt-content { flex: 1; display: flex; flex-direction: column; justify-content: center; }
 
 .vt-tabs { display: flex; flex-wrap: wrap; gap: 6px 22px; border-bottom: 1px solid var(--vt-border); margin: 0 0 26px; }
 .vt-tab {
@@ -100,9 +105,9 @@
 .vt-content { display: flex; flex-direction: column; gap: 26px; }
 
 /* ---- Karteikarten ---- */
-.vt-flip { perspective: 1400px; cursor: pointer; }
+.vt-flip { perspective: 1400px; cursor: pointer; flex: 1; display: flex; }
 .vt-flip-inner {
-  position: relative; min-height: 300px;
+  position: relative; min-height: 300px; width: 100%;
   transform-style: preserve-3d; transition: transform 1.1s cubic-bezier(.2,.8,.25,1);
 }
 .vt-flip-inner.is-flipped { transform: rotateX(-180deg); }

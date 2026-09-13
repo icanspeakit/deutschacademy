@@ -11,9 +11,9 @@ import kultur from "../../data/kultur.json";
   <PracticeHeader title="Kulturwissen" />
   <main class="practice-main">
     <div class="practice-hero">
-      <p class="eyebrow">Landeskunde</p>
-      <h1>Kulturwissen</h1>
-      <p>Kurze Themen aus echten Unterrichtsgesprächen bei DeutschAcademy — kein generisches KI-Trivia.</p>
+      <p class="eyebrow" data-i18n="kultur.hero.eyebrow">Landeskunde</p>
+      <h1 data-i18n="tool.kultur.title">Kulturwissen</h1>
+      <p data-i18n="kultur.hero.subtitle">Kurze Themen aus echten Unterrichtsgesprächen bei DeutschAcademy — kein generisches KI-Trivia.</p>
     </div>
 
     {kultur.map((note) => (
@@ -46,13 +46,13 @@ import kultur from "../../data/kultur.json";
         </details>
         <p class="culture-source">{note.sourceNote}</p>
         <div class="culture-links">
-          <a class="quiz-btn" href="/uebungen/grammatik#passiv">Die Passiv-Sätze dazu üben →</a>
-          <a class="quiz-btn" href="/uebungen/wortschatz">Deine Meinung dazu äußern (Redemittel) →</a>
+          <a class="quiz-btn" href="/uebungen/grammatik/passiv" data-i18n="kultur.link.passiv">Die Passiv-Sätze dazu üben →</a>
+          <a class="quiz-btn" href="/uebungen/wortschatz" data-i18n="kultur.link.wortschatz">Deine Meinung dazu äußern (Redemittel) →</a>
         </div>
       </article>
     ))}
 
-    <p class="culture-more-note">
+    <p class="culture-more-note" data-i18n="kultur.moreNote">
       Weitere Themen (Feiertage, regionale Bräuche, Alltagsetikette) folgen, sobald echtes
       Quellmaterial dafür vorliegt — wir erfinden keine kulturellen Behauptungen.
     </p>

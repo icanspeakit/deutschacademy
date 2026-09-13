@@ -13,45 +13,38 @@ const languages = [
 ];
 ---
 <Layout title="Wortschatz & Redemittel – DeutschAcademy">
-  <Fragment slot="head">
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap"
-      rel="stylesheet"
-    />
-  </Fragment>
   <PracticeHeader title="Wortschatz & Redemittel" />
 
   <main class="vt-shell" id="vt-page">
     <div class="vt-inner">
       <div class="vt-hero">
         <p class="eyebrow" id="vt-eyebrow">Karteikarten</p>
-        <h1>Redemittel & Alltagsvokabeln</h1>
-        <p>Drei Übungsarten für dieselben Karten: klassisch umdrehen, Multiple-Choice lernen oder dich im Testmodus abfragen lassen.</p>
+        <h1 data-i18n="wortschatz.hero.title">Redemittel & Alltagsvokabeln</h1>
       </div>
 
-      <div class="vt-tabs" id="vt-tabs">
-        <button class="vt-tab active" type="button" data-tab="cards">Karteikarten</button>
-        <button class="vt-tab" type="button" data-tab="learn">Lernen</button>
-        <button class="vt-tab" type="button" data-tab="test">Testen</button>
-        <button class="vt-tab" type="button" data-tab="list">Wortliste</button>
-      </div>
-
-      <div class="vt-toolbar">
-        <div class="vt-lang-tabs" id="vt-lang-tabs"></div>
-        <div class="vt-toolbar-right">
-          <label class="vt-direction">
-            <input type="checkbox" class="vt-switch" id="vt-dir-switch" checked />
-            <span id="vt-dir-label"></span>
-          </label>
-          <button class="vt-pill" id="vt-deck-chip" type="button"></button>
-          <span class="vt-position" id="vt-position"></span>
-          <button class="vt-theme-toggle" id="vt-theme-toggle" type="button" title="Dunkles Design umschalten">🌙</button>
+      <div class="vt-tool">
+        <div class="vt-tabs" id="vt-tabs">
+          <button class="vt-tab active" type="button" data-tab="cards" data-i18n="wortschatz.tab.cards">Karteikarten</button>
+          <button class="vt-tab" type="button" data-tab="learn" data-i18n="wortschatz.tab.learn">Lernen</button>
+          <button class="vt-tab" type="button" data-tab="test" data-i18n="wortschatz.tab.test">Testen</button>
+          <button class="vt-tab" type="button" data-tab="list" data-i18n="wortschatz.tab.list">Wortliste</button>
         </div>
-      </div>
 
-      <div id="vt-content"></div>
+        <div class="vt-toolbar">
+          <div class="vt-lang-tabs" id="vt-lang-tabs"></div>
+          <div class="vt-toolbar-right">
+            <label class="vt-direction">
+              <input type="checkbox" class="vt-switch" id="vt-dir-switch" checked />
+              <span id="vt-dir-label"></span>
+            </label>
+            <button class="vt-pill" id="vt-deck-chip" type="button"></button>
+            <span class="vt-position" id="vt-position"></span>
+            <button class="vt-theme-toggle" id="vt-theme-toggle" type="button" title="Dunkles Design umschalten" data-i18n-attr="title:wortschatz.themeToggle">🌙</button>
+          </div>
+        </div>
+
+        <div id="vt-content"></div>
+      </div>
     </div>
   </main>
   <script type="application/json" id="fc-data" set:html={JSON.stringify(wortschatz)}></script>

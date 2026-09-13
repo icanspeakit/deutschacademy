@@ -1,6 +1,8 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import LanguageSwitcher from "../components/LanguageSwitcher.astro";
 import "../styles/landing.css";
+import "../styles/m1.css";
 import artikel from "../data/artikel.json";
 import grammatik from "../data/grammatik.json";
 import wortschatz from "../data/wortschatz.json";
@@ -12,24 +14,44 @@ import lid from "../data/leben-in-deutschland.json";
 const grammarQuestionCount = grammatik.reduce((sum, t) => sum + t.questions.length, 0);
 const readingQuestionCount = lesen.groups.reduce((sum, g) => sum + g.questions.length, 0);
 
+// Icons: inner <path>/<circle> markup for a 24x24 viewBox, fill="currentColor" —
+// ported from the "DA für Dich – Übungsseite" design mockup so the homepage grid
+// matches it (gradient tile + real iconography instead of emoji).
+const ICON = {
+  artikel: `<path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm0 14a4 4 0 1 1 0-8 4 4 0 0 1 0 8Z" fill-rule="evenodd"/><circle cx="12" cy="12" r="1.4"/>`,
+  grammatik: `<path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H12v17H6.5A2.5 2.5 0 0 1 4 17.5v-12Z"/><path d="M12 3h5.5A2.5 2.5 0 0 1 20 5.5v12a2.5 2.5 0 0 1-2.5 2.5H12V3Z" opacity="0.55"/>`,
+  wortschatz: `<path d="M3 7a2 2 0 0 1 2-2h4.5l1.5 2H19a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7Z"/>`,
+  aussprache: `<path d="M3 9h3.5l5-4v14l-5-4H3V9Z"/><path d="M15.5 9a3 3 0 0 1 0 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>`,
+  sprechen: `<rect x="9" y="2" width="6" height="12" rx="3"/><path d="M6.5 11a5.5 5.5 0 0 0 11 0h-1.6a3.9 3.9 0 0 1-7.8 0H6.5Z"/><rect x="11.2" y="18" width="1.6" height="3"/>`,
+  lesen: `<path d="M4 20 15 9l3 3-11 11H4v-3Z"/><path d="M13 6l3-3 3 3-3 3-3-3Z" opacity="0.55"/>`,
+  kultur: `<path d="M12 21s7-6.2 7-11.6A7 7 0 0 0 5 9.4C5 14.8 12 21 12 21Zm0-6.5a3 3 0 1 1 0-6 3 3 0 0 1 0 6Z" fill-rule="evenodd"/>`,
+  comingSoon: `<path d="M12 2l2 6 6 2-6 2-2 6-2-6-6-2 6-2 2-6Z"/>`,
+  telc: `<path d="M6 2h9l3 3v17H6V2Z"/><rect x="9" y="12" width="6" height="1.4" fill="#fff" opacity="0.9"/><rect x="9" y="16" width="6" height="1.4" fill="#fff" opacity="0.9"/>`,
+  goethe: `<path d="M12 3 3 8h18L12 3Z"/><path d="M5 9h14v2H5V9Zm1 3h2v6H6v-6Zm4.5 0h2v6h-2v-6Zm4.5 0h2v6h-2v-6ZM4 19h16v2H4v-2Z"/>`,
+  testdaf: `<path d="M12 3 2 8l10 5 10-5-10-5Z"/><path d="M6 12.2v4.3c0 1.4 2.8 2.5 6 2.5s6-1.1 6-2.5v-4.3l-6 3-6-3Z" opacity="0.55"/>`,
+  dtz: `<path d="M12 5c-2-1.3-5-1.3-7 0v13c2-1.3 5-1.3 7 0V5Z"/><path d="M12 5c2-1.3 5-1.3 7 0v13c-2-1.3-5-1.3-7 0V5Z" opacity="0.55"/>`,
+};
+
 // Real catalog — matches /uebungen and /pruefungen exactly, no placeholder numbers.
+// title/desc/count are the German fallback shown before JS applies a translation;
+// titleKey/descKey/countKey + countVars point at the matching public/i18n/*.json entries.
 const tools = [
-  { href: "/uebungen/artikel-trainer", icon: "🎯", title: "der/die/das-Trainer", desc: "Artikel gezielt üben, mit sofortigem Feedback.", count: `${artikel.length} Nomen` },
-  { href: "/uebungen/grammatik", icon: "📚", title: "Grammatik-Quiz", desc: "Lückentext-Übungen zu Akkusativ, Dativ, Passiv und mehr.", count: `${grammatik.length} Themen · ${grammarQuestionCount} Fragen` },
-  { href: "/uebungen/wortschatz", icon: "🗂️", title: "Wortschatz & Redemittel", desc: "Karteikarten zum Umdrehen und Wiederholen.", count: `${wortschatz.length} Karten` },
-  { href: "/uebungen/aussprache", icon: "🔊", title: "Aussprache-Training", desc: "Wörter anhören und im Langsam-Modus üben.", count: `${wortschatz.length + artikel.length} Wörter` },
-  { href: "/uebungen/sprechen", icon: "🗣️", title: "Sprechen: Bildbeschreibung", desc: "Echte DTZ-Prüferfragen, mit 90-Sekunden-Timer.", count: `${sprechen.length} Bilder` },
-  { href: "/uebungen/lesen-schreiben", icon: "✍️", title: "Lesen & Schreiben", desc: "DTZ-Leseverstehen-Simulation plus Schreibaufgaben.", count: `${readingQuestionCount} Aufgaben` },
-  { href: "/uebungen/kultur", icon: "🗺️", title: "Kulturwissen", desc: "Einblicke aus echten Unterrichtsgesprächen.", count: `${kultur.length} Thema${kultur.length === 1 ? "" : "n"}` },
+  { href: "/uebungen/artikel-trainer", icon: ICON.artikel, titleKey: "tool.artikel.title", title: "der/die/das-Trainer", descKey: "tool.artikel.desc", desc: "Artikel gezielt üben, mit sofortigem Feedback.", countKey: "tool.artikel.count", countVars: { n: artikel.length }, count: `${artikel.length} Nomen` },
+  { href: "/uebungen/grammatik", icon: ICON.grammatik, titleKey: "tool.grammatik.title", title: "Grammatik", descKey: "tool.grammatik.desc", desc: "Themen nach Niveau: Akkusativ, Dativ, Passiv und mehr.", countKey: "tool.grammatik.count", countVars: { n: grammatik.length, q: grammarQuestionCount }, count: `${grammatik.length} Themen · ${grammarQuestionCount} Fragen` },
+  { href: "/uebungen/wortschatz", icon: ICON.wortschatz, titleKey: "tool.wortschatz.title", title: "Wortschatz & Redemittel", descKey: "tool.wortschatz.desc", desc: "Karteikarten zum Umdrehen und Wiederholen.", countKey: "tool.wortschatz.count", countVars: { n: wortschatz.length }, count: `${wortschatz.length} Karten` },
+  { href: "/uebungen/aussprache", icon: ICON.aussprache, titleKey: "tool.aussprache.title", title: "Aussprache-Training", descKey: "tool.aussprache.desc", desc: "Wörter anhören und im Langsam-Modus üben.", countKey: "tool.aussprache.count", countVars: { n: wortschatz.length + artikel.length }, count: `${wortschatz.length + artikel.length} Wörter` },
+  { href: "/uebungen/sprechen", icon: ICON.sprechen, titleKey: "tool.sprechen.title", title: "Sprechen: Bildbeschreibung", descKey: "tool.sprechen.desc", desc: "Echte DTZ-Prüferfragen, mit 90-Sekunden-Timer.", countKey: "tool.sprechen.count", countVars: { n: sprechen.length }, count: `${sprechen.length} Bilder` },
+  { href: "/uebungen/lesen-schreiben", icon: ICON.lesen, titleKey: "tool.lesen.title", title: "Lesen & Schreiben", descKey: "tool.lesen.desc", desc: "DTZ-Leseverstehen-Simulation plus Schreibaufgaben.", countKey: "tool.lesen.count", countVars: { n: readingQuestionCount }, count: `${readingQuestionCount} Aufgaben` },
+  { href: "/uebungen/kultur", icon: ICON.kultur, titleKey: "tool.kultur.title", title: "Kulturwissen", descKey: "tool.kultur.desc", desc: "Einblicke aus echten Unterrichtsgesprächen.", countKey: "tool.kultur.count", countVars: { n: kultur.length }, count: `${kultur.length} Thema${kultur.length === 1 ? "" : "n"}` },
 ];
-const comingSoonTool = { icon: "✨", title: "Weitere Übungen", desc: "Neue Übungstools sind in Arbeit.", count: "Bald verfügbar" };
+const comingSoonTool = { icon: ICON.comingSoon, titleKey: "tool.comingSoon.title", title: "Weitere Übungen", descKey: "tool.comingSoon.desc", desc: "Neue Übungstools sind in Arbeit.", countKey: "tool.comingSoon.count", count: "Bald verfügbar" };
 
 const exams = [
-  { href: "/pruefungen/telc", icon: "📄", title: "telc", level: "A1–C2" },
-  { href: "/pruefungen/goethe", icon: "🏛️", title: "Goethe-Zertifikat", level: "A1–C2" },
-  { href: "/pruefungen/testdaf", icon: "🎓", title: "TestDaF", level: "≈ B2–C1" },
-  { href: "/pruefungen/dtz", icon: "🧾", title: "DTZ", level: "A2 / B1" },
-  { href: "/pruefungen/leben-in-deutschland", icon: "🇩🇪", title: "Leben in Deutschland", level: `${lid.bundeslaender.length} Bundesländer` },
+  { href: "/pruefungen/telc", icon: ICON.telc, title: "telc", level: "A1–C2" },
+  { href: "/pruefungen/goethe", icon: ICON.goethe, title: "Goethe-Zertifikat", level: "A1–C2" },
+  { href: "/pruefungen/testdaf", icon: ICON.testdaf, title: "TestDaF", level: "≈ B2–C1" },
+  { href: "/pruefungen/dtz", icon: ICON.dtz, title: "DTZ", level: "A2 / B1" },
+  { href: "/pruefungen/leben-in-deutschland", icon: ICON.kultur, title: "Leben in Deutschland", level: `${lid.bundeslaender.length} Bundesländer` },
 ];
 
 const toolCount = tools.length;
@@ -44,18 +66,20 @@ const userCount = 412; // actual signups so far
         <div class="lp-nav-left">
           <a href="/"><img src="/assets/logo.png" alt="DeutschAcademy" /></a>
           <div class="lp-nav-links" id="lp-nav-links">
-            <a href="/uebungen">Übungen</a>
-            <a href="/pruefungen">Prüfungen</a>
+            <a href="/uebungen" data-i18n="nav.exercises">Übungen</a>
+            <a href="/pruefungen" data-i18n="nav.exams">Prüfungen</a>
           </div>
         </div>
         <div class="lp-nav-right">
-          <a href="/uebungen" class="lp-btn lp-btn--primary">Kostenlos üben</a>
+          <a href="/uebungen" class="lp-btn lp-btn--primary" data-i18n="nav.cta">Kostenlos üben</a>
+          <LanguageSwitcher />
           <button
             class="lp-nav-toggle"
             type="button"
             aria-expanded="false"
             aria-controls="lp-nav-links"
             aria-label="Menü öffnen"
+            data-i18n-attr="aria-label:nav.menuOpen"
           >
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
               <line x1="3" y1="6" x2="21" y2="6"></line>
@@ -84,124 +108,159 @@ const userCount = 412; // actual signups so far
       });
     </script>
 
-    <!-- HERO: dashboard advertisement -->
-    <section class="lp-hero">
-      <div class="lp-wrap lp-hero-inner">
-        <div class="lp-hero-copy">
-          <div class="lp-eyebrow">Dein Dashboard</div>
-          <h1>Dein Fortschritt, immer im Blick</h1>
-          <p class="lp-hero-lead">Level, erledigte Lektionen und nächste Schritte an einem Ort — damit du bei jedem Login genau weißt, woran du weitermachst.</p>
-          <p class="lp-hero-sub">Kostenloser Grundkurs A1–C1, plus Prüfungsvorbereitung für Goethe, telc, TestDaF, DTZ und Leben in Deutschland, wenn du bereit bist.</p>
+    <!-- HERO CROSS: dashboard pitch + quiz pitch interleaved into one 2x2 grid
+         (design candidate from m1.astro, promoted here). Desktop-only; mobile
+         gets the stacked device-frame section right below. -->
+    <section class="m1-cross-section">
+      <div class="lp-wrap m1-cross">
+
+        <div class="lp-hero-copy m1-copy-1">
+          <div class="lp-eyebrow" data-i18n="home.hero1.eyebrow">Dein Dashboard</div>
+          <h1 data-i18n="home.hero1.title">Dein Fortschritt, immer im Blick</h1>
+          <p class="lp-hero-lead" data-i18n="home.hero1.lead">Level, erledigte Lektionen und nächste Schritte an einem Ort — damit du bei jedem Login genau weißt, woran du weitermachst.</p>
           <div class="lp-hero-actions">
-            <a href="/uebungen" class="lp-btn lp-btn--primary">Kostenlos starten</a>
-            <span class="lp-nav-login">Bereits dabei? Log in</span>
-          </div>
-          <div class="lp-hero-note">Kostenloser Grundkurs A1–C1 · kein Abo nötig</div>
-        </div>
-        <div class="lp-browser">
-          <div class="lp-browser-bar">
-            <div class="lp-browser-dot"></div><div class="lp-browser-dot"></div><div class="lp-browser-dot"></div>
-            <div class="lp-browser-url">deutschacademy.com/dashboard</div>
-          </div>
-          <div class="lp-browser-body">
-            <div class="lp-sidebar">
-              <img src="/assets/logo.png" alt="" />
-              <div class="lp-sidebar-link lp-sidebar-link--active">Dashboard</div>
-              <div class="lp-sidebar-link">Grammatik</div>
-              <div class="lp-sidebar-link">Wortschatz</div>
-              <div class="lp-sidebar-link">Sprechen</div>
-              <div class="lp-sidebar-link">Prüfungen</div>
-              <div class="lp-sidebar-upsell">
-                <strong>Go Premium</strong>
-                <span>Unlock exam prep and corrections.</span>
-              </div>
-            </div>
-            <div class="lp-dash">
-              <div class="lp-dash-header">
-                <div class="lp-dash-greeting"><strong>Guten Morgen, Ana</strong><span>Day 34 · B1.2 in progress</span></div>
-                <div class="lp-avatar-initials">A</div>
-              </div>
-              <div class="lp-progress-card">
-                <div class="lp-progress-row"><span>Level B1 · Selbstständig</span><span class="pct">62%</span></div>
-                <div class="lp-progress-track"><div class="lp-progress-fill" style="width:62%"></div></div>
-                <div class="lp-progress-note">18 of 29 lessons · next: Termin beim Amt</div>
-              </div>
-              <div class="lp-mini-grid">
-                <div class="lp-mini-card">
-                  <img src="/assets/methods.jpg" alt="" />
-                  <div class="lp-mini-card-body"><span>A2 · Alltag</span><div class="lp-mini-bar"><div class="lp-mini-bar-fill" style="width:100%;background:var(--brand-blue-light)"></div></div></div>
-                </div>
-                <div class="lp-mini-card">
-                  <img src="/assets/foto-buero-2.jpg" alt="" style="object-position: 50% 25%;" />
-                  <div class="lp-mini-card-body"><span>B1 · Beruf</span><div class="lp-mini-bar"><div class="lp-mini-bar-fill" style="width:62%;background:var(--brand-blue)"></div></div></div>
-                </div>
-                <div class="lp-mini-card">
-                  <img src="/assets/online-is-futur.jpg" alt="" />
-                  <div class="lp-mini-card-body"><span>Authentic clips</span><div class="lp-mini-bar"><div class="lp-mini-bar-fill" style="width:24%;background:var(--accent)"></div></div></div>
-                </div>
-                <div class="lp-locked-card">
-                  <div class="icon">🔒</div>
-                  <strong>Goethe B2 prep</strong>
-                  <span>Premium</span>
-                </div>
-              </div>
-            </div>
+            <a href="/uebungen" class="lp-btn lp-btn--primary" data-i18n="home.cta.startFree">Kostenlos starten</a>
+            <span class="lp-nav-login" data-i18n="home.hero1.login">Bereits dabei? Log in</span>
           </div>
         </div>
+
+        <div class="m1-mock-1">
+          <div class="lp-browser">
+            <div class="lp-browser-bar">
+              <div class="lp-browser-dot"></div><div class="lp-browser-dot"></div><div class="lp-browser-dot"></div>
+              <div class="lp-browser-url">deutschacademy.com/dashboard</div>
+            </div>
+            <div class="lp-browser-body">
+              <div class="lp-sidebar">
+                <img src="/assets/logo.png" alt="" />
+                <div class="lp-sidebar-link lp-sidebar-link--active" data-i18n="home.mock.dashboard">Dashboard</div>
+                <div class="lp-sidebar-link" data-i18n="home.mock.grammatikShort">Grammatik</div>
+                <div class="lp-sidebar-link" data-i18n="home.mock.wortschatzShort">Wortschatz</div>
+                <div class="lp-sidebar-link" data-i18n="home.mock.sprechenShort">Sprechen</div>
+                <div class="lp-sidebar-link" data-i18n="nav.exams">Prüfungen</div>
+                <div class="lp-sidebar-upsell">
+                  <strong data-i18n="home.mock.goPremium">Go Premium</strong>
+                  <span data-i18n="home.mock.unlockDesc">Unlock exam prep and corrections.</span>
+                </div>
+              </div>
+              <div class="lp-dash">
+                <div class="lp-dash-header">
+                  <div class="lp-dash-greeting"><strong data-i18n="home.mock.greeting">Guten Morgen, Ana</strong><span data-i18n="home.mock.dayProgress">Day 34 · B1.2 in progress</span></div>
+                  <div class="lp-avatar-initials">A</div>
+                </div>
+                <div class="lp-progress-card">
+                  <div class="lp-progress-row"><span>Level B1 · Selbstständig</span><span class="pct">62%</span></div>
+                  <div class="lp-progress-track"><div class="lp-progress-fill" style="width:62%"></div></div>
+                  <div class="lp-progress-note">18 of 29 lessons · next: Termin beim Amt</div>
+                </div>
+                <div class="lp-mini-grid">
+                  <div class="lp-mini-card">
+                    <img src="/assets/methods.jpg" alt="" />
+                    <div class="lp-mini-card-body"><span data-i18n="home.mock.a2Alltag">A2 · Alltag</span><div class="lp-mini-bar"><div class="lp-mini-bar-fill" style="width:100%;background:var(--brand-blue-light)"></div></div></div>
+                  </div>
+                  <div class="lp-mini-card">
+                    <img src="/assets/foto-buero-2.jpg" alt="" style="object-position: 50% 25%;" />
+                    <div class="lp-mini-card-body"><span data-i18n="home.mock.b1Beruf">B1 · Beruf</span><div class="lp-mini-bar"><div class="lp-mini-bar-fill" style="width:62%;background:var(--brand-blue)"></div></div></div>
+                  </div>
+                  <div class="lp-mini-card">
+                    <img src="/assets/online-is-futur.jpg" alt="" />
+                    <div class="lp-mini-card-body"><span data-i18n="home.mock.authenticClips">Authentic clips</span><div class="lp-mini-bar"><div class="lp-mini-bar-fill" style="width:24%;background:var(--accent)"></div></div></div>
+                  </div>
+                  <div class="lp-locked-card">
+                    <div class="icon">🔒</div>
+                    <strong data-i18n="home.mock.goetheB2Prep">Goethe B2 prep</strong>
+                    <span data-i18n="home.word.premium">Premium</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="m1-mock-2">
+          <div class="lp-browser">
+            <div class="lp-browser-bar">
+              <div class="lp-browser-dot"></div><div class="lp-browser-dot"></div><div class="lp-browser-dot"></div>
+              <div class="lp-browser-url">deutschacademy.com/uebungen</div>
+            </div>
+            <div class="lp-browser-body">
+              <div class="lp-sidebar">
+                <img src="/assets/logo.png" alt="" />
+                <div class="lp-sidebar-link lp-sidebar-link--active">📚 <span data-i18n="tool.grammatik.title">Grammatik</span></div>
+                <div class="lp-sidebar-link">🎯 <span data-i18n="tool.artikel.title">der/die/das-Trainer</span></div>
+                <div class="lp-sidebar-link">🗂️ <span data-i18n="home.mock.wortschatzShort">Wortschatz</span></div>
+                <div class="lp-sidebar-link">🔊 <span data-i18n="tool.aussprache.title">Aussprache</span></div>
+                <div class="lp-sidebar-link">🗣️ <span data-i18n="home.mock.sprechenShort">Sprechen</span></div>
+                <div class="lp-sidebar-link">✍️ <span data-i18n="tool.lesen.title">Lesen &amp; Schreiben</span></div>
+                <div class="lp-sidebar-link">🗺️ <span data-i18n="tool.kultur.title">Kulturwissen</span></div>
+              </div>
+              <div class="lp-dash">
+                <div class="lp-dash-header">
+                  <div class="lp-dash-greeting"><strong data-i18n="tool.grammatik.title">Grammatik</strong><span>Thema 1 von {grammatik.length}</span></div>
+                </div>
+                <div class="lp-dash-stat-row">
+                  <div class="lp-dash-stat"><strong>{grammarQuestionCount}</strong><span data-i18n="home.mock.questionsLabel">Fragen</span></div>
+                  <div class="lp-dash-stat"><strong>{grammatik.length}</strong><span data-i18n="home.mock.topicsLabel">Themen</span></div>
+                  <div class="lp-dash-stat"><strong>0€</strong><span data-i18n="home.mock.costLabel">Kosten</span></div>
+                </div>
+                <div class="lp-dash-question">
+                  <div class="lp-quiz-kicker">Akkusativ</div>
+                  <p class="lp-quiz-prompt">Ich habe <span class="blank">___</span> Computer.</p>
+                  <p class="lp-quiz-hint">(der Computer)</p>
+                  <div class="lp-quiz-choices">
+                    <span class="lp-quiz-choice">der</span>
+                    <span class="lp-quiz-choice lp-quiz-choice--correct">den</span>
+                    <span class="lp-quiz-choice">das</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="lp-hero-copy m1-copy-2">
+          <div class="lp-eyebrow" data-i18n="home.hero2.eyebrow">Deutsch von A1 bis C1</div>
+          <h1 data-i18n="home.hero2.title">Deutsch lernen, wie es wirklich gesprochen wird</h1>
+          <p class="lp-hero-lead" data-i18n="home.hero2.lead">Grammatik, Alltagsdeutsch und Sprechpraxis — aufgebaut aus echtem Unterrichtsmaterial, nicht kalt für eine Plattform geschrieben.</p>
+          <div class="lp-hero-actions">
+            <a href="#" class="lp-btn lp-btn--primary" data-i18n="home.hero2.cta1">Start Learning Free</a>
+            <a href="#" class="lp-btn lp-btn--outline" data-i18n="home.hero2.cta2">See How It Works</a>
+          </div>
+          <div class="lp-hero-progress"><span></span><span></span></div>
+        </div>
+
       </div>
     </section>
 
-    <!-- SECOND SECTION: previous hero (quiz demo), relocated as-is -->
-    <section class="lp-section">
-      <div class="lp-wrap lp-hero-inner lp-hero-inner--reverse">
-        <div class="lp-hero-copy">
-          <div class="lp-eyebrow">Deutsch von A1 bis C1</div>
-          <h1>Deutsch lernen, wie es wirklich gesprochen wird</h1>
-          <p class="lp-hero-lead">Grammatik, Alltagsdeutsch und Sprechpraxis — aufgebaut aus echtem Unterrichtsmaterial, nicht kalt für eine Plattform geschrieben.</p>
-          <p class="lp-hero-sub">Kostenloser Grundkurs A1–C1, plus Prüfungsvorbereitung für Goethe, telc, TestDaF, DTZ und Leben in Deutschland, wenn du bereit bist.</p>
-          <div class="lp-hero-actions">
-            <a href="#" class="lp-btn lp-btn--primary">Start Learning Free</a>
-            <a href="#" class="lp-btn lp-btn--outline">See How It Works</a>
-          </div>
-          <div class="lp-hero-progress"><span></span><span></span></div>
-          <div class="lp-hero-note">Kostenloser Grundkurs A1–C1 · kein Abo nötig</div>
-        </div>
-        <div class="lp-browser">
-          <div class="lp-browser-bar">
-            <div class="lp-browser-dot"></div><div class="lp-browser-dot"></div><div class="lp-browser-dot"></div>
-            <div class="lp-browser-url">deutschacademy.com/uebungen</div>
-          </div>
-          <div class="lp-browser-body">
-            <div class="lp-sidebar">
-              <img src="/assets/logo.png" alt="" />
-              <div class="lp-sidebar-link lp-sidebar-link--active">📚 Grammatik-Quiz</div>
-              <div class="lp-sidebar-link">🎯 der/die/das-Trainer</div>
-              <div class="lp-sidebar-link">🗂️ Wortschatz</div>
-              <div class="lp-sidebar-link">🔊 Aussprache</div>
-              <div class="lp-sidebar-link">🗣️ Sprechen</div>
-              <div class="lp-sidebar-link">✍️ Lesen &amp; Schreiben</div>
-              <div class="lp-sidebar-link">🗺️ Kulturwissen</div>
+    <!-- Mobile: stacked device-frame preview instead of the 2x2 cross, which
+         doesn't read well recompressed to one column. -->
+    <section class="m1-mobile-hero">
+      <div class="m1-phone">
+        <div class="m1-phone-notch"></div>
+        <div class="m1-phone-home"></div>
+        <div class="m1-phone-screen">
+          <div class="m1-phone-content">
+
+            <div class="m1-phone-block">
+              <div class="lp-eyebrow" data-i18n="home.hero1.eyebrow">Dein Dashboard</div>
+              <h1 data-i18n="home.hero1.title">Dein Fortschritt, immer im Blick</h1>
+              <p data-i18n="home.hero1.lead">Level, erledigte Lektionen und nächste Schritte an einem Ort.</p>
+              <a href="/uebungen" class="lp-btn lp-btn--primary" data-i18n="home.cta.startFree">Kostenlos starten</a>
             </div>
-            <div class="lp-dash">
-              <div class="lp-dash-header">
-                <div class="lp-dash-greeting"><strong>Grammatik-Quiz</strong><span>Thema 1 von {grammatik.length}</span></div>
-              </div>
-              <div class="lp-dash-stat-row">
-                <div class="lp-dash-stat"><strong>{grammarQuestionCount}</strong><span>Fragen</span></div>
-                <div class="lp-dash-stat"><strong>{grammatik.length}</strong><span>Themen</span></div>
-                <div class="lp-dash-stat"><strong>0€</strong><span>Kosten</span></div>
-              </div>
-              <div class="lp-dash-question">
-                <div class="lp-quiz-kicker">Akkusativ</div>
-                <p class="lp-quiz-prompt">Ich habe <span class="blank">___</span> Computer.</p>
-                <p class="lp-quiz-hint">(der Computer)</p>
-                <div class="lp-quiz-choices">
-                  <span class="lp-quiz-choice">der</span>
-                  <span class="lp-quiz-choice lp-quiz-choice--correct">den</span>
-                  <span class="lp-quiz-choice">das</span>
-                </div>
-              </div>
+            <div class="m1-phone-shot">
+              <img src="/assets/methods.jpg" alt="" />
             </div>
+
+            <div class="m1-phone-block m1-phone-block--divider">
+              <div class="lp-eyebrow" data-i18n="home.hero2.eyebrow">Deutsch von A1 bis C1</div>
+              <h1 data-i18n="home.hero2.title">Deutsch lernen, wie es wirklich gesprochen wird</h1>
+              <p data-i18n="home.hero2.lead">Grammatik, Alltagsdeutsch und Sprechpraxis.</p>
+              <a href="#" class="lp-btn lp-btn--primary" data-i18n="home.hero2.cta1">Start Learning Free</a>
+            </div>
+            <div class="m1-phone-shot">
+              <img src="/assets/foto-buero-2.jpg" alt="" style="object-position: 50% 25%;" />
+            </div>
+
           </div>
         </div>
       </div>
@@ -210,10 +269,10 @@ const userCount = 412; // actual signups so far
     <!-- TRUST BAR -->
     <section class="lp-trust">
       <div class="lp-wrap lp-trust-grid">
-        <div class="lp-trust-item"><div class="lp-trust-num">{toolCount}</div><div class="lp-trust-label">Übungstools, alle kostenlos</div></div>
-        <div class="lp-trust-item"><div class="lp-trust-num">{examCount}</div><div class="lp-trust-label">Prüfungen im Überblick</div></div>
-        <div class="lp-trust-item"><div class="lp-trust-num">{userCount}+</div><div class="lp-trust-label">Lernende bisher</div></div>
-        <div class="lp-trust-item"><div class="lp-trust-num">0€</div><div class="lp-trust-label">für den A1–C1-Grundkurs</div></div>
+        <div class="lp-trust-item"><div class="lp-trust-num">{toolCount}</div><div class="lp-trust-label" data-i18n="home.trust.tools">Übungstools, alle kostenlos</div></div>
+        <div class="lp-trust-item"><div class="lp-trust-num">{examCount}</div><div class="lp-trust-label" data-i18n="home.trust.exams">Prüfungen im Überblick</div></div>
+        <div class="lp-trust-item"><div class="lp-trust-num">{userCount}+</div><div class="lp-trust-label" data-i18n="home.trust.learners">Lernende bisher</div></div>
+        <div class="lp-trust-item"><div class="lp-trust-num">0€</div><div class="lp-trust-label" data-i18n="home.trust.freeCourse">für den A1–C1-Grundkurs</div></div>
       </div>
     </section>
 
@@ -221,26 +280,26 @@ const userCount = 412; // actual signups so far
     <section class="lp-section">
       <div class="lp-wrap">
         <div class="lp-section-head">
-          <div class="lp-eyebrow">Why DeutschAcademy</div>
-          <h2>Built from real classes, not templates</h2>
-          <p>Every lesson below has already been taught, live, to real learners — not written cold for a course platform.</p>
+          <div class="lp-eyebrow" data-i18n="home.value.eyebrow">Why DeutschAcademy</div>
+          <h2 data-i18n="home.value.title">Built from real classes, not templates</h2>
+          <p data-i18n="home.value.subtitle">Every lesson below has already been taught, live, to real learners — not written cold for a course platform.</p>
         </div>
         <div class="lp-value-grid">
           <div class="lp-value-card">
             <img src="/assets/bricks-2181920_1280.jpg" alt="" />
-            <div class="lp-value-card-body"><h3>60+ grammar topics, properly explained</h3><p>Every case, tense and construction — Dativ, Genitiv, Passiv, Konjunktiv II, Relativsätze — broken down with worked exercises, not just quick tips.</p></div>
+            <div class="lp-value-card-body"><h3 data-i18n="home.value.card1.title">60+ grammar topics, properly explained</h3><p data-i18n="home.value.card1.desc">Every case, tense and construction — Dativ, Genitiv, Passiv, Konjunktiv II, Relativsätze — broken down with worked exercises, not just quick tips.</p></div>
           </div>
           <div class="lp-value-card">
             <img src="/assets/online-is-futur.jpg" alt="" />
-            <div class="lp-value-card-body"><h3>Everyday German, not textbook dialogues</h3><p>Scenario-based practice pulled from real life: Behördengänge, moving apartments, describing your day, ordering at a café.</p></div>
+            <div class="lp-value-card-body"><h3 data-i18n="home.value.card2.title">Everyday German, not textbook dialogues</h3><p data-i18n="home.value.card2.desc">Scenario-based practice pulled from real life: Behördengänge, moving apartments, describing your day, ordering at a café.</p></div>
           </div>
           <div class="lp-value-card">
             <img src="/assets/letsdoit.jpg" alt="" />
-            <div class="lp-value-card-body"><h3>Speaking practice built in</h3><p>Role-play, partner exercises and picture descriptions (Bildbeschreibung) — the part learners usually only get in a live class.</p></div>
+            <div class="lp-value-card-body"><h3 data-i18n="home.value.card3.title">Speaking practice built in</h3><p data-i18n="home.value.card3.desc">Role-play, partner exercises and picture descriptions (Bildbeschreibung) — the part learners usually only get in a live class.</p></div>
           </div>
           <div class="lp-value-card">
             <img src="/assets/foto-buero-1.jpg" alt="" />
-            <div class="lp-value-card-body"><h3>Exam-format prep, not guesswork</h3><p>Mock sittings and writing tasks structured the way Goethe and telc actually test you, corrected by a real instructor.</p></div>
+            <div class="lp-value-card-body"><h3 data-i18n="home.value.card4.title">Exam-format prep, not guesswork</h3><p data-i18n="home.value.card4.desc">Mock sittings and writing tasks structured the way Goethe and telc actually test you, corrected by a real instructor.</p></div>
           </div>
         </div>
       </div>
@@ -250,13 +309,13 @@ const userCount = 412; // actual signups so far
     <section class="lp-section lp-section--alt">
       <div class="lp-wrap">
         <div class="lp-section-head" style="max-width:560px">
-          <div class="lp-eyebrow">So funktioniert's</div>
-          <h2>Dein Weg zu fließendem Deutsch — in drei klaren Schritten</h2>
+          <div class="lp-eyebrow" data-i18n="home.how.eyebrow">So funktioniert's</div>
+          <h2 data-i18n="home.how.title">Dein Weg zu fließendem Deutsch — in drei klaren Schritten</h2>
         </div>
         <div class="lp-track">
-          <div class="lp-road-step"><div class="lp-road-node">1</div><div class="lp-road-label">Schritt 1</div><h3>Grammatik</h3><p>60+ Grammatikthemen — von Dativ bis Konjunktiv II, mit durchdachten Übungen.</p></div>
-          <div class="lp-road-step"><div class="lp-road-node">2</div><div class="lp-road-label">Schritt 2</div><h3>Alltagsdeutsch</h3><p>Echte Alltagsszenarien statt Lehrbuchdialoge: Ämter, Wohnungssuche, der Alltag.</p></div>
-          <div class="lp-road-step"><div class="lp-road-node">3</div><div class="lp-road-label">Schritt 3</div><h3>Sprechpraxis</h3><p>Rollenspiele, Partnerübungen und Bildbeschreibungen üben.</p></div>
+          <div class="lp-road-step"><div class="lp-road-node">1</div><div class="lp-road-label" data-i18n="home.how.step1.label">Schritt 1</div><h3 data-i18n="home.how.step1.title">Grammatik</h3><p data-i18n="home.how.step1.desc">60+ Grammatikthemen — von Dativ bis Konjunktiv II, mit durchdachten Übungen.</p></div>
+          <div class="lp-road-step"><div class="lp-road-node">2</div><div class="lp-road-label" data-i18n="home.how.step2.label">Schritt 2</div><h3 data-i18n="home.how.step2.title">Alltagsdeutsch</h3><p data-i18n="home.how.step2.desc">Echte Alltagsszenarien statt Lehrbuchdialoge: Ämter, Wohnungssuche, der Alltag.</p></div>
+          <div class="lp-road-step"><div class="lp-road-node">3</div><div class="lp-road-label" data-i18n="home.how.step3.label">Schritt 3</div><h3 data-i18n="home.how.step3.title">Sprechpraxis</h3><p data-i18n="home.how.step3.desc">Rollenspiele, Partnerübungen und Bildbeschreibungen üben.</p></div>
         </div>
       </div>
     </section>
@@ -265,37 +324,37 @@ const userCount = 412; // actual signups so far
     <section class="lp-section">
       <div class="lp-wrap">
         <div class="lp-section-head" style="max-width:600px">
-          <div class="lp-eyebrow">Alle Werkzeuge</div>
-          <h2>Übungen und Prüfungsvorbereitung, an einem Ort</h2>
-          <p>Kein Zusammensuchen zwischen Apps und Karteikarten — alles lebt im selben Dashboard.</p>
+          <div class="lp-eyebrow" data-i18n="home.tools.eyebrow">Alle Werkzeuge</div>
+          <h2 data-i18n="home.tools.heading2">Übungen und Prüfungsvorbereitung, an einem Ort</h2>
+          <p data-i18n="home.tools.subtitle">Kein Zusammensuchen zwischen Apps und Karteikarten — alles lebt im selben Dashboard.</p>
         </div>
         <div class="lp-tools-group">
-          <div class="lp-tools-label">Übungen</div>
+          <div class="lp-tools-label" data-i18n="nav.exercises">Übungen</div>
           <div class="lp-tools-grid">
             {tools.map((t) => (
               <a href={t.href} class="lp-tool-card">
-                <div class="lp-tool-chip">{t.icon}</div>
-                <h4>{t.title}</h4>
-                <p>{t.desc}</p>
-                <span class="lp-tool-card-count">{t.count}</span>
+                <div class="lp-tool-tile"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" set:html={t.icon} /></div>
+                <h4 data-i18n={t.titleKey}>{t.title}</h4>
+                <p data-i18n={t.descKey}>{t.desc}</p>
+                <span class="badge badge-brand" data-i18n={t.countKey} data-i18n-vars={JSON.stringify(t.countVars)}>{t.count}</span>
               </a>
             ))}
             <div class="lp-tool-card lp-tool-card--soon">
-              <div class="lp-tool-chip">{comingSoonTool.icon}</div>
-              <h4>{comingSoonTool.title}</h4>
-              <p>{comingSoonTool.desc}</p>
-              <span class="lp-tool-card-count lp-tool-card-count--soon">{comingSoonTool.count}</span>
+              <div class="lp-tool-tile"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" set:html={comingSoonTool.icon} /></div>
+              <h4 data-i18n={comingSoonTool.titleKey}>{comingSoonTool.title}</h4>
+              <p data-i18n={comingSoonTool.descKey}>{comingSoonTool.desc}</p>
+              <span class="badge badge-neutral" data-i18n={comingSoonTool.countKey}>{comingSoonTool.count}</span>
             </div>
           </div>
         </div>
         <div class="lp-tools-group lp-tools-group--exams">
-          <div class="lp-tools-label">Prüfungen</div>
-          <div class="lp-tools-grid lp-tools-grid--exams">
+          <div class="lp-tools-label" data-i18n="nav.exams">Prüfungen</div>
+          <div class="lp-tools-grid">
             {exams.map((e) => (
               <a href={e.href} class="lp-tool-card">
-                <div class="lp-tool-chip">{e.icon}</div>
+                <div class="lp-tool-tile"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" set:html={e.icon} /></div>
                 <h4>{e.title}</h4>
-                <p>{e.level}</p>
+                <span class="badge badge-neutral">{e.level}</span>
               </a>
             ))}
           </div>
@@ -307,43 +366,43 @@ const userCount = 412; // actual signups so far
     <section class="lp-section lp-section--alt">
       <div class="lp-wrap">
         <div class="lp-section-head" style="max-width:600px">
-          <div class="lp-eyebrow">What's included</div>
-          <h2>Everything you get, tier by tier</h2>
+          <div class="lp-eyebrow" data-i18n="home.deepdive.eyebrow">What's included</div>
+          <h2 data-i18n="home.deepdive.title">Everything you get, tier by tier</h2>
         </div>
         <div class="lp-deepdive-grid">
           <div class="lp-deep-card">
             <div class="lp-deep-icon">01</div>
-            <div class="lp-deep-head"><h3>Core Course</h3><p>Everything you need to build real fluency, self-paced.</p></div>
+            <div class="lp-deep-head"><h3 data-i18n="home.deepdive.core.title">Core Course</h3><p data-i18n="home.deepdive.core.subtitle">Everything you need to build real fluency, self-paced.</p></div>
             <div class="lp-deep-list">
-              <div class="lp-deep-item"><span class="lp-check-icon">✓</span><span>Full A1–C1 curriculum, built from live-taught lessons</span></div>
-              <div class="lp-deep-item"><span class="lp-check-icon">✓</span><span>60+ grammar topics explained in depth</span></div>
-              <div class="lp-deep-item"><span class="lp-check-icon">✓</span><span>Real-life scenario library, not textbook dialogues</span></div>
-              <div class="lp-deep-item"><span class="lp-check-icon">✓</span><span>Placement test and a structured lesson path</span></div>
+              <div class="lp-deep-item"><span class="lp-check-icon">✓</span><span data-i18n="home.deepdive.core.item1">Full A1–C1 curriculum, built from live-taught lessons</span></div>
+              <div class="lp-deep-item"><span class="lp-check-icon">✓</span><span data-i18n="home.deepdive.core.item2">60+ grammar topics explained in depth</span></div>
+              <div class="lp-deep-item"><span class="lp-check-icon">✓</span><span data-i18n="home.deepdive.core.item3">Real-life scenario library, not textbook dialogues</span></div>
+              <div class="lp-deep-item"><span class="lp-check-icon">✓</span><span data-i18n="home.deepdive.core.item4">Placement test and a structured lesson path</span></div>
             </div>
-            <div class="lp-deep-cta">Start free</div>
+            <div class="lp-deep-cta" data-i18n="home.deepdive.core.cta">Start free</div>
           </div>
           <div class="lp-deep-card lp-deep-card--featured">
             <div class="lp-deep-icon lp-deep-icon--featured">02</div>
-            <div class="lp-deep-head"><h3>Exam Prep &amp; Coaching</h3><p>For learners with a Goethe or telc exam on the calendar.</p></div>
+            <div class="lp-deep-head"><h3 data-i18n="home.deepdive.exam.title">Exam Prep &amp; Coaching</h3><p data-i18n="home.deepdive.exam.subtitle">For learners with a Goethe or telc exam on the calendar.</p></div>
             <div class="lp-deep-list">
-              <div class="lp-deep-item"><span class="lp-check-icon lp-check-icon--premium">✓</span><span>Everything in Core Course</span></div>
-              <div class="lp-deep-item"><span class="lp-check-icon lp-check-icon--premium">✓</span><span>Exam-format mock sittings, structured the way Goethe/telc test you</span></div>
-              <div class="lp-deep-item"><span class="lp-check-icon lp-check-icon--premium">✓</span><span>Writing tasks corrected by a human instructor, not a model</span></div>
-              <div class="lp-deep-item"><span class="lp-check-icon lp-check-icon--premium">✓</span><span>Speaking practice: role-play, partner exercises, Bildbeschreibung</span></div>
-              <div class="lp-deep-item"><span class="lp-check-icon lp-check-icon--premium">✓</span><span>Exam-structure walkthroughs, so nothing on test day is a surprise</span></div>
+              <div class="lp-deep-item"><span class="lp-check-icon lp-check-icon--premium">✓</span><span data-i18n="home.deepdive.exam.item1">Everything in Core Course</span></div>
+              <div class="lp-deep-item"><span class="lp-check-icon lp-check-icon--premium">✓</span><span data-i18n="home.deepdive.exam.item2">Exam-format mock sittings, structured the way Goethe/telc test you</span></div>
+              <div class="lp-deep-item"><span class="lp-check-icon lp-check-icon--premium">✓</span><span data-i18n="home.deepdive.exam.item3">Writing tasks corrected by a human instructor, not a model</span></div>
+              <div class="lp-deep-item"><span class="lp-check-icon lp-check-icon--premium">✓</span><span data-i18n="home.deepdive.exam.item4">Speaking practice: role-play, partner exercises, Bildbeschreibung</span></div>
+              <div class="lp-deep-item"><span class="lp-check-icon lp-check-icon--premium">✓</span><span data-i18n="home.deepdive.exam.item5">Exam-structure walkthroughs, so nothing on test day is a surprise</span></div>
             </div>
-            <div class="lp-deep-cta lp-deep-cta--featured">Go Premium</div>
+            <div class="lp-deep-cta lp-deep-cta--featured" data-i18n="home.deepdive.exam.cta">Go Premium</div>
           </div>
           <div class="lp-deep-card lp-deep-card--cyan">
             <div class="lp-deep-icon">03</div>
-            <div class="lp-deep-head"><h3>Community &amp; Practice</h3><p>Where you actually use the German you're learning.</p></div>
+            <div class="lp-deep-head"><h3 data-i18n="home.deepdive.community.title">Community &amp; Practice</h3><p data-i18n="home.deepdive.community.subtitle">Where you actually use the German you're learning.</p></div>
             <div class="lp-deep-list">
-              <div class="lp-deep-item"><span class="lp-check-icon">✓</span><span>Monthly live Q&amp;A with an instructor</span></div>
-              <div class="lp-deep-item"><span class="lp-check-icon">✓</span><span>Partner and small-group speaking practice</span></div>
-              <div class="lp-deep-item"><span class="lp-check-icon">✓</span><span>A space to ask questions between lessons</span></div>
-              <div class="lp-deep-item"><span class="lp-check-icon">✓</span><span>New practice material added as the course grows</span></div>
+              <div class="lp-deep-item"><span class="lp-check-icon">✓</span><span data-i18n="home.deepdive.community.item1">Monthly live Q&amp;A with an instructor</span></div>
+              <div class="lp-deep-item"><span class="lp-check-icon">✓</span><span data-i18n="home.deepdive.community.item2">Partner and small-group speaking practice</span></div>
+              <div class="lp-deep-item"><span class="lp-check-icon">✓</span><span data-i18n="home.deepdive.community.item3">A space to ask questions between lessons</span></div>
+              <div class="lp-deep-item"><span class="lp-check-icon">✓</span><span data-i18n="home.deepdive.community.item4">New practice material added as the course grows</span></div>
             </div>
-            <div class="lp-deep-cta">Join the community</div>
+            <div class="lp-deep-cta" data-i18n="home.deepdive.community.cta">Join the community</div>
           </div>
         </div>
       </div>
@@ -353,53 +412,53 @@ const userCount = 412; // actual signups so far
     <section class="lp-section">
       <div class="lp-wrap">
         <div class="lp-section-head" style="max-width:560px">
-          <div class="lp-eyebrow">Pricing</div>
-          <h2>One free course. One upgrade, when you're ready to sit the exam.</h2>
-          <p>Everything above is either included free or unlocked with Premium — no hidden tiers.</p>
+          <div class="lp-eyebrow" data-i18n="home.pricing.eyebrow">Pricing</div>
+          <h2 data-i18n="home.pricing.title">One free course. One upgrade, when you're ready to sit the exam.</h2>
+          <p data-i18n="home.pricing.subtitle">Everything above is either included free or unlocked with Premium — no hidden tiers.</p>
         </div>
         <div class="lp-pricing-grid">
           <div class="lp-price-card">
-            <div class="lp-price-name">Free</div>
-            <div class="lp-price-amount"><strong>€0</strong><span>forever</span></div>
-            <div class="lp-price-desc">Everything you need to learn on your own, at no cost.</div>
+            <div class="lp-price-name" data-i18n="home.pricing.free.name">Free</div>
+            <div class="lp-price-amount"><strong>€0</strong><span data-i18n="home.pricing.free.period">forever</span></div>
+            <div class="lp-price-desc" data-i18n="home.pricing.free.desc">Everything you need to learn on your own, at no cost.</div>
             <div class="lp-price-divider"></div>
             <div class="lp-price-list">
-              <div class="lp-price-item"><span class="lp-check-icon">✓</span><span>Full A1–C1 core course</span></div>
-              <div class="lp-price-item"><span class="lp-check-icon">✓</span><span>Placement test &amp; structured path</span></div>
-              <div class="lp-price-item"><span class="lp-check-icon">✓</span><span>60+ grammar topic breakdowns</span></div>
-              <div class="lp-price-item lp-price-item--off"><span class="lp-check-icon">—</span><span>Exam-format mock sittings</span></div>
-              <div class="lp-price-item lp-price-item--off"><span class="lp-check-icon">—</span><span>Human writing corrections</span></div>
+              <div class="lp-price-item"><span class="lp-check-icon">✓</span><span data-i18n="home.pricing.free.item1">Full A1–C1 core course</span></div>
+              <div class="lp-price-item"><span class="lp-check-icon">✓</span><span data-i18n="home.pricing.free.item2">Placement test &amp; structured path</span></div>
+              <div class="lp-price-item"><span class="lp-check-icon">✓</span><span data-i18n="home.pricing.free.item3">60+ grammar topic breakdowns</span></div>
+              <div class="lp-price-item lp-price-item--off"><span class="lp-check-icon">—</span><span data-i18n="home.pricing.free.item4">Exam-format mock sittings</span></div>
+              <div class="lp-price-item lp-price-item--off"><span class="lp-check-icon">—</span><span data-i18n="home.pricing.free.item5">Human writing corrections</span></div>
             </div>
-            <div class="lp-price-cta">Start Free</div>
+            <div class="lp-price-cta" data-i18n="home.pricing.free.cta">Start Free</div>
           </div>
           <!-- TODO(Edgar): confirm price - one-time vs monthly membership; see Language Cluster Strategy, open decisions -->
           <div class="lp-price-card lp-price-card--featured">
-            <div class="lp-price-badge">MOST POPULAR</div>
-            <div class="lp-price-name">Premium Membership</div>
-            <div class="lp-price-amount"><strong>€XX</strong><span>/month (TBD)</span></div>
-            <div class="lp-price-desc">Everything in Free, plus what you need to actually pass the exam.</div>
+            <div class="lp-price-badge" data-i18n="home.pricing.badge">MOST POPULAR</div>
+            <div class="lp-price-name" data-i18n="home.pricing.premium.name">Premium Membership</div>
+            <div class="lp-price-amount"><strong>€XX</strong><span data-i18n="home.pricing.premium.period">/month (TBD)</span></div>
+            <div class="lp-price-desc" data-i18n="home.pricing.premium.desc">Everything in Free, plus what you need to actually pass the exam.</div>
             <div class="lp-price-divider"></div>
             <div class="lp-price-list">
-              <div class="lp-price-item"><span class="lp-check-icon lp-check-icon--premium">✓</span><span>Everything in the Free plan</span></div>
-              <div class="lp-price-item"><span class="lp-check-icon lp-check-icon--premium">✓</span><span>Exam-format mock sittings (Goethe &amp; telc)</span></div>
-              <div class="lp-price-item"><span class="lp-check-icon lp-check-icon--premium">✓</span><span>Human corrections on every writing task</span></div>
-              <div class="lp-price-item"><span class="lp-check-icon lp-check-icon--premium">✓</span><span>Speaking &amp; role-play practice sessions</span></div>
-              <div class="lp-price-item"><span class="lp-check-icon lp-check-icon--premium">✓</span><span>Monthly live community Q&amp;A</span></div>
+              <div class="lp-price-item"><span class="lp-check-icon lp-check-icon--premium">✓</span><span data-i18n="home.pricing.premium.item1">Everything in the Free plan</span></div>
+              <div class="lp-price-item"><span class="lp-check-icon lp-check-icon--premium">✓</span><span data-i18n="home.pricing.premium.item2">Exam-format mock sittings (Goethe &amp; telc)</span></div>
+              <div class="lp-price-item"><span class="lp-check-icon lp-check-icon--premium">✓</span><span data-i18n="home.pricing.premium.item3">Human corrections on every writing task</span></div>
+              <div class="lp-price-item"><span class="lp-check-icon lp-check-icon--premium">✓</span><span data-i18n="home.pricing.premium.item4">Speaking &amp; role-play practice sessions</span></div>
+              <div class="lp-price-item"><span class="lp-check-icon lp-check-icon--premium">✓</span><span data-i18n="home.pricing.premium.item5">Monthly live community Q&amp;A</span></div>
             </div>
-            <div class="lp-price-cta lp-price-cta--featured">Start Premium</div>
+            <div class="lp-price-cta lp-price-cta--featured" data-i18n="home.pricing.premium.cta">Start Premium</div>
           </div>
         </div>
-        <div class="lp-pricing-note">No contracts — cancel anytime.</div>
+        <div class="lp-pricing-note" data-i18n="home.pricing.note">No contracts — cancel anytime.</div>
       </div>
     </section>
 
     <!-- FINAL CTA -->
     <section class="lp-final-cta">
       <div class="lp-wrap lp-final-cta-inner">
-        <h2>Dein nächster Schritt zu fließendem Deutsch</h2>
-        <p>Kostenlos starten, dein Niveau testen, in deinem Tempo weitermachen.</p>
-        <a href="#" class="lp-final-cta-btn">Kostenlos starten</a>
-        <div class="lp-final-cta-login">Already have an account? <b>Log in</b></div>
+        <h2 data-i18n="home.finalcta.title">Dein nächster Schritt zu fließendem Deutsch</h2>
+        <p data-i18n="home.finalcta.subtitle">Kostenlos starten, dein Niveau testen, in deinem Tempo weitermachen.</p>
+        <a href="#" class="lp-final-cta-btn" data-i18n="home.finalcta.cta">Kostenlos starten</a>
+        <div class="lp-final-cta-login"><span data-i18n="home.finalcta.loginQuestion">Already have an account?</span> <b data-i18n="home.finalcta.loginAction">Log in</b></div>
       </div>
     </section>
 
@@ -409,17 +468,17 @@ const userCount = 412; // actual signups so far
         <div class="lp-footer-grid">
           <div class="lp-footer-brand">
             <img src="/assets/logo.png" alt="DeutschAcademy" />
-            <strong>Da für Dich!</strong>
+            <strong data-i18n="home.footer.tagline">Da für Dich!</strong>
             <p>Lorem ipsum dolor sit amet consectetur adipiscing elit sed.</p>
           </div>
-          <div class="lp-footer-col"><h5>Product</h5><span>Lorem ipsum</span><span>Dolor sit</span><span>Amet consectetur</span><span>Adipiscing</span></div>
-          <div class="lp-footer-col"><h5>Company</h5><span>Lorem ipsum</span><span>Dolor sit</span><span>Amet consectetur</span><span>Adipiscing</span></div>
-          <div class="lp-footer-col"><h5>Support</h5><span>Lorem ipsum</span><span>Dolor sit</span><span>Amet consectetur</span><span>Adipiscing</span></div>
-          <div class="lp-footer-col"><h5>Legal</h5><span>Lorem ipsum</span><span>Dolor sit</span><span>Amet consectetur</span><span>Adipiscing</span></div>
+          <div class="lp-footer-col"><h5 data-i18n="home.footer.col.product">Product</h5><span>Lorem ipsum</span><span>Dolor sit</span><span>Amet consectetur</span><span>Adipiscing</span></div>
+          <div class="lp-footer-col"><h5 data-i18n="home.footer.col.company">Company</h5><span>Lorem ipsum</span><span>Dolor sit</span><span>Amet consectetur</span><span>Adipiscing</span></div>
+          <div class="lp-footer-col"><h5 data-i18n="home.footer.col.support">Support</h5><span>Lorem ipsum</span><span>Dolor sit</span><span>Amet consectetur</span><span>Adipiscing</span></div>
+          <div class="lp-footer-col"><h5 data-i18n="home.footer.col.legal">Legal</h5><span>Lorem ipsum</span><span>Dolor sit</span><span>Amet consectetur</span><span>Adipiscing</span></div>
         </div>
         <div class="lp-footer-bottom">
           <div class="lp-footer-copyright">© 2026 Lorem ipsum. Dolor sit amet.</div>
-          <div class="lp-footer-lang">🌐 English<span class="caret">▾</span></div>
+          <LanguageSwitcher />
         </div>
       </div>
     </footer>

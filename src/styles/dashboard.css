@@ -4,7 +4,7 @@
   display: grid;
   grid-template-columns: 1.3fr 1fr;
   gap: 32px;
-  background: var(--blue-50);
+  background: var(--gradient-brand);
   border-radius: var(--radius-lg);
   padding: 36px 40px;
   margin-bottom: 32px;
@@ -16,22 +16,24 @@
   background: #fff; border-radius: var(--radius-pill); padding: 6px 14px;
   font-size: .85rem; font-weight: 700; color: var(--ink);
 }
-.dash-hero h1 { margin: 0; font-size: clamp(1.5rem, 3vw, 2rem); font-family: var(--font-display); letter-spacing: -.01em; text-align: left; }
-.dash-subtitle { margin: 0; color: var(--muted); font-size: .95rem; max-width: 480px; line-height: 1.5; }
+.dash-hero h1 { margin: 0; font-size: clamp(1.5rem, 3vw, 2rem); font-family: var(--font-display); letter-spacing: -.01em; text-align: left; color: #fff; }
+.dash-subtitle { margin: 0; color: rgba(255,255,255,.9); font-size: .95rem; max-width: 480px; line-height: 1.5; }
 
 .dash-progress-row { display: flex; align-items: center; gap: 12px; width: 100%; max-width: 480px; }
-.dash-progress-track { flex: 1; height: 10px; border-radius: 999px; background: var(--blue-100); overflow: hidden; }
-.dash-progress-fill { display: block; height: 100%; border-radius: 999px; background: var(--gradient-brand); transition: width .4s ease; }
-.dash-progress-label { font-size: .85rem; font-weight: 700; color: var(--brand-blue-dark); white-space: nowrap; }
+.dash-progress-track { flex: 1; height: 10px; border-radius: 999px; background: rgba(255,255,255,.3); overflow: hidden; }
+.dash-progress-fill { display: block; height: 100%; border-radius: 999px; background: #fff; transition: width .4s ease; }
+.dash-progress-label { font-size: .85rem; font-weight: 700; color: #fff; white-space: nowrap; }
 
 .dash-hero-actions { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
-.dash-link-btn { background: none; border: none; padding: 15px 4px; margin: -15px -4px; color: var(--brand-blue-dark); font-weight: 600; font-size: .85rem; cursor: pointer; text-decoration: underline; font-family: var(--font-body); }
+.dash-hero-actions .quiz-btn--primary { background: #fff; color: var(--brand-blue-dark); }
+.dash-link-btn { background: none; border: none; padding: 15px 4px; margin: -15px -4px; color: #fff; font-weight: 600; font-size: .85rem; cursor: pointer; text-decoration: underline; font-family: var(--font-body); }
+.dash-hero-main .dash-inline-edit { background: rgba(255,255,255,.15); border-radius: var(--radius-pill); padding: 4px 4px 4px 12px; }
 .dash-inline-edit { display: inline-flex; align-items: center; gap: 6px; }
 .dash-inline-edit input { border: 1px solid var(--border); border-radius: 8px; padding: 8px 10px; font-size: 1rem; font-family: var(--font-body); width: 140px; }
 .dash-inline-edit button { border: none; background: var(--brand-blue); color: #fff; border-radius: 8px; padding: 5px 10px; font-size: .8rem; font-weight: 600; cursor: pointer; font-family: var(--font-body); }
 
 .dash-stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-.dash-stat-tile { background: #fff; border-radius: 14px; padding: 16px 18px; display: flex; flex-direction: column; gap: 4px; }
+.dash-stat-tile { background: #fff; border-radius: 14px; padding: 16px 18px; display: flex; flex-direction: column; gap: 4px; box-shadow: var(--shadow-hover); }
 .dash-stat-label { font-size: .78rem; color: var(--muted); }
 .dash-stat-value { font-size: 1.5rem; font-weight: 700; font-family: var(--font-display); color: var(--ink); }
 

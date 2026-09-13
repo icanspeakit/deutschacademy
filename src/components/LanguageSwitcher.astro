@@ -1,0 +1,113 @@
+---
+import { LANGUAGES } from "../lib/i18n.js";
+---
+<div class="lang-switcher" data-lang-switcher>
+  <button type="button" class="lang-switcher-btn" data-lang-btn aria-haspopup="true" aria-expanded="false">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 4 6 4 9s-1.5 6.4-4 9c-2.5-2.6-4-6-4-9s1.5-6.4 4-9Z"/></svg>
+    <span data-lang-code>DE</span>
+    <svg width="10" height="6" viewBox="0 0 10 6" fill="none" aria-hidden="true"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </button>
+  <div class="lang-switcher-menu" data-lang-menu role="menu" hidden>
+    {LANGUAGES.map((l) => (
+      <button type="button" class="lang-switcher-option" role="menuitem" data-lang-option={l.code}>
+        {l.label}
+      </button>
+    ))}
+  </div>
+</div>
+
+<style>
+  .lang-switcher { position: relative; }
+  .lang-switcher-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 8px 12px;
+    font-size: .85rem;
+    font-weight: 600;
+    color: var(--ink);
+    cursor: pointer;
+  }
+  .lang-switcher-btn:hover { border-color: var(--brand-blue); }
+  .lang-switcher-menu {
+    position: absolute;
+    top: calc(100% + 6px);
+    right: 0;
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    box-shadow: 0 12px 28px rgba(28,43,63,.14);
+    padding: 6px;
+    min-width: 160px;
+    z-index: 50;
+  }
+  :global([dir="rtl"]) .lang-switcher-menu { right: auto; left: 0; }
+  .lang-switcher-option {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    background: none;
+    border: none;
+    text-align: left;
+    padding: 8px 10px;
+    border-radius: 8px;
+    font-size: .9rem;
+    color: var(--ink);
+    cursor: pointer;
+  }
+  :global([dir="rtl"]) .lang-switcher-option { text-align: right; }
+  .lang-switcher-option:hover { background: var(--surface); }
+  .lang-switcher-option[aria-current="true"] { font-weight: 700; color: var(--brand-blue-dark); background: var(--blue-50); }
+</style>
+
+<script>
+  import { LANGUAGES, getLang, setLang, onLangChange } from "../lib/i18n.js";
+
+  document.querySelectorAll("[data-lang-switcher]").forEach((root) => {
+    const btn = root.querySelector("[data-lang-btn]");
+    const menu = root.querySelector("[data-lang-menu]");
+    const codeEl = root.querySelector("[data-lang-code]");
+
+    function reflect(code) {
+      const lang = LANGUAGES.find((l) => l.code === code) || LANGUAGES[0];
+      codeEl.textContent = lang.code.toUpperCase();
+      root.querySelectorAll("[data-lang-option]").forEach((opt) => {
+        opt.setAttribute("aria-current", String(opt.dataset.langOption === lang.code));
+      });
+    }
+
+    reflect(getLang());
+    onLangChange((code) => reflect(code));
+
+    function closeMenu() {
+      menu.hidden = true;
+      btn.setAttribute("aria-expanded", "false");
+    }
+
+    btn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const isOpen = !menu.hidden;
+      document.querySelectorAll("[data-lang-menu]").forEach((m) => (m.hidden = true));
+      menu.hidden = isOpen;
+      btn.setAttribute("aria-expanded", String(!isOpen));
+    });
+
+    root.querySelectorAll("[data-lang-option]").forEach((opt) => {
+      opt.addEventListener("click", () => {
+        setLang(opt.dataset.langOption);
+        closeMenu();
+      });
+    });
+
+    document.addEventListener("click", (e) => {
+      if (!root.contains(e.target)) closeMenu();
+    });
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") closeMenu();
+    });
+  });
+</script>

@@ -1,13 +1,23 @@
 ---
+import LanguageSwitcher from "./LanguageSwitcher.astro";
+
 interface Props {
   title: string;
+  titleKey?: string;
 }
-const { title } = Astro.props;
+const { title, titleKey } = Astro.props;
 ---
 <header class="practice-header">
   <div class="practice-header-inner">
-    <a href="/uebungen" class="practice-back">← Alle Übungen</a>
-    <span class="practice-header-title">{title}</span>
-    <a href="/" class="practice-back">Startseite</a>
+    <a href="/uebungen" class="practice-back" data-i18n="header.allExercises">← Alle Übungen</a>
+    <span class="practice-header-title" data-i18n={titleKey}>{title}</span>
+    <div class="practice-header-right">
+      <a href="/" class="practice-back" data-i18n="header.home">Startseite</a>
+      <LanguageSwitcher />
+    </div>
   </div>
 </header>
+
+<style>
+  .practice-header-right { display: flex; align-items: center; gap: 16px; }
+</style>

@@ -1,5 +1,22 @@
+import { getLang, loadDict, onLangChange } from "./i18n.js";
+
 // Shared quiz engine: mode "text" (typed answer) or "choice" (buttons).
 export function mountQuiz(root, questions, { mode = "text", shuffle = true, onDone, onAnswer, showWrongCount = false } = {}) {
+  let dict = null;
+  function tr(key, fallback, vars) {
+    const base = (dict && dict[key]) ?? fallback;
+    if (!vars) return base;
+    return base.replace(/\{(\w+)\}/g, (m, k) => (k in vars ? String(vars[k]) : m));
+  }
+  loadDict(getLang()).then((d) => {
+    dict = d;
+    render();
+  });
+  onLangChange((code, newDict) => {
+    dict = newDict;
+    render();
+  });
+
   let order = questions.map((_, i) => i);
   if (shuffle) order = order.sort(() => Math.random() - 0.5);
   let pos = 0;
@@ -12,8 +29,8 @@ export function mountQuiz(root, questions, { mode = "text", shuffle = true, onDo
       root.innerHTML = `
         <div class="quiz-done">
           <div class="quiz-done-score">${score} / ${total}</div>
-          <p>richtig beantwortet</p>
-          <button class="quiz-btn quiz-btn--primary" id="quiz-restart" type="button">Nochmal üben</button>
+          <p>${tr("quiz.correctAnswered", "richtig beantwortet")}</p>
+          <button class="quiz-btn quiz-btn--primary" id="quiz-restart" type="button">${tr("quiz.restart", "Nochmal üben")}</button>
         </div>`;
       root.querySelector("#quiz-restart").addEventListener("click", () => {
         order = order.sort(() => Math.random() - 0.5);
@@ -33,13 +50,13 @@ export function mountQuiz(root, questions, { mode = "text", shuffle = true, onDo
     } else {
       inputHtml = `
         <form id="quiz-form" class="quiz-form" autocomplete="off">
-          <input type="text" id="quiz-input" autocomplete="off" placeholder="Antwort eintippen…" />
-          <button type="submit" class="quiz-btn quiz-btn--primary">Prüfen</button>
+          <input type="text" id="quiz-input" autocomplete="off" placeholder="${tr("quiz.inputPlaceholder", "Antwort eintippen…")}" />
+          <button type="submit" class="quiz-btn quiz-btn--primary">${tr("quiz.check", "Prüfen")}</button>
         </form>`;
     }
     const progress = showWrongCount
-      ? `<div class="quiz-progress quiz-progress--split"><span>Frage ${pos + 1} / ${total}</span><span>${score} richtig · ${wrong} falsch</span></div>`
-      : `<div class="quiz-progress">Frage ${pos + 1} / ${total} · ${score} richtig</div>`;
+      ? `<div class="quiz-progress quiz-progress--split"><span>${tr("quiz.progress.question", "Frage {n} / {total}", { n: pos + 1, total })}</span><span>${tr("quiz.progress.scoreSplit", "{score} richtig · {wrong} falsch", { score, wrong })}</span></div>`
+      : `<div class="quiz-progress">${tr("quiz.progress.full", "Frage {n} / {total} · {score} richtig", { n: pos + 1, total, score })}</div>`;
     root.innerHTML = `
       ${progress}
       <div class="quiz-prompt">${q.prompt}</div>
@@ -75,13 +92,13 @@ export function mountQuiz(root, questions, { mode = "text", shuffle = true, onDo
         else wrong++;
         if (onAnswer) onAnswer(ok, q);
         feedback.innerHTML = ok
-          ? `<span class="quiz-ok">✓ Richtig!</span>`
-          : `<span class="quiz-no">✗ Nicht ganz — richtig: <strong>${q.answer}</strong></span>`;
+          ? `<span class="quiz-ok">${tr("quiz.correct", "✓ Richtig!")}</span>`
+          : `<span class="quiz-no">${tr("quiz.incorrect", "✗ Nicht ganz — richtig: {answer}", { answer: `<strong>${q.answer}</strong>` })}</span>`;
         if (q.explain) feedback.innerHTML += `<div class="quiz-explain">${q.explain}</div>`;
         const nextBtn = document.createElement("button");
         nextBtn.className = "quiz-btn quiz-btn--next";
         nextBtn.type = "button";
-        nextBtn.textContent = pos + 1 < total ? "Weiter →" : "Ergebnis anzeigen →";
+        nextBtn.textContent = pos + 1 < total ? tr("quiz.next", "Weiter →") : tr("quiz.showResult", "Ergebnis anzeigen →");
         nextBtn.addEventListener("click", () => {
           pos++;
           render();

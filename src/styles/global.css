@@ -47,7 +47,9 @@
   --info-border:  #bfdbfe;
 
   --font-body: "Sora", "Segoe UI", Arial, sans-serif;
-  --font-display: "Sora", "Segoe UI", Arial, sans-serif;
+  --font-display: "Big Shoulders Display", "Segoe UI", Arial, sans-serif;
+  --font-accent: "Bungee Shade", var(--font-display), cursive;
+  --font-mono: "IBM Plex Mono", "SFMono-Regular", Consolas, monospace;
 
   /* Type scale */
   --text-xs:   .75rem;
@@ -113,6 +115,30 @@
   --breakpoint-lg: 1024px;
 }
 
+@font-face {
+  font-family: "Big Shoulders Display";
+  font-style: normal;
+  font-weight: 500 800;
+  font-display: swap;
+  src: url("/fonts/big-shoulders-display-latin.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Bungee Shade";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/bungee-shade-latin.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Sora";
+  font-style: normal;
+  font-weight: 300 800;
+  font-display: swap;
+  src: url("/fonts/sora-latin.woff2") format("woff2");
+}
+
 * { box-sizing: border-box; }
 body {
   margin: 0;
@@ -124,7 +150,7 @@ img { max-width: 100%; display: block; }
 .container { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
 .section { padding: 64px 0; }
 .eyebrow {
-  font-family: var(--font-display);
+  font-family: var(--font-mono);
   color: var(--brand-blue-dark);
   text-transform: uppercase;
   letter-spacing: .08em;

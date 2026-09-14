@@ -1,0 +1,233 @@
+---
+// /sora — weight comparison for the Sora headings on the vp-page template
+// (/uebungen/grammatik/<topic>). Sora is self-hosted as a VARIABLE font with a
+// 300–800 axis (see the @font-face in global.css), so every weight below is a
+// real master on the axis, not a synthetic smear.
+//
+// Each panel renders the real hero markup and the real .vp-* classes, only
+// overriding weight and tracking — so what you compare is the type and nothing
+// else. Internal; not linked from the public nav.
+import Layout from "../layouts/Layout.astro";
+import ThemeToggle from "../components/ThemeToggle.astro";
+import "../styles/practice.css";
+import "../styles/verben-praepositionen.css";
+
+const versions = [
+  {
+    id: "a",
+    label: "A · Semibold 600",
+    note: "Eine klare Stufe tiefer — noch eindeutig eine Überschrift.",
+    css: "font-weight: 600;\nletter-spacing: -.01em;",
+    applied: false,
+  },
+  {
+    id: "b",
+    label: "B · Medium 500",
+    note: "Deutlich leichter. Die engere Laufweite verhindert, dass die breite Schrift locker wirkt.",
+    css: "font-weight: 500;\nletter-spacing: -.015em;",
+    applied: false,
+  },
+  {
+    id: "c",
+    label: "C · Regular 400",
+    note: "Aktuell angewendet — auf h1, Abschnittstitel und Übungs-Überschriften. Größe und Farbe tragen die Hierarchie, nicht das Gewicht.",
+    css: "font-weight: 400;\nletter-spacing: -.02em;",
+    applied: true,
+  },
+];
+---
+<Layout title="Sora-Gewichte – DeutschAcademy" description="Interner Vergleich der Sora-Schriftstärken für die Grammatik-Überschriften.">
+  <div class="sora-page">
+    <header class="sora-bar">
+      <div class="sora-bar-inner">
+        <div>
+          <p class="sora-bar-title">Sora-Gewichte</p>
+          <p class="sora-bar-note">
+            Dieselbe Überschrift, nur Stärke und Laufweite geändert · Sora ist variabel (300–800)
+          </p>
+        </div>
+        <ThemeToggle />
+      </div>
+    </header>
+
+    <main class="sora-main">
+      <!-- Reference: what the page looked like before, so the delta is visible
+           rather than remembered. -->
+      <section class="sora-panel sora-panel--before" data-sora="before">
+        <div class="sora-panel-head">
+          <span class="sora-tag sora-tag--before">Vorher</span>
+          <div>
+            <p class="sora-panel-label">Extrabold 800</p>
+            <p class="sora-panel-note">Das ursprüngliche Gewicht — „zu dick und gedrungen“.</p>
+          </div>
+        </div>
+        <div class="sora-demo">
+          <div class="vp-hero">
+            <div class="vp-hero-badges">
+              <span class="badge badge-brand">GRAMMATIK ÜBEN</span>
+              <span class="badge badge-info">A1</span>
+            </div>
+            <h1>Artikel: der, die, das</h1>
+            <p>Jedes deutsche Nomen hat ein Geschlecht — und der Artikel zeigt es an.</p>
+          </div>
+          <h2 class="vp-section-title">Übungen</h2>
+        </div>
+      </section>
+
+      {versions.map((v) => (
+        <section class="sora-panel" data-sora={v.id}>
+          <div class="sora-panel-head">
+            <span class={`sora-tag${v.applied ? " sora-tag--applied" : ""}`}>{v.label.split(" · ")[0]}</span>
+            <div>
+              <p class="sora-panel-label">
+                {v.label.split(" · ")[1]}
+                {v.applied && <span class="sora-live">aktiv</span>}
+              </p>
+              <p class="sora-panel-note">{v.note}</p>
+            </div>
+            <pre class="sora-css">{v.css}</pre>
+          </div>
+          <div class="sora-demo">
+            <div class="vp-hero">
+              <div class="vp-hero-badges">
+                <span class="badge badge-brand">GRAMMATIK ÜBEN</span>
+                <span class="badge badge-info">A1</span>
+              </div>
+              <h1>Artikel: der, die, das</h1>
+              <p>Jedes deutsche Nomen hat ein Geschlecht — und der Artikel zeigt es an.</p>
+            </div>
+            <h2 class="vp-section-title">Übungen</h2>
+          </div>
+        </section>
+      ))}
+
+      <p class="sora-foot">
+        Zum Übernehmen: <code>.vp-hero h1</code>, <code>.vp-section-title</code> und
+        <code>.vp-ex-head h3</code> in <code>src/styles/verben-praepositionen.css</code> auf die
+        gewünschten Werte setzen. Alle drei gehören zusammen, damit Überschrift, Abschnittstitel
+        und Übungs-Überschriften dasselbe Gewicht haben.
+      </p>
+    </main>
+  </div>
+
+  <style>
+    .sora-page { min-height: 100vh; background: var(--page-bg); }
+
+    .sora-bar {
+      position: sticky; top: 0; z-index: 20;
+      background: var(--page-bg);
+      border-bottom: 1px solid var(--border);
+    }
+    .sora-bar-inner {
+      max-width: 900px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between; gap: 24px;
+      padding: 14px clamp(16px, 3vw, 28px);
+    }
+    .sora-bar-title {
+      margin: 0;
+      font-family: var(--font-display);
+      font-size: var(--text-lg);
+      font-weight: var(--fw-bold);
+      color: var(--ink);
+      line-height: 1.1;
+    }
+    .sora-bar-note { margin: 2px 0 0; font-size: var(--text-xs); color: var(--muted); }
+
+    .sora-main { max-width: 900px; margin: 0 auto; padding: 32px clamp(16px, 3vw, 28px) 96px; }
+
+    .sora-panel {
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 20px 24px 28px;
+      margin-bottom: 20px;
+      background: var(--surface-card);
+    }
+    /* The "before" panel is a reference, not a candidate — muted so it doesn't
+       compete with the three real options. */
+    .sora-panel--before { background: var(--surface); opacity: .8; }
+
+    .sora-panel-head {
+      display: flex; align-items: flex-start; gap: 14px; flex-wrap: wrap;
+      padding-bottom: 18px; margin-bottom: 10px;
+      border-bottom: 1px dashed var(--border);
+    }
+    .sora-tag {
+      flex-shrink: 0;
+      font-family: var(--font-label);
+      font-weight: var(--fw-bold);
+      font-size: var(--text-xs);
+      letter-spacing: .06em;
+      color: #fff;
+      background: var(--brand-blue);
+      padding: 5px 10px;
+      border-radius: var(--radius-sm);
+    }
+    .sora-tag--applied { background: var(--gradient-brand); }
+    .sora-tag--before { background: var(--muted-soft); }
+    .sora-panel-label {
+      margin: 0;
+      font-weight: var(--fw-semibold);
+      color: var(--ink);
+      display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+    }
+    .sora-live {
+      font-family: var(--font-label);
+      font-size: .7rem; font-weight: var(--fw-bold); letter-spacing: .06em;
+      text-transform: uppercase;
+      color: var(--brand-blue-dark);
+      background: var(--blue-100);
+      border-radius: var(--radius-pill);
+      padding: 2px 8px;
+    }
+    .sora-panel-note { margin: 3px 0 0; font-size: .88rem; color: var(--muted); max-width: 46ch; }
+    .sora-css {
+      margin: 0 0 0 auto;
+      font-family: var(--font-mono, ui-monospace, SFMono-Regular, Menlo, monospace);
+      font-size: .72rem;
+      line-height: 1.5;
+      color: var(--muted);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 8px 12px;
+      white-space: pre;
+    }
+
+    /* The demo reuses the real .vp-* rules; only weight and tracking are
+       overridden per panel, so nothing else can drift between the options. */
+    .sora-demo { padding-top: 6px; }
+    .sora-demo .vp-hero { margin-bottom: 0; }
+    .sora-demo .vp-section-title { margin: 26px 0 0; }
+
+    [data-sora="before"] .vp-hero h1,
+    [data-sora="before"] .vp-section-title { font-weight: 800; letter-spacing: normal; }
+
+    [data-sora="a"] .vp-hero h1,
+    [data-sora="a"] .vp-section-title { font-weight: 600; letter-spacing: -.01em; }
+
+    [data-sora="b"] .vp-hero h1,
+    [data-sora="b"] .vp-section-title { font-weight: 500; letter-spacing: -.015em; }
+
+    [data-sora="c"] .vp-hero h1,
+    [data-sora="c"] .vp-section-title { font-weight: 400; letter-spacing: -.02em; }
+
+    .sora-foot {
+      margin: 32px 0 0;
+      font-size: .88rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+    .sora-foot code {
+      font-family: var(--font-mono, ui-monospace, SFMono-Regular, Menlo, monospace);
+      font-size: .85em;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 1px 5px;
+    }
+
+    @media (max-width: 620px) {
+      .sora-css { margin-left: 0; width: 100%; }
+    }
+  </style>
+</Layout>

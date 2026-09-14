@@ -288,3 +288,23 @@
      so they must stop being full-width blocks. */
   .dm .lp-sidebar-link { width: auto; }
 }
+
+/* ---------------------------------------------------------------------------
+   Homepage use (index.astro)
+   ---------------------------------------------------------------------------
+   The "A · Versetzt" fold was promoted from these studies onto the real
+   homepage. There it has no internal control bar above it — the site nav does
+   that job — and it is the first section of a long page rather than the whole
+   page, so the two page-level assumptions above have to be relaxed.
+   --------------------------------------------------------------------------- */
+.fr-page--home {
+  /* Site nav height: 44px logo + 2x12px padding + 1px border. */
+  --fr-bar-h: 69px;
+  min-height: 0;
+  background: transparent;
+}
+/* Sections follow, so the fold must not also reserve the sticky nav's height
+   a second time at the bottom of the viewport. */
+@media (max-width: 900px) {
+  .fr-page--home .fr-stage { padding-bottom: var(--space-8); }
+}

@@ -1,45 +1,550 @@
 ---
 // The exercises browser mockup from the homepage hero. See DashboardMock.astro
 // for why this lives as a component.
+//
+// This mock is playable, and its sidebar really switches. The panels are chosen
+// to *not* repeat DashboardMock next door, which already covers Dashboard,
+// Grammatik, Wortschatz, Sprechen and Prüfungen: here the sidebar leads to
+// Grammatik plus the three areas that mock never shows — Aussprache (real audio
+// files), Bildbeschreibung (the DTZ picture task) and Kulturwissen (the
+// Einbürgerungstest question format). Everything is driven by the same data the
+// real pages use, so nothing here can promise something the site does not have.
 import grammatik from "../../data/grammatik.json";
+import wortschatz from "../../data/wortschatz.json";
+import artikel from "../../data/artikel.json";
+import sprechen from "../../data/sprechen.json";
+import lid from "../../data/leben-in-deutschland.json";
 
-const grammarQuestionCount = grammatik.reduce((sum, t) => sum + t.questions.length, 0);
+// Same two pools the real hub draws from (see uebungen/grammatik.astro), counted
+// here so the stat row ages with the catalogue instead of freezing at the number
+// that happened to be true the day the mock was drawn.
+const workspaceModules = import.meta.glob("../../data/grammatik/*.json", { eager: true });
+const workspaces = Object.values(workspaceModules).map((m) => m.default ?? m);
+const covered = new Set(workspaces.map((w) => w.id));
+const quizOnly = grammatik.filter((t) => !covered.has(t.id));
+
+const ANSWERABLE = {
+  fill: (ex) => ex.items.length,
+  match: (ex) => ex.pairs.length,
+  table: (ex) => ex.rows.length,
+  story: (ex) => ex.segments.filter((s) => s.blank !== undefined).length,
+  build: (ex) => ex.sentences.length,
+};
+const grammarTopics = workspaces.length + quizOnly.length;
+const grammarQuestions =
+  workspaces.reduce((sum, w) => sum + w.exercises.reduce((n, ex) => n + (ANSWERABLE[ex.type]?.(ex) ?? 0), 0), 0) +
+  quizOnly.reduce((sum, t) => sum + t.questions.length, 0);
+
+const pronItems = wortschatz.length + artikel.length;
+const bildQuestions = sprechen.reduce((n, b) => n + b.beschreibung.length + b.persoenlich.length, 0);
+
+// --- Grammatik: one question per level band, each lifted from the topic it
+// names so the demo round is a real sample. `answer` indexes `choices`.
+//
+// Deliberately disjoint from DashboardMock's quiz next door, which covers
+// Akkusativ, Dativ and Perfekt — both mocks are visible at once on the homepage,
+// so an overlapping first question made the pair look like one screenshot twice.
+// This round leads with Präpositionen instead.
+const ROUND = [
+  { topic: "Verben mit Präpositionen", level: "B1", pre: "Ich warte ", post: " den Bus.", hint: "warten + feste Präposition", choices: ["auf", "für", "an"], answer: 0 },
+  { topic: "Artikel", level: "A1", pre: "", post: " Wohnung", hint: "Die Endung verrät das Genus.", choices: ["die", "der", "das"], answer: 0 },
+  { topic: "Wechselpräpositionen", level: "A2", pre: "Heute Abend gehe ich ", post: " Kino.", hint: "Wohin? — Richtung", choices: ["im", "in", "ins"], answer: 2 },
+  { topic: "Modalverben", level: "A2", pre: "Im Museum ", post: " man die Bilder nicht anfassen.", hint: "Verbot — es ist nicht erlaubt.", choices: ["kann", "darf", "mag"], answer: 1 },
+  { topic: "Zweiteilige Konnektoren", level: "B1", pre: "Er hat nicht nur einen Job, ", post: " auch eine Wohnung.", hint: "Der zweite Teil von „nicht nur …“", choices: ["aber", "oder", "sondern"], answer: 2 },
+  { topic: "N-Deklination", level: "B1", pre: "Ich gehe mit dem ", post: " spazieren.", hint: "(der Herr)", choices: ["Herr", "Herrn", "Herren"], answer: 1 },
+];
+
+// --- Aussprache: five entries whose recordings exist in public/audio/aussprache.
+// Kept as an explicit list rather than a slice of the data files so the mock can
+// never point at a missing mp3.
+const PRON = [
+  { text: "Ich bin der Meinung, dass …", audio: "/audio/aussprache/ich-bin-der-meinung-dass.mp3", note: "Meinung äußern — Verb ans Satzende!" },
+  { text: "Das sehe ich auch so.", audio: "/audio/aussprache/das-sehe-ich-auch-so.mp3", note: "Zustimmen — höflicher als ein bloßes „Ja“." },
+  { text: "der Schlüssel", audio: "/audio/aussprache/der-schluessel.mp3", note: "ü lang und gerundet, sch wie „sh“." },
+  { text: "die Ärztin", audio: "/audio/aussprache/die-aerztin.mp3", note: "Ä wie in „Bär“, das r fast verschluckt." },
+  { text: "der Käfig", audio: "/audio/aussprache/der-kaefig.mp3", note: "Endung -ig klingt wie „-ich“." },
+];
+
+// --- Kulturwissen: four questions in the Einbürgerungstest format.
+const CULTURE = lid.questions.slice(0, 4).map((q) => ({
+  prompt: q.prompt,
+  options: q.options,
+  answer: q.options.indexOf(q.answer),
+}));
+
+const PANELS = [
+  { key: "grammatik", url: "deutschacademy.com/uebungen/grammatik" },
+  { key: "aussprache", url: "deutschacademy.com/uebungen/aussprache" },
+  { key: "bild", url: "deutschacademy.com/uebungen/sprechen" },
+  { key: "kultur", url: "deutschacademy.com/uebungen/kultur" },
+];
+
+const firstQ = ROUND[0];
+const firstP = PRON[0];
+const firstB = sprechen[0];
+const firstC = CULTURE[0];
 ---
-<div class="lp-browser">
+<div class="lp-browser" data-mock>
   <div class="lp-browser-bar">
     <div class="lp-browser-dot"></div><div class="lp-browser-dot"></div><div class="lp-browser-dot"></div>
-    <div class="lp-browser-url">deutschacademy.com/uebungen</div>
+    <div class="lp-browser-url" data-mock-url>{PANELS[0].url}</div>
   </div>
   <div class="lp-browser-body">
     <div class="lp-sidebar">
       <img src="/assets/logo.png" alt="" />
-      <div class="lp-sidebar-link lp-sidebar-link--active">📚 <span data-i18n="tool.grammatik.title">Grammatik</span></div>
-      <div class="lp-sidebar-link">🎯 <span data-i18n="tool.artikel.title">der/die/das-Trainer</span></div>
-      <div class="lp-sidebar-link">🗂️ <span data-i18n="home.mock.wortschatzShort">Wortschatz</span></div>
-      <div class="lp-sidebar-link">🔊 <span data-i18n="tool.aussprache.title">Aussprache</span></div>
-      <div class="lp-sidebar-link">🗣️ <span data-i18n="home.mock.sprechenShort">Sprechen</span></div>
-      <div class="lp-sidebar-link">✍️ <span data-i18n="tool.lesen.title">Lesen &amp; Schreiben</span></div>
-      <div class="lp-sidebar-link">🗺️ <span data-i18n="tool.kultur.title">Kulturwissen</span></div>
+      <button type="button" class="lp-sidebar-link lp-sidebar-link--active" data-panel="grammatik">
+        📚 <span data-i18n="tool.grammatik.title">Grammatik</span>
+      </button>
+      <button type="button" class="lp-sidebar-link" data-panel="aussprache">
+        🔊 <span data-i18n="home.mock.ausspracheShort">Aussprache</span>
+      </button>
+      <button type="button" class="lp-sidebar-link" data-panel="bild">
+        🗣️ <span data-i18n="home.mock.bildTitle">Bildbeschreibung</span>
+      </button>
+      <button type="button" class="lp-sidebar-link" data-panel="kultur">
+        🗺️ <span data-i18n="tool.kultur.title">Kulturwissen</span>
+      </button>
+      <!-- The rest of the toolbox, shown but not faked: these lead nowhere in a
+           mockup, so they read as a list rather than as dead buttons. -->
+      <div class="lp-sidebar-more">
+        <span class="lp-sidebar-more-label" data-i18n="home.mock.alsoIncluded">Außerdem dabei</span>
+        <span>🎯 <span data-i18n="tool.artikel.title">der/die/das-Trainer</span></span>
+        <span>🗂️ <span data-i18n="home.mock.wortschatzShort">Wortschatz</span></span>
+        <span>✍️ <span data-i18n="tool.lesen.title">Lesen &amp; Schreiben</span></span>
+      </div>
     </div>
+
     <div class="lp-dash">
-      <div class="lp-dash-header">
-        <div class="lp-dash-greeting"><strong data-i18n="tool.grammatik.title">Grammatik</strong><span>Thema 1 von {grammatik.length}</span></div>
-      </div>
-      <div class="lp-dash-stat-row">
-        <div class="lp-dash-stat"><strong>{grammarQuestionCount}</strong><span data-i18n="home.mock.questionsLabel">Fragen</span></div>
-        <div class="lp-dash-stat"><strong>{grammatik.length}</strong><span data-i18n="home.mock.topicsLabel">Themen</span></div>
-        <div class="lp-dash-stat"><strong>0€</strong><span data-i18n="home.mock.costLabel">Kosten</span></div>
-      </div>
-      <div class="lp-dash-question">
-        <div class="lp-quiz-kicker">Akkusativ</div>
-        <p class="lp-quiz-prompt">Ich habe <span class="blank">___</span> Computer.</p>
-        <p class="lp-quiz-hint">(der Computer)</p>
-        <div class="lp-quiz-choices">
-          <span class="lp-quiz-choice">der</span>
-          <span class="lp-quiz-choice lp-quiz-choice--correct">den</span>
-          <span class="lp-quiz-choice">das</span>
+      <!-- Grammatik ---------------------------------------------------------->
+      <section data-panel-body="grammatik" data-quiz>
+        <div class="lp-dash-header">
+          <div class="lp-dash-greeting">
+            <strong data-i18n="tool.grammatik.title">Grammatik</strong>
+            <span data-quiz-position>Frage 1 von {ROUND.length}</span>
+          </div>
         </div>
-      </div>
+        <div class="lp-dash-stat-row">
+          <div class="lp-dash-stat"><strong>{grammarQuestions}</strong><span data-i18n="home.mock.questionsLabel">Fragen</span></div>
+          <div class="lp-dash-stat"><strong>{grammarTopics}</strong><span data-i18n="home.mock.topicsLabel">Themen</span></div>
+          <div class="lp-dash-stat"><strong>0€</strong><span data-i18n="home.mock.costLabel">Kosten</span></div>
+        </div>
+        <div class="lp-dash-question">
+          <div class="lp-quiz-kicker" data-quiz-kicker>{firstQ.topic} · {firstQ.level}</div>
+          <p class="lp-quiz-prompt"><span data-quiz-pre>{firstQ.pre}</span><span class="blank" data-quiz-blank>___</span><span data-quiz-post>{firstQ.post}</span></p>
+          <p class="lp-quiz-hint" data-quiz-hint>{firstQ.hint}</p>
+          <div class="lp-quiz-choices" data-quiz-choices>
+            {firstQ.choices.map((choice, i) => (
+              <button type="button" class="lp-quiz-choice" data-choice={i}>{choice}</button>
+            ))}
+          </div>
+          <div class="lp-quiz-foot">
+            <span class="lp-quiz-feedback" data-quiz-feedback role="status" aria-live="polite"></span>
+            <span class="lp-quiz-dots" data-quiz-dots>
+              {ROUND.map((_, i) => <i class={i === 0 ? "is-current" : ""}></i>)}
+            </span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Aussprache --------------------------------------------------------->
+      <section data-panel-body="aussprache" data-pron hidden>
+        <div class="lp-dash-header">
+          <div class="lp-dash-greeting">
+            <strong data-i18n="tool.aussprache.title">Aussprache-Training</strong>
+            <span data-pron-position>Phrase 1 von {PRON.length}</span>
+          </div>
+        </div>
+        <div class="lp-dash-stat-row">
+          <div class="lp-dash-stat"><strong>{pronItems}</strong><span data-i18n="home.mock.phrasesLabel">Phrasen</span></div>
+          <div class="lp-dash-stat"><strong>2</strong><span data-i18n="home.mock.setsLabel">Sets</span></div>
+          <div class="lp-dash-stat"><strong>0€</strong><span data-i18n="home.mock.costLabel">Kosten</span></div>
+        </div>
+        <div class="lp-dash-question lp-pron">
+          <div class="lp-quiz-kicker" data-i18n="aussprache.hero.eyebrow">Hören &amp; nachsprechen</div>
+          <p class="lp-pron-text" data-pron-text>{firstP.text}</p>
+          <p class="lp-quiz-hint" data-pron-note>{firstP.note}</p>
+          <div class="lp-pron-controls">
+            <button type="button" class="lp-pron-play" data-pron-play>
+              <span class="lp-pron-icon" data-pron-icon>▶</span>
+              <span data-i18n="aussprache.play">Abspielen</span>
+            </button>
+            <label class="lp-pron-slow">
+              <input type="checkbox" data-pron-slow />
+              <span data-i18n="home.mock.slow">langsam</span>
+            </label>
+            <span class="lp-pron-nav">
+              <button type="button" class="lp-pron-step" data-pron-step="-1" aria-label="Zurück" data-i18n-attr="aria-label:aussprache.prev">‹</button>
+              <button type="button" class="lp-pron-step" data-pron-step="1" aria-label="Weiter" data-i18n-attr="aria-label:aussprache.next">›</button>
+            </span>
+          </div>
+          <audio data-pron-audio preload="none" src={firstP.audio}></audio>
+        </div>
+      </section>
+
+      <!-- Bildbeschreibung ---------------------------------------------------->
+      <section data-panel-body="bild" data-bild hidden>
+        <div class="lp-dash-header">
+          <div class="lp-dash-greeting">
+            <strong data-i18n="home.mock.bildTitle">Bildbeschreibung</strong>
+            <span data-i18n="home.mock.bildSub">DTZ Sprechen, Teil 2</span>
+          </div>
+        </div>
+        <div class="lp-dash-stat-row">
+          <div class="lp-dash-stat"><strong>{sprechen.length}</strong><span data-i18n="home.mock.imagesLabel">Bilder</span></div>
+          <div class="lp-dash-stat"><strong>{bildQuestions}</strong><span data-i18n="home.mock.questionsLabel">Fragen</span></div>
+          <div class="lp-dash-stat"><strong>0€</strong><span data-i18n="home.mock.costLabel">Kosten</span></div>
+        </div>
+        <div class="lp-dash-question lp-bild">
+          <img src={firstB.image} alt="" data-bild-img loading="lazy" />
+          <div class="lp-bild-body">
+            <div class="lp-bild-tabs">
+              <button type="button" class="lp-bild-tab is-active" data-bild-tab="beschreibung" data-i18n="home.mock.describeTab">Bild beschreiben</button>
+              <button type="button" class="lp-bild-tab" data-bild-tab="persoenlich" data-i18n="home.mock.aboutYouTab">Über dich</button>
+            </div>
+            <ul class="lp-bild-list" data-bild-list>
+              {firstB.beschreibung.map((q) => <li>{q}</li>)}
+            </ul>
+            <div class="lp-quiz-foot">
+              <span class="lp-quiz-dots" data-bild-dots>
+                {sprechen.map((_, i) => <i class={i === 0 ? "is-current" : ""}></i>)}
+              </span>
+              <span class="lp-pron-nav">
+                <button type="button" class="lp-pron-step" data-bild-step="-1" aria-label="Zurück" data-i18n-attr="aria-label:aussprache.prev">‹</button>
+                <button type="button" class="lp-pron-step" data-bild-step="1" aria-label="Weiter" data-i18n-attr="aria-label:aussprache.next">›</button>
+              </span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Kulturwissen -------------------------------------------------------->
+      <section data-panel-body="kultur" data-kultur hidden>
+        <div class="lp-dash-header">
+          <div class="lp-dash-greeting">
+            <strong data-i18n="tool.kultur.title">Kulturwissen</strong>
+            <span data-kultur-position>Frage 1 von {CULTURE.length}</span>
+          </div>
+          <div class="lp-kultur-score" data-kultur-score>0 / {CULTURE.length}</div>
+        </div>
+        <div class="lp-dash-stat-row">
+          <div class="lp-dash-stat"><strong>{lid.questions.length}</strong><span data-i18n="home.mock.questionsLabel">Fragen</span></div>
+          <div class="lp-dash-stat"><strong>{lid.bundeslaender.length}</strong><span data-i18n="home.mock.statesLabel">Bundesländer</span></div>
+          <div class="lp-dash-stat"><strong>0€</strong><span data-i18n="home.mock.costLabel">Kosten</span></div>
+        </div>
+        <div class="lp-dash-question">
+          <div class="lp-quiz-kicker" data-i18n="home.mock.kulturSub">Leben in Deutschland</div>
+          <p class="lp-quiz-prompt" data-kultur-prompt>{firstC.prompt}</p>
+          <div class="lp-kultur-options" data-kultur-options>
+            {firstC.options.map((opt, i) => (
+              <button type="button" class="lp-quiz-choice lp-kultur-option" data-kultur-choice={i}>{opt}</button>
+            ))}
+          </div>
+          <div class="lp-quiz-foot">
+            <span class="lp-quiz-feedback" data-kultur-feedback role="status" aria-live="polite"></span>
+            <span class="lp-quiz-dots" data-kultur-dots>
+              {CULTURE.map((_, i) => <i class={i === 0 ? "is-current" : ""}></i>)}
+            </span>
+          </div>
+        </div>
+      </section>
     </div>
   </div>
 </div>
+
+<script type="application/json" data-mock-data set:html={JSON.stringify({ ROUND, PRON, BILD: sprechen, CULTURE, PANELS })}></script>
+
+<script>
+  import { getLang, loadDict, onLangChange } from "../../lib/i18n.js";
+
+  const dataEl = document.querySelector("[data-mock-data]");
+  // A page may place this component more than once (mobile3 shows it in the
+  // desktop fold and again further down), so wire every instance, not just the
+  // first — otherwise whichever copy is visible at the current width is dead.
+  // Each gets its own state; they only share the payload, which is identical.
+  for (const mock of dataEl ? document.querySelectorAll("[data-mock]") : []) {
+    const { ROUND, PRON, BILD, CULTURE, PANELS } = JSON.parse(dataEl.textContent);
+
+    // Copy the scripts write themselves still has to follow the language
+    // switcher, so keep the live dictionary and re-render on change.
+    let dict = {};
+    const t = (key, fallback, vars) => {
+      let str = dict[key] ?? fallback;
+      if (vars) str = str.replace(/\{(\w+)\}/g, (m, k) => (k in vars ? String(vars[k]) : m));
+      return str;
+    };
+    const renderers = [];
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    /* --------------------------------------------------------- panel switch */
+    const urlSlot = mock.querySelector("[data-mock-url]");
+    const navButtons = [...mock.querySelectorAll("[data-panel]")];
+    const bodies = [...mock.querySelectorAll("[data-panel-body]")];
+
+    function showPanel(key) {
+      for (const btn of navButtons) btn.classList.toggle("lp-sidebar-link--active", btn.dataset.panel === key);
+      for (const body of bodies) body.hidden = body.dataset.panelBody !== key;
+      const panel = PANELS.find((p) => p.key === key);
+      if (panel && urlSlot) urlSlot.textContent = panel.url;
+      // Leaving the pronunciation panel should not leave audio running.
+      if (key !== "aussprache") stopAudio();
+    }
+    for (const btn of navButtons) btn.addEventListener("click", () => showPanel(btn.dataset.panel));
+
+    /* -------------------------------------------------------- Grammatik quiz */
+    {
+      const root = mock.querySelector("[data-quiz]");
+      const position = root.querySelector("[data-quiz-position]");
+      const kicker = root.querySelector("[data-quiz-kicker]");
+      const pre = root.querySelector("[data-quiz-pre]");
+      const post = root.querySelector("[data-quiz-post]");
+      const blank = root.querySelector("[data-quiz-blank]");
+      const hint = root.querySelector("[data-quiz-hint]");
+      const choices = root.querySelector("[data-quiz-choices]");
+      const feedback = root.querySelector("[data-quiz-feedback]");
+      const dots = root.querySelector("[data-quiz-dots]");
+
+      let index = 0;
+      let solved = false;
+      let tried = new Set();
+      let advanceTimer = null;
+
+      function render() {
+        const q = ROUND[index];
+        position.textContent = t("home.mock.position", "Frage {i} von {n}", { i: index + 1, n: ROUND.length });
+        kicker.textContent = `${q.topic} · ${q.level}`;
+        hint.textContent = q.hint;
+
+        // The blank fills in with the word once it is right — the small payoff
+        // that makes the card feel like an exercise rather than a picture of one.
+        pre.textContent = q.pre;
+        post.textContent = q.post;
+        blank.textContent = solved ? q.choices[q.answer] : "___";
+        blank.classList.toggle("is-filled", solved);
+
+        // A wrong pick is marked and retired, but the right answer is never
+        // revealed for it — the point is to try again, not to be told.
+        choices.innerHTML = q.choices
+          .map((choice, i) => {
+            const cls = ["lp-quiz-choice", solved && i === q.answer ? "lp-quiz-choice--correct" : "", tried.has(i) ? "lp-quiz-choice--wrong" : ""]
+              .filter(Boolean)
+              .join(" ");
+            const off = solved || tried.has(i);
+            return `<button type="button" class="${cls}" data-choice="${i}"${off ? " disabled" : ""}>${choice}</button>`;
+          })
+          .join("");
+
+        if (solved) feedback.textContent = t("home.mock.correct", "Richtig!");
+        else if (tried.size) feedback.textContent = t("home.mock.tryAgain", "Fast — noch mal.");
+        else feedback.textContent = "";
+        feedback.className = `lp-quiz-feedback${solved ? " is-correct" : tried.size ? " is-wrong" : ""}`;
+
+        [...dots.children].forEach((dot, i) => {
+          dot.className = i === index ? "is-current" : i < index ? "is-done" : "";
+        });
+      }
+
+      choices.addEventListener("click", (e) => {
+        const btn = e.target.closest("[data-choice]");
+        if (!btn || advanceTimer) return;
+        const q = ROUND[index];
+        const picked = Number(btn.dataset.choice);
+        if (picked === q.answer) solved = true;
+        else tried.add(picked);
+        render();
+        if (!solved) return;
+        // Hold the solved state long enough to read, then roll on. The round loops
+        // so the card is never a dead end for the next visitor scrolling past.
+        advanceTimer = window.setTimeout(
+          () => {
+            advanceTimer = null;
+            index = (index + 1) % ROUND.length;
+            solved = false;
+            tried = new Set();
+            render();
+          },
+          reduceMotion ? 1600 : 1100
+        );
+      });
+
+      renderers.push(render);
+    }
+
+    /* ------------------------------------------------------------ Aussprache */
+    let stopAudio = () => {};
+    {
+      const root = mock.querySelector("[data-pron]");
+      const position = root.querySelector("[data-pron-position]");
+      const text = root.querySelector("[data-pron-text]");
+      const note = root.querySelector("[data-pron-note]");
+      const audio = root.querySelector("[data-pron-audio]");
+      const playBtn = root.querySelector("[data-pron-play]");
+      const icon = root.querySelector("[data-pron-icon]");
+      const slow = root.querySelector("[data-pron-slow]");
+
+      let index = 0;
+
+      stopAudio = () => {
+        audio.pause();
+        audio.currentTime = 0;
+        icon.textContent = "▶";
+        root.classList.remove("is-playing");
+      };
+
+      function render() {
+        const item = PRON[index];
+        position.textContent = t("home.mock.phrasePosition", "Phrase {i} von {n}", { i: index + 1, n: PRON.length });
+        text.textContent = item.text;
+        note.textContent = item.note;
+        if (!audio.src.endsWith(item.audio)) {
+          stopAudio();
+          audio.src = item.audio;
+        }
+      }
+
+      playBtn.addEventListener("click", () => {
+        if (!audio.paused) {
+          stopAudio();
+          return;
+        }
+        audio.playbackRate = slow.checked ? 0.7 : 1;
+        audio.currentTime = 0;
+        // An autoplay block or a missing file must not leave the button stuck
+        // in a playing state it never reached.
+        audio.play().then(
+          () => {
+            icon.textContent = "❚❚";
+            root.classList.add("is-playing");
+          },
+          () => stopAudio()
+        );
+      });
+      audio.addEventListener("ended", stopAudio);
+      slow.addEventListener("change", () => {
+        audio.playbackRate = slow.checked ? 0.7 : 1;
+      });
+
+      for (const btn of root.querySelectorAll("[data-pron-step]")) {
+        btn.addEventListener("click", () => {
+          index = (index + Number(btn.dataset.pronStep) + PRON.length) % PRON.length;
+          render();
+        });
+      }
+
+      renderers.push(render);
+    }
+
+    /* ------------------------------------------------------ Bildbeschreibung */
+    {
+      const root = mock.querySelector("[data-bild]");
+      const img = root.querySelector("[data-bild-img]");
+      const list = root.querySelector("[data-bild-list]");
+      const dots = root.querySelector("[data-bild-dots]");
+      const tabs = [...root.querySelectorAll("[data-bild-tab]")];
+
+      let index = 0;
+      let tab = "beschreibung";
+
+      function render() {
+        const bild = BILD[index];
+        img.src = bild.image;
+        img.alt = bild.title;
+        list.innerHTML = bild[tab].map((q) => `<li>${q}</li>`).join("");
+        for (const b of tabs) b.classList.toggle("is-active", b.dataset.bildTab === tab);
+        [...dots.children].forEach((dot, i) => {
+          dot.className = i === index ? "is-current" : "";
+        });
+      }
+
+      for (const b of tabs) {
+        b.addEventListener("click", () => {
+          tab = b.dataset.bildTab;
+          render();
+        });
+      }
+      for (const btn of root.querySelectorAll("[data-bild-step]")) {
+        btn.addEventListener("click", () => {
+          index = (index + Number(btn.dataset.bildStep) + BILD.length) % BILD.length;
+          render();
+        });
+      }
+
+      renderers.push(render);
+    }
+
+    /* --------------------------------------------------------- Kulturwissen */
+    {
+      const root = mock.querySelector("[data-kultur]");
+      const position = root.querySelector("[data-kultur-position]");
+      const scoreSlot = root.querySelector("[data-kultur-score]");
+      const prompt = root.querySelector("[data-kultur-prompt]");
+      const options = root.querySelector("[data-kultur-options]");
+      const feedback = root.querySelector("[data-kultur-feedback]");
+      const dots = root.querySelector("[data-kultur-dots]");
+
+      let index = 0;
+      let picked = null;
+      let score = 0;
+      let advanceTimer = null;
+
+      function render() {
+        const q = CULTURE[index];
+        position.textContent = t("home.mock.position", "Frage {i} von {n}", { i: index + 1, n: CULTURE.length });
+        scoreSlot.textContent = `${score} / ${CULTURE.length}`;
+        prompt.textContent = q.prompt;
+
+        // Einbürgerungstest rules: one attempt, then the right answer is shown.
+        options.innerHTML = q.options
+          .map((opt, i) => {
+            const cls = [
+              "lp-quiz-choice lp-kultur-option",
+              picked !== null && i === q.answer ? "lp-quiz-choice--correct" : "",
+              picked === i && i !== q.answer ? "lp-quiz-choice--wrong" : "",
+            ]
+              .filter(Boolean)
+              .join(" ");
+            return `<button type="button" class="${cls}" data-kultur-choice="${i}"${picked !== null ? " disabled" : ""}>${opt}</button>`;
+          })
+          .join("");
+
+        if (picked === null) feedback.textContent = "";
+        else if (picked === q.answer) feedback.textContent = t("home.mock.correct", "Richtig!");
+        else feedback.textContent = t("home.mock.wasCorrect", "Richtig wäre gewesen:");
+        feedback.className = `lp-quiz-feedback${picked === null ? "" : picked === q.answer ? " is-correct" : " is-wrong"}`;
+
+        [...dots.children].forEach((dot, i) => {
+          dot.className = i === index ? "is-current" : i < index ? "is-done" : "";
+        });
+      }
+
+      options.addEventListener("click", (e) => {
+        const btn = e.target.closest("[data-kultur-choice]");
+        if (!btn || picked !== null || advanceTimer) return;
+        picked = Number(btn.dataset.kulturChoice);
+        if (picked === CULTURE[index].answer) score += 1;
+        render();
+        advanceTimer = window.setTimeout(
+          () => {
+            advanceTimer = null;
+            index = (index + 1) % CULTURE.length;
+            if (index === 0) score = 0;
+            picked = null;
+            render();
+          },
+          reduceMotion ? 2600 : 1900
+        );
+      });
+
+      renderers.push(render);
+    }
+
+    const renderAll = () => renderers.forEach((fn) => fn());
+    loadDict(getLang()).then((d) => {
+      dict = d;
+      renderAll();
+    });
+    onLangChange((_code, d) => {
+      dict = d;
+      renderAll();
+    });
+  }
+</script>

@@ -1,0 +1,277 @@
+---
+// Homepage study: concept B ("Wo stehst du?") as the fold up to 1024px.
+//
+// Decisions this page implements, in the order they were taken:
+//   · the level grid is the fold on phone, tablet portrait and small laptops;
+//     above 1024px the existing mockup fold stays, because that is the first
+//     width where the frames can be shown big enough to actually use
+//   · everything below the fold is a slimmed rewrite, not index.astro's full
+//     run of sections — on a phone the old body was seven screens of scrolling
+//   · the hero paragraph is gone. The tiles say what it said, faster
+//   · a fifth tile, "Weiß ich nicht", lands on A1 — new learners cannot place
+//     themselves, and four CEFR tiles quietly assume they can
+//
+// Internal; noindex, not linked from the public nav. index.astro untouched.
+import Layout from "../layouts/Layout.astro";
+import LanguageSwitcher from "../components/LanguageSwitcher.astro";
+import ThemeToggle from "../components/ThemeToggle.astro";
+import LevelFold from "../components/LevelFold.astro";
+import DashboardMock from "../components/mocks/DashboardMock.astro";
+import UebungenMock from "../components/mocks/UebungenMock.astro";
+import "../styles/landing.css";
+import "../styles/front.css";
+import "../styles/mobile3.css";
+import artikel from "../data/artikel.json";
+import grammatik from "../data/grammatik.json";
+import wortschatz from "../data/wortschatz.json";
+import sprechen from "../data/sprechen.json";
+import lesen from "../data/lesen.json";
+import kultur from "../data/kultur.json";
+import lid from "../data/leben-in-deutschland.json";
+
+const workspaceModules = import.meta.glob("../data/grammatik/*.json", { eager: true });
+const workspaces = Object.values(workspaceModules).map((m) => m.default ?? m);
+const covered = new Set(workspaces.map((w) => w.id));
+const quizOnly = grammatik.filter((t) => !covered.has(t.id));
+
+const ANSWERABLE = {
+  fill: (ex) => ex.items.length,
+  match: (ex) => ex.pairs.length,
+  table: (ex) => ex.rows.length,
+  story: (ex) => ex.segments.filter((s) => s.blank !== undefined).length,
+  build: (ex) => ex.sentences.length,
+};
+const grammarQuestions =
+  workspaces.reduce((sum, w) => sum + w.exercises.reduce((n, ex) => n + (ANSWERABLE[ex.type]?.(ex) ?? 0), 0), 0) +
+  quizOnly.reduce((sum, t) => sum + t.questions.length, 0);
+const topicCount = workspaces.length + quizOnly.length;
+const readingQuestionCount = lesen.groups.reduce((sum, g) => sum + g.questions.length, 0);
+
+
+const ICON = {
+  artikel: `<path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm0 14a4 4 0 1 1 0-8 4 4 0 0 1 0 8Z" fill-rule="evenodd"/><circle cx="12" cy="12" r="1.4"/>`,
+  grammatik: `<path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H12v17H6.5A2.5 2.5 0 0 1 4 17.5v-12Z"/><path d="M12 3h5.5A2.5 2.5 0 0 1 20 5.5v12a2.5 2.5 0 0 1-2.5 2.5H12V3Z" opacity="0.55"/>`,
+  wortschatz: `<path d="M3 7a2 2 0 0 1 2-2h4.5l1.5 2H19a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7Z"/>`,
+  aussprache: `<path d="M3 9h3.5l5-4v14l-5-4H3V9Z"/><path d="M15.5 9a3 3 0 0 1 0 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>`,
+  sprechen: `<rect x="9" y="2" width="6" height="12" rx="3"/><path d="M6.5 11a5.5 5.5 0 0 0 11 0h-1.6a3.9 3.9 0 0 1-7.8 0H6.5Z"/><rect x="11.2" y="18" width="1.6" height="3"/>`,
+  lesen: `<path d="M4 20 15 9l3 3-11 11H4v-3Z"/><path d="M13 6l3-3 3 3-3 3-3-3Z" opacity="0.55"/>`,
+  kultur: `<path d="M12 21s7-6.2 7-11.6A7 7 0 0 0 5 9.4C5 14.8 12 21 12 21Zm0-6.5a3 3 0 1 1 0-6 3 3 0 0 1 0 6Z" fill-rule="evenodd"/>`,
+  praepositionen: `<path d="M9.6 14.4 14.4 9.6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M13.2 6.6 15 4.8a3.8 3.8 0 0 1 5.4 5.4l-1.8 1.8" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M10.8 17.4 9 19.2a3.8 3.8 0 0 1-5.4-5.4l1.8-1.8" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>`,
+  telc: `<path d="M6 2h9l3 3v17H6V2Z"/>`,
+  goethe: `<path d="M12 3 3 8h18L12 3Z"/><path d="M5 9h14v2H5V9Zm1 3h2v6H6v-6Zm4.5 0h2v6h-2v-6Zm4.5 0h2v6h-2v-6ZM4 19h16v2H4v-2Z"/>`,
+  testdaf: `<path d="M12 3 2 8l10 5 10-5-10-5Z"/><path d="M6 12.2v4.3c0 1.4 2.8 2.5 6 2.5s6-1.1 6-2.5v-4.3l-6 3-6-3Z" opacity="0.55"/>`,
+  dtz: `<path d="M12 5c-2-1.3-5-1.3-7 0v13c2-1.3 5-1.3 7 0V5Z"/><path d="M12 5c2-1.3 5-1.3 7 0v13c-2-1.3-5-1.3-7 0V5Z" opacity="0.55"/>`,
+};
+
+const tools = [
+  { href: "/uebungen/grammatik", icon: ICON.grammatik, title: "Grammatik", desc: "Themen nach Niveau, je mit Erklärung und Übungen.", count: `${topicCount} Themen` },
+  { href: "/uebungen/artikel-trainer", icon: ICON.artikel, title: "der/die/das-Trainer", desc: "Artikel gezielt üben, mit sofortigem Feedback.", count: `${artikel.length} Nomen` },
+  { href: "/uebungen/wortschatz", icon: ICON.wortschatz, title: "Wortschatz", desc: "Karteikarten zum Umdrehen und Wiederholen.", count: `${wortschatz.length} Karten` },
+  { href: "/uebungen/aussprache", icon: ICON.aussprache, title: "Aussprache", desc: "Anhören, nachsprechen, sich selbst aufnehmen.", count: `${wortschatz.length + artikel.length} Wörter` },
+  { href: "/uebungen/sprechen", icon: ICON.sprechen, title: "Bildbeschreibung", desc: "Echte DTZ-Prüferfragen mit Timer.", count: `${sprechen.length} Bilder` },
+  { href: "/uebungen/lesen-schreiben", icon: ICON.lesen, title: "Lesen & Schreiben", desc: "DTZ-Leseverstehen plus Schreibaufgaben.", count: `${readingQuestionCount} Aufgaben` },
+  { href: "/uebungen/grammatik/verben-praepositionen", icon: ICON.praepositionen, title: "Verben mit Präpositionen", desc: "Feste Präpositionen in fünf Aufgabentypen.", count: "B1" },
+  { href: "/uebungen/kultur", icon: ICON.kultur, title: "Kulturwissen", desc: "Einblicke aus echten Unterrichtsgesprächen.", count: `${kultur.length} Thema${kultur.length === 1 ? "" : "n"}` },
+];
+
+const exams = [
+  { href: "/pruefungen/dtz", icon: ICON.dtz, title: "DTZ", level: "A2 / B1" },
+  { href: "/pruefungen/telc", icon: ICON.telc, title: "telc", level: "A1–C2" },
+  { href: "/pruefungen/goethe", icon: ICON.goethe, title: "Goethe", level: "A1–C2" },
+  { href: "/pruefungen/testdaf", icon: ICON.testdaf, title: "TestDaF", level: "≈ B2–C1" },
+  { href: "/pruefungen/leben-in-deutschland", icon: ICON.kultur, title: "Leben in D.", level: `${lid.bundeslaender.length} Länder` },
+];
+
+const userCount = 412; // actual signups so far
+---
+<Layout title="Startseite: Niveau-Fold (Studie) – DeutschAcademy" description="Studie: Niveau-Grid als Fold bis 1024px.">
+  <Fragment slot="head">
+    <meta name="robots" content="noindex, nofollow" />
+  </Fragment>
+
+  <div class="m3">
+    <header class="m3-bar">
+      <div class="m3-bar-inner">
+        <p class="m3-bar-title">Niveau-Fold (Studie)</p>
+        <div class="m3-bar-tools">
+          <span class="m3-meta" data-meta>— px</span>
+          <LanguageSwitcher />
+          <ThemeToggle />
+        </div>
+      </div>
+    </header>
+
+    <!-- FOLD ≤1024px: dieselbe Komponente, die index.astro benutzt. -->
+    <LevelFold />
+
+    <!-- FOLD >1024px: die bisherige Mockup-Fold -->
+    <section class="m3-fold--mocks fr-page fr-page--home" data-variant="versetzt">
+      <div class="fr-stage">
+        <div class="fr-grid">
+          <div class="fr-block fr-copy">
+            <p class="fr-eyebrow" data-i18n="home.hero2.eyebrow">Deutsch von A1 bis C1</p>
+            <h1 class="fr-title" data-i18n="front.title">Deutsch lernen</h1>
+            <p class="fr-accent">Schritt für Schritt.</p>
+            <p class="fr-lead" data-i18n="home.hero2.lead">
+              Grammatik, Alltagsdeutsch und Sprechpraxis — aufgebaut aus echtem
+              Unterrichtsmaterial, nicht kalt für eine Plattform geschrieben.
+            </p>
+            <div class="fr-actions">
+              <a href="/uebungen" class="lp-btn lp-btn--primary" data-i18n="home.cta.startFree">Kostenlos starten</a>
+              <a href="/pruefungen" class="lp-btn lp-btn--outline" data-i18n="home.hero2.cta2">So funktioniert's</a>
+            </div>
+          </div>
+          <div class="fr-block fr-mock fr-mock--dash" aria-label="Dashboard-Vorschau"><DashboardMock /></div>
+          <div class="fr-block fr-mock fr-mock--ueb" aria-label="Übungen-Vorschau"><UebungenMock /></div>
+          <div class="fr-block fr-slogan">
+            <p class="fr-slogan-line" data-i18n="home.footer.tagline">Da für Dich!</p>
+            <p class="fr-slogan-sub" data-i18n="front.slogan.sub">
+              Kostenlos, ohne Konto — von Lehrkräften, die wirklich unterrichten.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Zahlen -->
+    <section class="m3-band m3-band--alt">
+      <div class="m3-wrap">
+        <div class="m3-nums">
+          <div class="m3-num"><strong>{grammarQuestions}</strong><span>Aufgaben</span></div>
+          <div class="m3-num"><strong>{topicCount}</strong><span>Grammatikthemen</span></div>
+          <div class="m3-num"><strong>{userCount}+</strong><span>Lernende bisher</span></div>
+          <div class="m3-num"><strong>0€</strong><span>für alles</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Werkzeuge -->
+    <section class="m3-band">
+      <div class="m3-wrap">
+        <div class="m3-band-head">
+          <h2>Was du bekommst</h2>
+          <p>Alles kostenlos, alles ohne Konto — aus echtem Unterrichtsmaterial.</p>
+        </div>
+        <div class="m3-cards">
+          {tools.map((t) => (
+            <a class="m3-card" href={t.href}>
+              <span class="m3-card-tile"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" set:html={t.icon} /></span>
+              <h4>{t.title}</h4>
+              <p>{t.desc}</p>
+              <span class="badge badge-brand">{t.count}</span>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Prüfungen -->
+    <section class="m3-band m3-band--alt">
+      <div class="m3-wrap">
+        <div class="m3-band-head">
+          <h2>Prüfungen</h2>
+          <p>Format, Aufbau und Übungssätze — für die Prüfung, die du brauchst.</p>
+        </div>
+        <div class="m3-cards m3-cards--exams">
+          {exams.map((e) => (
+            <a class="m3-card" href={e.href}>
+              <span class="m3-card-tile"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" set:html={e.icon} /></span>
+              <h4>{e.title}</h4>
+              <span class="badge badge-neutral">{e.level}</span>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Blick hinein -->
+    <section class="m3-band">
+      <div class="m3-wrap">
+        <div class="m3-band-head">
+          <h2>So sieht es von innen aus</h2>
+          <p>Keine Bilder — beide funktionieren. Tipp in der Seitenleiste auf ein Thema.</p>
+        </div>
+        <div class="m3-peek">
+          <div class="m3-peek-item">
+            <p class="m3-peek-label">Dein Fortschritt</p>
+            <DashboardMock />
+          </div>
+          <div class="m3-peek-item">
+            <p class="m3-peek-label">Übungen</p>
+            <UebungenMock />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slogan -->
+    <section class="m3-slogan">
+      <div class="m3-wrap">
+        <p class="m3-slogan-line" data-i18n="home.footer.tagline">Da für Dich!</p>
+        <p class="m3-slogan-sub" data-i18n="front.slogan.sub">
+          Kostenlos, ohne Konto — von Lehrkräften, die wirklich unterrichten.
+        </p>
+        <a href="/uebungen" class="lp-btn lp-btn--primary" data-i18n="home.cta.startFree">Kostenlos starten</a>
+      </div>
+    </section>
+
+    <footer class="m3-foot">
+      <div class="m3-wrap">
+        <div class="m3-foot-links">
+          <a href="/uebungen" data-i18n="nav.exercises">Übungen</a>
+          <a href="/pruefungen" data-i18n="nav.exams">Prüfungen</a>
+        </div>
+        <p>© DeutschAcademy</p>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    const meta = document.querySelector("[data-meta]");
+    const showWidth = () => { meta.innerHTML = `<strong>${window.innerWidth}</strong> px`; };
+    addEventListener("resize", showWidth);
+    showWidth();
+
+    // The desktop fold's mocks are fixed-size artwork taken out of flow (see
+    // front.css), so each has to be scaled to its grid cell. Ported from
+    // index.astro; it only ever runs at the width where that fold is visible.
+    const DESKTOP = window.matchMedia("(min-width: 1025px)");
+    const DEFAULT_W = 760;
+    const MAX_SCALE = 1.15;
+    const GUTTER = 20;
+    const mocks = [...document.querySelectorAll(".m3-fold--mocks .fr-mock")];
+
+    function designWidth(cell) {
+      const raw = getComputedStyle(cell).getPropertyValue("--fr-mock-w");
+      return parseFloat(raw) || DEFAULT_W;
+    }
+
+    function fitMocks() {
+      if (!DESKTOP.matches) return;
+      for (const cell of mocks) {
+        const browser = cell.querySelector(".lp-browser");
+        if (!browser) continue;
+        browser.style.transform = "";
+        const cw = cell.clientWidth - GUTTER * 2;
+        const ch = cell.clientHeight - GUTTER * 2;
+        const mh = browser.offsetHeight;
+        const dw = designWidth(cell);
+        if (cw <= 0 || ch <= 0 || !mh) continue;
+        const scale = Math.min(cw / dw, ch / mh, MAX_SCALE);
+        browser.style.transform = `translate(${GUTTER + (cw - dw * scale) / 2}px, ${GUTTER + (ch - mh * scale) / 2}px) scale(${scale})`;
+      }
+    }
+
+    requestAnimationFrame(() => requestAnimationFrame(fitMocks));
+    addEventListener("resize", fitMocks);
+    DESKTOP.addEventListener("change", fitMocks);
+    if (window.ResizeObserver) {
+      const ro = new ResizeObserver(() => fitMocks());
+      for (const cell of mocks) {
+        const browser = cell.querySelector(".lp-browser");
+        if (browser) ro.observe(browser);
+      }
+    }
+    document.fonts?.ready.then(fitMocks);
+  </script>
+</Layout>

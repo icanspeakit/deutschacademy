@@ -37,9 +37,17 @@ const reference = concept?.reference;
 <Layout title={`${name} – DeutschAcademy`}>
   <PracticeHeader title={name} />
 
-  <main class="vp-page" id="vp-page">
+  <main class="vp-page vp-page--split" id="vp-page">
     <a href="/uebungen/grammatik" class="vp-back-link" data-i18n="header.back">← Zurück zur Übersicht</a>
 
+    <!-- Two columns on desktop: rule sticky on the right, exercises on the left.
+         The rule stays FIRST in the DOM so that on a phone — where scroll order is
+         the only hierarchy there is — the learner still meets the rule before the
+         exercises. The desktop grid then places the exercises in column 1.
+         Every [data-ex-index] slot must stay inside #vp-page: mountGrammarWorkspace
+         binds to them from that root. -->
+    <div class="vp-workspace">
+    <aside class="vp-col vp-col--rule" id="vp-rule">
     <div class="vp-hero">
       <div class="vp-hero-badges">
         <span class="badge badge-brand" data-i18n="grammatik.hero.eyebrow">GRAMMATIK ÜBEN</span>
@@ -125,8 +133,21 @@ const reference = concept?.reference;
       </div>
     )}
 
-    <h2 class="vp-section-title" data-i18n="nav.exercises">Übungen</h2>
+    </aside>
 
+    <section class="vp-col vp-col--ex">
+    <div class="vp-ex-toolbar">
+      <h2 class="vp-section-title" data-i18n="nav.exercises">Übungen</h2>
+      <button
+        type="button"
+        class="vp-rule-toggle"
+        id="vp-rule-toggle"
+        data-show="Regel einblenden"
+        data-hide="Regel ausblenden"
+      >Regel ausblenden</button>
+    </div>
+
+    <div class="vp-ex-grid">
     {workspace ? (
       workspace.exercises.map((ex, i) => (
         <div class="vp-card">
@@ -147,12 +168,15 @@ const reference = concept?.reference;
         <div id="quiz-root"></div>
       </div>
     )}
+    </div>
+    </section>
+    </div>
   </main>
 
   <script type="application/json" id="topic-data" set:html={JSON.stringify(workspace ?? topic)}></script>
   <script type="module">
     import { mountGrammarWorkspace } from "../../../lib/grammarWorkspace.js";
-    import { mountQuiz } from "../../../lib/quiz.js";
+    import { mountQuiz, withChoices } from "../../../lib/quiz.js";
     import { recordAttempt } from "../../../lib/progress.js";
 
     const data = JSON.parse(document.getElementById("topic-data").textContent);
@@ -161,8 +185,25 @@ const reference = concept?.reference;
     if (Array.isArray(data.exercises)) {
       mountGrammarWorkspace(document.getElementById("vp-page"), data, { onAnswer });
     } else {
-      mountQuiz(document.getElementById("quiz-root"), data.questions, { mode: "text", onAnswer });
+      mountQuiz(document.getElementById("quiz-root"), withChoices(data.questions), { mode: "choice", onAnswer });
     }
+
+    // Collapsing the rule widens the exercise grid from 2-up to 3-up. Remembered,
+    // because whether you still need the rule visible is a per-learner thing, not a
+    // per-visit one.
+    const page = document.getElementById("vp-page");
+    const ruleBtn = document.getElementById("vp-rule-toggle");
+    const RULE_KEY = "da-grammatik-rule";
+
+    function applyRule(hidden) {
+      page.dataset.rule = hidden ? "hidden" : "";
+      if (ruleBtn) ruleBtn.textContent = hidden ? ruleBtn.dataset.show : ruleBtn.dataset.hide;
+      try { localStorage.setItem(RULE_KEY, hidden ? "hidden" : "shown"); } catch {}
+    }
+    let ruleSaved = null;
+    try { ruleSaved = localStorage.getItem(RULE_KEY); } catch {}
+    applyRule(ruleSaved === "hidden");
+    ruleBtn?.addEventListener("click", () => applyRule(page.dataset.rule !== "hidden"));
 
     const toggleRefBtn = document.getElementById("vp-toggle-ref");
     const refGrid = document.getElementById("vp-ref-panel");

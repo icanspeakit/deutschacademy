@@ -1,0 +1,23 @@
+---
+// /nav — the navigation study that produced /dashboard. Same component, same
+// data, same exercises; the only difference is that this page renders all three
+// navigation variants with a toggle between them:
+//
+//   A · Rail      — one flat column, everything visible at once.
+//   B · Icon-Rail — a 64px level column plus a list panel.   ← shipped as /dashboard
+//   C · Akkordeon — folding groups, each header carrying its own progress.
+//
+// Kept rather than deleted because the trade-offs are not settled forever: A is
+// the most scannable while the catalogue is small, C doubles as a course map.
+// Since everything lives in LearnShell.astro, this page cannot drift away from
+// the real one — including its progress, which is the same stored progress.
+// Not linked from the public nav; noindex.
+import Layout from "../layouts/Layout.astro";
+import LearnShell from "../components/LearnShell.astro";
+---
+<Layout title="Navigation (Studie) – DeutschAcademy" description="Designstudie: drei Varianten der Dashboard-Navigation.">
+  <Fragment slot="head">
+    <meta name="robots" content="noindex, nofollow" />
+  </Fragment>
+  <LearnShell variants={["a", "b", "c"]} study />
+</Layout>

@@ -1,0 +1,776 @@
+/* /nav — navigation study. Three ways to do the "list on the left" shell,
+   swapped by the toggle at the top. Everything below is scoped under .nv so it
+   can never leak into the real pages; colours come from the global tokens, so
+   all three variants follow dark mode for free. */
+
+.nv {
+  font-family: var(--font-body);
+  color: var(--ink);
+  background: var(--surface);
+  min-height: 100vh;
+}
+
+.nv-banner {
+  background: var(--warning-soft);
+  border-bottom: 1px solid var(--warning-border);
+  color: var(--ink);
+  font-size: var(--text-sm);
+  padding: var(--space-3) var(--space-6);
+  text-align: center;
+}
+.nv-banner a { color: var(--brand-blue-dark); font-weight: var(--fw-semibold); }
+
+/* ── Top bar + variant toggle ─────────────────────────────────────────── */
+.nv-topbar {
+  background: var(--surface-card);
+  border-bottom: 1px solid var(--border);
+  padding: var(--space-3) var(--space-6);
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+  position: sticky;
+  top: 0;
+  z-index: var(--z-header);
+}
+.nv-brand { display: flex; align-items: center; gap: var(--space-2); text-decoration: none; }
+.nv-brand img { height: 30px; width: auto; }
+.nv-brand span { font-family: var(--font-display); font-size: var(--text-xl); color: var(--ink); letter-spacing: -.01em; }
+
+.nv-toggle { margin-left: auto; display: flex; align-items: center; gap: var(--space-3); flex-wrap: wrap; }
+.nv-toggle-label { font-family: var(--font-label); font-size: var(--text-xs); font-weight: var(--fw-semibold); color: var(--muted); text-transform: uppercase; letter-spacing: .08em; }
+.nv-toggle-group { display: inline-flex; gap: 4px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-pill); padding: 4px; }
+.nv-toggle-btn {
+  border: none; background: transparent; color: var(--muted); cursor: pointer;
+  font-family: var(--font-body); font-size: var(--text-sm); font-weight: var(--fw-bold);
+  padding: 7px 14px; border-radius: var(--radius-pill);
+  transition: background .3s var(--nv-ease-soft), color .3s var(--nv-ease-soft);
+}
+.nv-toggle-btn:hover { color: var(--ink); }
+.nv-toggle-btn.active { background: var(--brand-blue); color: #fff; }
+
+/* ── The thin course strip above the shell (from the reference screenshot) ── */
+.nv-strip {
+  display: flex; align-items: center; gap: var(--space-4);
+  padding: var(--space-4) var(--space-6);
+  background: var(--surface-card);
+  border-bottom: 1px solid var(--border);
+  flex-wrap: wrap;
+}
+.nv-strip-title { font-family: var(--font-display); font-size: var(--text-xl); color: var(--brand-blue-dark); }
+.nv-strip-sub { font-size: var(--text-sm); color: var(--muted-soft); }
+.nv-strip-track { flex: 1; min-width: 120px; height: 8px; border-radius: var(--radius-pill); background: var(--blue-50); overflow: hidden; }
+.nv-strip-fill { display: block; height: 100%; border-radius: var(--radius-pill); background: var(--gradient-brand); }
+.nv-strip-points { font-family: var(--font-label); font-size: var(--text-sm); font-weight: var(--fw-semibold); color: var(--muted); white-space: nowrap; }
+
+/* ── Shell: nav column + content column ───────────────────────────────── */
+.nv-shell {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: start;
+  gap: var(--space-6);
+  padding: var(--space-6);
+  max-width: 1280px;
+  margin: 0 auto;
+}
+.nv-shell > * { min-width: 0; }
+
+/* Only the variant picked by the toggle is mounted. */
+.nv-aside[hidden] { display: none; }
+
+.nv-aside {
+  position: sticky;
+  /* Clears whatever sits above it: the study page has its own sticky top bar,
+     the real page has a static site header, so the rail can sit higher. */
+  top: var(--space-6);
+  align-self: start;
+}
+.nv--study .nv-aside { top: 72px; }
+
+/* Shared row bits used by more than one variant. */
+.nv-icon { display: inline-flex; flex-shrink: 0; color: currentColor; }
+.nv-count {
+  margin-left: auto; font-family: var(--font-label);
+  font-size: var(--text-xs); font-weight: var(--fw-semibold); color: var(--muted-soft);
+  white-space: nowrap;
+}
+.nv-eyebrow {
+  font-family: var(--font-label); font-size: var(--text-xs); font-weight: var(--fw-bold);
+  letter-spacing: .1em; text-transform: uppercase; color: var(--muted-soft);
+  padding: 0 var(--space-3); margin: 0 0 var(--space-2);
+  display: flex; align-items: center; gap: var(--space-2);
+}
+
+/* The GER level badge. Carries the sort order, so it appears on every group
+   heading, on the accordion headers and next to the open item's title. */
+.nv-levelchip {
+  display: inline-flex; align-items: center; justify-content: center;
+  font-family: var(--font-label); font-size: 10px; font-weight: var(--fw-bold);
+  letter-spacing: .04em; text-transform: none;
+  color: var(--brand-blue-dark); background: var(--blue-50);
+  border: 1px solid var(--blue-200); border-radius: var(--radius-pill);
+  padding: 2px 7px; white-space: nowrap;
+}
+.nv-levelchip--lg { font-size: var(--text-xs); padding: 3px 10px; }
+
+/* ── Variant A · Rail ─────────────────────────────────────────────────── */
+/* The reference layout, tidied: one column, grouped by heading, the active row
+   a filled pill. Everything is visible at once — no clicks to find a page. */
+.nva { width: 268px; display: flex; flex-direction: column; gap: var(--space-5); }
+
+/* Level ladder — the sort key of the whole list, made visible at the top. */
+.nva-ladder {
+  background: var(--surface-card); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: var(--space-3) var(--space-4);
+  display: flex; flex-direction: column; gap: var(--space-2);
+}
+.nva-ladder-label { font-family: var(--font-label); font-size: var(--text-xs); font-weight: var(--fw-bold); letter-spacing: .1em; text-transform: uppercase; color: var(--muted-soft); }
+.nva-ladder-row { display: flex; align-items: center; gap: 4px; }
+.nva-step {
+  flex: 1; text-align: center; font-family: var(--font-label);
+  font-size: var(--text-xs); font-weight: var(--fw-bold);
+  padding: 5px 0; border-radius: 7px;
+  background: var(--surface); color: var(--muted-soft); border: 1px solid var(--border);
+}
+.nva-step[data-state="done"] { background: var(--success-soft); color: var(--success); border-color: var(--success-border); }
+.nva-step[data-state="current"] { background: var(--brand-blue); color: #fff; border-color: var(--brand-blue); }
+.nva-step { cursor: pointer; font-family: var(--font-label); }
+.nva-step:hover { border-color: var(--brand-blue); }
+
+/* Group headings are clickable in A too — same "the level is a destination"
+   rule as B's rail, so the three variants stay comparable. */
+.nva-grouphead {
+  background: none; border: none; cursor: pointer; width: 100%;
+  text-align: left; font-family: var(--font-label);
+  border-radius: 7px; padding: 4px var(--space-3);
+}
+.nva-grouphead:hover { color: var(--brand-blue-dark); }
+.nva-grouphead.active { color: var(--brand-blue-dark); }
+.nva-groupgo { margin-left: auto; opacity: 0; transition: opacity .3s var(--nv-ease-soft); }
+.nva-grouphead:hover .nva-groupgo, .nva-grouphead.active .nva-groupgo { opacity: 1; }
+.nva-group { display: flex; flex-direction: column; gap: 2px; }
+.nva-item {
+  display: flex; align-items: center; gap: var(--space-3);
+  padding: 10px var(--space-3); border-radius: var(--radius-sm);
+  text-decoration: none; color: var(--ink); font-size: var(--text-sm); font-weight: var(--fw-medium);
+  background: none; border: none; width: 100%; text-align: left; cursor: pointer;
+  font-family: var(--font-body);
+  transition: background .3s var(--nv-ease-soft);
+}
+.nva-item { overflow: hidden; }
+.nva-item > span:not(.nv-icon):not(.nv-count):not(.nva-dot) {
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0;
+}
+.nva-item:hover { background: var(--blue-50); }
+.nva-item.active { background: var(--blue-100); color: var(--brand-blue-dark); font-weight: var(--fw-bold); }
+.nva-item.active .nv-count { color: var(--brand-blue-dark); }
+.nva-dot {
+  width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0;
+  border: 2px solid var(--border-strong); background: transparent;
+}
+.nva-item.active .nva-dot { border-color: var(--brand-blue); background: var(--brand-blue); }
+.nva-item.done .nva-dot { border-color: var(--success); background: var(--success); }
+.nva-divider { height: 1px; background: var(--border); margin: var(--space-2) var(--space-3); }
+.nva-reset {
+  font-size: var(--text-xs); color: var(--muted); text-decoration: underline;
+  padding: 0 var(--space-3);
+  background: none; border: none; cursor: pointer; font-family: var(--font-body); text-align: left;
+}
+.nva-reset:hover { color: var(--danger); }
+
+/* ── Variant B · Icon rail + panel ────────────────────────────────────── */
+/* Two stages: a permanent icon column for the sections, and a panel that only
+   ever lists the section you are in. Collapses to 60px when space is tight. */
+.nvb { display: flex; gap: 0; border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; background: var(--surface-card); }
+.nvb-rail {
+  width: 64px; flex-shrink: 0; background: var(--inverse-surface);
+  display: flex; flex-direction: column; align-items: center; gap: var(--space-2);
+  padding: var(--space-3) 0;
+}
+.nvb-railbtn {
+  width: 42px; height: 42px; border-radius: var(--radius-sm);
+  display: grid; place-items: center; cursor: pointer;
+  border: none; background: transparent; color: rgba(255,255,255,.6);
+  transition: background .3s var(--nv-ease-soft), color .3s var(--nv-ease-soft);
+  position: relative;
+}
+.nvb-railbtn:hover { color: #fff; background: rgba(255,255,255,.09); }
+.nvb-railbtn.active { color: #fff; background: var(--brand-blue); }
+/* Levels have no icon worth drawing — the level itself is the icon. */
+.nvb-railbadge { font-family: var(--font-label); font-size: 12px; line-height: 1.1; font-weight: var(--fw-bold); letter-spacing: .01em; white-space: nowrap; }
+/* A dot under the rail badge repeats the level's state, so the rail alone says
+   where you are without opening anything. */
+.nvb-raildot {
+  position: absolute; bottom: 5px; left: 50%; transform: translateX(-50%);
+  width: 4px; height: 4px; border-radius: 50%; background: rgba(255,255,255,.35);
+}
+.nvb-raildot[data-state="done"] { background: var(--success); }
+.nvb-raildot[data-state="current"] { background: var(--warning); }
+.nvb-railbtn.active .nvb-raildot { background: #fff; }
+
+.nvb-panelprogress {
+  display: flex; align-items: center; gap: var(--space-2);
+  padding: 0 var(--space-2) var(--space-3);
+  font-family: var(--font-label); font-size: var(--text-xs); color: var(--muted);
+}
+.nvb-panelbar { flex: 1; height: 5px; border-radius: var(--radius-pill); background: var(--blue-50); overflow: hidden; }
+.nvb-panelbar span { display: block; height: 100%; background: var(--gradient-brand); border-radius: var(--radius-pill); }
+
+.nvb-overview {
+  margin: 0 var(--space-2) var(--space-3); padding: 7px var(--space-3);
+  border: 1px dashed var(--border-strong); border-radius: 8px; background: none; cursor: pointer;
+  font-family: var(--font-body); font-size: var(--text-xs); font-weight: var(--fw-semibold);
+  color: var(--muted); text-align: left;
+}
+.nvb-overview:hover { border-color: var(--brand-blue); color: var(--brand-blue-dark); border-style: solid; }
+.nvb-tip {
+  position: absolute; left: calc(100% + 8px); top: 50%; transform: translateY(-50%);
+  background: var(--ink-deep); color: #fff; font-size: var(--text-xs); font-weight: var(--fw-semibold);
+  padding: 5px 9px; border-radius: 7px; white-space: nowrap; pointer-events: none;
+  opacity: 0; transition: opacity .3s var(--nv-ease-soft); z-index: var(--z-dropdown);
+}
+/* Only worth showing when the panel is folded away — with the panel open its
+   head already names the section, and the tooltip just covers the list. */
+.nvb.collapsed .nvb-railbtn:hover .nvb-tip { opacity: 1; }
+.nvb-panel { width: 242px; padding: var(--space-4) var(--space-3); display: flex; flex-direction: column; gap: 2px; }
+/* Workspace topics have long names ("Präteritum & Plusquamperfekt"), so the
+   label truncates rather than pushing the count out of the panel. */
+.nvb-item { overflow: hidden; }
+.nvb-item > span:not(.nv-icon):not(.nv-count) {
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; flex: 1;
+}
+.nvb-item > .nv-count { flex-shrink: 0; }
+.nvb-panelhead { display: flex; align-items: center; gap: var(--space-2); padding: 0 var(--space-2) var(--space-3); }
+.nvb-panelhead h3 { margin: 0; font-family: var(--font-display); font-size: var(--text-lg); color: var(--ink); }
+.nvb-collapse {
+  margin-left: auto; border: none; background: none; cursor: pointer; color: var(--muted-soft);
+  padding: 4px; border-radius: 6px; line-height: 0;
+}
+.nvb-collapse:hover { color: var(--ink); background: var(--surface); }
+.nvb-section[hidden] { display: none; }
+.nvb-item {
+  display: flex; align-items: center; gap: var(--space-2);
+  padding: 9px var(--space-2); border-radius: 8px;
+  color: var(--ink); text-decoration: none; font-size: var(--text-sm); cursor: pointer;
+  background: none; border: none; width: 100%; text-align: left; font-family: var(--font-body);
+  border-left: 2px solid transparent;
+}
+.nvb-item:hover { background: var(--surface); }
+.nvb-item.active { background: var(--blue-50); border-left-color: var(--brand-blue); color: var(--brand-blue-dark); font-weight: var(--fw-bold); }
+.nvb.collapsed .nvb-panel { display: none; }
+
+/* ── Variant C · Accordion tree ───────────────────────────────────────── */
+/* One column again, but the groups fold. Each group header carries its own
+   progress, so the sidebar doubles as a course overview. */
+.nvc { width: 288px; display: flex; flex-direction: column; gap: var(--space-3); }
+.nvc-group { background: var(--surface-card); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+.nvc-head {
+  display: flex; align-items: center; gap: var(--space-3); width: 100%;
+  padding: var(--space-3) var(--space-4); cursor: pointer;
+  background: none; border: none; font-family: var(--font-body); text-align: left; color: var(--ink);
+}
+.nvc-head:hover { background: var(--surface); }
+.nvc-group.open { border-color: var(--brand-blue); }
+.nvc-head.active .nvc-head-title { color: var(--brand-blue-dark); }
+.nvc-head-text { display: flex; flex-direction: column; gap: 5px; flex: 1; min-width: 0; }
+.nvc-head-title { font-size: var(--text-sm); font-weight: var(--fw-bold); }
+.nvc-bar { height: 4px; border-radius: var(--radius-pill); background: var(--blue-50); overflow: hidden; }
+.nvc-bar span { display: block; height: 100%; background: var(--gradient-brand); border-radius: var(--radius-pill); }
+.nvc-chev { color: var(--muted-soft); transition: transform .42s var(--nv-ease-soft); flex-shrink: 0; }
+.nvc-group.open .nvc-chev { transform: rotate(90deg); }
+/* Folds with grid-template-rows 0fr→1fr so the open/close is animatable —
+   height:auto is not. The inner wrapper is what gets clipped. */
+.nvc-list {
+  display: grid; grid-template-rows: 0fr;
+  transition: grid-template-rows .42s var(--nv-ease-soft);
+}
+.nvc-listinner { overflow: hidden; display: flex; flex-direction: column; padding: 0 var(--space-4) 0 var(--space-5); }
+.nvc-group.open .nvc-list { grid-template-rows: 1fr; }
+.nvc-group.open .nvc-listinner { padding-bottom: var(--space-3); }
+.nvc-item {
+  display: flex; align-items: center; gap: var(--space-2);
+  padding: 8px 0 8px var(--space-4); position: relative;
+  color: var(--muted); text-decoration: none; font-size: var(--text-sm); cursor: pointer;
+  background: none; border: none; text-align: left; font-family: var(--font-body); width: 100%;
+  border-left: 2px solid var(--border);
+}
+.nvc-item { overflow: hidden; }
+.nvc-item > span:not(.nv-count) { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; flex: 1; }
+.nvc-item > .nv-count { flex-shrink: 0; }
+.nvc-item:hover { color: var(--ink); border-left-color: var(--border-strong); }
+.nvc-item.active { color: var(--brand-blue-dark); font-weight: var(--fw-bold); border-left-color: var(--brand-blue); }
+.nvc-cta {
+  background: var(--gradient-brand-soft); border: 1px solid var(--blue-200);
+  border-radius: var(--radius); padding: var(--space-4); display: flex; flex-direction: column; gap: var(--space-2);
+}
+.nvc-cta p { margin: 0; font-size: var(--text-xs); color: var(--muted); }
+.nvc-cta strong { font-family: var(--font-display); font-size: var(--text-lg); color: var(--ink); }
+.nvc-cta a, .nvc-cta-btn {
+  background: var(--brand-blue); color: #fff; text-decoration: none; text-align: center;
+  padding: 9px; border-radius: var(--radius-pill); font-size: var(--text-sm); font-weight: var(--fw-bold);
+  border: none; cursor: pointer; font-family: var(--font-body);
+}
+.nvc-cta-btn:hover { background: var(--brand-blue-dark); }
+
+/* ── Content column (shared by all three) ─────────────────────────────── */
+.nv-main { display: flex; flex-direction: column; gap: var(--space-5); }
+/* Two content views live here: one overview per Stufe, plus one item shell. */
+.nv-view { display: flex; flex-direction: column; gap: var(--space-5); }
+.nv-view[hidden] { display: none; }
+
+.nv-back {
+  align-self: flex-start; background: none; border: none; cursor: pointer;
+  font-family: var(--font-body); font-size: var(--text-sm); font-weight: var(--fw-semibold);
+  color: var(--muted); padding: 4px 0;
+}
+.nv-back:hover { color: var(--brand-blue-dark); }
+
+.nv-focus { margin: var(--space-4) 0 0; padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: var(--space-2); }
+.nv-focus li {
+  font-size: var(--text-xs); color: var(--muted);
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius-pill); padding: 5px 12px;
+}
+.nv-crumbs { display: flex; align-items: center; gap: var(--space-2); font-size: var(--text-xs); color: var(--muted-soft); font-family: var(--font-label); }
+.nv-crumbs strong { color: var(--muted); font-weight: var(--fw-semibold); }
+
+.nv-detail {
+  background: var(--surface-card); border: 1px solid var(--border); border-radius: var(--radius-lg);
+  padding: var(--space-7); display: grid; grid-template-columns: minmax(0, 1fr) 240px; gap: var(--space-6); align-items: start;
+}
+.nv-detail-eyebrow { font-family: var(--font-label); font-size: var(--text-xs); font-weight: var(--fw-bold); letter-spacing: .1em; text-transform: uppercase; color: var(--muted-soft); }
+.nv-detail h1 { margin: var(--space-2) 0 var(--space-3); font-family: var(--font-display); font-size: var(--text-3xl); color: var(--ink); letter-spacing: -.01em; }
+.nv-detail-level { display: flex; align-items: center; gap: var(--space-2); margin: 0 0 var(--space-3) !important; flex-wrap: wrap; }
+.nv-detail-levelsrc { font-size: var(--text-xs); color: var(--muted-soft); }
+.nv-detail p { margin: 0; color: var(--muted); font-size: var(--text-sm); line-height: 1.6; max-width: 52ch; }
+.nv-detail-actions { display: flex; gap: var(--space-3); margin-top: var(--space-5); flex-wrap: wrap; }
+.nv-btn {
+  display: inline-flex; align-items: center; gap: 6px; padding: 10px 18px; border-radius: var(--radius-pill);
+  font-size: var(--text-sm); font-weight: var(--fw-bold); text-decoration: none; border: 1px solid transparent; cursor: pointer;
+  font-family: var(--font-body);
+}
+.nv-btn--primary { background: var(--brand-blue); color: #fff; }
+.nv-btn--primary:hover { background: var(--brand-blue-dark); }
+.nv-btn--ghost { background: transparent; border-color: var(--border-strong); color: var(--ink); }
+.nv-btn--ghost:hover { border-color: var(--brand-blue); color: var(--brand-blue-dark); }
+
+.nv-ring-card {
+  background: var(--gradient-brand); border-radius: var(--radius); padding: var(--space-5);
+  display: flex; flex-direction: column; align-items: center; gap: var(--space-2); color: #fff;
+}
+.nv-ring { position: relative; width: 96px; height: 96px; }
+.nv-ring svg { transform: rotate(-90deg); }
+.nv-ring-value {
+  position: absolute; inset: 0; display: grid; place-items: center;
+  font-family: var(--font-display); font-size: var(--text-2xl); color: #fff;
+}
+.nv-ring-label { font-family: var(--font-label); font-size: var(--text-xs); color: rgba(255,255,255,.88); text-align: center; }
+
+.nv-panel { background: var(--surface-card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: var(--space-6); }
+.nv-panel h2 { margin: 0 0 var(--space-4); font-family: var(--font-display); font-size: var(--text-xl); color: var(--ink); }
+.nv-modrow {
+  display: grid; grid-template-columns: 28px minmax(0, 1.6fr) 1fr auto auto; gap: var(--space-4);
+  align-items: center; padding: var(--space-3) 0; border-bottom: 1px solid var(--border);
+}
+.nv-modrow:last-child { border-bottom: none; }
+.nv-modnum { width: 28px; height: 28px; border-radius: 8px; background: var(--blue-50); color: var(--brand-blue-dark); display: grid; place-items: center; font-size: var(--text-xs); font-weight: var(--fw-bold); }
+.nv-modname { font-size: var(--text-sm); font-weight: var(--fw-semibold); }
+.nv-modmeta { font-size: var(--text-xs); color: var(--muted-soft); }
+.nv-modtrack { height: 6px; border-radius: var(--radius-pill); background: var(--blue-50); overflow: hidden; }
+.nv-modtrack span { display: block; height: 100%; background: var(--brand-blue); border-radius: var(--radius-pill); }
+.nv-modpoints { font-family: var(--font-label); font-size: var(--text-sm); font-weight: var(--fw-semibold); color: var(--muted); white-space: nowrap; }
+.nv-modlink {
+  font-size: var(--text-sm); font-weight: var(--fw-bold); color: var(--brand-blue-dark);
+  text-decoration: none; white-space: nowrap;
+  background: none; border: none; cursor: pointer; font-family: var(--font-body); padding: 4px 0;
+}
+.nv-modlink:hover { text-decoration: underline; }
+
+.nv-notes { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-4); }
+.nv-note { background: var(--surface-card); border: 1px solid var(--border); border-radius: var(--radius); padding: var(--space-5); }
+.nv-note h3 { margin: 0 0 var(--space-2); font-family: var(--font-display); font-size: var(--text-lg); color: var(--ink); }
+.nv-note p { margin: 0; font-size: var(--text-xs); color: var(--muted); line-height: 1.6; }
+.nv-note.active { border-color: var(--brand-blue); box-shadow: var(--shadow-sm); }
+
+.nv-footnote { margin: 0; font-size: var(--text-xs); color: var(--muted-soft); line-height: 1.6; }
+.nv-footnote code { font-size: 11px; background: var(--surface-card); border: 1px solid var(--border); border-radius: 5px; padding: 1px 5px; }
+
+/* ── Inline-Übung ─────────────────────────────────────────────────────── */
+/* The real mountQuiz() engine from src/lib/quiz.js renders in here, so these
+   rules match the class names it emits rather than inventing new ones. */
+.nv-learn-head { display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-2); }
+.nv-learn-head h2 { margin: 0; }
+.nv-learn-badge {
+  font-family: var(--font-label); font-size: 10px; font-weight: var(--fw-bold);
+  letter-spacing: .06em; text-transform: uppercase;
+  color: var(--success); background: var(--success-soft);
+  border: 1px solid var(--success-border); border-radius: var(--radius-pill); padding: 3px 9px;
+}
+.nv-learn-intro { margin: 0 0 var(--space-5); font-size: var(--text-sm); color: var(--muted); line-height: 1.6; }
+.nv-learn-empty p { margin: 0; font-size: var(--text-sm); color: var(--muted); line-height: 1.6; }
+
+/* ── The non-grammar exercise kinds ───────────────────────────────────── */
+.nv-inline-body { display: flex; flex-direction: column; gap: var(--space-4); }
+.nv-card-counter { font-family: var(--font-label); font-size: var(--text-xs); font-weight: var(--fw-semibold); color: var(--muted-soft); letter-spacing: .04em; }
+.nv-card-actions { display: flex; align-items: center; gap: var(--space-3); flex-wrap: wrap; }
+
+.nv-grouptabs { display: flex; gap: var(--space-2); flex-wrap: wrap; }
+.nv-grouptab {
+  border: 1px solid var(--border); background: var(--surface); color: var(--muted);
+  border-radius: var(--radius-pill); padding: 6px 14px; cursor: pointer;
+  font-family: var(--font-body); font-size: var(--text-xs); font-weight: var(--fw-semibold);
+}
+.nv-grouptab:hover { border-color: var(--brand-blue); color: var(--brand-blue-dark); }
+.nv-grouptab.active { background: var(--brand-blue); border-color: var(--brand-blue); color: #fff; }
+.nv-readtext {
+  background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+  padding: var(--space-5); font-size: var(--text-sm); line-height: 1.75; color: var(--ink);
+  max-height: 340px; overflow-y: auto;
+}
+.nv-readq { margin: 0; font-family: var(--font-display); font-size: var(--text-2xl); color: var(--ink); }
+
+.nv-flashcard {
+  width: 100%; min-height: 150px; cursor: pointer; text-align: center;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: var(--space-3);
+  background: var(--gradient-brand-soft); border: 1px solid var(--blue-200);
+  border-radius: var(--radius-lg); padding: var(--space-7);
+  font-family: var(--font-body);
+}
+.nv-flashcard:hover { transform: translateY(-2px); box-shadow: var(--shadow-hover); }
+.nv-flashcard-front { font-family: var(--font-display); font-size: var(--text-2xl); color: var(--ink); }
+.nv-flashcard-back { font-size: var(--text-lg); color: var(--brand-blue-dark); font-weight: var(--fw-semibold); }
+.nv-flashcard-hint { font-size: var(--text-xs); color: var(--muted-soft); }
+
+.nv-audioword { font-family: var(--font-display); font-size: var(--text-4xl); color: var(--ink); text-align: center; padding: var(--space-6) 0; }
+
+.nv-speakimg { width: 100%; max-width: 100%; border-radius: var(--radius); border: 1px solid var(--border); }
+.nv-speakcols { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-5); }
+.nv-speakcols h4 { margin: 0 0 var(--space-2); font-family: var(--font-label); font-size: var(--text-xs); text-transform: uppercase; letter-spacing: .08em; color: var(--muted-soft); }
+.nv-speakcols ul { margin: 0; padding-left: var(--space-5); display: flex; flex-direction: column; gap: var(--space-2); }
+.nv-speakcols li { font-size: var(--text-sm); color: var(--muted); line-height: 1.6; }
+.nv-timer { font-family: var(--font-display); font-size: var(--text-xl); color: var(--brand-blue-dark); min-width: 60px; }
+
+.nv-pickergrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: var(--space-2); }
+.nv-pickerbtn {
+  display: flex; align-items: center; gap: var(--space-2); text-align: left;
+  border: 1px solid var(--border); background: var(--surface-card); border-radius: var(--radius-sm);
+  padding: 10px var(--space-3); cursor: pointer; font-family: var(--font-body);
+  font-size: var(--text-sm); color: var(--ink); overflow: hidden;
+}
+.nv-pickerbtn:hover { border-color: var(--brand-blue); background: var(--blue-50); }
+.nv-pickerbtn > span:nth-child(2) { flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+.nv-resultgrid { display: flex; flex-direction: column; gap: var(--space-3); }
+.nv-resultrow { display: grid; grid-template-columns: 76px minmax(0, 1fr) auto 52px; gap: var(--space-4); align-items: center; }
+.nv-resultrow .nv-levelchip { justify-content: center; }
+.nv-resultpct { font-family: var(--font-display); font-size: var(--text-lg); color: var(--brand-blue-dark); text-align: right; }
+.nv-resultsum { margin: var(--space-5) 0 0; font-size: var(--text-sm); color: var(--muted); }
+.nv-resultsum strong { color: var(--ink); }
+
+/* The exercise that sits on every Stufenübersicht, directly under the top card.
+   Deliberately the loudest thing on the page after the hero: the point of /nav
+   is that you can do something the moment it loads. */
+.nv-quickex { border-color: var(--blue-200); }
+.nv-quickex-head { display: flex; align-items: flex-start; gap: var(--space-4); margin-bottom: var(--space-5); }
+.nv-quickex-head h2 { margin: var(--space-2) 0 var(--space-2); }
+.nv-quickex-head .nv-learn-badge { margin-left: auto; flex-shrink: 0; }
+.nv-quickex-sub { margin: 0; font-size: var(--text-sm); color: var(--muted); line-height: 1.6; }
+.nv-quickex-sub strong { color: var(--ink); }
+.nv-quickex-more {
+  margin-top: var(--space-5); padding: 9px var(--space-4);
+  border: 1px solid var(--border-strong); border-radius: var(--radius-pill);
+  background: none; cursor: pointer; font-family: var(--font-body);
+  font-size: var(--text-sm); font-weight: var(--fw-semibold); color: var(--ink);
+  transition: border-color .3s var(--nv-ease-soft), color .3s var(--nv-ease-soft);
+}
+.nv-quickex-more:hover { border-color: var(--brand-blue); color: var(--brand-blue-dark); }
+/* The widget arrives in a plain slot, not in a .vp-card — it already has one. */
+.nv-quickex .vp-ex-hint { margin-top: 0; }
+/* The workspace widgets bring their own pop/shake keyframes; soften them here. */
+.nv-quickex .vp-feedback, .nv-ws .vp-feedback { animation-duration: .32s !important; animation-timing-function: var(--nv-ease-out) !important; }
+
+/* The full workspace (rule card + four or five exercises) mounted inline.
+   The .vp-* children bring their own styling from verben-praepositionen.css;
+   this only gives them a home inside the narrower /nav content column. */
+.nv-ws { display: flex; flex-direction: column; animation: nv-in var(--nv-dur-enter) var(--nv-ease-out) both; }
+.nv-ws[hidden] { display: none; }
+.nv-ws-head { display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-4); }
+.nv-ws-head h2 { margin: 0; font-family: var(--font-display); font-size: var(--text-xl); color: var(--ink); }
+.nv-ws-subhead {
+  margin: var(--space-5) 0 var(--space-4); font-family: var(--font-display);
+  font-size: var(--text-xl); color: var(--ink); display: flex; align-items: center; gap: var(--space-3);
+}
+.nv-ws-subhead span {
+  font-family: var(--font-label); font-size: var(--text-xs); font-weight: var(--fw-bold);
+  color: var(--brand-blue-dark); background: var(--blue-50);
+  border: 1px solid var(--blue-200); border-radius: var(--radius-pill); padding: 2px 9px;
+}
+.nv-ws-loading { margin: 0; padding: var(--space-8) 0; text-align: center; color: var(--muted-soft); font-size: var(--text-sm); }
+/* The workspace cards carry their own bottom margin; the flex gap would double it. */
+.nv-ws .vp-card { margin-bottom: var(--space-4); }
+.nv-ws .vp-ref-table-scroll { overflow-x: auto; }
+
+.nv-quiz { display: flex; flex-direction: column; gap: var(--space-4); }
+.nv-quiz .quiz-progress {
+  font-family: var(--font-label); font-size: var(--text-xs); font-weight: var(--fw-semibold);
+  color: var(--muted-soft); letter-spacing: .04em;
+}
+.nv-quiz .quiz-prompt {
+  font-size: var(--text-xl); line-height: 1.6; color: var(--ink);
+  background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+  padding: var(--space-5); animation: nv-in .55s var(--nv-ease-out) both;
+}
+.nv-quiz .quiz-prompt em { color: var(--muted-soft); font-size: var(--text-sm); font-style: normal; }
+.nv-quiz .quiz-form { display: flex; gap: var(--space-3); flex-wrap: wrap; }
+.nv-quiz .quiz-form input {
+  flex: 1; min-width: 160px; font-family: var(--font-body); font-size: var(--text-base);
+  padding: 11px var(--space-4); border: 1px solid var(--border-strong); border-radius: var(--radius-sm);
+  background: var(--surface-card); color: var(--ink);
+  transition: border-color .3s var(--nv-ease-soft), box-shadow .3s var(--nv-ease-soft);
+}
+.nv-quiz .quiz-form input:focus {
+  outline: none; border-color: var(--brand-blue); box-shadow: 0 0 0 3px var(--blue-100);
+}
+.nv-quiz .quiz-btn {
+  border: none; cursor: pointer; font-family: var(--font-body);
+  font-size: var(--text-sm); font-weight: var(--fw-bold);
+  padding: 11px 20px; border-radius: var(--radius-pill);
+  background: var(--surface); color: var(--ink);
+  transition: background .3s var(--nv-ease-soft), box-shadow .3s var(--nv-ease-soft);
+}
+.nv-quiz .quiz-btn:hover { box-shadow: var(--shadow-sm); }
+.nv-quiz .quiz-btn--primary { background: var(--brand-blue); color: #fff; }
+.nv-quiz .quiz-btn--primary:hover { background: var(--brand-blue-dark); }
+.nv-quiz .quiz-btn--next { background: var(--ink); color: var(--page-bg); margin-top: var(--space-3); }
+.nv-quiz .quiz-feedback { display: flex; flex-direction: column; align-items: flex-start; gap: var(--space-2); }
+.nv-quiz .quiz-ok, .nv-quiz .quiz-no {
+  font-weight: var(--fw-bold); font-size: var(--text-base);
+  padding: 9px var(--space-4); border-radius: var(--radius-sm);
+  animation: nv-feedback .5s var(--nv-ease-out) both;
+}
+.nv-quiz .quiz-ok { color: var(--success); background: var(--success-soft); border: 1px solid var(--success-border); }
+.nv-quiz .quiz-no { color: var(--danger); background: var(--danger-soft); border: 1px solid var(--danger-border); }
+.nv-quiz .quiz-explain { font-size: var(--text-sm); color: var(--muted); }
+.nv-quiz .quiz-done { text-align: center; padding: var(--space-6) 0; animation: nv-pop-in .7s var(--nv-ease-out) both; }
+.nv-quiz .quiz-done-score { font-family: var(--font-display); font-size: var(--text-4xl); color: var(--brand-blue-dark); }
+.nv-quiz .quiz-done p { margin: var(--space-2) 0 var(--space-5); color: var(--muted); font-size: var(--text-sm); }
+
+/* ── Toast ────────────────────────────────────────────────────────────── */
+.nv-toast {
+  position: fixed; left: 50%; bottom: var(--space-6); transform: translateX(-50%);
+  background: var(--ink-deep); color: var(--page-bg);
+  font-size: var(--text-sm); font-weight: var(--fw-semibold);
+  padding: 12px var(--space-5); border-radius: var(--radius-pill);
+  box-shadow: var(--shadow-raised); z-index: var(--z-toast); max-width: calc(100vw - 32px);
+}
+.nv-toast[hidden] { display: none; }
+.nv-toast--in { animation: nv-toast-in .6s var(--nv-ease-out) both; }
+
+/* ── Motion ───────────────────────────────────────────────────────────────
+   One calm system. Three rules it follows:
+
+   1. Never animate transform and a layout property on the same element at the
+      same time. The progress bars used to run a scaleX keyframe AND a width
+      transition together, which is what made them stutter; now width alone
+      moves them, on one long curve.
+   2. Entrances decelerate. --nv-ease-out is an expo-out curve: it arrives fast
+      and settles slowly, so the end of the movement is soft instead of
+      stopping dead the way cubic-bezier(.4,0,.2,1) does.
+   3. Nothing pops. No scale overshoot on click, no rotation anywhere — those
+      read as twitchy at this size. Emphasis comes from a glow, not a jump.
+--------------------------------------------------------------------------- */
+:root {
+  --nv-ease-out: cubic-bezier(.16, 1, .3, 1);      /* entrances, settling */
+  --nv-ease-soft: cubic-bezier(.33, 1, .68, 1);    /* value changes */
+  --nv-dur-enter: .7s;
+  --nv-dur-value: 1.15s;
+}
+
+/* ── Taming the shared exercise widgets ───────────────────────────────────
+   grammarWorkspace.js and practiceWorkspace.js animate their own feedback,
+   inline: `style="animation: vp-shake .35s ease"`. Those keyframes are a
+   ±5px horizontal wobble (vp-shake) and a four-step ±4px one (akk-shake),
+   plus scale-to-1.08 pops — which is exactly the jitter.
+
+   Redefining the keyframes HERE replaces them for this document only: nav.css
+   is imported by /nav and nothing else, so /uebungen/* keeps its own feel and
+   no shared file has to change. The names stay so the inline styles still
+   resolve; only what they do changes.
+------------------------------------------------------------------------- */
+@keyframes vp-shake { from { background-color: var(--danger-soft); } to { background-color: transparent; } }
+@keyframes akk-shake { from { background-color: var(--danger-soft); } to { background-color: transparent; } }
+@keyframes vp-pop { from { background-color: var(--success-soft); } to { background-color: transparent; } }
+@keyframes akk-pop { from { background-color: var(--success-soft); } to { background-color: transparent; } }
+@keyframes vp-fade-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes akk-fade-slide-in { from { opacity: 0; transform: translate3d(0, 6px, 0); } to { opacity: 1; transform: none; } }
+
+/* The inline styles carry their own short duration, so override the timing
+   too — this is the one place !important is the right tool, since an inline
+   style cannot be beaten any other way. */
+.nv [style*="animation"], .nv .akk-anim-in, .nv .vp-feedback {
+  animation-duration: .9s !important;
+  animation-timing-function: var(--nv-ease-out) !important;
+}
+
+@keyframes nv-in { from { opacity: 0; transform: translate3d(0, 8px, 0); } to { opacity: 1; transform: none; } }
+@keyframes nv-pop-in { from { opacity: 0; transform: scale(.97); } to { opacity: 1; transform: none; } }
+@keyframes nv-feedback { from { opacity: 0; transform: translate3d(0, -3px, 0); } to { opacity: 1; transform: none; } }
+@keyframes nv-toast-in { from { opacity: 0; transform: translate(-50%, 10px); } to { opacity: 1; transform: translate(-50%, 0); } }
+/* Emphasis without movement: the ring card glows and fades, nothing jumps. */
+@keyframes nv-glow {
+  from { box-shadow: 0 0 0 0 rgba(20,184,166,.45); }
+  to   { box-shadow: 0 0 0 18px rgba(20,184,166,0); }
+}
+
+/* A view entering: one movement for the whole column, not three staggered ones.
+   The children ride along instead of each starting on its own delay. */
+.nv-view:not([hidden]) { animation: nv-in var(--nv-dur-enter) var(--nv-ease-out) both; }
+/* No per-row cascade. A stagger is a sequence of small separate movements, and
+   at eight-plus rows that is what reads as jitter however gentle each one is —
+   the whole column arrives as one piece instead. */
+
+/* Bars and rings: width and stroke only, one long soft curve, no keyframes. */
+.nv-modtrack span, .nvc-bar span, .nvb-panelbar span, .nv-strip-fill {
+  transition: width var(--nv-dur-value) var(--nv-ease-soft);
+}
+.nv-ring circle { transition: stroke-dashoffset 1.5s var(--nv-ease-out); }
+
+.nv-pop { animation: nv-glow .8s var(--nv-ease-out); }
+.nv-celebrate { animation: nv-glow 1.4s var(--nv-ease-out); }
+
+/* Rows and rail buttons acknowledge the click through colour, not scale. */
+.nva-item, .nvb-item, .nvc-item, .nvb-railbtn, .nva-step, .nv-toggle-btn,
+.nv-pickerbtn, .nv-grouptab, .nv-btn {
+  transition: background .3s var(--nv-ease-soft),
+              color .3s var(--nv-ease-soft),
+              border-color .3s var(--nv-ease-soft),
+              box-shadow .3s var(--nv-ease-soft);
+}
+.nvc-chev { transition: transform .32s var(--nv-ease-soft); }
+.nv-flashcard { transition: transform .45s var(--nv-ease-out), box-shadow .45s var(--nv-ease-out); }
+
+/* A finished row keeps a quiet checkmark rather than a count. */
+.nva-item.done .nv-count::after, .nvb-item.done .nv-count::after, .nvc-item.done .nv-count::after {
+  content: " ✓"; color: var(--success); font-weight: var(--fw-bold);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nv *, .nv *::before, .nv *::after {
+    animation-duration: .001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .001ms !important;
+  }
+}
+
+/* ── Mobile ───────────────────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .nv-shell { grid-template-columns: minmax(0, 1fr); padding: var(--space-4); gap: var(--space-4); }
+  .nv-aside { position: static; width: auto; }
+  .nv-detail { grid-template-columns: minmax(0, 1fr); padding: var(--space-5); }
+  .nv-notes { grid-template-columns: minmax(0, 1fr); }
+  .nv-modrow { grid-template-columns: 28px minmax(0, 1fr) auto; row-gap: var(--space-2); }
+  .nv-modrow .nv-modtrack { grid-column: 2 / -1; }
+  .nv-topbar { padding: var(--space-3) var(--space-4); }
+  .nv-toggle { margin-left: 0; width: 100%; }
+
+  /* A collapses into a horizontal chip scroller — the whole list stays reachable
+     with a thumb swipe instead of eating a third of the screen. */
+  .nva { width: auto; gap: var(--space-3); }
+  .nva-group { flex-direction: row; gap: var(--space-2); overflow-x: auto; padding-bottom: var(--space-2); }
+  .nva-item { width: auto; white-space: nowrap; border: 1px solid var(--border); background: var(--surface-card); }
+  .nva-item .nv-count { margin-left: 0; }
+  .nva-divider, .nva-reset { display: none; }
+
+  /* B puts the rail on top and the panel underneath it. */
+  .nvb { flex-direction: column; }
+  .nvb-rail { width: auto; flex-direction: row; justify-content: flex-start; padding: var(--space-2) var(--space-3); overflow-x: auto; }
+  .nvb-tip { display: none; }
+  .nvb-panel { width: auto; }
+  .nvb.collapsed .nvb-panel { display: flex; }
+
+  /* C stays as-is — an accordion is already the mobile-native shape. */
+  .nvc { width: auto; }
+
+  .nv-speakcols { grid-template-columns: minmax(0, 1fr); }
+  .nv-pickergrid { grid-template-columns: minmax(0, 1fr); }
+  .nv-audioword { font-size: var(--text-3xl); }
+}
+
+/* ── Focus topic layout (/v2) ─────────────────────────────────────────────
+   The merge of /dashboard and /v1: the level overviews stay exactly as they
+   are — rail, rings, content table — but opening a topic drops the hero card
+   and gives the exercises the column, with the rule one click away in a
+   drawer instead of stacked above them.
+------------------------------------------------------------------------- */
+.nv--focus [data-item-view] .nv-detail { display: none; }
+.nv--focus [data-item-view] .nv-ws-subhead { margin-top: 0; }
+
+.nvf-head { display: flex; align-items: center; gap: var(--space-3); flex-wrap: wrap; }
+.nvf-head h1 {
+  margin: 0; font-family: var(--font-display); font-size: var(--text-3xl);
+  color: var(--ink); letter-spacing: -.01em;
+}
+.nvf-progress {
+  margin-left: auto; display: flex; align-items: center; gap: var(--space-3);
+  font-family: var(--font-label); font-size: var(--text-xs); font-weight: var(--fw-semibold); color: var(--muted);
+}
+.nvf-bar { width: 120px; height: 6px; border-radius: var(--radius-pill); background: var(--blue-50); overflow: hidden; }
+.nvf-bar span { display: block; height: 100%; border-radius: var(--radius-pill); background: var(--gradient-brand); transition: width var(--nv-dur-value) var(--nv-ease-soft); }
+.nvf-lead { margin: 0; color: var(--muted); font-size: var(--text-sm); line-height: 1.6; max-width: 62ch; }
+
+/* Loud on purpose — it is what a learner reaches for mid-exercise. */
+.nvf-rulecta {
+  display: flex; align-items: center; gap: var(--space-4); width: 100%;
+  padding: var(--space-4) var(--space-5); cursor: pointer; text-align: left;
+  border: 1px solid var(--blue-200); border-radius: var(--radius-lg);
+  background: var(--gradient-brand-soft); font-family: var(--font-body);
+}
+.nvf-rulecta[hidden] { display: none; }
+.nvf-rulecta:hover { border-color: var(--brand-blue); }
+.nvf-rulecta-icon {
+  flex-shrink: 0; width: 34px; height: 34px; border-radius: 50%;
+  background: var(--gradient-brand); color: #fff;
+  display: inline-flex; align-items: center; justify-content: center;
+  font-family: var(--font-display); font-weight: var(--fw-bold); font-size: 1.05rem;
+}
+.nvf-rulecta-text { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.nvf-rulecta-title { font-weight: var(--fw-semibold); color: var(--ink); font-size: var(--text-base); }
+.nvf-rulecta-sub { font-size: var(--text-xs); color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.nvf-rulecta-arrow { margin-left: auto; color: var(--brand-blue-dark); font-size: 1.1rem; }
+
+/* The drawer. Slides from the right; the scrim closes it, so does Escape. */
+.nvf-scrim {
+  position: fixed; inset: 0; background: rgba(15, 20, 27, .45);
+  z-index: var(--z-modal); animation: nv-in .35s var(--nv-ease-out) both;
+}
+.nvf-scrim[hidden] { display: none; }
+.nvf-drawer {
+  position: fixed; top: 0; right: 0; bottom: 0; width: min(560px, 92vw);
+  background: var(--page-bg); border-left: 1px solid var(--border);
+  box-shadow: var(--shadow-raised); z-index: calc(var(--z-modal) + 1);
+  display: flex; flex-direction: column;
+  transform: translate3d(100%, 0, 0);
+  transition: transform .5s var(--nv-ease-out);
+}
+.nvf-drawer.open { transform: none; }
+.nvf-drawer[aria-hidden="true"] { visibility: hidden; }
+.nvf-drawer.open { visibility: visible; }
+.nvf-drawer-head {
+  display: flex; align-items: center; gap: var(--space-3);
+  padding: var(--space-5) var(--space-6) var(--space-3);
+  border-bottom: 1px solid var(--border);
+}
+.nvf-drawer-head .nv-detail-eyebrow { margin: 0; }
+.nvf-drawer-x {
+  margin-left: auto; border: none; background: none; cursor: pointer;
+  font-size: 1.6rem; line-height: 1; color: var(--muted); padding: 0 4px;
+}
+.nvf-drawer-x:hover { color: var(--ink); }
+.nvf-drawer-card { margin: var(--space-5) var(--space-6) var(--space-8); overflow-y: auto; }
+
+@media (max-width: 900px) {
+  .nvf-head h1 { font-size: var(--text-2xl); }
+  .nvf-progress { margin-left: 0; width: 100%; }
+  .nvf-bar { flex: 1; width: auto; }
+  .nvf-drawer { width: 100%; }
+}

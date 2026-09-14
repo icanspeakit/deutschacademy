@@ -1,6 +1,25 @@
 import { getLang, loadDict, onLangChange } from "./i18n.js";
 
 // Shared quiz engine: mode "text" (typed answer) or "choice" (buttons).
+/**
+ * Turns typed questions into click questions by using the question set's OWN distinct
+ * answers as the options — so the legacy grammatik.json topics (4-6 questions, 3-5
+ * distinct answers) become clickable without anyone authoring option lists.
+ *
+ * Deduped case-insensitively: konjunktiv2 carries both "Wäre" (sentence-initial) and
+ * "wäre", which would otherwise render as two pills that are the same word. The
+ * grader already normalises case, so keeping the first spelling loses nothing.
+ */
+export function withChoices(questions) {
+  const seen = new Map();
+  for (const q of questions) {
+    const key = String(q.answer).trim().toLowerCase();
+    if (!seen.has(key)) seen.set(key, String(q.answer).trim());
+  }
+  const options = [...seen.values()];
+  return questions.map((q) => ({ ...q, options }));
+}
+
 export function mountQuiz(root, questions, { mode = "text", shuffle = true, onDone, onAnswer, showWrongCount = false } = {}) {
   let dict = null;
   function tr(key, fallback, vars) {

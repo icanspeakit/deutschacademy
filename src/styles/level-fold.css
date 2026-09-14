@@ -1,0 +1,70 @@
+/* "Wo stehst du?" — the fold below 1024px.
+   Imported by components/LevelFold.astro, so the styles travel with the
+   component wherever it is placed (index.astro and /mobile3 both use it).
+
+   Why 1024 and not 900: a portrait tablet and a small laptop have the same
+   problem as a phone — room for two browser frames, no benefit from them. The
+   frames only earn their space once they can be shown at a size where the
+   controls inside are actually clickable. */
+
+.lf { padding: 22px 0 30px; background: var(--surface); border-bottom: 1px solid var(--border); }
+.lf * { box-sizing: border-box; }
+.lf a { text-decoration: none; color: inherit; }
+.lf-wrap { width: 100%; max-width: 920px; margin: 0 auto; padding: 0 16px; }
+
+.lf-kicker {
+  display: flex; align-items: center; gap: 7px;
+  margin: 0 0 12px;
+  font-size: 11.5px; font-weight: 700; color: var(--muted-soft);
+}
+.lf-kicker::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--brand-blue); flex-shrink: 0; }
+
+.lf-ask {
+  margin: 0 0 4px;
+  font-family: var(--font-display); font-weight: 700;
+  font-size: clamp(1.7rem, 7vw, 2.4rem); line-height: 1.1; letter-spacing: -.02em;
+  color: var(--ink);
+}
+.lf-ask-sub { margin: 0 0 18px; font-size: 13.5px; line-height: 1.45; color: var(--muted); }
+
+.lf-levels { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+.lf-tile {
+  display: flex; flex-direction: column; justify-content: space-between; gap: 10px;
+  min-height: 112px; padding: 16px;
+  border-radius: var(--radius-lg); border: 1px solid var(--border);
+  background: var(--surface-card);
+  transition: border-color .15s ease, transform .15s ease;
+}
+.lf-tile:hover { border-color: var(--brand-blue); }
+.lf-tile:active { transform: translateY(1px); }
+.lf-tile-level { font-family: var(--font-display); font-weight: 800; font-size: 1.9rem; line-height: 1; color: var(--brand-blue-dark); }
+.lf-tile-name { display: block; font-size: 13px; font-weight: 700; line-height: 1.25; color: var(--ink); }
+.lf-tile-meta { display: block; margin-top: 3px; font-size: 11px; color: var(--muted-soft); }
+
+/* "Weiß ich nicht" is the escape hatch for the learners who cannot place
+   themselves — which is most of the new ones. Full width under the four on a
+   phone, an equal fifth column once there is room. */
+.lf-tile--unsure { grid-column: 1 / -1; flex-direction: row; align-items: center; min-height: 0; gap: 12px; background: var(--surface); }
+.lf-tile--unsure .lf-tile-level { font-size: 1.5rem; }
+
+.lf-sub-head { margin: 22px 0 10px; font-size: 11.5px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: var(--muted-soft); }
+.lf-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.lf-chip {
+  display: inline-flex; align-items: center; min-height: 40px;
+  padding: 0 16px; border-radius: var(--radius-pill);
+  border: 1px solid var(--border); background: var(--surface-card);
+  font-size: 13px; font-weight: 700; color: var(--ink);
+}
+/* Prüfungen are orange site-wide (see landing.css, .lp-tools-group--exams), so
+   the chips pick up the accent too — the colour is the category. */
+.lf-chip:hover { border-color: var(--accent); color: var(--accent-dark); }
+
+@media (min-width: 720px) {
+  .lf-levels { grid-template-columns: repeat(5, 1fr); }
+  .lf-tile--unsure { grid-column: auto; flex-direction: column; align-items: flex-start; justify-content: space-between; min-height: 112px; }
+  .lf-tile--unsure .lf-tile-level { font-size: 1.9rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lf-tile { transition: none; }
+}

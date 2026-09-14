@@ -37,6 +37,88 @@ function modelAnswer(answer) {
   return Array.isArray(answer) ? answer.join(" / ") : answer;
 }
 
+/* -------------------------------------------------------------- choices ----
+ * Learners click, they do not type. Every answerable slot in fill/table/story is a
+ * pill. The option set is the exercise's own distinct answers — or an explicit
+ * `choices` list where the data declares one — so this needed no new content.
+ *
+ * Two shapes, chosen by size: up to INLINE_MAX options render on each item, which
+ * reads as a direct question. Above that they render once as a word bank the learner
+ * picks from, because 14 options across 14 blanks would be ~200 buttons. `story`
+ * always uses the bank: its blanks sit inside running prose, which pills would shred.
+ *
+ * The bank is a palette, not an inventory — words are not used up, because several
+ * items legitimately share an answer.
+ * -------------------------------------------------------------------------- */
+const INLINE_MAX = 8;
+
+function optionSet(ex, answers) {
+  if (Array.isArray(ex.choices) && ex.choices.length) return ex.choices.slice();
+  const flat = answers
+    .map((a) => (Array.isArray(a) ? a[0] : a))
+    .filter((a) => a != null && String(a).trim() !== "")
+    .map(String);
+  return [...new Set(flat)];
+}
+
+function shuffleList(list) {
+  const a = list.slice();
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function stateClass(checked, ok, chosen) {
+  if (!checked) return chosen ? "is-chosen" : "";
+  return ok ? "is-correct" : chosen ? "is-wrong" : "";
+}
+
+/** Inline pill row for one slot. */
+function pillsHtml(options, idx, value, checked, answer) {
+  return `<span class="vp-pills">${options
+    .map((o) => {
+      const chosen = value === o;
+      const ok = checked && accepts(answer, o);
+      return `<button type="button" class="vp-pill-opt ${stateClass(checked, ok, chosen)}" data-slot="${idx}" data-val="${escapeHtml(o)}" ${checked ? "disabled" : ""}>${escapeHtml(o)}</button>`;
+    })
+    .join("")}</span>`;
+}
+
+/** The shared word bank, rendered once above the items. */
+function bankHtml(options, selected) {
+  return `<div class="vp-bank" role="group" aria-label="Wortliste">${options
+    .map((o) => `<button type="button" class="vp-bankword${selected === o ? " is-selected" : ""}" data-bank="${escapeHtml(o)}" aria-pressed="${selected === o}">${escapeHtml(o)}</button>`)
+    .join("")}</div>`;
+}
+
+/** A slot the learner drops a bank word into. */
+function slotHtml(idx, value, checked, answer, placeholder) {
+  const ok = checked && accepts(answer, value);
+  const cls = checked ? (ok ? "is-correct" : "is-wrong") : value ? "is-chosen" : "";
+  return `<button type="button" class="vp-slot ${cls}" data-slot="${idx}" ${checked ? "disabled" : ""}>${value ? escapeHtml(value) : escapeHtml(placeholder || "…")}</button>`;
+}
+
+/** Wires bank + slot clicks for a bank-mode exercise. */
+function wireBank(root, state, render) {
+  root.querySelectorAll("[data-bank]").forEach((b) => {
+    b.addEventListener("click", () => {
+      state.selected = state.selected === b.dataset.bank ? null : b.dataset.bank;
+      render();
+    });
+  });
+  root.querySelectorAll("[data-slot]").forEach((b) => {
+    b.addEventListener("click", () => {
+      const i = +b.dataset.slot;
+      // Clicking a filled slot clears it; otherwise the armed bank word lands here.
+      if (state.values[i]) { delete state.values[i]; }
+      else if (state.selected) { state.values[i] = state.selected; state.selected = null; }
+      render();
+    });
+  });
+}
+
 const POP = "vp-pop .3s ease";
 const SHAKE = "vp-shake .35s ease";
 
@@ -54,46 +136,51 @@ const LABEL = {
 
 /* ---------------------------------------------------------------- fill ---- */
 function mountFill(root, ex, notify) {
-  const placeholder = ex.placeholder || "";
-  const state = ex.items.map(() => ({ value: "", checked: false, correct: false }));
+  const answers = ex.items.map((it) => it.answer);
+  const options = shuffleList(optionSet(ex, answers));
+  const bankMode = options.length > INLINE_MAX;
+  const state = { values: {}, checked: {}, selected: null };
 
   function render() {
-    root.innerHTML = ex.items
+    const items = ex.items
       .map((item, idx) => {
-        const f = state[idx];
-        const anim = f.checked ? (f.correct ? POP : SHAKE) : "none";
-        const feedback = f.checked
-          ? `<span class="vp-feedback ${f.correct ? "is-correct" : "is-wrong"}">${f.correct ? LABEL.correct : LABEL.wrongIs(modelAnswer(item.answer))}</span>
+        const val = state.values[idx] || "";
+        const checked = !!state.checked[idx];
+        const ok = checked && accepts(item.answer, val);
+        const feedback = checked
+          ? `<span class="vp-feedback ${ok ? "is-correct" : "is-wrong"}">${ok ? LABEL.correct : LABEL.wrongIs(modelAnswer(item.answer))}</span>
              <button type="button" class="vp-link-btn" data-reset="${idx}">${LABEL.retry}</button>`
-          : `<button type="button" class="vp-btn-check" data-check="${idx}">${LABEL.check}</button>`;
+          : `<button type="button" class="vp-btn-check" data-check="${idx}" ${val ? "" : "disabled"}>${LABEL.check}</button>`;
+        const control = bankMode
+          ? slotHtml(idx, val, checked, item.answer, ex.placeholder)
+          : pillsHtml(options, idx, val, checked, item.answer);
         return `
           <div class="vp-fill-item">
             <p class="vp-fill-prompt">${escapeHtml(item.prompt)}</p>
             ${item.hint ? `<p class="vp-fill-hint">${escapeHtml(item.hint)}</p>` : ""}
-            <div class="vp-fill-row">
-              <input type="text" class="vp-input" data-i="${idx}" value="${escapeHtml(f.value)}" ${f.checked ? "disabled" : ""} placeholder="${escapeHtml(placeholder)}" style="animation:${anim}" />
-              ${feedback}
-            </div>
+            <div class="vp-fill-row">${control}${feedback}</div>
           </div>`;
       })
       .join("");
+    root.innerHTML = `${bankMode ? bankHtml(options, state.selected) : ""}${items}`;
 
-    root.querySelectorAll(".vp-input").forEach((input) => {
-      input.addEventListener("input", (e) => { state[+input.dataset.i].value = e.target.value; });
-      input.addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); check(+input.dataset.i); } });
-    });
+    if (bankMode) wireBank(root, state, render);
+    else {
+      root.querySelectorAll("[data-val]").forEach((b) => {
+        b.addEventListener("click", () => { state.values[+b.dataset.slot] = b.dataset.val; render(); });
+      });
+    }
     root.querySelectorAll("[data-check]").forEach((b) => b.addEventListener("click", () => check(+b.dataset.check)));
     root.querySelectorAll("[data-reset]").forEach((b) => b.addEventListener("click", () => reset(+b.dataset.reset)));
   }
   function check(idx) {
-    const f = state[idx];
-    f.checked = true;
-    f.correct = accepts(ex.items[idx].answer, f.value);
-    notify(f.correct);
+    state.checked[idx] = true;
+    notify(accepts(ex.items[idx].answer, state.values[idx] || ""));
     render();
   }
   function reset(idx) {
-    state[idx] = { value: "", checked: false, correct: false };
+    delete state.values[idx];
+    delete state.checked[idx];
     render();
   }
   render();
@@ -175,8 +262,10 @@ function mountMatch(root, ex, notify) {
 
 /* --------------------------------------------------------------- table ---- */
 function mountTable(root, ex, notify) {
-  const placeholder = ex.placeholder || "";
-  const state = { values: {}, checked: false };
+  const answers = ex.rows.map((r) => r.answer);
+  const options = shuffleList(optionSet(ex, answers));
+  const bankMode = options.length > INLINE_MAX;
+  const state = { values: {}, checked: false, selected: null };
 
   function render() {
     const head = ex.columns
@@ -185,17 +274,19 @@ function mountTable(root, ex, notify) {
     const rows = ex.rows
       .map((row, idx) => {
         const val = state.values[idx] || "";
-        const ok = state.checked && accepts(row.answer, val);
-        const anim = state.checked ? (ok ? POP : SHAKE) : "none";
+        const control = bankMode
+          ? slotHtml(idx, val, state.checked, row.answer, ex.placeholder)
+          : pillsHtml(options, idx, val, state.checked, row.answer);
         return `
           <div class="vp-table-row">
             <span class="vp-table-verb">${escapeHtml(row.term)}</span>
-            <input type="text" class="vp-input vp-input-sm ${state.checked ? (ok ? "is-correct" : "is-wrong") : ""}" data-i="${idx}" value="${escapeHtml(val)}" ${state.checked ? "disabled" : ""} placeholder="${escapeHtml(placeholder)}" style="animation:${anim}" />
+            ${control}
           </div>`;
       })
       .join("");
     const wrong = state.checked ? ex.rows.filter((r, i) => !accepts(r.answer, state.values[i] || "")) : [];
     root.innerHTML = `
+      ${bankMode ? bankHtml(options, state.selected) : ""}
       <div class="vp-table">${head}${rows}</div>
       <div class="vp-actions">
         ${state.checked ? "" : `<button type="button" class="vp-btn-check" data-table-check>${LABEL.check}</button>`}
@@ -204,9 +295,12 @@ function mountTable(root, ex, notify) {
       </div>
       ${state.checked && wrong.length ? `<p class="vp-fill-hint">${wrong.map((r) => `${escapeHtml(r.term)} → <strong>${escapeHtml(modelAnswer(r.answer))}</strong>`).join(" · ")}</p>` : ""}`;
 
-    root.querySelectorAll(".vp-input").forEach((input) => {
-      input.addEventListener("input", (e) => { state.values[+input.dataset.i] = e.target.value; });
-    });
+    if (bankMode) wireBank(root, state, render);
+    else {
+      root.querySelectorAll("[data-val]").forEach((b) => {
+        b.addEventListener("click", () => { state.values[+b.dataset.slot] = b.dataset.val; render(); });
+      });
+    }
     root.querySelector("[data-table-check]")?.addEventListener("click", check);
     root.querySelector("[data-table-reset]").addEventListener("click", reset);
   }
@@ -217,6 +311,7 @@ function mountTable(root, ex, notify) {
   }
   function reset() {
     state.values = {};
+    state.selected = null;
     state.checked = false;
     render();
   }
@@ -225,23 +320,23 @@ function mountTable(root, ex, notify) {
 
 /* --------------------------------------------------------------- story ---- */
 function mountStory(root, ex, notify) {
-  const state = { values: {}, checked: false };
   const blanks = ex.segments.filter((s) => s.blank !== undefined);
+  const options = shuffleList(optionSet(ex, blanks.map((b) => b.answer)));
+  const state = { values: {}, checked: false, selected: null };
 
   function render() {
     const html = ex.segments
       .map((seg) => {
         if (seg.text !== undefined) return escapeHtml(seg.text);
-        const val = state.values[seg.blank] || "";
-        const ok = state.checked && accepts(seg.answer, val);
-        const anim = state.checked ? (ok ? POP : SHAKE) : "none";
-        return `<input type="text" class="vp-input vp-input-blank ${state.checked ? (ok ? "is-correct" : "is-wrong") : ""}" data-blank="${seg.blank}" value="${escapeHtml(val)}" ${state.checked ? "disabled" : ""} style="animation:${anim}" />`;
+        // Always bank mode: these blanks sit inside running prose.
+        return slotHtml(seg.blank, state.values[seg.blank] || "", state.checked, seg.answer, "…");
       })
       .join("");
     const allCorrect = state.checked && blanks.every((s) => accepts(s.answer, state.values[s.blank] || ""));
     const missed = state.checked ? blanks.filter((s) => !accepts(s.answer, state.values[s.blank] || "")) : [];
 
     root.innerHTML = `
+      ${bankHtml(options, state.selected)}
       <p class="vp-story-text">${html}</p>
       <div class="vp-actions">
         ${state.checked ? "" : `<button type="button" class="vp-btn-check" data-story-check>${LABEL.check}</button>`}
@@ -250,9 +345,7 @@ function mountStory(root, ex, notify) {
       </div>
       ${missed.length ? `<p class="vp-fill-hint">${missed.map((s) => `${s.blank + 1}. <strong>${escapeHtml(modelAnswer(s.answer))}</strong>`).join(" · ")}</p>` : ""}`;
 
-    root.querySelectorAll("[data-blank]").forEach((input) => {
-      input.addEventListener("input", (e) => { state.values[+input.dataset.blank] = e.target.value; });
-    });
+    wireBank(root, state, render);
     root.querySelector("[data-story-check]")?.addEventListener("click", check);
     root.querySelector("[data-story-reset]").addEventListener("click", reset);
   }
@@ -263,6 +356,7 @@ function mountStory(root, ex, notify) {
   }
   function reset() {
     state.values = {};
+    state.selected = null;
     state.checked = false;
     render();
   }

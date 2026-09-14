@@ -2,8 +2,14 @@
 import Layout from "../layouts/Layout.astro";
 import LanguageSwitcher from "../components/LanguageSwitcher.astro";
 import ThemeToggle from "../components/ThemeToggle.astro";
+import DashboardMock from "../components/mocks/DashboardMock.astro";
+import UebungenMock from "../components/mocks/UebungenMock.astro";
+import LevelFold from "../components/LevelFold.astro";
 import "../styles/landing.css";
 import "../styles/m1.css";
+import "../styles/front.css";
+// Last, so its fold-switching rules win over front.css at equal specificity.
+import "../styles/home-fold.css";
 import artikel from "../data/artikel.json";
 import grammatik from "../data/grammatik.json";
 import wortschatz from "../data/wortschatz.json";
@@ -113,167 +119,108 @@ const userCount = 412; // actual signups so far
       });
     </script>
 
-    <!-- HERO CROSS: dashboard pitch + quiz pitch interleaved into one 2x2 grid
-         (design candidate from m1.astro, promoted here). Desktop-only; mobile
-         gets the stacked device-frame section right below. -->
-    <section class="m1-cross-section">
-      <div class="lp-wrap m1-cross">
+    <!-- HERO FOLD, ≤1024px: "Wo stehst du?" — five tap targets instead of a
+         paragraph. Below that width the two mockups cannot be shown at a size
+         where their controls are clickable, so they are replaced rather than
+         shrunk; they reappear further down, at real width, in the peek band. -->
+    <LevelFold />
 
-        <div class="lp-hero-copy m1-copy-1">
-          <div class="lp-eyebrow" data-i18n="home.hero1.eyebrow">Dein Dashboard</div>
-          <h1 data-i18n="home.hero1.title">Dein Fortschritt, immer im Blick</h1>
-          <p class="lp-hero-lead" data-i18n="home.hero1.lead">Level, erledigte Lektionen und nächste Schritte an einem Ort — damit du bei jedem Login genau weißt, woran du weitermachst.</p>
-          <div class="lp-hero-actions">
-            <a href="/uebungen" class="lp-btn lp-btn--primary" data-i18n="home.cta.startFree">Kostenlos starten</a>
-            <span class="lp-nav-login" data-i18n="home.hero1.login">Bereits dabei? Log in</span>
-          </div>
-        </div>
-
-        <div class="m1-mock-1">
-          <div class="lp-browser">
-            <div class="lp-browser-bar">
-              <div class="lp-browser-dot"></div><div class="lp-browser-dot"></div><div class="lp-browser-dot"></div>
-              <div class="lp-browser-url">deutschacademy.com/dashboard</div>
-            </div>
-            <div class="lp-browser-body">
-              <div class="lp-sidebar">
-                <img src="/assets/logo.png" alt="" />
-                <div class="lp-sidebar-link lp-sidebar-link--active" data-i18n="home.mock.dashboard">Dashboard</div>
-                <div class="lp-sidebar-link" data-i18n="home.mock.grammatikShort">Grammatik</div>
-                <div class="lp-sidebar-link" data-i18n="home.mock.wortschatzShort">Wortschatz</div>
-                <div class="lp-sidebar-link" data-i18n="home.mock.sprechenShort">Sprechen</div>
-                <div class="lp-sidebar-link" data-i18n="nav.exams">Prüfungen</div>
-                <div class="lp-sidebar-upsell">
-                  <strong data-i18n="home.mock.goPremium">Go Premium</strong>
-                  <span data-i18n="home.mock.unlockDesc">Unlock exam prep and corrections.</span>
-                </div>
-              </div>
-              <div class="lp-dash">
-                <div class="lp-dash-header">
-                  <div class="lp-dash-greeting"><strong data-i18n="home.mock.greeting">Guten Morgen, Ana</strong><span data-i18n="home.mock.dayProgress">Day 34 · B1.2 in progress</span></div>
-                  <div class="lp-avatar-initials">A</div>
-                </div>
-                <div class="lp-progress-card">
-                  <div class="lp-progress-row"><span>Level B1 · Selbstständig</span><span class="pct">62%</span></div>
-                  <div class="lp-progress-track"><div class="lp-progress-fill" style="width:62%"></div></div>
-                  <div class="lp-progress-note">18 of 29 lessons · next: Termin beim Amt</div>
-                </div>
-                <div class="lp-mini-grid">
-                  <div class="lp-mini-card">
-                    <img src="/assets/methods.jpg" alt="" />
-                    <div class="lp-mini-card-body"><span data-i18n="home.mock.a2Alltag">A2 · Alltag</span><div class="lp-mini-bar"><div class="lp-mini-bar-fill" style="width:100%;background:var(--brand-blue-light)"></div></div></div>
-                  </div>
-                  <div class="lp-mini-card">
-                    <img src="/assets/foto-buero-2.jpg" alt="" style="object-position: 50% 25%;" />
-                    <div class="lp-mini-card-body"><span data-i18n="home.mock.b1Beruf">B1 · Beruf</span><div class="lp-mini-bar"><div class="lp-mini-bar-fill" style="width:62%;background:var(--brand-blue)"></div></div></div>
-                  </div>
-                  <div class="lp-mini-card">
-                    <img src="/assets/online-is-futur.jpg" alt="" />
-                    <div class="lp-mini-card-body"><span data-i18n="home.mock.authenticClips">Authentic clips</span><div class="lp-mini-bar"><div class="lp-mini-bar-fill" style="width:24%;background:var(--accent)"></div></div></div>
-                  </div>
-                  <div class="lp-locked-card">
-                    <div class="icon">🔒</div>
-                    <strong data-i18n="home.mock.goetheB2Prep">Goethe B2 prep</strong>
-                    <span data-i18n="home.word.premium">Premium</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="m1-mock-2">
-          <div class="lp-browser">
-            <div class="lp-browser-bar">
-              <div class="lp-browser-dot"></div><div class="lp-browser-dot"></div><div class="lp-browser-dot"></div>
-              <div class="lp-browser-url">deutschacademy.com/uebungen</div>
-            </div>
-            <div class="lp-browser-body">
-              <div class="lp-sidebar">
-                <img src="/assets/logo.png" alt="" />
-                <div class="lp-sidebar-link lp-sidebar-link--active">📚 <span data-i18n="tool.grammatik.title">Grammatik</span></div>
-                <div class="lp-sidebar-link">🎯 <span data-i18n="tool.artikel.title">der/die/das-Trainer</span></div>
-                <div class="lp-sidebar-link">🗂️ <span data-i18n="home.mock.wortschatzShort">Wortschatz</span></div>
-                <div class="lp-sidebar-link">🔊 <span data-i18n="tool.aussprache.title">Aussprache</span></div>
-                <div class="lp-sidebar-link">🗣️ <span data-i18n="home.mock.sprechenShort">Sprechen</span></div>
-                <div class="lp-sidebar-link">✍️ <span data-i18n="tool.lesen.title">Lesen &amp; Schreiben</span></div>
-                <div class="lp-sidebar-link">🗺️ <span data-i18n="tool.kultur.title">Kulturwissen</span></div>
-              </div>
-              <div class="lp-dash">
-                <div class="lp-dash-header">
-                  <div class="lp-dash-greeting"><strong data-i18n="tool.grammatik.title">Grammatik</strong><span>Thema 1 von {grammatik.length}</span></div>
-                </div>
-                <div class="lp-dash-stat-row">
-                  <div class="lp-dash-stat"><strong>{grammarQuestionCount}</strong><span data-i18n="home.mock.questionsLabel">Fragen</span></div>
-                  <div class="lp-dash-stat"><strong>{grammatik.length}</strong><span data-i18n="home.mock.topicsLabel">Themen</span></div>
-                  <div class="lp-dash-stat"><strong>0€</strong><span data-i18n="home.mock.costLabel">Kosten</span></div>
-                </div>
-                <div class="lp-dash-question">
-                  <div class="lp-quiz-kicker">Akkusativ</div>
-                  <p class="lp-quiz-prompt">Ich habe <span class="blank">___</span> Computer.</p>
-                  <p class="lp-quiz-hint">(der Computer)</p>
-                  <div class="lp-quiz-choices">
-                    <span class="lp-quiz-choice">der</span>
-                    <span class="lp-quiz-choice lp-quiz-choice--correct">den</span>
-                    <span class="lp-quiz-choice">das</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="lp-hero-copy m1-copy-2">
-          <div class="lp-eyebrow" data-i18n="home.hero2.eyebrow">Deutsch von A1 bis C1</div>
-          <h1 data-i18n="home.hero2.title">Deutsch lernen, wie es wirklich gesprochen wird</h1>
-          <!-- The only Bungee Shade on the site. Deliberately not translated:
-               it is a German tagline, and the face has no Cyrillic or Arabic. -->
-          <p class="lp-hero-accent">Schritt für Schritt.</p>
-          <p class="lp-hero-lead" data-i18n="home.hero2.lead">Grammatik, Alltagsdeutsch und Sprechpraxis — aufgebaut aus echtem Unterrichtsmaterial, nicht kalt für eine Plattform geschrieben.</p>
-          <div class="lp-hero-actions">
-            <a href="#" class="lp-btn lp-btn--primary" data-i18n="home.hero2.cta1">Start Learning Free</a>
-            <a href="#" class="lp-btn lp-btn--outline" data-i18n="home.hero2.cta2">See How It Works</a>
-          </div>
-          <div class="lp-hero-progress"><span></span><span></span></div>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- Mobile: stacked device-frame preview instead of the 2x2 cross, which
-         doesn't read well recompressed to one column. -->
-    <section class="m1-mobile-hero">
-      <div class="m1-phone">
-        <div class="m1-phone-notch"></div>
-        <div class="m1-phone-home"></div>
-        <div class="m1-phone-screen">
-          <div class="m1-phone-content">
-
-            <div class="m1-phone-block">
-              <div class="lp-eyebrow" data-i18n="home.hero1.eyebrow">Dein Dashboard</div>
-              <h1 data-i18n="home.hero1.title">Dein Fortschritt, immer im Blick</h1>
-              <p data-i18n="home.hero1.lead">Level, erledigte Lektionen und nächste Schritte an einem Ort.</p>
+    <!-- HERO FOLD, >1024px: the "A · Versetzt" arrangement promoted from the
+         /front layout studies. Overlapping 12x12 grid: headline left, dashboard
+         mock over the right edge of it, exercises mock below-left, brand line
+         bottom-right. Markup is identical across the three studied variants —
+         only the grid-area rules in front.css differ — so switching to "buehne"
+         or "split" is a one-word change to data-variant below. -->
+    <section class="fr-page fr-page--home" data-variant="versetzt">
+      <div class="fr-stage">
+        <div class="fr-grid">
+          <div class="fr-block fr-copy">
+            <p class="fr-eyebrow" data-i18n="home.hero2.eyebrow">Deutsch von A1 bis C1</p>
+            <h1 class="fr-title" data-i18n="front.title">Deutsch lernen</h1>
+            <p class="fr-accent">Schritt für Schritt.</p>
+            <p class="fr-lead" data-i18n="home.hero2.lead">
+              Grammatik, Alltagsdeutsch und Sprechpraxis — aufgebaut aus echtem
+              Unterrichtsmaterial, nicht kalt für eine Plattform geschrieben.
+            </p>
+            <div class="fr-actions">
               <a href="/uebungen" class="lp-btn lp-btn--primary" data-i18n="home.cta.startFree">Kostenlos starten</a>
+              <a href="/pruefungen" class="lp-btn lp-btn--outline" data-i18n="home.hero2.cta2">So funktioniert's</a>
             </div>
-            <div class="m1-phone-shot">
-              <img src="/assets/methods.jpg" alt="" />
-            </div>
+          </div>
 
-            <div class="m1-phone-block m1-phone-block--divider">
-              <div class="lp-eyebrow" data-i18n="home.hero2.eyebrow">Deutsch von A1 bis C1</div>
-              <h1 data-i18n="home.hero2.title">Deutsch lernen, wie es wirklich gesprochen wird</h1>
-              <p class="lp-hero-accent">Schritt für Schritt.</p>
-              <p data-i18n="home.hero2.lead">Grammatik, Alltagsdeutsch und Sprechpraxis.</p>
-              <a href="#" class="lp-btn lp-btn--primary" data-i18n="home.hero2.cta1">Start Learning Free</a>
-            </div>
-            <div class="m1-phone-shot">
-              <img src="/assets/foto-buero-2.jpg" alt="" style="object-position: 50% 25%;" />
-            </div>
+          <div class="fr-block fr-mock fr-mock--dash" aria-label="Dashboard-Vorschau">
+            <DashboardMock />
+          </div>
 
+          <div class="fr-block fr-mock fr-mock--ueb" aria-label="Übungen-Vorschau">
+            <UebungenMock />
+          </div>
+
+          <div class="fr-block fr-slogan">
+            <p class="fr-slogan-line" data-i18n="home.footer.tagline">Da für Dich!</p>
+            <p class="fr-slogan-sub" data-i18n="front.slogan.sub">
+              Kostenlos, ohne Konto — von Lehrkräften, die wirklich unterrichten.
+            </p>
           </div>
         </div>
       </div>
     </section>
+
+    <script>
+      // The fold's mocks are fixed-size artwork laid out at their design width and
+      // taken out of flow (see front.css), so each has to be scaled to its grid
+      // cell. Ported from /front, minus the variant switcher.
+      const DEFAULT_W = 760;
+      // Past this the dashboard stops reading as a UI and starts reading as a
+      // poster of one.
+      const MAX_SCALE = 1.15;
+      // Breathing room so the frame's shadow is not flush against its neighbour.
+      const GUTTER = 20;
+      const mocks = [...document.querySelectorAll(".fr-page--home .fr-mock")];
+
+      function designWidth(cell) {
+        const raw = getComputedStyle(cell).getPropertyValue("--fr-mock-w");
+        return parseFloat(raw) || DEFAULT_W;
+      }
+
+      function fitMocks() {
+        // Below the breakpoint front.css puts the mocks back in normal flow.
+        if (window.matchMedia("(max-width: 900px)").matches) {
+          for (const cell of mocks) {
+            const b = cell.querySelector(".lp-browser");
+            if (b) b.style.transform = "";
+          }
+          return;
+        }
+        for (const cell of mocks) {
+          const browser = cell.querySelector(".lp-browser");
+          if (!browser) continue;
+          browser.style.transform = "";
+          const cw = cell.clientWidth - GUTTER * 2;
+          const ch = cell.clientHeight - GUTTER * 2;
+          const mh = browser.offsetHeight;
+          const dw = designWidth(cell);
+          if (cw <= 0 || ch <= 0 || !mh) continue;
+          const scale = Math.min(cw / dw, ch / mh, MAX_SCALE);
+          const x = GUTTER + (cw - dw * scale) / 2;
+          const y = GUTTER + (ch - mh * scale) / 2;
+          browser.style.transform = `translate(${x}px, ${y}px) scale(${scale})`;
+        }
+      }
+
+      requestAnimationFrame(() => requestAnimationFrame(fitMocks));
+      addEventListener("resize", fitMocks);
+      // Fonts land after first paint and change the mock's intrinsic height; so do
+      // late images and, in dev, stylesheets injected after hydration.
+      if (window.ResizeObserver) {
+        const ro = new ResizeObserver(() => fitMocks());
+        for (const cell of mocks) {
+          const browser = cell.querySelector(".lp-browser");
+          if (browser) ro.observe(browser);
+        }
+      }
+      document.fonts?.ready.then(fitMocks);
+    </script>
 
     <!-- TRUST BAR -->
     <section class="lp-trust">
@@ -360,6 +307,29 @@ const userCount = 412; // actual signups so far
                 <span class="badge badge-neutral">{e.level}</span>
               </a>
             ))}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PEEK, ≤1024px only: the two mockups the fold no longer shows at this
+         width. Down here they are useful rather than in the way, and at real
+         width they are not pictures of a UI — they are the UI. -->
+    <section class="lp-section hf-peek-band">
+      <div class="lp-wrap">
+        <div class="lp-section-head" style="max-width:600px">
+          <div class="lp-eyebrow" data-i18n="home.peek.eyebrow">Ein Blick hinein</div>
+          <h2 data-i18n="home.peek.title">So sieht es von innen aus</h2>
+          <p data-i18n="home.peek.subtitle">Keine Bilder — beide funktionieren. Tipp in der Seitenleiste auf ein Thema.</p>
+        </div>
+        <div class="hf-peek">
+          <div class="hf-peek-item">
+            <p class="hf-peek-label" data-i18n="home.peek.progress">Dein Fortschritt</p>
+            <DashboardMock />
+          </div>
+          <div class="hf-peek-item">
+            <p class="hf-peek-label" data-i18n="nav.exercises">Übungen</p>
+            <UebungenMock />
           </div>
         </div>
       </div>

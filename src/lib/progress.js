@@ -29,10 +29,11 @@ function load() {
         skills: data.skills || {},
         dailyActivity: data.dailyActivity || {},
         vocabMastered: data.vocabMastered || [],
+        topics: data.topics || {},
       };
     }
   } catch {}
-  return { streak: 0, lastActiveDate: null, lastSkill: null, skills: {}, dailyActivity: {}, vocabMastered: [] };
+  return { streak: 0, lastActiveDate: null, lastSkill: null, skills: {}, dailyActivity: {}, vocabMastered: [], topics: {} };
 }
 
 function save(data) {
@@ -62,7 +63,12 @@ function ensureSkill(data, skill) {
 // `trackVocab: true` + a stable `id` also counts this toward the "Wörter gelernt" stat the
 // first time that id is answered correctly — pass it only from genuinely vocabulary-teaching
 // tools (Wortschatz, Artikel-Trainer), not grammar drills like Akkusativ.
-export function recordAttempt({ skill, correct, id, trackVocab } = {}) {
+//
+// `topic` is the slug of the thing being practised ("dativ", "artikel-trainer", …). The skill
+// buckets above are too coarse for /dashboard, which shows a bar per topic and per CEFR level,
+// so correct answers are additionally counted per topic here. It stays a count of real answers:
+// nothing is ever written except from a graded attempt.
+export function recordAttempt({ skill, correct, id, trackVocab, topic } = {}) {
   if (!skill) return;
   const data = load();
   touch(data, skill);
@@ -70,6 +76,11 @@ export function recordAttempt({ skill, correct, id, trackVocab } = {}) {
   s.attempts += 1;
   if (correct) s.correct += 1;
   s.lastActiveDate = todayStr();
+  if (topic) {
+    if (!data.topics[topic]) data.topics[topic] = { done: 0, attempts: 0 };
+    data.topics[topic].attempts += 1;
+    if (correct) data.topics[topic].done += 1;
+  }
   if (trackVocab && correct && id) {
     const key = `${skill}:${id}`;
     if (!data.vocabMastered.includes(key)) data.vocabMastered.push(key);
@@ -91,6 +102,17 @@ export function recordSession(skill) {
 
 export function getProgress() {
   return load();
+}
+
+// { [topicSlug]: { done, attempts } } — what /dashboard draws its bars from.
+export function getTopicProgress() {
+  return load().topics;
+}
+
+// Clears everything this module stores. Behind an explicit user action only
+// ("Fortschritt zurücksetzen"); there is no undo because there is no server.
+export function resetProgress() {
+  try { localStorage.removeItem(STORE_KEY); } catch {}
 }
 
 export function getWeeklyCount(data = load()) {

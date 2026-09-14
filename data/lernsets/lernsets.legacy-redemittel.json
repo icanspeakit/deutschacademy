@@ -1,0 +1,181 @@
+{
+  "id": "legacy-redemittel",
+  "title": "Redemittel & Alltagsvokabeln (Karteikarten)",
+  "level": null,
+  "status": "legacy",
+  "note": "Source: src/data/wortschatz.json, consumed by /uebungen/wortschatz. Four languages (en/ar/ru/tr) against the lexicon's en-only, so it is deliberately not migrated. Overlaps thematically with a2-28 (Redemittel) and a1-20 (Tiere).",
+  "languages": [
+    "en",
+    "ar",
+    "ru",
+    "tr"
+  ],
+  "words": 15,
+  "items": [
+    {
+      "id": "redemittel-01",
+      "front": "Ich bin der Meinung, dass...",
+      "note": "Meinung äußern — der Standard-Einstieg für jedes Gespräch. Achtung: Verb ans Satzende!",
+      "translations": {
+        "en": "I'm of the opinion that...",
+        "ar": "في رأيي أنّ...",
+        "ru": "Я считаю, что...",
+        "tr": "Bence..."
+      }
+    },
+    {
+      "id": "redemittel-02",
+      "front": "Das sehe ich auch so.",
+      "note": "Zustimmen — klingt natürlicher und höflicher als ein einfaches \"Ja\".",
+      "translations": {
+        "en": "I see it that way too.",
+        "ar": "أرى الأمر كذلك أيضًا.",
+        "ru": "Я тоже так считаю.",
+        "tr": "Ben de öyle düşünüyorum."
+      }
+    },
+    {
+      "id": "redemittel-03",
+      "front": "Wie geht's dir?",
+      "note": "Lockere Begrüßung unter Freunden (du-Form).",
+      "translations": {
+        "en": "How's it going?",
+        "ar": "كيف حالك؟",
+        "ru": "Как дела?",
+        "tr": "Nasılsın?"
+      }
+    },
+    {
+      "id": "redemittel-04",
+      "front": "Woher kommst du?",
+      "note": "→ Antwort: Ich komme aus [Land].",
+      "translations": {
+        "en": "Where are you from?",
+        "ar": "من أين أنت؟",
+        "ru": "Откуда ты?",
+        "tr": "Nerelisin?"
+      }
+    },
+    {
+      "id": "redemittel-05",
+      "front": "Was machst du beruflich?",
+      "note": "→ Antwort: Ich bin [Beruf].",
+      "translations": {
+        "en": "What do you do for work?",
+        "ar": "ما هي مهنتك؟",
+        "ru": "Кем ты работаешь?",
+        "tr": "Mesleğin ne?"
+      }
+    },
+    {
+      "id": "redemittel-06",
+      "front": "Welche Sprachen sprichst du?",
+      "note": "→ Antwort: Ich spreche...",
+      "translations": {
+        "en": "Which languages do you speak?",
+        "ar": "ما هي اللغات التي تتحدثها؟",
+        "ru": "На каких языках ты говоришь?",
+        "tr": "Hangi dilleri konuşuyorsun?"
+      }
+    },
+    {
+      "id": "redemittel-07",
+      "front": "Wo wohnst du?",
+      "note": "→ Antwort: Ich wohne in...",
+      "translations": {
+        "en": "Where do you live?",
+        "ar": "أين تسكن؟",
+        "ru": "Где ты живёшь?",
+        "tr": "Nerede oturuyorsun?"
+      }
+    },
+    {
+      "id": "redemittel-08",
+      "front": "der Hund",
+      "note": "Vorteil: braucht wenig Zeit; Nachteil: viele Haare, kann Allergien verursachen",
+      "translations": {
+        "en": "dog",
+        "ar": "الكلب",
+        "ru": "собака",
+        "tr": "köpek"
+      }
+    },
+    {
+      "id": "redemittel-09",
+      "front": "die Katze",
+      "note": "Vorteil: braucht nicht viel Platz; Nachteil: kann Möbel kaputt machen",
+      "translations": {
+        "en": "cat",
+        "ar": "القطة",
+        "ru": "кошка",
+        "tr": "kedi"
+      }
+    },
+    {
+      "id": "redemittel-10",
+      "front": "das Nagetier / die Nagetiere",
+      "note": "kleine Haustiere, brauchen wenig Platz und wenig Futter",
+      "translations": {
+        "en": "rodent(s)",
+        "ar": "القارض / القوارض",
+        "ru": "грызун / грызуны",
+        "tr": "kemirgen / kemirgenler"
+      }
+    },
+    {
+      "id": "redemittel-11",
+      "front": "der Käfig",
+      "note": "muss regelmäßig saubergemacht werden",
+      "translations": {
+        "en": "cage",
+        "ar": "القفص",
+        "ru": "клетка",
+        "tr": "kafes"
+      }
+    },
+    {
+      "id": "redemittel-12",
+      "front": "der Tierarzt / die Tierärztin",
+      "note": "für Haustiere, die krank werden können",
+      "translations": {
+        "en": "vet",
+        "ar": "الطبيب البيطري / الطبيبة البيطرية",
+        "ru": "ветеринар",
+        "tr": "veteriner"
+      }
+    },
+    {
+      "id": "redemittel-13",
+      "front": "eine Reise planen",
+      "note": "Übernachtung, Aktivitäten, Kosten gemeinsam besprechen",
+      "translations": {
+        "en": "to plan a trip",
+        "ar": "التخطيط لرحلة",
+        "ru": "планировать поездку",
+        "tr": "bir seyahat planlamak"
+      }
+    },
+    {
+      "id": "redemittel-14",
+      "front": "Wo wollen wir übernachten?",
+      "note": "Reiseplanung, Vorschläge machen",
+      "translations": {
+        "en": "Where do we want to stay overnight?",
+        "ar": "أين نريد أن نبيت؟",
+        "ru": "Где мы хотим переночевать?",
+        "tr": "Nerede kalmak istiyoruz?"
+      }
+    },
+    {
+      "id": "redemittel-15",
+      "front": "Wie viel Geld wollen wir ausgeben?",
+      "note": "Budget-Frage beim Planen",
+      "translations": {
+        "en": "How much money do we want to spend?",
+        "ar": "كم من المال نريد أن ننفق؟",
+        "ru": "Сколько денег мы хотим потратить?",
+        "tr": "Ne kadar para harcamak istiyoruz?"
+      }
+    }
+  ]
+}

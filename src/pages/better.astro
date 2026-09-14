@@ -1,0 +1,349 @@
+---
+// /better — layout study for the grammar-topic template (/uebungen/grammatik/<topic>).
+//
+// Why this template and not the Artikel-Trainer: an audit of all 37 Übungen routes
+// found this one shell is used by 26 topics, carries 48–93 exercise items each, and
+// shows ~1 of them above the fold. It is the biggest single win on the site.
+//
+// Real data (src/data/grammatik/artikel.json), real .vp-* classes. The toggle changes
+// ONLY layout, so what you compare is the arrangement and nothing else. The two
+// `table` exercises are rendered in full; the story/match/fill ones are represented by
+// their real titles plus a stand-in, since re-implementing three exercise engines here
+// would add nothing to a layout comparison. Internal; not linked from the public nav.
+import Layout from "../layouts/Layout.astro";
+import ThemeToggle from "../components/ThemeToggle.astro";
+import "../styles/practice.css";
+import "../styles/verben-praepositionen.css";
+import topic from "../data/grammatik/artikel.json";
+
+const modes = [
+  { id: "jetzt", label: "Jetzt", note: "Eine Spalte, 880px. Erst sechs Erklärkarten, dann die Übungen." },
+  { id: "split", label: "A · Split", note: "Regel links, klebt beim Scrollen. Übungen rechts, sofort sichtbar." },
+  { id: "uebung", label: "B · Übung zuerst", note: "Übungen zuerst und zweispaltig. Die Regel liegt daneben, einklappbar." },
+];
+
+const tableExercises = topic.exercises.filter((e) => e.type === "table");
+const otherExercises = topic.exercises.filter((e) => e.type !== "table");
+---
+<Layout title="Layout-Studie Grammatik – DeutschAcademy" description="Interne Layout-Studie für die Grammatik-Übungsseiten.">
+  <div class="bt-page" data-mode="jetzt">
+    <header class="bt-bar">
+      <div class="bt-bar-inner">
+        <div class="bt-bar-text">
+          <p class="bt-bar-title">Grammatik-Layout</p>
+          <p class="bt-bar-note" data-mode-note>{modes[0].note}</p>
+        </div>
+
+        <div class="bt-switch" role="tablist" aria-label="Layout-Variante">
+          {modes.map((m, i) => (
+            <button
+              type="button"
+              role="tab"
+              class="bt-switch-btn"
+              data-mode-btn={m.id}
+              data-note={m.note}
+              aria-selected={i === 0 ? "true" : "false"}
+            >{m.label}</button>
+          ))}
+        </div>
+
+        <ThemeToggle />
+      </div>
+
+      <!-- Measured live from what is on screen right now, so the comparison is a
+           number rather than a matter of taste. -->
+      <div class="bt-metrics" aria-live="polite">
+        <span class="bt-metric"><b data-metric="width">–</b> Breite genutzt</span>
+        <span class="bt-metric"><b data-metric="above">–</b> Übungsfelder ohne Scrollen</span>
+        <span class="bt-metric"><b data-metric="screens">–</b> Bildschirme hoch</span>
+        <span class="bt-metric bt-metric--ref">Echte Seite heute: 46% · 1 Feld · 4,6 Bildschirme</span>
+      </div>
+    </header>
+
+    <main class="bt-stage">
+      <!-- RULE ------------------------------------------------------------ -->
+      <section class="bt-col bt-col--rule" aria-label="Regel">
+        <div class="bt-rule-head">
+          <span class="badge badge-brand">GRAMMATIK ÜBEN</span>
+          <span class="badge badge-info">{topic.level}</span>
+          <button class="bt-rule-toggle" type="button" data-rule-toggle>Regel ausblenden</button>
+        </div>
+        <h1 class="bt-title">{topic.name}</h1>
+        <p class="bt-subtitle">{topic.subtitle}</p>
+
+        <div class="vp-card">
+          <div class="vp-card-label">Wie funktioniert das?</div>
+          {topic.concept.flow && (
+            <div class="vp-flow">
+              {topic.concept.flow.map((step, i) => (
+                <>
+                  {i > 0 && <span class="vp-flow-arrow">→</span>}
+                  <span class={`vp-flow-step${step.variant ? ` vp-flow-step--${step.variant}` : ""}`}>{step.text}</span>
+                </>
+              ))}
+            </div>
+          )}
+          {topic.concept.exampleHtml && <p class="vp-example" set:html={topic.concept.exampleHtml} />}
+          {topic.concept.qa && (
+            <div class="vp-qa-grid">
+              {topic.concept.qa.map((item) => (
+                <div class="vp-qa-item">
+                  <span set:html={item.html} />
+                  {item.tag && <span class="vp-qa-tag">{item.tag}</span>}
+                </div>
+              ))}
+            </div>
+          )}
+          {topic.concept.noteHtml && <p class="vp-note" set:html={topic.concept.noteHtml} />}
+        </div>
+      </section>
+
+      <!-- EXERCISES ------------------------------------------------------- -->
+      <section class="bt-col bt-col--ex" aria-label="Übungen">
+        <h2 class="vp-section-title bt-ex-title">Übungen</h2>
+
+        <div class="bt-ex-grid">
+          {tableExercises.map((ex, i) => (
+            <div class="vp-card bt-ex">
+              <div class="vp-ex-head">
+                <span class="bt-ex-num">{i + 1}</span>
+                <h3>{ex.title}</h3>
+              </div>
+              {ex.hint && <p class="bt-ex-hint">{ex.hint}</p>}
+              <table class="bt-table">
+                <thead>
+                  <tr>{(ex.columns || []).map((c) => <th class="vp-table-head">{c}</th>)}</tr>
+                </thead>
+                <tbody>
+                  {ex.rows.map((row) => (
+                    <tr>
+                      <td class="vp-table-verb">{row.term}</td>
+                      <td><input class="bt-input" type="text" placeholder={ex.placeholder || "der / die / das"} data-answer={row.answer} /></td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          ))}
+
+          {otherExercises.map((ex, i) => (
+            <div class="vp-card bt-ex bt-ex--stub">
+              <div class="vp-ex-head">
+                <span class="bt-ex-num">{tableExercises.length + i + 1}</span>
+                <h3>{ex.title}</h3>
+              </div>
+              {ex.hint && <p class="bt-ex-hint">{ex.hint}</p>}
+              <p class="bt-stub-note">
+                <code>{ex.type}</code> — echte Übung, hier nur als Platzhalter. Für den
+                Layout-Vergleich zählt nur, wie viel Platz sie bekommt.
+              </p>
+            </div>
+          ))}
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <style>
+    .bt-page { min-height: 100vh; background: var(--page-bg); }
+
+    /* Control bar ------------------------------------------------------- */
+    .bt-bar {
+      position: sticky; top: 0; z-index: 30;
+      background: var(--page-bg);
+      border-bottom: 1px solid var(--border);
+    }
+    .bt-bar-inner {
+      display: flex; align-items: center; gap: var(--space-6);
+      padding: 12px clamp(14px, 3vw, 28px) 0;
+    }
+    .bt-bar-text { min-width: 0; }
+    .bt-bar-title {
+      margin: 0; font-family: var(--font-display); font-size: var(--text-lg);
+      font-weight: var(--fw-bold); color: var(--ink); line-height: 1.1;
+    }
+    .bt-bar-note {
+      margin: 1px 0 0; font-size: var(--text-xs); color: var(--muted);
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .bt-switch {
+      display: flex; gap: 3px; padding: 3px; margin-inline: auto;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius-pill);
+    }
+    .bt-switch-btn {
+      padding: 7px 16px; border: none; border-radius: var(--radius-pill);
+      background: none; font-family: var(--font-label); font-size: var(--text-xs);
+      font-weight: var(--fw-semibold); letter-spacing: .04em; color: var(--muted);
+      white-space: nowrap; cursor: pointer;
+      transition: background var(--duration-base) var(--ease-standard), color var(--duration-base) var(--ease-standard);
+    }
+    .bt-switch-btn:hover { color: var(--ink); }
+    .bt-switch-btn[aria-selected="true"] { background: var(--gradient-brand); color: #fff; }
+
+    .bt-metrics {
+      display: flex; flex-wrap: wrap; gap: 8px 20px;
+      padding: 8px clamp(14px, 3vw, 28px) 10px;
+      font-size: var(--text-xs); color: var(--muted);
+    }
+    .bt-metric b { color: var(--brand-blue-dark); font-weight: var(--fw-bold); }
+    .bt-metric--ref { margin-left: auto; color: var(--muted-soft); }
+
+    /* Stage ------------------------------------------------------------- */
+    .bt-stage { padding: 24px clamp(14px, 3vw, 32px) 80px; }
+    .bt-col { min-width: 0; }
+    .bt-title {
+      font-family: var(--font-body); font-weight: var(--fw-regular);
+      letter-spacing: -.02em; font-size: clamp(1.6rem, 3vw, 2.125rem);
+      color: var(--ink); margin: 10px 0 8px;
+    }
+    .bt-subtitle { color: var(--muted); margin: 0 0 18px; line-height: 1.6; }
+    .bt-rule-head { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+    .bt-rule-toggle {
+      margin-left: auto; border: 1px solid var(--border); background: var(--surface-card);
+      border-radius: var(--radius-pill); padding: 6px 14px; cursor: pointer;
+      font-family: var(--font-label); font-size: var(--text-xs);
+      font-weight: var(--fw-semibold); color: var(--muted);
+    }
+    .bt-rule-toggle:hover { color: var(--ink); border-color: var(--border-strong); }
+
+    .bt-ex-title { margin-top: 0; }
+    .bt-ex-num {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 26px; height: 26px; border-radius: 50%;
+      background: var(--blue-100); color: var(--brand-blue-dark);
+      font-size: .8rem; font-weight: var(--fw-bold); flex-shrink: 0;
+    }
+    .bt-ex-hint { color: var(--muted); font-size: .875rem; margin: 0 0 14px; }
+    .bt-table { width: 100%; border-collapse: collapse; }
+    .bt-table th { text-align: left; padding-bottom: 8px; }
+    .bt-table td { padding: 7px 0; border-top: 1px solid var(--border); }
+    .bt-input {
+      width: 100%; max-width: 150px; border: 1px solid var(--border);
+      border-radius: var(--radius-sm); background: var(--surface);
+      padding: 7px 10px; font-family: var(--font-body); font-size: .9rem; color: var(--ink);
+    }
+    .bt-input:focus { outline: 2px solid var(--brand-blue); outline-offset: 1px; }
+    .bt-ex--stub { border-style: dashed; }
+    .bt-stub-note { color: var(--muted-soft); font-size: .84rem; margin: 0; line-height: 1.5; }
+    .bt-stub-note code {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 4px; padding: 1px 5px; font-size: .9em;
+    }
+
+    /* --- Jetzt: today's layout, reproduced ----------------------------- */
+    [data-mode="jetzt"] .bt-stage { max-width: 880px; margin: 0 auto; }
+    [data-mode="jetzt"] .bt-ex-grid { display: block; }
+    [data-mode="jetzt"] .bt-rule-toggle { display: none; }
+
+    /* --- A · Split: rule sticky left, exercises right ------------------- */
+    [data-mode="split"] .bt-stage {
+      max-width: 1600px; margin: 0 auto;
+      display: grid; grid-template-columns: minmax(320px, 30%) 1fr; gap: var(--space-7);
+      align-items: start;
+    }
+    [data-mode="split"] .bt-col--rule {
+      position: sticky; top: 104px;
+      max-height: calc(100vh - 130px); overflow-y: auto;
+      padding-right: 6px;
+    }
+    [data-mode="split"] .bt-ex-grid { display: grid; gap: var(--space-5); }
+
+    /* --- B · Übung zuerst: practice leads, rule is a side rail ---------- */
+    [data-mode="uebung"] .bt-stage {
+      max-width: 1600px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr minmax(280px, 26%); gap: var(--space-7);
+      align-items: start;
+    }
+    [data-mode="uebung"] .bt-col--ex { order: 1; }
+    [data-mode="uebung"] .bt-col--rule {
+      order: 2; position: sticky; top: 104px;
+      max-height: calc(100vh - 130px); overflow-y: auto;
+    }
+    /* Two exercises side by side: the tables are narrow, so one per row wastes
+       the width this layout just reclaimed. */
+    [data-mode="uebung"] .bt-ex-grid {
+      display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-5);
+      align-items: start;
+    }
+    [data-mode="uebung"] .bt-title { font-size: 1.4rem; }
+    [data-mode="uebung"] .bt-subtitle { font-size: .9rem; }
+
+    /* Rule collapsed (the toggle) — exercises take the whole width. */
+    .bt-page[data-rule="hidden"] .bt-col--rule .vp-card,
+    .bt-page[data-rule="hidden"] .bt-subtitle { display: none; }
+    [data-mode="split"][data-rule="hidden"] .bt-stage,
+    [data-mode="uebung"][data-rule="hidden"] .bt-stage { grid-template-columns: 1fr; }
+    [data-mode="uebung"][data-rule="hidden"] .bt-ex-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+    @media (max-width: 1000px) {
+      [data-mode] .bt-stage { display: block; max-width: 880px; margin: 0 auto; }
+      [data-mode] .bt-col--rule { position: static; max-height: none; }
+      [data-mode] .bt-ex-grid { display: block; }
+      .bt-bar-inner { flex-wrap: wrap; }
+      .bt-switch { margin-inline: 0; order: 3; width: 100%; justify-content: center; }
+    }
+  </style>
+
+  <script>
+    const page = document.querySelector(".bt-page");
+    const note = document.querySelector("[data-mode-note]");
+    const btns = [...document.querySelectorAll("[data-mode-btn]")];
+    const ruleToggle = document.querySelector("[data-rule-toggle]");
+    const KEY = "da-better-mode";
+
+    // Live measurement of whatever is currently rendered — the whole point of the
+    // page is that the layouts are compared by number, not by feel.
+    function measure() {
+      const vh = innerHeight, vw = innerWidth;
+      const stage = document.querySelector(".bt-stage");
+      const inputs = [...document.querySelectorAll(".bt-input")];
+      const above = inputs.filter((el) => {
+        const r = el.getBoundingClientRect();
+        return r.top >= 0 && r.bottom <= vh;
+      }).length;
+      const set = (k, v) => {
+        const el = document.querySelector(`[data-metric="${k}"]`);
+        if (el) el.textContent = v;
+      };
+      set("width", Math.round((stage.getBoundingClientRect().width / vw) * 100) + "%");
+      set("above", `${above} / ${inputs.length}`);
+      set("screens", (document.body.scrollHeight / vh).toFixed(1));
+    }
+
+    // rAF is paused on a hidden/occluded document, which would leave the readout
+    // stuck on its placeholder. Measure immediately, then again after layout has
+    // settled — whichever the browser actually gets to.
+    function scheduleMeasure() {
+      measure();
+      requestAnimationFrame(() => requestAnimationFrame(measure));
+      setTimeout(measure, 60);
+    }
+
+    function apply(id) {
+      const btn = btns.find((b) => b.dataset.modeBtn === id) || btns[0];
+      page.dataset.mode = btn.dataset.modeBtn;
+      btns.forEach((b) => b.setAttribute("aria-selected", String(b === btn)));
+      note.textContent = btn.dataset.note;
+      try { localStorage.setItem(KEY, page.dataset.mode); } catch {}
+      // Two frames: one for the grid to re-lay-out, one for the new geometry.
+      scheduleMeasure();
+    }
+
+    btns.forEach((b) => b.addEventListener("click", () => apply(b.dataset.modeBtn)));
+
+    ruleToggle?.addEventListener("click", () => {
+      const hidden = page.dataset.rule === "hidden";
+      page.dataset.rule = hidden ? "" : "hidden";
+      ruleToggle.textContent = hidden ? "Regel ausblenden" : "Regel einblenden";
+      scheduleMeasure();
+    });
+
+    let saved = null;
+    try { saved = localStorage.getItem(KEY); } catch {}
+    apply(saved || "jetzt");
+
+    addEventListener("resize", measure);
+    addEventListener("scroll", measure, { passive: true });
+  </script>
+</Layout>

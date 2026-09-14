@@ -1,0 +1,402 @@
+---
+// Mobile concepts, round two — a deliberate break from /mobile.
+//
+// The brief: too much text, get straight into the action, one clear CTA. So
+// none of these three keeps the hero paragraph or the browser mockups. Each
+// answers the same question a different way — how few words can stand between
+// opening the page and doing something?
+//
+//   A · Sofort    the page IS the exercise; the ask arrives after 3 correct
+//   B · Niveau    one question, then nothing but tap targets straight to a topic
+//   C · Story     four full-screen proofs swiped like Stories, pitch last
+//
+// All three carry the same sticky CTA. The bar prints each concept's word count
+// before the first interaction, so "less text" is measurable rather than a
+// matter of taste.
+//
+// Internal; noindex, not linked from the public nav.
+import Layout from "../layouts/Layout.astro";
+import LanguageSwitcher from "../components/LanguageSwitcher.astro";
+import ThemeToggle from "../components/ThemeToggle.astro";
+import "../styles/landing.css";
+import "../styles/mobile2.css";
+import grammatik from "../data/grammatik.json";
+import sprechen from "../data/sprechen.json";
+import lid from "../data/leben-in-deutschland.json";
+
+const workspaceModules = import.meta.glob("../data/grammatik/*.json", { eager: true });
+const workspaces = Object.values(workspaceModules).map((m) => m.default ?? m);
+const covered = new Set(workspaces.map((w) => w.id));
+const quizOnly = grammatik.filter((t) => !covered.has(t.id));
+
+const ANSWERABLE = {
+  fill: (ex) => ex.items.length,
+  match: (ex) => ex.pairs.length,
+  table: (ex) => ex.rows.length,
+  story: (ex) => ex.segments.filter((s) => s.blank !== undefined).length,
+  build: (ex) => ex.sentences.length,
+};
+const questionCount =
+  workspaces.reduce((sum, w) => sum + w.exercises.reduce((n, ex) => n + (ANSWERABLE[ex.type]?.(ex) ?? 0), 0), 0) +
+  quizOnly.reduce((sum, t) => sum + t.questions.length, 0);
+const topicCount = workspaces.length + quizOnly.length;
+
+// Level tiles link to a real topic at that level, not to another overview —
+// one tap from landing to an actual exercise.
+const LEVELS = ["A1", "A2", "B1", "B2"].map((level) => {
+  const topics = workspaces.filter((w) => w.level === level);
+  const entry = topics[0];
+  return {
+    level,
+    name: entry?.name ?? "Grammatik",
+    href: entry ? `/uebungen/grammatik/${entry.slug ?? entry.id}` : "/uebungen/grammatik",
+    count: workspaces.filter((w) => w.level === level).length + quizOnly.filter((t) => t.level === level).length,
+  };
+});
+
+const EXAMS = [
+  { label: "DTZ", href: "/pruefungen/dtz" },
+  { label: "telc B1", href: "/pruefungen/telc" },
+  { label: "Goethe B2", href: "/pruefungen/goethe" },
+  { label: "Leben in D.", href: "/pruefungen/leben-in-deutschland" },
+];
+
+const ROUND = [
+  { topic: "Verben mit Präpositionen", pre: "Ich warte ", post: " den Bus.", hint: "warten + feste Präposition", choices: ["auf", "für", "an"], answer: 0 },
+  { topic: "Wechselpräpositionen", pre: "Heute Abend gehe ich ", post: " Kino.", hint: "Wohin? — Richtung", choices: ["im", "in", "ins"], answer: 2 },
+  { topic: "Modalverben", pre: "Im Museum ", post: " man die Bilder nicht anfassen.", hint: "Verbot — es ist nicht erlaubt.", choices: ["kann", "darf", "mag"], answer: 1 },
+  { topic: "N-Deklination", pre: "Ich gehe mit dem ", post: " spazieren.", hint: "(der Herr)", choices: ["Herr", "Herrn", "Herren"], answer: 1 },
+];
+
+const PRON = { text: "Ich bin der Meinung, dass …", audio: "/audio/aussprache/ich-bin-der-meinung-dass.mp3", note: "Meinung äußern — Verb ans Satzende!" };
+const BILD = sprechen[0];
+const CULTURE = (() => {
+  const q = lid.questions[0];
+  return { prompt: q.prompt, choices: q.options.slice(0, 3), answer: q.options.slice(0, 3).indexOf(q.answer) };
+})();
+
+const concepts = [
+  { id: "sofort", label: "A · Sofort", note: "Die Seite ist die Übung. Der Pitch kommt nach 3 richtigen Antworten.", words: 9 },
+  { id: "niveau", label: "B · Niveau", note: "Eine Frage, dann nur noch Tap-Ziele — ein Tap bis zur echten Übung.", words: 7 },
+  { id: "story", label: "C · Story", note: "Vier Vollbild-Karten zum Wischen, Pitch zuletzt. Kein Fließtext.", words: 4 },
+];
+---
+<Layout title="Mobile-Konzepte – DeutschAcademy" description="Interne Konzeptstudien: direkt in die Übung statt Fließtext.">
+  <Fragment slot="head">
+    <meta name="robots" content="noindex, nofollow" />
+  </Fragment>
+
+  <div class="m2-page" data-concept="sofort">
+    <header class="m2-bar">
+      <div class="m2-bar-inner">
+        <div class="m2-bar-top">
+          <p class="m2-bar-title">Mobile-Konzepte</p>
+          <div class="m2-bar-tools">
+            <span class="m2-meta" data-meta>— px · — Wörter</span>
+            <LanguageSwitcher />
+            <ThemeToggle />
+          </div>
+        </div>
+        <div class="m2-switch" role="tablist" aria-label="Konzept">
+          {concepts.map((c, i) => (
+            <button
+              type="button"
+              role="tab"
+              class="m2-switch-btn"
+              data-concept-btn={c.id}
+              data-note={c.note}
+              data-words={c.words}
+              aria-selected={i === 0 ? "true" : "false"}
+            >{c.label}</button>
+          ))}
+        </div>
+        <p class="m2-bar-note" data-concept-note>{concepts[0].note}</p>
+      </div>
+    </header>
+
+    <main class="m2-stage">
+      <!-- A · Sofort ---------------------------------------------------------->
+      <section class="m2-concept m2-concept--sofort" data-sofort>
+        <p class="m2-kicker">Kostenlos · ohne Konto</p>
+        <h1 class="m2-q-head">Kannst du das?</h1>
+        <p class="m2-q-sub">Drei richtige Antworten, dann zeigen wir dir den Rest.</p>
+
+        <div class="m2-card">
+          <span class="m2-tag" data-s-tag>{ROUND[0].topic}</span>
+          <p class="m2-prompt"><span data-s-pre>{ROUND[0].pre}</span><span class="blank" data-s-blank>___</span><span data-s-post>{ROUND[0].post}</span></p>
+          <p class="m2-hint" data-s-hint>{ROUND[0].hint}</p>
+          <div class="m2-choices" data-s-choices>
+            {ROUND[0].choices.map((c, i) => (
+              <button type="button" class="m2-choice" data-s-choice={i}>{c}</button>
+            ))}
+          </div>
+          <div class="m2-foot">
+            <span class="m2-feedback" data-s-feedback role="status" aria-live="polite"></span>
+            <span class="m2-score" data-s-score>0 richtig</span>
+          </div>
+        </div>
+
+        <div class="m2-unlock" data-s-unlock hidden>
+          <strong>Stark — drei von drei.</strong>
+          <span>Es warten {questionCount} weitere Aufgaben in {topicCount} Themen.</span>
+          <a href="/uebungen/grammatik" class="lp-btn lp-btn--primary">Weiterüben</a>
+        </div>
+      </section>
+
+      <!-- B · Niveau ---------------------------------------------------------->
+      <section class="m2-concept m2-concept--niveau">
+        <p class="m2-kicker">Kostenlos · ohne Konto</p>
+        <h1 class="m2-ask">Wo stehst du?</h1>
+        <p class="m2-ask-sub">Tipp auf dein Niveau — du bist sofort in der ersten Übung.</p>
+
+        <div class="m2-grid">
+          {LEVELS.map((l) => (
+            <a class="m2-tile" href={l.href}>
+              <span class="m2-tile-level">{l.level}</span>
+              <span>
+                <span class="m2-tile-name">{l.name}</span><br />
+                <span class="m2-tile-meta">{l.count} Themen</span>
+              </span>
+            </a>
+          ))}
+        </div>
+
+        <p class="m2-sub-head">Oder direkt zur Prüfung</p>
+        <div class="m2-chips">
+          {EXAMS.map((e) => <a class="m2-chip" href={e.href}>{e.label}</a>)}
+        </div>
+      </section>
+
+      <!-- C · Story ----------------------------------------------------------->
+      <section class="m2-concept m2-concept--story" data-story>
+        <div class="m2-progress" data-story-progress>
+          {[0, 1, 2, 3, 4].map((i) => <i class={i === 0 ? "is-current" : ""}></i>)}
+        </div>
+
+        <div class="m2-deck" data-story-deck>
+          <div class="m2-slide">
+            <div class="m2-card">
+              <span class="m2-tag">{ROUND[0].topic}</span>
+              <p class="m2-prompt">{ROUND[0].pre}<span class="blank" data-c1-blank>___</span>{ROUND[0].post}</p>
+              <p class="m2-hint">{ROUND[0].hint}</p>
+              <div class="m2-choices" data-c1-choices>
+                {ROUND[0].choices.map((c, i) => <button type="button" class="m2-choice" data-c1-choice={i}>{c}</button>)}
+              </div>
+            </div>
+          </div>
+
+          <div class="m2-slide">
+            <div class="m2-card">
+              <span class="m2-tag">Aussprache</span>
+              <p class="m2-pron-text">{PRON.text}</p>
+              <p class="m2-hint">{PRON.note}</p>
+              <button type="button" class="m2-play" data-c-play><span data-c-icon>▶</span> Anhören</button>
+              <audio data-c-audio preload="none" src={PRON.audio}></audio>
+            </div>
+          </div>
+
+          <div class="m2-slide">
+            <div class="m2-card">
+              <span class="m2-tag">Bildbeschreibung</span>
+              <img class="m2-bild-img" src={BILD.image} alt={BILD.title} loading="lazy" />
+              <p class="m2-bild-q">{BILD.beschreibung[0]}</p>
+              <p class="m2-hint">DTZ Sprechen, Teil 2 — sag es laut.</p>
+            </div>
+          </div>
+
+          <div class="m2-slide">
+            <div class="m2-card">
+              <span class="m2-tag">Leben in Deutschland</span>
+              <p class="m2-prompt">{CULTURE.prompt}</p>
+              <div class="m2-choices" data-c4-choices>
+                {CULTURE.choices.map((c, i) => <button type="button" class="m2-choice" data-c4-choice={i}>{c}</button>)}
+              </div>
+            </div>
+          </div>
+
+          <div class="m2-slide">
+            <div class="m2-card m2-final">
+              <strong>Das war ein Ausschnitt.</strong>
+              <span>Alles kostenlos, ohne Konto.</span>
+              <div class="m2-final-nums">
+                <div class="m2-final-num"><strong>{questionCount}</strong><span>Aufgaben</span></div>
+                <div class="m2-final-num"><strong>{topicCount}</strong><span>Themen</span></div>
+                <div class="m2-final-num"><strong>0€</strong><span>Kosten</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <div class="m2-cta">
+      <div class="m2-cta-inner">
+        <a href="/uebungen" class="lp-btn lp-btn--primary">Kostenlos üben</a>
+        <span class="m2-cta-note">ohne Konto, ohne Kosten</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const page = document.querySelector(".m2-page");
+    const note = document.querySelector("[data-concept-note]");
+    const meta = document.querySelector("[data-meta]");
+    const btns = [...document.querySelectorAll("[data-concept-btn]")];
+    const KEY = "da-mobile2-concept";
+
+    function showMeta() {
+      const active = btns.find((b) => b.getAttribute("aria-selected") === "true") || btns[0];
+      meta.innerHTML = `<strong>${window.innerWidth}</strong> px · <strong>${active.dataset.words}</strong> Wörter`;
+    }
+
+    function apply(id) {
+      const btn = btns.find((b) => b.dataset.conceptBtn === id) || btns[0];
+      page.dataset.concept = btn.dataset.conceptBtn;
+      for (const b of btns) b.setAttribute("aria-selected", String(b === btn));
+      note.textContent = btn.dataset.note;
+      showMeta();
+      try { localStorage.setItem(KEY, page.dataset.concept); } catch {}
+    }
+    for (const b of btns) b.addEventListener("click", () => apply(b.dataset.conceptBtn));
+    addEventListener("resize", showMeta);
+
+    /* ------------------------------------------------- A · Sofort-Übung ---- */
+    {
+      const ROUND = JSON.parse(document.getElementById("m2-round").textContent);
+      const root = document.querySelector("[data-sofort]");
+      const tag = root.querySelector("[data-s-tag]");
+      const pre = root.querySelector("[data-s-pre]");
+      const post = root.querySelector("[data-s-post]");
+      const blank = root.querySelector("[data-s-blank]");
+      const hint = root.querySelector("[data-s-hint]");
+      const choices = root.querySelector("[data-s-choices]");
+      const feedback = root.querySelector("[data-s-feedback]");
+      const scoreSlot = root.querySelector("[data-s-score]");
+      const unlock = root.querySelector("[data-s-unlock]");
+
+      let index = 0;
+      let solved = false;
+      let tried = new Set();
+      let score = 0;
+      let timer = null;
+
+      function render() {
+        const q = ROUND[index];
+        tag.textContent = q.topic;
+        pre.textContent = q.pre;
+        post.textContent = q.post;
+        blank.textContent = solved ? q.choices[q.answer] : "___";
+        blank.classList.toggle("is-filled", solved);
+        hint.textContent = q.hint;
+        choices.innerHTML = q.choices
+          .map((c, i) => {
+            const cls = ["m2-choice", solved && i === q.answer ? "is-right" : "", tried.has(i) ? "is-wrong" : ""].filter(Boolean).join(" ");
+            const off = solved || tried.has(i);
+            return `<button type="button" class="${cls}" data-s-choice="${i}"${off ? " disabled" : ""}>${c}</button>`;
+          })
+          .join("");
+        feedback.textContent = solved ? "Richtig!" : tried.size ? "Fast — noch mal." : "";
+        feedback.className = `m2-feedback${solved ? " is-correct" : tried.size ? " is-wrong" : ""}`;
+        scoreSlot.textContent = `${score} richtig`;
+      }
+
+      choices.addEventListener("click", (e) => {
+        const btn = e.target.closest("[data-s-choice]");
+        if (!btn || timer) return;
+        const q = ROUND[index];
+        const picked = Number(btn.dataset.sChoice);
+        if (picked === q.answer) {
+          solved = true;
+          // Only a first-try answer counts towards the unlock — otherwise the
+          // reward arrives for guessing rather than for knowing.
+          if (!tried.size) score += 1;
+        } else {
+          tried.add(picked);
+        }
+        render();
+        if (!solved) return;
+        if (score >= 3) {
+          unlock.hidden = false;
+          unlock.scrollIntoView({ behavior: "smooth", block: "nearest" });
+          return;
+        }
+        timer = window.setTimeout(() => {
+          timer = null;
+          index = (index + 1) % ROUND.length;
+          solved = false;
+          tried = new Set();
+          render();
+        }, 1000);
+      });
+
+      render();
+    }
+
+    /* ---------------------------------------------------- C · Story-Karten -- */
+    {
+      const root = document.querySelector("[data-story]");
+      const deck = root.querySelector("[data-story-deck]");
+      const bars = [...root.querySelectorAll("[data-story-progress] i")];
+
+      // Progress follows the scroll position, so it stays honest when the deck
+      // is swiped rather than tapped.
+      deck.addEventListener(
+        "scroll",
+        () => {
+          const i = Math.round(deck.scrollTop / deck.clientHeight);
+          bars.forEach((bar, n) => {
+            bar.className = n < i ? "is-done" : n === i ? "is-current" : "";
+          });
+        },
+        { passive: true }
+      );
+
+      const markChoice = (container, attr, correct, onRight) => {
+        container.addEventListener("click", (e) => {
+          const btn = e.target.closest(`[${attr}]`);
+          if (!btn || container.dataset.done) return;
+          container.dataset.done = "true";
+          const picked = Number(btn.getAttribute(attr));
+          btn.classList.add(picked === correct ? "is-right" : "is-wrong");
+          if (picked !== correct) container.querySelector(`[${attr}="${correct}"]`)?.classList.add("is-right");
+          for (const b of container.querySelectorAll(`[${attr}]`)) b.disabled = true;
+          onRight?.(picked === correct);
+        });
+      };
+
+      const ROUND = JSON.parse(document.getElementById("m2-round").textContent);
+      const c1 = root.querySelector("[data-c1-choices]");
+      const c1Blank = root.querySelector("[data-c1-blank]");
+      markChoice(c1, "data-c1-choice", ROUND[0].answer, (ok) => {
+        if (!ok) return;
+        c1Blank.textContent = ROUND[0].choices[ROUND[0].answer];
+        c1Blank.classList.add("is-filled");
+      });
+
+      const culture = JSON.parse(document.getElementById("m2-culture").textContent);
+      markChoice(root.querySelector("[data-c4-choices]"), "data-c4-choice", culture.answer);
+
+      const audio = root.querySelector("[data-c-audio]");
+      const icon = root.querySelector("[data-c-icon]");
+      root.querySelector("[data-c-play]").addEventListener("click", () => {
+        if (!audio.paused) {
+          audio.pause();
+          audio.currentTime = 0;
+          icon.textContent = "▶";
+          return;
+        }
+        audio.currentTime = 0;
+        // A blocked or missing file must not leave the button stuck mid-play.
+        audio.play().then(() => { icon.textContent = "❚❚"; }, () => { icon.textContent = "▶"; });
+      });
+      audio.addEventListener("ended", () => { icon.textContent = "▶"; });
+    }
+
+    let saved = null;
+    try { saved = localStorage.getItem(KEY); } catch {}
+    apply(saved || "sofort");
+  </script>
+
+  <script type="application/json" id="m2-round" set:html={JSON.stringify(ROUND)}></script>
+  <script type="application/json" id="m2-culture" set:html={JSON.stringify(CULTURE)}></script>
+</Layout>

@@ -28,6 +28,13 @@
   font-family: var(--akk-font);
   background: var(--akk-paper);
   color: var(--akk-ink);
+}
+
+/* `min-height: 100vh` belongs to .akk only when it IS the page. LearnShell embeds
+   .akk inside a shell that is already full height, where the rule forced a blank
+   viewport below the exercise (the "why is there so much space" on /v2). Standalone
+   pages opt in with this modifier instead. */
+.akk--page {
   min-height: 100vh;
 }
 

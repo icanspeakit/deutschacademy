@@ -1,0 +1,214 @@
+/* Mobile concepts, round two. Where /mobile rearranged the existing fold, this
+   page throws it away: no hero paragraph, no browser mockups, no "here is what
+   we are" preamble. Each concept answers the same question differently — how
+   few words can stand between opening the page and doing something?
+
+   Shared across all three: one sticky CTA at the bottom that never moves, and
+   a word budget printed in the bar so the comparison is measurable, not a
+   matter of taste. */
+
+.m2-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--surface);
+  color: var(--ink);
+  font-family: var(--font-body);
+  /* Room for the sticky CTA so nothing is ever parked underneath it. */
+  padding-bottom: 88px;
+}
+.m2-page * { box-sizing: border-box; }
+
+/* Bar ---------------------------------------------------------------------- */
+.m2-bar { position: sticky; top: 0; z-index: 30; background: var(--surface-card); border-bottom: 1px solid var(--border); }
+.m2-bar-inner { max-width: 900px; margin: 0 auto; padding: 10px 16px; display: flex; flex-direction: column; gap: 8px; }
+.m2-bar-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.m2-bar-title { margin: 0; font-family: var(--font-display); font-weight: 700; font-size: 14px; }
+.m2-bar-tools { display: flex; align-items: center; gap: 8px; }
+.m2-meta { font-family: var(--font-mono, monospace); font-size: 11px; color: var(--muted-soft); white-space: nowrap; }
+.m2-meta strong { color: var(--brand-blue-dark); }
+.m2-switch { display: flex; gap: 6px; }
+.m2-switch-btn {
+  flex: 1; min-height: 36px; padding: 8px; border-radius: var(--radius-pill);
+  border: 1px solid var(--border); background: var(--surface-card);
+  font-family: inherit; font-size: 11.5px; font-weight: 700; color: var(--muted);
+  cursor: pointer; white-space: nowrap;
+}
+.m2-switch-btn[aria-selected="true"] { border-color: var(--brand-blue); background: var(--blue-50); color: var(--brand-blue-dark); }
+.m2-bar-note { margin: 0; font-size: 11px; line-height: 1.4; color: var(--muted-soft); }
+
+/* Stage -------------------------------------------------------------------- */
+/* The stage takes the space between bar and CTA, and the active concept fills
+   it — on a phone a half-empty screen reads as "the page did not finish
+   loading", so every concept centres in what it is given instead. */
+.m2-stage { flex: 1; width: 100%; max-width: 460px; margin: 0 auto; padding: 16px; display: flex; flex-direction: column; }
+.m2-concept { display: none; }
+.m2-page[data-concept="sofort"] .m2-concept--sofort,
+.m2-page[data-concept="niveau"] .m2-concept--niveau,
+.m2-page[data-concept="story"] .m2-concept--story {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: 1;
+  min-height: 0;
+}
+
+/* One line of orientation, never a paragraph. */
+.m2-kicker {
+  display: flex; align-items: center; gap: 7px;
+  margin: 0 0 14px;
+  font-size: 11.5px; font-weight: 700; color: var(--muted-soft);
+}
+.m2-kicker::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--brand-blue); flex-shrink: 0; }
+
+/* Sticky CTA --------------------------------------------------------------- */
+.m2-cta {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 40;
+  padding: 12px 16px calc(12px + env(safe-area-inset-bottom, 0px));
+  background: color-mix(in srgb, var(--surface-card) 92%, transparent);
+  backdrop-filter: blur(8px);
+  border-top: 1px solid var(--border);
+}
+.m2-cta-inner { max-width: 460px; margin: 0 auto; display: flex; align-items: center; gap: 12px; }
+.m2-cta .lp-btn { flex: 1; padding: 15px 20px; font-size: 15px; }
+.m2-cta-note { font-size: 10.5px; line-height: 1.3; color: var(--muted-soft); text-align: right; max-width: 92px; }
+
+/* ------------------------------------------------------- A · Sofort-Übung --
+   The page opens on the exercise. Nothing above it but the question itself. */
+.m2-q-head { margin: 0 0 4px; font-family: var(--font-display); font-weight: 700; font-size: 1.45rem; line-height: 1.15; }
+.m2-q-sub { margin: 0 0 18px; font-size: 13px; color: var(--muted); }
+
+.m2-card {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--surface-card);
+  padding: 20px 18px;
+  box-shadow: var(--shadow-raised);
+}
+.m2-tag {
+  display: inline-block; margin-bottom: 12px;
+  font-family: var(--font-display); font-size: 10.5px; font-weight: 700;
+  letter-spacing: .07em; text-transform: uppercase; color: var(--brand-blue-dark);
+}
+.m2-prompt { margin: 0 0 6px; font-size: 1.15rem; font-weight: 700; line-height: 1.35; }
+.m2-prompt .blank { display: inline-block; min-width: 46px; text-align: center; border-bottom: 2px solid var(--brand-blue); }
+.m2-prompt .blank.is-filled { color: var(--brand-blue-dark); padding: 0 5px; }
+.m2-hint { margin: 0 0 16px; font-size: 12.5px; color: var(--muted-soft); }
+
+/* Big, thumb-sized targets — the whole point of going straight to the action
+   is that the action has to be hittable without aiming. */
+.m2-choices { display: flex; flex-direction: column; gap: 9px; }
+.m2-choice {
+  width: 100%; min-height: 52px; padding: 14px 18px;
+  border-radius: var(--radius-lg); border: 1.5px solid var(--border);
+  background: var(--surface-card);
+  font-family: inherit; font-size: 16px; font-weight: 700; color: var(--ink);
+  text-align: left; cursor: pointer;
+  transition: border-color .15s ease, background .15s ease;
+}
+.m2-choice:disabled { cursor: default; }
+.m2-choice.is-right { border-color: var(--brand-blue); background: var(--blue-50); color: var(--brand-blue-dark); }
+.m2-choice.is-wrong { border-color: var(--danger); color: var(--danger); animation: m2-shake .35s ease; }
+@keyframes m2-shake { 0%,100% { transform: translateX(0); } 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } }
+
+.m2-foot { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: 16px; min-height: 18px; }
+.m2-feedback { font-size: 13px; font-weight: 700; }
+.m2-feedback.is-correct { color: var(--brand-blue-dark); }
+.m2-feedback.is-wrong { color: var(--danger); }
+.m2-score { font-size: 12px; font-weight: 700; color: var(--muted); }
+
+/* The reward panel, revealed only after three correct answers — the ask lands
+   once something has been earned, not before. */
+.m2-unlock {
+  margin-top: 16px; padding: 18px;
+  border-radius: var(--radius-lg);
+  background: var(--gradient-brand-soft);
+  border: 1px solid var(--blue-200);
+  text-align: center;
+}
+.m2-unlock[hidden] { display: none; }
+.m2-unlock strong { display: block; font-family: var(--font-display); font-size: 1.2rem; margin-bottom: 6px; }
+.m2-unlock span { display: block; font-size: 13px; color: var(--muted); margin-bottom: 14px; }
+
+/* ---------------------------------------------------------- B · Niveau-Grid --
+   One question, then nothing but tap targets. Each tile is a link to a real
+   exercise, not to another page that explains things. */
+.m2-ask { margin: 0 0 4px; font-family: var(--font-display); font-weight: 700; font-size: 1.75rem; line-height: 1.12; }
+.m2-ask-sub { margin: 0 0 18px; font-size: 13.5px; color: var(--muted); }
+
+.m2-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.m2-tile {
+  display: flex; flex-direction: column; justify-content: space-between; gap: 10px;
+  min-height: 108px; padding: 16px;
+  border-radius: var(--radius-lg); border: 1px solid var(--border);
+  background: var(--surface-card);
+  text-decoration: none; color: inherit;
+}
+.m2-tile:active { border-color: var(--brand-blue); }
+.m2-tile-level { font-family: var(--font-display); font-weight: 800; font-size: 1.9rem; line-height: 1; color: var(--brand-blue-dark); }
+.m2-tile-name { font-size: 13px; font-weight: 700; line-height: 1.25; }
+.m2-tile-meta { font-size: 11px; color: var(--muted-soft); }
+
+.m2-sub-head { margin: 22px 0 10px; font-size: 12px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: var(--muted-soft); }
+.m2-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.m2-chip {
+  padding: 11px 16px; border-radius: var(--radius-pill);
+  border: 1px solid var(--border); background: var(--surface-card);
+  font-size: 13px; font-weight: 700; color: var(--ink); text-decoration: none;
+}
+.m2-chip:active { border-color: var(--brand-blue); }
+
+/* ---------------------------------------------------------- C · Story-Karten --
+   Full-height cards, one interaction each, swiped vertically like Stories.
+   The CTA card is the last one, so the pitch arrives after four proofs. */
+.m2-progress { display: flex; gap: 4px; margin-bottom: 12px; }
+.m2-progress i { flex: 1; height: 3px; border-radius: 2px; background: var(--border-strong); }
+.m2-progress i.is-done, .m2-progress i.is-current { background: var(--brand-blue); }
+
+.m2-deck {
+  display: grid;
+  grid-auto-flow: row;
+  gap: 12px;
+  /* One card fills the space the stage gives it; snapping makes the swipe land
+     cleanly instead of stopping halfway between two cards. */
+  flex: 1;
+  min-height: 0;
+  /* The page is min-height:100vh, so flex alone would let the deck grow past
+     the fold and turn the whole page into one long scroll — the opposite of a
+     card deck. Bound it to the viewport explicitly. dvh first so a mobile
+     browser's collapsing address bar does not cut a card in half. */
+  max-height: calc(100vh - 250px);
+  max-height: calc(100dvh - 250px);
+  overflow-y: auto;
+  scroll-snap-type: y mandatory;
+  scrollbar-width: none;
+}
+.m2-deck::-webkit-scrollbar { display: none; }
+/* Each slide is shorter than the deck so the next card always peeks in at the
+   bottom — the only cue that the deck can be swiped at all. */
+.m2-slide { scroll-snap-align: start; height: calc(100vh - 292px); height: calc(100dvh - 292px); }
+.m2-slide .m2-card { height: 100%; display: flex; flex-direction: column; justify-content: center; }
+
+.m2-pron-text { margin: 0 0 6px; font-family: var(--font-display); font-weight: 700; font-size: 1.5rem; line-height: 1.2; }
+.m2-play {
+  display: inline-flex; align-items: center; justify-content: center; gap: 9px;
+  width: 100%; min-height: 52px; margin-top: 14px;
+  border: none; border-radius: var(--radius-lg);
+  background: var(--gradient-brand); color: #fff;
+  font-family: inherit; font-size: 15px; font-weight: 700; cursor: pointer;
+}
+.m2-bild-img { width: 100%; height: 150px; object-fit: cover; border-radius: var(--radius-md, 10px); margin-bottom: 12px; }
+.m2-bild-q { margin: 0; font-size: 14.5px; font-weight: 700; line-height: 1.4; }
+
+.m2-final { text-align: center; }
+.m2-final strong { display: block; font-family: var(--font-display); font-size: 1.5rem; line-height: 1.15; margin-bottom: 8px; }
+.m2-final span { display: block; font-size: 13.5px; color: var(--muted); }
+.m2-final-nums { display: flex; justify-content: center; gap: 22px; margin-top: 18px; }
+.m2-final-num strong { font-size: 1.5rem; margin: 0; color: var(--brand-blue-dark); }
+.m2-final-num span { font-size: 11px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .m2-choice { transition: none; }
+  .m2-choice.is-wrong { animation: none; }
+  .m2-deck { scroll-behavior: auto; }
+}

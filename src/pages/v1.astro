@@ -1,0 +1,17 @@
+---
+// /v1 — the merge. Single column like /jetzt (one column reads better), with the empty
+// side filled by the Icon-Rail navigation from /nav, and the rule moved off the top into
+// a panel that slides in from the side behind a prominent trigger in the main column.
+// Side-by-side survives only for the reading exercise, where the eye criss-crosses
+// between text and answers.
+// Internal; not linked from the public nav.
+import Layout from "../layouts/Layout.astro";
+import TopicDemo from "../components/demo/TopicDemo.astro";
+import "../styles/practice.css";
+import "../styles/verben-praepositionen.css";
+// Icon-Rail navigation reused verbatim from /nav (variant B).
+import "../styles/nav.css";
+---
+<Layout title="V1 – Grammatik-Layout" description="Interner Prototyp: Grammatik-Seite mit seitlicher Regel.">
+  <TopicDemo variant="v1" />
+</Layout>

@@ -1,0 +1,1385 @@
+---
+// /nav — navigation test bed. Takes the "list on the left" shell from the
+// Pflegeplace dashboard (sticky step list + grouped sections + content pane)
+// and tries three ways of doing it, swapped by the toggle in the top bar:
+//
+//   A · Rail      — one flat column, everything visible at once.
+//   B · Icon-Rail — a 64px level column plus a list panel.  ← the favoured one
+//   C · Akkordeon — folding groups, each header carrying its own progress.
+//
+// All three are driven by the SAME `sections` array below, so the comparison is
+// only ever about the layout. The order of that array is the information
+// architecture: items are sorted by CEFR level (A1 → A2 → B1 → B2), not by tool
+// type, with the current course path pinned above it and the exams — which are
+// targets rather than a level — kept in their own group at the end.
+//
+// THREE CONTENT VIEWS. Picking a Stufe shows that level's OVERVIEW (own hero,
+// own ring, own content table). Picking an entry shows the ITEM view. And a
+// grammar entry ALSO mounts the real exercise inline — the same mountQuiz() the
+// live /uebungen/grammatik pages use — so you can answer questions without ever
+// leaving the shell, and watch the ring, the level bar and the strip move while
+// you do. That is the open question this page exists to answer: can a learner
+// stay in this view, or does practice need its own page?
+//
+// LEVELS: grammatik.json carries a real `level` per topic (source: "data").
+// The other exercise data files have no level field, so those entries are
+// derived from what the exercise itself contains (source: "abgeleitet") and are
+// the ones to correct first. When this concept graduates, the derived levels
+// should move into the data files rather than living in this page.
+//
+// NUMBERS: `tasks` counts are real, from the same data files the live pages use.
+// `done` values are mock (nobody is logged in here) but every percentage on the
+// page is computed from them, so the strip, the rings, the bars and the tables
+// can never contradict each other — and correct answers in the inline quiz feed
+// straight back into the same numbers. `minutes` are rough estimates, always
+// shown with "ca.". Not linked from the public nav; noindex.
+import Icon from "./Icon.astro";
+
+// The workspace styles the inline rule card and the five exercise widgets need.
+// Both files are fully class-scoped (.vp-*, .quiz-*) — no bare element selectors —
+// so they cannot leak into the .nv shell.
+import "../styles/practice.css";
+import "../styles/akkusativ.css";
+import "../styles/dtz.css";
+import "../styles/verben-praepositionen.css";
+import "../styles/nav.css";
+import artikel from "../data/artikel.json";
+import { nouns } from "../lib/lexicon.js";
+import grammatik from "../data/grammatik.json";
+import wortschatz from "../data/wortschatz.json";
+import sprechen from "../data/sprechen.json";
+import lesen from "../data/lesen.json";
+import kultur from "../data/kultur.json";
+import lid from "../data/leben-in-deutschland.json";
+
+const readingQuestionCount = lesen.groups.reduce((sum, g) => sum + g.questions.length, 0);
+const ausspracheWordCount = wortschatz.length + artikel.length;
+const byLevel = (level: string) => grammatik.filter((t) => t.level === level);
+
+type IconName = "target" | "book" | "book-open" | "folder" | "volume" | "mic" | "pencil" | "map-pin" | "sparkle" | "document" | "landmark" | "graduation-cap";
+
+type Item = {
+  id: string;
+  label: string;
+  icon: IconName;
+  href: string;
+  level: string;
+  levelSource: "data" | "abgeleitet" | "—";
+  eyebrow: string;
+  lead: string;
+  tasks?: number;
+  done?: number;
+  minutes?: number;
+  meta?: string;
+  // "quiz"      — a single Lückentext from grammatik.json
+  // "workspace" — the full rule card plus four or five exercises
+  // "trainer" — the real Artikel-Trainer (practiceWorkspace.js)
+  // Every kind of inline exercise /nav can mount. "info" means the row really
+  // has nothing to practise (an overview, an exam description).
+  practice?: "quiz" | "workspace" | "trainer" | "choice" | "cards" | "audio" | "speak" | "read" | "dtz" | "picker" | "result" | "bausteine";
+  // Aggregate rows (the course modules) are the sum of other rows, so practising
+  // a single topic has to move them too — otherwise the course strip sits still
+  // while the level bar climbs, and the page contradicts itself.
+  derived?: string[];
+};
+
+type Section = {
+  id: string;
+  label: string;
+  badge: string;
+  icon: IconName;
+  kind: "kurs" | "stufe" | "ziel";
+  blurb: string;
+  focus: string[];
+  items: Item[];
+};
+
+// Nothing is pre-filled. Every number on this page starts at zero and is filled
+// in on the client from what the learner has actually answered, via
+// getTopicProgress() in src/lib/progress.js. The server render is the empty state.
+const doneOf = (_id: string) => 0;
+
+// ── The Artikel-Trainer, embedded ────────────────────────────────────────
+// Same pool and same question shape as /uebungen/artikel-trainer, driven by the
+// same practiceWorkspace.js. The live page ships the whole ~860-noun lexicon;
+// this study page caps it at PER_LEVEL per level, which is still several rounds
+// deep and keeps the HTML from doubling.
+const ARTIKEL_SESSION = 25;
+const ARTIKEL_PER_LEVEL = 60;
+
+function explainArtikel(word: string, gender: string) {
+  const lower = word.toLowerCase();
+  if (lower.endsWith("in")) return "Die Endung -in kennzeichnet die weibliche Form — solche Wörter sind feminin.";
+  if (lower.endsWith("chen") || lower.endsWith("lein")) return "Verkleinerungsformen auf -chen oder -lein sind immer neutrum.";
+  if (lower.endsWith("e")) return "Viele zweisilbige Wörter auf -e sind feminin (z. B. Tasche, Sonne, Katze).";
+  if (lower.endsWith("er")) return "Viele Wörter auf -er — Werkzeuge, Geräte, männliche Personen — sind maskulin.";
+  if (lower.endsWith("el")) return "Viele Wörter auf -el sind maskulin (z. B. Schlüssel, Apfel).";
+  return `Für „${word}" gibt es keine feste Regel — der Artikel wird mit dem Wort zusammen gelernt.`;
+}
+
+const artikelQuestion = (n: any) => ({
+  id: n.id,
+  level: n.level,
+  prompt: `___ ${n.lemma}?`,
+  options: ["der", "die", "das"],
+  answer: n.gender,
+  explain: explainArtikel(n.lemma, n.gender),
+  change: `${n.gender} ${n.lemma}`,
+});
+
+const ARTIKEL_POOL = [
+  ...nouns({ level: "A1", has: "gender" }).slice(0, ARTIKEL_PER_LEVEL),
+  ...nouns({ level: "A2", has: "gender" }).slice(0, ARTIKEL_PER_LEVEL),
+].map(artikelQuestion);
+
+const ARTIKEL_LEVELS = [
+  { key: "A1", label: "A1", count: ARTIKEL_POOL.filter((q) => q.level === "A1").length },
+  { key: "A2", label: "A2", count: ARTIKEL_POOL.filter((q) => q.level === "A2").length },
+  { key: "all", label: "Alle", count: ARTIKEL_POOL.length },
+];
+
+const grammarItem = (t: (typeof grammatik)[number], level: string): Item => ({
+  id: t.id,
+  label: t.name,
+  icon: "book",
+  href: `/uebungen/grammatik/${t.id}`,
+  level,
+  levelSource: "data",
+  eyebrow: `Grammatik · ${level}`,
+  lead: t.intro,
+  tasks: t.questions.length,
+  done: doneOf(t.id),
+  minutes: Math.round(t.questions.length * 1.5),
+  practice: "quiz",
+});
+
+// ── The full grammar workspaces ──────────────────────────────────────────
+// src/data/grammatik/*.json each describe a complete Kursbuchseite: the
+// "Wie funktioniert das?" rule card plus four or five exercises. The live
+// /uebungen/grammatik/<topic> route renders exactly these. Here they are
+// globbed for their metadata only — the JSON itself is loaded lazily in the
+// browser, one topic at a time, so this page does not ship all 180 KB of them.
+const workspaceMods = import.meta.glob("../data/grammatik/*.json", { eager: true });
+const workspaces = Object.values(workspaceMods).map((m: any) => m.default ?? m);
+
+// One "Slot" is one thing the learner has to get right, counted the same way
+// the five exercise renderers in grammarWorkspace.js consume their data.
+const slotsOf = (ex: any): number => {
+  if (ex.type === "fill") return ex.items.length;
+  if (ex.type === "match") return ex.pairs.length;
+  if (ex.type === "table") return ex.rows.length;
+  if (ex.type === "story") return ex.segments.filter((s: any) => s.blank !== undefined).length;
+  if (ex.type === "build") return ex.sentences.length;
+  return 0;
+};
+const workspaceSlots = (w: any) => (w.exercises ?? []).reduce((a: number, e: any) => a + slotsOf(e), 0);
+
+const workspaceItem = (w: any): Item => {
+  const id = w.slug ?? w.id;
+  const tasks = workspaceSlots(w);
+  return {
+    id,
+    label: w.name,
+    icon: "book-open",
+    href: `/uebungen/grammatik/${id}`,
+    level: w.level,
+    levelSource: "data",
+    eyebrow: `Grammatik · ${w.level}`,
+    lead: w.subtitle ?? "",
+    tasks,
+    done: doneOf(id),
+    minutes: Math.max(8, Math.round(tasks * 0.8)),
+    practice: "workspace",
+  };
+};
+
+// A workspace always beats a bare quiz topic of the same id — same rule the
+// live [id].astro route uses, so /nav never offers a thinner version of a page
+// that already exists in full.
+const workspaceIds = new Set(workspaces.flatMap((w: any) => [w.id, w.slug].filter(Boolean)));
+const workspacesAt = (level: string) =>
+  workspaces.filter((w: any) => w.level === level).sort((a: any, b: any) => a.name.localeCompare(b.name, "de")).map(workspaceItem);
+const quizTopicsAt = (level: string) =>
+  byLevel(level).filter((t) => !workspaceIds.has(t.id)).map((t) => grammarItem(t, level));
+const grammarAt = (level: string) => [...workspacesAt(level), ...quizTopicsAt(level)];
+
+// ── The exercise that sits on every overview ─────────────────────────────
+// Each Stufenübersicht carries one ready-to-use exercise directly under the top
+// card, so /nav always has something to actually do without drilling into a
+// topic first. Preference: that level's first workspace, and within it the first
+// "fill" exercise (the most self-explanatory of the five widgets).
+const workspaceById = Object.fromEntries(workspaces.map((w: any) => [w.slug ?? w.id, w]));
+const quickIndexOf = (w: any) => {
+  const i = (w.exercises ?? []).findIndex((e: any) => e.type === "fill");
+  return i >= 0 ? i : 0;
+};
+const quickFor = (items: Item[], fallbackId: string) => {
+  // A1 and the course get the Artikel-Trainer itself — it is the most
+  // immediately usable thing on the site and needs no rule read first.
+  if (items.some((i) => i.practice === "trainer")) {
+    return { kind: "trainer" as const, topicId: "artikel-trainer", topicLabel: "der/die/das-Trainer", level: "A1", index: 0, title: "der, die oder das?", hint: "Wähle den passenden Artikel — Fokus- oder Testmodus." };
+  }
+  const item = items.find((i) => i.practice === "workspace");
+  const id = item ? item.id : fallbackId;
+  const w = workspaceById[id];
+  if (!w) return null;
+  const idx = quickIndexOf(w);
+  const ex = w.exercises[idx];
+  return { kind: "workspace" as const, topicId: id, topicLabel: w.name, level: w.level, index: idx, title: ex.title, hint: ex.hint ?? "" };
+};
+
+// Every grammar entry, in one list — the course module "Grammatik-Basis" is
+// their sum, so practising any single topic moves the course strip too.
+const allGrammarItems = ["A1", "A2", "B1", "B2"].flatMap(grammarAt);
+const allGrammarIds = allGrammarItems.map((i) => i.id);
+const allGrammarTasks = allGrammarItems.reduce((a, i) => a + (i.tasks ?? 0), 0);
+const allGrammarDone = allGrammarItems.reduce((a, i) => a + (i.done ?? 0), 0);
+const allGrammarMinutes = allGrammarItems.reduce((a, i) => a + (i.minutes ?? 0), 0);
+
+const sections: Section[] = [
+  {
+    id: "weg",
+    label: "Dein Weg",
+    badge: "Kurs",
+    icon: "sparkle",
+    kind: "kurs",
+    blurb: "Dein aktueller Kurs — nach Reihenfolge sortiert, nicht nach Stufe. Erst die Grammatik, dann der Wortschatz, dann der komplette Probelauf.",
+    focus: ["Grammatik von A1 bis B2", "Redemittel für den Alltag", "Ein kompletter DTZ-Übungssatz"],
+    items: [
+      { id: "start", label: "Start", icon: "sparkle", href: "/uebungen", level: "A1–B1", levelSource: "—", eyebrow: "Übersicht", lead: "Dein Einstieg: wo du stehst, was als Nächstes ansteht und wie viel bis zur Prüfung fehlt.", meta: "Übersicht", practice: "picker" },
+      { id: "grammatik-basis", label: "Grammatik-Basis", icon: "book", href: "/uebungen/grammatik", level: "A1–B2", levelSource: "data", eyebrow: "Modul 1", lead: `Regeln und Übungen zu ${allGrammarItems.length} Themen von A1 bis B2 — die meisten mit Regelkarte und fünf Übungstypen.`, tasks: allGrammarTasks, done: allGrammarDone, minutes: allGrammarMinutes, derived: allGrammarIds, practice: "picker" },
+      { id: "wortschatz-kurs", label: "Wortschatz-Karten", icon: "folder", href: "/uebungen/wortschatz", level: "A1–B1", levelSource: "abgeleitet", eyebrow: "Modul 2", lead: "Redemittel für Amt, Wohnungssuche und Alltag — als Karteikarten zum Umdrehen.", tasks: wortschatz.length, done: 0, minutes: 15, practice: "cards" },
+      { id: "probelauf", label: "Prüfungssimulation", icon: "document", href: "/pruefungen/dtz/uebungssatz", level: "A2/B1", levelSource: "abgeleitet", eyebrow: "Modul 3", lead: "Ein kompletter DTZ-Übungssatz im echten Format: neun Prüfungsteile, 45 bewertete Aufgaben.", tasks: 45, done: 0, minutes: 54, practice: "dtz" },
+      { id: "ergebnis", label: "Ergebnis", icon: "graduation-cap", href: "/pruefungen/dtz", level: "A2/B1", levelSource: "—", eyebrow: "Abschluss", lead: "Deine Auswertung nach Stufe — live aus dem, was du auf dieser Seite geübt hast.", meta: "Am Ende", practice: "result" },
+    ],
+  },
+  {
+    id: "a1",
+    label: "Stufe A1",
+    badge: "A1",
+    icon: "book",
+    kind: "stufe",
+    blurb: "Der Anfang: die Artikel der häufigsten Nomen und der Akkusativ. Wer diese Stufe sicher hat, kann einfache Sätze bilden, die stimmen.",
+    focus: ["Artikel: der, die, das", "Akkusativ nach Verben", "Grundwortschatz"],
+    items: [
+      ...grammarAt("A1"),
+      { id: "artikel-trainer", label: "der/die/das-Trainer", icon: "target", href: "/uebungen/artikel-trainer", level: "A1", levelSource: "abgeleitet", eyebrow: "Übung · A1", lead: `Artikel gezielt trainieren — ${ARTIKEL_POOL.length} Nomen aus dem Lexikon, Fokus- oder Testmodus, mit sofortigem Feedback nach jeder Antwort.`, tasks: ARTIKEL_SESSION, done: doneOf("artikel-trainer"), minutes: 8, practice: "trainer" },
+    ],
+  },
+  {
+    id: "a2",
+    label: "Stufe A2",
+    badge: "A2",
+    icon: "book",
+    kind: "stufe",
+    blurb: "Der Sprung in den Alltag: Dativ und trennbare Verben. Ab hier lassen sich Sätze bauen, die mehr können als „Ich habe einen Hund.“",
+    focus: ["Dativ nach Verben und Präpositionen", "Trennbare Verben im Satz", "Alltagssituationen"],
+    items: grammarAt("A2"),
+  },
+  {
+    id: "b1",
+    label: "Stufe B1",
+    badge: "B1",
+    icon: "book-open",
+    kind: "stufe",
+    blurb: "Das DTZ-Niveau: komplexere Sätze und die echten Prüfungsaufgabenformen. Der größte Block — und der, der für die Prüfung zählt.",
+    focus: ["Passiv, Relativsätze, Präpositionalverben", "DTZ-Leseverstehen", "Bildbeschreibung mit Prüferfragen"],
+    items: [
+      ...grammarAt("B1"),
+      { id: "sprechen", label: "Sprechen: Bildbeschreibung", icon: "mic", href: "/uebungen/sprechen", level: "A2/B1", levelSource: "abgeleitet", eyebrow: "Übung · B1", lead: "Bildbeschreibung mit echten DTZ-Prüferfragen und 90-Sekunden-Timer — dieselbe Aufgabenform wie im Prüfungsteil Sprechen.", tasks: sprechen.length, done: 0, minutes: 15, practice: "speak" },
+      { id: "lesen", label: "Lesen & Schreiben", icon: "pencil", href: "/uebungen/lesen-schreiben", level: "A2/B1", levelSource: "abgeleitet", eyebrow: "Übung · B1", lead: `DTZ-Leseverstehen-Simulation mit ${readingQuestionCount} Aufgaben in vier Teilen, dazu Schreibaufgaben.`, tasks: readingQuestionCount, done: 0, minutes: 25, practice: "choice" },
+      { id: "kultur", label: "Kulturwissen", icon: "map-pin", href: "/uebungen/kultur", level: "B1", levelSource: "abgeleitet", eyebrow: "Übung · B1", lead: "Diskussionsthemen aus echten Unterrichtsgesprächen — mit Pro- und Kontra-Argumenten zum Nachsprechen.", tasks: kultur.length, done: 0, minutes: 10, practice: "read" },
+    ],
+  },
+  {
+    id: "b2",
+    label: "Stufe B2",
+    badge: "B2",
+    icon: "graduation-cap",
+    kind: "stufe",
+    blurb: "Jenseits des DTZ: Konjunktiv und Feinheiten. Für alle, die nach der Prüfung weitermachen oder aufs Studium zielen.",
+    focus: ["Konjunktiv II: höflich und hypothetisch", "Feinere Satzstrukturen"],
+    items: grammarAt("B2"),
+  },
+  {
+    id: "alle",
+    label: "Alle Stufen",
+    badge: "A1–B1",
+    icon: "folder",
+    kind: "stufe",
+    blurb: "Übungen, deren Inhalt echt über mehrere Stufen läuft — die Karteikarten reichen von „Wie geht's dir?“ bis „Ich bin der Meinung, dass …“.",
+    focus: ["Redemittel A1 bis B1", "Aussprache im Langsam-Modus"],
+    items: [
+      { id: "wortschatz", label: "Wortschatz & Redemittel", icon: "folder", href: "/uebungen/wortschatz", level: "A1–B1", levelSource: "abgeleitet", eyebrow: "Übung · A1–B1", lead: `${wortschatz.length} Karteikarten, von „Wie geht's dir?“ (A1) bis „Ich bin der Meinung, dass …“ (B1).`, tasks: wortschatz.length, done: 0, minutes: 15, practice: "cards" },
+      { id: "aussprache", label: "Aussprache-Training", icon: "volume", href: "/uebungen/aussprache", level: "A1–B1", levelSource: "abgeleitet", eyebrow: "Übung · A1–B1", lead: `Alle ${ausspracheWordCount} Wörter aus Wortschatz und Artikel-Trainer anhören und im Langsam-Modus nachsprechen.`, tasks: ausspracheWordCount, done: 0, minutes: 12, practice: "audio" },
+    ],
+  },
+  {
+    id: "pruefungen",
+    label: "Prüfungen",
+    badge: "Ziel",
+    icon: "landmark",
+    kind: "ziel",
+    blurb: "Prüfungen sind keine Stufe, sondern ein Ziel — deshalb eine eigene Gruppe, sortiert nach Einstiegsniveau statt nach Fortschritt.",
+    focus: ["Format und Dauer", "Was zum Bestehen reicht", "Welche Prüfung zu welchem Ziel passt"],
+    items: [
+      { id: "dtz", label: "DTZ", icon: "document", href: "/pruefungen/dtz", level: "A2/B1", levelSource: "data", eyebrow: "Prüfung", lead: "Deutsch-Test für Zuwanderer: Hören, Lesen, Schreiben, Sprechen — 45 bewertete Aufgaben plus Schreibteil.", tasks: 45, done: 0, minutes: 54, practice: "dtz" },
+      { id: "lid", label: "Leben in Deutschland", icon: "map-pin", href: "/pruefungen/leben-in-deutschland", level: "kein GER", levelSource: "data", eyebrow: "Prüfung", lead: `33 Fragen aus dem offiziellen Katalog, dazu die Landesfragen aller ${lid.bundeslaender.length} Bundesländer — Wissenstest, keine Sprachprüfung.`, tasks: lid.questions.length, done: 0, minutes: 20, practice: "choice" },
+      { id: "telc", label: "telc", icon: "document", href: "/pruefungen/telc", level: "A1–C2", levelSource: "data", eyebrow: "Prüfung", lead: "Sprachbausteine — der Prüfungsteil, den es so nur bei telc gibt: Grammatik im laufenden Text.", tasks: 20, done: 0, minutes: 20, practice: "bausteine" },
+      { id: "goethe", label: "Goethe-Zertifikat", icon: "landmark", href: "/pruefungen/goethe", level: "A1–C2", levelSource: "data", eyebrow: "Prüfung", lead: "Die Goethe-Zertifikate decken A1 bis C2 ab — hier alle Themen, nach Stufe sortiert.", meta: "A1–C2", practice: "picker" },
+      { id: "testdaf", label: "TestDaF", icon: "graduation-cap", href: "/pruefungen/testdaf", level: "B2–C1", levelSource: "data", eyebrow: "Prüfung", lead: "TestDaF setzt B2–C1 voraus — hier die Themen dieser Stufen.", meta: "B2–C1", practice: "picker" },
+    ],
+  },
+];
+
+// Everything below is derived — no percentage is typed by hand.
+const sum = (ns: number[]) => ns.reduce((a, b) => a + b, 0);
+const stats = (s: Section) => {
+  const counted = s.items.filter((i) => typeof i.tasks === "number");
+  const tasks = sum(counted.map((i) => i.tasks!));
+  const done = sum(counted.map((i) => i.done ?? 0));
+  return { tasks, done, minutes: sum(s.items.map((i) => i.minutes ?? 0)), pct: tasks ? Math.round((done / tasks) * 100) : null };
+};
+const sectionStats = Object.fromEntries(sections.map((s) => [s.id, stats(s)]));
+// "artikel" is the fallback for the groups with no grammar of their own
+// (Dein Weg, Alle Stufen, Prüfungen) — A1, concrete, and nobody is too advanced
+// to benefit from a der/die/das drill.
+// Which groups get the Artikel-Trainer as their exercise rather than a grammar
+// workspace: the landing view and A1, plus the two groups with no grammar of
+// their own — nobody is too advanced for a der/die/das drill.
+const TRAINER_SECTIONS = new Set(["weg", "a1", "alle", "pruefungen"]);
+const sectionQuick = Object.fromEntries(sections.map((s) => [
+  s.id,
+  TRAINER_SECTIONS.has(s.id)
+    ? quickFor([{ practice: "trainer" } as Item], "artikel")
+    : quickFor(s.items, "artikel"),
+]));
+const itemPct = (i: Item) => (i.tasks ? Math.round(((i.done ?? 0) / i.tasks) * 100) : null);
+const sectionOf = Object.fromEntries(sections.flatMap((s) => s.items.map((i) => [i.id, s])));
+const courseStats = sectionStats.weg;
+
+const ladder = ["a1", "a2", "b1", "b2"].map((id) => {
+  const s = sections.find((x) => x.id === id)!;
+  const p = sectionStats[id].pct ?? 0;
+  return { id, label: s.badge, state: p === 100 ? "done" : p > 0 ? "current" : "todo" };
+});
+
+// Handed to the client: one flat item table plus the questions for every topic
+// that can be practised inline.
+const clientData = {
+  items: Object.fromEntries(sections.flatMap((s) => s.items.map((i) => [i.id, {
+    label: i.label, eyebrow: i.eyebrow, lead: i.lead, href: i.href,
+    level: i.level, levelSource: i.levelSource,
+    tasks: i.tasks ?? null, done: i.done ?? 0, minutes: i.minutes ?? null,
+    practice: i.practice ?? null, derived: i.derived ?? null,
+    section: sectionOf[i.id].id, sectionLabel: sectionOf[i.id].label,
+  }]))),
+  sections: Object.fromEntries(sections.map((s) => [s.id, { label: s.label, items: s.items.map((i) => i.id) }])),
+  // Which coarse skill bucket each kind of exercise reports into, so /uebungen's
+  // existing per-skill stats keep working alongside the per-topic numbers.
+  skillOf: Object.fromEntries(sections.flatMap((s) => s.items.map((i) => [i.id,
+    i.practice === "cards" ? "wortschatz"
+    : i.practice === "audio" ? "hoeren"
+    : i.practice === "speak" ? "sprechen"
+    : i.practice === "choice" || i.practice === "read" ? "lesen"
+    : i.practice === "dtz" || i.practice === "bausteine" ? "pruefungen"
+    : "grammatik"]))),
+  topics: Object.fromEntries(grammatik.map((t) => [t.id, { name: t.name, intro: t.intro, questions: t.questions }])),
+  // Content for the non-grammar exercises. All real, from the same files the
+  // live pages read; the DTZ Übungssatz is the only one loaded lazily.
+  choice: {
+    lesen: lesen.groups.map((g) => ({ id: g.id, title: g.title, level: g.level, text: g.text, questions: g.questions })),
+    lid: [{ id: "lid", title: "Einbürgerungstest", level: "kein GER", text: "", questions: lid.questions }],
+  },
+  cards: wortschatz.map((c) => ({ front: c.front, note: c.note ?? "", back: c.translations?.en ?? Object.values(c.translations ?? {})[0] ?? "" })),
+  audio: [...wortschatz.map((c) => c.front), ...artikel.map((a) => `${a.gender} ${a.word}`)],
+  speak: sprechen,
+  read: kultur,
+  picker: allGrammarItems.map((i) => ({ id: i.id, label: i.label, level: i.level, tasks: i.tasks })),
+  // Which levels a picker row should offer. Anything not listed shows all of them.
+  pickerScope: { testdaf: ["B2"], goethe: ["A1", "A2", "B1", "B2"] } as Record<string, string[]>,
+};
+
+
+const RING = 2 * Math.PI * 42;
+
+interface Props {
+  /** Which navigation variants to render. One = no toggle, that layout only. */
+  variants?: ("a" | "b" | "c")[];
+  /** Study mode: the test banner and the A/B/C toggle. Off for the real page. */
+  study?: boolean;
+  /**
+   * How an open topic is presented in the content column.
+   *   "cards" — /dashboard: a hero card with the topic's own progress ring, then
+   *             the rule and the exercises stacked underneath it.
+   *   "focus" — /v2, merged with /v1: no hero, just the topic name and its level,
+   *             a loud trigger that slides the rule in from the side, and the
+   *             exercises immediately. The level overviews are unchanged, so the
+   *             dashboard is still the dashboard until you open something.
+   */
+  topicLayout?: "cards" | "focus";
+}
+const { variants = ["b"], study = false, topicLayout = "cards" } = Astro.props;
+const showVariant = (id: string) => variants.includes(id as any);
+const defaultVariant = variants[0];
+
+---
+  <div class:list={["nv", study && "nv--study", topicLayout === "focus" && "nv--focus"]}>
+    {study && (
+      <div class="nv-banner">
+        🧪 <strong>Navigations-Studie</strong> — dieselbe Seite wie <a href="/dashboard">/dashboard</a>, hier mit allen drei Navigationsvarianten zum Vergleichen.
+      </div>
+    )}
+
+    {study && (
+      <header class="nv-topbar">
+        <a href="/" class="nv-brand">
+          <img src="/assets/logo.png" alt="DeutschAcademy" />
+          <span>Deutsch Academy</span>
+        </a>
+        <div class="nv-toggle">
+          <span class="nv-toggle-label">Navigation</span>
+          <div class="nv-toggle-group" role="tablist" aria-label="Navigationsvariante">
+            {showVariant("a") && <button type="button" class="nv-toggle-btn" data-variant="a" role="tab">A · Rail</button>}
+            {showVariant("b") && <button type="button" class="nv-toggle-btn" data-variant="b" role="tab">B · Icon-Rail</button>}
+            {showVariant("c") && <button type="button" class="nv-toggle-btn" data-variant="c" role="tab">C · Akkordeon</button>}
+          </div>
+        </div>
+      </header>
+    )}
+
+    <div class="nv-strip">
+      <span class="nv-strip-title">Dein Kurs</span>
+      <span class="nv-strip-sub">DTZ-Vorbereitung</span>
+      <span class="nv-strip-track"><span class="nv-strip-fill" data-strip-fill style={`width:${courseStats.pct}%`}></span></span>
+      <span class="nv-strip-points" data-strip-label>{courseStats.pct} % · {courseStats.done} / {courseStats.tasks} Aufgaben</span>
+    </div>
+
+    <div class="nv-shell">
+
+      <!-- ── Variante A · Rail ─────────────────────────────────────────── -->
+      {showVariant("a") && (
+      <aside class="nv-aside nva" data-variant-pane="a" aria-label="Seitennavigation, Variante Rail">
+        <div class="nva-ladder">
+          <span class="nva-ladder-label">Deine Stufe</span>
+          <div class="nva-ladder-row">
+            {ladder.map((l) => (
+              <button type="button" class="nva-step" data-state={l.state} data-ladder={l.id} data-section-btn={l.id}>{l.label}</button>
+            ))}
+          </div>
+        </div>
+
+        {sections.map((section, i) => (
+          <>
+            <div class="nva-group">
+              <button type="button" class="nv-eyebrow nva-grouphead" data-section-btn={section.id}>
+                <span>{section.label}</span>
+                {section.label !== `Stufe ${section.badge}` && <span class="nv-levelchip">{section.badge}</span>}
+                <span class="nva-groupgo">→</span>
+              </button>
+              {section.items.map((item) => (
+                <button type="button" class="nva-item" data-nav-item={item.id} data-row={item.id}>
+                  {section.id === "weg" ? <span class="nva-dot"></span> : <span class="nv-icon"><Icon name={item.icon} size={17} /></span>}
+                  <span>{item.label}</span>
+                  <span class="nv-count" data-count={item.id}>{item.meta ?? `${item.done ?? 0}/${item.tasks}`}</span>
+                </button>
+              ))}
+            </div>
+            {i === 0 && (
+              <div>
+                <div class="nva-divider"></div>
+                <button type="button" class="nva-reset" data-reset-progress>Fortschritt zurücksetzen</button>
+              </div>
+            )}
+          </>
+        ))}
+      </aside>
+      )}
+
+      <!-- ── Variante B · Icon-Rail + Panel ────────────────────────────── -->
+      {showVariant("b") && (
+      <aside class="nv-aside" data-variant-pane="b" aria-label="Seitennavigation, Variante Icon-Rail" hidden>
+        <div class="nvb" data-nvb>
+          <div class="nvb-rail" role="tablist" aria-label="Stufe">
+            {sections.map((section) => (
+              <button type="button" class="nvb-railbtn" data-section-btn={section.id} role="tab" aria-label={section.label}>
+                {section.kind === "stufe"
+                  ? <span class="nvb-railbadge">{section.badge}</span>
+                  : <Icon name={section.icon} size={20} />}
+                {sectionStats[section.id].pct !== null && <span class="nvb-raildot" data-raildot={section.id}></span>}
+                <span class="nvb-tip">{section.label}</span>
+              </button>
+            ))}
+          </div>
+          <div class="nvb-panel">
+            {sections.map((section) => (
+              <div class="nvb-section" data-rail-section={section.id} hidden>
+                <div class="nvb-panelhead">
+                  <h3>{section.label}</h3>
+                  <button type="button" class="nvb-collapse" data-nvb-collapse aria-label="Liste einklappen">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>
+                  </button>
+                </div>
+                {sectionStats[section.id].pct !== null && (
+                  <div class="nvb-panelprogress">
+                    <span class="nvb-panelbar"><span data-secbar={section.id} style={`width:${sectionStats[section.id].pct}%`}></span></span>
+                    <span data-secpct={section.id}>{sectionStats[section.id].pct} %</span>
+                  </div>
+                )}
+                <button type="button" class="nvb-overview" data-section-btn={section.id}>Stufenübersicht öffnen →</button>
+                {section.items.map((item) => (
+                  <button type="button" class="nvb-item" data-nav-item={item.id} data-row={item.id}>
+                    <span class="nv-icon"><Icon name={item.icon} size={16} /></span>
+                    <span>{item.label}</span>
+                    <span class="nv-count" data-count={item.id}>{item.meta ?? `${item.done ?? 0}/${item.tasks}`}</span>
+                  </button>
+                ))}
+              </div>
+            ))}
+          </div>
+        </div>
+      </aside>
+      )}
+
+      <!-- ── Variante C · Akkordeon ────────────────────────────────────── -->
+      {showVariant("c") && (
+      <aside class="nv-aside nvc" data-variant-pane="c" aria-label="Seitennavigation, Variante Akkordeon" hidden>
+        {sections.map((section, i) => (
+          <div class:list={["nvc-group", i === 0 && "open"]} data-nvc-group>
+            <button type="button" class="nvc-head" data-section-btn={section.id} aria-expanded={i === 0 ? "true" : "false"}>
+              <span class="nv-levelchip nv-levelchip--lg">{section.badge}</span>
+              <span class="nvc-head-text">
+                <span class="nvc-head-title">{section.label}</span>
+                <span class="nvc-bar"><span data-secbar={section.id} style={`width:${sectionStats[section.id].pct ?? 0}%`}></span></span>
+              </span>
+              <span class="nv-count">{section.items.length}</span>
+              <svg class="nvc-chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+            </button>
+            <div class="nvc-list"><div class="nvc-listinner">
+              {section.items.map((item) => (
+                <button type="button" class="nvc-item" data-nav-item={item.id} data-row={item.id}>
+                  <span>{item.label}</span>
+                  <span class="nv-count" data-count={item.id}>{item.meta ?? `${item.done ?? 0}/${item.tasks}`}</span>
+                </button>
+              ))}
+            </div></div>
+          </div>
+        ))}
+        <div class="nvc-cta">
+          <p>Weiter, wo du aufgehört hast</p>
+          <strong>Dativ · A2</strong>
+          <button type="button" class="nvc-cta-btn" data-nav-item="dativ">Weitermachen →</button>
+        </div>
+      </aside>
+      )}
+
+      <!-- ── Inhalt ────────────────────────────────────────────────────── -->
+      <main class="nv-main">
+        <nav class="nv-crumbs" aria-label="Pfad">
+          <span>Dein Kurs</span> <span>/</span> <strong data-crumb-section>Dein Weg</strong>
+          <span data-crumb-tail hidden> / <strong data-crumb-item></strong></span>
+        </nav>
+
+        <!-- Stufenübersicht: eine pro Gruppe, serverseitig gerendert. -->
+        {sections.map((section) => {
+          const st = sectionStats[section.id];
+          return (
+            <div class="nv-view" data-section-view={section.id} hidden>
+              <section class="nv-detail">
+                <div>
+                  <p class="nv-detail-eyebrow">{section.kind === "stufe" ? "Stufe" : section.kind === "ziel" ? "Ziel" : "Kurs"}</p>
+                  <h1>{section.label}</h1>
+                  <p class="nv-detail-level">
+                    <span class="nv-levelchip nv-levelchip--lg">{section.badge}</span>
+                    <span class="nv-detail-levelsrc">{section.items.length} Einträge{st.tasks ? ` · ${st.tasks} Aufgaben` : ""}{st.minutes ? ` · ca. ${st.minutes} Min.` : ""}</span>
+                  </p>
+                  <p>{section.blurb}</p>
+                  <ul class="nv-focus">{section.focus.map((f) => <li>{f}</li>)}</ul>
+                  <div class="nv-detail-actions">
+                    <button type="button" class="nv-btn nv-btn--primary" data-nav-item={section.items.find((i) => i.practice)?.id ?? section.items[0].id}>
+                      {st.pct && st.pct > 0 ? "Weitermachen →" : "Stufe starten →"}
+                    </button>
+                  </div>
+                </div>
+                <div class="nv-ring-card" data-ringcard={section.id}>
+                  <div class="nv-ring">
+                    <svg width="96" height="96" viewBox="0 0 96 96">
+                      <circle cx="48" cy="48" r="42" fill="none" stroke="rgba(255,255,255,.28)" stroke-width="8" />
+                      <circle cx="48" cy="48" r="42" fill="none" stroke="#fff" stroke-width="8" stroke-linecap="round"
+                              stroke-dasharray={RING} stroke-dashoffset={RING} data-secring={section.id} />
+                    </svg>
+                    <span class="nv-ring-value" data-secringvalue={section.id}>{st.pct === null ? "–" : "0%"}</span>
+                  </div>
+                  <span class="nv-ring-label" data-secringlabel={section.id}>
+                    {st.pct === null ? "Kein Fortschritt zu zählen" : `${st.done} von ${st.tasks} Aufgaben`}
+                  </span>
+                </div>
+              </section>
+
+              {sectionQuick[section.id] && (
+                <section class="nv-panel nv-quickex" data-quickex={section.id} data-quick-kind={sectionQuick[section.id]!.kind} data-quick-topic={sectionQuick[section.id]!.topicId} data-quick-index={sectionQuick[section.id]!.index}>
+                  <div class="nv-quickex-head">
+                    <div>
+                      <p class="nv-detail-eyebrow">Übung · {sectionQuick[section.id]!.level}</p>
+                      <h2>{sectionQuick[section.id]!.title}</h2>
+                      <p class="nv-quickex-sub">
+                        aus <strong>{sectionQuick[section.id]!.topicLabel}</strong>
+                        {sectionQuick[section.id]!.hint ? ` — ${sectionQuick[section.id]!.hint}` : ""}
+                      </p>
+                    </div>
+                    <span class="nv-learn-badge">direkt üben</span>
+                  </div>
+                  {sectionQuick[section.id]!.kind === "trainer"
+                    ? <div class="nv-quickex-body akk" data-trainer-root><p class="nv-ws-loading">Trainer wird geladen …</p></div>
+                    : <div class="nv-quickex-body" data-ex-index={sectionQuick[section.id]!.index}><p class="nv-ws-loading">Übung wird geladen …</p></div>}
+                  <button type="button" class="nv-quickex-more" data-nav-item={sectionQuick[section.id]!.topicId}>
+                    {sectionQuick[section.id]!.kind === "trainer"
+                      ? "Trainer mit voller Sitzung öffnen →"
+                      : `Regel und alle Übungen zu „${sectionQuick[section.id]!.topicLabel}" →`}
+                  </button>
+                </section>
+              )}
+
+              <section class="nv-panel">
+                <h2>{section.kind === "kurs" ? "Module" : section.kind === "ziel" ? "Prüfungen" : "Inhalte dieser Stufe"}</h2>
+                {section.items.map((item, n) => (
+                  <div class="nv-modrow" style={`--i:${n}`} data-modrow={item.id}>
+                    <span class="nv-modnum">{n + 1}</span>
+                    <span>
+                      <span class="nv-modname">{item.label}</span><br />
+                      <span class="nv-modmeta">
+                        {item.level}
+                        {item.tasks ? ` · ${item.tasks} Aufgaben` : ""}
+                        {item.minutes ? ` · ca. ${item.minutes} Min.` : ""}
+                        {item.practice === "workspace" ? " · Regel + Übungen hier" : item.practice === "quiz" ? " · hier üben" : ""}
+                      </span>
+                    </span>
+                    {itemPct(item) === null
+                      ? <span class="nv-modmeta">{item.meta}</span>
+                      : <span class="nv-modtrack"><span data-itembar={item.id} style={`width:${itemPct(item)}%`}></span></span>}
+                    <span class="nv-modpoints" data-itempoints={item.id}>{item.tasks ? `${item.done ?? 0} / ${item.tasks}` : ""}</span>
+                    <button type="button" class="nv-modlink" data-nav-item={item.id}>
+                      {item.practice ? "Üben →" : "Öffnen →"}
+                    </button>
+                  </div>
+                ))}
+              </section>
+            </div>
+          );
+        })}
+
+        <!-- Einzelansicht: eine Hülle, aus den Daten des geklickten Eintrags gefüllt. -->
+        <div class="nv-view" data-item-view hidden>
+          <button type="button" class="nv-back" data-back>← <span data-back-label>Zurück</span></button>
+
+          {topicLayout === "focus" && (
+            <>
+              {/* The /v1 head: the topic, its level, its progress as one line —
+                  no hero card, because the exercises are what you came for. */}
+              <div class="nvf-head">
+                <h1 data-detail-title></h1>
+                <span class="nv-levelchip nv-levelchip--lg" data-detail-level></span>
+                <span class="nvf-progress">
+                  <span class="nvf-bar"><span data-focus-bar></span></span>
+                  <span data-focus-count></span>
+                </span>
+              </div>
+              <p class="nvf-lead" data-detail-lead></p>
+
+              {/* Loud on purpose: it is what a learner reaches for mid-exercise,
+                  and a quiet control in a bar was being missed. */}
+              <button class="nvf-rulecta" type="button" data-rule-open aria-controls="nvf-rule" aria-expanded="false" hidden>
+                <span class="nvf-rulecta-icon" aria-hidden="true">?</span>
+                <span class="nvf-rulecta-text">
+                  <span class="nvf-rulecta-title">Regel ansehen</span>
+                  <span class="nvf-rulecta-sub" data-rule-teaser>Wie funktioniert das?</span>
+                </span>
+                <span class="nvf-rulecta-arrow" aria-hidden="true">→</span>
+              </button>
+            </>
+          )}
+
+          <section class="nv-detail">
+            <div>
+              <p class="nv-detail-eyebrow" data-detail-eyebrow></p>
+              <h1 data-detail-title></h1>
+              <p class="nv-detail-level">
+                <span class="nv-levelchip nv-levelchip--lg" data-detail-level></span>
+                <span class="nv-detail-levelsrc" data-detail-levelsrc></span>
+              </p>
+              <p data-detail-lead></p>
+              <div class="nv-detail-actions">
+                <a class="nv-btn nv-btn--ghost" href="#" data-detail-href target="_blank" rel="noopener">Eigene Seite öffnen ↗</a>
+                <button type="button" class="nv-btn nv-btn--ghost" data-back>Zurück zur Stufe</button>
+              </div>
+            </div>
+            <div class="nv-ring-card" data-itemringcard>
+              <div class="nv-ring">
+                <svg width="96" height="96" viewBox="0 0 96 96">
+                  <circle cx="48" cy="48" r="42" fill="none" stroke="rgba(255,255,255,.28)" stroke-width="8" />
+                  <circle cx="48" cy="48" r="42" fill="none" stroke="#fff" stroke-width="8" stroke-linecap="round"
+                          stroke-dasharray={RING} stroke-dashoffset={RING} data-detail-ring />
+                </svg>
+                <span class="nv-ring-value" data-detail-ringvalue>–</span>
+              </div>
+              <span class="nv-ring-label" data-detail-ringlabel></span>
+            </div>
+          </section>
+
+          <!-- Der eigentliche Test: Regel und Übungen komplett in dieser Ansicht.
+               Die Regelkarte und die vier bis fünf Übungsblöcke werden hier zur
+               Laufzeit aus src/data/grammatik/<thema>.json gebaut und dann von
+               grammarWorkspace.js bespielt — derselbe Motor wie auf der echten
+               Themenseite. Nur das eine geöffnete Thema wird geladen. -->
+          <div class="nv-ws" data-ws-root hidden></div>
+
+          <!-- Jede andere Übungsart: Karteikarten, Auswahlfragen, Aussprache,
+               Bildbeschreibung, Kulturkarte, DTZ-Übungssatz, Themenwahl. -->
+          <section class="nv-panel nv-quickex" data-inline-panel hidden>
+            <div class="nv-quickex-head">
+              <div>
+                <p class="nv-detail-eyebrow" data-inline-eyebrow></p>
+                <h2 data-inline-title></h2>
+                <p class="nv-quickex-sub" data-inline-sub></p>
+              </div>
+              <span class="nv-learn-badge">direkt üben</span>
+            </div>
+            <div class="nv-inline-body" data-inline-root></div>
+          </section>
+
+          <!-- Der Artikel-Trainer, komplett in dieser Ansicht. -->
+          <section class="nv-panel nv-quickex" data-trainer-panel hidden>
+            <div class="nv-quickex-head">
+              <div>
+                <p class="nv-detail-eyebrow">Übung · A1</p>
+                <h2>der, die oder das?</h2>
+                <p class="nv-quickex-sub">Wähle den passenden Artikel — Fokus- oder Testmodus, {ARTIKEL_SESSION} Nomen pro Runde.</p>
+              </div>
+              <span class="nv-learn-badge">direkt üben</span>
+            </div>
+            <div class="akk" data-trainer-root><p class="nv-ws-loading">Trainer wird geladen …</p></div>
+          </section>
+
+          <!-- Themen ohne Workspace: der einfache Lückentext aus grammatik.json. -->
+          <section class="nv-panel nv-learn" data-learn hidden>
+            <div class="nv-learn-head">
+              <h2>Üben</h2>
+              <span class="nv-learn-badge">läuft in dieser Ansicht</span>
+            </div>
+            <p class="nv-learn-intro" data-learn-intro></p>
+            <div class="nv-quiz" data-quiz-root></div>
+          </section>
+
+          <section class="nv-panel nv-learn-empty" data-learn-empty hidden>
+            <p>Diese Übung hat noch keine Inline-Fassung — sie läuft auf ihrer eigenen Seite. Verkabelt sind alle Grammatikthemen: die Workspace-Themen mit Regelkarte und allen Übungen, der Rest mit dem Lückentext.</p>
+          </section>
+        </div>
+
+
+      </main>
+    </div>
+
+    {topicLayout === "focus" && (
+      <>
+        <div class="nvf-scrim" data-rule-close hidden></div>
+        <aside class="nvf-drawer" id="nvf-rule" aria-label="Regel" aria-hidden="true">
+          <div class="nvf-drawer-head">
+            <p class="nv-detail-eyebrow" data-rule-title>Regel</p>
+            <button class="nvf-drawer-x" type="button" data-rule-close aria-label="Regel schließen">×</button>
+          </div>
+          <div class="vp-card nvf-drawer-card" data-rule-panel></div>
+        </aside>
+      </>
+    )}
+
+    <div class="nv-toast" data-toast hidden role="status" aria-live="polite"></div>
+  </div>
+
+  <script type="application/json" id="nv-layout" set:html={JSON.stringify(topicLayout)}></script>
+  <script type="application/json" id="nv-variants" set:html={JSON.stringify(variants)}></script>
+  <script type="application/json" id="nv-data" set:html={JSON.stringify(clientData)}></script>
+  <script type="application/json" id="nv-artikel" set:html={JSON.stringify({ pool: ARTIKEL_POOL, levels: ARTIKEL_LEVELS, session: ARTIKEL_SESSION })}></script>
+
+  <script>
+    import { getTopicProgress, recordAttempt, resetProgress } from "../lib/progress.js";
+    import { createExerciseMounter, INLINE_TITLES, loaderFor } from "../lib/inlineExercises.js";
+    import { mountQuiz, withChoices } from "../lib/quiz.js";
+    import { mountGrammarWorkspace } from "../lib/grammarWorkspace.js";
+    import { mountPracticeWorkspace } from "../lib/practiceWorkspace.js";
+
+    const DATA = JSON.parse(document.getElementById("nv-data")!.textContent!);
+    const ITEMS: Record<string, any> = DATA.items;
+    const SECTIONS: Record<string, any> = DATA.sections;
+    const TOPICS: Record<string, any> = DATA.topics;
+    const RING = 2 * Math.PI * 42;
+    const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    // Live progress. Starts from the server's mock values; the inline quiz
+    // writes into it, and every bar/ring/label on the page reads from it.
+    // Real progress, read back from localStorage. The server rendered zeros; this
+    // is where the page learns what the learner has already done.
+    const progress: Record<string, number> = {};
+    const stored = (() => { try { return getTopicProgress(); } catch (e) { return {}; } })();
+    Object.keys(ITEMS).forEach((id) => {
+      const tasks = ITEMS[id].tasks;
+      progress[id] = tasks ? Math.min(stored[id]?.done ?? 0, tasks) : 0;
+    });
+
+    const $ = <T extends Element = HTMLElement>(sel: string) => document.querySelector(sel) as T | null;
+    const $$ = (sel: string) => Array.from(document.querySelectorAll(sel)) as HTMLElement[];
+
+    // ── Motion helpers ────────────────────────────────────────────────
+    // Each run stamps the element; an older run that is still animating sees a
+    // newer stamp and stops. Without this, switching items fast lets the
+    // previous item's count-up keep writing over the new item's number.
+    let countToken = 0;
+    function countUp(el: Element | null, to: number, suffix = "%") {
+      if (!el) return;
+      const token = String(++countToken);
+      (el as HTMLElement).dataset.count = token;
+      const from = parseInt(el.textContent || "0", 10) || 0;
+      if (reduced || from === to) { el.textContent = to + suffix; return; }
+      const start = performance.now();
+      // Matches --nv-dur-value and the expo-out curve the bars and rings use, so
+      // the number and the bar under it finish together instead of racing.
+      const dur = 1150;
+      const step = (now: number) => {
+        if ((el as HTMLElement).dataset.count !== token) return;
+        const t = Math.min(1, (now - start) / dur);
+        const eased = t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
+        el.textContent = Math.round(from + (to - from) * eased) + suffix;
+        if (t < 1) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+    }
+    // Writing a plain value must also cancel any in-flight animation.
+    function setCount(el: Element | null, text: string) {
+      if (!el) return;
+      (el as HTMLElement).dataset.count = String(++countToken);
+      el.textContent = text;
+    }
+
+    function setRing(el: Element | null, pct: number, sweep = false) {
+      if (!el) return;
+      if (sweep && !reduced) {
+        el.setAttribute("stroke-dashoffset", String(RING));
+        // Next frame, so the transition has something to move from.
+        requestAnimationFrame(() => requestAnimationFrame(() =>
+          el.setAttribute("stroke-dashoffset", String(RING * (1 - pct / 100)))));
+      } else {
+        el.setAttribute("stroke-dashoffset", String(RING * (1 - pct / 100)));
+      }
+    }
+
+    function flash(el: Element | null, cls = "nv-flash") {
+      if (!el || reduced) return;
+      el.classList.remove(cls);
+      void (el as HTMLElement).offsetWidth; // restart the animation
+      el.classList.add(cls);
+    }
+
+    let toastTimer: number | undefined;
+    function toast(msg: string) {
+      const t = $("[data-toast]");
+      if (!t) return;
+      t.textContent = msg;
+      t.hidden = false;
+      flash(t, "nv-toast--in");
+      clearTimeout(toastTimer);
+      toastTimer = window.setTimeout(() => { t.hidden = true; }, 3200);
+    }
+
+    // ── Derived numbers ───────────────────────────────────────────────
+    const pctOf = (id: string) => {
+      const it = ITEMS[id];
+      return it.tasks ? Math.round((progress[id] / it.tasks) * 100) : null;
+    };
+    function sectionTotals(sid: string) {
+      const ids = SECTIONS[sid].items.filter((id: string) => ITEMS[id].tasks);
+      const tasks = ids.reduce((a: number, id: string) => a + ITEMS[id].tasks, 0);
+      const done = ids.reduce((a: number, id: string) => a + progress[id], 0);
+      return { tasks, done, pct: tasks ? Math.round((done / tasks) * 100) : null };
+    }
+
+    // Repaint every number that depends on `progress`.
+    function repaint(sweep = false) {
+      // Aggregates first: a course module is the sum of the topics under it.
+      Object.keys(ITEMS).forEach((id) => {
+        const from: string[] | null = ITEMS[id].derived;
+        if (from) progress[id] = from.reduce((a, x) => a + (progress[x] ?? 0), 0);
+      });
+
+      Object.keys(ITEMS).forEach((id) => {
+        const it = ITEMS[id];
+        if (!it.tasks) return;
+        const p = pctOf(id)!;
+        $$(`[data-itembar="${id}"]`).forEach((b) => (b.style.width = p + "%"));
+        $$(`[data-itempoints="${id}"]`).forEach((e) => (e.textContent = `${progress[id]} / ${it.tasks}`));
+        $$(`[data-count="${id}"]`).forEach((e) => (e.textContent = `${progress[id]}/${it.tasks}`));
+        $$(`[data-row="${id}"]`).forEach((e) => e.classList.toggle("done", p === 100));
+      });
+
+      Object.keys(SECTIONS).forEach((sid) => {
+        const st = sectionTotals(sid);
+        if (st.pct === null) return;
+        $$(`[data-secbar="${sid}"]`).forEach((b) => (b.style.width = st.pct + "%"));
+        $$(`[data-secpct="${sid}"]`).forEach((e) => (e.textContent = st.pct + " %"));
+        const label = $(`[data-secringlabel="${sid}"]`);
+        if (label) label.textContent = `${st.done} von ${st.tasks} Aufgaben`;
+        const dot = $(`[data-raildot="${sid}"]`);
+        if (dot) dot.dataset.state = st.pct === 100 ? "done" : st.pct > 0 ? "current" : "todo";
+        const ladderBtn = $(`[data-ladder="${sid}"]`);
+        if (ladderBtn) ladderBtn.dataset.state = st.pct === 100 ? "done" : st.pct > 0 ? "current" : "todo";
+        // The visible section ring animates; the hidden ones just get set.
+        const view = $(`[data-section-view="${sid}"]`);
+        const visible = view && !(view as HTMLElement).hidden;
+        setRing($(`[data-secring="${sid}"]`), st.pct, sweep && !!visible);
+        if (visible) countUp($(`[data-secringvalue="${sid}"]`), st.pct);
+        else setCount($(`[data-secringvalue="${sid}"]`), st.pct + "%");
+      });
+
+      mounter.repaintResult();   // keeps the Ergebnis view live while it is open
+
+      const course = sectionTotals("weg");
+      const fill = $("[data-strip-fill]");
+      if (fill && course.pct !== null) fill.style.width = course.pct + "%";
+      const stripLabel = $("[data-strip-label]");
+      if (stripLabel && course.pct !== null) stripLabel.textContent = `${course.pct} % · ${course.done} / ${course.tasks} Aufgaben`;
+    }
+
+    // ── Variant switch ────────────────────────────────────────────────
+    function showVariant(id: string) {
+      $$("[data-variant-pane]").forEach((p) => { p.hidden = p.dataset.variantPane !== id; });
+      $$(".nv-toggle-btn").forEach((b) => {
+        const on = b.dataset.variant === id;
+        b.classList.toggle("active", on);
+        b.setAttribute("aria-selected", String(on));
+      });
+      try { localStorage.setItem("nv-variant", id); } catch (e) {}
+    }
+    $$(".nv-toggle-btn").forEach((b) => b.addEventListener("click", () => showVariant(b.dataset.variant!)));
+
+    // ── The content views ─────────────────────────────────────────────
+    const current = { section: "weg", item: null as string | null };
+    const LEVEL_SOURCE_TEXT: Record<string, string> = {
+      data: "Stufe aus den Daten",
+      abgeleitet: "Stufe aus dem Inhalt abgeleitet — noch kein level-Feld",
+      "—": "",
+    };
+
+    function selectSection(id: string, keepItem = false) {
+      current.section = id;
+      if (!keepItem) current.item = null;
+
+      $$("[data-section-view]").forEach((v) => { v.hidden = v.dataset.sectionView !== id || !!current.item; });
+      const itemView = $("[data-item-view]");
+      if (itemView) itemView.hidden = !current.item;
+
+      $$("[data-rail-section]").forEach((s) => { s.hidden = s.dataset.railSection !== id; });
+      $$("[data-section-btn]").forEach((b) => b.classList.toggle("active", b.dataset.sectionBtn === id));
+      $("[data-nvb]")?.classList.remove("collapsed");
+
+      // In the accordion, choosing a group also opens it.
+      const head = $(`.nvc-head[data-section-btn="${id}"]`);
+      if (head) {
+        $$("[data-nvc-group]").forEach((g) => {
+          const on = g.contains(head);
+          g.classList.toggle("open", on);
+          g.querySelector(".nvc-head")?.setAttribute("aria-expanded", String(on));
+        });
+      }
+
+      if (!current.item) {
+        stopQuiz();
+        const h1 = $(`[data-section-view="${id}"] h1`);
+        const crumbSection = $("[data-crumb-section]");
+        if (crumbSection) crumbSection.textContent = h1 ? h1.textContent! : id;
+        const tail = $("[data-crumb-tail]");
+        if (tail) tail.hidden = true;
+        $$("[data-nav-item]").forEach((el) => { el.classList.remove("active"); el.setAttribute("aria-current", "false"); });
+        repaint(true);
+        mountQuickExercise(id);
+      }
+      try { localStorage.setItem("nv-view", JSON.stringify(current)); } catch (e) {}
+    }
+
+    function selectItem(id: string) {
+      const it = ITEMS[id];
+      if (!it) return;
+      current.item = id;
+      selectSection(it.section, true);
+
+      $$("[data-nav-item]").forEach((el) => {
+        const on = el.dataset.navItem === id;
+        el.classList.toggle("active", on);
+        el.setAttribute("aria-current", on ? "page" : "false");
+      });
+
+      const set = (sel: string, text: string) => { const el = $(sel); if (el) el.textContent = text; };
+      set("[data-detail-eyebrow]", it.eyebrow);
+      set("[data-detail-title]", it.label);
+      set("[data-detail-level]", it.level);
+      set("[data-detail-levelsrc]", LEVEL_SOURCE_TEXT[it.levelSource] || "");
+      set("[data-detail-lead]", it.lead);
+      const href = $<HTMLAnchorElement>("[data-detail-href]");
+      if (href) href.href = it.href;
+
+      paintItemRing(id, true);
+      paintFocusHead(id);
+
+      set("[data-crumb-section]", it.sectionLabel);
+      const tail = $("[data-crumb-tail]");
+      if (tail) tail.hidden = false;
+      set("[data-crumb-item]", it.label);
+      set("[data-back-label]", "Zurück zu " + it.sectionLabel);
+
+      $$("[data-section-view]").forEach((v) => (v.hidden = true));
+      const itemView = $("[data-item-view]");
+      if (itemView) itemView.hidden = false;
+
+      mountPractice(id);
+      try { localStorage.setItem("nv-view", JSON.stringify(current)); } catch (e) {}
+    }
+
+    function paintItemRing(id: string, sweep = false) {
+      const it = ITEMS[id];
+      const pct = pctOf(id);
+      setRing($("[data-detail-ring]"), pct ?? 0, sweep);
+      const value = $("[data-detail-ringvalue]");
+      if (value) {
+        if (pct === null) setCount(value, "–");
+        else if (sweep) { setCount(value, "0%"); countUp(value, pct); }
+        else countUp(value, pct);
+      }
+      const label = $("[data-detail-ringlabel]");
+      if (label) label.textContent = it.tasks
+        ? `${progress[id]} von ${it.tasks} Aufgaben` + (it.minutes ? ` · ca. ${it.minutes} Min.` : "")
+        : "Keine Aufgaben zu zählen";
+    }
+
+    // ── The inline exercise ───────────────────────────────────────────
+    let mountedTopic: string | null = null;
+
+    function stopQuiz() {
+      const root = $("[data-quiz-root]");
+      if (root) root.innerHTML = "";
+      const ws = $("[data-ws-root]");
+      if (ws) { ws.hidden = true; ws.innerHTML = ""; }
+      const trainerPanel = $("[data-trainer-panel]");
+      if (trainerPanel) trainerPanel.hidden = true;
+      const inlinePanel = $("[data-inline-panel]");
+      if (inlinePanel) inlinePanel.hidden = true;
+      mountedTopic = null;
+    }
+
+    // One correct answer, wherever it came from, moves every number on the page.
+    function creditAnswer(id: string, ok: boolean) {
+      // Wrong answers are recorded too — they count toward the streak and the
+      // per-skill accuracy, they just do not advance the topic.
+      try {
+        recordAttempt({
+          skill: DATA.skillOf[id] ?? "grammatik",
+          correct: ok,
+          topic: id,
+          id,
+          trackVocab: id === "artikel-trainer" || DATA.skillOf[id] === "wortschatz",
+        });
+      } catch (e) {}
+      if (!ok) return;
+      const before = pctOf(id);
+      progress[id] = Math.min(progress[id] + 1, ITEMS[id].tasks);
+      repaint();
+      paintItemRing(id);
+      paintFocusHead(id);
+      flash($("[data-itemringcard]"), "nv-pop");
+      if (pctOf(id) === 100 && before !== 100) {
+        flash($("[data-itemringcard]"), "nv-celebrate");
+        toast(`✓ ${ITEMS[id].label} abgeschlossen`);
+        if (sectionTotals(ITEMS[id].section).pct === 100) toast(`🎉 ${ITEMS[id].sectionLabel} komplett`);
+      }
+    }
+
+    const esc = (s: any) => String(s ?? "").replace(/[&<>"']/g, (c) =>
+      ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c] as string));
+
+    // The same rule card and exercise shells [id].astro renders server-side —
+    // rebuilt here so /nav can show any of the 21 topics without shipping them all.
+    function ruleCardHtml(w: any): string | null {
+      const c = w.concept;
+      if (!c) return null;
+      const ref = c?.reference;
+      return `
+        <div class="vp-card">
+          <div class="vp-card-label">Wie funktioniert das?</div>
+          ${c.flow ? `<div class="vp-flow">${c.flow
+            .map((s: any, i: number) =>
+              `${i > 0 ? '<span class="vp-flow-arrow">→</span>' : ""}<div class="vp-flow-step${s.variant ? ` vp-flow-step--${esc(s.variant)}` : ""}">${esc(s.text)}</div>`)
+            .join("")}</div>` : ""}
+          ${c.exampleHtml ? `<p class="vp-example">${c.exampleHtml}</p>` : ""}
+          ${c.qa ? `<div class="vp-qa-grid">${c.qa
+            .map((q: any) => `<div class="vp-qa-item"><span>${q.html}</span>${q.tag ? `<span class="vp-qa-tag">${esc(q.tag)}</span>` : ""}</div>`)
+            .join("")}</div>` : ""}
+          ${c.noteHtml ? `<p class="vp-note">${c.noteHtml}</p>` : ""}
+          ${ref ? `
+            <button type="button" class="vp-toggle-ref" data-ws-ref
+              data-show="${esc(ref.showLabel ?? "Referenzliste anzeigen ▼")}"
+              data-hide="${esc(ref.hideLabel ?? "Referenzliste ausblenden ▲")}"
+            >${esc(ref.showLabel ?? "Referenzliste anzeigen ▼")}</button>
+            <div data-ws-refpanel hidden>
+              ${(ref.tables ?? []).map((t: any) => `
+                <div class="vp-ref-table-wrap">
+                  ${t.caption ? `<p class="vp-ref-table-caption">${esc(t.caption)}</p>` : ""}
+                  <div class="vp-ref-table-scroll">
+                    <table class="vp-ref-table">
+                      <thead><tr>${t.head.map((h: string) => `<th>${esc(h)}</th>`).join("")}</tr></thead>
+                      <tbody>${t.rows.map((r: string[]) =>
+                        `<tr>${r.map((cell, i) => i === 0 ? `<th scope="row">${esc(cell)}</th>` : `<td>${esc(cell)}</td>`).join("")}</tr>`).join("")}</tbody>
+                    </table>
+                  </div>
+                  ${t.note ? `<p class="vp-ref-table-note">${esc(t.note)}</p>` : ""}
+                </div>`).join("")}
+              ${ref.boxes ? `<div class="vp-ref-grid">${ref.boxes.map((b: any) => `
+                <div class="vp-ref-box vp-ref-box--${esc(b.variant ?? "akk")}">
+                  <span class="badge ${b.variant === "dat" ? "badge-info" : "badge-brand"}">${esc(b.badge)}</span>
+                  <ul>${b.items.map((i: string) => `<li>${esc(i)}</li>`).join("")}</ul>
+                </div>`).join("")}</div>` : ""}
+            </div>` : ""}
+        </div>`;
+
+    }
+
+    function exerciseCardsHtml(w: any) {
+      return (w.exercises ?? []).map((ex: any, i: number) => `
+        <div class="vp-card">
+          <div class="vp-ex-head"><span class="badge badge-neutral">${i + 1}</span><h3>${esc(ex.title)}</h3></div>
+          ${ex.hint ? `<p class="vp-ex-hint">${esc(ex.hint)}</p>` : ""}
+          <div data-ex-index="${i}"></div>
+        </div>`).join("");
+    }
+
+    // /dashboard stacks the rule above the exercises; /v2 puts it in the drawer
+    // and starts the column at the exercises.
+    function workspaceHtml(w: any, withRule = true) {
+      const rule = withRule ? ruleCardHtml(w) : null;
+      return `
+        ${withRule ? `<div class="nv-ws-head">
+          <h2>Regel &amp; Übungen</h2>
+          <span class="nv-learn-badge">läuft in dieser Ansicht</span>
+        </div>` : ""}
+        ${rule ?? ""}
+        <h3 class="nv-ws-subhead">Übungen <span>${(w.exercises ?? []).length}</span></h3>
+        ${exerciseCardsHtml(w)}`;
+    }
+
+    // ── The Artikel-Trainer ───────────────────────────────────────────
+    // Every exercise kind lives in src/lib/inlineExercises.js so the topic pages
+    // mount the identical widgets from the identical data. This shell only says
+    // what an answer means here: it moves this page's numbers, and it persists.
+    const ARTIKEL = JSON.parse(document.getElementById("nv-artikel")!.textContent!);
+    const mounter = createExerciseMounter({
+      DATA,
+      ARTIKEL,
+      credit: (id: string, ok: boolean) => creditAnswer(id, ok),
+      onPick: (id: string) => selectItem(id),
+      totals: (sid: string) => (SECTIONS[sid] ? sectionTotals(sid) : null),
+      sections: SECTIONS,
+    });
+    const mountInline = mounter.mountInline;
+    const mountTrainer = mounter.mountTrainer;
+
+    // ── Focus mode (/v2): the rule lives in a drawer, not above the exercises ──
+    const LAYOUT = JSON.parse(document.getElementById("nv-layout")!.textContent!);
+    const focusMode = LAYOUT === "focus";
+    const drawer = {
+      panel: $("[data-rule-panel]"),
+      title: $("[data-rule-title]"),
+      teaser: $("[data-rule-teaser]"),
+      cta: $("[data-rule-open]"),
+      scrim: $(".nvf-scrim"),
+      aside: $(".nvf-drawer"),
+    };
+
+    function openRule(open: boolean) {
+      if (!drawer.aside) return;
+      drawer.aside.classList.toggle("open", open);
+      drawer.aside.setAttribute("aria-hidden", String(!open));
+      drawer.cta?.setAttribute("aria-expanded", String(open));
+      if (drawer.scrim) drawer.scrim.hidden = !open;
+      if (open) ($(".nvf-drawer-x") as HTMLElement | null)?.focus();
+      else (drawer.cta as HTMLElement | null)?.focus();
+    }
+    drawer.cta?.addEventListener("click", () => openRule(true));
+    $$("[data-rule-close]").forEach((b) => b.addEventListener("click", () => openRule(false)));
+    addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && drawer.aside?.classList.contains("open")) openRule(false);
+    });
+
+    // Fills the drawer for the open topic, and hides the trigger when there is no
+    // rule to show — a Karteikarten deck has none, and an empty drawer is worse
+    // than no button.
+    function setRule(html: string | null, name: string, teaser: string) {
+      if (!focusMode || !drawer.cta) return;
+      const has = !!html;
+      (drawer.cta as HTMLElement).hidden = !has;
+      if (!has) { openRule(false); return; }
+      if (drawer.panel) drawer.panel.innerHTML = html!;
+      if (drawer.title) drawer.title.textContent = `Regel — ${name}`;
+      if (drawer.teaser) drawer.teaser.textContent = teaser || "Wie funktioniert das?";
+    }
+
+    // The focus head carries the progress the hero card carries elsewhere.
+    function paintFocusHead(id: string) {
+      if (!focusMode) return;
+      const it = ITEMS[id];
+      const pct = pctOf(id);
+      const bar = $("[data-focus-bar]") as HTMLElement | null;
+      if (bar) bar.style.width = (pct ?? 0) + "%";
+      const count = $("[data-focus-count]");
+      if (count) count.textContent = it.tasks ? `${progress[id]} / ${it.tasks}` : "";
+    }
+
+    const mountedQuick = new Set<string>();
+
+    async function mountQuickExercise(sectionId: string) {
+      const card = $(`[data-quickex="${sectionId}"]`);
+      if (!card || mountedQuick.has(sectionId)) return;
+      const topicId = (card as HTMLElement).dataset.quickTopic!;
+
+      if ((card as HTMLElement).dataset.quickKind === "trainer") {
+        mountedQuick.add(sectionId);
+        mountTrainer(card.querySelector("[data-trainer-root]") as HTMLElement);
+        return;
+      }
+
+      const loader = loaderFor(topicId);
+      if (!loader) return;
+
+      mountedQuick.add(sectionId);
+      const mod: any = await loader();
+      const w = mod.default ?? mod;
+      const slot = card.querySelector("[data-ex-index]") as HTMLElement | null;
+      if (slot) slot.innerHTML = "";
+      mountGrammarWorkspace(card, w, { onAnswer: (ok: boolean) => creditAnswer(topicId, ok) });
+    }
+
+    async function mountWorkspace(id: string) {
+      const root = $("[data-ws-root]");
+      const loader = loaderFor(id);
+      if (!root || !loader) return false;
+      if (mountedTopic === id) { root.hidden = false; return true; }
+
+      root.hidden = false;
+      root.innerHTML = `<p class="nv-ws-loading">Übungen werden geladen …</p>`;
+      const mod: any = await loader();
+      // The learner may have clicked on to something else while this loaded.
+      if (current.item !== id) return true;
+
+      const w = mod.default ?? mod;
+      root.innerHTML = workspaceHtml(w, !focusMode);
+      if (focusMode) setRule(ruleCardHtml(w), w.name, w.subtitle ?? "");
+      mountedTopic = id;
+
+      root.querySelector("[data-ws-ref]")?.addEventListener("click", (e) => {
+        const btn = e.currentTarget as HTMLElement;
+        const panel = root.querySelector("[data-ws-refpanel]") as HTMLElement | null;
+        if (!panel) return;
+        panel.hidden = !panel.hidden;
+        btn.textContent = panel.hidden ? btn.dataset.show! : btn.dataset.hide!;
+      });
+
+      mountGrammarWorkspace(root, w, { onAnswer: (ok: boolean) => creditAnswer(id, ok) });
+      return true;
+    }
+
+    function mountPractice(id: string) {
+      if (focusMode && ITEMS[id].practice !== "workspace") setRule(null, "", "");
+      const learn = $("[data-learn]");
+      const empty = $("[data-learn-empty]");
+      const ws = $("[data-ws-root]");
+      const root = $("[data-quiz-root]");
+      const trainerPanel = $("[data-trainer-panel]");
+      const kind = ITEMS[id].practice;
+
+      if (kind !== "workspace" && ws) { ws.hidden = true; ws.innerHTML = ""; }
+      if (trainerPanel) trainerPanel.hidden = kind !== "trainer";
+
+      if (kind === "trainer") {
+        if (learn) learn.hidden = true;
+        if (empty) empty.hidden = true;
+        if (root) root.innerHTML = "";
+        mountTrainer(trainerPanel!.querySelector("[data-trainer-root]") as HTMLElement);
+        return;
+      }
+
+      const INLINE_KINDS = ["choice", "cards", "audio", "speak", "read", "dtz", "picker", "result", "bausteine"];
+      const inlinePanel = $("[data-inline-panel]");
+      if (inlinePanel) inlinePanel.hidden = !INLINE_KINDS.includes(kind as string);
+      if (kind && INLINE_KINDS.includes(kind)) {
+        if (learn) learn.hidden = true;
+        if (empty) empty.hidden = true;
+        if (root) root.innerHTML = "";
+        const it = ITEMS[id];
+        const set = (sel: string, t: string) => { const el = inlinePanel!.querySelector(sel); if (el) el.textContent = t; };
+        set("[data-inline-eyebrow]", it.eyebrow);
+        set("[data-inline-title]", INLINE_TITLES[kind] ?? it.label);
+        set("[data-inline-sub]", it.lead);
+        mountInline(inlinePanel!.querySelector("[data-inline-root]") as HTMLElement, id, kind);
+        return;
+      }
+
+      if (kind === "workspace") {
+        if (learn) learn.hidden = true;
+        if (empty) empty.hidden = true;
+        if (root) root.innerHTML = "";
+        mountWorkspace(id);
+        return;
+      }
+
+      const topic = TOPICS[id];
+      if (kind !== "quiz" || !topic) {
+        stopQuiz();
+        if (learn) learn.hidden = true;
+        if (empty) empty.hidden = false;
+        return;
+      }
+
+      if (learn) learn.hidden = false;
+      if (empty) empty.hidden = true;
+      const intro = $("[data-learn-intro]");
+      if (intro) intro.textContent = topic.intro;
+
+      if (mountedTopic === id || !root) return;
+      root.innerHTML = "";
+      mountedTopic = id;
+      mountQuiz(root, withChoices(topic.questions), { mode: "choice", onAnswer: (ok: boolean) => creditAnswer(id, ok) });
+    }
+
+    // ── Wiring ────────────────────────────────────────────────────────
+    $$("[data-section-btn]").forEach((b) => b.addEventListener("click", () => selectSection(b.dataset.sectionBtn!)));
+    $$("[data-nav-item]").forEach((b) => b.addEventListener("click", () => selectItem(b.dataset.navItem!)));
+    $$("[data-back]").forEach((b) => b.addEventListener("click", () => selectSection(current.section)));
+    $$("[data-reset-progress]").forEach((b) =>
+      b.addEventListener("click", () => {
+        if (!confirm("Deinen gesamten Fortschritt löschen? Das lässt sich nicht rückgängig machen.")) return;
+        try { resetProgress(); } catch (e) {}
+        Object.keys(progress).forEach((k) => (progress[k] = 0));
+        repaint(true);
+        toast("Fortschritt zurückgesetzt");
+      }));
+    $$("[data-nvb-collapse]").forEach((b) =>
+      b.addEventListener("click", (e) => { e.stopPropagation(); $("[data-nvb]")?.classList.toggle("collapsed"); }));
+
+    // ── Restore ───────────────────────────────────────────────────────
+    const AVAILABLE: string[] = JSON.parse(document.getElementById("nv-variants")!.textContent!);
+    let savedVariant = AVAILABLE[0];
+    try {
+      const stored = localStorage.getItem("nv-variant");
+      if (stored && AVAILABLE.includes(stored)) savedVariant = stored;
+    } catch (e) {}
+    showVariant(savedVariant);
+
+    let saved: any = null;
+    try { saved = JSON.parse(localStorage.getItem("nv-view") || "null"); } catch (e) {}
+    if (saved && saved.item && ITEMS[saved.item]) selectItem(saved.item);
+    else selectSection(saved && saved.section ? saved.section : "weg");
+  </script>

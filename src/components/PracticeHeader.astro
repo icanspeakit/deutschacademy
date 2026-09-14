@@ -13,6 +13,7 @@ const { title, titleKey } = Astro.props;
     <a href="/uebungen" class="practice-back" data-i18n="header.allExercises">← Alle Übungen</a>
     <span class="practice-header-title" data-i18n={titleKey}>{title}</span>
     <div class="practice-header-right">
+      <a href="/dashboard" class="practice-back">Dashboard</a>
       <a href="/" class="practice-back" data-i18n="header.home">Startseite</a>
       <LanguageSwitcher />
       <ThemeToggle />

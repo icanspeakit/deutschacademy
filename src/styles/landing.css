@@ -274,10 +274,22 @@
 .lp-dash-question { border: 1px dashed var(--border-strong); border-radius: 12px; padding: 18px; }
 .lp-quiz-kicker { font-family: var(--font-display); font-size: 11.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--brand-blue-dark); margin-bottom: 10px; }
 .lp-quiz-prompt { margin: 0 0 4px; font-size: 16px; font-weight: 700; color: var(--ink); }
-.lp-quiz-prompt .blank { display: inline-block; min-width: 38px; border-bottom: 2px solid var(--brand-blue); }
+.lp-quiz-prompt .blank { display: inline-block; min-width: 38px; border-bottom: 2px solid var(--brand-blue); text-align: center; }
+.lp-quiz-prompt .blank.is-filled { color: var(--brand-blue-dark); padding: 0 4px; }
 .lp-quiz-hint { margin: 0 0 14px; font-size: 12px; color: var(--muted-soft); }
 .lp-quiz-choices { display: flex; gap: 8px; flex-wrap: wrap; }
-.lp-quiz-choice { padding: 9px 16px; border-radius: var(--radius-pill); border: 1.5px solid var(--border); font-weight: 700; font-size: 13px; color: var(--ink); }
+/* The homepage mock renders these as real <button>s (the quiz card there is
+   playable), the design-preview pages still as <span>s — so reset the button
+   chrome here rather than assuming one element. */
+.lp-quiz-choice {
+  padding: 9px 16px; border-radius: var(--radius-pill); border: 1.5px solid var(--border);
+  font-family: inherit; font-weight: 700; font-size: 13px; color: var(--ink);
+  background: var(--surface-card); line-height: 1.2;
+  transition: border-color .15s ease, background .15s ease, color .15s ease;
+}
+button.lp-quiz-choice { cursor: pointer; }
+button.lp-quiz-choice:hover:not(:disabled) { border-color: var(--brand-blue); }
+button.lp-quiz-choice:disabled { cursor: default; }
 .lp-quiz-choice--correct { border-color: var(--brand-blue); background: var(--blue-50, #f0fdfa); color: var(--brand-blue-dark); position: relative; }
 .lp-quiz-choice--correct::after {
   content: "✓"; position: absolute; top: -7px; right: -6px;
@@ -285,6 +297,24 @@
   background: var(--brand-blue); color: #fff;
   font-size: 9px; font-weight: 700;
   display: flex; align-items: center; justify-content: center;
+}
+.lp-quiz-choice--wrong { border-color: var(--danger); color: var(--danger); background: var(--surface-card); animation: lp-quiz-shake .35s ease; }
+@keyframes lp-quiz-shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-4px); }
+  75% { transform: translateX(4px); }
+}
+.lp-quiz-foot { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; margin-top: 12px; min-height: 16px; }
+.lp-quiz-feedback { font-size: 12px; font-weight: 700; }
+.lp-quiz-feedback.is-correct { color: var(--brand-blue-dark); }
+.lp-quiz-feedback.is-wrong { color: var(--danger); }
+.lp-quiz-dots { display: flex; gap: 5px; }
+.lp-quiz-dots i { width: 6px; height: 6px; border-radius: 50%; background: var(--border-strong); }
+.lp-quiz-dots i.is-done { background: var(--blue-200); }
+.lp-quiz-dots i.is-current { background: var(--brand-blue); }
+@media (prefers-reduced-motion: reduce) {
+  .lp-quiz-choice { transition: none; }
+  .lp-quiz-choice--wrong { animation: none; }
 }
 .lp-progress-card { border: 1px solid var(--border); border-radius: 12px; padding: 16px; display: flex; flex-direction: column; gap: 10px; }
 .lp-progress-row { display: flex; justify-content: space-between; font-size: 12.5px; font-weight: 700; color: var(--ink); }
@@ -434,6 +464,23 @@
   .lp-step-arrow { transform: rotate(90deg); height: 32px; }
 }
 
+/* The nav's right cluster (CTA + language + theme + burger) never shrank below the
+   900px breakpoint, so it ran past the screen edge on phones — 376px of content in
+   a 360px viewport, and 112px over on a 320px iPhone SE. */
+@media (max-width: 600px) {
+  .lp-nav-row { gap: 12px; padding-inline: 16px; }
+  .lp-nav-left { gap: 16px; }
+  .lp-nav-left img { height: 36px; }
+  .lp-nav-right { gap: 10px; }
+  .lp-nav .lp-btn--primary { padding: 9px 14px; font-size: 13px; }
+}
+
+/* Narrower still: drop the nav CTA. It duplicates "Kostenlos starten" sitting a
+   few hundred pixels below it in the fold, and the burger still holds the links. */
+@media (max-width: 430px) {
+  .lp-nav .lp-btn--primary { display: none; }
+}
+
 @media (max-width: 720px) {
   .lp-value-grid { grid-template-columns: 1fr; }
   .lp-browser-body { grid-template-columns: 1fr; }
@@ -447,4 +494,94 @@
   .lp-section { padding: 56px 0; }
   .lp-hero-inner { padding-top: 48px; padding-bottom: 56px; }
   .lp-final-cta-inner { padding-top: 64px; padding-bottom: 64px; }
+}
+
+/* --- Homepage "Übungen" mock: a switching sidebar over four live panels ------
+   Scoped to [data-mock] so the same .lp-browser markup on the design-preview
+   pages (m1, uebungen-vorschau) keeps its original static proportions. The body
+   height is fixed rather than min-height because index.astro's fitMocks() rescales
+   the whole frame whenever the artwork's height changes — without this, switching
+   panels would make the mock jump. */
+[data-mock] .lp-browser-body { height: 440px; }
+[data-mock] .lp-dash { overflow: hidden; }
+[data-mock] .lp-dash > [data-panel-body] { display: flex; flex-direction: column; gap: 18px; flex: 1; min-height: 0; }
+[data-mock] .lp-dash > [data-panel-body][hidden] { display: none; }
+
+/* The sidebar entries are real buttons here, so undo the button chrome and keep
+   the look landing.css already defines for .lp-sidebar-link. */
+[data-mock] button.lp-sidebar-link {
+  display: flex; align-items: center; gap: 7px;
+  width: 100%; text-align: left;
+  font-family: inherit; font-size: 12.5px; line-height: 1.3;
+  background: none; border: 1px solid transparent; cursor: pointer;
+  transition: background var(--duration-base, .18s) var(--ease-standard, ease);
+}
+[data-mock] button.lp-sidebar-link:hover { background: var(--surface-card); }
+[data-mock] button.lp-sidebar-link.lp-sidebar-link--active { background: var(--surface-card); border-color: var(--border); }
+
+/* Everything else in the toolbox: shown so the sidebar still tells the whole
+   story, styled as a list so it never reads as a button that does nothing. */
+.lp-sidebar-more { margin-top: auto; display: flex; flex-direction: column; gap: 5px; padding-top: 12px; border-top: 1px solid var(--border); }
+.lp-sidebar-more > span { font-size: 11px; color: var(--muted-soft); display: flex; align-items: center; gap: 6px; }
+.lp-sidebar-more-label { font-size: 9.5px !important; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--muted-soft); }
+
+/* Aussprache panel */
+.lp-pron-text { margin: 0 0 4px; font-family: var(--font-display); font-weight: 700; font-size: 21px; line-height: 1.25; color: var(--ink); }
+.lp-pron-controls { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-top: 14px; }
+.lp-pron-play {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 9px 18px; border-radius: var(--radius-pill); border: none;
+  background: var(--gradient-brand); color: #fff;
+  font-family: inherit; font-size: 13px; font-weight: 700; cursor: pointer;
+}
+.lp-pron-icon { font-size: 10px; line-height: 1; }
+.is-playing .lp-pron-play { box-shadow: 0 0 0 4px var(--blue-100); }
+.lp-pron-slow { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; color: var(--muted); cursor: pointer; }
+.lp-pron-slow input { accent-color: var(--brand-blue); cursor: pointer; }
+.lp-pron-nav { margin-left: auto; display: inline-flex; gap: 6px; }
+.lp-pron-step {
+  width: 28px; height: 28px; border-radius: 50%;
+  border: 1px solid var(--border-strong); background: var(--surface-card);
+  color: var(--ink); font-size: 15px; line-height: 1; cursor: pointer;
+}
+.lp-pron-step:hover { border-color: var(--brand-blue); color: var(--brand-blue-dark); }
+
+/* Bildbeschreibung panel */
+.lp-bild { display: flex; gap: 16px; min-height: 0; }
+.lp-bild img { width: 168px; height: 100%; max-height: 210px; object-fit: cover; border-radius: 10px; flex-shrink: 0; }
+.lp-bild-body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 10px; }
+.lp-bild-tabs { display: flex; gap: 6px; }
+.lp-bild-tab {
+  padding: 5px 11px; border-radius: var(--radius-pill);
+  border: 1px solid var(--border); background: var(--surface-card);
+  font-family: inherit; font-size: 11px; font-weight: 700; color: var(--muted); cursor: pointer;
+}
+.lp-bild-tab.is-active { border-color: var(--brand-blue); background: var(--blue-50); color: var(--brand-blue-dark); }
+.lp-bild-list { margin: 0; padding-left: 16px; display: flex; flex-direction: column; gap: 6px; font-size: 12px; line-height: 1.45; color: var(--muted); overflow: hidden; }
+.lp-bild-body .lp-quiz-foot { margin-top: auto; }
+
+/* Kulturwissen panel */
+.lp-kultur-score { font-size: 12px; font-weight: 700; color: var(--brand-blue-dark); }
+/* Four stacked options plus prompt, kicker and foot have to clear the fixed
+   440px body — hence the tighter rhythm than the other panels use. */
+.lp-kultur-options { display: flex; flex-direction: column; gap: 5px; margin-top: 10px; }
+.lp-kultur-option { text-align: left; padding: 6px 13px; font-size: 12px; font-weight: 600; }
+[data-mock] [data-panel-body="kultur"] .lp-quiz-prompt { font-size: 14px; }
+
+/* Narrow: landing.css reflows .lp-browser-body to one column at 720px, so the
+   fixed desktop height (and the clipping that goes with it) has to be released —
+   the sidebar now sits above the panel instead of beside it, and the panel is
+   free to be as tall as its content. Mirrors what mock-dashboard.css does for
+   the dashboard mock at its own breakpoint. */
+@media (max-width: 720px) {
+  [data-mock] .lp-browser-body { height: auto; }
+  [data-mock] .lp-dash { overflow: visible; }
+  [data-mock] .lp-sidebar { align-items: center; gap: 6px; }
+  [data-mock] .lp-sidebar img { width: 100%; margin-bottom: 4px; }
+  [data-mock] button.lp-sidebar-link { width: auto; }
+  /* A vertical "also included" list would double the sidebar's height on a
+     phone for something that is only context — lay it out inline instead. */
+  .lp-sidebar-more { margin-top: 0; width: 100%; flex-direction: row; flex-wrap: wrap; align-items: center; gap: 4px 10px; }
+  .lp-bild { flex-direction: column; }
+  .lp-bild img { width: 100%; max-height: 150px; }
 }

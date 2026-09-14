@@ -1,0 +1,79 @@
+---
+// "Wo stehst du?" — the homepage fold below 1024px.
+//
+// Replaces the hero paragraph with five tap targets. Each level tile lands on a
+// real topic at that level, never on another overview, so it is one tap from
+// the fold into an exercise. The fifth tile is the escape hatch: most new
+// learners cannot place themselves on the CEFR scale, and four level tiles
+// quietly assume they can.
+//
+// The entry topic per level is chosen, not derived — taking "the first topic of
+// that level" gave B1 · Adjektivdeklination, which is a poor advertisement for
+// B1. If a slug here ever disappears, the build fails loudly rather than
+// linking into nowhere (see the check below).
+import "../styles/level-fold.css";
+import grammatik from "../data/grammatik.json";
+
+const workspaceModules = import.meta.glob("../data/grammatik/*.json", { eager: true });
+const workspaces = Object.values(workspaceModules).map((m) => m.default ?? m);
+const covered = new Set(workspaces.map((w) => w.id));
+const quizOnly = grammatik.filter((t) => !covered.has(t.id));
+
+const bySlug = new Map(workspaces.map((w) => [w.slug ?? w.id, w]));
+const countFor = (level) =>
+  workspaces.filter((w) => w.level === level).length + quizOnly.filter((t) => t.level === level).length;
+
+const ENTRY = [
+  { level: "A1", slug: "artikel" },
+  { level: "A2", slug: "perfekt" },
+  { level: "B1", slug: "verben-praepositionen" },
+  { level: "B2", slug: "partizip-als-adjektiv" },
+];
+
+const LEVELS = ENTRY.map(({ level, slug }) => {
+  const topic = bySlug.get(slug);
+  if (!topic) throw new Error(`LevelFold: kein Grammatikthema mit slug "${slug}" (Einstieg für ${level})`);
+  return { level, name: topic.name, href: `/uebungen/grammatik/${slug}`, count: countFor(level) };
+});
+
+const unsureHref = LEVELS[0].href;
+
+const EXAM_CHIPS = [
+  { label: "DTZ", href: "/pruefungen/dtz" },
+  { label: "telc", href: "/pruefungen/telc" },
+  { label: "Goethe", href: "/pruefungen/goethe" },
+  { label: "TestDaF", href: "/pruefungen/testdaf" },
+  { label: "Leben in Deutschland", href: "/pruefungen/leben-in-deutschland" },
+];
+---
+<section class="lf">
+  <div class="lf-wrap">
+    <p class="lf-kicker" data-i18n="fold.free">Kostenlos · ohne Konto</p>
+    <h1 class="lf-ask" data-i18n="fold.ask">Wo stehst du?</h1>
+    <p class="lf-ask-sub" data-i18n="fold.askSub">Tipp auf dein Niveau — du bist sofort in der ersten Übung.</p>
+
+    <div class="lf-levels">
+      {LEVELS.map((l) => (
+        <a class="lf-tile" href={l.href}>
+          <span class="lf-tile-level">{l.level}</span>
+          <span>
+            <span class="lf-tile-name">{l.name}</span>
+            <span class="lf-tile-meta" data-i18n="fold.topics" data-i18n-vars={JSON.stringify({ n: l.count })}>{l.count} Themen</span>
+          </span>
+        </a>
+      ))}
+      <a class="lf-tile lf-tile--unsure" href={unsureHref}>
+        <span class="lf-tile-level">?</span>
+        <span>
+          <span class="lf-tile-name" data-i18n="fold.unsure">Weiß ich nicht</span>
+          <span class="lf-tile-meta" data-i18n="fold.unsureSub">Wir fangen bei A1 an — du merkst in zwei Fragen, ob es zu leicht ist.</span>
+        </span>
+      </a>
+    </div>
+
+    <p class="lf-sub-head" data-i18n="fold.orExam">Oder direkt zur Prüfung</p>
+    <div class="lf-chips">
+      {EXAM_CHIPS.map((e) => <a class="lf-chip" href={e.href}>{e.label}</a>)}
+    </div>
+  </div>
+</section>

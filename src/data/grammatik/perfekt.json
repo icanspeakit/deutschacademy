@@ -6,17 +6,39 @@
   "source": "Perfekt Partnerseite A.pdf · Perfekt Partnerseite B.pdf (Partnerseite 4: Perfekt)",
   "concept": {
     "flow": [
-      { "text": "haben / sein", "variant": "verb" },
-      { "text": "Position 2" },
-      { "text": "…" },
-      { "text": "Partizip II · Ende", "variant": "prep" }
+      {
+        "text": "haben / sein",
+        "variant": "verb"
+      },
+      {
+        "text": "Position 2"
+      },
+      {
+        "text": "…"
+      },
+      {
+        "text": "Partizip II · Ende",
+        "variant": "prep"
+      }
     ],
     "exampleHtml": "Ich <span class=\"vp-verb\">habe</span> gestern einen Kaffee <span class=\"vp-prep\">getrunken</span>. — Ich <span class=\"vp-verb\">bin</span> um neun Uhr <span class=\"vp-prep\">gekommen</span>.",
     "qa": [
-      { "html": "<strong>sein</strong> nehmen Verben der <em>Bewegung von A nach B</em> (gehen, fahren, fliegen, kommen, steigen) und der <em>Zustandsänderung</em> (aufwachen, einschlafen, sterben, passieren).", "tag": "sein" },
-      { "html": "<strong>haben</strong> nehmen alle übrigen Verben — vor allem alle mit Akkusativobjekt: <em>Ich habe einen Kaffee getrunken.</em>", "tag": "haben" },
-      { "html": "<strong>Regelmäßig</strong>: ge- + Stamm + -t. <em>kaufen → gekauft, wohnen → gewohnt, arbeiten → gearbeitet</em>.", "tag": "ge…t" },
-      { "html": "<strong>Unregelmäßig</strong>: ge- + (oft geänderter) Stamm + -en. <em>trinken → getrunken, sprechen → gesprochen, gehen → gegangen</em>.", "tag": "ge…en" }
+      {
+        "html": "<strong>sein</strong> nehmen Verben der <em>Bewegung von A nach B</em> (gehen, fahren, fliegen, kommen, steigen) und der <em>Zustandsänderung</em> (aufwachen, einschlafen, sterben, passieren).",
+        "tag": "sein"
+      },
+      {
+        "html": "<strong>haben</strong> nehmen alle übrigen Verben — vor allem alle mit Akkusativobjekt: <em>Ich habe einen Kaffee getrunken.</em>",
+        "tag": "haben"
+      },
+      {
+        "html": "<strong>Regelmäßig</strong>: ge- + Stamm + -t. <em>kaufen → gekauft, wohnen → gewohnt, arbeiten → gearbeitet</em>.",
+        "tag": "ge…t"
+      },
+      {
+        "html": "<strong>Unregelmäßig</strong>: ge- + (oft geänderter) Stamm + -en. <em>trinken → getrunken, sprechen → gesprochen, gehen → gegangen</em>.",
+        "tag": "ge…en"
+      }
     ],
     "noteHtml": "Zwei Sonderfälle ohne <em>ge-</em>: Verben auf <strong>-ieren</strong> (<em>studieren → studiert, telefonieren → telefoniert</em>) und Verben mit <strong>untrennbarem Präfix</strong> be-, emp-, ent-, er-, ver-, zer- (<em>bekommen → bekommen, empfehlen → empfohlen, vergessen → vergessen</em>). Bei <strong>trennbaren</strong> Verben rutscht das <em>ge-</em> in die Mitte: <em>aufwachen → auf<strong>ge</strong>wacht, einladen → ein<strong>ge</strong>laden</em>.",
     "reference": {
@@ -25,39 +47,135 @@
       "tables": [
         {
           "caption": "31 Verben aus der Partnerseite",
-          "head": ["Infinitiv", "Perfekt (er …)"],
+          "head": [
+            "Infinitiv",
+            "Perfekt (er …)"
+          ],
           "rows": [
-            ["holen", "hat geholt"],
-            ["wohnen", "hat gewohnt"],
-            ["gehen", "ist gegangen"],
-            ["treffen", "hat getroffen"],
-            ["arbeiten", "hat gearbeitet"],
-            ["abfahren", "ist abgefahren"],
-            ["bestellen", "hat bestellt"],
-            ["kommen", "ist gekommen"],
-            ["aufwachen", "ist aufgewacht"],
-            ["passieren", "ist passiert"],
-            ["öffnen", "hat geöffnet"],
-            ["einladen", "hat eingeladen"],
-            ["einsteigen", "ist eingestiegen"],
-            ["ausziehen", "ist/hat ausgezogen"],
-            ["fliegen", "ist geflogen"],
-            ["bekommen", "hat bekommen"],
-            ["empfehlen", "hat empfohlen"],
-            ["waschen", "hat gewaschen"],
-            ["duschen", "hat geduscht"],
-            ["bleiben", "ist geblieben"],
-            ["fernsehen", "hat ferngesehen"],
-            ["teilnehmen", "hat teilgenommen"],
-            ["erklären", "hat erklärt"],
-            ["trinken", "hat getrunken"],
-            ["vergessen", "hat vergessen"],
-            ["sprechen", "hat gesprochen"],
-            ["helfen", "hat geholfen"],
-            ["auspacken", "hat ausgepackt"],
-            ["haben", "hat gehabt"],
-            ["kennen", "hat gekannt"],
-            ["wissen", "hat gewusst"]
+            [
+              "holen",
+              "hat geholt"
+            ],
+            [
+              "wohnen",
+              "hat gewohnt"
+            ],
+            [
+              "gehen",
+              "ist gegangen"
+            ],
+            [
+              "treffen",
+              "hat getroffen"
+            ],
+            [
+              "arbeiten",
+              "hat gearbeitet"
+            ],
+            [
+              "abfahren",
+              "ist abgefahren"
+            ],
+            [
+              "bestellen",
+              "hat bestellt"
+            ],
+            [
+              "kommen",
+              "ist gekommen"
+            ],
+            [
+              "aufwachen",
+              "ist aufgewacht"
+            ],
+            [
+              "passieren",
+              "ist passiert"
+            ],
+            [
+              "öffnen",
+              "hat geöffnet"
+            ],
+            [
+              "einladen",
+              "hat eingeladen"
+            ],
+            [
+              "einsteigen",
+              "ist eingestiegen"
+            ],
+            [
+              "ausziehen",
+              "ist/hat ausgezogen"
+            ],
+            [
+              "fliegen",
+              "ist geflogen"
+            ],
+            [
+              "bekommen",
+              "hat bekommen"
+            ],
+            [
+              "empfehlen",
+              "hat empfohlen"
+            ],
+            [
+              "waschen",
+              "hat gewaschen"
+            ],
+            [
+              "duschen",
+              "hat geduscht"
+            ],
+            [
+              "bleiben",
+              "ist geblieben"
+            ],
+            [
+              "fernsehen",
+              "hat ferngesehen"
+            ],
+            [
+              "teilnehmen",
+              "hat teilgenommen"
+            ],
+            [
+              "erklären",
+              "hat erklärt"
+            ],
+            [
+              "trinken",
+              "hat getrunken"
+            ],
+            [
+              "vergessen",
+              "hat vergessen"
+            ],
+            [
+              "sprechen",
+              "hat gesprochen"
+            ],
+            [
+              "helfen",
+              "hat geholfen"
+            ],
+            [
+              "auspacken",
+              "hat ausgepackt"
+            ],
+            [
+              "haben",
+              "hat gehabt"
+            ],
+            [
+              "kennen",
+              "hat gekannt"
+            ],
+            [
+              "wissen",
+              "hat gewusst"
+            ]
           ]
         }
       ],
@@ -91,39 +209,108 @@
     {
       "type": "table",
       "title": "haben oder sein?",
-      "hint": "Schreiben Sie nur das Hilfsverb in der Form für „er“.",
-      "columns": ["Verb", "hat / ist"],
-      "placeholder": "hat / ist",
+      "hint": "Welches Hilfsverb bildet das Perfekt? Wählen Sie haben oder sein.",
+      "columns": [
+        "Verb",
+        "Hilfsverb"
+      ],
       "rows": [
-        { "term": "trinken", "answer": "hat" },
-        { "term": "gehen", "answer": "ist" },
-        { "term": "arbeiten", "answer": "hat" },
-        { "term": "einschlafen", "answer": "ist" },
-        { "term": "einladen", "answer": "hat" },
-        { "term": "fliegen", "answer": "ist" },
-        { "term": "bleiben", "answer": "ist" },
-        { "term": "waschen", "answer": "hat" },
-        { "term": "passieren", "answer": "ist" },
-        { "term": "vergessen", "answer": "hat" }
+        {
+          "term": "trinken",
+          "answer": "haben"
+        },
+        {
+          "term": "gehen",
+          "answer": "sein"
+        },
+        {
+          "term": "arbeiten",
+          "answer": "haben"
+        },
+        {
+          "term": "einschlafen",
+          "answer": "sein"
+        },
+        {
+          "term": "einladen",
+          "answer": "haben"
+        },
+        {
+          "term": "fliegen",
+          "answer": "sein"
+        },
+        {
+          "term": "bleiben",
+          "answer": "sein"
+        },
+        {
+          "term": "waschen",
+          "answer": "haben"
+        },
+        {
+          "term": "passieren",
+          "answer": "sein"
+        },
+        {
+          "term": "vergessen",
+          "answer": "haben"
+        }
+      ],
+      "choices": [
+        "haben",
+        "sein"
       ]
     },
     {
       "type": "table",
       "title": "Wie heißt das Partizip II?",
       "hint": "Nur das Partizip, ohne Hilfsverb.",
-      "columns": ["Infinitiv", "Partizip II"],
+      "columns": [
+        "Infinitiv",
+        "Partizip II"
+      ],
       "placeholder": "Partizip II",
       "rows": [
-        { "term": "kaufen", "answer": "gekauft" },
-        { "term": "trinken", "answer": "getrunken" },
-        { "term": "sprechen", "answer": "gesprochen" },
-        { "term": "aufwachen", "answer": "aufgewacht" },
-        { "term": "einladen", "answer": "eingeladen" },
-        { "term": "studieren", "answer": "studiert" },
-        { "term": "bekommen", "answer": "bekommen" },
-        { "term": "empfehlen", "answer": "empfohlen" },
-        { "term": "fernsehen", "answer": "ferngesehen" },
-        { "term": "wissen", "answer": "gewusst" }
+        {
+          "term": "kaufen",
+          "answer": "gekauft"
+        },
+        {
+          "term": "trinken",
+          "answer": "getrunken"
+        },
+        {
+          "term": "sprechen",
+          "answer": "gesprochen"
+        },
+        {
+          "term": "aufwachen",
+          "answer": "aufgewacht"
+        },
+        {
+          "term": "einladen",
+          "answer": "eingeladen"
+        },
+        {
+          "term": "studieren",
+          "answer": "studiert"
+        },
+        {
+          "term": "bekommen",
+          "answer": "bekommen"
+        },
+        {
+          "term": "empfehlen",
+          "answer": "empfohlen"
+        },
+        {
+          "term": "fernsehen",
+          "answer": "ferngesehen"
+        },
+        {
+          "term": "wissen",
+          "answer": "gewusst"
+        }
       ]
     },
     {
@@ -131,13 +318,34 @@
       "title": "Infinitiv und Perfektform verbinden.",
       "hint": "Achten Sie besonders auf die trennbaren Verben.",
       "pairs": [
-        { "q": "abfahren", "a": "ist abgefahren" },
-        { "q": "auspacken", "a": "hat ausgepackt" },
-        { "q": "teilnehmen", "a": "hat teilgenommen" },
-        { "q": "einsteigen", "a": "ist eingestiegen" },
-        { "q": "bestellen", "a": "hat bestellt" },
-        { "q": "kennen", "a": "hat gekannt" },
-        { "q": "sterben", "a": "ist gestorben" }
+        {
+          "q": "abfahren",
+          "a": "ist abgefahren"
+        },
+        {
+          "q": "auspacken",
+          "a": "hat ausgepackt"
+        },
+        {
+          "q": "teilnehmen",
+          "a": "hat teilgenommen"
+        },
+        {
+          "q": "einsteigen",
+          "a": "ist eingestiegen"
+        },
+        {
+          "q": "bestellen",
+          "a": "hat bestellt"
+        },
+        {
+          "q": "kennen",
+          "a": "hat gekannt"
+        },
+        {
+          "q": "sterben",
+          "a": "ist gestorben"
+        }
       ]
     },
     {
@@ -145,31 +353,117 @@
       "title": "Lückentext: Ein verpatzter Morgen.",
       "hint": "Ergänzen Sie das Hilfsverb oder das Partizip.",
       "segments": [
-        { "text": "Ich " },
-        { "blank": 0, "answer": ["bin"] },
-        { "text": " heute um 7.00 Uhr aus dem Bett " },
-        { "blank": 1, "answer": ["gekommen"] },
-        { "text": ". Zehn Minuten später " },
-        { "blank": 2, "answer": ["bin"] },
-        { "text": " ich ins Bad " },
-        { "blank": 3, "answer": ["gegangen"] },
-        { "text": ". Um 8.00 Uhr " },
-        { "blank": 4, "answer": ["habe"] },
-        { "text": " ich in der Küche " },
-        { "blank": 5, "answer": ["gefrühstückt"] },
-        { "text": ". Danach " },
-        { "blank": 6, "answer": ["bin"] },
-        { "text": " ich aus dem Haus " },
-        { "blank": 7, "answer": ["gegangen"] },
-        { "text": " und kurz darauf in den Zug " },
-        { "blank": 8, "answer": ["eingestiegen"] },
-        { "text": ". Um 9.00 Uhr " },
-        { "blank": 9, "answer": ["bin"] },
-        { "text": " ich im Büro " },
-        { "blank": 10, "answer": ["angekommen"] },
-        { "text": ". Mein Chef " },
-        { "blank": 11, "answer": ["hat"] },
-        { "text": " sich an diesem Morgen leider nicht gefreut." }
+        {
+          "text": "Ich "
+        },
+        {
+          "blank": 0,
+          "answer": [
+            "bin"
+          ]
+        },
+        {
+          "text": " heute um 7.00 Uhr aus dem Bett "
+        },
+        {
+          "blank": 1,
+          "answer": [
+            "gekommen"
+          ]
+        },
+        {
+          "text": ". Zehn Minuten später "
+        },
+        {
+          "blank": 2,
+          "answer": [
+            "bin"
+          ]
+        },
+        {
+          "text": " ich ins Bad "
+        },
+        {
+          "blank": 3,
+          "answer": [
+            "gegangen"
+          ]
+        },
+        {
+          "text": ". Um 8.00 Uhr "
+        },
+        {
+          "blank": 4,
+          "answer": [
+            "habe"
+          ]
+        },
+        {
+          "text": " ich in der Küche "
+        },
+        {
+          "blank": 5,
+          "answer": [
+            "gefrühstückt"
+          ]
+        },
+        {
+          "text": ". Danach "
+        },
+        {
+          "blank": 6,
+          "answer": [
+            "bin"
+          ]
+        },
+        {
+          "text": " ich aus dem Haus "
+        },
+        {
+          "blank": 7,
+          "answer": [
+            "gegangen"
+          ]
+        },
+        {
+          "text": " und kurz darauf in den Zug "
+        },
+        {
+          "blank": 8,
+          "answer": [
+            "eingestiegen"
+          ]
+        },
+        {
+          "text": ". Um 9.00 Uhr "
+        },
+        {
+          "blank": 9,
+          "answer": [
+            "bin"
+          ]
+        },
+        {
+          "text": " ich im Büro "
+        },
+        {
+          "blank": 10,
+          "answer": [
+            "angekommen"
+          ]
+        },
+        {
+          "text": ". Mein Chef "
+        },
+        {
+          "blank": 11,
+          "answer": [
+            "hat"
+          ]
+        },
+        {
+          "text": " sich an diesem Morgen leider nicht gefreut."
+        }
       ]
     },
     {
@@ -179,20 +473,72 @@
         {
           "id": "pf1",
           "hint": "Hilfsverb auf Position 2.",
-          "correct": ["Ich", "habe", "gestern", "einen", "Kaffee", "getrunken", "."],
-          "shuffled": ["einen", "Ich", "getrunken", "gestern", "Kaffee", "habe", "."]
+          "correct": [
+            "Ich",
+            "habe",
+            "gestern",
+            "einen",
+            "Kaffee",
+            "getrunken",
+            "."
+          ],
+          "shuffled": [
+            "einen",
+            "Ich",
+            "getrunken",
+            "gestern",
+            "Kaffee",
+            "habe",
+            "."
+          ]
         },
         {
           "id": "pf2",
           "hint": "Bewegungsverb.",
-          "correct": ["Wir", "sind", "letzte", "Woche", "nach", "Berlin", "geflogen", "."],
-          "shuffled": ["nach", "letzte", "Wir", "geflogen", "Woche", "Berlin", "sind", "."]
+          "correct": [
+            "Wir",
+            "sind",
+            "letzte",
+            "Woche",
+            "nach",
+            "Berlin",
+            "geflogen",
+            "."
+          ],
+          "shuffled": [
+            "nach",
+            "letzte",
+            "Wir",
+            "geflogen",
+            "Woche",
+            "Berlin",
+            "sind",
+            "."
+          ]
         },
         {
           "id": "pf3",
           "hint": "Trennbares Verb im Perfekt.",
-          "correct": ["Sie", "hat", "mich", "zu", "ihrem", "Geburtstag", "eingeladen", "."],
-          "shuffled": ["ihrem", "mich", "Sie", "eingeladen", "zu", "Geburtstag", "hat", "."]
+          "correct": [
+            "Sie",
+            "hat",
+            "mich",
+            "zu",
+            "ihrem",
+            "Geburtstag",
+            "eingeladen",
+            "."
+          ],
+          "shuffled": [
+            "ihrem",
+            "mich",
+            "Sie",
+            "eingeladen",
+            "zu",
+            "Geburtstag",
+            "hat",
+            "."
+          ]
         }
       ]
     }

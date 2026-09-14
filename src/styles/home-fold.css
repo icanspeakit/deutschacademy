@@ -1,0 +1,45 @@
+/* Which fold the homepage shows, and what happens to the mockups when it is not
+   the one they live in. Imported by index.astro only — /mobile3 carries its own
+   copy of the same decision so the study page can be compared independently. */
+
+/* The level fold owns everything up to 1024px; the mockup fold owns everything
+   above it. Exactly one is ever in the document flow. */
+@media (min-width: 1025px) {
+  .lf { display: none; }
+}
+@media (max-width: 1024px) {
+  .fr-page--home { display: none; }
+}
+
+/* Peek band: only where the fold stopped showing the mockups. */
+.hf-peek-band { display: none; }
+@media (max-width: 1024px) {
+  .hf-peek-band { display: block; }
+}
+
+.hf-peek { display: flex; flex-direction: column; gap: 22px; }
+.hf-peek .lp-browser { width: 100%; max-width: none; transform: none !important; }
+.hf-peek-label {
+  display: flex; align-items: center; gap: 7px;
+  margin: 0 0 8px;
+  font-size: 11px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase;
+  color: var(--muted-soft);
+}
+.hf-peek-label::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--brand-blue); }
+
+/* Two frames fit side by side on a landscape tablet and still stay readable. */
+@media (min-width: 860px) and (max-width: 1024px) {
+  .hf-peek { flex-direction: row; align-items: flex-start; gap: 20px; }
+  .hf-peek-item { flex: 1; min-width: 0; }
+}
+
+/* mock-dashboard.css releases the dashboard's fixed body height below 900px,
+   which is right in a fold but wrong here: unfolded, that one mock is over
+   1500px on a phone — a screen and a half of scrolling past something meant to
+   be glanced at. Keep the frame a frame and let it scroll inside.
+   overscroll-behavior goes back to auto on purpose: `contain` is fine when the
+   page behind cannot scroll, but in mid-page it traps a thumb. */
+@media (max-width: 900px) {
+  .hf-peek .dm .lp-browser-body { height: 420px; }
+  .hf-peek .dm .lp-dash { overflow-y: auto; overscroll-behavior: auto; }
+}

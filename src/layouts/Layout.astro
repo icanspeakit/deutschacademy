@@ -39,12 +39,22 @@ const {
         }
       })();
     </script>
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
-    <link rel="shortcut icon" href="/favicon.ico" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-    <link rel="manifest" href="/site.webmanifest" />
-    <meta name="theme-color" content="#4d9be1" />
+    <!-- Favicons. The `?v=` is load-bearing, not decoration: Chrome caches favicons by
+         URL in a store that survives a hard reload, so replacing the file at the same
+         path leaves returning visitors on the old icon indefinitely. That is exactly what
+         happened here — the Astro starter placeholder (a PNG saved as favicon.ico) stayed
+         pinned in tabs long after the real logo shipped. Bump the version whenever an
+         icon changes.
+         `rel="shortcut icon"` was dropped: it is a non-standard legacy alias for
+         `rel="icon"` and adds a second, competing declaration for the same file. -->
+    <link rel="icon" href="/favicon.ico?v=2" sizes="32x32" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png?v=2" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png?v=2" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=2" />
+    <link rel="manifest" href="/site.webmanifest?v=2" />
+    <!-- Brand teal (--brand-blue in global.css). Was #4d9be1, a blue left over from an
+         earlier palette, so the browser chrome did not match the site. -->
+    <meta name="theme-color" content="#0d9488" />
     <script is:inline>
       (function () {
         var m = document.querySelector('meta[name="theme-color"]');

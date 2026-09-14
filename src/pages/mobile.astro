@@ -1,0 +1,167 @@
+---
+// Mobile studies for the homepage fold — the phone-width counterpart to
+// /front. Same four blocks (headline, dashboard mock, exercises mock, slogan),
+// three arrangements, switchable from the bar at the top.
+//
+// The page renders at the real viewport width rather than inside a drawn phone
+// frame: both mocks already reflow below 720px (landing.css for the frame,
+// mock-dashboard.css for the dashboard panel), and they stay fully interactive
+// at that size. A scaled-down desktop screenshot would have looked neater and
+// told us nothing about whether the thing is usable with a thumb.
+//
+// Internal; noindex, not linked from the public nav. Nothing here touches
+// index.astro.
+import Layout from "../layouts/Layout.astro";
+import LanguageSwitcher from "../components/LanguageSwitcher.astro";
+import ThemeToggle from "../components/ThemeToggle.astro";
+import DashboardMock from "../components/mocks/DashboardMock.astro";
+import UebungenMock from "../components/mocks/UebungenMock.astro";
+import "../styles/landing.css";
+import "../styles/mobile.css";
+
+const variants = [
+  { id: "stapel", label: "A · Stapel", note: "Alles untereinander — ein Scroll, nichts versteckt." },
+  { id: "tabs", label: "B · Tabs", note: "Ein Mockup zur Zeit, umschaltbar. Kürzeste Seite." },
+  { id: "karussell", label: "C · Karussell", note: "Beide Mockups zum Wischen, mit Punkten darunter." },
+];
+
+const mocks = [
+  { id: "dashboard", label: "Dein Fortschritt" },
+  { id: "uebungen", label: "Übungen" },
+];
+---
+<Layout title="Mobile-Layouts – DeutschAcademy" description="Interne Layout-Studien für den Startseiten-Fold auf dem Handy.">
+  <Fragment slot="head">
+    <meta name="robots" content="noindex, nofollow" />
+  </Fragment>
+
+  <div class="mb-page" data-variant="stapel">
+    <header class="mb-bar">
+      <div class="mb-bar-inner">
+        <div class="mb-bar-top">
+          <p class="mb-bar-title">Mobile-Layouts</p>
+          <div class="mb-bar-tools">
+            <span class="mb-width" data-width-readout>— px</span>
+            <LanguageSwitcher />
+            <ThemeToggle />
+          </div>
+        </div>
+        <div class="mb-switch" role="tablist" aria-label="Layout-Variante">
+          {variants.map((v, i) => (
+            <button
+              type="button"
+              role="tab"
+              class="mb-switch-btn"
+              data-variant-btn={v.id}
+              data-note={v.note}
+              aria-selected={i === 0 ? "true" : "false"}
+            >{v.label}</button>
+          ))}
+        </div>
+        <p class="mb-bar-note" data-variant-note>{variants[0].note}</p>
+      </div>
+    </header>
+
+    <main class="mb-stage">
+      <section class="mb-copy">
+        <p class="mb-eyebrow" data-i18n="home.hero2.eyebrow">Deutsch von A1 bis C1</p>
+        <h1 class="mb-title" data-i18n="front.title">Deutsch lernen</h1>
+        <p class="mb-accent">Schritt für Schritt.</p>
+        <p class="mb-lead" data-i18n="home.hero2.lead">
+          Grammatik, Alltagsdeutsch und Sprechpraxis — aufgebaut aus echtem
+          Unterrichtsmaterial, nicht kalt für eine Plattform geschrieben.
+        </p>
+        <div class="mb-actions">
+          <a href="/uebungen" class="lp-btn lp-btn--primary" data-i18n="home.cta.startFree">Kostenlos starten</a>
+          <a href="/pruefungen" class="lp-btn lp-btn--outline" data-i18n="home.hero2.cta2">So funktioniert's</a>
+        </div>
+      </section>
+
+      <div class="mb-tabs" role="tablist" aria-label="Vorschau">
+        {mocks.map((m, i) => (
+          <button type="button" role="tab" class="mb-tab" data-mock-tab={m.id} aria-selected={i === 0 ? "true" : "false"}>{m.label}</button>
+        ))}
+      </div>
+
+      <div class="mb-mocks" data-mocks>
+        <section class="mb-mock" data-mock-slot="dashboard" aria-label="Dashboard-Vorschau">
+          <p class="mb-mock-label">{mocks[0].label}</p>
+          <DashboardMock />
+        </section>
+        <section class="mb-mock" data-mock-slot="uebungen" aria-label="Übungen-Vorschau">
+          <p class="mb-mock-label">{mocks[1].label}</p>
+          <UebungenMock />
+        </section>
+      </div>
+
+      <div class="mb-dots" data-dots aria-hidden="true">
+        {mocks.map((_, i) => <i class={i === 0 ? "is-current" : ""}></i>)}
+      </div>
+
+      <section class="mb-slogan">
+        <p class="mb-slogan-line" data-i18n="home.footer.tagline">Da für Dich!</p>
+        <p class="mb-slogan-sub" data-i18n="front.slogan.sub">
+          Kostenlos, ohne Konto — von Lehrkräften, die wirklich unterrichten.
+        </p>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    const page = document.querySelector(".mb-page");
+    const note = document.querySelector("[data-variant-note]");
+    const variantBtns = [...document.querySelectorAll("[data-variant-btn]")];
+    const tabBtns = [...document.querySelectorAll("[data-mock-tab]")];
+    const slots = [...document.querySelectorAll("[data-mock-slot]")];
+    const track = document.querySelector("[data-mocks]");
+    const dots = [...document.querySelectorAll("[data-dots] i")];
+    const readout = document.querySelector("[data-width-readout]");
+    const KEY = "da-mobile-variant";
+
+    let activeMock = "dashboard";
+
+    function applyTabs() {
+      // Only the tabs variant hides a mock; the other two must show both, or
+      // switching away from tabs would leave one permanently gone.
+      const tabsMode = page.dataset.variant === "tabs";
+      for (const slot of slots) slot.hidden = tabsMode && slot.dataset.mockSlot !== activeMock;
+      for (const btn of tabBtns) btn.setAttribute("aria-selected", String(btn.dataset.mockTab === activeMock));
+    }
+
+    function applyVariant(id) {
+      const btn = variantBtns.find((b) => b.dataset.variantBtn === id) || variantBtns[0];
+      page.dataset.variant = btn.dataset.variantBtn;
+      for (const b of variantBtns) b.setAttribute("aria-selected", String(b === btn));
+      note.textContent = btn.dataset.note;
+      applyTabs();
+      if (page.dataset.variant === "karussell") track.scrollTo({ left: 0 });
+      try { localStorage.setItem(KEY, page.dataset.variant); } catch {}
+    }
+
+    for (const b of variantBtns) b.addEventListener("click", () => applyVariant(b.dataset.variantBtn));
+    for (const b of tabBtns) {
+      b.addEventListener("click", () => {
+        activeMock = b.dataset.mockTab;
+        applyTabs();
+      });
+    }
+
+    // Carousel dots follow the scroll position rather than a click handler, so
+    // they stay honest when the strip is swiped instead of tapped.
+    track.addEventListener("scroll", () => {
+      if (page.dataset.variant !== "karussell") return;
+      const i = Math.round(track.scrollLeft / track.clientWidth);
+      dots.forEach((dot, n) => dot.classList.toggle("is-current", n === i));
+    }, { passive: true });
+
+    function showWidth() {
+      readout.innerHTML = `<strong>${window.innerWidth}</strong> px`;
+    }
+    addEventListener("resize", showWidth);
+    showWidth();
+
+    let saved = null;
+    try { saved = localStorage.getItem(KEY); } catch {}
+    applyVariant(saved || "stapel");
+  </script>
+</Layout>

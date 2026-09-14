@@ -23,7 +23,11 @@
 }
 .uv-hero h1 { font-family: var(--font-display); font-size: var(--text-4xl); color: #fff; margin: 0 0 8px; }
 .uv-hero p { color: rgba(255,255,255,.9); margin: 0; max-width: 46ch; }
-.uv-hero-pills { display: flex; gap: 10px; flex-shrink: 0; }
+/* The row grew to three pills (Übungen / Prüfungen / Wörter) and three won't fit
+   on a 360px phone in one line. `flex-shrink: 0` pinned this block at its 356px
+   max-content width, so its own flex-wrap could never engage — it has to be able
+   to shrink to the line it sits on before the pills will wrap. */
+.uv-hero-pills { display: flex; flex-wrap: wrap; gap: 10px; min-width: 0; }
 .uv-pill--ghost { background: rgba(255,255,255,.18); color: #fff; border: 1px solid rgba(255,255,255,.4); }
 
 .uv-main { max-width: 1200px; margin: 0 auto; padding: 40px 24px 64px; }

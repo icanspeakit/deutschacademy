@@ -2,12 +2,20 @@
 import Layout from "../../layouts/Layout.astro";
 import PracticeHeader from "../../components/PracticeHeader.astro";
 import ExamPractice from "../../components/ExamPractice.astro";
+import ExamFormat from "../../components/ExamFormat.astro";
 import "../../styles/practice.css";
 import "../../styles/pruefungen.css";
+import telcFormate from "../../data/pruefungen/telc-formate.json";
+
+// Format data is read off the telc Übungstests themselves (see the `source` field on
+// each entry) — every time, point value and task count below is from that source, not
+// estimated. The exam items themselves are © telc gGmbH and are deliberately not
+// reproduced here; only the structure of the exam is.
+const formate = telcFormate.formate;
 ---
 <Layout
   title="telc – DeutschAcademy"
-  description="telc Deutsch: Niveaustufen A1–C2, Prüfungsaufbau und kostenlose Grammatik- und Wortschatzübungen."
+  description="telc Deutsch: Niveaustufen A1–C2, der genaue Prüfungsaufbau von telc A1 (Start Deutsch 1) und ein kostenloser Sprachbausteine-Trainer."
 >
   <PracticeHeader title="telc" />
   <main class="practice-main">
@@ -24,10 +32,10 @@ import "../../styles/pruefungen.css";
         <span class="exam-meta-badge">Modulares System</span>
       </div>
       <p>
-        telc-Prüfungen gibt es für fast jedes CEFR-Niveau und für einige berufsbezogene Varianten
-        (z. B. telc Deutsch B1·B2 Beruf, telc Deutsch C1 Hochschule für die Studienzulassung). Sie werden
-        häufig für Arbeitsverhältnisse, Aufenthaltstitel und — bei den Hochschul-Varianten — für die
-        Zulassung zum Studium verlangt.
+        telc-Prüfungen gibt es für fast jedes CEFR-Niveau. Sie werden häufig für Arbeitsverhältnisse,
+        Aufenthaltstitel und — bei den Hochschul-Varianten — für die Zulassung zum Studium verlangt.
+        Daneben gibt es berufs- und fachsprachliche Varianten (telc Deutsch Beruf, Pflege, Medizin);
+        die deckt diese Seite bewusst nicht ab — hier geht es um allgemeines Deutsch.
       </p>
     </section>
 
@@ -36,39 +44,42 @@ import "../../styles/pruefungen.css";
       <div class="skill-grid">
         <div class="skill-card"><div class="skill-card-icon">📖</div><h4>Lesen</h4><p>Leseverstehen</p></div>
         <div class="skill-card"><div class="skill-card-icon">🎧</div><h4>Hören</h4><p>Hörverstehen</p></div>
+        <div class="skill-card"><div class="skill-card-icon">🧩</div><h4>Sprachbausteine</h4><p>Grammatik und Wortschatz im Text</p></div>
         <div class="skill-card"><div class="skill-card-icon">✍️</div><h4>Schreiben</h4><p>Schriftlicher Ausdruck</p></div>
         <div class="skill-card"><div class="skill-card-icon">🗣️</div><h4>Sprechen</h4><p>Mündliche Prüfung, meist paarweise</p></div>
       </div>
-    </section>
-
-    <section class="exam-section">
-      <!-- GENERIC FORMAT INFO: no deutschacademy source material for this exam yet -->
-      <h2>Format</h2>
-      <div class="format-table-wrap">
-        <table class="format-table">
-          <thead><tr><th>Teil</th><th>Was wird geprüft</th><th>Dauer / Umfang</th></tr></thead>
-          <tbody>
-            <tr><td>Schriftliche Prüfung</td><td>Lesen, Hören, Schreiben (Sprachbausteine)</td><td>Variiert je nach Niveau/Modul</td></tr>
-            <tr><td>Mündliche Prüfung</td><td>Sprechen, meist mit einem zweiten Teilnehmer</td><td>Variiert je nach Niveau/Modul</td></tr>
-          </tbody>
-        </table>
-      </div>
       <p class="format-note">
-        Genaue Zeiten, Aufgabenzahlen und Bestehensgrenzen unterscheiden sich je nach Niveau und Modul
-        (A1 ist deutlich kürzer als C2). Es liegt uns kein eigenes telc-Quellmaterial vor — die Angaben
-        hier sind allgemein bekannte, öffentliche Informationen zum telc-System, keine erfundenen Details.
-        Für die genauen Werte deines Moduls prüfe den offiziellen telc-Modellsatz.
+        Sprachbausteine sind die telc-Besonderheit: Grammatik und Wortschatz werden nicht in Einzelsätzen
+        abgefragt, sondern im laufenden Text. Nicht jede telc-Prüfung hat alle fünf Subtests — telc A1
+        (Start Deutsch 1) prüft Hören, Lesen und Schreiben zusammen und hat keine Sprachbausteine.
+        Ab B1 gehören sie dazu.
       </p>
     </section>
 
-    <div class="mock-cta mock-cta--soon">
-      <h2>Mock-Test: bald verfügbar</h2>
-      <p>Uns liegt kein eigenes telc-Quellmaterial vor, aus dem wir einen echten telc-Mock-Test bauen könnten. Statt erfundener Prüfungsfragen gibt es hier vorerst keinen Mock-Test — nur die allgemeinen Übungstools unten.</p>
+    {formate.map((f) => <ExamFormat format={f} />)}
+
+    <section class="exam-section">
+      <h2>Weitere Niveaus</h2>
+      <p class="format-note">
+        Oben steht die telc-Prüfung, für die uns ein Übungstest als Quelle vorliegt. Zeiten,
+        Aufgabenzahlen und Bestehensgrenzen unterscheiden sich zwischen den Niveaus deutlich — für A2, B1,
+        B2, C1 oder C2 prüfe bitte den offiziellen telc-Modellsatz deines Moduls. Wir tragen hier nur ein,
+        was wir belegen können, statt Werte zu schätzen.
+      </p>
+    </section>
+
+    <div class="mock-cta">
+      <h2>Sprachbausteine üben</h2>
+      <p>
+        Der Prüfungsteil, den es so nur bei telc gibt: Teil 1 als Zuordnung aus dem Wortkasten,
+        Teil 2 als Multiple Choice im laufenden Text — mit Alltagstexten und sofortiger Auswertung.
+      </p>
+      <a class="quiz-btn quiz-btn--primary" href="/pruefungen/telc/sprachbausteine">Zum Sprachbausteine-Trainer →</a>
     </div>
 
     <ExamPractice
-      heading="Üben für telc"
-      intro="Es gibt noch keine telc-spezifischen Übungen. Diese drei Tools sind niveau- und prüfungsübergreifend nützlich — sie stammen aus dem DTZ-Unterrichtsmaterial, prüfen aber allgemeine Artikel-, Grammatik- und Wortschatzkenntnisse, keinen telc-spezifischen Inhalt."
+      heading="Weiter üben für telc"
+      intro="Diese Tools sind niveau- und prüfungsübergreifend nützlich. Sie stammen aus dem DTZ-Unterrichtsmaterial und prüfen allgemeine Artikel-, Grammatik- und Wortschatzkenntnisse — keine telc-spezifischen Aufgabenformate."
       tools={["artikel", "grammatik", "wortschatz"]}
     />
   </main>

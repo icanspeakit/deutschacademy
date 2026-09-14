@@ -1,7 +1,7 @@
 /* Practice tools — reuses brand tokens from global.css */
 
 .practice-header {
-  background: #fff;
+  background: var(--surface-card);
   border-bottom: 1px solid var(--border);
   padding: 18px 24px;
 }
@@ -34,6 +34,9 @@
 }
 
 .practice-main { max-width: 880px; margin: 0 auto; padding: 40px 24px 80px; }
+/* Image-led pages (Bildbeschreibung) need the photo as large as the screen allows —
+   880px wastes most of a desktop viewport. */
+.practice-main--wide { max-width: 1240px; }
 
 .practice-back-link { display: inline-block; margin-bottom: 20px; font-weight: 600; font-size: .875rem; color: var(--brand-blue-dark); text-decoration: none; }
 .practice-back-link:hover { color: var(--accent-dark); }
@@ -56,7 +59,7 @@
   margin-top: 32px;
 }
 .tool-card {
-  background: #fff;
+  background: var(--surface-card);
   border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 28px 24px;
@@ -96,7 +99,7 @@
 .topic-tabs { display: flex; flex-wrap: wrap; gap: 8px; margin: 24px 0; justify-content: center; }
 .topic-tab {
   border: 1px solid var(--border);
-  background: #fff;
+  background: var(--surface-card);
   color: var(--ink);
   padding: 12px 16px;
   border-radius: 999px;
@@ -125,7 +128,7 @@
 
 /* Quiz card */
 .quiz-card {
-  background: #fff;
+  background: var(--surface-card);
   border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 28px;
@@ -165,7 +168,7 @@
 .quiz-btn {
   display: inline-block;
   border: 1px solid var(--border);
-  background: #fff;
+  background: var(--surface-card);
   color: var(--ink);
   padding: 10px 18px;
   border-radius: var(--radius-pill);
@@ -203,7 +206,7 @@
   font-size: 1.15rem;
   line-height: 1.5;
   transition: transform .4s ease;
-  background: #fff;
+  background: var(--surface-card);
   overflow-y: auto;
 }
 .fc-face--front { transform: rotateY(0deg); }
@@ -227,21 +230,37 @@
 .fc-kbd-hint { font-size: .78rem; color: var(--muted-soft); margin-top: 14px; }
 
 /* Speaking prompts */
-.prompt-card { background: #fff; border: 1px solid var(--border); border-radius: var(--radius); padding: 28px; max-width: 640px; margin: 0 auto; }
+.prompt-card { background: var(--surface-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 28px; max-width: 100%; margin: 0 auto; }
 .prompt-card h3 { text-align: left; margin: 0 0 6px; }
-.prompt-image { width: 100%; height: 420px; object-fit: contain; background: var(--surface); border-radius: 10px; margin: 0 0 16px; display: block; }
-@media (max-width: 560px) {
-  .prompt-image { height: 300px; }
+/* No fixed height and no `contain` box: a fixed 640x420 frame letterboxed every photo
+   against a grey slab — badly for the 1200x1800 portrait shot, which rendered only 280px
+   wide. Sizing by natural aspect ratio instead lets each photo be as large as the card
+   width and the viewport height allow, with no bars around it. */
+.prompt-image {
+  display: block;
+  margin: 0 auto 16px;
+  width: 100%;
+  max-width: 1100px;
+  height: auto;
+  border-radius: 10px;
 }
+/* Portrait shots (the 1200x1800 escalator one) would be ~1.5 viewports tall at full card
+   width, so they are capped by height instead — `width: auto` keeps the ratio intact,
+   which a `max-height` alone would not. The class is set from naturalWidth/naturalHeight
+   in sprechen.astro. */
+.prompt-image--portrait { width: auto; max-width: 100%; max-height: min(78vh, 860px); }
 .prompt-timer { font-family: var(--font-display); font-size: 2rem; color: var(--brand-blue-dark); text-align: center; margin: 12px 0; }
-.prompt-section-label { font-weight: 700; color: var(--brand-blue-dark); margin: 18px 0 6px; font-size: .85rem; text-transform: uppercase; letter-spacing: .04em; }
-.prompt-card ul { margin: 0; padding-left: 20px; }
+/* The card is now as wide as the photo needs, but prose shouldn't be 1200px wide —
+   cap the text columns and centre them under the image. */
+.prompt-section-label { font-weight: 700; color: var(--brand-blue-dark); margin: 18px auto 6px; max-width: 70ch; font-size: .85rem; text-transform: uppercase; letter-spacing: .04em; }
+.prompt-card ul { margin: 0 auto; max-width: 70ch; padding-left: 20px; }
+.prompt-card h3 { max-width: 70ch; margin-inline: auto; }
 .prompt-card li { margin-bottom: 6px; }
 .prompt-nav { display: flex; gap: 10px; justify-content: center; margin-top: 20px; }
 .prompt-reveal-btn { display: block; margin: 16px auto 0; }
 
 /* Reading / writing blocks */
-.reading-block { background: #fff; border: 1px solid var(--border); border-radius: var(--radius); padding: 28px; margin-bottom: 32px; }
+.reading-block { background: var(--surface-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 28px; margin-bottom: 32px; }
 .reading-block h3 { text-align: left; margin: 0 0 4px; }
 .reading-level { color: var(--muted); font-size: .85rem; margin-bottom: 16px; }
 .reading-text { white-space: pre-line; background: var(--surface); border-radius: 10px; padding: 18px; margin-bottom: 20px; line-height: 1.6; }
@@ -257,7 +276,7 @@ textarea.writing-area {
 .tips-box { background: var(--surface); border-radius: 10px; padding: 14px 18px; color: var(--muted); font-size: .9rem; margin-top: 10px; }
 
 /* Culture notes */
-.culture-card { background: #fff; border: 1px solid var(--border); border-radius: var(--radius); padding: 28px; max-width: 720px; margin: 0 auto 24px; }
+.culture-card { background: var(--surface-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 28px; max-width: 720px; margin: 0 auto 24px; }
 .culture-card h3 { text-align: left; margin: 0 0 10px; }
 .culture-question { font-weight: 700; color: var(--brand-blue-dark); }
 .culture-pros-cons { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin: 16px 0; }
@@ -283,7 +302,7 @@ textarea.writing-area {
   flex-direction: column;
   align-items: center;
   gap: 8px;
-  background: #fff;
+  background: var(--surface-card);
   border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 20px 14px;
@@ -298,3 +317,8 @@ textarea.writing-area {
 .pron-card--playing { border-color: var(--brand-blue-dark); background: var(--surface); }
 .pron-card--playing .pron-play-icon { animation: pron-pulse 1s ease-in-out infinite; }
 @keyframes pron-pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
+
+/* Sprechen B1/B2: three-stage prompt card (Bildbeschreibung · Kurzvortrag · Diskussion). */
+.prompt-stages { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin: 0 0 16px; }
+.prompt-hint { margin: 0 0 12px; font-size: .875rem; line-height: 1.6; color: var(--muted); }
+.prompt-topic { margin: 0 0 12px; font-size: 1rem; line-height: 1.6; }

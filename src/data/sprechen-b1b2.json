@@ -1,0 +1,127 @@
+{
+  "note": "Mündliche Prüfung B1/B2: drei Stufen pro Thema — Bildbeschreibung, Kurzvortrag, Diskussion. Das dreistufige Format stammt aus 'Pruefungsvorbereitung B1-B2 muendliche Pruefung Bild 1-6.pdf'; dessen sechs Themen sind pflegespezifisch und gehören in ein berufsbezogenes Angebot, nicht hierher. Die Themen hier decken die üblichen allgemeinsprachlichen Prüfungsbereiche ab (Umwelt, Wohnen, Medien, Gesundheit, Bildung, Zusammenleben). Bilder: Assets aus dem Repo.",
+  "stages": [
+    {
+      "key": "beschreibung",
+      "label": "1 · Bildbeschreibung",
+      "seconds": 90,
+      "hint": "Beschreiben Sie, was Sie sehen. Wer ist zu sehen, wo sind die Personen, was tun sie?"
+    },
+    {
+      "key": "kurzvortrag",
+      "label": "2 · Kurzvortrag",
+      "seconds": 180,
+      "hint": "Halten Sie einen kurzen Vortrag. Gehen Sie auf alle drei Punkte ein und schließen Sie mit Ihrer eigenen Meinung."
+    },
+    {
+      "key": "diskussion",
+      "label": "3 · Diskussion",
+      "seconds": 180,
+      "hint": "In der Prüfung sprechen Sie hier mit einer Partnerin oder einem Partner. Üben Sie beide Seiten: nennen Sie ein Argument dafür und eines dagegen."
+    }
+  ],
+  "prompts": [
+    {
+      "title": "Bild 1: Zusammen etwas schaffen",
+      "image": "/assets/foto-buero-1.jpg",
+      "beschreibung": [
+        "Was sehen Sie auf dem Bild? Wo sind die Personen und was tun sie gerade?",
+        "Wie wirkt die Stimmung auf Sie? Woran sehen Sie das?"
+      ],
+      "kurzvortrag": {
+        "topic": "Zusammenarbeit und Ehrenamt",
+        "points": [
+          "Wo arbeiten Menschen in Ihrem Alltag zusammen — in der Familie, im Verein, in der Nachbarschaft?",
+          "Warum engagieren sich Menschen freiwillig für andere?",
+          "Haben Sie schon einmal ehrenamtlich geholfen? Wobei?"
+        ]
+      },
+      "diskussion": "Sollte ehrenamtliches Engagement in der Schule verpflichtend sein — oder verliert es dann seinen Sinn?"
+    },
+    {
+      "title": "Bild 2: Gesundheit im Alltag",
+      "image": "/assets/nurse-2141808_1280.jpg",
+      "beschreibung": [
+        "Wer ist auf dem Bild zu sehen und in welcher Situation?",
+        "Welche Gefühle löst so eine Situation bei den meisten Menschen aus?"
+      ],
+      "kurzvortrag": {
+        "topic": "Gesund bleiben",
+        "points": [
+          "Was tun Sie selbst für Ihre Gesundheit?",
+          "Warum fällt es vielen Menschen schwer, gesund zu leben?",
+          "Wie ist die medizinische Versorgung in Ihrem Heimatland organisiert?"
+        ]
+      },
+      "diskussion": "Sollte der Staat ungesunde Lebensmittel höher besteuern, um die Menschen zu schützen — oder ist das Bevormundung?"
+    },
+    {
+      "title": "Bild 3: Wohnen und Stadt",
+      "image": "/assets/bricks-2181920_1280.jpg",
+      "beschreibung": [
+        "Was wird auf dem Bild gemacht? Welche Materialien sehen Sie?",
+        "In was für einer Gegend könnte dieses Bild entstanden sein?"
+      ],
+      "kurzvortrag": {
+        "topic": "Wohnen in der Stadt oder auf dem Land",
+        "points": [
+          "Welche Vorteile hat das Leben in einer Großstadt?",
+          "Warum ziehen viele Familien trotzdem aufs Land?",
+          "Wo möchten Sie in zehn Jahren leben? Warum?"
+        ]
+      },
+      "diskussion": "Sollten Städte mehr bezahlbare Wohnungen bauen, auch wenn dafür Grünflächen verschwinden?"
+    },
+    {
+      "title": "Bild 4: Leben mit dem Bildschirm",
+      "image": "/assets/laptop-3196481_1920.jpg",
+      "beschreibung": [
+        "Was sehen Sie? Wo könnte sich diese Person befinden?",
+        "Wie lange verbringt ein Mensch Ihrer Meinung nach täglich vor einem Bildschirm?"
+      ],
+      "kurzvortrag": {
+        "topic": "Internet und soziale Medien",
+        "points": [
+          "Wofür nutzen Sie das Internet am häufigsten?",
+          "Welche Gefahren sehen Sie bei sozialen Medien?",
+          "Wie hat das Smartphone den Alltag in den letzten zehn Jahren verändert?"
+        ]
+      },
+      "diskussion": "Sollten soziale Medien erst ab 16 Jahren erlaubt sein?"
+    },
+    {
+      "title": "Bild 5: Lernen ein Leben lang",
+      "image": "/assets/buch-brille-lesen.jpg",
+      "beschreibung": [
+        "Was sehen Sie auf dem Bild? Was macht die Person vermutlich gerade?",
+        "In welcher Situation lernen Menschen Ihrer Meinung nach am besten?"
+      ],
+      "kurzvortrag": {
+        "topic": "Sprachen lernen",
+        "points": [
+          "Warum lernen Menschen eine neue Sprache?",
+          "Was ist beim Deutschlernen für Sie am schwierigsten?",
+          "Welchen Tipp würden Sie jemandem geben, der gerade anfängt?"
+        ]
+      },
+      "diskussion": "Lernt man eine Sprache besser in einem Kurs oder einfach im Alltag mit Muttersprachlern?"
+    },
+    {
+      "title": "Bild 6: Miteinander reden",
+      "image": "/assets/foto-buero-2.jpg",
+      "beschreibung": [
+        "Wer spricht hier mit wem, und worum könnte es gehen?",
+        "Wie verhalten sich die Personen? Wer hört zu, wer redet?"
+      ],
+      "kurzvortrag": {
+        "topic": "Leben in einem neuen Land",
+        "points": [
+          "Was ist am Anfang in einem neuen Land am schwierigsten?",
+          "Was hilft dabei, Anschluss zu finden?",
+          "Welche Unterschiede sind Ihnen im Alltag in Deutschland aufgefallen?"
+        ]
+      },
+      "diskussion": "Sollten Neuankömmlinge verpflichtet sein, einen Sprachkurs zu besuchen — oder soll das freiwillig bleiben?"
+    }
+  ]
+}

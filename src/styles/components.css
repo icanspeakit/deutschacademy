@@ -30,7 +30,7 @@
 .btn-primary { background: var(--gradient-brand); color: #fff; }
 .btn-primary:hover { box-shadow: var(--shadow-cta); transform: translateY(-1px); }
 
-.btn-secondary { background: #fff; color: var(--ink); border-color: var(--border-strong); }
+.btn-secondary { background: var(--surface-card); color: var(--ink); border-color: var(--border-strong); }
 .btn-secondary:hover { border-color: var(--brand-blue); color: var(--brand-blue-dark); }
 
 .btn-ghost { background: none; color: var(--brand-blue-dark); }
@@ -43,7 +43,7 @@
 
 /* Cards */
 .card {
-  background: #fff;
+  background: var(--surface-card);
   border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: var(--space-6);
@@ -102,7 +102,7 @@
   font-family: var(--font-body);
   font-size: var(--text-sm);
   color: var(--ink);
-  background: #fff;
+  background: var(--surface-card);
   border: 1px solid var(--border-strong);
   border-radius: var(--radius-sm);
   padding: 10px 14px;
@@ -121,7 +121,7 @@
 .tabs {
   display: inline-flex;
   gap: 4px;
-  background: #fff;
+  background: var(--surface-card);
   border: 1px solid var(--border);
   border-radius: var(--radius-pill);
   padding: 3px;

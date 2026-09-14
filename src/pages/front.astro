@@ -1,0 +1,163 @@
+---
+// Layout studies for the homepage fold. Three arrangements of the same four
+// blocks — headline, dashboard mock, exercises mock, proof strip — switchable
+// from the bar at the top so they can be compared at the same viewport.
+// Internal; not linked from the public nav. Nothing here touches index.astro.
+import Layout from "../layouts/Layout.astro";
+import LanguageSwitcher from "../components/LanguageSwitcher.astro";
+import ThemeToggle from "../components/ThemeToggle.astro";
+import DashboardMock from "../components/mocks/DashboardMock.astro";
+import UebungenMock from "../components/mocks/UebungenMock.astro";
+import "../styles/landing.css";
+import "../styles/front.css";
+
+const variants = [
+  { id: "versetzt", label: "A · Versetzt", note: "Überlappendes Raster — die Skizze." },
+  { id: "buehne", label: "B · Bühne", note: "Titel über die volle Breite, Mockups versetzt darunter." },
+  { id: "split", label: "C · Split", note: "Feste Textspalte links, gestapelte Mockups rechts." },
+];
+
+---
+<Layout title="Front-Layouts – DeutschAcademy" description="Interne Layout-Studien für den Startseiten-Fold.">
+  <div class="fr-page" data-variant="versetzt">
+    <header class="fr-bar">
+      <div class="fr-bar-inner">
+        <div class="fr-bar-text">
+          <p class="fr-bar-title">Fold-Layouts</p>
+          <p class="fr-bar-note" data-variant-note>{variants[0].note}</p>
+        </div>
+        <div class="fr-switch" role="tablist" aria-label="Layout-Variante">
+          {variants.map((v, i) => (
+            <button
+              type="button"
+              role="tab"
+              class="fr-switch-btn"
+              data-variant-btn={v.id}
+              data-note={v.note}
+              aria-selected={i === 0 ? "true" : "false"}
+            >{v.label}</button>
+          ))}
+        </div>
+        <div class="fr-bar-tools">
+          <LanguageSwitcher />
+          <ThemeToggle />
+        </div>
+      </div>
+    </header>
+
+    <main class="fr-stage">
+      <div class="fr-grid">
+        <section class="fr-block fr-copy">
+          <p class="fr-eyebrow" data-i18n="home.hero2.eyebrow">Deutsch von A1 bis C1</p>
+          <h1 class="fr-title" data-i18n="front.title">Deutsch lernen</h1>
+          <p class="fr-accent">Schritt für Schritt.</p>
+          <p class="fr-lead" data-i18n="home.hero2.lead">
+            Grammatik, Alltagsdeutsch und Sprechpraxis — aufgebaut aus echtem
+            Unterrichtsmaterial, nicht kalt für eine Plattform geschrieben.
+          </p>
+          <div class="fr-actions">
+            <a href="/uebungen" class="lp-btn lp-btn--primary" data-i18n="home.cta.startFree">Kostenlos starten</a>
+            <a href="/pruefungen" class="lp-btn lp-btn--outline" data-i18n="home.hero2.cta2">So funktioniert's</a>
+          </div>
+        </section>
+
+        <section class="fr-block fr-mock fr-mock--dash" aria-label="Dashboard-Vorschau">
+          <DashboardMock />
+        </section>
+
+        <section class="fr-block fr-mock fr-mock--ueb" aria-label="Übungen-Vorschau">
+          <UebungenMock />
+        </section>
+
+        <!-- The corner used to carry a counter row. Numbers are what a
+             visitor checks last; the promise is what they should read first,
+             so the brand line sits here instead. -->
+        <section class="fr-block fr-slogan">
+          <p class="fr-slogan-line" data-i18n="home.footer.tagline">Da für Dich!</p>
+          <p class="fr-slogan-sub" data-i18n="front.slogan.sub">
+            Kostenlos, ohne Konto — von Lehrkräften, die wirklich unterrichten.
+          </p>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    const page = document.querySelector(".fr-page");
+    const note = document.querySelector("[data-variant-note]");
+    const btns = [...document.querySelectorAll("[data-variant-btn]")];
+    const KEY = "da-front-variant";
+
+    function apply(id) {
+      const btn = btns.find((b) => b.dataset.variantBtn === id) || btns[0];
+      page.dataset.variant = btn.dataset.variantBtn;
+      btns.forEach((b) => b.setAttribute("aria-selected", String(b === btn)));
+      note.textContent = btn.dataset.note;
+      try { localStorage.setItem(KEY, page.dataset.variant); } catch {}
+    }
+
+    // The mocks are fixed-size artwork laid out at their design width and taken
+    // out of flow (see front.css). Scale each to its grid cell so every variant
+    // shows them at the largest size that fits, aspect ratio untouched. Each
+    // cell declares its own --fr-mock-w, so the dashboard can be drawn wider
+    // than the exercises panel without a second scaling pass.
+    const DEFAULT_W = 760;
+    // Past this the dashboard stops reading as a UI and starts reading as a
+    // poster of one — and its controls get comically large to click.
+    const MAX_SCALE = 1.15;
+    // Breathing room inside the cell so the frame's shadow and rounded corners
+    // are not flush against the neighbouring block.
+    const GUTTER = 20;
+    const mocks = [...document.querySelectorAll(".fr-mock")];
+
+    function designWidth(cell) {
+      const raw = getComputedStyle(cell).getPropertyValue("--fr-mock-w");
+      return parseFloat(raw) || DEFAULT_W;
+    }
+
+    function fitMocks() {
+      // Below the breakpoint the CSS puts the mocks back in normal flow.
+      if (window.matchMedia("(max-width: 900px)").matches) return;
+      for (const cell of mocks) {
+        const browser = cell.querySelector(".lp-browser");
+        if (!browser) continue;
+        browser.style.transform = "";
+        const cw = cell.clientWidth - GUTTER * 2;
+        const ch = cell.clientHeight - GUTTER * 2;
+        const mh = browser.offsetHeight;
+        const dw = designWidth(cell);
+        if (cw <= 0 || ch <= 0 || !mh) continue;
+        const scale = Math.min(cw / dw, ch / mh, MAX_SCALE);
+        // Centre what is left over after scaling.
+        const x = GUTTER + (cw - dw * scale) / 2;
+        const y = GUTTER + (ch - mh * scale) / 2;
+        browser.style.transform = `translate(${x}px, ${y}px) scale(${scale})`;
+      }
+    }
+
+    function applyAndFit(id) {
+      apply(id);
+      // Two frames: one for the grid to re-lay-out, one for the new cell sizes.
+      requestAnimationFrame(() => requestAnimationFrame(fitMocks));
+    }
+
+    let saved = null;
+    try { saved = localStorage.getItem(KEY); } catch {}
+    applyAndFit(saved || "versetzt");
+
+    btns.forEach((b) => b.addEventListener("click", () => applyAndFit(b.dataset.variantBtn)));
+
+    addEventListener("resize", fitMocks);
+    // Fonts land after first paint and change the mock's intrinsic height; so
+    // do late images and, in dev, stylesheets injected after hydration. One
+    // observer per mock covers all three without a chain of one-off hooks.
+    if (window.ResizeObserver) {
+      const ro = new ResizeObserver(() => fitMocks());
+      for (const cell of mocks) {
+        const browser = cell.querySelector(".lp-browser");
+        if (browser) ro.observe(browser);
+      }
+    }
+    document.fonts?.ready.then(fitMocks);
+  </script>
+</Layout>

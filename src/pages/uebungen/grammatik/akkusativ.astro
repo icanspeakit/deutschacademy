@@ -1,6 +1,7 @@
 ---
 import Layout from "../../../layouts/Layout.astro";
 import LanguageSwitcher from "../../../components/LanguageSwitcher.astro";
+import ThemeToggle from "../../../components/ThemeToggle.astro";
 import "../../../styles/akkusativ.css";
 import akkusativQuestions from "../../../data/akkusativ.json";
 
@@ -16,7 +17,10 @@ const total = akkusativQuestions.filter((q) => q.difficulty === "leicht").length
           <a href="/uebungen/grammatik">Grammatik</a><span class="akk-crumb-sep">›</span>
           <span class="akk-crumb-current">Akkusativ</span>
         </nav>
-        <div style="margin-left:auto;"><LanguageSwitcher /></div>
+        <div style="margin-left:auto; display:flex; align-items:center; gap:10px;">
+          <LanguageSwitcher />
+          <ThemeToggle />
+        </div>
       </div>
     </header>
 

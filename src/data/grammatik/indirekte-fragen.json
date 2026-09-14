@@ -1,0 +1,152 @@
+{
+  "id": "indirekte-fragen",
+  "name": "Indirekte Fragen: Wissen Sie, ob …?",
+  "level": "B1",
+  "subtitle": "„Wo ist der Bahnhof?“ klingt knapp. „Können Sie mir sagen, wo der Bahnhof ist?“ klingt höflich — und macht aus der Frage einen Nebensatz mit Verb am Ende.",
+  "source": "Indirekte Fragen.pdf (Kapitel 67)",
+  "concept": {
+    "flow": [
+      { "text": "Einleitung", "variant": "verb" },
+      { "text": "," },
+      { "text": "w-Wort / ob", "variant": "prep" },
+      { "text": "Subjekt … Verb · Ende" }
+    ],
+    "exampleHtml": "Wissen Sie, <span class=\"vp-prep\">wo</span> der Bahnhof <span class=\"vp-verb\">ist</span>? — Können Sie mir sagen, <span class=\"vp-prep\">ob</span> es noch weit <span class=\"vp-verb\">ist</span>?",
+    "qa": [
+      { "html": "Aus einer <strong>W-Frage</strong> wird die indirekte Frage mit demselben Fragewort: <em>Wo ist der Bahnhof? → Wissen Sie, wo der Bahnhof ist?</em>", "tag": "w-Wort" },
+      { "html": "Aus einer <strong>Ja/Nein-Frage</strong> wird sie mit <em>ob</em>: <em>Ist es noch weit? → Wissen Sie, ob es noch weit ist?</em>", "tag": "ob" },
+      { "html": "Die indirekte Frage ist ein <strong>Nebensatz</strong> — das konjugierte Verb steht am Ende, davor ein Komma.", "tag": "Verb am Ende" },
+      { "html": "Auch <strong>Fragewort + Präposition oder Nomen</strong> bleibt zusammen vorn: <em>Hast du eine Idee, <strong>auf welchem Gleis</strong> der Zug heute abfährt?</em>", "tag": "auf welchem" }
+    ],
+    "noteHtml": "Indirekte Fragen sind vor allem <strong>höfliche</strong> Fragen. Typische Einleitungen: <em>Wissen Sie, … · Können Sie mir sagen, … · Ich möchte gerne wissen, … · Ich habe keine Ahnung, … · Hast du dich informiert, … · Weißt du schon, …</em> Endet die Einleitung selbst mit einem Fragezeichen-Satz, steht am Ende ein <strong>Fragezeichen</strong>; bei <em>Ich möchte wissen, …</em> steht ein Punkt.",
+    "reference": {
+      "showLabel": "Übersicht anzeigen ▼",
+      "hideLabel": "Übersicht ausblenden ▲",
+      "tables": [
+        {
+          "caption": "Direkt und indirekt",
+          "head": ["Direkte Frage", "Indirekte Frage"],
+          "rows": [
+            ["Wo ist der Bahnhof?", "Wissen Sie, wo der Bahnhof ist?"],
+            ["Ist es noch weit zum Bahnhof?", "Können Sie mir sagen, ob es noch weit zum Bahnhof ist?"],
+            ["Warum ist das Taxi nicht gekommen?", "Ich möchte gerne wissen, warum das Taxi nicht gekommen ist."],
+            ["Auf welchem Gleis fährt der Zug ab?", "Hast du eine Idee, auf welchem Gleis der Zug heute abfährt?"],
+            ["Erreichen wir den Zug noch?", "Ich habe keine Ahnung, ob wir den Zug noch erreichen."]
+          ]
+        },
+        {
+          "caption": "Der Bauplan des Nebensatzes",
+          "head": ["Hauptsatz", "Konjunktion", "Subjekt", "Mittelfeld", "Verb"],
+          "rows": [
+            ["Können Sie mir sagen,", "wo", "der Bahnhof", "—", "ist?"],
+            ["Ich möchte gerne wissen,", "warum", "das Taxi", "nicht", "gekommen ist."],
+            ["Wissen Sie,", "ob", "es", "noch weit zum Bahnhof", "ist?"],
+            ["Ich habe keine Ahnung,", "ob", "wir", "den Zug", "noch erreichen."]
+          ]
+        }
+      ],
+      "boxes": [
+        {
+          "badge": "Höfliche Einleitungen",
+          "variant": "akk",
+          "items": [
+            "Können Sie mir sagen, …",
+            "Wissen Sie, …",
+            "Ich möchte gerne wissen, …",
+            "Hast du eine Idee, …",
+            "Ich habe keine Ahnung, …"
+          ]
+        },
+        {
+          "badge": "Häufige Fehler",
+          "variant": "dat",
+          "items": [
+            "falsch: Wissen Sie, wo ist der Bahnhof? — das Verb muss ans Ende",
+            "falsch: Wissen Sie, wenn es weit ist? — Ja/Nein-Frage braucht ob",
+            "falsch: Wissen Sie, dass es weit ist? — dass ist keine Frage",
+            "richtig: Weißt du, ob Peter auch eingeladen ist?"
+          ]
+        }
+      ]
+    }
+  },
+  "exercises": [
+    {
+      "type": "fill",
+      "title": "Fragewort oder „ob“?",
+      "hint": "Steckt eine W-Frage dahinter oder eine Ja/Nein-Frage?",
+      "placeholder": "w-Wort / ob",
+      "items": [
+        { "prompt": "Liegt das Hotel zentral? → Können Sie mir sagen, ___ das Hotel zentral liegt?", "hint": "Ja/Nein-Frage.", "answer": ["ob"] },
+        { "prompt": "Wie viel kostet das Frühstück? → Können Sie mir sagen, ___ viel das Frühstück kostet?", "hint": "W-Frage.", "answer": ["wie"] },
+        { "prompt": "Gibt es einen Swimmingpool? → Wissen Sie, ___ es einen Swimmingpool gibt?", "hint": "Ja/Nein-Frage.", "answer": ["ob"] },
+        { "prompt": "Wo kann ich parken? → Ich möchte wissen, ___ ich parken kann.", "hint": "Ort.", "answer": ["wo"] },
+        { "prompt": "Kann ich meinen Hund mitbringen? → Können Sie mir sagen, ___ ich meinen Hund mitbringen kann?", "hint": "Ja/Nein-Frage.", "answer": ["ob"] },
+        { "prompt": "Von wann bis wann kann man frühstücken? → Wissen Sie, ___ wann bis wann man frühstücken kann?", "hint": "Die Präposition bleibt vorn.", "answer": ["von"] }
+      ]
+    },
+    {
+      "type": "build",
+      "title": "Machen Sie aus der direkten Frage eine indirekte.",
+      "sentences": [
+        {
+          "id": "if1",
+          "hint": "„Wo ist der Frühstücksraum?“",
+          "correct": ["Können", "Sie", "mir", "sagen", ",", "wo", "der", "Frühstücksraum", "ist", "?"],
+          "shuffled": ["der", "wo", "Können", "ist", "mir", "Frühstücksraum", "Sie", ",", "sagen", "?"]
+        },
+        {
+          "id": "if2",
+          "hint": "„Akzeptieren Sie Kreditkarten?“",
+          "correct": ["Ich", "möchte", "wissen", ",", "ob", "Sie", "Kreditkarten", "akzeptieren", "."],
+          "shuffled": ["ob", "Ich", "akzeptieren", "wissen", "Sie", "möchte", ",", "Kreditkarten", "."]
+        },
+        {
+          "id": "if3",
+          "hint": "„Wie viel kostet ein Doppelzimmer?“",
+          "correct": ["Wissen", "Sie", ",", "wie", "viel", "ein", "Doppelzimmer", "kostet", "?"],
+          "shuffled": ["viel", "Wissen", "kostet", "wie", "Doppelzimmer", "Sie", "ein", ",", "?"]
+        },
+        {
+          "id": "if4",
+          "hint": "„Ist Peter auch eingeladen?“",
+          "correct": ["Weißt", "du", ",", "ob", "Peter", "auch", "eingeladen", "ist", "?"],
+          "shuffled": ["auch", "ob", "Weißt", "ist", "Peter", "du", "eingeladen", ",", "?"]
+        }
+      ]
+    },
+    {
+      "type": "match",
+      "title": "Zurück zur direkten Frage.",
+      "hint": "Party, Party — welche direkte Frage steckt drin?",
+      "pairs": [
+        { "q": "Weißt du, wann die Party beginnt?", "a": "Wann beginnt die Party?" },
+        { "q": "Hast du gehört, wie viele Gäste kommen?", "a": "Wie viele Gäste kommen?" },
+        { "q": "Weißt du, ob Peter auch eingeladen ist?", "a": "Ist Peter auch eingeladen?" },
+        { "q": "Hast du eine Ahnung, was es zu essen gibt?", "a": "Was gibt es zu essen?" },
+        { "q": "Hast du dich informiert, wo die Party stattfindet?", "a": "Wo findet die Party statt?" },
+        { "q": "Weißt du schon, ob du zu der Party gehst?", "a": "Gehst du zu der Party?" }
+      ]
+    },
+    {
+      "type": "story",
+      "title": "Lückentext: Am Hotelempfang.",
+      "hint": "Ergänzen Sie das Fragewort oder „ob“ — und achten Sie darauf, dass das Verb am Ende steht.",
+      "segments": [
+        { "text": "Guten Tag! Können Sie mir sagen, " },
+        { "blank": 0, "answer": ["wie"] },
+        { "text": " viel ein Doppelzimmer kostet? Und wissen Sie, " },
+        { "blank": 1, "answer": ["ob"] },
+        { "text": " das Frühstück inklusive ist? Ich möchte außerdem gerne wissen, " },
+        { "blank": 2, "answer": ["wo"] },
+        { "text": " ich parken kann. Haben Sie eine Idee, " },
+        { "blank": 3, "answer": ["von"] },
+        { "text": " wann bis wann man frühstücken kann? Und könnten Sie mir noch sagen, " },
+        { "blank": 4, "answer": ["ob"] },
+        { "text": " ich meinen Hund mitbringen darf? Ich habe nämlich keine Ahnung, " },
+        { "blank": 5, "answer": ["wie"] },
+        { "text": " lange wir bleiben werden." }
+      ]
+    }
+  ]
+}

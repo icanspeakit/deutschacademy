@@ -4,32 +4,73 @@ import PracticeHeader from "../../components/PracticeHeader.astro";
 import "../../styles/practice.css";
 import grammatik from "../../data/grammatik.json";
 
-const WORKSPACE_HREF = {
-  akkusativ: "/uebungen/grammatik/akkusativ",
-  praepositionen: "/uebungen/grammatik/verben-praepositionen",
-  dativ: "/uebungen/grammatik/dativ",
-  passiv: "/uebungen/grammatik/passiv",
-  konjunktiv2: "/uebungen/grammatik/konjunktiv2",
-  relativpronomen: "/uebungen/grammatik/relativpronomen",
-  "trennbare-verben": "/uebungen/grammatik/trennbare-verben",
-};
+// The hub draws from two pools, in this order of preference:
+//   - src/data/grammatik/*.json — full workspaces (concept card + up to five exercises)
+//   - grammatik.json            — quiz-only topics still waiting for a workspace
+// A workspace shadows the quiz entry with the same id, so promoting a topic is just
+// dropping in the JSON file — no change here or in [id].astro.
+const workspaceModules = import.meta.glob("../../data/grammatik/*.json", { eager: true });
+const workspaces = Object.values(workspaceModules).map((m) => m.default ?? m);
+const covered = new Set(workspaces.map((w) => w.id));
+
+const topics = [
+  ...workspaces.map((w) => ({
+    id: w.id,
+    name: w.name,
+    level: w.level,
+    intro: w.subtitle,
+    href: "/uebungen/grammatik/" + (w.slug ?? w.id),
+    badge: w.exercises.length + " Aufgabentypen",
+    isWorkspace: true,
+  })),
+  ...grammatik
+    .filter((t) => !covered.has(t.id))
+    .map((t) => ({
+      id: t.id,
+      name: t.name,
+      level: t.level,
+      intro: t.intro,
+      href: "/uebungen/grammatik/" + t.id,
+      badge: t.questions.length + " Fragen",
+      isWorkspace: t.id === "akkusativ",
+    })),
+];
 
 const ICON = {
   akkusativ: "🎯",
+  artikel: "🏷️",
+  "w-fragen": "❓",
+  "ja-nein-fragen": "🙋",
   dativ: "🤝",
-  praepositionen: "🔗",
-  passiv: "🔄",
-  konjunktiv2: "💭",
-  relativpronomen: "🧩",
+  modalverben: "🔑",
   "trennbare-verben": "✂️",
+  satzstellung: "🌉",
+  wechselpraepositionen: "🧭",
+  negation: "🚫",
+  perfekt: "⏪",
+  praepositionen: "🔗",
+  adjektivdeklination: "🎨",
+  "als-oder-wenn": "⏱️",
+  passiv: "🔄",
+  relativpronomen: "🧩",
+  "zweiteilige-konnektoren": "🔀",
+  "infinitiv-mit-zu": "🏁",
+  "indirekte-fragen": "🙏",
+  "n-deklination": "📐",
+  "praeteritum-plusquamperfekt": "📜",
+  irgend: "🌫️",
+  konjunktiv2: "💭",
+  "negationswoerter": "🔕",
+  "partizip-als-adjektiv": "🖌️",
+  "nomen-verb-verbindungen": "🧱",
+  fokuspartikeln: "🔦",
 };
 
 const LEVEL_ORDER = ["A1", "A2", "B1", "B2", "C1"];
-const levels = LEVEL_ORDER.filter((lvl) => grammatik.some((t) => t.level === lvl));
+const levels = LEVEL_ORDER.filter((lvl) => topics.some((t) => t.level === lvl));
 
 // Every level row is padded with placeholder cards up to this width, so a level with only
-// one real topic (e.g. A1 today) doesn't stretch into one giant card or look lopsided next
-// to a fuller level. 4 comfortably covers the busiest level (B1, 3 topics) with room to grow.
+// one real topic doesn't stretch into one giant card or look lopsided next to a fuller level.
 const ROW_WIDTH = 4;
 ---
 <Layout title="Grammatik – DeutschAcademy">
@@ -38,7 +79,7 @@ const ROW_WIDTH = 4;
     <div class="grammatik-hero">
       <p class="eyebrow" data-i18n="grammatik.hero.eyebrow">Grammatik üben</p>
       <h1 data-i18n="grammatik.hero.title">Themen nach Niveau</h1>
-      <p data-i18n="grammatik.hero.subtitle">Wähle ein Thema. Für Akkusativ und Verben mit Präpositionen gibt es einen eigenen Übungsraum mit mehreren Aufgabentypen — die anderen Themen übst du im Lückentext-Quiz.</p>
+      <p data-i18n="grammatik.hero.subtitle">Wähle ein Thema. Die meisten haben einen eigenen Übungsraum mit Erklärung und mehreren Aufgabentypen — die übrigen übst du im Lückentext-Quiz.</p>
     </div>
 
     {levels.map((level) => (
@@ -47,23 +88,15 @@ const ROW_WIDTH = 4;
           <span class="badge badge-info">{level}</span>
         </div>
         <div class="tool-grid">
-          {grammatik.filter((t) => t.level === level).map((t) => {
-            const href = WORKSPACE_HREF[t.id] || `/uebungen/grammatik/quiz?topic=${t.id}`;
-            const isWorkspace = Boolean(WORKSPACE_HREF[t.id]);
-            return (
-              <a class="tool-card" href={href}>
-                <div class="tool-card-icon">{ICON[t.id] || "📚"}</div>
-                <h3>{t.name}</h3>
-                <p>{t.intro}</p>
-                {isWorkspace ? (
-                  <span class="tool-card-count" data-i18n="grammatik.card.workspace">Übungsraum</span>
-                ) : (
-                  <span class="tool-card-count" data-i18n="grammatik.card.questions" data-i18n-vars={JSON.stringify({ n: t.questions.length })}>{t.questions.length} Fragen</span>
-                )}
-              </a>
-            );
-          })}
-          {Array.from({ length: Math.max(0, ROW_WIDTH - grammatik.filter((t) => t.level === level).length) }).map(() => (
+          {topics.filter((t) => t.level === level).map((t) => (
+            <a class="tool-card" href={t.href}>
+              <div class="tool-card-icon">{ICON[t.id] || "📚"}</div>
+              <h3>{t.name}</h3>
+              <p>{t.intro}</p>
+              <span class={`tool-card-count ${t.isWorkspace ? "tool-card-count--workspace" : ""}`}>{t.badge}</span>
+            </a>
+          ))}
+          {Array.from({ length: Math.max(0, ROW_WIDTH - topics.filter((t) => t.level === level).length) }).map(() => (
             <div class="tool-card tool-card--placeholder" aria-hidden="true">
               <div class="tool-card-icon tool-card-icon--placeholder">+</div>
               <h3 data-i18n="grammatik.card.comingSoonTitle">Weiteres Thema</h3>
@@ -78,31 +111,56 @@ const ROW_WIDTH = 4;
 </Layout>
 
 <style>
+  /* This hub is a card index, not a reading page: widen past the shared 880px article
+     width and compact every block so more than one level fits on screen at once. */
+  .practice-main { max-width: 1160px; padding-top: 28px; padding-bottom: 56px; }
+
   .grammatik-hero {
     background: var(--gradient-brand);
     border-radius: var(--radius-lg);
-    padding: 36px 40px;
-    margin-bottom: 8px;
-    text-align: center;
+    padding: 22px 28px;
+    margin-bottom: 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
   }
-  .grammatik-hero .eyebrow { color: rgba(255,255,255,.85); }
+  .grammatik-hero .eyebrow { color: rgba(255,255,255,.85); margin: 0; }
   .grammatik-hero h1 {
     font-family: var(--font-display);
-    font-size: clamp(1.6rem, 4vw, 2.4rem);
+    font-size: clamp(1.4rem, 2.4vw, 1.9rem);
     color: #fff;
-    margin: 0 0 10px;
+    margin: 0;
   }
-  .grammatik-hero p { color: rgba(255,255,255,.92); margin: 0 auto; max-width: 560px; }
+  .grammatik-hero p { color: rgba(255,255,255,.92); margin: 0; max-width: 68ch; font-size: .9rem; line-height: 1.45; }
 
-  .level-section { margin-top: 40px; }
+  .level-section { margin-top: 26px; }
   .level-section:first-of-type { margin-top: 0; }
-  .level-heading { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
+  .level-heading { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
 
   /* Fixed column count (instead of the shared tool-grid's auto-fit) so every level lines up
      the same way, whether it has 1 topic or a full row of them. */
-  .tool-grid { grid-template-columns: repeat(4, 1fr); }
-  @media (max-width: 900px) { .tool-grid { grid-template-columns: repeat(2, 1fr); } }
-  @media (max-width: 560px) { .tool-grid { grid-template-columns: 1fr; } }
+  .tool-grid { grid-template-columns: repeat(4, 1fr); gap: 14px; margin-top: 0; }
+  @media (max-width: 1000px) { .tool-grid { grid-template-columns: repeat(3, 1fr); } }
+  @media (max-width: 760px) { .tool-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 480px) { .tool-grid { grid-template-columns: 1fr; } }
+
+  /* Compact card: fixed icon row, description clamped to 3 lines so a long intro
+     can't stretch its whole row into a wall of text. */
+  .tool-card { padding: 16px 16px 14px; display: flex; flex-direction: column; gap: 8px; }
+  .tool-card-icon { width: 34px; height: 34px; border-radius: 12px; font-size: 1rem; margin-bottom: 2px; }
+  .tool-card h3 { margin: 0; font-size: 1rem; }
+  .tool-card p {
+    margin: 0;
+    font-size: .85rem;
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .tool-card-count { align-self: flex-start; margin-top: auto; font-size: .75rem; padding: 3px 10px; }
+  /* A full workspace earns the brand tint; a plain quiz topic stays neutral. */
+  .tool-card-count--workspace { background: var(--blue-100); color: var(--brand-blue-dark); }
 
   .tool-card--placeholder {
     background: var(--surface);
@@ -115,7 +173,7 @@ const ROW_WIDTH = 4;
   .tool-card-icon--placeholder {
     background: var(--border);
     color: var(--muted-soft);
-    font-size: 1.4rem;
+    font-size: 1.2rem;
     font-weight: 700;
   }
   .tool-card-count--placeholder { background: var(--surface); color: var(--muted-soft); border: 1px solid var(--border-strong); }

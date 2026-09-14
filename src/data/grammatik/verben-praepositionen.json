@@ -1,0 +1,261 @@
+{
+  "id": "praepositionen",
+  "slug": "verben-praepositionen",
+  "name": "Verben mit Präpositionen",
+  "level": "B1",
+  "subtitleKey": "vp.hero.subtitle",
+  "subtitle": "Manche Verben brauchen eine feste Präposition. Lerne das Muster, dann übe es in fünf verschiedenen Aufgabentypen — wie auf einer Kursbuchseite.",
+  "source": "A2-B1_Verben-mit-Praepositionen-Uebung-1.pdf, Verben und Präpositionen.pdf, Verben m Dativ Präp..pdf",
+  "concept": {
+    "flow": [
+      {
+        "text": "Subjekt"
+      },
+      {
+        "text": "Verb (+ sich)",
+        "variant": "verb"
+      },
+      {
+        "text": "Präposition + Objekt",
+        "variant": "prep"
+      }
+    ],
+    "exampleHtml": "Sie <span class=\"vp-verb\">ärgert sich</span> <span class=\"vp-prep\">über den Verkehr</span>.",
+    "qa": [
+      {
+        "html": "<strong>Worüber</strong> ärgert sie sich? — Über den Verkehr.",
+        "tag": "(Sache)"
+      },
+      {
+        "html": "<strong>Über wen</strong> ärgert sie sich? — Über ihren Chef.",
+        "tag": "(Person)"
+      }
+    ],
+    "noteHtml": "Fragewort für Sachen: <em>wo(r) + Präposition</em>, z. B. <em>worüber</em>. Fragewort für Personen: <em>Präposition + wen/wem</em>, z. B. <em>über wen</em>.",
+    "reference": {
+      "boxes": [
+        {
+          "badge": "Präposition + Akkusativ",
+          "variant": "akk",
+          "items": [
+            "sich freuen auf",
+            "sich freuen über",
+            "sich ärgern über",
+            "sich interessieren für",
+            "warten auf",
+            "sich vorbereiten auf",
+            "sprechen über",
+            "diskutieren über",
+            "sich beschweren über",
+            "sich kümmern um",
+            "denken an",
+            "sich erinnern an"
+          ]
+        },
+        {
+          "badge": "Präposition + Dativ",
+          "variant": "dat",
+          "items": [
+            "träumen von",
+            "erzählen von",
+            "telefonieren mit",
+            "sich verabschieden von",
+            "gratulieren zu",
+            "teilnehmen an",
+            "Angst haben vor",
+            "sich beschäftigen mit"
+          ]
+        }
+      ]
+    }
+  },
+  "exercises": [
+    {
+      "type": "fill",
+      "title": "Ergänzen Sie die passende Präposition.",
+      "placeholder": "Präposition…",
+      "items": [
+        {
+          "prompt": "Ich freue mich schon sehr ___ den Sommerurlaub.",
+          "hint": "sich freuen auf + Akkusativ (Vorfreude)",
+          "answer": "auf"
+        },
+        {
+          "prompt": "Er denkt noch oft ___ seine erste Deutschlehrerin.",
+          "hint": "denken an + Akkusativ",
+          "answer": "an"
+        },
+        {
+          "prompt": "Sie träumt ___ einem eigenen Café in Hamburg.",
+          "hint": "träumen von + Dativ",
+          "answer": "von"
+        }
+      ]
+    },
+    {
+      "type": "match",
+      "title": "Ordnen Sie zu: Frage und Antwort.",
+      "hint": "Klicke erst eine Frage, dann die passende Antwort.",
+      "pairs": [
+        {
+          "q": "Wofür interessiert sie sich?",
+          "a": "Für moderne Kunst."
+        },
+        {
+          "q": "Auf wen wartet er schon eine Stunde?",
+          "a": "Auf seinen Bruder."
+        },
+        {
+          "q": "Worüber diskutieren die Nachbarn?",
+          "a": "Über den neuen Zaun."
+        },
+        {
+          "q": "Von wem erzählt der Roman?",
+          "a": "Von einer jungen Journalistin."
+        },
+        {
+          "q": "Mit wem telefonierst du gerade?",
+          "a": "Mit meiner Schwester."
+        }
+      ]
+    },
+    {
+      "type": "table",
+      "title": "Ergänzen Sie die Präposition.",
+      "columns": [
+        "Verb",
+        "Präposition"
+      ],
+      "placeholder": "Präposition…",
+      "rows": [
+        {
+          "term": "sich ärgern",
+          "answer": "über"
+        },
+        {
+          "term": "sich interessieren",
+          "answer": "für"
+        },
+        {
+          "term": "warten",
+          "answer": "auf"
+        },
+        {
+          "term": "erzählen",
+          "answer": "von"
+        }
+      ]
+    },
+    {
+      "type": "story",
+      "title": "Lückentext: Ergänzen Sie die Präpositionen.",
+      "segments": [
+        {
+          "text": "Lisa freut sich schon "
+        },
+        {
+          "blank": 0,
+          "answer": "auf"
+        },
+        {
+          "text": " das Wochenende. Sie wartet "
+        },
+        {
+          "blank": 1,
+          "answer": "auf"
+        },
+        {
+          "text": " den Anruf ihrer besten Freundin, denn die beiden wollen zusammen ins Kino gehen. Lisa interessiert sich sehr "
+        },
+        {
+          "blank": 2,
+          "answer": "für"
+        },
+        {
+          "text": " französische Filme. Ihre Freundin denkt aber lieber "
+        },
+        {
+          "blank": 3,
+          "answer": "an"
+        },
+        {
+          "text": " einen Actionfilm. Am Ende diskutieren sie noch lange "
+        },
+        {
+          "blank": 4,
+          "answer": "über"
+        },
+        {
+          "text": " die richtige Wahl."
+        }
+      ]
+    },
+    {
+      "type": "build",
+      "title": "Bauen Sie den Satz aus den Wortgruppen.",
+      "sentences": [
+        {
+          "id": "b1",
+          "correct": [
+            "Er",
+            "wartet",
+            "schon",
+            "eine Stunde",
+            "auf",
+            "den Bus",
+            "."
+          ],
+          "shuffled": [
+            "auf",
+            "Er",
+            "den Bus",
+            ".",
+            "schon",
+            "wartet",
+            "eine Stunde"
+          ]
+        },
+        {
+          "id": "b2",
+          "correct": [
+            "Wir",
+            "sprechen",
+            "morgen",
+            "über",
+            "das neue Projekt",
+            "."
+          ],
+          "shuffled": [
+            "über",
+            "Wir",
+            "das neue Projekt",
+            ".",
+            "sprechen",
+            "morgen"
+          ]
+        },
+        {
+          "id": "b3",
+          "correct": [
+            "Sie",
+            "kümmert",
+            "sich",
+            "seit Jahren",
+            "um",
+            "ihre Großmutter",
+            "."
+          ],
+          "shuffled": [
+            "um",
+            "Sie",
+            "ihre Großmutter",
+            "kümmert",
+            ".",
+            "sich",
+            "seit Jahren"
+          ]
+        }
+      ]
+    }
+  ]
+}

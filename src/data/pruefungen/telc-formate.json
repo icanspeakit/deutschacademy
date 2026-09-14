@@ -1,0 +1,99 @@
+{
+  "note": "Prüfungsformate telc (allgemeines Deutsch). Jede Zahl hier ist aus dem jeweiligen telc-Übungstest abgelesen — Zeiten, Punkte, Aufgabenzahlen und Aufgabentypen. Keine geschätzten oder erfundenen Werte. Berufsbezogene telc-Varianten (telc Deutsch B1·B2 Beruf, Pflege, Medizin usw.) sind hier bewusst nicht abgebildet — diese Seite deckt allgemeines Deutsch ab. Die Prüfungsaufgaben selbst sind urheberrechtlich geschützt (© telc gGmbH) und stehen NICHT in dieser Datei; hier steht nur die Struktur.",
+  "formate": [
+    {
+      "id": "a1",
+      "exam": "telc Deutsch A1",
+      "alt": "Start Deutsch 1",
+      "level": "A1",
+      "source": "telc Start Deutsch 1, Übungstest 1 — „Testformat“, S. 5",
+      "totalPoints": 60,
+      "blocks": [
+        {
+          "label": "Schriftliche Prüfung",
+          "total": {
+            "time": "75 Minuten"
+          },
+          "rows": [
+            {
+              "part": "Formalitäten",
+              "what": "Antwortbogen ausfüllen",
+              "time": "10 Minuten",
+              "points": null
+            },
+            {
+              "part": "1 Hören",
+              "what": "Hörverstehen",
+              "time": "ca. 20 Minuten",
+              "points": 15
+            },
+            {
+              "part": "2 und 3 Lesen und Schreiben",
+              "what": "Leseverstehen und schriftlicher Ausdruck",
+              "time": "45 Minuten",
+              "points": "15 + 15"
+            }
+          ]
+        },
+        {
+          "label": "Mündliche Prüfung",
+          "total": {
+            "time": "15 Minuten",
+            "points": 15
+          },
+          "rows": [
+            {
+              "part": "4 Sprechen · Teil 1",
+              "what": "Sich vorstellen",
+              "time": "ca. 3 Minuten",
+              "points": null
+            },
+            {
+              "part": "Teil 2",
+              "what": "Um Informationen bitten und Informationen geben",
+              "time": "ca. 4 Minuten",
+              "points": null
+            },
+            {
+              "part": "Teil 3",
+              "what": "Bitten formulieren und darauf reagieren",
+              "time": "ca. 4 Minuten",
+              "points": null
+            },
+            {
+              "part": "Beschlussfassung der Prüfenden",
+              "what": "—",
+              "time": "ca. 4 Minuten",
+              "points": null
+            }
+          ]
+        }
+      ],
+      "grading": {
+        "caption": "Ergebnispunkte und Prädikat",
+        "rows": [
+          [
+            "54–60",
+            "sehr gut"
+          ],
+          [
+            "48–53,5",
+            "gut"
+          ],
+          [
+            "42–47,5",
+            "befriedigend"
+          ],
+          [
+            "36–41,5",
+            "ausreichend"
+          ],
+          [
+            "0–35,5",
+            "teilgenommen"
+          ]
+        ]
+      }
+    }
+  ]
+}

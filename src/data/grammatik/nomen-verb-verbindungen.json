@@ -1,0 +1,145 @@
+{
+  "id": "nomen-verb-verbindungen",
+  "name": "Nomen-Verb-Verbindungen",
+  "level": "B2",
+  "subtitle": "„Rücksicht nehmen“, „in Frage kommen“, „zur Verfügung stehen“ — feste Paare aus Nomen und Verb, bei denen das Verb fast keine eigene Bedeutung mehr hat. Man muss sie als Ganzes lernen.",
+  "source": "Nomen Verb Verbindungen drucken und schneiden.pdf (Aspekte neu B2, Kapitel 4, Modul 3, Autor: Ludwig Hoffmann) · Nomen Verb Verbindungen.pdf",
+  "concept": {
+    "flow": [
+      { "text": "Nomen (oft mit Präposition)", "variant": "prep" },
+      { "text": "+" },
+      { "text": "festes Verb", "variant": "verb" }
+    ],
+    "exampleHtml": "Er ist egoistisch und <span class=\"vp-prep\">nimmt</span> keine <span class=\"vp-verb\">Rücksicht</span> auf andere Leute.",
+    "qa": [
+      { "html": "Das Verb ist <strong>austauschbar durch ein einfaches Verb</strong>: <em>Rücksicht nehmen ≈ rücksichtsvoll sein</em>, <em>zu Ende bringen ≈ beenden</em>.", "tag": "Bedeutung" },
+      { "html": "Die <strong>Kombination ist fest</strong>. <em>Einen Kompromiss <strong>schließen</strong></em> — nicht machen, nicht nehmen.", "tag": "fest" },
+      { "html": "Viele beginnen mit einer <strong>Präposition</strong>: <em>in Schwierigkeiten, unter Druck, zu Ende, zur Verfügung, in Frage, in Kauf, im Irrtum</em>.", "tag": "Präposition" },
+      { "html": "Verneint wird meist mit <strong>kein</strong> vor dem Nomen — bei Präposition mit <strong>nicht</strong>: <em>Das spielt <strong>keine</strong> Rolle. Das kommt <strong>nicht</strong> in Frage.</em>", "tag": "Negation" }
+    ],
+    "noteHtml": "Nomen-Verb-Verbindungen sind ein Kennzeichen des <strong>schriftlichen und formellen Deutsch</strong> — in Behördenbriefen, Zeitungstexten und Geschäftskorrespondenz. Wer sie kennt, versteht diese Texte deutlich schneller; wer sie benutzt, klingt sofort erwachsener. Vorsicht beim Kasus: <em>Rücksicht nehmen <strong>auf</strong> + Akkusativ</em>, <em>Zweifel haben <strong>an</strong> + Dativ</em>.",
+    "reference": {
+      "showLabel": "Liste anzeigen ▼",
+      "hideLabel": "Liste ausblenden ▲",
+      "tables": [
+        {
+          "caption": "Die dreizehn Verbindungen des Arbeitsblatts",
+          "head": ["Verbindung", "bedeutet", "Beispiel"],
+          "rows": [
+            ["in Schwierigkeiten geraten", "Probleme bekommen", "Durch den Kauf einer Wohnung geriet er in Schwierigkeiten."],
+            ["im Irrtum sein", "sich irren", "Was Sie sagen, stimmt nicht — da sind Sie im Irrtum."],
+            ["Rücksicht nehmen (auf + A)", "rücksichtsvoll sein", "Walter nimmt keine Rücksicht auf andere Leute."],
+            ["einen Kompromiss schließen", "sich einigen", "Sie schlossen einen Kompromiss."],
+            ["unter Druck stehen", "gestresst sein", "Er hat viel Stress und steht unter Druck."],
+            ["Aufsehen erregen", "auffallen", "Mit ihrem Kleid erregte sie viel Aufsehen."],
+            ["zu Ende bringen", "beenden", "Wir müssen die Sache zu Ende bringen."],
+            ["zur Verfügung stehen", "verfügbar sein", "Es stehen keine Mittel mehr zur Verfügung."],
+            ["in Frage kommen", "möglich sein", "Das kommt nicht in Frage!"],
+            ["Zweifel haben (an + D)", "zweifeln", "Ich habe Zweifel an der Darstellung."],
+            ["einen Antrag stellen", "etwas beantragen", "Er stellte einen Antrag auf Elternzeit."],
+            ["in Kauf nehmen", "akzeptieren", "Das müssen wir in Kauf nehmen."],
+            ["eine Rolle spielen", "wichtig sein", "Das spielt keine Rolle."]
+          ]
+        }
+      ],
+      "boxes": [
+        {
+          "badge": "Verneinen mit kein",
+          "variant": "akk",
+          "items": [
+            "Das spielt keine Rolle.",
+            "Er nimmt keine Rücksicht.",
+            "Es stehen keine Mittel zur Verfügung.",
+            "Ich habe keine Zweifel."
+          ]
+        },
+        {
+          "badge": "Verneinen mit nicht",
+          "variant": "dat",
+          "items": [
+            "Das kommt nicht in Frage.",
+            "Er steht nicht unter Druck.",
+            "Sie ist nicht im Irrtum.",
+            "Er ist nicht in Schwierigkeiten geraten."
+          ]
+        }
+      ]
+    }
+  },
+  "exercises": [
+    {
+      "type": "match",
+      "title": "Setzen Sie die Verbindungen zusammen.",
+      "hint": "Welches Verb gehört zu welchem Nomen?",
+      "pairs": [
+        { "q": "in Schwierigkeiten", "a": "geraten" },
+        { "q": "im Irrtum", "a": "sein" },
+        { "q": "Rücksicht", "a": "nehmen" },
+        { "q": "einen Kompromiss", "a": "schließen" },
+        { "q": "unter Druck", "a": "stehen" },
+        { "q": "Aufsehen", "a": "erregen" },
+        { "q": "zu Ende", "a": "bringen" },
+        { "q": "zur Verfügung", "a": "stehen (verfügbar sein)" },
+        { "q": "in Frage", "a": "kommen" },
+        { "q": "eine Rolle", "a": "spielen" },
+        { "q": "in Kauf", "a": "nehmen (akzeptieren)" },
+        { "q": "Zweifel", "a": "haben" }
+      ]
+    },
+    {
+      "type": "table",
+      "title": "Welches einfache Verb steckt dahinter?",
+      "hint": "Ein Verb genügt.",
+      "columns": ["Verbindung", "einfaches Verb"],
+      "placeholder": "Verb",
+      "rows": [
+        { "term": "zu Ende bringen", "answer": ["beenden", "abschließen"] },
+        { "term": "eine Rolle spielen", "answer": ["wichtig sein", "zählen"] },
+        { "term": "in Frage kommen", "answer": ["möglich sein", "infrage kommen"] },
+        { "term": "Zweifel haben", "answer": ["zweifeln", "bezweifeln"] },
+        { "term": "im Irrtum sein", "answer": ["sich irren", "irren"] },
+        { "term": "einen Kompromiss schließen", "answer": ["sich einigen", "einigen"] },
+        { "term": "in Kauf nehmen", "answer": ["akzeptieren", "hinnehmen"] },
+        { "term": "einen Antrag stellen", "answer": ["beantragen"] }
+      ]
+    },
+    {
+      "type": "fill",
+      "title": "Setzen Sie die richtige Verbindung ein.",
+      "hint": "Manche Sätze brauchen eine Verneinung. Schreiben Sie den fehlenden Teil.",
+      "placeholder": "Nomen-Verb-Verbindung",
+      "items": [
+        { "prompt": "Walter ist sehr egoistisch und ___ auf andere Leute.", "hint": "Verneint: Rücksicht nehmen.", "answer": ["nimmt keine Rücksicht"] },
+        { "prompt": "Das ist in diesem Zusammenhang unwichtig, es ___ .", "hint": "Verneint: eine Rolle spielen.", "answer": ["spielt keine Rolle"] },
+        { "prompt": "Herr Schmidt muss das Projekt beenden. Er hat viel Stress und ___ .", "hint": "unter Druck", "answer": ["steht unter Druck"] },
+        { "prompt": "Mit ihrem extravaganten Kleid ___ die Schauspielerin viel Aufsehen.", "hint": "Präteritum von erregen.", "answer": ["erregte"] },
+        { "prompt": "Nach langen Beratungen fanden sie eine Lösung für beide Seiten. Sie ___ .", "hint": "Präteritum: einen Kompromiss schließen.", "answer": ["schlossen einen Kompromiss"] },
+        { "prompt": "Wir machen beim Verkauf Verluste. Das müssen wir ___ .", "hint": "in Kauf", "answer": ["in Kauf nehmen"] },
+        { "prompt": "Das können wir auf keinen Fall machen. Das ___ !", "hint": "Verneint: in Frage kommen.", "answer": ["kommt nicht in Frage", "kommt nicht infrage"] },
+        { "prompt": "Wir haben jetzt keine Zeit mehr. Wir müssen die Sache ___ .", "hint": "zu Ende", "answer": ["zu Ende bringen"] }
+      ]
+    },
+    {
+      "type": "story",
+      "title": "Lückentext: Krisensitzung.",
+      "hint": "Ergänzen Sie jeweils ein Wort.",
+      "segments": [
+        { "text": "Durch den Kauf des Eigenheims bekam er große Probleme. Er geriet in " },
+        { "blank": 0, "answer": ["Schwierigkeiten"] },
+        { "text": ". Wir haben dieses Jahr kein Geld mehr für Investitionen — es stehen keine Mittel mehr zur " },
+        { "blank": 1, "answer": ["Verfügung"] },
+        { "text": ". Was Sie sagen, stimmt so nicht; da sind Sie im " },
+        { "blank": 2, "answer": ["Irrtum"] },
+        { "text": ". Ich bin mir nicht sicher, ob das stimmt, was in der Zeitung steht — ich habe " },
+        { "blank": 3, "answer": ["Zweifel"] },
+        { "text": " an der Darstellung. Trotzdem müssen wir die Sache zu " },
+        { "blank": 4, "answer": ["Ende"] },
+        { "text": " bringen. Eine Verschiebung kommt nicht in " },
+        { "blank": 5, "answer": ["Frage"] },
+        { "text": ", und ein paar Verluste nehmen wir in " },
+        { "blank": 6, "answer": ["Kauf"] },
+        { "text": "." }
+      ]
+    }
+  ]
+}

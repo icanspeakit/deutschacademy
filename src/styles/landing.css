@@ -3,7 +3,7 @@
 .lp {
   font-family: var(--font-body);
   color: var(--ink);
-  background: #fff;
+  background: var(--surface-card);
 }
 .lp * { box-sizing: border-box; }
 .lp img { max-width: 100%; display: block; }
@@ -18,6 +18,39 @@
   text-transform: uppercase;
   color: var(--brand-blue-dark);
 }
+/* Bungee Shade accent under the hero h1 — the single place the face is used
+   site-wide, so it stays an accent rather than a second display voice. Sized
+   well below the h1 on purpose; if it ever needs to appear somewhere else,
+   reuse this class instead of reaching for var(--font-accent) directly. */
+.lp-hero-accent {
+  display: inline-block;
+  /* .lp-hero-copy is a flex column, which blockifies and stretches children —
+     pin it to the start so the highlight hugs the text instead of the column. */
+  align-self: flex-start;
+  width: fit-content;
+  margin: 6px 0 0;
+  padding: 4px 12px;
+  border-radius: var(--radius-sm);
+  background: var(--blue-100);
+  color: var(--accent);
+  font-family: var(--font-accent);
+  font-size: clamp(.9rem, 2.2vw, 1.25rem);
+  line-height: 1.4;
+  text-transform: uppercase;
+  letter-spacing: .02em;
+}
+
+/* Sit tight under the h1 rather than a full column gap away. */
+.lp-hero-copy .lp-hero-accent { margin-top: -16px; }
+/* The phone-frame hero styles every <p> as muted body copy — win on
+   specificity so the accent keeps its own color and scale there. */
+.m1-phone-block .lp-hero-accent {
+  font-size: 12px;
+  color: var(--accent);
+  margin: 2px 0 12px;
+  padding: 3px 9px;
+}
+
 .lp-section { padding: 88px 0; }
 .lp-section--alt { background: var(--surface); border-top: 1px solid var(--border); }
 .lp-section-head {
@@ -39,14 +72,21 @@
 }
 .lp-section-head p { margin: 0; font-size: 16.5px; line-height: 1.55; color: var(--muted); }
 
+/* Base size lives here so an .lp-btn works anywhere it is dropped. Every
+   context that wants a different size (nav, hero, showcase, m1) overrides
+   padding/font-size with a two-class selector and still wins. */
 .lp-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  padding: 13px 26px;
   border-radius: var(--radius-pill);
+  font-size: 15px;
   font-weight: 700;
+  line-height: 1.2;
   white-space: nowrap;
   border: none;
+  text-decoration: none;
   cursor: pointer;
   font-family: var(--font-body);
 }
@@ -58,7 +98,10 @@
 }
 .lp-btn--primary:hover { transform: translateY(-1px); }
 .lp-btn--outline {
-  background: #fff;
+  background: var(--surface-card);
+  /* 1px less padding than the base so the border does not make it taller
+     than the primary sitting next to it. */
+  padding: 12px 25px;
   border: 1px solid var(--border-strong);
   color: var(--brand-blue-dark);
   transition: border-color .2s ease;
@@ -66,7 +109,7 @@
 .lp-btn--outline:hover { border-color: var(--brand-blue); }
 
 /* Nav */
-.lp-nav { position: sticky; top: 0; z-index: 20; background: #fff; border-bottom: 1px solid var(--border); }
+.lp-nav { position: sticky; top: 0; z-index: 20; background: var(--surface-card); border-bottom: 1px solid var(--border); }
 .lp-nav-row { display: flex; align-items: center; justify-content: space-between; gap: 32px; padding: 12px 24px; max-width: 1240px; margin: 0 auto; }
 .lp-nav-left { display: flex; align-items: center; gap: 44px; }
 .lp-nav-left img { height: 44px; }
@@ -91,7 +134,7 @@
 .lp-nav-toggle svg { width: 24px; height: 24px; }
 
 /* Hero */
-.lp-hero { background: #fff; }
+.lp-hero { background: var(--surface-card); }
 .lp-hero-inner { padding-top: 80px; padding-bottom: 88px; display: grid; grid-template-columns: 1.05fr 1fr; gap: 64px; align-items: center; }
 .lp-hero-inner--reverse { grid-template-columns: 1fr 1.05fr; }
 .lp-hero-inner--reverse .lp-hero-copy { order: 2; }
@@ -155,7 +198,7 @@
 
 /* Value props */
 .lp-value-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px; }
-.lp-value-card { border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; background: #fff; display: flex; flex-direction: column; }
+.lp-value-card { border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; background: var(--surface-card); display: flex; flex-direction: column; }
 .lp-value-card img { width: 100%; height: 140px; object-fit: cover; }
 .lp-value-card-body { padding: 22px; display: flex; flex-direction: column; gap: 9px; }
 .lp-value-card-body h3 { margin: 0; font-size: 17.5px; font-weight: 700; line-height: 1.3; color: var(--ink); }
@@ -188,29 +231,28 @@
 .lp-tools-group { margin-bottom: 40px; }
 .lp-tools-group:last-child { margin-bottom: 0; }
 .lp-tools-label { font-family: var(--font-display); font-weight: 700; font-size: 12.5px; letter-spacing: .07em; text-transform: uppercase; color: var(--muted-soft); margin-bottom: 16px; }
-.lp-tools-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; }
-.lp-tool-card { display: flex; flex-direction: column; gap: 14px; border: 1px solid var(--border); border-radius: var(--radius); padding: 20px 18px; background: #fff; transition: border-color .2s ease, box-shadow .2s ease, transform .2s ease; }
+/* Fixed column counts (not auto-fill) so each group forms complete rows: the 8 exercise
+   tools land as a clean 4x2, the 5 exams as a single row — no ragged tail. */
+.lp-tools-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px; }
+.lp-tools-grid--exams { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+.lp-tool-card { display: flex; flex-direction: column; gap: 14px; border: 1px solid var(--border); border-radius: var(--radius); padding: 20px 18px; background: var(--surface-card); transition: border-color .2s ease, box-shadow .2s ease, transform .2s ease; }
 .lp-tool-card:hover { border-color: var(--brand-blue); box-shadow: var(--shadow-hover); transform: translateY(-2px); }
-.lp-tool-card--soon { border-style: dashed; }
-.lp-tool-card--soon:hover { border-color: var(--border-strong); box-shadow: none; transform: none; }
 .lp-tool-tile { width: 44px; height: 44px; border-radius: var(--radius-lg); background: var(--gradient-brand); color: #fff; box-shadow: 0 6px 14px rgba(13,148,136,.14); display: flex; align-items: center; justify-content: center; }
 .lp-tools-group--exams .lp-tool-tile { background: linear-gradient(135deg, #fdba74, var(--accent)); box-shadow: 0 6px 14px rgba(249,115,22,.14); }
-.lp-tool-card--soon .lp-tool-tile { background: var(--surface); color: var(--muted-soft); box-shadow: none; }
 .lp-tool-card h4 { margin: 0; font-size: 15px; font-weight: 700; color: var(--ink); line-height: 1.3; }
-.lp-tool-card--soon h4 { color: var(--muted); }
 .lp-tool-card p { margin: 0; font-size: 12.5px; line-height: 1.5; color: var(--muted); flex-grow: 1; }
 
 /* Product showcase */
 .lp-showcase { display: grid; grid-template-columns: 1.3fr 1fr; gap: 56px; align-items: center; }
-.lp-browser { border: 1px solid var(--border); border-radius: 16px; overflow: hidden; background: #fff; box-shadow: var(--shadow-raised); }
+.lp-browser { border: 1px solid var(--border); border-radius: 16px; overflow: hidden; background: var(--surface-card); box-shadow: var(--shadow-raised); }
 .lp-browser-bar { display: flex; align-items: center; gap: 8px; padding: 12px 16px; background: var(--surface); border-bottom: 1px solid var(--border); }
 .lp-browser-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--border-strong); }
-.lp-browser-url { flex: 1; height: 22px; border-radius: 6px; background: #fff; border: 1px solid var(--border); margin-left: 10px; display: flex; align-items: center; padding: 0 10px; font-size: 10.5px; color: var(--muted-soft); }
+.lp-browser-url { flex: 1; height: 22px; border-radius: 6px; background: var(--surface-card); border: 1px solid var(--border); margin-left: 10px; display: flex; align-items: center; padding: 0 10px; font-size: 10.5px; color: var(--muted-soft); }
 .lp-browser-body { display: grid; grid-template-columns: 186px 1fr; min-height: 370px; }
 .lp-sidebar { border-right: 1px solid var(--border); padding: 20px 14px; display: flex; flex-direction: column; gap: 6px; background: var(--surface); }
 .lp-sidebar img { height: 28px; width: auto; object-fit: contain; object-position: left; margin-bottom: 14px; }
 .lp-sidebar-link { padding: 10px 12px; font-size: 12.5px; color: var(--muted); border-radius: 8px; }
-.lp-sidebar-link--active { background: #fff; border: 1px solid var(--border); font-weight: 700; color: var(--brand-blue-dark); }
+.lp-sidebar-link--active { background: var(--surface-card); border: 1px solid var(--border); font-weight: 700; color: var(--brand-blue-dark); }
 .lp-sidebar-upsell { margin-top: auto; padding: 12px; border-radius: 10px; background: var(--gradient-brand-soft); border: 1px solid var(--blue-200); }
 .lp-sidebar-upsell strong { display: block; font-size: 11.5px; font-weight: 700; color: var(--brand-blue-dark); margin-bottom: 4px; }
 .lp-sidebar-upsell span { font-size: 10.5px; line-height: 1.4; color: var(--muted); }
@@ -285,7 +327,7 @@
 
 /* Deep dive */
 .lp-deepdive-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; align-items: stretch; }
-.lp-deep-card { background: #fff; border: 1px solid var(--border); border-top: 5px solid var(--brand-blue-light); border-radius: var(--radius); padding: 30px 26px; display: flex; flex-direction: column; gap: 18px; }
+.lp-deep-card { background: var(--surface-card); border: 1px solid var(--border); border-top: 5px solid var(--brand-blue-light); border-radius: var(--radius); padding: 30px 26px; display: flex; flex-direction: column; gap: 18px; }
 .lp-deep-card--featured { border-top-color: var(--brand-blue); box-shadow: var(--shadow-hover); }
 .lp-deep-card--cyan { border-top-color: var(--brand-cyan); }
 .lp-deep-icon { width: 48px; height: 48px; border-radius: 12px; background: var(--blue-100); display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-weight: 700; font-size: 18px; color: var(--brand-blue-dark); }
@@ -298,14 +340,14 @@
 .lp-deep-item span { font-size: 13.5px; line-height: 1.45; color: var(--ink); }
 .lp-deep-cta {
   margin-top: auto; padding: 13px 20px; border-radius: var(--radius-pill);
-  background: #fff; border: 1px solid var(--border-strong); color: var(--brand-blue-dark);
+  background: var(--surface-card); border: 1px solid var(--border-strong); color: var(--brand-blue-dark);
   font-size: 14px; font-weight: 700; text-align: center;
 }
 .lp-deep-cta--featured { background: var(--gradient-brand); border: none; color: #fff; box-shadow: var(--shadow-cta); padding: 14px 20px; }
 
 /* Pricing */
 .lp-pricing-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 26px; max-width: 880px; margin: 0 auto; }
-.lp-price-card { border: 1px solid var(--border); border-radius: var(--radius); padding: 36px 30px; display: flex; flex-direction: column; gap: 20px; background: #fff; }
+.lp-price-card { border: 1px solid var(--border); border-radius: var(--radius); padding: 36px 30px; display: flex; flex-direction: column; gap: 20px; background: var(--surface-card); }
 .lp-price-card--featured { position: relative; border: 2px solid var(--brand-blue); box-shadow: var(--shadow-raised); }
 .lp-price-badge {
   position: absolute; top: -14px; left: 30px; padding: 7px 16px; border-radius: var(--radius-pill);
@@ -325,7 +367,7 @@
 .lp-price-item--off span { color: var(--muted-soft); }
 .lp-price-cta {
   margin-top: auto; padding: 15px 20px; border-radius: var(--radius-pill);
-  background: #fff; border: 1px solid var(--border-strong); color: var(--brand-blue-dark);
+  background: var(--surface-card); border: 1px solid var(--border-strong); color: var(--brand-blue-dark);
   font-size: 15px; font-weight: 700; text-align: center;
 }
 .lp-price-cta--featured { background: var(--gradient-brand); border: none; color: #fff; box-shadow: var(--shadow-cta); padding: 16px 20px; }
@@ -336,12 +378,12 @@
 .lp-final-cta-inner { padding-top: 96px; padding-bottom: 96px; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 20px; }
 .lp-final-cta-inner h2 { margin: 0; font-family: var(--font-display); font-weight: 700; font-size: clamp(1.75rem, 4vw, 2.75rem); line-height: 1.12; letter-spacing: -.015em; color: #fff; max-width: 24ch; }
 .lp-final-cta-inner p { margin: 0; font-size: 17px; line-height: 1.55; color: rgba(255,255,255,.9); max-width: 52ch; }
-.lp-final-cta-btn { padding: 20px 46px; border-radius: var(--radius-pill); background: #fff; color: var(--brand-blue-dark); font-size: 17.5px; font-weight: 700; margin-top: 8px; box-shadow: 0 12px 30px rgba(28,43,63,.22); }
+.lp-final-cta-btn { padding: 20px 46px; border-radius: var(--radius-pill); background: var(--surface-card); color: var(--brand-blue-dark); font-size: 17.5px; font-weight: 700; margin-top: 8px; box-shadow: 0 12px 30px rgba(28,43,63,.22); }
 .lp-final-cta-login { font-size: 14px; color: rgba(255,255,255,.85); }
 .lp-final-cta-login b { color: #fff; text-decoration: underline; }
 
 /* Footer */
-.lp-footer { background: var(--ink); color: #cfd8e6; }
+.lp-footer { background: var(--inverse-surface); color: #cfd8e6; }
 .lp-footer-inner { padding-top: 64px; padding-bottom: 28px; }
 .lp-footer-grid { display: grid; grid-template-columns: minmax(0, 1.5fr) repeat(4, minmax(0, 1fr)); gap: 40px; }
 .lp-footer-brand { display: flex; flex-direction: column; gap: 16px; }
@@ -364,6 +406,7 @@
   .lp-deepdive-grid { grid-template-columns: 1fr; }
   .lp-footer-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .lp-showcase { grid-template-columns: 1fr; }
+  .lp-tools-grid, .lp-tools-grid--exams { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
 @media (max-width: 900px) {
@@ -378,7 +421,7 @@
     flex-direction: column;
     align-items: stretch;
     gap: 0;
-    background: #fff;
+    background: var(--surface-card);
     border-bottom: 1px solid var(--border);
     padding: 8px 24px 16px;
     box-shadow: var(--shadow-hover);
@@ -399,6 +442,7 @@
   .lp-mini-grid { grid-template-columns: 1fr; }
   .lp-mini-card img { height: 140px; }
   .lp-pricing-grid { grid-template-columns: 1fr; }
+  .lp-tools-grid, .lp-tools-grid--exams { grid-template-columns: minmax(0, 1fr); }
   .lp-footer-grid { grid-template-columns: 1fr; }
   .lp-section { padding: 56px 0; }
   .lp-hero-inner { padding-top: 48px; padding-bottom: 56px; }

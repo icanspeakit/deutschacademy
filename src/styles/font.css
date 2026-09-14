@@ -1,0 +1,156 @@
+/* /font — internal test bed for the --font-label candidates. The toggle sets
+   [data-label-font] on .ft-page, which re-points the global token for the whole
+   subtree, so the specimens below inherit it exactly as real pages do. */
+
+.ft-page { --font-label: "Albert Sans", "Segoe UI", Arial, sans-serif; }
+.ft-page[data-label-font="shoulders"] { --font-label: "Big Shoulders Display", "Segoe UI", Arial, sans-serif; }
+
+/* Big Shoulders is a condensed display face: at label sizes it needs more
+   letter-spacing and weight than Albert Sans to stay readable. */
+.ft-page[data-label-font="shoulders"] .eyebrow,
+.ft-page[data-label-font="shoulders"] .ft-chip,
+.ft-page[data-label-font="shoulders"] .ft-lesson-label,
+.ft-page[data-label-font="shoulders"] .ft-spot-sample { letter-spacing: .12em; font-weight: var(--fw-bold); }
+
+/* Control bar --------------------------------------------------------------- */
+
+.ft-bar {
+  position: sticky; top: 0; z-index: 10;
+  background: var(--page-bg);
+  border-bottom: 1px solid var(--border);
+}
+.ft-bar-inner {
+  max-width: 880px; margin: 0 auto;
+  padding: var(--space-4) clamp(14px, 4vw, 24px);
+  display: flex; align-items: center; justify-content: space-between;
+  gap: var(--space-6); flex-wrap: wrap;
+}
+.ft-bar-title { font-family: var(--font-display); font-size: var(--text-xl); font-weight: var(--fw-bold); color: var(--ink); margin: 0; }
+.ft-bar-sub { font-size: var(--text-sm); color: var(--muted); margin: 2px 0 0; }
+
+.ft-switch-wrap { display: flex; align-items: center; gap: var(--space-3); }
+.ft-switch-label {
+  font-size: var(--text-sm); font-weight: var(--fw-semibold);
+  color: var(--muted-soft);
+  transition: color var(--duration-base) var(--ease-standard);
+}
+.ft-switch-label[data-switch-side="albert"] { font-family: "Albert Sans", "Segoe UI", Arial, sans-serif; }
+.ft-switch-label[data-switch-side="shoulders"] { font-family: "Big Shoulders Display", "Segoe UI", Arial, sans-serif; letter-spacing: .04em; }
+.ft-page[data-label-font="albert"] .ft-switch-label[data-switch-side="albert"],
+.ft-page[data-label-font="shoulders"] .ft-switch-label[data-switch-side="shoulders"] { color: var(--brand-blue-dark); }
+
+.ft-switch {
+  position: relative; flex-shrink: 0;
+  width: 52px; height: 30px; padding: 0;
+  border: 1px solid var(--border-strong); border-radius: var(--radius-pill);
+  background: var(--surface); cursor: pointer;
+  transition: background var(--duration-base) var(--ease-standard), border-color var(--duration-base) var(--ease-standard);
+}
+.ft-switch[aria-checked="true"] { background: var(--gradient-brand); border-color: transparent; }
+.ft-switch:focus-visible { outline: 2px solid var(--brand-blue); outline-offset: 2px; }
+.ft-switch-knob {
+  position: absolute; top: 3px; left: 3px;
+  width: 22px; height: 22px; border-radius: 50%;
+  background: #fff; box-shadow: var(--shadow-sm);
+  transition: transform var(--duration-base) var(--ease-standard);
+}
+.ft-switch[aria-checked="true"] .ft-switch-knob { transform: translateX(22px); }
+
+/* Hero specimen ------------------------------------------------------------- */
+
+.ft-section {
+  max-width: 880px; margin: 0 auto;
+  padding: clamp(28px, 6vw, 56px) clamp(14px, 4vw, 24px);
+  border-bottom: 1px solid var(--border);
+}
+.ft-section:last-child { border-bottom: none; padding-bottom: var(--space-24); }
+
+.ft-chip {
+  display: inline-block; margin: 0 0 var(--space-6);
+  padding: 7px 16px; border-radius: var(--radius-pill);
+  background: var(--blue-100); color: var(--brand-blue-dark);
+  font-family: var(--font-label); font-size: var(--text-sm);
+  font-weight: var(--fw-semibold); letter-spacing: .02em;
+}
+
+.ft-hero-title {
+  font-family: var(--font-display); font-weight: var(--fw-extrabold);
+  font-size: clamp(2.4rem, 7vw, 4rem); line-height: 1.02;
+  color: var(--ink-deep); margin: 0; text-align: left;
+}
+/* The Bungee Shade accent line from the approved mockup: sits directly under
+   the h1, highlighted, and deliberately never larger than the headline. */
+.ft-hero-accent {
+  display: inline-block; margin: var(--space-2) 0 0;
+  padding: 4px 12px; border-radius: var(--radius-sm);
+  background: var(--blue-100); color: var(--accent);
+  font-family: var(--font-accent);
+  font-size: clamp(1rem, 2.6vw, 1.5rem); line-height: 1.35;
+  text-transform: uppercase; letter-spacing: .02em;
+}
+.ft-hero-body {
+  max-width: 620px; margin: var(--space-6) 0 0;
+  font-size: var(--text-lg); line-height: 1.6; color: var(--muted);
+}
+
+.ft-lesson-card {
+  margin: var(--space-8) 0 0; max-width: 620px;
+  background: var(--surface-card); border: 1px solid var(--border);
+  border-radius: var(--radius-lg); padding: var(--space-6);
+}
+.ft-lesson-label {
+  font-family: var(--font-label); font-size: var(--text-xs);
+  font-weight: var(--fw-semibold); letter-spacing: .08em;
+  text-transform: uppercase; color: var(--brand-blue-dark); margin: 0 0 var(--space-2);
+}
+.ft-lesson-title { font-family: var(--font-display); font-size: var(--text-2xl); font-weight: var(--fw-bold); color: var(--ink); margin: 0; text-align: left; }
+.ft-lesson-meta { font-size: var(--text-sm); color: var(--muted); margin: var(--space-2) 0 var(--space-4); }
+.ft-progress { height: 8px; border-radius: var(--radius-pill); background: var(--blue-100); overflow: hidden; }
+.ft-progress span { display: block; height: 100%; border-radius: inherit; background: var(--gradient-brand); }
+
+.ft-cta {
+  display: inline-block; margin-top: var(--space-8);
+  padding: 14px 28px; border-radius: var(--radius-pill);
+  background: var(--gradient-brand); color: #fff;
+  font-weight: var(--fw-bold); text-decoration: none;
+  box-shadow: var(--shadow-cta);
+}
+.ft-cta:hover { filter: brightness(1.05); }
+
+/* In-context specimens ------------------------------------------------------ */
+
+.ft-eyebrow-left { text-align: left; }
+.ft-section-title { font-family: var(--font-display); font-size: var(--text-3xl); font-weight: var(--fw-bold); color: var(--ink); margin: 0 0 var(--space-3); text-align: left; }
+.ft-section-desc { color: var(--muted); margin: 0 0 var(--space-6); max-width: 620px; }
+.ft-section-desc code { font-size: var(--text-sm); background: var(--surface); padding: 2px 6px; border-radius: 6px; }
+
+.ft-spot-list { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-3); }
+.ft-spot {
+  display: flex; align-items: baseline; gap: var(--space-5); flex-wrap: wrap;
+  padding: var(--space-4);
+  background: var(--surface-card); border: 1px solid var(--border); border-radius: var(--radius);
+}
+.ft-spot-where { flex: 0 0 260px; font-family: monospace; font-size: var(--text-xs); color: var(--muted-soft); }
+.ft-spot-sample {
+  font-family: var(--font-label); font-size: var(--text-sm);
+  font-weight: var(--fw-semibold); letter-spacing: .08em;
+  text-transform: uppercase; color: var(--brand-blue-dark);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Static side-by-side ------------------------------------------------------- */
+
+.ft-compare { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4); }
+.ft-compare-col { padding: var(--space-5); background: var(--surface-card); border: 1px solid var(--border); border-radius: var(--radius); }
+.ft-compare-col--albert { font-family: "Albert Sans", "Segoe UI", Arial, sans-serif; }
+.ft-compare-col--shoulders { font-family: "Big Shoulders Display", "Segoe UI", Arial, sans-serif; }
+.ft-compare-name { font-family: var(--font-body); font-size: var(--text-xs); color: var(--muted-soft); margin: 0 0 var(--space-4); text-transform: uppercase; letter-spacing: .08em; }
+.ft-compare-label { font-size: var(--text-sm); font-weight: var(--fw-bold); letter-spacing: .08em; text-transform: uppercase; color: var(--brand-blue-dark); margin: 0 0 var(--space-3); }
+.ft-compare-num { font-size: var(--text-lg); font-weight: var(--fw-semibold); color: var(--ink); margin: 0 0 var(--space-3); font-variant-numeric: tabular-nums; }
+.ft-compare-glyphs { font-size: var(--text-base); color: var(--muted); margin: 0; }
+
+@media (max-width: 640px) {
+  .ft-bar-inner { flex-direction: column; align-items: flex-start; gap: var(--space-4); }
+  .ft-spot-where { flex-basis: 100%; }
+  .ft-compare { grid-template-columns: 1fr; }
+}

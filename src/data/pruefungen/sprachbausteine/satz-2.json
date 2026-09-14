@@ -1,0 +1,87 @@
+{
+  "setId": "satz-2",
+  "setLabel": "Satz 2",
+  "id": "telc-sprachbausteine-2",
+  "name": "Sprachbausteine",
+  "level": "B1",
+  "subtitle": "Zweiter Satz im gleichen Format: Teil 1 als Zuordnung aus dem Wortkasten, Teil 2 als Multiple Choice im laufenden Text.",
+  "sourceNote": "Aufgabentypen nach telc-Vorbild. Texte und Aufgaben sind eigene, keine Prüfungsaufgaben.",
+  "exercises": [
+    {
+      "type": "wordbank",
+      "title": "Sprachbausteine, Teil 1 — Brief an eine Freundin",
+      "hint": "Welches Wort aus dem Kasten passt in welche Lücke? Jedes Wort passt nur einmal, zwei Wörter bleiben übrig.",
+      "letters": {
+        "a": "ABER",
+        "b": "AUF",
+        "c": "DAZU",
+        "d": "FÄHRST",
+        "e": "OBWOHL",
+        "f": "SEITDEM",
+        "g": "ÜBER",
+        "h": "UNTERWEGS",
+        "i": "VON",
+        "j": "WEIL"
+      },
+      "segments": [
+        { "text": "Liebe Sofia,\n\nendlich komme ich " },
+        { "blank": 0, "answer": "c" },
+        { "text": ", dir zu schreiben! Die letzten Wochen waren ziemlich voll.\n\nWie du weißt, wollten wir " },
+        { "blank": 1, "answer": "g" },
+        { "text": " Ostern nach Italien fahren. Daraus ist leider nichts geworden, " },
+        { "blank": 2, "answer": "j" },
+        { "text": " Marek kurz vorher krank geworden ist. Wir haben die Reise deshalb " },
+        { "blank": 3, "answer": "b" },
+        { "text": " den Sommer verschoben.\n\nJetzt planen wir alles " },
+        { "blank": 4, "answer": "i" },
+        { "text": " Neuem — diesmal mit dem Zug statt mit dem Auto. Das dauert zwar länger, ist " },
+        { "blank": 5, "answer": "a" },
+        { "text": " viel entspannter, finde ich.\n\n" },
+        { "blank": 6, "answer": "d" },
+        { "text": " du in den Ferien auch weg? Falls du Zeit hast, könnten wir uns " },
+        { "blank": 7, "answer": "h" },
+        { "text": " in Wien treffen.\n\nMelde dich bald!\nLiebe Grüße\nHanna" }
+      ]
+    },
+    {
+      "type": "mcgap",
+      "title": "Sprachbausteine, Teil 2 — Zeitungstext: Mit dem Rad durch die Stadt",
+      "hint": "Welches Wort passt? Klicke pro Lücke eine der drei Möglichkeiten.",
+      "segments": [
+        { "text": "Immer mehr Menschen in Deutschland steigen " },
+        { "blank": 0 },
+        { "text": " das Fahrrad um. Nach einer neuen Studie fahren rund 40 Prozent der Stadtbewohner " },
+        { "blank": 1 },
+        { "text": " mit dem Rad zur Arbeit oder zum Einkaufen.\n\nDie Gründe sind unterschiedlich. Viele nennen die Kosten: Ein Fahrrad ist " },
+        { "blank": 2 },
+        { "text": " günstiger als ein Auto. Andere sagen, sie seien mit dem Rad in der Innenstadt " },
+        { "blank": 3 },
+        { "text": " schneller unterwegs als mit dem Auto.\n\nDie Städte reagieren darauf. In Hamburg " },
+        { "blank": 4 },
+        { "text": " im letzten Jahr über 30 Kilometer neue Radwege gebaut. In München plant man, " },
+        { "blank": 5 },
+        { "text": " 2030 jede Hauptstraße mit einem geschützten Radweg auszustatten.\n\nKritik gibt es trotzdem. Fußgängerverbände warnen " },
+        { "blank": 6 },
+        { "text": ", dass Radfahrer zu oft auf dem Gehweg fahren. Und " },
+        { "blank": 7 },
+        { "text": " das Wetter schlecht ist, bleibt das Rad bei vielen im Keller.\n\nFachleute sind sich " },
+        { "blank": 8 },
+        { "text": " einig, dass es ohne sichere Wege nicht geht. " },
+        { "blank": 9 },
+        { "text": " mehr Menschen sich sicher fühlen, desto eher steigen sie um." }
+      ],
+      "items": [
+        { "options": ["auf", "an", "in"], "correct": 0 },
+        { "options": ["regelmäßig", "regelmäßige", "regelmäßigen"], "correct": 0 },
+        { "options": ["deutlich", "deutliche", "deutlichen"], "correct": 0 },
+        { "options": ["sogar", "immer", "gerade"], "correct": 0 },
+        { "options": ["wurden", "werden", "worden"], "correct": 0 },
+        { "options": ["bis", "seit", "ab"], "correct": 0 },
+        { "options": ["davor", "dafür", "darauf"], "correct": 0 },
+        { "options": ["wenn", "als", "ob"], "correct": 0 },
+        { "options": ["darin", "daran", "damit"], "correct": 0 },
+        { "options": ["Je", "Desto", "Umso"], "correct": 0 }
+      ]
+    }
+  ]
+}

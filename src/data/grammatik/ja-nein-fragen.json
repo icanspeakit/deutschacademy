@@ -1,0 +1,119 @@
+{
+  "id": "ja-nein-fragen",
+  "name": "Ja/Nein-Fragen und „doch“",
+  "level": "A1",
+  "subtitle": "Ohne Fragewort rutscht das Verb ganz nach vorn: „Er kommt aus Berlin.“ wird zu „Kommt er aus Berlin?“ Und auf eine negative Frage antwortet man nicht mit ja, sondern mit doch.",
+  "source": "Ja Nein Fragen.pdf (Kapitel 10, Übungen 1–2)",
+  "concept": {
+    "flow": [
+      { "text": "Verb · Position 1", "variant": "verb" },
+      { "text": "Subjekt", "variant": "prep" },
+      { "text": "Rest?" }
+    ],
+    "exampleHtml": "Aussage: Er <span class=\"vp-prep\">kommt</span> aus Berlin. → Frage: <span class=\"vp-verb\">Kommt</span> er aus Berlin?",
+    "qa": [
+      { "html": "Das konjugierte <strong>Verb steht am Beginn</strong>, das Subjekt direkt dahinter. Sonst ändert sich nichts.", "tag": "Verb zuerst" },
+      { "html": "Auf eine <strong>positive</strong> Frage antwortet man mit <em>ja</em> oder <em>nein</em>: <em>Kommen Sie heute? — Ja, ich komme.</em>", "tag": "ja / nein" },
+      { "html": "Auf eine <strong>negative</strong> Frage antwortet man mit <em>doch</em> oder <em>nein</em>: <em>Kommen Sie heute nicht? — Doch, ich komme.</em>", "tag": "doch" },
+      { "html": "Auch der <strong>Imperativ</strong> beginnt mit dem Verb: <em>Trink eine Tasse Kaffee! Essen Sie doch ein Stück Schokolade!</em>", "tag": "Imperativ" }
+    ],
+    "noteHtml": "<strong>doch</strong> ist das Wort, das viele Sprachen nicht haben. Es widerspricht einer Verneinung: <em>„Du hast doch keine Zeit, oder?“ — „Doch!“</em> heißt: ich habe sehr wohl Zeit. Mit <em>ja</em> wäre die Antwort unverständlich. Höflicher bitten Sie übrigens im Konjunktiv: <em>Könnten Sie mir bitte helfen? Würden Sie bitte das Fenster öffnen?</em>",
+    "reference": {
+      "showLabel": "Übersicht anzeigen ▼",
+      "hideLabel": "Übersicht ausblenden ▲",
+      "tables": [
+        {
+          "caption": "Aussagesatz, W-Frage, Ja/Nein-Frage",
+          "head": ["Satzart", "Position 1", "Position 2", "Rest"],
+          "rows": [
+            ["Aussagesatz", "Er", "kommt", "aus Berlin."],
+            ["W-Frage", "Woher", "kommt", "er?"],
+            ["Ja/Nein-Frage", "Kommt", "er", "aus Berlin?"],
+            ["Imperativ", "Trink", "—", "eine Tasse Kaffee!"]
+          ]
+        },
+        {
+          "caption": "Die Antwort hängt von der Frage ab",
+          "head": ["Frage", "positiv antworten", "negativ antworten"],
+          "rows": [
+            ["Kommen Sie heute?", "Ja, ich komme heute Nachmittag.", "Nein, ich kann heute nicht."],
+            ["Kommen Sie heute nicht?", "Doch, ich komme heute Nachmittag.", "Nein, ich kann heute nicht."]
+          ]
+        }
+      ]
+    }
+  },
+  "exercises": [
+    {
+      "type": "fill",
+      "title": "ja, nein oder doch?",
+      "hint": "Achten Sie darauf, ob die Frage eine Verneinung enthält.",
+      "placeholder": "ja / nein / doch",
+      "items": [
+        { "prompt": "Sprechen Sie Deutsch? — ___, ein bisschen.", "hint": "positive Frage, positive Antwort", "answer": ["Ja"] },
+        { "prompt": "Kommst du heute nicht? — ___, ich komme um sechs.", "hint": "negative Frage, positive Antwort", "answer": ["Doch"] },
+        { "prompt": "Hast du keine Zeit? — ___, ich habe leider wirklich keine.", "hint": "negative Frage, negative Antwort", "answer": ["Nein"] },
+        { "prompt": "Ist das nicht dein Mantel? — ___, der gehört mir.", "hint": "Widerspruch gegen die Verneinung.", "answer": ["Doch"] },
+        { "prompt": "Haben Sie Kinder? — ___, drei.", "hint": "positive Frage", "answer": ["Ja"] },
+        { "prompt": "Wohnen Sie nicht mehr in Berlin? — ___, ich bin letztes Jahr umgezogen.", "hint": "Die Verneinung stimmt.", "answer": ["Nein"] }
+      ]
+    },
+    {
+      "type": "build",
+      "title": "Aus der Aussage wird eine Frage.",
+      "sentences": [
+        {
+          "id": "jn1",
+          "hint": "„Sie heißen Schmidt.“ → Frage",
+          "correct": ["Heißen", "Sie", "Schmidt", "?"],
+          "shuffled": ["Sie", "?", "Heißen", "Schmidt"]
+        },
+        {
+          "id": "jn2",
+          "hint": "„Sie kommen aus Südafrika.“ → Frage",
+          "correct": ["Kommen", "Sie", "aus", "Südafrika", "?"],
+          "shuffled": ["aus", "Sie", "Kommen", "?", "Südafrika"]
+        },
+        {
+          "id": "jn3",
+          "hint": "„Sie sind verheiratet.“ → Frage",
+          "correct": ["Sind", "Sie", "verheiratet", "?"],
+          "shuffled": ["verheiratet", "Sind", "?", "Sie"]
+        },
+        {
+          "id": "jn4",
+          "hint": "Höfliche Bitte im Konjunktiv.",
+          "correct": ["Könnten", "Sie", "mir", "bitte", "helfen", "?"],
+          "shuffled": ["mir", "Könnten", "helfen", "bitte", "?", "Sie"]
+        }
+      ]
+    },
+    {
+      "type": "match",
+      "title": "Welche Frage passt zu welcher Antwort?",
+      "hint": "Die Antwort verrät das Verb der Frage.",
+      "pairs": [
+        { "q": "Sprechen Sie Französisch?", "a": "Nein, ich spreche kein Französisch." },
+        { "q": "Sind Sie Deutsche?", "a": "Nein, ich bin keine Deutsche, ich bin Türkin." },
+        { "q": "Ist er Lehrer von Beruf?", "a": "Ja, er ist Lehrer von Beruf." },
+        { "q": "Wohnen Sie schon lange hier im Haus?", "a": "Ja, wir wohnen schon lange hier." },
+        { "q": "Haben sie Kinder?", "a": "Nein, sie haben keine Kinder." }
+      ]
+    },
+    {
+      "type": "table",
+      "title": "W-Frage oder Ja/Nein-Frage?",
+      "hint": "Steht das Verb auf Position 1 oder auf Position 2?",
+      "columns": ["Frage", "Position des Verbs"],
+      "placeholder": "1 oder 2",
+      "rows": [
+        { "term": "Kommt er aus Berlin?", "answer": "1" },
+        { "term": "Woher kommt er?", "answer": "2" },
+        { "term": "Essen wir heute Abend Pizza?", "answer": "1" },
+        { "term": "Wann essen wir Pizza?", "answer": "2" },
+        { "term": "Möchten Sie Schokolade essen?", "answer": "1" },
+        { "term": "Wie alt ist dein Sohn?", "answer": "2" }
+      ]
+    }
+  ]
+}

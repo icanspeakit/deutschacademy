@@ -1,0 +1,270 @@
+{
+  "note": "The A1-C2 offering structure. Word counts and available trainers are DERIVED from the lexicon at build time (src/lib/program.js), never stored here, so the numbers the site shows can never drift from the content that actually exists. Levels marked 'planned' have units defined but no words yet.",
+  "levels": [
+    {
+      "level": "A1",
+      "status": "live",
+      "title": "Grundwortschatz",
+      "subtitle": "Alltag, Familie, Wohnen, Einkaufen - die Wörter für die ersten Gespräche.",
+      "targetWords": 650,
+      "modules": [
+        {
+          "id": "a1-m1",
+          "title": "Ich & die Anderen",
+          "units": [
+            { "id": "a1-01", "title": "Person & Vorstellung" },
+            { "id": "a1-02", "title": "Familie & Beziehungen" },
+            { "id": "a1-03", "title": "Gefühle" }
+          ]
+        },
+        {
+          "id": "a1-m2",
+          "title": "Wohnen",
+          "units": [
+            { "id": "a1-04", "title": "Haus & Räume" },
+            { "id": "a1-05", "title": "Möbel & Haushalt" }
+          ]
+        },
+        {
+          "id": "a1-m3",
+          "title": "Essen & Einkaufen",
+          "units": [
+            { "id": "a1-06", "title": "Essen & Trinken" },
+            { "id": "a1-07", "title": "Einkaufen & Preise" },
+            { "id": "a1-08", "title": "Kleidung & Farben" }
+          ]
+        },
+        {
+          "id": "a1-m4",
+          "title": "Körper & Gesundheit",
+          "units": [
+            { "id": "a1-09", "title": "Körper & Befinden" },
+            { "id": "a1-10", "title": "Beim Arzt" }
+          ]
+        },
+        {
+          "id": "a1-m5",
+          "title": "Alltag & Arbeit",
+          "units": [
+            { "id": "a1-11", "title": "Tagesablauf" },
+            { "id": "a1-12", "title": "Arbeit & Berufe" },
+            { "id": "a1-13", "title": "Schule & Lernen" },
+            { "id": "a1-14", "title": "Freizeit & Hobbys" }
+          ]
+        },
+        {
+          "id": "a1-m6",
+          "title": "Unterwegs",
+          "units": [
+            { "id": "a1-15", "title": "Stadt & Orte" },
+            { "id": "a1-16", "title": "Verkehr & Wege" },
+            { "id": "a1-17", "title": "Reisen & Urlaub" }
+          ]
+        },
+        {
+          "id": "a1-m7",
+          "title": "Welt & Zeit",
+          "units": [
+            { "id": "a1-18", "title": "Zahlen, Zeit & Datum" },
+            { "id": "a1-19", "title": "Wetter & Jahreszeiten" },
+            { "id": "a1-20", "title": "Tiere & Natur" }
+          ]
+        },
+        {
+          "id": "a1-m8",
+          "title": "Sprachbausteine",
+          "units": [
+            { "id": "a1-21", "title": "Verben des Alltags I" },
+            { "id": "a1-22", "title": "Verben des Alltags II" },
+            { "id": "a1-23", "title": "Adjektive: Gegensätze" },
+            { "id": "a1-24", "title": "Präpositionen & Ortsangaben" },
+            { "id": "a1-25", "title": "Funktionswörter & Konnektoren" },
+            { "id": "a1-26", "title": "Ämter & Formulare" }
+          ]
+        }
+      ]
+    },
+    {
+      "level": "A2",
+      "status": "live",
+      "title": "Aufbauwortschatz",
+      "subtitle": "Wohnungssuche, Behörden, Bewerbung - die Wörter für den echten Alltag in Deutschland.",
+      "targetWords": 700,
+      "modules": [
+        {
+          "id": "a2-m1",
+          "title": "Wohnen & Nachbarschaft",
+          "units": [
+            { "id": "a2-01", "title": "Wohnungssuche & Mietvertrag" },
+            { "id": "a2-02", "title": "Nachbarschaft & Zusammenleben" },
+            { "id": "a2-03", "title": "Haushalt & Reparaturen" }
+          ]
+        },
+        {
+          "id": "a2-m2",
+          "title": "Essen & Versorgung",
+          "units": [
+            { "id": "a2-04", "title": "Lebensmittel & Kochen" },
+            { "id": "a2-05", "title": "Restaurant & Bestellen" }
+          ]
+        },
+        {
+          "id": "a2-m3",
+          "title": "Gesundheit",
+          "units": [
+            { "id": "a2-06", "title": "Gesundheit & Krankheiten" },
+            { "id": "a2-07", "title": "Apotheke & Medikamente" },
+            { "id": "a2-08", "title": "Körperpflege" }
+          ]
+        },
+        {
+          "id": "a2-m4",
+          "title": "Beruf",
+          "units": [
+            { "id": "a2-09", "title": "Bewerbung & Lebenslauf" },
+            { "id": "a2-10", "title": "Arbeitsalltag & Kollegen" },
+            { "id": "a2-11", "title": "Ausbildung & Weiterbildung" }
+          ]
+        },
+        {
+          "id": "a2-m5",
+          "title": "Geld & Behörden",
+          "units": [
+            { "id": "a2-12", "title": "Bank & Geld" },
+            { "id": "a2-13", "title": "Post & Behördengänge" },
+            { "id": "a2-14", "title": "Versicherungen" }
+          ]
+        },
+        {
+          "id": "a2-m6",
+          "title": "Kommunikation",
+          "units": [
+            { "id": "a2-15", "title": "Telefonieren & E-Mail" },
+            { "id": "a2-16", "title": "Internet & Geräte" },
+            { "id": "a2-17", "title": "Reklamation & Umtausch" }
+          ]
+        },
+        {
+          "id": "a2-m7",
+          "title": "Mobilität",
+          "units": [
+            { "id": "a2-18", "title": "Öffentlicher Verkehr & Tickets" },
+            { "id": "a2-19", "title": "Auto & Führerschein" },
+            { "id": "a2-20", "title": "Reise: Hotel & Buchung" }
+          ]
+        },
+        {
+          "id": "a2-m8",
+          "title": "Kultur & Freizeit",
+          "units": [
+            { "id": "a2-21", "title": "Feste & Feiertage" },
+            { "id": "a2-22", "title": "Sport & Bewegung" },
+            { "id": "a2-23", "title": "Musik, Film & Lesen" }
+          ]
+        },
+        {
+          "id": "a2-m9",
+          "title": "Person & Sprache",
+          "units": [
+            { "id": "a2-24", "title": "Charaktereigenschaften" },
+            { "id": "a2-25", "title": "Gefühle & Meinungen" },
+            { "id": "a2-26", "title": "Umwelt & Müll" },
+            { "id": "a2-27", "title": "Trennbare Verben" },
+            { "id": "a2-28", "title": "Redemittel: Bitten, Vorschläge, Termine" }
+          ]
+        }
+      ]
+    },
+    {
+      "level": "B1",
+      "status": "planned",
+      "title": "Selbstständige Sprachverwendung",
+      "subtitle": "Arbeitswelt, Umwelt, Gesellschaft - die Wörter für Meinung und Argument.",
+      "targetWords": 1150,
+      "modules": [
+        { "id": "b1-m1", "title": "Arbeitswelt & Karriere", "plannedUnits": 5, "units": [] },
+        { "id": "b1-m2", "title": "Bildung & Studium", "plannedUnits": 4, "units": [] },
+        { "id": "b1-m3", "title": "Gesundheit & Ernährung", "plannedUnits": 4, "units": [] },
+        { "id": "b1-m4", "title": "Wohnen & Umzug", "plannedUnits": 3, "units": [] },
+        { "id": "b1-m5", "title": "Umwelt & Klima", "plannedUnits": 4, "units": [] },
+        { "id": "b1-m6", "title": "Medien & Digitalisierung", "plannedUnits": 4, "units": [] },
+        { "id": "b1-m7", "title": "Gesellschaft & Zusammenleben", "plannedUnits": 4, "units": [] },
+        { "id": "b1-m8", "title": "Migration & Integration", "plannedUnits": 3, "units": [] },
+        { "id": "b1-m9", "title": "Recht & Behörden", "plannedUnits": 3, "units": [] },
+        { "id": "b1-m10", "title": "Geld & Konsum", "plannedUnits": 3, "units": [] },
+        { "id": "b1-m11", "title": "Reisen & Mobilität", "plannedUnits": 3, "units": [] },
+        { "id": "b1-m12", "title": "Kultur & Freizeit", "plannedUnits": 3, "units": [] },
+        { "id": "b1-m13", "title": "Gefühle, Charakter & Beziehungen", "plannedUnits": 3, "units": [] },
+        { "id": "b1-m14", "title": "Wortbildung: Nomen aus Verben, Präfixverben", "plannedUnits": 2, "units": [] },
+        { "id": "b1-m15", "title": "Konnektoren & Satzstrukturen", "plannedUnits": 2, "units": [] }
+      ]
+    },
+    {
+      "level": "B2",
+      "status": "planned",
+      "title": "Fortgeschrittene Sprachverwendung",
+      "subtitle": "Wirtschaft, Politik, Wissenschaft - die Wörter für Fachdiskussion und Studium.",
+      "targetWords": 1700,
+      "modules": [
+        { "id": "b2-m1", "title": "Berufsleben & Bewerbung", "plannedUnits": 6, "units": [] },
+        { "id": "b2-m2", "title": "Wirtschaft & Arbeitsmarkt", "plannedUnits": 6, "units": [] },
+        { "id": "b2-m3", "title": "Politik & Gesellschaft", "plannedUnits": 6, "units": [] },
+        { "id": "b2-m4", "title": "Recht & Justiz", "plannedUnits": 5, "units": [] },
+        { "id": "b2-m5", "title": "Wissenschaft & Forschung", "plannedUnits": 5, "units": [] },
+        { "id": "b2-m6", "title": "Technik & Digitalisierung", "plannedUnits": 6, "units": [] },
+        { "id": "b2-m7", "title": "Umwelt, Energie & Klima", "plannedUnits": 5, "units": [] },
+        { "id": "b2-m8", "title": "Gesundheit & Medizin", "plannedUnits": 5, "units": [] },
+        { "id": "b2-m9", "title": "Bildung & Wissenschaftsbetrieb", "plannedUnits": 4, "units": [] },
+        { "id": "b2-m10", "title": "Medien & Kommunikation", "plannedUnits": 5, "units": [] },
+        { "id": "b2-m11", "title": "Kultur, Kunst & Literatur", "plannedUnits": 4, "units": [] },
+        { "id": "b2-m12", "title": "Psychologie & Verhalten", "plannedUnits": 4, "units": [] },
+        { "id": "b2-m13", "title": "Kollokationen & feste Wendungen", "plannedUnits": 4, "units": [] },
+        { "id": "b2-m14", "title": "Nomen-Verb-Verbindungen", "plannedUnits": 3, "units": [] }
+      ]
+    },
+    {
+      "level": "C1",
+      "status": "planned",
+      "title": "Register & Fachsprache",
+      "subtitle": "Ab hier zählt nicht mehr die Menge, sondern der Stil: Nominalstil, Kollokationen, Fachwortschatz.",
+      "targetWords": 2300,
+      "modules": [
+        { "id": "c1-m1", "title": "Wissenschaftssprache & Argumentation", "plannedUnits": 6, "units": [] },
+        { "id": "c1-m2", "title": "Nominalstil & Funktionsverbgefüge", "plannedUnits": 6, "units": [] },
+        { "id": "c1-m3", "title": "Konnektoren & Diskursmarker", "plannedUnits": 5, "units": [] },
+        { "id": "c1-m4", "title": "Fachwortschatz Wirtschaft", "plannedUnits": 6, "units": [] },
+        { "id": "c1-m5", "title": "Fachwortschatz Recht", "plannedUnits": 6, "units": [] },
+        { "id": "c1-m6", "title": "Fachwortschatz Medizin", "plannedUnits": 6, "units": [] },
+        { "id": "c1-m7", "title": "Fachwortschatz Technik & IT", "plannedUnits": 6, "units": [] },
+        { "id": "c1-m8", "title": "Fachwortschatz Umwelt & Energie", "plannedUnits": 5, "units": [] },
+        { "id": "c1-m9", "title": "Gesellschaftliche Debatten", "plannedUnits": 6, "units": [] },
+        { "id": "c1-m10", "title": "Redewendungen & Idiome", "plannedUnits": 6, "units": [] },
+        { "id": "c1-m11", "title": "Kollokationen", "plannedUnits": 6, "units": [] },
+        { "id": "c1-m12", "title": "Wortbildung: Präfixe, Suffixe, Fremdwörter", "plannedUnits": 6, "units": [] },
+        { "id": "c1-m13", "title": "Stilebenen: gehoben vs. umgangssprachlich", "plannedUnits": 6, "units": [] },
+        { "id": "c1-m14", "title": "Synonymfeinheiten & Verwechslungspaare", "plannedUnits": 6, "units": [] },
+        { "id": "c1-m15", "title": "Partikeln & Abtönung", "plannedUnits": 5, "units": [] },
+        { "id": "c1-m16", "title": "Textsorten: Essay, Bericht, Erörterung", "plannedUnits": 5, "units": [] }
+      ]
+    },
+    {
+      "level": "C2",
+      "status": "planned",
+      "title": "Nahezu muttersprachlich",
+      "subtitle": "Idiomatik, Konnotation, regionale Varianten - die Feinheiten, die den Unterschied machen.",
+      "targetWords": 1500,
+      "modules": [
+        { "id": "c2-m1", "title": "Idiomatik & Sprichwörter", "plannedUnits": 8, "units": [] },
+        { "id": "c2-m2", "title": "Literarische & gehobene Lexik", "plannedUnits": 7, "units": [] },
+        { "id": "c2-m3", "title": "Fachsprache: Verwaltung & Politik", "plannedUnits": 6, "units": [] },
+        { "id": "c2-m4", "title": "Fachsprache: Philosophie & Geisteswissenschaft", "plannedUnits": 6, "units": [] },
+        { "id": "c2-m5", "title": "Regionale Varianten (DE/AT/CH)", "plannedUnits": 5, "units": [] },
+        { "id": "c2-m6", "title": "Historische & bildungssprachliche Begriffe", "plannedUnits": 6, "units": [] },
+        { "id": "c2-m7", "title": "Feine Konnotationsunterschiede", "plannedUnits": 6, "units": [] },
+        { "id": "c2-m8", "title": "Rhetorische Mittel & Stilfiguren", "plannedUnits": 6, "units": [] },
+        { "id": "c2-m9", "title": "Anglizismen & Fremdwörter im Fachdiskurs", "plannedUnits": 5, "units": [] },
+        { "id": "c2-m10", "title": "Wortfelder: Abstrakta", "plannedUnits": 5, "units": [] }
+      ]
+    }
+  ]
+}

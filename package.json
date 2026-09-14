@@ -11,7 +11,9 @@
     "preview": "astro preview",
     "astro": "astro",
     "generate:fakten-pdf": "node scripts/generate-fakten-pdf.mjs",
-    "generate:audio": "node --env-file=.env.local scripts/generate-audio.mjs"
+    "generate:audio": "node --env-file=.env.local scripts/generate-audio.mjs",
+    "validate:lexicon": "node scripts/validate-lexicon.mjs",
+    "lexicon:ranks": "node scripts/attach-ranks.mjs"
   },
   "dependencies": {
     "astro": "^7.0.6"

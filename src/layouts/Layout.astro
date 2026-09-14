@@ -18,17 +18,45 @@ const {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
+    <!-- Runs before first paint so a dark-mode reload never flashes white.
+         Keep in sync with STORAGE_KEY/THEME_COLOR in src/lib/theme.js. -->
+    <script is:inline>
+      (function () {
+        try {
+          var stored = localStorage.getItem("da-theme");
+          // The Wortschatz trainer used to own a night mode of its own; honour it
+          // once so anyone who had it on does not get flipped back to light.
+          if (stored !== "light" && stored !== "dark" && localStorage.getItem("da-fc-theme") === "dark") {
+            stored = "dark";
+            localStorage.setItem("da-theme", "dark");
+          }
+          var theme = stored === "light" || stored === "dark"
+            ? stored
+            : (window.matchMedia && matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+          document.documentElement.dataset.theme = theme;
+        } catch (e) {
+          document.documentElement.dataset.theme = "light";
+        }
+      })();
+    </script>
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
     <link rel="shortcut icon" href="/favicon.ico" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
     <meta name="theme-color" content="#4d9be1" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+    <script is:inline>
+      (function () {
+        var m = document.querySelector('meta[name="theme-color"]');
+        if (m && document.documentElement.dataset.theme === "dark") m.setAttribute("content", "#0f141b");
+      })();
+    </script>
+    <!-- All four families are self-hosted from /public/fonts; nothing is
+         fetched from fonts.googleapis.com. Preload the three that paint
+         above the fold (Bungee Shade is accent-only, so it can wait). -->
     <link rel="preload" href="/fonts/sora-latin.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="/fonts/big-shoulders-display-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/albert-sans-latin.woff2" as="font" type="font/woff2" crossorigin />
     <slot name="head" />
     <title>{title}</title>
   </head>

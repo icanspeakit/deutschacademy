@@ -39,7 +39,6 @@ const languages = [
             </label>
             <button class="vt-pill" id="vt-deck-chip" type="button"></button>
             <span class="vt-position" id="vt-position"></span>
-            <button class="vt-theme-toggle" id="vt-theme-toggle" type="button" title="Dunkles Design umschalten" data-i18n-attr="title:wortschatz.themeToggle">🌙</button>
           </div>
         </div>
 
@@ -56,21 +55,8 @@ const languages = [
     const cards = JSON.parse(document.getElementById("fc-data").textContent);
     const languages = JSON.parse(document.getElementById("fc-langs").textContent);
 
-    const THEME_KEY = "da-fc-theme";
-    const pageEl = document.getElementById("vt-page");
-    const themeToggle = document.getElementById("vt-theme-toggle");
-
-    let theme = "light";
-    try { theme = localStorage.getItem(THEME_KEY) === "dark" ? "dark" : "light"; } catch {}
-
-    function setTheme(t) {
-      theme = t;
-      pageEl.dataset.theme = t;
-      themeToggle.textContent = t === "dark" ? "☀️" : "🌙";
-      try { localStorage.setItem(THEME_KEY, t); } catch {}
-    }
-    themeToggle.addEventListener("click", () => setTheme(theme === "dark" ? "light" : "dark"));
-    setTheme(theme);
+    // Night mode used to be page-local here; it is now the site-wide toggle in the
+    // header, so .vt-shell just reads <html data-theme> from vokabeltrainer.css.
 
     mountWortschatzApp(
       {

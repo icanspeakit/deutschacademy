@@ -1,0 +1,422 @@
+{
+  "id": "modalverben",
+  "name": "Modalverben",
+  "level": "A2",
+  "subtitle": "müssen, können, dürfen, sollen, wollen, mögen — sie sagen nicht, was passiert, sondern wie es gemeint ist: Pflicht, Erlaubnis, Fähigkeit oder Wunsch. Das zweite Verb wandert dabei ans Satzende.",
+  "source": "Modalverben.pdf, Modalverben Hausaufgabe.pdf, Kann ich oder muss ich.pdf — Aufgabentyp übernommen, Sätze auf Alltagskontexte umgeschrieben (die Quelle spielt im Pflegealltag; diese Seite deckt allgemeines Deutsch ab).",
+  "concept": {
+    "flow": [
+      {
+        "text": "Subjekt"
+      },
+      {
+        "text": "Modalverb · Position 2",
+        "variant": "verb"
+      },
+      {
+        "text": "…"
+      },
+      {
+        "text": "Infinitiv · Satzende",
+        "variant": "prep"
+      }
+    ],
+    "exampleHtml": "Nach dem Umzug <span class=\"vp-verb\">müssen</span> wir die neue Adresse beim Amt <span class=\"vp-prep\">anmelden</span>.",
+    "qa": [
+      {
+        "html": "<strong>müssen</strong> — es geht nicht anders. <em>Der Zug fällt aus, wir müssen warten.</em>",
+        "tag": "Pflicht"
+      },
+      {
+        "html": "<strong>dürfen</strong> — jemand erlaubt es. Verneint heißt es Verbot: <em>Hier darf man nicht parken.</em>",
+        "tag": "Erlaubnis"
+      },
+      {
+        "html": "<strong>können</strong> — man ist dazu in der Lage. <em>Meine Tochter kann schon schwimmen.</em>",
+        "tag": "Fähigkeit"
+      },
+      {
+        "html": "<strong>sollen</strong> — ein anderer will es so. <em>Der Arzt sagt, ich soll mehr schlafen.</em>",
+        "tag": "Auftrag"
+      }
+    ],
+    "noteHtml": "Die Form fällt bei <em>ich</em> und <em>er/sie/es</em> zusammen und hat <strong>keine Endung</strong>: <em>ich muss</em>, <em>er muss</em> (nicht <em>er musst</em>). Der Vokal wechselt außerdem im Singular: <em>müssen → ich muss</em>, <em>können → ich kann</em>, <em>dürfen → ich darf</em>.",
+    "reference": {
+      "showLabel": "Konjugationstabelle anzeigen ▼",
+      "hideLabel": "Konjugationstabelle ausblenden ▲",
+      "tables": [
+        {
+          "caption": "Präsens — alle sechs Modalverben",
+          "note": "ich und er/sie/es sind immer gleich und enden nie auf -e oder -t.",
+          "head": [
+            "",
+            "müssen",
+            "können",
+            "dürfen",
+            "sollen",
+            "wollen",
+            "mögen"
+          ],
+          "rows": [
+            [
+              "ich",
+              "muss",
+              "kann",
+              "darf",
+              "soll",
+              "will",
+              "mag"
+            ],
+            [
+              "du",
+              "musst",
+              "kannst",
+              "darfst",
+              "sollst",
+              "willst",
+              "magst"
+            ],
+            [
+              "er/sie/es",
+              "muss",
+              "kann",
+              "darf",
+              "soll",
+              "will",
+              "mag"
+            ],
+            [
+              "wir",
+              "müssen",
+              "können",
+              "dürfen",
+              "sollen",
+              "wollen",
+              "mögen"
+            ],
+            [
+              "ihr",
+              "müsst",
+              "könnt",
+              "dürft",
+              "sollt",
+              "wollt",
+              "mögt"
+            ],
+            [
+              "sie/Sie",
+              "müssen",
+              "können",
+              "dürfen",
+              "sollen",
+              "wollen",
+              "mögen"
+            ]
+          ]
+        }
+      ],
+      "boxes": [
+        {
+          "badge": "Höflich bitten und anbieten",
+          "variant": "akk",
+          "items": [
+            "Können Sie mir bitte helfen?",
+            "Könnten Sie mir bitte helfen? (höflicher)",
+            "Darf ich Ihnen mit dem Koffer helfen?",
+            "Soll ich das Fenster aufmachen?",
+            "Ich möchte einen Termin vereinbaren."
+          ]
+        },
+        {
+          "badge": "Verbot und Notwendigkeit",
+          "variant": "dat",
+          "items": [
+            "Hier darf man nicht parken. (verboten)",
+            "Sie müssen das nicht machen. (nicht nötig)",
+            "Sie dürfen das nicht machen. (verboten)",
+            "Ich muss noch zur Post. (nötig)"
+          ]
+        }
+      ]
+    }
+  },
+  "exercises": [
+    {
+      "type": "fill",
+      "title": "Wer muss, wer darf, wer kann, wer soll?",
+      "hint": "Manchmal passen zwei Modalverben — beide werden akzeptiert.",
+      "placeholder": "Modalverb…",
+      "items": [
+        {
+          "prompt": "Im Museum ___ man die Bilder nicht anfassen.",
+          "hint": "Es ist verboten.",
+          "answer": [
+            "darf"
+          ]
+        },
+        {
+          "prompt": "Der Zug fällt aus — wir ___ auf den nächsten warten.",
+          "hint": "Es geht nicht anders.",
+          "answer": [
+            "müssen"
+          ]
+        },
+        {
+          "prompt": "Meine Tochter ist erst vier, aber schwimmen ___ sie schon.",
+          "hint": "3. Person Singular — Achtung, keine Endung.",
+          "answer": [
+            "kann"
+          ]
+        },
+        {
+          "prompt": "Der Arzt hat gesagt, ich ___ mich eine Woche ausruhen.",
+          "hint": "Ein anderer möchte es so.",
+          "answer": [
+            "soll"
+          ]
+        },
+        {
+          "prompt": "___ ich Ihnen mit dem Koffer helfen?",
+          "hint": "Ein höfliches Angebot.",
+          "answer": [
+            "Darf",
+            "Soll",
+            "Kann"
+          ]
+        },
+        {
+          "prompt": "Nach dem Umzug ___ wir die neue Adresse beim Amt anmelden.",
+          "hint": "Das ist Pflicht.",
+          "answer": [
+            "müssen",
+            "sollen"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "match",
+      "title": "Welches Modalverb passt zu welcher Bedeutung?",
+      "hint": "Klicke erst ein Modalverb, dann die passende Bedeutung.",
+      "pairs": [
+        {
+          "q": "müssen",
+          "a": "Notwendigkeit — es geht nicht anders"
+        },
+        {
+          "q": "dürfen",
+          "a": "Erlaubnis — jemand gestattet es"
+        },
+        {
+          "q": "nicht dürfen",
+          "a": "Verbot — es ist untersagt"
+        },
+        {
+          "q": "können",
+          "a": "Fähigkeit — man ist dazu in der Lage"
+        },
+        {
+          "q": "sollen",
+          "a": "Auftrag — ein anderer möchte es so"
+        },
+        {
+          "q": "wollen",
+          "a": "eigener Wille — man hat es sich vorgenommen"
+        }
+      ]
+    },
+    {
+      "type": "table",
+      "title": "Ergänzen Sie die richtige Form.",
+      "hint": "Achten Sie auf den Vokalwechsel im Singular.",
+      "columns": [
+        "Person + Verb",
+        "Form"
+      ],
+      "placeholder": "Form…",
+      "rows": [
+        {
+          "term": "ich (müssen)",
+          "answer": "muss"
+        },
+        {
+          "term": "du (können)",
+          "answer": "kannst"
+        },
+        {
+          "term": "er (dürfen)",
+          "answer": "darf"
+        },
+        {
+          "term": "wir (sollen)",
+          "answer": "sollen"
+        },
+        {
+          "term": "ihr (wollen)",
+          "answer": "wollt"
+        },
+        {
+          "term": "sie (Plural, können)",
+          "answer": "können"
+        },
+        {
+          "term": "ich (mögen)",
+          "answer": "mag"
+        },
+        {
+          "term": "du (müssen)",
+          "answer": "musst"
+        }
+      ]
+    },
+    {
+      "type": "story",
+      "title": "Lückentext: Ein Samstag mit Plänen.",
+      "hint": "Setzen Sie das passende Modalverb in der richtigen Form ein.",
+      "segments": [
+        {
+          "text": "Samstags "
+        },
+        {
+          "blank": 0,
+          "answer": [
+            "kann",
+            "darf"
+          ]
+        },
+        {
+          "text": " ich endlich ausschlafen. Trotzdem stehe ich früh auf, denn ich "
+        },
+        {
+          "blank": 1,
+          "answer": [
+            "muss"
+          ]
+        },
+        {
+          "text": " noch zum Amt — der neue Ausweis liegt dort bereit. Danach "
+        },
+        {
+          "blank": 2,
+          "answer": [
+            "will",
+            "möchte"
+          ]
+        },
+        {
+          "text": " ich mit meiner Schwester auf den Markt gehen. Sie fragt mich immer: „"
+        },
+        {
+          "blank": 3,
+          "answer": [
+            "Sollen",
+            "Können"
+          ]
+        },
+        {
+          "text": " wir danach noch einen Kaffee trinken?“ Am Nachmittag "
+        },
+        {
+          "blank": 4,
+          "answer": [
+            "darf"
+          ]
+        },
+        {
+          "text": " mein Sohn zum ersten Mal allein zum Fußball fahren. Er ist zehn und "
+        },
+        {
+          "blank": 5,
+          "answer": [
+            "kann"
+          ]
+        },
+        {
+          "text": " den Weg schon gut. Abends "
+        },
+        {
+          "blank": 6,
+          "answer": [
+            "müssen",
+            "sollen"
+          ]
+        },
+        {
+          "text": " wir nur noch die Koffer packen — am Sonntag geht es in den Urlaub."
+        }
+      ]
+    },
+    {
+      "type": "build",
+      "title": "Bauen Sie die Sätze — der Infinitiv gehört ans Ende.",
+      "sentences": [
+        {
+          "id": "m1",
+          "hint": "Aussagesatz: Modalverb auf Position 2.",
+          "correct": [
+            "Wir",
+            "müssen",
+            "die",
+            "neue",
+            "Adresse",
+            "anmelden",
+            "."
+          ],
+          "shuffled": [
+            "anmelden",
+            "Wir",
+            "müssen",
+            ".",
+            "Adresse",
+            "neue",
+            "die"
+          ]
+        },
+        {
+          "id": "m2",
+          "hint": "Frage: Modalverb ganz nach vorn.",
+          "correct": [
+            "Können",
+            "Sie",
+            "mir",
+            "bitte",
+            "kurz",
+            "helfen",
+            "?"
+          ],
+          "shuffled": [
+            "helfen",
+            "Können",
+            "kurz",
+            "?",
+            "mir",
+            "Sie",
+            "bitte"
+          ]
+        },
+        {
+          "id": "m3",
+          "hint": "Mit Zeitangabe auf Position 1 — das Subjekt rutscht hinter das Modalverb.",
+          "correct": [
+            "Am",
+            "Wochenende",
+            "will",
+            "ich",
+            "endlich",
+            "ausschlafen",
+            "."
+          ],
+          "shuffled": [
+            "ausschlafen",
+            "Am",
+            "ich",
+            ".",
+            "will",
+            "endlich",
+            "Wochenende"
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,369 @@
+{
+  "id": "uebungssatz-1",
+  "label": "Übungssatz 1",
+  "meta": {
+    "title": "DTZ-Übungssatz 1",
+    "sourceNote": "Eigener Übungssatz der DeutschAcademy, gebaut nach dem offiziellen DTZ-Format: neun Prüfungsteile, 45 bewertete Aufgaben (Hören 1–20, Lesen 21–45), zwei Schreibaufgaben. Aufgabenzahlen, Aufgabentypen und Auswertung entsprechen der echten Prüfung — die Texte und Aufgaben selbst sind eigene, keine Aufgaben aus einem offiziellen Übungssatz.",
+    "audioNote": "Zu diesem Übungssatz gibt es noch keine Tonaufnahmen. Statt zu raten, lesen Sie den Hörtext — die Aufgaben bleiben dieselben. In der echten Prüfung hören Sie den Text (Teil 1, 2 und 4 einmal, Teil 3 zweimal)."
+  },
+  "parts": [
+    {
+      "key": "h1",
+      "group": "Hören",
+      "label": "Hören · Teil 1",
+      "type": "mc-audio",
+      "title": "Ansagen am Telefon und öffentliche Durchsagen verstehen",
+      "instruction": "Sie hören vier Ansagen. Zu jeder Ansage gibt es eine Aufgabe. Welche Lösung (a, b oder c) passt am besten? Sie hören jeden Text einmal.",
+      "example": {
+        "transcript": "Guten Tag, Sie haben die Nummer des Hallenbads Nordpark gewählt. Unsere Öffnungszeiten: montags bis freitags von 7 bis 21 Uhr, samstags von 9 bis 18 Uhr. Sonntags bleibt das Bad geschlossen. Der Eintritt kostet für Erwachsene 4 Euro 50, für Kinder 2 Euro 50.",
+        "question": "Wann ist das Hallenbad geschlossen?",
+        "options": ["Am Samstag.", "Am Sonntag.", "Am Montag."],
+        "correct": 1
+      },
+      "items": [
+        {
+          "id": 1,
+          "transcript": "Achtung, eine Durchsage für alle Reisenden nach Hannover: Der Regionalexpress 4711 fährt heute nicht von Gleis 5, sondern von Gleis 8 ab. Grund dafür sind Bauarbeiten. Ich wiederhole: Der RE 4711 nach Hannover fährt heute von Gleis 8. Die Abfahrt verzögert sich um etwa zehn Minuten.",
+          "question": "Von welchem Gleis fährt der Zug nach Hannover?",
+          "options": ["Von Gleis 4.", "Von Gleis 5.", "Von Gleis 8."],
+          "correct": 2
+        },
+        {
+          "id": 2,
+          "transcript": "Guten Tag, hier ist die Praxis Dr. Winkler. Frau Osman, Sie haben morgen um 9 Uhr einen Termin bei uns. Leider ist Frau Doktor Winkler morgen krank. Wir können Ihnen einen neuen Termin am Donnerstag um 14 Uhr anbieten. Bitte rufen Sie uns kurz zurück und sagen Sie uns Bescheid, ob das passt. Vielen Dank!",
+          "question": "Warum ruft die Praxis an?",
+          "options": ["Der Termin muss verschoben werden.", "Frau Osman soll ein Rezept abholen.", "Die Praxis ist umgezogen."],
+          "correct": 0
+        },
+        {
+          "id": 3,
+          "transcript": "Liebe Kundinnen und Kunden, wir möchten Sie darauf hinweisen, dass unser Markt am kommenden Freitag wegen einer Inventur bereits um 16 Uhr schließt. Am Samstag sind wir wieder ganz normal von 8 bis 20 Uhr für Sie da. Wir bitten um Ihr Verständnis und wünschen Ihnen noch einen schönen Einkauf.",
+          "question": "Was passiert am Freitag?",
+          "options": ["Der Markt öffnet später.", "Der Markt schließt früher.", "Der Markt bleibt ganz geschlossen."],
+          "correct": 1
+        },
+        {
+          "id": 4,
+          "transcript": "Hallo Frau Yildiz, hier ist Sandra Berg vom Kindergarten Sonnenblume. Wir machen am Mittwoch unseren Ausflug in den Tierpark. Bitte geben Sie Ihrer Tochter feste Schuhe, eine Regenjacke und genug zu trinken mit. Ein Mittagessen brauchen Sie nicht einzupacken, das bekommen die Kinder von uns. Wir sind gegen 16 Uhr zurück.",
+          "question": "Was soll das Kind mitbringen?",
+          "options": ["Etwas zu trinken.", "Ein Mittagessen.", "Geld für den Eintritt."],
+          "correct": 0
+        }
+      ]
+    },
+    {
+      "key": "h2",
+      "group": "Hören",
+      "label": "Hören · Teil 2",
+      "type": "mc-audio",
+      "title": "Kurze Informationen in den Medien verstehen",
+      "instruction": "Sie hören fünf kurze Beiträge aus dem Radio. Zu jedem Beitrag gibt es eine Aufgabe. Welche Lösung (a, b oder c) passt am besten? Sie hören jeden Text einmal.",
+      "items": [
+        {
+          "id": 5,
+          "transcript": "Und nun zum Verkehr: Auf der A3 zwischen dem Kreuz Oberhausen und Duisburg stehen die Fahrzeuge auf sechs Kilometern. Ein Lastwagen hat dort Öl verloren, die rechte Spur ist gesperrt. Fahren Sie wenn möglich über die B8. Die Aufräumarbeiten dauern noch mindestens zwei Stunden.",
+          "question": "Was ist auf der A3 passiert?",
+          "options": ["Ein Lastwagen hat Öl verloren.", "Es gibt Bauarbeiten.", "Ein Auto ist liegen geblieben."],
+          "correct": 0
+        },
+        {
+          "id": 6,
+          "transcript": "Das Wetter für morgen: Am Vormittag ist es noch stark bewölkt, örtlich fällt Regen. Ab Mittag lockert es dann von Westen her auf und die Sonne zeigt sich. Die Höchstwerte liegen bei 14 bis 17 Grad. In der Nacht kühlt es auf 6 Grad ab.",
+          "question": "Wie wird das Wetter am Nachmittag?",
+          "options": ["Es regnet den ganzen Tag.", "Es wird freundlicher.", "Es wird neblig."],
+          "correct": 1
+        },
+        {
+          "id": 7,
+          "transcript": "Ein Tipp fürs Wochenende: Am Samstag findet im Stadtpark wieder das große Frühlingsfest statt. Von 11 bis 22 Uhr gibt es Musik auf zwei Bühnen, Essen aus vielen Ländern und ein Programm für Kinder. Der Eintritt ist frei. Parkplätze gibt es kaum — kommen Sie am besten mit dem Bus.",
+          "question": "Was sagt der Sprecher über das Fest?",
+          "options": ["Man muss Eintritt bezahlen.", "Man sollte mit dem Bus kommen.", "Es ist nur für Kinder."],
+          "correct": 1
+        },
+        {
+          "id": 8,
+          "transcript": "Achtung, alle Fahrgäste: Die Gewerkschaft hat für Dienstag einen Streik im Nahverkehr angekündigt. Busse und Straßenbahnen fahren an diesem Tag voraussichtlich gar nicht. Die S-Bahn ist von dem Streik nicht betroffen und fährt nach dem normalen Fahrplan.",
+          "question": "Was fährt am Dienstag trotzdem?",
+          "options": ["Die Busse.", "Die Straßenbahnen.", "Die S-Bahn."],
+          "correct": 2
+        },
+        {
+          "id": 9,
+          "transcript": "Und noch ein Hinweis der Stadtbücherei: Ab dem ersten Juni ändern sich die Öffnungszeiten. Die Bücherei öffnet dann schon um 10 Uhr, schließt dafür aber samstags bereits um 13 Uhr. Die Ausleihe bleibt wie bisher kostenlos, nur für verspätet zurückgegebene Bücher wird eine Gebühr fällig.",
+          "question": "Was ändert sich ab Juni?",
+          "options": ["Die Öffnungszeiten.", "Die Ausleihe kostet Geld.", "Die Bücherei zieht um."],
+          "correct": 0
+        }
+      ]
+    },
+    {
+      "key": "h3",
+      "group": "Hören",
+      "label": "Hören · Teil 3",
+      "type": "dialog",
+      "title": "Gespräche im Alltag verstehen",
+      "instruction": "Sie hören vier Gespräche. Zu jedem Gespräch gibt es zwei Aufgaben. Entscheiden Sie bei der ersten Aufgabe, ob die Aussage richtig oder falsch ist, und wählen Sie bei der zweiten die passende Lösung. Sie hören jeden Text zweimal.",
+      "groups": [
+        {
+          "dialog": [
+            ["Frau Klein", "Entschuldigung, Herr Aydin — gehört die Waschmaschine unten Ihnen? Sie läuft seit gestern Abend."],
+            ["Herr Aydin", "Oh nein, die habe ich ganz vergessen. Tut mir wirklich leid. Ich hole die Wäsche sofort raus."],
+            ["Frau Klein", "Kein Problem. Ich wollte nur waschen, und die Maschine war eben belegt."],
+            ["Herr Aydin", "Verstehe. Übrigens: Ab nächster Woche hängt unten ein Plan, da kann man sich eintragen."],
+            ["Frau Klein", "Das ist eine gute Idee. Dann weiß jeder, wann er dran ist."]
+          ],
+          "questions": [
+            { "id": 10, "type": "tf", "question": "Herr Aydin hat seine Wäsche vergessen.", "correct": "richtig" },
+            { "id": 11, "type": "mc", "question": "Was soll ab nächster Woche helfen?", "options": ["Eine zweite Waschmaschine.", "Ein Plan zum Eintragen.", "Ein Schlüssel für die Waschküche."], "correct": 1 }
+          ]
+        },
+        {
+          "dialog": [
+            ["Mitarbeiter", "Guten Tag, was kann ich für Sie tun?"],
+            ["Herr Novak", "Guten Tag. Ich bin letzte Woche umgezogen und möchte mich anmelden."],
+            ["Mitarbeiter", "Gerne. Haben Sie Ihren Pass und die Bestätigung vom Vermieter dabei?"],
+            ["Herr Novak", "Den Pass ja. Die Bestätigung vom Vermieter habe ich leider nicht."],
+            ["Mitarbeiter", "Ohne die geht es leider nicht. Aber Sie können sie auch nachreichen — bringen Sie sie einfach innerhalb von zwei Wochen vorbei."],
+            ["Herr Novak", "Gut, dann komme ich am Freitag noch einmal."]
+          ],
+          "questions": [
+            { "id": 12, "type": "tf", "question": "Herr Novak hat alle Papiere dabei.", "correct": "falsch" },
+            { "id": 13, "type": "mc", "question": "Was fehlt Herrn Novak?", "options": ["Sein Pass.", "Die Bestätigung vom Vermieter.", "Ein Foto."], "correct": 1 }
+          ]
+        },
+        {
+          "dialog": [
+            ["Yusuf", "Du, Marina, hättest du Lust, am Samstag für mich zu arbeiten? Ich würde deine Schicht am Montag übernehmen."],
+            ["Marina", "Samstag ist schlecht, da habe ich schon etwas vor. Aber Sonntag könnte ich."],
+            ["Yusuf", "Sonntag hilft mir leider nicht, ich brauche genau den Samstag."],
+            ["Marina", "Dann frag doch mal Kemal. Der wollte sowieso mehr Stunden machen."],
+            ["Yusuf", "Stimmt, gute Idee. Ich schreibe ihm gleich."]
+          ],
+          "questions": [
+            { "id": 14, "type": "tf", "question": "Marina übernimmt Yusufs Schicht am Samstag.", "correct": "falsch" },
+            { "id": 15, "type": "mc", "question": "Was rät Marina ihm?", "options": ["Er soll Kemal fragen.", "Er soll mit dem Chef sprechen.", "Er soll die Schicht tauschen lassen."], "correct": 0 }
+          ]
+        },
+        {
+          "dialog": [
+            ["Arzthelferin", "Praxis Dr. Sommer, guten Tag."],
+            ["Frau Petrova", "Guten Tag, hier Petrova. Ich brauche ein neues Rezept für meine Tabletten."],
+            ["Arzthelferin", "Dafür müssten Sie einmal vorbeikommen, der Arzt möchte Sie vorher kurz sehen."],
+            ["Frau Petrova", "Muss ich denn einen Termin machen? Ich arbeite bis 17 Uhr."],
+            ["Arzthelferin", "Dienstag und Donnerstag haben wir eine offene Sprechstunde bis 18 Uhr, da können Sie ohne Termin kommen."],
+            ["Frau Petrova", "Perfekt, dann komme ich am Donnerstag nach der Arbeit."]
+          ],
+          "questions": [
+            { "id": 16, "type": "tf", "question": "Frau Petrova bekommt das Rezept am Telefon.", "correct": "falsch" },
+            { "id": 17, "type": "mc", "question": "Wann kann sie ohne Termin kommen?", "options": ["Jeden Tag bis 17 Uhr.", "Dienstag und Donnerstag bis 18 Uhr.", "Nur am Vormittag."], "correct": 1 }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "h4",
+      "group": "Hören",
+      "label": "Hören · Teil 4",
+      "type": "statement-match",
+      "title": "Meinungen zu einem Thema verstehen",
+      "instruction": "Sie hören drei Personen zum Thema „Wie lernen Sie am besten Deutsch?“. Welche Aussage passt zu welcher Person? Es gibt mehr Aussagen als Personen. Sie hören jeden Text einmal.",
+      "statements": {
+        "a": "Am meisten hilft mir das Sprechen mit anderen Menschen.",
+        "b": "Ich lerne am liebsten allein mit einer App.",
+        "c": "Fernsehen und Serien bringen mir mehr als ein Kurs.",
+        "d": "Ohne einen festen Kurs mit Lehrerin schaffe ich es nicht.",
+        "e": "Ich lerne vor allem bei der Arbeit, ganz nebenbei.",
+        "f": "Für mich ist Schreiben das Wichtigste."
+      },
+      "example": {
+        "answer": "b",
+        "transcript": "Ich sitze jeden Abend zwanzig Minuten mit meinem Handy auf dem Sofa. Eine App fragt mich Wörter ab, und ich sehe sofort, was ich schon kann. In einem Kurs wäre mir das zu langsam — ich mache lieber mein eigenes Tempo, allein."
+      },
+      "items": [
+        {
+          "id": 18,
+          "correct": "e",
+          "transcript": "Ehrlich gesagt habe ich nach der Arbeit kaum Kraft für einen Kurs. Aber ich bin in der Küche eines Restaurants, und dort wird den ganzen Tag Deutsch gesprochen. Am Anfang habe ich fast nichts verstanden, heute rede ich mit. Gelernt habe ich das nicht am Schreibtisch, sondern beim Arbeiten."
+        },
+        {
+          "id": 19,
+          "correct": "d",
+          "transcript": "Ich habe es zuerst allein probiert, mit Büchern und Videos. Nach zwei Monaten hatte ich alles wieder vergessen. Jetzt gehe ich dreimal pro Woche in einen Kurs, und da ist jemand, der mich korrigiert und der merkt, wenn ich nicht da bin. Ohne diesen festen Rahmen würde ich es einfach nicht durchhalten."
+        },
+        {
+          "id": 20,
+          "correct": "a",
+          "transcript": "Grammatik kann man aus jedem Buch lernen, das ist nicht das Problem. Schwierig ist der Mut, den Mund aufzumachen. Ich gehe deshalb jede Woche zu einem Sprachcafé und rede dort mit wildfremden Leuten. Nach zwei Stunden bin ich müde, aber ich habe mehr gelernt als in einer ganzen Woche zu Hause."
+        }
+      ]
+    },
+    {
+      "key": "l1",
+      "group": "Lesen",
+      "label": "Lesen · Teil 1",
+      "type": "toc",
+      "title": "In einem Inhaltsverzeichnis etwas finden",
+      "instruction": "Sie suchen Informationen in einem Ratgeber für neue Einwohnerinnen und Einwohner. In welchem Kapitel finden Sie etwas dazu?",
+      "tocHeading": "Neu in der Stadt — Ihr Wegweiser",
+      "toc": [
+        { "n": 1, "title": "Ankommen und anmelden", "desc": "Wohnsitz anmelden, Ausweis und Meldebescheinigung, Fristen, welche Papiere Sie mitbringen müssen." },
+        { "n": 2, "title": "Wohnen und Nachbarschaft", "desc": "Mietvertrag verstehen, Nebenkosten, Müll richtig trennen, Ruhezeiten im Haus." },
+        { "n": 3, "title": "Arbeit und Ausbildung", "desc": "Zeugnisse anerkennen lassen, Arbeitsvertrag, Stellensuche, Beratungsstellen für Berufe." },
+        { "n": 4, "title": "Gesundheit", "desc": "Krankenversicherung, Hausarzt finden, Notdienst am Wochenende, Vorsorge für Kinder." },
+        { "n": 5, "title": "Kinder, Schule und Freizeit", "desc": "Kita-Platz beantragen, Schulanmeldung, Vereine und Angebote für Familien." }
+      ],
+      "example": {
+        "question": "Sie sind gerade umgezogen und müssen sich bei der Stadt melden.",
+        "options": ["Kapitel 1", "Kapitel 2", "Kapitel 5"],
+        "correct": 0
+      },
+      "items": [
+        { "id": 21, "question": "Ihre Tochter kommt im Sommer in die Schule und Sie wissen nicht, wie Sie sie anmelden.", "options": ["Kapitel 1", "Kapitel 3", "Kapitel 5"], "correct": 2 },
+        { "id": 22, "question": "Sie haben in Ihrem Heimatland als Elektriker gearbeitet und möchten wissen, ob Ihr Abschluss hier gilt.", "options": ["Kapitel 2", "Kapitel 3", "Kapitel 4"], "correct": 1 },
+        { "id": 23, "question": "Ihr Kind hat am Sonntag hohes Fieber und Sie wissen nicht, wohin.", "options": ["Kapitel 1", "Kapitel 4", "Kapitel 5"], "correct": 1 },
+        { "id": 24, "question": "Ihr Nachbar beschwert sich, weil Sie abends um elf noch die Waschmaschine laufen lassen.", "options": ["Kapitel 2", "Kapitel 3", "Kapitel 4"], "correct": 0 },
+        { "id": 25, "question": "Sie verstehen die Abrechnung für Heizung und Wasser nicht.", "options": ["Kapitel 1", "Kapitel 2", "Kapitel 4"], "correct": 1 }
+      ]
+    },
+    {
+      "key": "l2",
+      "group": "Lesen",
+      "label": "Lesen · Teil 2",
+      "type": "ads",
+      "title": "Anzeigen lesen und zuordnen",
+      "instruction": "Lesen Sie die Situationen und die Anzeigen. Welche Anzeige passt zu welcher Situation? Für eine Situation gibt es keine passende Anzeige — markieren Sie dort „keine“.",
+      "ads": {
+        "a": { "title": "Nachhilfe Mathe", "body": "Lehramtsstudentin gibt Nachhilfe in Mathe, Klasse 5–10. 15 €/Stunde, bei Ihnen zu Hause oder online. Auch in den Ferien. Tel. 0176 44 55 66." },
+        "b": { "title": "Fahrrad günstig abzugeben", "body": "Damenrad, 7 Gänge, wenig gefahren, kleine Kratzer am Rahmen. 60 € VB. Nur Abholung, Stadtteil Nordend. Meldung per WhatsApp." },
+        "c": { "title": "Wohnung zu vermieten", "body": "2 Zimmer, 54 m², Balkon, 4. Stock ohne Aufzug, ab 1. Mai. 640 € kalt plus Nebenkosten. Nur an Nichtraucher, keine Haustiere." },
+        "d": { "title": "Deutschkurs am Abend", "body": "Integrationskurs A2–B1, Montag bis Donnerstag 18–20.30 Uhr. Auch für Berufstätige. Kostenlos mit Berechtigungsschein. Anmeldung: VHS, Raum 12." },
+        "e": { "title": "Haushaltshilfe gesucht", "body": "Familie mit zwei Kindern sucht Unterstützung, 2× pro Woche je 3 Stunden, vormittags. Erfahrung erwünscht, Deutschkenntnisse nicht nötig. 14 €/Std." },
+        "f": { "title": "Umzugshelfer", "body": "Wir packen an: 2 kräftige Helfer mit Transporter, kurzfristig verfügbar, auch am Wochenende. Ab 35 €/Stunde inkl. Fahrzeug. Festpreis auf Anfrage." },
+        "g": { "title": "Kleiderbasar", "body": "Großer Kinderkleiderbasar in der Turnhalle Süd, Samstag 9–13 Uhr. Gut erhaltene Kleidung Größe 50–176, Spielzeug, Kinderwagen. Kuchen und Kaffee vor Ort." },
+        "h": { "title": "Hundebetreuung", "body": "Tierliebe Rentnerin betreut Ihren Hund, wenn Sie arbeiten oder in Urlaub fahren. Auch über Nacht. Kleiner Garten vorhanden. Gerne Probetag." }
+      },
+      "items": [
+        { "id": 26, "question": "Sie arbeiten ab nächstem Monat wieder und suchen jemanden, der sich tagsüber um Ihren Hund kümmert.", "correct": "h" },
+        { "id": 27, "question": "Ihr Sohn ist in der 7. Klasse und schreibt in Mathe nur schlechte Noten.", "correct": "a" },
+        { "id": 28, "question": "Sie ziehen am Wochenende um und brauchen Hilfe beim Tragen der Möbel.", "correct": "f" },
+        { "id": 29, "question": "Sie möchten neben Ihrer Arbeit Deutsch lernen und haben nur abends Zeit.", "correct": "d" },
+        { "id": 30, "question": "Sie suchen einen Kinderarzt, der auch am Samstag geöffnet hat.", "correct": "x" }
+      ]
+    },
+    {
+      "key": "l3",
+      "group": "Lesen",
+      "label": "Lesen · Teil 3",
+      "type": "texts",
+      "title": "Kurze Texte aus dem Alltag verstehen",
+      "instruction": "Lesen Sie die drei Texte. Zu jedem Text gibt es zwei Aufgaben.",
+      "texts": [
+        {
+          "title": "E-Mail an die Elternvertretung",
+          "letter": true,
+          "paras": [
+            "Liebe Eltern,",
+            "wie Sie wissen, fährt die Klasse 6b im Juni für drei Tage in die Jugendherberge. Die Kosten betragen 95 Euro pro Kind. Falls das für Ihre Familie schwierig ist, sprechen Sie mich bitte an — es gibt einen Fonds, aus dem wir helfen können. Niemand soll aus finanziellen Gründen zu Hause bleiben.",
+            "Wichtig: Die Anmeldung muss bis zum 30. April bei mir sein. Später eingehende Anmeldungen können wir leider nicht mehr berücksichtigen, weil die Herberge die Zimmer sonst anderweitig vergibt.",
+            "Mit freundlichen Grüßen, S. Brandt (Klassenlehrerin)"
+          ],
+          "questions": [
+            { "id": 31, "type": "tf", "question": "Familien mit wenig Geld können Unterstützung bekommen.", "correct": "richtig" },
+            { "id": 32, "type": "mc", "question": "Was passiert nach dem 30. April?", "options": ["Die Fahrt wird teurer.", "Eine Anmeldung ist nicht mehr möglich.", "Die Fahrt fällt aus."], "correct": 1 }
+          ]
+        },
+        {
+          "title": "Aushang im Treppenhaus",
+          "paras": [
+            "Liebe Hausgemeinschaft,",
+            "am Dienstag, den 14. März, wird zwischen 8 und etwa 15 Uhr das Wasser abgestellt. Die Firma tauscht die alten Leitungen im Keller aus. Bitte stellen Sie sich rechtzeitig Trinkwasser bereit.",
+            "Die Arbeiten betreffen nur das Vorderhaus. Wer im Hinterhaus wohnt, ist nicht betroffen. Sollten die Arbeiten länger dauern, informieren wir Sie über einen zweiten Aushang.",
+            "Ihre Hausverwaltung Merz"
+          ],
+          "questions": [
+            { "id": 33, "type": "tf", "question": "Alle Wohnungen im Haus sind ohne Wasser.", "correct": "falsch" },
+            { "id": 34, "type": "mc", "question": "Was sollen die Bewohner tun?", "options": ["Wasser im Voraus bereitstellen.", "Am Dienstag zu Hause bleiben.", "Sich bei der Firma melden."], "correct": 0 }
+          ]
+        },
+        {
+          "title": "Aus der Zeitung: Neues Angebot der Stadtbücherei",
+          "paras": [
+            "Seit diesem Monat bietet die Stadtbücherei jeden Mittwochnachmittag ein Sprachcafé an. Von 16 bis 18 Uhr treffen sich dort Menschen, die Deutsch lernen, mit Ehrenamtlichen aus der Stadt. Es wird einfach geredet — über Arbeit, Familie, Alltag.",
+            "Eine Anmeldung ist nicht nötig, und Kosten entstehen keine. „Wir wollten etwas schaffen, wo niemand Angst vor Fehlern haben muss“, sagt Leiterin Anke Roth. Zum ersten Termin kamen 24 Personen, deutlich mehr als erwartet.",
+            "Wer möchte, kann sich auch als ehrenamtliche Begleitung melden. Vorkenntnisse als Lehrkraft sind ausdrücklich nicht erforderlich."
+          ],
+          "questions": [
+            { "id": 35, "type": "tf", "question": "Man muss sich vorher anmelden.", "correct": "falsch" },
+            { "id": 36, "type": "mc", "question": "Wer kann ehrenamtlich mitmachen?", "options": ["Nur ausgebildete Lehrkräfte.", "Jede interessierte Person.", "Nur Mitglieder der Bücherei."], "correct": 1 }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "l4",
+      "group": "Lesen",
+      "label": "Lesen · Teil 4",
+      "type": "regulative",
+      "title": "Regeln und Vorschriften verstehen",
+      "instruction": "Lesen Sie den Text. Sind die Aussagen richtig oder falsch?",
+      "readingTitle": "Hausordnung — Auszug",
+      "paras": [
+        "§ 3 Ruhezeiten. In der Zeit von 22 bis 7 Uhr sowie sonntags und an Feiertagen ganztägig ist Lärm zu vermeiden. Das Waschen und Trocknen von Wäsche in der gemeinsamen Waschküche ist in diesen Zeiten nicht gestattet. Musizieren ist werktags für höchstens zwei Stunden täglich erlaubt.",
+        "§ 4 Treppenhaus und Flure. Fahrräder, Kinderwagen und Schuhregale dürfen nicht im Treppenhaus abgestellt werden; die Flure müssen als Fluchtweg frei bleiben. Kinderwagen dürfen ausnahmsweise unter der Treppe im Erdgeschoss stehen, wenn der Durchgang frei bleibt.",
+        "§ 7 Müll. Die Mülltonnen stehen im Hof. Papier, Verpackungen und Restmüll sind getrennt zu entsorgen. Sperrmüll darf nicht neben die Tonnen gestellt werden; er wird von der Stadt nach Anmeldung abgeholt. Die Kosten für eine falsche Entsorgung trägt die verursachende Partei."
+      ],
+      "items": [
+        { "id": 37, "question": "Sonntags darf man in der Waschküche nicht waschen.", "correct": "richtig" },
+        { "id": 38, "question": "Ein Kinderwagen darf niemals im Haus abgestellt werden.", "correct": "falsch" },
+        { "id": 39, "question": "Sperrmüll kann man einfach neben die Mülltonnen stellen.", "correct": "falsch" }
+      ]
+    },
+    {
+      "key": "l5",
+      "group": "Lesen",
+      "label": "Lesen · Teil 5",
+      "type": "letter-gaps",
+      "title": "Einen Brief ergänzen",
+      "instruction": "Lesen Sie den Brief. Welches Wort passt in welche Lücke? Wählen Sie a, b oder c.",
+      "letterIntro": "Frau Adeyemi schreibt an ihre Vermieterin.",
+      "letterSegments": [
+        { "text": "Sehr geehrte Frau Berger,\n\nam vergangenen Wochenende ist in meiner Wohnung ein Schaden " },
+        { "blank": 0 },
+        { "text": ". Das Wasser läuft unter der Spüle heraus, und der Schrank darunter ist schon nass. Ich habe den Haupthahn zugedreht, " },
+        { "blank": 1 },
+        { "text": " nicht noch mehr passiert.\n\nIch habe bereits " },
+        { "blank": 2 },
+        { "text": " versucht, Sie telefonisch zu erreichen, leider ohne Erfolg. " },
+        { "blank": 3 },
+        { "text": " schreibe ich Ihnen heute.\n\nKönnten Sie bitte so schnell wie möglich einen Handwerker " },
+        { "blank": 4 },
+        { "text": "? Ich bin diese Woche jeden Tag ab 15 Uhr zu Hause und kann ihn hereinlassen. " },
+        { "blank": 5 },
+        { "text": " eine kurze Rückmeldung wäre ich Ihnen sehr dankbar.\n\nMit freundlichen Grüßen\nFolake Adeyemi" }
+      ],
+      "example": { "options": ["geehrte", "liebe", "werte"], "correct": 0 },
+      "items": [
+        { "id": 40, "options": ["entstanden", "entsteht", "entstehen"], "correct": 0 },
+        { "id": 41, "options": ["weil", "damit", "obwohl"], "correct": 1 },
+        { "id": 42, "options": ["dreimal", "dritte", "drei"], "correct": 0 },
+        { "id": 43, "options": ["Trotzdem", "Deshalb", "Obwohl"], "correct": 1 },
+        { "id": 44, "options": ["schicken", "schickt", "geschickt"], "correct": 0 },
+        { "id": 45, "options": ["Für", "Über", "Auf"], "correct": 0 }
+      ]
+    }
+  ],
+  "schreiben": {
+    "instruction": "Wählen Sie eine der beiden Aufgaben. Schreiben Sie ungefähr 40 Wörter und bearbeiten Sie alle vier Punkte. Vergessen Sie Anrede und Gruß nicht.",
+    "taskA": {
+      "label": "Aufgabe A",
+      "prompt": "Ihre Nachbarin, Frau Hoffmann, fährt für zwei Wochen zu ihrer Tochter. Sie hat Sie gefragt, ob Sie in dieser Zeit ihre Katze füttern können. Schreiben Sie ihr eine Nachricht zurück.",
+      "points": ["Zusagen", "Wann Sie kommen können", "Wo der Schlüssel bleibt", "Was Sie noch wissen müssen"]
+    },
+    "taskB": {
+      "label": "Aufgabe B",
+      "prompt": "Sie haben vor drei Wochen eine Waschmaschine gekauft. Sie funktioniert nicht richtig und Sie haben im Geschäft schon angerufen — es ist nichts passiert. Schreiben Sie an das Geschäft.",
+      "points": ["Grund für Ihr Schreiben", "Was genau nicht funktioniert", "Was Sie jetzt möchten", "Bis wann Sie eine Antwort erwarten"]
+    },
+    "selfRateNote": "Der Schreibteil wird in der echten Prüfung von Menschen bewertet — nach Inhalt, Kommunikation und Sprache. Hier können Sie Ihren Text nur selbst einschätzen; er wird nicht gespeichert und nicht gesendet."
+  }
+}

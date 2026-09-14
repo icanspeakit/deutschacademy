@@ -8,6 +8,22 @@
    dial fixed to the bottom-right corner that swaps between three structural layouts (Tabs is
    the default). See the crossfade + sliding-indicator mechanics near the bottom of this file. */
 
+/* The "minimal" look is monochrome by design, so dark mode inverts it in place
+   instead of pulling in the teal site palette. */
+:root[data-theme="dark"] .fk-page {
+  --ink: #ededed;
+  --muted: #a0a0a0;
+  --border: #2c2c2c;
+  --border-strong: #3f3f3f;
+  --surface: #161616;
+  --brand-blue: #60a5fa;
+  --brand-blue-dark: #93c5fd;
+  --gradient-brand: #60a5fa;
+  --fk-page-bg: #0d0d0d;
+  --fk-header-bg: #121212;
+  --fk-card-bg: #161616;
+}
+
 .fk-page {
   --ink: #111111;
   --muted: #666666;

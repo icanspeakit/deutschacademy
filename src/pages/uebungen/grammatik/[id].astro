@@ -5,52 +5,170 @@ import "../../../styles/practice.css";
 import "../../../styles/verben-praepositionen.css";
 import grammatik from "../../../data/grammatik.json";
 
+// Two kinds of topic live on this route:
+//
+//   1. Workspaces — a file in src/data/grammatik/ describes a full Kursbuchseite: the
+//      "Wie funktioniert das?" card plus up to five exercises, driven by grammarWorkspace.js.
+//      Adding one is a JSON file; no page change needed.
+//   2. Quiz topics — an entry in grammatik.json with nothing but questions. They get the
+//      same shell with a single Lückentext exercise, until someone writes them a workspace.
+//
+// akkusativ keeps its own bespoke page (akkusativ.astro) and is skipped here.
 export function getStaticPaths() {
-  // akkusativ and praepositionen have their own bespoke pages (akkusativ.astro,
-  // verben-praepositionen.astro) — every other topic gets this shared workspace layout.
-  const dedicatedPages = new Set(["akkusativ", "praepositionen"]);
-  return grammatik
-    .filter((t) => !dedicatedPages.has(t.id))
-    .map((t) => ({ params: { id: t.id }, props: { topic: t } }));
+  const mods = import.meta.glob("../../../data/grammatik/*.json", { eager: true });
+  const all = Object.values(mods).map((m) => m.default ?? m);
+  const covered = new Set(all.map((w) => w.id));
+
+  return [
+    ...all.map((w) => ({ params: { id: w.slug ?? w.id }, props: { workspace: w } })),
+    ...grammatik
+      .filter((t) => t.id !== "akkusativ" && !covered.has(t.id))
+      .map((t) => ({ params: { id: t.id }, props: { topic: t } })),
+  ];
 }
 
-const { topic } = Astro.props;
+const { workspace, topic } = Astro.props;
+const name = workspace ? workspace.name : topic.name;
+const level = workspace ? workspace.level : topic.level;
+const intro = workspace ? workspace.subtitle : topic.intro;
+const concept = workspace?.concept;
+const reference = concept?.reference;
 ---
-<Layout title={`${topic.name} – DeutschAcademy`}>
-  <PracticeHeader title={topic.name} />
+<Layout title={`${name} – DeutschAcademy`}>
+  <PracticeHeader title={name} />
 
-  <main class="vp-page">
+  <main class="vp-page" id="vp-page">
     <a href="/uebungen/grammatik" class="vp-back-link" data-i18n="header.back">← Zurück zur Übersicht</a>
 
     <div class="vp-hero">
       <div class="vp-hero-badges">
         <span class="badge badge-brand" data-i18n="grammatik.hero.eyebrow">GRAMMATIK ÜBEN</span>
-        <span class="badge badge-info">{topic.level}</span>
+        <span class="badge badge-info">{level}</span>
       </div>
-      <h1>{topic.name}</h1>
-      <p>{topic.intro}</p>
+      <h1>{name}</h1>
+      <p data-i18n={workspace?.subtitleKey}>{intro}</p>
     </div>
+
+    {concept && (
+      <div class="vp-card">
+        <div class="vp-card-label" data-i18n="vp.howItWorks">Wie funktioniert das?</div>
+
+        {concept.flow && (
+          <div class="vp-flow">
+            {concept.flow.map((step, i) => (
+              <>
+                {i > 0 && <span class="vp-flow-arrow">→</span>}
+                <div class={`vp-flow-step ${step.variant ? `vp-flow-step--${step.variant}` : ""}`}>{step.text}</div>
+              </>
+            ))}
+          </div>
+        )}
+
+        {concept.exampleHtml && <p class="vp-example" set:html={concept.exampleHtml} />}
+
+        {concept.qa && (
+          <div class="vp-qa-grid">
+            {concept.qa.map((item) => (
+              <div class="vp-qa-item">
+                <span set:html={item.html} />
+                {item.tag && <span class="vp-qa-tag">{item.tag}</span>}
+              </div>
+            ))}
+          </div>
+        )}
+
+        {concept.noteHtml && <p class="vp-note" set:html={concept.noteHtml} />}
+
+        {reference && (
+          <>
+            <button
+              type="button"
+              class="vp-toggle-ref"
+              id="vp-toggle-ref"
+              data-show={reference.showLabel ?? "Referenzliste anzeigen ▼"}
+              data-hide={reference.hideLabel ?? "Referenzliste ausblenden ▲"}
+            >{reference.showLabel ?? "Referenzliste anzeigen ▼"}</button>
+
+            <div id="vp-ref-panel" hidden>
+              {reference.tables?.map((table) => (
+                <div class="vp-ref-table-wrap">
+                  {table.caption && <p class="vp-ref-table-caption">{table.caption}</p>}
+                  <div class="vp-ref-table-scroll">
+                    <table class="vp-ref-table">
+                      <thead>
+                        <tr>{table.head.map((h) => <th>{h}</th>)}</tr>
+                      </thead>
+                      <tbody>
+                        {table.rows.map((row) => (
+                          <tr>{row.map((cell, i) => (i === 0 ? <th scope="row">{cell}</th> : <td>{cell}</td>))}</tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                  {table.note && <p class="vp-ref-table-note">{table.note}</p>}
+                </div>
+              ))}
+
+              {reference.boxes && (
+                <div class="vp-ref-grid">
+                  {reference.boxes.map((box) => (
+                    <div class={`vp-ref-box vp-ref-box--${box.variant ?? "akk"}`}>
+                      <span class={`badge ${box.variant === "dat" ? "badge-info" : "badge-brand"}`}>{box.badge}</span>
+                      <ul>{box.items.map((item) => <li>{item}</li>)}</ul>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          </>
+        )}
+      </div>
+    )}
 
     <h2 class="vp-section-title" data-i18n="nav.exercises">Übungen</h2>
 
-    <div class="vp-card">
-      <div class="vp-ex-head">
-        <span class="badge badge-neutral">1</span>
-        <h3>Lückentext: Ergänzen Sie.</h3>
+    {workspace ? (
+      workspace.exercises.map((ex, i) => (
+        <div class="vp-card">
+          <div class="vp-ex-head">
+            <span class="badge badge-neutral">{i + 1}</span>
+            <h3>{ex.title}</h3>
+          </div>
+          {ex.hint && <p class="vp-ex-hint">{ex.hint}</p>}
+          <div data-ex-index={i}></div>
+        </div>
+      ))
+    ) : (
+      <div class="vp-card">
+        <div class="vp-ex-head">
+          <span class="badge badge-neutral">1</span>
+          <h3>Lückentext: Ergänzen Sie.</h3>
+        </div>
+        <div id="quiz-root"></div>
       </div>
-      <div id="quiz-root"></div>
-    </div>
+    )}
   </main>
 
-  <script type="application/json" id="topic-data" set:html={JSON.stringify(topic)}></script>
+  <script type="application/json" id="topic-data" set:html={JSON.stringify(workspace ?? topic)}></script>
   <script type="module">
+    import { mountGrammarWorkspace } from "../../../lib/grammarWorkspace.js";
     import { mountQuiz } from "../../../lib/quiz.js";
     import { recordAttempt } from "../../../lib/progress.js";
 
-    const topic = JSON.parse(document.getElementById("topic-data").textContent);
-    mountQuiz(document.getElementById("quiz-root"), topic.questions, {
-      mode: "text",
-      onAnswer: (ok) => recordAttempt({ skill: "grammatik", correct: ok }),
+    const data = JSON.parse(document.getElementById("topic-data").textContent);
+    const onAnswer = (ok) => recordAttempt({ skill: "grammatik", correct: ok });
+
+    if (Array.isArray(data.exercises)) {
+      mountGrammarWorkspace(document.getElementById("vp-page"), data, { onAnswer });
+    } else {
+      mountQuiz(document.getElementById("quiz-root"), data.questions, { mode: "text", onAnswer });
+    }
+
+    const toggleRefBtn = document.getElementById("vp-toggle-ref");
+    const refGrid = document.getElementById("vp-ref-panel");
+    toggleRefBtn?.addEventListener("click", () => {
+      refGrid.hidden = !refGrid.hidden;
+      toggleRefBtn.textContent = refGrid.hidden ? toggleRefBtn.dataset.show : toggleRefBtn.dataset.hide;
     });
   </script>
 </Layout>

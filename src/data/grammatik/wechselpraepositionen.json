@@ -1,0 +1,190 @@
+{
+  "id": "wechselpraepositionen",
+  "name": "Wechselpräpositionen: wo oder wohin?",
+  "level": "A2",
+  "subtitle": "Neun Präpositionen können Dativ oder Akkusativ verlangen. Die Frage entscheidet: „Wo?“ heißt Dativ, „Wohin?“ heißt Akkusativ. Im Kino ist nicht ins Kino.",
+  "source": "Wechselpräp.pdf (Kapitel 34) · Präp erklärt.pdf (Kapitel 35) · Präp m Akk.pdf · Prä m Dat.pdf · WEchselprä Partner A/B.pdf · f 12 05 C11 Rauf und Runter(2).pdf (Kapitel 76)",
+  "concept": {
+    "flow": [
+      { "text": "Wohin? → Akkusativ", "variant": "verb" },
+      { "text": "Wo? → Dativ", "variant": "prep" }
+    ],
+    "exampleHtml": "Ich gehe <span class=\"vp-verb\">ins</span> Kino. — Ich war gestern schon <span class=\"vp-prep\">im</span> Kino.",
+    "qa": [
+      { "html": "<strong>Wohin?</strong> nennt die Richtung (direktiv): Präposition + <em>Akkusativ</em>. <em>Der Löwe springt auf <strong>den</strong> Boden.</em>", "tag": "Richtung" },
+      { "html": "<strong>Wo?</strong> nennt den Ort (situativ): Präposition + <em>Dativ</em>. <em>Der Löwe sitzt auf <strong>dem</strong> Boden.</em>", "tag": "Ort" },
+      { "html": "Nur diese neun sind Wechselpräpositionen: <strong>in, an, auf, über, unter, vor, hinter, neben, zwischen</strong>.", "tag": "die Neun" },
+      { "html": "Verschmelzungen: <em>in + das = ins, an + das = ans</em> (Akkusativ) — <em>in + dem = im, an + dem = am</em> (Dativ).", "tag": "im / ins" }
+    ],
+    "noteHtml": "Das Verb verrät die Frage: <strong>Bewegungsverben</strong> (gehen, fahren, bringen, steigen, legen, stellen, setzen, hängen) fragen nach <em>wohin</em> → Akkusativ. <strong>Zustandsverben</strong> (sein, sitzen, stehen, liegen, wohnen, studieren, hängen) fragen nach <em>wo</em> → Dativ. Ein klassisches Paar: <em>Sie <strong>legt</strong> die Decke auf <strong>das</strong> Bett.</em> — <em>Die Decke <strong>liegt</strong> auf <strong>dem</strong> Bett.</em>",
+    "reference": {
+      "showLabel": "Übersicht anzeigen ▼",
+      "hideLabel": "Übersicht ausblenden ▲",
+      "tables": [
+        {
+          "caption": "Die neun Wechselpräpositionen",
+          "head": ["Präposition", "Wohin? (Akkusativ)", "Wo? (Dativ)"],
+          "rows": [
+            ["in", "Der Lolly fällt in die Tasche.", "Der Lolly ist in der Tasche."],
+            ["an", "Der Schmetterling fliegt an den Baum.", "Der Schmetterling sitzt an dem Baum."],
+            ["auf", "Der Löwe springt auf den Boden.", "Der Löwe liegt auf dem Boden."],
+            ["über", "Der Vogel fliegt über den Baum.", "Der Vogel kreist über dem Baum."],
+            ["unter", "Der Hase läuft unter den Hut.", "Der Hase sitzt unter dem Hut."],
+            ["vor", "Der Hut fällt vor den Löwen.", "Der Hut liegt vor dem Löwen."],
+            ["hinter", "Das Mädchen läuft hinter den Baum.", "Das Mädchen steht hinter dem Baum."],
+            ["neben", "Der Hut fällt neben die Tasche.", "Der Hut liegt neben der Tasche."],
+            ["zwischen", "Der Löwe springt zwischen die Bäume.", "Der Löwe steht zwischen den Bäumen."]
+          ]
+        },
+        {
+          "caption": "Verbpaare: Aktion und Zustand",
+          "note": "Links die regelmäßigen Aktionsverben (Akkusativ), rechts die unregelmäßigen Zustandsverben (Dativ).",
+          "head": ["Wohin? — Aktion", "Formen", "Wo? — Zustand", "Formen"],
+          "rows": [
+            ["stellen", "stellte, gestellt", "stehen", "stand, gestanden"],
+            ["legen", "legte, gelegt", "liegen", "lag, gelegen"],
+            ["setzen", "setzte, gesetzt", "sitzen", "saß, gesessen"],
+            ["hängen", "hängte, gehängt", "hängen", "hing, gehangen"]
+          ]
+        },
+        {
+          "caption": "Lokale Präpositionen, die nicht wechseln",
+          "head": ["Frage", "Präposition", "Beispiele"],
+          "rows": [
+            ["Wo? (immer Dativ)", "bei", "bei Lisa, beim Arzt, beim Picknick"],
+            ["Wohin? (immer Dativ)", "zu", "zu Lisa, zum Arzt, zum Picknick"],
+            ["Wohin? (ohne Artikel)", "nach", "nach Paris, nach Japan, nach Hause"],
+            ["Woher? (immer Dativ)", "aus", "aus Paris, aus dem Haus"],
+            ["Woher? (immer Dativ)", "von", "vom Strand, von Lisa, von zu Hause"]
+          ]
+        }
+      ],
+      "boxes": [
+        {
+          "badge": "Wohin? — Akkusativ",
+          "variant": "akk",
+          "items": [
+            "Ich gehe ins Kino.",
+            "Wir fahren ans Meer.",
+            "Sie bringt den Müll in die Mülltonne.",
+            "Ich möchte auf einen hohen Berg steigen.",
+            "Sie legt die Socken in den Schrank."
+          ]
+        },
+        {
+          "badge": "Wo? — Dativ",
+          "variant": "dat",
+          "items": [
+            "Ich war gestern schon im Kino.",
+            "Am Meer waren wir letztes Jahr.",
+            "Das Bad ist neben der Haustür.",
+            "Die Kinder spielen auf dem Spielplatz.",
+            "Die Socken liegen auf dem Tisch."
+          ]
+        }
+      ]
+    }
+  },
+  "exercises": [
+    {
+      "type": "table",
+      "title": "Wo? oder Wohin? Welches Verb verlangt was?",
+      "hint": "Tippen Sie „wo“ oder „wohin“.",
+      "columns": ["Verb", "wo / wohin"],
+      "placeholder": "wo / wohin",
+      "rows": [
+        { "term": "gehen", "answer": "wohin" },
+        { "term": "studieren", "answer": "wo" },
+        { "term": "sein", "answer": "wo" },
+        { "term": "sitzen", "answer": "wo" },
+        { "term": "stehen", "answer": "wo" },
+        { "term": "bringen", "answer": "wohin" },
+        { "term": "fahren", "answer": "wohin" },
+        { "term": "steigen", "answer": "wohin" },
+        { "term": "spielen", "answer": "wo" },
+        { "term": "fliegen", "answer": "wohin" }
+      ]
+    },
+    {
+      "type": "fill",
+      "title": "Ergänzen Sie den Artikel im Dativ oder Akkusativ.",
+      "hint": "Erst die Frage stellen: Wo? oder Wohin?",
+      "placeholder": "Artikel",
+      "items": [
+        { "prompt": "Sollen wir an ___ Meer fahren?", "hint": "Richtung — an + das", "answer": ["das", "ans"] },
+        { "prompt": "Nein, an ___ Meer waren wir doch schon letztes Jahr.", "hint": "Ort — an + dem", "answer": ["dem", "am"] },
+        { "prompt": "Dieses Jahr möchte ich lieber in ___ Berge.", "hint": "Richtung, Plural Akkusativ", "answer": ["die"] },
+        { "prompt": "Ich möchte auf ___ hohen Berg steigen.", "hint": "Richtung, maskulin Akkusativ", "answer": ["einen"] },
+        { "prompt": "Warst du schon in ___ Alpen?", "hint": "Ort, Plural Dativ", "answer": ["den"] },
+        { "prompt": "Heute Abend gehe ich in ___ Kino.", "hint": "Richtung — in + das", "answer": ["das", "ins"] },
+        { "prompt": "Nein, ich war gestern schon i___ Kino.", "hint": "Ort — die Verschmelzung, ohne „in“ davor.", "answer": ["m"] }
+      ]
+    },
+    {
+      "type": "match",
+      "title": "Frage und Antwort zusammenbringen.",
+      "hint": "Wohin verlangt Akkusativ, wo verlangt Dativ.",
+      "pairs": [
+        { "q": "Wohin gehst du heute Abend?", "a": "In die Disko." },
+        { "q": "Wo möchtest du studieren?", "a": "In Berlin." },
+        { "q": "Wo ist das Bad?", "a": "Neben der Haustür." },
+        { "q": "Wohin bringst du die Kinder?", "a": "In die Schule." },
+        { "q": "Wohin fahrt ihr im Sommer?", "a": "Ans Meer." },
+        { "q": "Wo kann man gut Fisch essen?", "a": "Am Meer." },
+        { "q": "Wohin fliegt ihr nächstes Jahr?", "a": "In die USA." }
+      ]
+    },
+    {
+      "type": "story",
+      "title": "Lückentext: Sabine räumt auf.",
+      "hint": "Erst liegt etwas irgendwo (Dativ), dann legt Sabine es woandershin (Akkusativ).",
+      "segments": [
+        { "text": "Die Decke liegt unter " },
+        { "blank": 0, "answer": ["dem"] },
+        { "text": " Tisch. Sabine legt die Decke auf " },
+        { "blank": 1, "answer": ["das"] },
+        { "text": " Bett. Die Stifte liegen auf " },
+        { "blank": 2, "answer": ["dem"] },
+        { "text": " Bett. Sie legt die Stifte in " },
+        { "blank": 3, "answer": ["die"] },
+        { "text": " Schublade. Der Kuchen steht auf " },
+        { "blank": 4, "answer": ["dem"] },
+        { "text": " Stuhl. Sie stellt den Kuchen auf " },
+        { "blank": 5, "answer": ["den"] },
+        { "text": " Tisch. Die Socken liegen auf " },
+        { "blank": 6, "answer": ["dem"] },
+        { "text": " Tisch. Sie hängt die Socken in " },
+        { "blank": 7, "answer": ["den"] },
+        { "text": " Schrank. Die Vase steht auf " },
+        { "blank": 8, "answer": ["dem"] },
+        { "text": " Herd. Sie stellt die Vase neben " },
+        { "blank": 9, "answer": ["das"] },
+        { "text": " Sofa." }
+      ]
+    },
+    {
+      "type": "build",
+      "title": "Bauen Sie den Satz — achten Sie auf den Kasus.",
+      "sentences": [
+        {
+          "id": "wp1",
+          "hint": "Richtung: Akkusativ.",
+          "correct": ["Sie", "bringt", "den", "Müll", "in", "die", "Mülltonne", "."],
+          "shuffled": ["die", "Sie", "in", "Müll", "Mülltonne", "bringt", "den", "."]
+        },
+        {
+          "id": "wp2",
+          "hint": "Ort: Dativ.",
+          "correct": ["Die", "Kinder", "spielen", "auf", "dem", "Spielplatz", "."],
+          "shuffled": ["auf", "Die", "Spielplatz", "spielen", "dem", "Kinder", "."]
+        },
+        {
+          "id": "wp3",
+          "hint": "Zwei Kasus in einem Satz.",
+          "correct": ["Ich", "gehe", "in", "die", "Küche", ",", "denn", "der", "Kaffee", "steht", "in", "der", "Küche", "."],
+          "shuffled": ["der", "Ich", "Küche", "in", "steht", "die", "gehe", ",", "Kaffee", "denn", "der", "in", "Küche", "."]
+        }
+      ]
+    }
+  ]
+}

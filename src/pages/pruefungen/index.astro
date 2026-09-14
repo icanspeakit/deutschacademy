@@ -12,6 +12,7 @@ const exams = [
     title: "telc",
     level: "A1–C2",
     desc: "The European Language Certificates — modular exams accepted for jobs, visas and some universities.",
+    practice: "Sprachbausteine-Trainer · Prüfungsformat A1",
   },
   {
     href: "/pruefungen/goethe",
@@ -19,6 +20,7 @@ const exams = [
     title: "Goethe-Zertifikat",
     level: "A1–C2",
     desc: "The Goethe-Institut's own exams — widely recognized for visas, universities and employers.",
+    practice: "Format Start Deutsch 1 (A1)",
   },
   {
     href: "/pruefungen/testdaf",
@@ -33,6 +35,7 @@ const exams = [
     title: "DTZ",
     level: "A2 / B1",
     desc: "Deutsch-Test für Zuwanderer — the exam at the end of a state-funded Integrationskurs.",
+    practice: "Übungssatz im Prüfungsformat · Lesen-Mock-Test",
   },
   {
     href: "/pruefungen/leben-in-deutschland",
@@ -40,6 +43,7 @@ const exams = [
     title: "Leben in Deutschland",
     level: "Orientierungskurs / citizenship",
     desc: "The civics test on German society, history and law — required for naturalization.",
+    practice: "Fakten-Lernseite · Übungstest",
   },
 ];
 
@@ -137,6 +141,7 @@ const comparison = [
             <div class="exam-card-icon"><Icon name={e.icon} /></div>
             <h3>{e.title}</h3>
             <p>{e.desc}</p>
+            {e.practice && <p class="exam-card-practice">{e.practice}</p>}
             <span class="exam-card-level">{e.level}</span>
           </a>
         ))}

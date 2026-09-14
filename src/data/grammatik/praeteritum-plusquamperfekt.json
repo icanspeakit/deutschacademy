@@ -1,0 +1,187 @@
+{
+  "id": "praeteritum-plusquamperfekt",
+  "name": "Präteritum & Plusquamperfekt",
+  "level": "B1",
+  "subtitle": "Drei Vergangenheitsformen, drei Aufgaben: Perfekt fürs Gespräch, Präteritum fürs Erzählen und Schreiben — und Plusquamperfekt für alles, was noch davor passiert ist.",
+  "source": "Nr. 5 PQP und Präteritum.pdf (Kapitel 27, Übungen 3–5)",
+  "concept": {
+    "flow": [
+      { "text": "Plusquamperfekt", "variant": "prep" },
+      { "text": "→ Präteritum / Perfekt", "variant": "verb" },
+      { "text": "→ Gegenwart" }
+    ],
+    "exampleHtml": "Nachdem wir uns <span class=\"vp-prep\">verabschiedet hatten</span>, <span class=\"vp-verb\">fuhr</span> ich in die Stadt.",
+    "qa": [
+      { "html": "<strong>Perfekt</strong> ist die Form der gesprochenen Sprache: <em>Was hast du gestern gemacht?</em>", "tag": "mündlich" },
+      { "html": "<strong>Präteritum</strong> ist die Form geschriebener Erzählungen und Berichte: <em>1966 startete die Serie in den USA.</em>", "tag": "schriftlich" },
+      { "html": "Bei <strong>haben, sein und den Modalverben</strong> nimmt man auch im Gespräch das Präteritum: <em>ich war, ich hatte, ich musste, ich wollte, ich konnte</em>.", "tag": "immer Präteritum" },
+      { "html": "<strong>Plusquamperfekt</strong> = <em>hatte/war</em> im Präteritum + Partizip II. Es markiert die Vorzeitigkeit: erst das, dann das andere.", "tag": "davor" }
+    ],
+    "noteHtml": "Das Plusquamperfekt steht fast nie allein — es braucht einen zweiten Satz in der Vergangenheit, auf den es sich bezieht. Der typische Auslöser ist <strong>nachdem</strong>: <em>Nachdem das Raumschiff in Deutschland <strong>gelandet war</strong>, <strong>eroberte</strong> es die Herzen des Publikums.</em> Merken Sie sich die Kombination: <em>nachdem</em> + Plusquamperfekt im Nebensatz, Präteritum im Hauptsatz.",
+    "reference": {
+      "showLabel": "Formenübersicht anzeigen ▼",
+      "hideLabel": "Formenübersicht ausblenden ▲",
+      "tables": [
+        {
+          "caption": "Dieselbe Handlung in drei Formen",
+          "head": ["Form", "Beispiel", "wann?"],
+          "rows": [
+            ["Perfekt", "Ich habe einen Kaffee getrunken.", "Gespräch, Alltag"],
+            ["Präteritum", "Ich trank einen Kaffee.", "Text, Erzählung, Bericht"],
+            ["Plusquamperfekt", "Ich hatte einen Kaffee getrunken.", "vor einer anderen Vergangenheit"]
+          ]
+        },
+        {
+          "caption": "Starke Verben im Präteritum",
+          "head": ["Infinitiv", "Präteritum (ich/er)", "Partizip II"],
+          "rows": [
+            ["gehen", "ging", "gegangen"],
+            ["sehen", "sah", "gesehen"],
+            ["treffen", "traf", "getroffen"],
+            ["trinken", "trank", "getrunken"],
+            ["lesen", "las", "gelesen"],
+            ["denken", "dachte", "gedacht"],
+            ["sein", "war", "gewesen"],
+            ["haben", "hatte", "gehabt"],
+            ["werden", "wurde", "geworden"],
+            ["können", "konnte", "gekonnt"],
+            ["müssen", "musste", "gemusst"],
+            ["wollen", "wollte", "gewollt"]
+          ]
+        },
+        {
+          "caption": "Plusquamperfekt bilden",
+          "head": ["Hilfsverb im Präteritum", "+ Partizip II", "Beispiel"],
+          "rows": [
+            ["hatte", "gemacht", "Ich hatte den Einkauf schon gemacht."],
+            ["war", "gefahren", "Wir waren in die Stadt gefahren."],
+            ["hatte", "gesehen", "Er hatte den Film schon gesehen."],
+            ["war", "angekommen", "Als ich oben angekommen war, …"]
+          ]
+        }
+      ],
+      "boxes": [
+        {
+          "badge": "nachdem + Plusquamperfekt",
+          "variant": "akk",
+          "items": [
+            "Nachdem wir uns verabschiedet hatten, fuhr ich in die Stadt.",
+            "Nachdem die Serie Kultstatus erlangt hatte, wurde der Name berühmt.",
+            "Nachdem er gegessen hatte, ging er spazieren.",
+            "Nachdem sie angekommen war, rief sie sofort an."
+          ]
+        },
+        {
+          "badge": "Im Gespräch lieber Perfekt",
+          "variant": "dat",
+          "items": [
+            "besser: Alle meine Freunde sind auch hingegangen.",
+            "statt: Alle meine Freunde gingen auch hin.",
+            "besser: Ich habe dich nicht gesehen.",
+            "statt: Ich sah dich nicht.",
+            "aber immer: Ich war müde. Ich hatte keine Zeit. Ich musste gehen."
+          ]
+        }
+      ]
+    }
+  },
+  "exercises": [
+    {
+      "type": "table",
+      "title": "Wie lautet das Präteritum?",
+      "hint": "Form für „ich“ oder „er“.",
+      "columns": ["Infinitiv", "Präteritum"],
+      "placeholder": "Präteritum",
+      "rows": [
+        { "term": "gehen", "answer": "ging" },
+        { "term": "sehen", "answer": "sah" },
+        { "term": "treffen", "answer": "traf" },
+        { "term": "trinken", "answer": "trank" },
+        { "term": "lesen", "answer": "las" },
+        { "term": "denken", "answer": "dachte" },
+        { "term": "sein", "answer": "war" },
+        { "term": "haben", "answer": "hatte" },
+        { "term": "werden", "answer": "wurde" },
+        { "term": "wollen", "answer": "wollte" },
+        { "term": "müssen", "answer": "musste" },
+        { "term": "warten", "answer": "wartete" }
+      ]
+    },
+    {
+      "type": "fill",
+      "title": "Plusquamperfekt bilden.",
+      "hint": "Schreiben Sie nur das Hilfsverb im Präteritum.",
+      "placeholder": "hatte / war",
+      "items": [
+        { "prompt": "Nachdem ich den Einkauf gemacht ___, ging ich nach Hause.", "hint": "„machen“ nimmt haben.", "answer": ["hatte"] },
+        { "prompt": "Nachdem wir uns verabschiedet ___, fuhr ich in die Stadt.", "hint": "„sich verabschieden“ nimmt haben.", "answer": ["hatten"] },
+        { "prompt": "Als ich oben angekommen ___, standen plötzlich Fotografen um mich herum.", "hint": "„ankommen“ nimmt sein.", "answer": ["war"] },
+        { "prompt": "Nachdem die Serie Kultstatus erlangt ___, wurde der Name berühmt.", "hint": "„erlangen“ nimmt haben.", "answer": ["hatte"] },
+        { "prompt": "Nachdem das Raumschiff in Deutschland gelandet ___, eroberte es die Herzen des Publikums.", "hint": "„landen“ nimmt sein.", "answer": ["war"] },
+        { "prompt": "Er erzählte, dass er den Film schon gesehen ___.", "hint": "„sehen“ nimmt haben.", "answer": ["hatte"] }
+      ]
+    },
+    {
+      "type": "match",
+      "title": "Was passierte zuerst?",
+      "hint": "Der Satzteil im Plusquamperfekt beschreibt das frühere Ereignis.",
+      "pairs": [
+        { "q": "Nachdem wir uns verabschiedet hatten,", "a": "fuhr ich in die Stadt." },
+        { "q": "Nachdem ich ausgestiegen war,", "a": "fuhr ich auf der Rolltreppe nach oben." },
+        { "q": "Als ich oben angekommen war,", "a": "standen plötzlich Fotografen um mich herum." },
+        { "q": "Nachdem ich herausgefunden hatte, dass ich der zehnmillionste Benutzer war,", "a": "bekam ich einen Gutschein über 200 Euro." },
+        { "q": "Nachdem die TV-Serie Kultstatus erlangt hatte,", "a": "wurde der Name „Enterprise“ auch für die Raumfähre benutzt." }
+      ]
+    },
+    {
+      "type": "story",
+      "title": "Lückentext: Überraschung auf der Rolltreppe.",
+      "hint": "Präteritum oder Plusquamperfekt — achten Sie auf die Reihenfolge der Ereignisse.",
+      "segments": [
+        { "text": "Nachdem wir uns verabschiedet " },
+        { "blank": 0, "answer": ["hatten"] },
+        { "text": ", " },
+        { "blank": 1, "answer": ["fuhr"] },
+        { "text": " ich in die Stadt und ging ins Einkaufszentrum. Ich " },
+        { "blank": 2, "answer": ["wollte"] },
+        { "text": " einfach nur gucken. Also " },
+        { "blank": 3, "answer": ["stieg"] },
+        { "text": " ich gestern am Nordwestzentrum aus und fuhr auf der Rolltreppe nach oben. Als ich oben angekommen " },
+        { "blank": 4, "answer": ["war"] },
+        { "text": ", standen plötzlich mehrere Fotografen um mich herum und es " },
+        { "blank": 5, "answer": ["blitzte"] },
+        { "text": " wie bei Politikern. Das " },
+        { "blank": 6, "answer": ["war"] },
+        { "text": " ein Schock für mich! Ich " },
+        { "blank": 7, "answer": ["fand"] },
+        { "text": " dann heraus, dass ich der zehnmillionste Benutzer der Rolltreppe gewesen " },
+        { "blank": 8, "answer": ["war"] },
+        { "text": ", und ich bekam einen Einkaufsgutschein im Wert von 200 Euro." }
+      ]
+    },
+    {
+      "type": "build",
+      "title": "Bauen Sie den Satz mit „nachdem“.",
+      "sentences": [
+        {
+          "id": "pq1",
+          "hint": "Nebensatz im Plusquamperfekt, Hauptsatz im Präteritum.",
+          "correct": ["Nachdem", "er", "gegessen", "hatte", ",", "ging", "er", "spazieren", "."],
+          "shuffled": ["hatte", "Nachdem", "spazieren", "gegessen", "ging", "er", ",", "er", "."]
+        },
+        {
+          "id": "pq2",
+          "hint": "„ankommen“ nimmt sein.",
+          "correct": ["Nachdem", "sie", "angekommen", "war", ",", "rief", "sie", "sofort", "an", "."],
+          "shuffled": ["war", "sofort", "Nachdem", "an", "rief", "angekommen", "sie", ",", "sie", "."]
+        },
+        {
+          "id": "pq3",
+          "hint": "Präteritum im Bericht.",
+          "correct": ["1966", "startete", "die", "Serie", "„Raumschiff", "Enterprise“", "in", "den", "USA", "."],
+          "shuffled": ["die", "in", "1966", "USA", "Serie", "den", "startete", "Enterprise“", "„Raumschiff", "."]
+        }
+      ]
+    }
+  ]
+}

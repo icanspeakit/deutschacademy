@@ -1,0 +1,162 @@
+{
+  "id": "zweiteilige-konnektoren",
+  "name": "Zweiteilige Konnektoren",
+  "level": "B1",
+  "subtitle": "Diese Konnektoren kommen immer im Doppelpack: „nicht nur … sondern auch“, „weder … noch“, „je … desto“. Wer den ersten Teil setzt, muss den zweiten mitliefern.",
+  "source": "zweiteilige Konnektoren.pdf (Roman Giesing, mit Lösungsschlüssel) · Doppelkonnektoren.pdf (Kapitel 75)",
+  "concept": {
+    "flow": [
+      { "text": "Teil 1", "variant": "verb" },
+      { "text": "Satzteil A" },
+      { "text": "Teil 2", "variant": "prep" },
+      { "text": "Satzteil B" }
+    ],
+    "exampleHtml": "Er hat <span class=\"vp-verb\">nicht nur</span> einen guten Job, <span class=\"vp-prep\">sondern auch</span> eine tolle Wohnung.",
+    "qa": [
+      { "html": "<strong>sowohl … als auch</strong> — beides gilt, gleichwertig. <em>Ich trinke Kaffee sowohl mit Milch als auch mit Zucker.</em>", "tag": "+ +" },
+      { "html": "<strong>nicht nur … sondern auch</strong> — beides gilt, aber der zweite Teil wird betont. <em>Er trinkt Kaffee nicht nur mit Zucker, sondern auch mit Sahne.</em>", "tag": "+ + betont" },
+      { "html": "<strong>weder … noch</strong> — beides gilt nicht. Achtung: <em>weder…noch</em> ist schon negativ, ein zusätzliches <em>nicht</em> wäre falsch.", "tag": "− −" },
+      { "html": "<strong>entweder … oder</strong> — nur eins von beiden, ein starkes „oder“. <em>Ich trinke Tee entweder mit Zitrone oder mit Milch.</em>", "tag": "a oder b" }
+    ],
+    "noteHtml": "Drei weitere gehören dazu: <strong>zwar … aber</strong> räumt erst ein und schränkt dann ein (<em>Jan möchte zwar gern reisen, aber er hat Angst vorm Fliegen</em>), <strong>einerseits … andererseits</strong> stellt zwei Seiten nebeneinander, und <strong>je … desto</strong> verbindet zwei Steigerungen — dabei steht nach <em>je</em> ein Nebensatz mit Verb am Ende und nach <em>desto</em> das Verb direkt hinter dem Komparativ: <em>Je länger Lara lernt, desto mehr Spaß macht ihr die Schule.</em>",
+    "reference": {
+      "showLabel": "Übersicht anzeigen ▼",
+      "hideLabel": "Übersicht ausblenden ▲",
+      "tables": [
+        {
+          "caption": "Die sieben Paare",
+          "head": ["Konnektor", "Bedeutung", "Beispiel"],
+          "rows": [
+            ["sowohl … als auch", "+ + beides", "Hier kann man sowohl schwimmen als auch klettern."],
+            ["nicht nur … sondern auch", "+ + das 2. betont", "Er hat nicht nur einen guten Job, sondern auch eine tolle Wohnung."],
+            ["weder … noch", "− − beides nicht", "Julia gefällt weder das grüne noch das rote Kleid."],
+            ["entweder … oder", "a oder b", "Wir können entweder ins Kino oder ins Museum gehen."],
+            ["zwar … aber", "Einschränkung", "Jan möchte zwar gern nach Australien reisen, aber er hat Angst vorm Fliegen."],
+            ["einerseits … andererseits", "zwei Seiten", "Einerseits möchte ich studieren, andererseits finde ich auch einen Handwerksberuf interessant."],
+            ["je … desto", "zwei Steigerungen", "Je länger Lara lernt, desto mehr Spaß macht ihr die Schule."]
+          ]
+        },
+        {
+          "caption": "je … desto — die Wortstellung",
+          "note": "Nach „je“ steht ein Nebensatz (Verb am Ende), nach „desto“ ein Hauptsatz (Verb direkt nach dem Komparativ).",
+          "head": ["Je + Komparativ", "… Verb", "desto + Komparativ", "Verb", "Subjekt"],
+          "rows": [
+            ["Je mehr Sterne ein Hotel", "hat,", "desto teurer", "ist", "die Übernachtung."],
+            ["Je älter der Käse", "ist,", "desto intensiver", "schmeckt", "er."],
+            ["Je knapper die Erdölvorräte", "werden,", "desto höher", "steigt", "der Preis."]
+          ]
+        }
+      ],
+      "boxes": [
+        {
+          "badge": "Vorsicht: keine doppelte Verneinung",
+          "variant": "akk",
+          "items": [
+            "richtig: Ich mag weder Krimis noch Science-Fiction-Filme.",
+            "falsch: Ich mag nicht weder Krimis noch …",
+            "richtig: Wir haben weder in einem Hotel noch in einer Pension ein Zimmer gefunden.",
+            "falsch: Wir haben weder kein Hotel noch keine Pension gefunden."
+          ]
+        },
+        {
+          "badge": "Beide Teile gehören zusammen",
+          "variant": "dat",
+          "items": [
+            "sowohl → als auch (nicht: sowohl … und)",
+            "nicht nur → sondern auch (nicht: nicht nur … aber auch)",
+            "weder → noch (nicht: weder … oder)",
+            "entweder → oder (nicht: entweder … und)",
+            "zwar → aber (nicht: zwar … sondern)"
+          ]
+        }
+      ]
+    }
+  },
+  "exercises": [
+    {
+      "type": "story",
+      "title": "Lückentext: Verbinden Sie die Sätze.",
+      "hint": "Sieben Sätze, sieben Konnektorpaare — jedes kommt genau einmal vor.",
+      "segments": [
+        { "text": "1. Jan möchte " },
+        { "blank": 0, "answer": ["zwar"] },
+        { "text": " gern nach Australien reisen, " },
+        { "blank": 1, "answer": ["aber"] },
+        { "text": " er hat Angst vorm Fliegen.\n2. Julia gefällt " },
+        { "blank": 2, "answer": ["weder"] },
+        { "text": " das grüne " },
+        { "blank": 3, "answer": ["noch"] },
+        { "text": " das rote Kleid.\n3. Was wollen wir heute machen? Wir können " },
+        { "blank": 4, "answer": ["entweder"] },
+        { "text": " ins Kino " },
+        { "blank": 5, "answer": ["oder"] },
+        { "text": " ins Museum gehen.\n4. " },
+        { "blank": 6, "answer": ["Je"] },
+        { "text": " länger Lara lernt, " },
+        { "blank": 7, "answer": ["desto"] },
+        { "text": " mehr Spaß macht ihr die Schule.\n5. Michael gefällt es in Berlin. Er hat " },
+        { "blank": 8, "answer": ["nicht nur"] },
+        { "text": " einen guten Job, " },
+        { "blank": 9, "answer": ["sondern auch"] },
+        { "text": " eine tolle Wohnung.\n6. " },
+        { "blank": 10, "answer": ["Einerseits"] },
+        { "text": " möchte ich studieren, " },
+        { "blank": 11, "answer": ["andererseits"] },
+        { "text": " finde ich auch einen Handwerksberuf interessant.\n7. Hier in Portugal kann man " },
+        { "blank": 12, "answer": ["sowohl"] },
+        { "text": " schwimmen " },
+        { "blank": 13, "answer": ["als auch"] },
+        { "text": " klettern." }
+      ]
+    },
+    {
+      "type": "match",
+      "title": "Fernsehen: Was passt zusammen?",
+      "hint": "Der erste Teil verrät, welcher zweite Teil folgen muss.",
+      "pairs": [
+        { "q": "Im Fernsehen kann man sowohl Filme", "a": "als auch Nachrichten sehen." },
+        { "q": "Es gibt nicht nur gute Serien,", "a": "sondern auch interessante Dokumentationen und Talkshows." },
+        { "q": "Aber ich mag weder Krimis", "a": "noch Science-Fiction-Filme." },
+        { "q": "Ich kann mich beim Fernsehen entweder entspannen", "a": "oder informieren." },
+        { "q": "Je mehr Werbung ein Sender zeigt,", "a": "desto seltener schalte ich ihn ein." }
+      ]
+    },
+    {
+      "type": "fill",
+      "title": "Auf Zimmersuche: Ergänzen Sie beide Teile.",
+      "hint": "Das Zeichen in Klammern sagt, welche Bedeutung gemeint ist.",
+      "placeholder": "Konnektorpaar",
+      "items": [
+        { "prompt": "In der Nähe des Bahnhofs gibt es ___ Hotels als auch kleine Pensionen. (+/+)", "hint": "Beides gilt, gleichwertig.", "answer": ["sowohl"] },
+        { "prompt": "Wir haben noch kein Zimmer gefunden: ___ in einem Hotel noch in einer Pension. (−/−)", "hint": "Beides gilt nicht.", "answer": ["weder"] },
+        { "prompt": "Jetzt ist es nicht nur zu spät, ___ sehr kalt. (+/+, betont)", "hint": "Zweiteiliger Abschluss von „nicht nur“.", "answer": ["sondern auch"] },
+        { "prompt": "Wir müssen ___ im Auto oder unter der Brücke schlafen. (a oder b)", "hint": "Nur eins von beiden.", "answer": ["entweder"] },
+        { "prompt": "Das Hotel war ___ teuer, aber wenigstens warm.", "hint": "Einräumen und einschränken.", "answer": ["zwar"] }
+      ]
+    },
+    {
+      "type": "build",
+      "title": "Bauen Sie den Satz mit dem Konnektorpaar.",
+      "sentences": [
+        {
+          "id": "zk1",
+          "hint": "sowohl … als auch",
+          "correct": ["Heute", "gehen", "wir", "sowohl", "ins", "Restaurant", "als", "auch", "ins", "Kino", "."],
+          "shuffled": ["ins", "wir", "sowohl", "Heute", "Kino", "als", "Restaurant", "gehen", "auch", "ins", "."]
+        },
+        {
+          "id": "zk2",
+          "hint": "nicht nur … sondern auch",
+          "correct": ["Elena", "ist", "nicht", "nur", "schön", ",", "sondern", "auch", "intelligent", "."],
+          "shuffled": ["schön", "nur", "Elena", "intelligent", "sondern", "nicht", ",", "auch", "ist", "."]
+        },
+        {
+          "id": "zk3",
+          "hint": "je … desto — Verb am Ende des ersten Teils.",
+          "correct": ["Je", "mehr", "Sterne", "ein", "Hotel", "hat", ",", "desto", "teurer", "ist", "die", "Übernachtung", "."],
+          "shuffled": ["hat", "Je", "die", "Sterne", "desto", "ein", "teurer", "mehr", ",", "Übernachtung", "ist", "Hotel", "."]
+        }
+      ]
+    }
+  ]
+}

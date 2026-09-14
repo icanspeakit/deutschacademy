@@ -1,0 +1,131 @@
+{
+  "setId": "satz-1",
+  "setLabel": "Satz 1",
+  "id": "telc-sprachbausteine",
+  "name": "Sprachbausteine",
+  "level": "B1",
+  "subtitle": "Der Prüfungsteil, den es so nur bei telc gibt: Grammatik und Wortschatz werden nicht in Einzelsätzen abgefragt, sondern im laufenden Text — einmal als Zuordnung aus einem Wortkasten, einmal als Multiple Choice.",
+  "sourceNote": "Aufgabentypen nach telc-Vorbild: Zuordnung aus einem Wortkasten (mehr Wörter als Lücken, jedes nur einmal) und Multiple Choice im Text. Wie viele Aufgaben ein Prüfungsteil genau hat, ist je nach Niveau unterschiedlich — dafür gilt der offizielle Modellsatz deines Moduls. Texte und Aufgaben hier sind eigene, keine Prüfungsaufgaben.",
+  "concept": {
+    "flow": [
+      { "text": "Text lesen" },
+      { "text": "Lücke im Kontext prüfen", "variant": "verb" },
+      { "text": "Wort einsetzen", "variant": "prep" }
+    ],
+    "exampleHtml": "Ich habe vor zwei Jahren schon einen Kurs besucht, habe <span class=\"vp-verb\">aber</span> leider vieles wieder vergessen. Einen Test würde ich <span class=\"vp-prep\">gern</span> machen.",
+    "qa": [
+      { "html": "<strong>Teil 1</strong> — ein Wortkasten mit zehn Wörtern, aber nur acht Lücken. Zwei Wörter bleiben übrig, jedes Wort passt nur einmal.", "tag": "Zuordnung" },
+      { "html": "<strong>Teil 2</strong> — zehn Lücken, zu jeder drei Vorschläge. Oft entscheidet nicht die Grammatik allein, sondern was im Satz Sinn ergibt.", "tag": "Multiple Choice" },
+      { "html": "Geprüft wird beides zusammen: Konnektoren, Präpositionen, Verbformen, feste Wendungen — immer im Zusammenhang, nie als Einzelsatz.", "tag": "Worauf achten" }
+    ],
+    "noteHtml": "Strategie: erst den ganzen Text einmal lesen, dann die sicheren Lücken füllen und die schweren zuletzt. In Teil 1 hilft das Ausschlussverfahren — jedes gesetzte Wort ist für die übrigen Lücken weg.",
+    "reference": {
+      "showLabel": "Was in Sprachbausteinen geprüft wird ▼",
+      "hideLabel": "Ausblenden ▲",
+      "boxes": [
+        {
+          "badge": "Häufige Konnektoren",
+          "variant": "akk",
+          "items": [
+            "weil / da — Grund, Verb am Ende",
+            "obwohl — Gegensatz, Verb am Ende",
+            "falls / wenn — Bedingung",
+            "damit — Absicht, Verb am Ende",
+            "bevor / nachdem — Zeit",
+            "trotz / während + Genitiv"
+          ]
+        },
+        {
+          "badge": "Feste Wendungen im Alltag",
+          "variant": "dat",
+          "items": [
+            "sich interessieren für + Akkusativ",
+            "sich freuen auf / über + Akkusativ",
+            "sich melden bei + Dativ",
+            "Bescheid geben / sagen",
+            "zur Verfügung stehen",
+            "dazu kommen, etwas zu tun"
+          ]
+        }
+      ]
+    }
+  },
+  "exercises": [
+    {
+      "type": "wordbank",
+      "title": "Sprachbausteine, Teil 1 — Anfrage bei einer Sprachschule",
+      "hint": "Welches Wort aus dem Kasten passt in welche Lücke? Jedes Wort passt nur einmal, zwei Wörter bleiben übrig.",
+      "letters": {
+        "a": "ABER",
+        "b": "AUSSERDEM",
+        "c": "BEVOR",
+        "d": "FREUEN",
+        "e": "FÜR",
+        "f": "GERN",
+        "g": "NUR",
+        "h": "OBWOHL",
+        "i": "SEITDEM",
+        "j": "VOR ALLEM"
+      },
+      "segments": [
+        { "text": "Sehr geehrte Damen und Herren,\n\nich habe Ihre Anzeige im Internet gelesen und interessiere mich " },
+        { "blank": 0, "answer": "e" },
+        { "text": " Ihren Abendkurs auf Niveau B1.\n\nIch arbeite tagsüber und könnte " },
+        { "blank": 1, "answer": "g" },
+        { "text": " abends ab 18 Uhr kommen. " },
+        { "blank": 2, "answer": "j" },
+        { "text": " finde ich es wichtig, dass im Unterricht viel gesprochen wird — Grammatik allein hilft mir wenig.\n\n" },
+        { "blank": 3, "answer": "c" },
+        { "text": " ich mich anmelde, würde ich gern wissen, wie viele Teilnehmerinnen und Teilnehmer in einer Gruppe sind. " },
+        { "blank": 4, "answer": "b" },
+        { "text": " würde mich interessieren, ob man den Kurs später noch wechseln kann.\n\nIch habe vor zwei Jahren schon einen A2-Kurs besucht, habe " },
+        { "blank": 5, "answer": "a" },
+        { "text": " leider vieles wieder vergessen. Einen Einstufungstest würde ich deshalb " },
+        { "blank": 6, "answer": "f" },
+        { "text": " machen.\n\nÜber eine kurze Antwort würde ich mich sehr " },
+        { "blank": 7, "answer": "d" },
+        { "text": ".\n\nMit freundlichen Grüßen\nAmina Cheikh" }
+      ]
+    },
+    {
+      "type": "mcgap",
+      "title": "Sprachbausteine, Teil 2 — Einladung zum Straßenfest",
+      "hint": "Welches Wort passt? Klicke pro Lücke eine der drei Möglichkeiten.",
+      "segments": [
+        { "text": "Liebe Nachbarinnen und Nachbarn,\n\nwie jedes Jahr feiern wir " },
+        { "blank": 0 },
+        { "text": " Sommer unser Straßenfest. Es findet am Samstag, dem 12. Juli, statt — " },
+        { "blank": 1 },
+        { "text": " es regnet, verschieben wir auf den Sonntag.\n\nAb 15 Uhr bauen wir gemeinsam die Tische auf. Wer helfen möchte, " },
+        { "blank": 2 },
+        { "text": " einfach dazukommen. Für Getränke ist gesorgt; " },
+        { "blank": 3 },
+        { "text": " Essen bringt bitte jede Familie etwas mit.\n\nWir würden uns freuen, wenn " },
+        { "blank": 4 },
+        { "text": " viele Kinder kommen. Es gibt eine Hüpfburg, " },
+        { "blank": 5 },
+        { "text": " die Kinder den ganzen Nachmittag benutzen können.\n\n" },
+        { "blank": 6 },
+        { "text": " des Festes bleibt die Straße für Autos gesperrt. Bitte parkt eure Fahrzeuge " },
+        { "blank": 7 },
+        { "text": " dem Parkplatz hinter der Schule.\n\nWer noch Fragen hat, " },
+        { "blank": 8 },
+        { "text": " sich bei Familie Weber im Haus Nr. 14 melden.\n\nWir freuen uns " },
+        { "blank": 9 },
+        { "text": " euch!\n\nEure Nachbarschaftsinitiative" }
+      ],
+      "items": [
+        { "options": ["im", "am", "um"], "correct": 0 },
+        { "options": ["falls", "obwohl", "damit"], "correct": 0 },
+        { "options": ["kann", "können", "konnte"], "correct": 0 },
+        { "options": ["zum", "für", "mit"], "correct": 0 },
+        { "options": ["möglichst", "meistens", "mindestens"], "correct": 0 },
+        { "options": ["die", "der", "denen"], "correct": 0 },
+        { "options": ["Während", "Wegen", "Seit"], "correct": 0 },
+        { "options": ["auf", "in", "an"], "correct": 0 },
+        { "options": ["kann", "könnt", "kannst"], "correct": 0 },
+        { "options": ["auf", "über", "für"], "correct": 0 }
+      ]
+    }
+  ]
+}

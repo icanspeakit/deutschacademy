@@ -1,0 +1,411 @@
+{
+  "id": "partizip-als-adjektiv",
+  "name": "Partizip I und II als Adjektiv",
+  "level": "B2",
+  "subtitle": "Aus einem ganzen Satz wird ein Wort: „Der Zug fährt ein“ → „der einfahrende Zug“. Partizip I heißt: läuft gerade. Partizip II heißt: ist fertig oder wurde gemacht.",
+  "source": "Partizip 1.pdf (Menschen im Beruf – Pflege, Kap. 5) · C11 Partizipien.pdf (Kapitel 7, Teil C) — Aufgabentyp übernommen, Beispielsätze auf Alltagskontexte umgeschrieben.",
+  "concept": {
+    "flow": [
+      {
+        "text": "Partizip I = Infinitiv + d",
+        "variant": "verb"
+      },
+      {
+        "text": "+ Adjektivendung"
+      },
+      {
+        "text": "Partizip II",
+        "variant": "prep"
+      },
+      {
+        "text": "+ Adjektivendung"
+      }
+    ],
+    "exampleHtml": "Der Zug fährt ein. → der <span class=\"vp-verb\">einfahrende</span> Zug. · Der Motor wurde eingebaut. → der <span class=\"vp-prep\">eingebaute</span> Motor.",
+    "qa": [
+      {
+        "html": "<strong>Partizip I</strong> = Infinitiv + <em>-d</em> + Adjektivendung. Die Handlung <em>dauert an</em>: <em>der einfahrende Zug</em> — er fährt gerade ein.",
+        "tag": "dauert an"
+      },
+      {
+        "html": "<strong>Partizip II</strong> + Adjektivendung. Die Handlung ist <em>abgeschlossen</em> — aktiv (<em>der eingefahrene Zug</em>) oder passiv (<em>der eingebaute Motor</em>).",
+        "tag": "abgeschlossen"
+      },
+      {
+        "html": "Das Partizip verhält sich wie jedes andere Adjektiv und wird ganz normal <strong>dekliniert</strong>: <em>ein lächelnder Verkäufer, den lächelnden Verkäufer</em>.",
+        "tag": "Deklination"
+      },
+      {
+        "html": "Kein Partizip II als Adjektiv bilden: <strong>sein, haben</strong> und Verben wie <em>arbeiten, antworten, danken, gefallen, nützen, schlafen, sitzen, stehen</em>.",
+        "tag": "Ausnahmen"
+      }
+    ],
+    "noteHtml": "Der Unterschied in einem Paar: <em>das ein<strong>stürzende</strong> Gebäude</em> stürzt in diesem Moment ein — <em>das ein<strong>gestürzte</strong> Gebäude</em> liegt schon in Trümmern. Verwandt, aber anders: das Suffix <strong>-artig</strong> bildet aus einem Nomen ein Adjektiv mit der Bedeutung „so wie“: <em>Krampf + -artig = krampfartig</em>, ebenso <em>wellenartig, blitzartig, kolikartig, wehenartig</em>.",
+    "reference": {
+      "showLabel": "Übersicht anzeigen ▼",
+      "hideLabel": "Übersicht ausblenden ▲",
+      "tables": [
+        {
+          "caption": "Partizip I und Partizip II im Vergleich",
+          "head": [
+            "",
+            "Beispiel",
+            "Bildung",
+            "Satz dahinter",
+            "Bedeutung"
+          ],
+          "rows": [
+            [
+              "Partizip I",
+              "der einfahrende Zug",
+              "einfahrend + Endung",
+              "Der Zug fährt ein.",
+              "Die Handlung dauert an."
+            ],
+            [
+              "Partizip II aktiv",
+              "der eingefahrene Zug",
+              "eingefahren + Endung",
+              "Der Zug ist eingefahren.",
+              "Die Handlung ist abgeschlossen."
+            ],
+            [
+              "Partizip II passiv",
+              "der eingebaute Motor",
+              "eingebaut + Endung",
+              "Der Motor wurde eingebaut.",
+              "Die Handlung ist abgeschlossen."
+            ]
+          ]
+        },
+        {
+          "caption": "Vom Satz zum Partizip",
+          "head": [
+            "Satz",
+            "Partizip"
+          ],
+          "rows": [
+            [
+              "Unser Service ist umfassend.",
+              "unser umfassender Service"
+            ],
+            [
+              "Der Motor wurde eingebaut.",
+              "der eingebaute Motor"
+            ],
+            [
+              "Das Gebäude stürzt ein.",
+              "das einstürzende Gebäude"
+            ],
+            [
+              "Das Gebäude ist eingestürzt.",
+              "das eingestürzte Gebäude"
+            ],
+            [
+              "Die Mikrowelle wurde manipuliert.",
+              "die manipulierte Mikrowelle"
+            ],
+            [
+              "Der Verkäufer lächelt.",
+              "der lächelnde Verkäufer"
+            ],
+            [
+              "Die Fehler wurden gefunden.",
+              "die gefundenen Fehler"
+            ],
+            [
+              "Die Tür ist geöffnet.",
+              "die geöffnete Tür"
+            ]
+          ]
+        },
+        {
+          "caption": "Das Suffix -artig: „so wie“",
+          "head": [
+            "Nomen",
+            "Adjektiv",
+            "Bedeutung"
+          ],
+          "rows": [
+            [
+              "die Welle",
+              "wellenartig",
+              "wie Wellen, an- und absteigend"
+            ],
+            [
+              "der Blitz",
+              "blitzartig",
+              "wie ein Blitz, plötzlich"
+            ],
+            [
+              "der Krampf",
+              "krampfartig",
+              "wie ein Krampf"
+            ],
+            [
+              "die Kolik",
+              "kolikartig",
+              "wie eine Kolik"
+            ],
+            [
+              "die Wehe",
+              "wehenartig",
+              "wie Wehen"
+            ]
+          ]
+        }
+      ],
+      "boxes": [
+        {
+          "badge": "Partizip I — läuft gerade",
+          "variant": "akk",
+          "items": [
+            "ein stechender Schmerz",
+            "ein hämmernder Schmerz",
+            "ein brennendes Gefühl",
+            "der lächelnde Verkäufer",
+            "das einstürzende Gebäude"
+          ]
+        },
+        {
+          "badge": "Partizip II — schon fertig",
+          "variant": "dat",
+          "items": [
+            "der eingebaute Motor",
+            "die manipulierte Mikrowelle",
+            "die erlaubte Höchstgeschwindigkeit",
+            "die untersuchten Strahlungswerte",
+            "die geöffnete Tür"
+          ]
+        }
+      ]
+    }
+  },
+  "exercises": [
+    {
+      "type": "table",
+      "title": "Partizip I bilden.",
+      "hint": "Infinitiv + d + Endung. Schreiben Sie die Form für „der …“.",
+      "columns": [
+        "Satz",
+        "Partizip I"
+      ],
+      "placeholder": "z. B. einfahrende",
+      "rows": [
+        {
+          "term": "Es sticht. → ein … Schmerz",
+          "answer": "stechender"
+        },
+        {
+          "term": "Es hämmert. → ein … Schmerz",
+          "answer": "hämmernder"
+        },
+        {
+          "term": "Es brennt. → ein … Schmerz",
+          "answer": "brennender"
+        },
+        {
+          "term": "Es drückt. → ein … Schmerz",
+          "answer": "drückender"
+        },
+        {
+          "term": "Der Schmerz strahlt aus. → ein … Schmerz",
+          "answer": "ausstrahlender"
+        },
+        {
+          "term": "Der Schmerz steigt an. → ein … Schmerz",
+          "answer": "ansteigender"
+        },
+        {
+          "term": "Der Schmerz kehrt wieder. → ein … Schmerz",
+          "answer": "wiederkehrender"
+        },
+        {
+          "term": "Es zieht. → ein … Schmerz",
+          "answer": "ziehender"
+        }
+      ]
+    },
+    {
+      "type": "fill",
+      "title": "Partizip I oder Partizip II?",
+      "hint": "Läuft die Handlung noch oder ist sie abgeschlossen? Schreiben Sie nur das Partizip mit Endung.",
+      "placeholder": "Partizip",
+      "items": [
+        {
+          "prompt": "Das Gebäude stürzt ein. → das ___ Gebäude",
+          "hint": "Es passiert gerade.",
+          "answer": [
+            "einstürzende"
+          ]
+        },
+        {
+          "prompt": "Das Gebäude ist eingestürzt. → das ___ Gebäude",
+          "hint": "Schon passiert.",
+          "answer": [
+            "eingestürzte"
+          ]
+        },
+        {
+          "prompt": "Die Mikrowelle wurde manipuliert. → die ___ Mikrowelle",
+          "hint": "Passiv, abgeschlossen.",
+          "answer": [
+            "manipulierte"
+          ]
+        },
+        {
+          "prompt": "Diese Höchstgeschwindigkeit wurde erlaubt. → die ___ Höchstgeschwindigkeit",
+          "hint": "Passiv, abgeschlossen.",
+          "answer": [
+            "erlaubte"
+          ]
+        },
+        {
+          "prompt": "Die Strahlungswerte wurden untersucht. → die ___ Strahlungswerte",
+          "hint": "Plural, Passiv.",
+          "answer": [
+            "untersuchten"
+          ]
+        },
+        {
+          "prompt": "Der Verkäufer lächelt. → der ___ Verkäufer",
+          "hint": "Er lächelt gerade.",
+          "answer": [
+            "lächelnde"
+          ]
+        },
+        {
+          "prompt": "Die Fehler wurden gefunden. → die ___ Fehler",
+          "hint": "Plural, Passiv.",
+          "answer": [
+            "gefundenen"
+          ]
+        },
+        {
+          "prompt": "Die Tür ist geöffnet. → die ___ Tür",
+          "hint": "Zustand nach der Handlung.",
+          "answer": [
+            "geöffnete"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "match",
+      "title": "Was bedeutet das Partizip?",
+      "hint": "Dauert die Handlung an oder ist sie vorbei?",
+      "pairs": [
+        {
+          "q": "der einfahrende Zug",
+          "a": "Der Zug fährt gerade ein."
+        },
+        {
+          "q": "der eingefahrene Zug",
+          "a": "Der Zug ist schon eingefahren."
+        },
+        {
+          "q": "der eingebaute Motor",
+          "a": "Der Motor wurde eingebaut."
+        },
+        {
+          "q": "unser umfassender Service",
+          "a": "Unser Service ist umfassend."
+        },
+        {
+          "q": "das leicht zu bedienende Gerät",
+          "a": "Das Gerät ist leicht zu bedienen."
+        }
+      ]
+    },
+    {
+      "type": "table",
+      "title": "Adjektive mit -artig.",
+      "hint": "„so wie …“ — schreiben Sie das Adjektiv.",
+      "columns": [
+        "wie …",
+        "Adjektiv"
+      ],
+      "placeholder": "…artig",
+      "rows": [
+        {
+          "term": "wie Wellen",
+          "answer": "wellenartig"
+        },
+        {
+          "term": "wie ein Blitz",
+          "answer": "blitzartig"
+        },
+        {
+          "term": "wie ein Krampf",
+          "answer": "krampfartig"
+        },
+        {
+          "term": "wie eine Kolik",
+          "answer": "kolikartig"
+        },
+        {
+          "term": "wie Wehen",
+          "answer": "wehenartig"
+        }
+      ]
+    },
+    {
+      "type": "build",
+      "title": "Bauen Sie die Nominalphrase.",
+      "sentences": [
+        {
+          "id": "pa1",
+          "hint": "Sie hört … (Partizip I)",
+          "correct": [
+            "einen",
+            "pfeifenden",
+            "Ton",
+            "aus",
+            "dem",
+            "Keller"
+          ],
+          "shuffled": [
+            "Ton",
+            "einen",
+            "Keller",
+            "dem",
+            "pfeifenden",
+            "aus"
+          ]
+        },
+        {
+          "id": "pa2",
+          "hint": "Partizip II im Passiv.",
+          "correct": [
+            "die",
+            "gerade",
+            "erschienenen",
+            "Produktkataloge"
+          ],
+          "shuffled": [
+            "erschienenen",
+            "die",
+            "Produktkataloge",
+            "gerade"
+          ]
+        },
+        {
+          "id": "pa3",
+          "hint": "Partizip I, Plural.",
+          "correct": [
+            "die",
+            "immer",
+            "wiederkehrenden",
+            "Schmerzen"
+          ],
+          "shuffled": [
+            "wiederkehrenden",
+            "die",
+            "Schmerzen",
+            "immer"
+          ]
+        }
+      ]
+    }
+  ]
+}

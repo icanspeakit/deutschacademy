@@ -1,0 +1,315 @@
+/* Styles for the interactive dashboard mockup (components/mocks/DashboardMock).
+   The frame itself (.lp-browser / .lp-sidebar / .lp-dash) is still landing.css
+   artwork; everything here is the part a visitor can actually operate — the
+   sidebar as real buttons, the scrolling panel body, the quiz, the vocabulary
+   cards, the speaking rows. Imported by the component, so the rules travel
+   with it wherever it is placed. */
+
+/* Frame ---------------------------------------------------------------------- */
+
+.dm .lp-browser-body {
+  /* Fixed frame height: the panels are deliberately taller than this so the
+     body scrolls, which is the tell that the mock is live and not a picture. */
+  height: var(--dm-body-h, 440px);
+  min-height: 0;
+}
+
+.dm .lp-dash {
+  overflow-y: auto;
+  /* Don't hand the wheel back to the page once the panel bottoms out — on the
+     fold the page behind it does not scroll anyway, and the hand-off reads as
+     the mock being dead. */
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-strong) transparent;
+}
+.dm .lp-dash::-webkit-scrollbar { width: 8px; }
+.dm .lp-dash::-webkit-scrollbar-thumb {
+  background: var(--border-strong);
+  border: 2px solid var(--surface-card);
+  border-radius: var(--radius-pill);
+}
+.dm .lp-dash::-webkit-scrollbar-track { background: transparent; }
+
+.dm-panel { display: flex; flex-direction: column; gap: 18px; }
+.dm-panel[hidden] { display: none; }
+
+/* Sidebar links are <button>s now, so they need the anchor-ish reset. */
+.dm .lp-sidebar-link {
+  display: block;
+  width: 100%;
+  text-align: left;
+  font: inherit;
+  font-size: 12.5px;
+  background: none;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: background var(--duration-base) var(--ease-standard),
+              color var(--duration-base) var(--ease-standard);
+}
+.dm .lp-sidebar-link:hover { background: var(--surface-card); color: var(--ink); }
+.dm .lp-sidebar-link--active,
+.dm .lp-sidebar-link--active:hover {
+  background: var(--surface-card);
+  border-color: var(--border);
+  font-weight: 700;
+  color: var(--brand-blue-dark);
+}
+
+/* Shared blocks -------------------------------------------------------------- */
+
+.dm-block {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 14px 16px;
+}
+.dm-block-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+.dm-block-head strong {
+  font-family: var(--font-display);
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--ink);
+}
+.dm-block-head span { font-size: 11px; color: var(--muted-soft); }
+
+.dm-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
+.dm-list li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 9px 0;
+  border-top: 1px solid var(--border);
+}
+.dm-list li:first-child { border-top: none; padding-top: 0; }
+.dm-list-name { font-size: 12.5px; font-weight: 600; color: var(--ink); }
+.dm-list-meta { font-size: 11px; color: var(--muted-soft); white-space: nowrap; }
+
+/* Streak row */
+.dm-streak { display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; }
+.dm-day { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+.dm-day span { font-size: 10px; font-weight: 700; color: var(--muted-soft); letter-spacing: .04em; }
+.dm-day i {
+  width: 100%;
+  height: 26px;
+  border-radius: 7px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+}
+.dm-day--done i { background: var(--gradient-brand); border-color: transparent; }
+.dm-day--today i { border: 1.5px dashed var(--brand-blue); background: var(--blue-50); }
+
+/* Grammatik ------------------------------------------------------------------ */
+
+.dm-score {
+  font-family: var(--font-display);
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--brand-blue-dark);
+  background: var(--blue-50);
+  border: 1px solid var(--blue-200);
+  border-radius: var(--radius-pill);
+  padding: 5px 12px;
+  white-space: nowrap;
+}
+
+.dm .lp-quiz-choice.dm-choice {
+  font: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  background: var(--surface-card);
+  color: var(--ink);
+  cursor: pointer;
+  transition: border-color var(--duration-base) var(--ease-standard),
+              background var(--duration-base) var(--ease-standard),
+              transform var(--duration-base) var(--ease-standard);
+}
+.dm .dm-choice:hover:not(:disabled) { border-color: var(--brand-blue); transform: translateY(-1px); }
+.dm .dm-choice:disabled { cursor: default; }
+.dm .dm-choice.is-right {
+  border-color: var(--brand-blue);
+  background: var(--blue-50);
+  color: var(--brand-blue-dark);
+}
+.dm .dm-choice.is-wrong {
+  border-color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
+  color: var(--accent-dark);
+}
+/* landing.css hangs a checkmark off .lp-quiz-choice--correct; here the mark is
+   earned, so it follows .is-right instead. */
+.dm .dm-choice.is-right::after {
+  content: "✓";
+  position: absolute;
+  top: -7px;
+  right: -7px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--gradient-brand);
+  color: #fff;
+  font-size: 10px;
+  line-height: 18px;
+  text-align: center;
+}
+.dm .dm-choice { position: relative; }
+
+.dm-note {
+  margin: 12px 0 0;
+  font-size: 11.5px;
+  line-height: 1.5;
+  color: var(--muted);
+}
+.dm-note[hidden] { display: none; }
+
+/* Wortschatz ----------------------------------------------------------------- */
+
+.dm-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.dm-card {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  text-align: left;
+  font: inherit;
+  padding: 12px 14px;
+  border: 1px solid var(--border);
+  border-radius: 11px;
+  background: var(--surface-card);
+  cursor: pointer;
+  transition: border-color var(--duration-base) var(--ease-standard),
+              background var(--duration-base) var(--ease-standard);
+}
+.dm-card:hover { border-color: var(--brand-blue); }
+.dm-card.is-open { background: var(--blue-50); border-color: var(--blue-200); }
+.dm-card-de { font-size: 13px; font-weight: 700; color: var(--ink); }
+.dm-card-cue { font-size: 10.5px; letter-spacing: .03em; color: var(--muted-soft); }
+.dm-card.is-open .dm-card-cue { display: none; }
+.dm-card-back { display: none; flex-direction: column; gap: 3px; }
+.dm-card.is-open .dm-card-back { display: flex; }
+.dm-card-back em { font-size: 12px; font-style: normal; font-weight: 600; color: var(--brand-blue-dark); }
+.dm-card-back span { font-size: 11px; line-height: 1.45; color: var(--muted); }
+
+/* Sprechen ------------------------------------------------------------------- */
+
+.dm-speak {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+.dm-speak-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.dm-speak-head strong { font-family: var(--font-display); font-size: 13.5px; font-weight: 700; color: var(--ink); }
+.dm-level {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .06em;
+  color: var(--brand-blue-dark);
+  background: var(--blue-50);
+  border-radius: var(--radius-pill);
+  padding: 3px 9px;
+}
+.dm-speak-line {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--ink);
+  font-style: italic;
+}
+.dm-speak-line::before { content: "„"; }
+.dm-speak-line::after { content: "“"; }
+
+.dm-rec {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  font: inherit;
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--brand-blue-dark);
+  padding: 7px 14px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-pill);
+  background: var(--surface-card);
+  cursor: pointer;
+  transition: border-color var(--duration-base) var(--ease-standard);
+}
+.dm-rec:hover { border-color: var(--brand-blue); }
+.dm-rec i {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+.dm-rec.is-rec { border-color: var(--accent); color: var(--accent-dark); }
+.dm-rec.is-rec i { animation: dm-pulse .9s var(--ease-standard) infinite; }
+.dm-rec.is-rec .dm-rec-label { display: none; }
+
+.dm-wave { display: none; align-items: flex-end; gap: 3px; height: 16px; }
+.dm-rec.is-rec .dm-wave { display: inline-flex; }
+.dm-wave b {
+  width: 3px;
+  height: 30%;
+  border-radius: 2px;
+  background: var(--accent);
+  animation: dm-bar .8s var(--ease-standard) infinite;
+}
+.dm-wave b:nth-child(2) { animation-delay: .1s; }
+.dm-wave b:nth-child(3) { animation-delay: .2s; }
+.dm-wave b:nth-child(4) { animation-delay: .3s; }
+.dm-wave b:nth-child(5) { animation-delay: .15s; }
+.dm-wave b:nth-child(6) { animation-delay: .25s; }
+.dm-wave b:nth-child(7) { animation-delay: .05s; }
+
+@keyframes dm-pulse { 50% { opacity: .35; transform: scale(.8); } }
+@keyframes dm-bar { 50% { height: 100%; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .dm-rec.is-rec i,
+  .dm-wave b { animation: none; }
+  .dm-wave b { height: 65%; }
+}
+
+/* Prüfungen ------------------------------------------------------------------ */
+
+.dm-exams { display: flex; flex-direction: column; gap: 8px; }
+.dm-exam {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 14px;
+  border: 1px solid var(--border);
+  border-radius: 11px;
+}
+.dm-exam strong { display: block; font-family: var(--font-display); font-size: 13.5px; font-weight: 700; color: var(--ink); }
+.dm-exam span { font-size: 11px; color: var(--muted-soft); }
+.dm-tag {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--brand-blue-dark);
+  background: var(--blue-50);
+  border-radius: var(--radius-pill);
+  padding: 4px 10px;
+  white-space: nowrap;
+}
+.dm-exam--locked { background: var(--surface); }
+.dm-exam--locked .dm-tag { color: var(--accent-dark); background: color-mix(in srgb, var(--accent) 14%, transparent); }
+
+/* Narrow --------------------------------------------------------------------- */
+
+@media (max-width: 900px) {
+  .dm .lp-browser-body { height: auto; }
+  .dm .lp-dash { overflow: visible; }
+  .dm-cards { grid-template-columns: 1fr; }
+}

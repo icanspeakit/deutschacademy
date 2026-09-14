@@ -1,9 +1,9 @@
 /* Wortschatz page — matches the "Wortschatz Prototyp" design (Layout A: single column).
    Scoped entirely to .vt-page / #vt-tabs so it never touches the shared fc- and quiz- classes
-   used by other practice pages. Fonts: IBM Plex Sans (body) / IBM Plex Mono (labels, counters,
+   used by other practice pages. Fonts: inherited from global.css — Sora (body) / --font-label (labels, counters,
    hints) per the prototype — loaded page-locally via <Fragment slot="head">. */
 
-#vt-eyebrow { font-family: "IBM Plex Mono", "SFMono-Regular", Consolas, monospace; letter-spacing: .08em; text-align: left; }
+#vt-eyebrow { font-family: var(--font-label); letter-spacing: .08em; text-align: left; }
 
 .vt-hero { text-align: left; margin-bottom: 18px; }
 .vt-hero h1 {
@@ -16,8 +16,8 @@
    edges, like the prototype's aOuter — no boxed/framed card sitting inside the page. */
 .vt-shell {
   width: 100%;
-  font-family: "IBM Plex Sans", var(--font-body);
-  --vt-bg: #fff;
+  font-family: var(--font-body);
+  --vt-bg: var(--surface-card);
   --vt-surface: var(--surface);
   --vt-ink: var(--ink);
   --vt-muted: var(--muted);
@@ -30,7 +30,8 @@
   background: var(--vt-bg);
   transition: background .3s;
 }
-.vt-shell[data-theme="dark"] {
+/* Driven by the site-wide <html data-theme>, not a page-local switch. */
+:root[data-theme="dark"] .vt-shell {
   --vt-bg: #141b26;
   --vt-surface: #0f141c;
   --vt-ink: #f4f6f8;
@@ -53,7 +54,7 @@
 .vt-tab {
   background: none; border: none; border-bottom: 2px solid transparent;
   padding: 0 0 9px; margin-bottom: -1px;
-  font-family: "IBM Plex Sans", var(--font-body); font-size: .8125rem; font-weight: 400; color: var(--vt-muted);
+  font-family: var(--font-body); font-size: .8125rem; font-weight: 400; color: var(--vt-muted);
   cursor: pointer; transition: color .15s ease, border-color .15s ease;
 }
 .vt-tab:hover { color: var(--vt-ink); }
@@ -76,7 +77,7 @@
 }
 .vt-switch::after {
   content: ""; position: absolute; top: 2px; left: 2px; width: 16px; height: 16px; border-radius: 50%;
-  background: #fff; transition: transform .25s ease;
+  background: var(--surface-card); transition: transform .25s ease;
 }
 .vt-switch:checked { background: var(--brand-blue); }
 .vt-switch:checked::after { transform: translateX(18px); }
@@ -87,14 +88,8 @@
   font-family: inherit;
 }
 .vt-pill.is-filtered { cursor: pointer; border-color: var(--brand-blue); color: var(--brand-blue-dark); background: var(--vt-correct-bg); }
-.vt-position { font-family: "IBM Plex Mono", "SFMono-Regular", Consolas, monospace; font-size: .75rem; color: var(--vt-muted); font-variant-numeric: tabular-nums; }
+.vt-position { font-family: var(--font-label); font-size: .75rem; color: var(--vt-muted); font-variant-numeric: tabular-nums; }
 
-.vt-theme-toggle {
-  background: none; border: 1px solid var(--vt-border); border-radius: 999px; width: 28px; height: 28px;
-  font-size: .85rem; line-height: 1; cursor: pointer; color: var(--vt-muted);
-  display: inline-flex; align-items: center; justify-content: center;
-}
-.vt-theme-toggle:hover { border-color: var(--brand-blue); color: var(--vt-ink); }
 
 /* ---- swap-in animation (re-triggered by alternating class names) ---- */
 @keyframes vtSwapA { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
@@ -130,7 +125,7 @@
 .vt-nav-link:hover { color: var(--vt-ink); }
 .vt-nav-flip { font-size: .8125rem; font-weight: 500; color: var(--brand-blue-dark); cursor: pointer; background: none; border: none; font-family: inherit; padding: 0; }
 .vt-nav-next { font-size: .8125rem; font-weight: 500; color: var(--vt-ink); cursor: pointer; background: none; border: none; font-family: inherit; padding: 0; }
-.vt-kbd-hint { font-family: "IBM Plex Mono", "SFMono-Regular", Consolas, monospace; font-size: .6875rem; color: var(--vt-muted); }
+.vt-kbd-hint { font-family: var(--font-label); font-size: .6875rem; color: var(--vt-muted); }
 
 /* ---- Lernen ---- */
 .vt-learn-hint { font-size: .8125rem; color: var(--vt-muted); }
@@ -166,7 +161,7 @@
 
 /* ---- Testen ---- */
 .vt-test-head { display: flex; justify-content: space-between; gap: 12px; font-size: .8125rem; color: var(--vt-muted); }
-.vt-score-mono { font-family: "IBM Plex Mono", "SFMono-Regular", Consolas, monospace; font-size: .75rem; color: var(--vt-muted); }
+.vt-score-mono { font-family: var(--font-label); font-size: .75rem; color: var(--vt-muted); }
 .vt-progress-track { height: 2px; background: var(--vt-border); }
 .vt-progress-fill { height: 2px; background: var(--brand-blue); transition: width .25s ease; }
 .vt-test-label { font-size: .6875rem; font-weight: 500; letter-spacing: .08em; text-transform: uppercase; color: var(--vt-muted); }
@@ -181,7 +176,7 @@
 /* ---- Wortliste ---- */
 .vt-list-head { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
 .vt-list-hint { font-size: .8125rem; color: var(--vt-muted); }
-.vt-list-legend { display: flex; align-items: center; gap: 14px; font-family: "IBM Plex Mono", "SFMono-Regular", Consolas, monospace; font-size: .75rem; color: var(--vt-muted); flex-wrap: wrap; }
+.vt-list-legend { display: flex; align-items: center; gap: 14px; font-family: var(--font-label); font-size: .75rem; color: var(--vt-muted); flex-wrap: wrap; }
 .vt-legend-item { display: flex; align-items: center; gap: 5px; }
 .vt-legend-dot { width: 6px; height: 6px; border-radius: 999px; }
 .vt-legend-dot--richtig { background: var(--brand-blue); }

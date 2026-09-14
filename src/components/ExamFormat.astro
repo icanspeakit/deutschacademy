@@ -1,0 +1,77 @@
+---
+// Renders one exam's format: a table per block (schriftlich / mündlich), optionally a
+// grading scale, and the source citation. Columns appear only when the data has them,
+// so a sparse format (telc A1: no per-part task types) and a dense one (telc B1·B2
+// Beruf: task type per part) both render without empty columns.
+//
+// Data shape: see src/data/pruefungen/*-formate.json.
+interface Props {
+  format: any;
+  headingPrefix?: string;
+}
+const { format: f, headingPrefix = "Format" } = Astro.props;
+---
+<section class="exam-section">
+  <h2>{headingPrefix}: {f.exam}</h2>
+  <div class="exam-meta-row">
+    <span class="exam-meta-badge">Niveau {f.level}</span>
+    {f.alt && <span class="exam-meta-badge">{f.alt}</span>}
+    {f.totalPoints && <span class="exam-meta-badge">{f.totalPoints} Punkte gesamt</span>}
+  </div>
+  {f.intro && <p>{f.intro}</p>}
+
+  {f.blocks.map((block) => {
+    const hasType = block.rows.some((r) => r.type);
+    const hasPoints = block.rows.some((r) => r.points != null) || block.total?.points != null;
+    return (
+      <div class="format-table-wrap">
+        <table class="format-table">
+          <thead>
+            <tr>
+              <th>{block.label}</th>
+              <th>Was wird geprüft</th>
+              {hasType && <th>Aufgabentyp</th>}
+              <th>Zeit</th>
+              {hasPoints && <th>Punkte</th>}
+            </tr>
+          </thead>
+          <tbody>
+            {block.rows.map((r) => (
+              <tr>
+                <td>{r.part}</td>
+                <td>{r.what}</td>
+                {hasType && <td>{r.type ?? ""}</td>}
+                <td>{r.time ?? ""}</td>
+                {hasPoints && <td>{r.points ?? ""}</td>}
+              </tr>
+            ))}
+            {block.total && (
+              <tr>
+                <td><strong>Gesamt</strong></td>
+                <td></td>
+                {hasType && <td></td>}
+                <td><strong>{block.total.time ?? ""}</strong></td>
+                {hasPoints && <td><strong>{block.total.points ?? ""}</strong></td>}
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
+    );
+  })}
+
+  {f.grading && (
+    <div class="format-table-wrap">
+      <table class="format-table">
+        <thead><tr><th>{f.grading.columns?.[0] ?? "Ergebnispunkte"}</th><th>{f.grading.columns?.[1] ?? "Prädikat"}</th></tr></thead>
+        <tbody>
+          {f.grading.rows.map((row) => (
+            <tr><td>{row[0]}</td><td>{row[1]}</td></tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  )}
+
+  <p class="format-note">Quelle: {f.source}.</p>
+</section>

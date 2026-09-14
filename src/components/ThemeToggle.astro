@@ -1,0 +1,87 @@
+---
+// Tiny light/dark switch. Sits next to <LanguageSwitcher /> in every header and
+// borrows its pill styling so the two read as one control group.
+//
+// Both icons are in the DOM and CSS picks which one shows off <html data-theme>,
+// so the correct glyph is painted on first frame — no post-hydration swap.
+---
+<button
+  type="button"
+  class="theme-toggle"
+  data-theme-toggle
+  aria-label="Dunkles Design einschalten"
+  data-i18n-attr="aria-label:theme.toDark"
+  title="Hell / Dunkel"
+>
+  <svg class="theme-toggle-icon theme-toggle-icon--sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" aria-hidden="true">
+    <circle cx="12" cy="12" r="4.2" />
+    <path d="M12 2.6v2.2M12 19.2v2.2M4.2 12H2M22 12h-2.2M5.6 5.6 7.2 7.2M16.8 16.8l1.6 1.6M18.4 5.6 16.8 7.2M7.2 16.8l-1.6 1.6" />
+  </svg>
+  <svg class="theme-toggle-icon theme-toggle-icon--moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <path d="M20 13.6A8.2 8.2 0 0 1 10.4 4a8.4 8.4 0 1 0 9.6 9.6Z" />
+  </svg>
+</button>
+
+<style>
+  .theme-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    flex: none;
+    padding: 0;
+    background: var(--surface-card);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    color: var(--ink);
+    cursor: pointer;
+    transition: border-color var(--duration-base) var(--ease-standard),
+                color var(--duration-base) var(--ease-standard);
+  }
+  .theme-toggle:hover { border-color: var(--brand-blue); color: var(--brand-blue-dark); }
+  .theme-toggle:focus-visible { outline: 2px solid var(--brand-blue); outline-offset: 2px; }
+
+  /* Show the icon for the theme you'd switch *to*, which is the convention users
+     expect from a single-button toggle. */
+  .theme-toggle-icon--moon { display: none; }
+  :global(:root[data-theme="dark"]) .theme-toggle-icon--sun { display: none; }
+  :global(:root[data-theme="dark"]) .theme-toggle-icon--moon { display: inline; }
+</style>
+
+<script>
+  import { getTheme, toggleTheme, onThemeChange, watchSystemTheme } from "../lib/theme.js";
+  import { getLang, loadDict, onLangChange } from "../lib/i18n.js";
+
+  // The label has to name the theme you are switching *to*, so it flips with the
+  // toggle as well as with the language. German is the fallback everywhere else.
+  const FALLBACK = {
+    "theme.toDark": "Dunkles Design einschalten",
+    "theme.toLight": "Helles Design einschalten",
+  };
+
+  let dict = {};
+  const buttons = Array.from(document.querySelectorAll("[data-theme-toggle]"));
+
+  function reflect(theme = getTheme()) {
+    const key = theme === "dark" ? "theme.toLight" : "theme.toDark";
+    buttons.forEach((btn) => {
+      btn.setAttribute("data-i18n-attr", "aria-label:" + key);
+      btn.setAttribute("aria-label", dict[key] ?? FALLBACK[key]);
+    });
+  }
+
+  watchSystemTheme();
+  onThemeChange(reflect);
+  onLangChange((code, d) => {
+    dict = d;
+    reflect();
+  });
+  loadDict(getLang()).then((d) => {
+    dict = d;
+    reflect();
+  });
+  reflect();
+
+  buttons.forEach((btn) => btn.addEventListener("click", () => toggleTheme()));
+</script>

@@ -1,6 +1,6 @@
 .uv { background: var(--surface); min-height: 100vh; }
 
-.uv-nav { background: #fff; border-bottom: 3px solid var(--brand-blue); }
+.uv-nav { background: var(--surface-card); border-bottom: 3px solid var(--brand-blue); }
 .uv-nav-row { max-width: 1200px; margin: 0 auto; padding: 14px 24px; display: flex; align-items: center; gap: 32px; }
 .uv-brand { display: flex; align-items: center; }
 .uv-brand img { height: 36px; }
@@ -28,7 +28,7 @@
 
 .uv-main { max-width: 1200px; margin: 0 auto; padding: 40px 24px 64px; }
 .uv-eyebrow {
-  font-family: var(--font-mono); color: var(--muted-soft); text-transform: uppercase;
+  font-family: var(--font-label); color: var(--muted-soft); text-transform: uppercase;
   letter-spacing: .08em; font-weight: 700; font-size: var(--text-xs); margin: 0 0 16px;
 }
 .uv-eyebrow:not(:first-child) { margin-top: var(--space-10); }
@@ -37,7 +37,7 @@
 .uv-grid--exams { grid-template-columns: repeat(5, minmax(0, 1fr)); }
 
 .uv-card {
-  display: block; background: #fff; border: 1px solid var(--border); border-radius: var(--radius);
+  display: block; background: var(--surface-card); border: 1px solid var(--border); border-radius: var(--radius);
   padding: 24px; text-decoration: none; color: var(--ink);
   transition: box-shadow .2s ease, transform .2s ease;
 }

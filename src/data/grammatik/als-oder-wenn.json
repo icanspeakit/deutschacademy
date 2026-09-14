@@ -1,0 +1,171 @@
+{
+  "id": "als-oder-wenn",
+  "name": "Nebensätze: als oder wenn",
+  "level": "B1",
+  "subtitle": "Beide heißen in vielen Sprachen dasselbe — im Deutschen nicht. Ein einmaliger Moment in der Vergangenheit ist immer „als“; alles Wiederholte, Bedingte oder Zukünftige ist „wenn“.",
+  "source": "ue04_nebensatz_als_wenn.pdf (graf-gutfreund.at), Nebensatze A.pdf, Nebensatze B.pdf",
+  "concept": {
+    "flow": [
+      { "text": "als / wenn", "variant": "verb" },
+      { "text": "Subjekt + …" },
+      { "text": "Verb · Satzende", "variant": "prep" }
+    ],
+    "exampleHtml": "<span class=\"vp-verb\">Als</span> ich nach Österreich gekommen bin, <span class=\"vp-prep\">habe</span> ich kein Wort Deutsch verstanden.",
+    "qa": [
+      { "html": "<strong>als</strong> — ein einziger, abgeschlossener Moment oder Zeitabschnitt in der <em>Vergangenheit</em>.", "tag": "einmalig" },
+      { "html": "<strong>wenn</strong> — etwas, das sich <em>wiederholt</em> („immer wenn“), oder eine <em>Bedingung</em>.", "tag": "wiederholt" },
+      { "html": "<strong>wenn</strong> — alles in <em>Gegenwart und Zukunft</em>, auch wenn es nur einmal passiert.", "tag": "Zukunft" }
+    ],
+    "noteHtml": "Test: Passt <em>immer wenn</em> davor? Dann ist es <strong>wenn</strong>. Steht dabei eine einmalige Zeitangabe wie <em>gestern, letzte Woche, 1998</em> in der Vergangenheit? Dann ist es <strong>als</strong>. In beiden Fällen steht das konjugierte Verb am <strong>Satzende</strong>.",
+    "reference": {
+      "showLabel": "Übersicht anzeigen ▼",
+      "hideLabel": "Übersicht ausblenden ▲",
+      "boxes": [
+        {
+          "badge": "als — einmalig, Vergangenheit",
+          "variant": "akk",
+          "items": [
+            "Als ich Schülerin war, …",
+            "Als meine Großmutter noch gelebt hat, …",
+            "Als ich ihn letzte Woche gesehen habe, …",
+            "Als es gestern geregnet hat, …",
+            "Als ich heute Morgen weggegangen bin, …"
+          ]
+        },
+        {
+          "badge": "wenn — wiederholt, Bedingung, Zukunft",
+          "variant": "dat",
+          "items": [
+            "Immer wenn ich vor dem Computer sitze, …",
+            "Wenn es regnet, bleibe ich gern daheim.",
+            "Wenn es morgen schön ist, …",
+            "Rufst du mich an, wenn du zurück bist?",
+            "Wenn wir uns wieder sehen, …"
+          ]
+        }
+      ],
+      "tables": [
+        {
+          "caption": "Der Unterschied auf einen Blick",
+          "head": ["", "als", "wenn"],
+          "rows": [
+            ["Wie oft?", "genau einmal", "immer wieder / jedes Mal"],
+            ["Wann?", "nur Vergangenheit", "Vergangenheit, Gegenwart, Zukunft"],
+            ["Bedingung?", "nein", "ja („falls“)"],
+            ["Signalwörter", "gestern, damals, letzte Woche, 1998", "immer, jedes Mal, jeden Tag, falls"]
+          ]
+        }
+      ]
+    }
+  },
+  "exercises": [
+    {
+      "type": "fill",
+      "title": "als oder wenn?",
+      "hint": "Achten Sie auf Groß- und Kleinschreibung am Satzanfang.",
+      "placeholder": "als / wenn",
+      "items": [
+        {
+          "prompt": "___ ich Schülerin war, bin ich gern auf Faschingspartys gegangen.",
+          "hint": "Ein abgeschlossener Zeitabschnitt in der Vergangenheit.",
+          "answer": ["Als"]
+        },
+        {
+          "prompt": "Ich werde oft nervös, ___ ich vor einer Gruppe Menschen sprechen soll.",
+          "hint": "Das passiert immer wieder.",
+          "answer": ["wenn"]
+        },
+        {
+          "prompt": "___ es gestern geregnet hat, hatte ich wieder einmal keinen Schirm.",
+          "hint": "„gestern“ — ein einziger Tag.",
+          "answer": ["Als"]
+        },
+        {
+          "prompt": "___ es morgen schön ist, können wir in den Zoo gehen.",
+          "hint": "Zukunft und Bedingung.",
+          "answer": ["Wenn"]
+        },
+        {
+          "prompt": "Ich bin unter der Dusche gestanden, ___ du angerufen hast.",
+          "hint": "Ein einziger Moment in der Vergangenheit.",
+          "answer": ["als"]
+        },
+        {
+          "prompt": "Immer ___ ich vor dem Computer sitze, will meine Katze mit mir spielen.",
+          "hint": "Das Signalwort steht schon davor.",
+          "answer": ["wenn"]
+        }
+      ]
+    },
+    {
+      "type": "match",
+      "title": "Ordnen Sie zu: Satzanfang und Fortsetzung.",
+      "hint": "Klicke erst einen Nebensatz, dann den passenden Hauptsatz.",
+      "pairs": [
+        { "q": "Als meine Großmutter noch gelebt hat,", "a": "waren die Weihnachtsfeste wirklich schön." },
+        { "q": "Wenn es regnet,", "a": "bleibe ich gern daheim und lese ein Buch." },
+        { "q": "Als ich nach Österreich gekommen bin,", "a": "habe ich kein Wort Deutsch verstanden." },
+        { "q": "Wenn wir uns wieder sehen,", "a": "werden wir eine große Party machen!" },
+        { "q": "Als meine Tochter gestern um 20 Uhr noch nicht da war,", "a": "habe ich mir wirklich Sorgen gemacht." }
+      ]
+    },
+    {
+      "type": "table",
+      "title": "Welches Signalwort verlangt was?",
+      "hint": "Tippen Sie „als“ oder „wenn“.",
+      "columns": ["Signal im Satz", "als / wenn"],
+      "placeholder": "als / wenn",
+      "rows": [
+        { "term": "gestern", "answer": "als" },
+        { "term": "jedes Mal", "answer": "wenn" },
+        { "term": "letzte Woche", "answer": "als" },
+        { "term": "morgen", "answer": "wenn" },
+        { "term": "damals, 1998", "answer": "als" },
+        { "term": "immer", "answer": "wenn" },
+        { "term": "falls (Bedingung)", "answer": "wenn" }
+      ]
+    },
+    {
+      "type": "story",
+      "title": "Lückentext: Erinnerungen.",
+      "hint": "Setzen Sie „als“ oder „wenn“ ein.",
+      "segments": [
+        { "text": "" },
+        { "blank": 0, "answer": ["Als"] },
+        { "text": " meine Mutter noch ein kleines Mädchen war, hat ihr Vater oft zu ihr gesagt: „" },
+        { "blank": 1, "answer": ["Wenn"] },
+        { "text": " du die Suppe brav aufisst, dann wird das Wetter morgen schön.“ Heute lacht sie darüber — aber immer " },
+        { "blank": 2, "answer": ["wenn"] },
+        { "text": " ich als Kind keine Suppe wollte, hat sie denselben Satz gesagt. " },
+        { "blank": 3, "answer": ["Als"] },
+        { "text": " ich sie letzte Woche besucht habe, stand wieder Suppe auf dem Tisch. Und " },
+        { "blank": 4, "answer": ["wenn"] },
+        { "text": " ich sie das nächste Mal besuche, wird es bestimmt wieder so sein." }
+      ]
+    },
+    {
+      "type": "build",
+      "title": "Bauen Sie den Nebensatz — das Verb steht am Ende.",
+      "sentences": [
+        {
+          "id": "w1",
+          "hint": "Nebensatz zuerst, dann der Hauptsatz.",
+          "correct": ["Als", "ich", "ein", "Kind", "war", ",", "hatten", "wir", "einen", "Hund", "."],
+          "shuffled": ["war", "Als", "Hund", "ich", "hatten", ",", "einen", "ein", "wir", ".", "Kind"]
+        },
+        {
+          "id": "w2",
+          "hint": "Bedingung in der Zukunft.",
+          "correct": ["Wenn", "du", "Zeit", "hast", ",", "können", "wir", "morgen", "spazieren", "gehen", "."],
+          "shuffled": ["hast", "Wenn", "gehen", "wir", "Zeit", ",", "morgen", "du", "können", ".", "spazieren"]
+        },
+        {
+          "id": "w3",
+          "hint": "Hauptsatz zuerst — der Nebensatz hängt hinten dran.",
+          "correct": ["Rufst", "du", "mich", "an", ",", "wenn", "du", "wieder", "zurück", "bist", "?"],
+          "shuffled": ["an", "Rufst", "bist", "mich", "wenn", ",", "zurück", "du", "wieder", "?", "du"]
+        }
+      ]
+    }
+  ]
+}

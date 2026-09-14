@@ -1,6 +1,6 @@
 /* Chrome for the /design-system reference page only. Not used elsewhere. */
 
-.ds-page { background: #fff; }
+.ds-page { background: var(--surface-card); }
 .ds-hero {
   background: var(--gradient-brand-soft);
   border-bottom: 1px solid var(--border);
@@ -18,7 +18,7 @@
   border-bottom: 1px solid var(--border);
   position: sticky;
   top: 0;
-  background: #fff;
+  background: var(--surface-card);
   z-index: var(--z-header);
 }
 .ds-nav a {
@@ -61,7 +61,7 @@
 .ds-flat-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: var(--space-5); }
 .ds-flat-box { height: 88px; display: flex; align-items: flex-end; justify-content: center; padding-bottom: var(--space-2); background: var(--surface); border: 1px solid var(--border); font-family: monospace; font-size: var(--text-xs); color: var(--muted); }
 
-.ds-shadow-box { height: 88px; border-radius: var(--radius); background: #fff; display: flex; align-items: center; justify-content: center; font-family: monospace; font-size: var(--text-xs); color: var(--muted); }
+.ds-shadow-box { height: 88px; border-radius: var(--radius); background: var(--surface-card); display: flex; align-items: center; justify-content: center; font-family: monospace; font-size: var(--text-xs); color: var(--muted); }
 
 .ds-row { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-4); }
 .ds-col { display: flex; flex-direction: column; gap: var(--space-4); max-width: 360px; }

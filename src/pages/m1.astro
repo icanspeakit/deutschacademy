@@ -10,6 +10,7 @@
 // once approved, not a page users should land on.
 import Layout from "../layouts/Layout.astro";
 import LanguageSwitcher from "../components/LanguageSwitcher.astro";
+import ThemeToggle from "../components/ThemeToggle.astro";
 import "../styles/landing.css";
 import "../styles/m1.css";
 import grammatik from "../data/grammatik.json";
@@ -34,6 +35,7 @@ const grammarQuestionCount = grammatik.reduce((sum, t) => sum + t.questions.leng
         <div class="lp-nav-right">
           <a href="/uebungen" class="lp-btn lp-btn--primary">Kostenlos üben</a>
           <LanguageSwitcher />
+          <ThemeToggle />
           <button class="lp-nav-toggle" type="button" aria-expanded="false" aria-controls="m1-nav-links" aria-label="Menü öffnen">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
               <line x1="3" y1="6" x2="21" y2="6"></line>

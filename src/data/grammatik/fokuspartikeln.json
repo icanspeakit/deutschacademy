@@ -1,0 +1,152 @@
+{
+  "id": "fokuspartikeln",
+  "name": "Position von auch & Fokuspartikeln",
+  "level": "B2",
+  "subtitle": "„Auch ich schenke dir Blumen“ und „Ich schenke dir auch Blumen“ sagen zwei verschiedene Dinge. Fokuspartikeln stehen direkt vor dem Satzteil, den sie hervorheben — und das ändert den Sinn.",
+  "source": "Auch.pdf (Kapitel 7, Position von auch und Fokuspartikeln; im Original als C1 markiert)",
+  "concept": {
+    "flow": [
+      { "text": "auch", "variant": "verb" },
+      { "text": "+ betonter Satzteil", "variant": "prep" },
+      { "text": "= genau dieser Teil ist gemeint" }
+    ],
+    "exampleHtml": "<span class=\"vp-verb\">Auch</span> <span class=\"vp-prep\">ich</span> schenke dir Blumen (nicht nur er). — Ich schenke dir <span class=\"vp-verb\">auch</span> <span class=\"vp-prep\">Blumen</span> (nicht nur Pralinen).",
+    "qa": [
+      { "html": "Bezieht sich <em>auch</em> auf den <strong>ganzen Satz</strong>, hat es dieselbe Position wie <em>nicht</em> — oder steht direkt davor.", "tag": "Satzbezug" },
+      { "html": "Als <strong>Fokuspartikel</strong> steht <em>auch</em> direkt <strong>vor</strong> dem Satzteil, den es hervorhebt. Dieser Teil wird betont gesprochen.", "tag": "Fokus" },
+      { "html": "Andere Partikeln stehen an derselben Stelle: <em>ebenfalls, nur, bloß, lediglich, sogar, selbst, gerade, ausgerechnet, insbesondere</em>.", "tag": "dieselbe Stelle" },
+      { "html": "<em>auch</em> und die anderen Fokuspartikeln können <strong>nicht allein auf Position 1</strong> stehen — nur zusammen mit ihrem Satzteil: <em>Auch ich schenke …</em>", "tag": "nie allein" }
+    ],
+    "noteHtml": "Dieselbe Merkhilfe wie bei <em>nicht</em>, nur mit <em>auch</em>: <strong>te-ka-<span class=\"vp-verb\">auch</span>-nicht-mo-lo</strong>. <em>Ich konnte meinen Vater gestern dank deiner Hilfe <strong>auch</strong> pünktlich am Bahnhof abholen.</em> Steht <em>nicht</em> mit im Satz, kommt <em>auch</em> direkt davor: <em>Ich kann mich heute <strong>auch nicht</strong> um meinen Kollegen kümmern.</em> Nicht verwechseln mit dem <strong>Modalpartikel</strong> <em>auch</em> (<em>Warum hast du auch nicht aufgepasst!</em>) — das ist eine andere Funktion.",
+    "reference": {
+      "showLabel": "Übersicht anzeigen ▼",
+      "hideLabel": "Übersicht ausblenden ▲",
+      "tables": [
+        {
+          "caption": "Fokuspartikeln und ihre Bedeutung",
+          "head": ["Partikeln", "Beispiel", "bedeutet"],
+          "rows": [
+            ["ebenfalls, ebenso, gleichfalls", "Seine Eltern sind ebenfalls gekommen.", "nicht nur meine Eltern"],
+            ["nur, bloß, lediglich, allein, ausschließlich, einzig", "Heute konnte ich lediglich eine Aufgabe fertig machen.", "diese eine, die anderen nicht"],
+            ["sogar, selbst, nicht einmal", "Heute hat sogar meine Schwester geholfen.", "sie hat überraschenderweise auch geholfen"],
+            ["gerade, genau, eben, ausgerechnet, insbesondere", "Dass gerade er gekommen ist, hat mich überrascht.", "dieser eine ist etwas Besonderes"]
+          ]
+        },
+        {
+          "caption": "Derselbe Satz, fünf Bedeutungen",
+          "head": ["Satz", "heißt"],
+          "rows": [
+            ["Auch ich schenke dir dieses Jahr Blumen zum Geburtstag.", "nicht nur er"],
+            ["Ich schenke auch dir dieses Jahr Blumen zum Geburtstag.", "nicht nur ihm"],
+            ["Ich schenke dir auch dieses Jahr Blumen zum Geburtstag.", "nicht nur letztes Jahr"],
+            ["Ich schenke dir dieses Jahr auch Blumen zum Geburtstag.", "nicht nur Pralinen"],
+            ["Ich schenke dir dieses Jahr Blumen auch zum Geburtstag.", "nicht nur zum Hochzeitstag"]
+          ]
+        },
+        {
+          "caption": "te-ka-auch-nicht-mo-lo",
+          "head": ["Subjekt", "Verb 1", "temporal / kausal", "auch", "nicht", "modal / lokal", "Verb 2"],
+          "rows": [
+            ["Ich", "konnte", "gestern · dank deiner Hilfe", "auch", "—", "pünktlich · am Bahnhof", "abholen."],
+            ["Ich", "kann", "heute", "auch", "nicht", "um meinen Kollegen", "kümmern."]
+          ]
+        }
+      ],
+      "boxes": [
+        {
+          "badge": "Links von auch (Satzbezug)",
+          "variant": "akk",
+          "items": [
+            "temporal: morgen, letzte Woche, nachts",
+            "kausal: wegen des Staus, aufgrund von Krankheiten",
+            "Pronomen und Objekte",
+            "Subjekt und Verb 1"
+          ]
+        },
+        {
+          "badge": "Rechts von auch",
+          "variant": "dat",
+          "items": [
+            "nicht",
+            "modal: höflich, mit dem Auto",
+            "lokal: zu Hause, in ihrem Büro",
+            "Verbgefährte: Musik (hören), eine Rolle (spielen)",
+            "Verb 2 am Satzende"
+          ]
+        }
+      ]
+    }
+  },
+  "exercises": [
+    {
+      "type": "table",
+      "title": "Steht der Satzteil links oder rechts von „auch“?",
+      "hint": "Wenn sich „auch“ auf den ganzen Satz bezieht. Tippen Sie „links“ oder „rechts“.",
+      "columns": ["Satzteil", "links / rechts"],
+      "placeholder": "links / rechts",
+      "rows": [
+        { "term": "morgen (temporal)", "answer": "links" },
+        { "term": "letzte Woche (temporal)", "answer": "links" },
+        { "term": "nachts (temporal)", "answer": "links" },
+        { "term": "wegen des Staus (kausal)", "answer": "links" },
+        { "term": "aufgrund von Krankheiten (kausal)", "answer": "links" },
+        { "term": "nicht mehr", "answer": "rechts" },
+        { "term": "höflich (modal)", "answer": "rechts" },
+        { "term": "mit dem Auto (modal)", "answer": "rechts" },
+        { "term": "zu Hause (lokal)", "answer": "rechts" },
+        { "term": "in ihrem Büro (lokal)", "answer": "rechts" },
+        { "term": "Musik (hören) (Verbgefährte)", "answer": "rechts" },
+        { "term": "eine Rolle (spielen) (Verbgefährte)", "answer": "rechts" }
+      ]
+    },
+    {
+      "type": "match",
+      "title": "Was ist hier gemeint?",
+      "hint": "Der Satzteil direkt nach „auch“ ist hervorgehoben.",
+      "pairs": [
+        { "q": "Auch ich schenke dir dieses Jahr Blumen.", "a": "nicht nur er" },
+        { "q": "Ich schenke auch dir dieses Jahr Blumen.", "a": "nicht nur ihm" },
+        { "q": "Ich schenke dir auch dieses Jahr Blumen.", "a": "nicht nur letztes Jahr" },
+        { "q": "Ich schenke dir dieses Jahr auch Blumen.", "a": "nicht nur Pralinen" },
+        { "q": "Ich schenke dir Blumen auch zum Geburtstag.", "a": "nicht nur zum Hochzeitstag" }
+      ]
+    },
+    {
+      "type": "fill",
+      "title": "Welche Fokuspartikel passt?",
+      "hint": "nur / lediglich · sogar / selbst · ebenfalls · ausgerechnet",
+      "placeholder": "Fokuspartikel",
+      "items": [
+        { "prompt": "Seine Eltern sind ___ gekommen — nicht nur meine.", "hint": "„auch“ in gehobener Form.", "answer": ["ebenfalls", "ebenso", "gleichfalls"] },
+        { "prompt": "Heute konnte ich ___ eine Aufgabe fertig machen, die anderen nicht.", "hint": "Einschränkung auf eine einzige.", "answer": ["lediglich", "nur", "bloß"] },
+        { "prompt": "Heute hat ___ meine Schwester geholfen — das hätte ich nie erwartet.", "hint": "Überraschung.", "answer": ["sogar", "selbst"] },
+        { "prompt": "Dass ___ er gekommen ist, hat mich überrascht.", "hint": "Genau dieser eine, ausgerechnet.", "answer": ["gerade", "ausgerechnet", "genau", "eben"] },
+        { "prompt": "Er hat ___ nicht angerufen — nicht einmal das.", "hint": "Verstärkte Verneinung.", "answer": ["nicht einmal", "sogar"] }
+      ]
+    },
+    {
+      "type": "build",
+      "title": "Setzen Sie „auch“ an die richtige Stelle.",
+      "sentences": [
+        {
+          "id": "fp1",
+          "hint": "Satzbezug: temporal links, modal und lokal rechts.",
+          "correct": ["Ich", "konnte", "meinen", "Vater", "gestern", "auch", "pünktlich", "am", "Bahnhof", "abholen", "."],
+          "shuffled": ["gestern", "pünktlich", "Ich", "abholen", "auch", "Vater", "am", "konnte", "meinen", "Bahnhof", "."]
+        },
+        {
+          "id": "fp2",
+          "hint": "„auch“ steht direkt vor „nicht“.",
+          "correct": ["Ich", "kann", "mich", "heute", "auch", "nicht", "um", "meinen", "Kollegen", "kümmern", "."],
+          "shuffled": ["heute", "nicht", "Ich", "kümmern", "auch", "mich", "um", "kann", "meinen", "Kollegen", "."]
+        },
+        {
+          "id": "fp3",
+          "hint": "Fokus auf das Subjekt — „auch“ und Subjekt zusammen auf Position 1.",
+          "correct": ["Auch", "ich", "schenke", "dir", "dieses", "Jahr", "Blumen", "."],
+          "shuffled": ["ich", "dieses", "Auch", "Blumen", "dir", "Jahr", "schenke", "."]
+        }
+      ]
+    }
+  ]
+}

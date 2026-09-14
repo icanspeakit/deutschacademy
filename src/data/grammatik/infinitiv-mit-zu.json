@@ -1,0 +1,174 @@
+{
+  "id": "infinitiv-mit-zu",
+  "name": "Infinitiv mit zu: um, ohne, anstatt",
+  "level": "B1",
+  "subtitle": "Ein Infinitivsatz hat kein eigenes Subjekt — es gilt das des Hauptsatzes. Das „zu“ steht ganz am Ende vor dem Infinitiv, bei trennbaren Verben mitten im Wort.",
+  "source": "Inf und zu.pdf (Kapitel 67, 68, 69) · zweiteilige Konnektoren.pdf, Übung 4",
+  "concept": {
+    "flow": [
+      { "text": "Hauptsatz", "variant": "verb" },
+      { "text": "," },
+      { "text": "um / ohne / anstatt", "variant": "prep" },
+      { "text": "… zu + Infinitiv" }
+    ],
+    "exampleHtml": "Julia macht viel Sport, <span class=\"vp-prep\">um</span> fit <span class=\"vp-verb\">zu bleiben</span>. — Jan kennt die Vokabeln, <span class=\"vp-prep\">ohne</span> sie gelernt <span class=\"vp-verb\">zu haben</span>.",
+    "qa": [
+      { "html": "<strong>um … zu</strong> nennt Ziel und Zweck. Es steckt die Bedeutung von <em>wollen/möchten</em> darin: <em>Ich koche ohne Fett, um abzunehmen.</em>", "tag": "final" },
+      { "html": "<strong>anstatt … zu</strong> nennt die Alternative, die <em>nicht</em> gewählt wird: <em>Ich esse zu Hause Obst, anstatt ins Café zu gehen.</em>", "tag": "Tausch" },
+      { "html": "<strong>ohne … zu</strong> nennt die erwartete Folge, die ausbleibt: <em>Ich mache Sport, ohne abzunehmen.</em>", "tag": "ohne Folge" },
+      { "html": "Bei <strong>trennbaren Verben</strong> rutscht das <em>zu</em> zwischen Präfix und Stamm: <em>abnehmen → ab<strong>zu</strong>nehmen, anrufen → an<strong>zu</strong>rufen</em>.", "tag": "abzunehmen" }
+    ],
+    "noteHtml": "Die Grundbedingung: Im Infinitivsatz steht <strong>kein Subjekt</strong> — das Subjekt des Hauptsatzes gilt auch dort. Ist das Subjekt ein anderes, braucht man einen Nebensatz: <em>Ich arbeite, <strong>um</strong> Geld <strong>zu</strong> verdienen</em> (ich = ich), aber <em>Ich arbeite, <strong>damit</strong> meine Eltern glücklich sind</em> (ich ≠ meine Eltern). Dasselbe gilt für <em>anstatt … zu</em> vs. <em>anstatt dass</em>.",
+    "reference": {
+      "showLabel": "Übersicht anzeigen ▼",
+      "hideLabel": "Übersicht ausblenden ▲",
+      "tables": [
+        {
+          "caption": "Drei Konnektoren, drei Bedeutungen",
+          "head": ["Bedeutung", "Konnektor", "Beispiel"],
+          "rows": [
+            ["Ziel / Zweck (final)", "um … zu", "Ich koche ohne Fett, um abzunehmen."],
+            ["Alternative / Tausch (modal)", "anstatt … zu", "Ich esse zu Hause Obst, anstatt ins Café zu gehen."],
+            ["ohne Konsequenz (modal)", "ohne … zu", "Ich mache Sport und esse fettarm, ohne abzunehmen."]
+          ]
+        },
+        {
+          "caption": "Wann kein Infinitivsatz möglich ist",
+          "head": ["gleiches Subjekt → Infinitiv", "anderes Subjekt → Nebensatz"],
+          "rows": [
+            ["Ich arbeite, um Geld zu verdienen.", "Ich arbeite, damit meine Eltern glücklich sind."],
+            ["Er geht früh, anstatt zu bleiben.", "Er geht früh, anstatt dass wir zusammen essen."],
+            ["Sie kam, ohne zu klopfen.", "Sie kam, ohne dass jemand es merkte."]
+          ]
+        },
+        {
+          "caption": "Infinitiv ohne zu",
+          "note": "Nach diesen Verben steht der blanke Infinitiv, niemals „zu“.",
+          "head": ["Verb", "Beispiel"],
+          "rows": [
+            ["Modalverben", "Wir möchten eine tolle Oper sehen."],
+            ["bleiben", "Wir bleiben hoffentlich nicht im Stau stecken."],
+            ["lassen", "Wir lassen das Auto hier stehen."],
+            ["gehen", "Wir gehen eine Aufführung anschauen."],
+            ["hören", "Wir hören heute Abend einen Star singen."],
+            ["sehen", "Wir sehen Opernstars spielen."],
+            ["lernen", "Ich lerne jetzt auch singen."]
+          ]
+        }
+      ],
+      "boxes": [
+        {
+          "badge": "zu steht hinter dem Präfix",
+          "variant": "akk",
+          "items": [
+            "abnehmen → abzunehmen",
+            "anrufen → anzurufen",
+            "einkaufen → einzukaufen",
+            "mitkommen → mitzukommen",
+            "aufstehen → aufzustehen"
+          ]
+        },
+        {
+          "badge": "Auslöser für einen zu-Infinitiv",
+          "variant": "dat",
+          "items": [
+            "haben + abstraktes Nomen: Wir haben Angst, zu spät zu kommen.",
+            "es ist + Adjektiv: Es ist schön, eine Oper zu hören.",
+            "ich finde es + Adjektiv: Ich finde es wunderbar, Musik zu hören.",
+            "Verben mit zweitem Verb: Wir hoffen, pünktlich zu kommen.",
+            "Verben mit Präposition: Ich freue mich darauf, die Oper zu sehen."
+          ]
+        }
+      ]
+    }
+  },
+  "exercises": [
+    {
+      "type": "fill",
+      "title": "um, ohne oder anstatt?",
+      "hint": "Ziel, ausbleibende Folge oder Alternative? Schreiben Sie nur den Konnektor.",
+      "placeholder": "um / ohne / anstatt",
+      "items": [
+        { "prompt": "Max fährt lieber mit dem Fahrrad, ___ den Bus zu nehmen.", "hint": "Er wählt A statt B.", "answer": ["anstatt", "statt"] },
+        { "prompt": "Julia macht viel Sport, ___ fit zu bleiben.", "hint": "Ziel.", "answer": ["um"] },
+        { "prompt": "Lara schreibt gute Noten, ___ viel dafür zu lernen.", "hint": "Die erwartete Folge bleibt aus.", "answer": ["ohne"] },
+        { "prompt": "Markus arbeitet ehrenamtlich, das heißt er arbeitet, ___ Geld dafür zu bekommen.", "hint": "Ohne die übliche Konsequenz.", "answer": ["ohne"] },
+        { "prompt": "Frau Meier kocht lieber selbst, ___ in ein Restaurant zu gehen.", "hint": "Alternative.", "answer": ["anstatt", "statt"] },
+        { "prompt": "Wir sparen Strom, ___ die Umwelt zu schonen.", "hint": "Zweck.", "answer": ["um"] },
+        { "prompt": "Herr Müller kann vier Stunden wandern, ___ müde zu werden.", "hint": "Erwartete Folge bleibt aus.", "answer": ["ohne"] }
+      ]
+    },
+    {
+      "type": "table",
+      "title": "Wo steht das „zu“?",
+      "hint": "Schreiben Sie die Infinitivform mit zu.",
+      "columns": ["Verb", "mit zu"],
+      "placeholder": "… zu …",
+      "rows": [
+        { "term": "kommen", "answer": "zu kommen" },
+        { "term": "abnehmen", "answer": "abzunehmen" },
+        { "term": "anrufen", "answer": "anzurufen" },
+        { "term": "bleiben", "answer": "zu bleiben" },
+        { "term": "einkaufen", "answer": "einzukaufen" },
+        { "term": "verstehen", "answer": "zu verstehen" },
+        { "term": "mitkommen", "answer": "mitzukommen" },
+        { "term": "aufstehen", "answer": "aufzustehen" }
+      ]
+    },
+    {
+      "type": "table",
+      "title": "Mit zu oder ohne zu?",
+      "hint": "Klavier spielen lernen. Tippen Sie „zu“ oder „—“.",
+      "columns": ["Satz", "zu / —"],
+      "placeholder": "zu / —",
+      "rows": [
+        { "term": "Es ist schön, Klavier … spielen.", "answer": "zu" },
+        { "term": "Ich möchte unbedingt Klavier … spielen.", "answer": ["—", "-", "ohne zu", "kein zu"] },
+        { "term": "Ich habe Lust, Klavier … spielen.", "answer": "zu" },
+        { "term": "Ich freue mich darauf, Klavier … spielen.", "answer": "zu" },
+        { "term": "Ich lerne jetzt Klavier … spielen.", "answer": ["—", "-", "ohne zu", "kein zu"] },
+        { "term": "Ich lasse mein Kind Klavier … spielen.", "answer": ["—", "-", "ohne zu", "kein zu"] },
+        { "term": "Ich fange an, Klavier … spielen.", "answer": "zu" },
+        { "term": "Ich höre mein Kind Klavier … spielen.", "answer": ["—", "-", "ohne zu", "kein zu"] },
+        { "term": "Ich gehe jetzt Klavier … spielen.", "answer": ["—", "-", "ohne zu", "kein zu"] },
+        { "term": "Ich muss jeden Tag Klavier … spielen.", "answer": ["—", "-", "ohne zu", "kein zu"] }
+      ]
+    },
+    {
+      "type": "match",
+      "title": "Hauptsatz und Infinitivsatz verbinden.",
+      "hint": "Achten Sie auf den Sinn: Ziel, Alternative oder ausbleibende Folge.",
+      "pairs": [
+        { "q": "Mia geht in die Bäckerei,", "a": "um Brot zu kaufen." },
+        { "q": "Deshalb gehen wir zu Fuß,", "a": "anstatt mit dem Auto zu fahren." },
+        { "q": "Jan kennt die Vokabeln,", "a": "ohne sie gelernt zu haben." },
+        { "q": "Fährst du nach Spanien,", "a": "um deine Kenntnisse zu verbessern?" },
+        { "q": "Sie ging aus dem Zimmer,", "a": "ohne sich zu verabschieden." }
+      ]
+    },
+    {
+      "type": "build",
+      "title": "Bauen Sie den Infinitivsatz.",
+      "sentences": [
+        {
+          "id": "iz1",
+          "hint": "Ziel — trennbares Verb.",
+          "correct": ["Ich", "koche", "ohne", "Fett", ",", "um", "abzunehmen", "."],
+          "shuffled": ["um", "Fett", "Ich", "abzunehmen", "ohne", ",", "koche", "."]
+        },
+        {
+          "id": "iz2",
+          "hint": "Alternative.",
+          "correct": ["Ich", "esse", "zu", "Hause", "Obst", ",", "anstatt", "ins", "Café", "zu", "gehen", "."],
+          "shuffled": ["Hause", "anstatt", "Ich", "zu", "Obst", "ins", "esse", ",", "gehen", "Café", "zu", "."]
+        },
+        {
+          "id": "iz3",
+          "hint": "Anderes Subjekt — hier braucht es „damit“.",
+          "correct": ["Ich", "arbeite", "mehr", ",", "damit", "meine", "Familie", "zufrieden", "ist", "."],
+          "shuffled": ["meine", "damit", "Ich", "ist", "mehr", "Familie", ",", "zufrieden", "arbeite", "."]
+        }
+      ]
+    }
+  ]
+}

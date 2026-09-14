@@ -5,23 +5,25 @@
    src/lib/practiceWorkspace.js across both pages that use this file —
    only the values changed, not the selectors. */
 
+:root[data-theme="dark"] .akk { --akk-amber-bg-tint: #33220f; }
+
 .akk {
   --akk-ink: var(--ink);
   --akk-ink-2: var(--brand-blue-dark);
   --akk-paper: var(--surface);
-  --akk-surface: #ffffff;
+  --akk-surface: var(--surface-card);
   --akk-line: var(--border);
   --akk-line-strong: var(--border-strong);
   --akk-muted: var(--muted);
   --akk-amber: var(--accent);
-  --akk-amber-bg: #ffedd5;
+  --akk-amber-bg: var(--akk-amber-bg-tint, #ffedd5);
   --akk-amber-ink: var(--accent-dark);
   --akk-green: var(--success);
   --akk-green-bg: var(--success-soft);
   --akk-red: var(--danger);
   --akk-red-bg: var(--danger-soft);
   --akk-font: var(--font-body);
-  --akk-mono: var(--font-mono);
+  --akk-mono: var(--font-label);
 
   font-family: var(--akk-font);
   background: var(--akk-paper);
@@ -191,6 +193,30 @@
 }
 .akk-mode-btn.active { color: var(--brand-blue-dark); font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
 .akk-mode-sep { color: var(--akk-line-strong); }
+
+/* Level picker — the noun pool spans A1 and A2, so a session is drawn from one level. */
+.akk-mode-row { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 24px; }
+.akk-level-btn {
+  font-family: var(--akk-font);
+  font-weight: 500;
+  font-size: 0.85rem;
+  padding: 12px 4px;
+  margin: -6px -4px;
+  border: none;
+  background: none;
+  color: var(--akk-muted);
+  cursor: pointer;
+  min-height: 44px;
+}
+.akk-level-btn.active { color: var(--brand-blue-dark); font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
+.akk-level-reload {
+  margin-left: 12px;
+  font-family: var(--akk-mono);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.akk-level-reload:hover { color: var(--brand-blue-dark); }
 
 /* Tag: transit-style line-code label, e.g. "AKK" */
 .akk-tag {

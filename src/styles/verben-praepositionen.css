@@ -12,8 +12,8 @@
 .vp-hero h1 { font-family: var(--font-body); font-weight: var(--fw-extrabold); font-size: clamp(1.75rem, 4vw, 2.375rem); color: var(--ink); margin: 0 0 12px; }
 .vp-hero p { color: var(--muted); max-width: 560px; margin: 0 auto; font-size: 1rem; line-height: 1.6; }
 
-.vp-card { background: #fff; border: 1px solid var(--border); border-radius: var(--radius-lg); padding: var(--space-7); margin-bottom: 20px; }
-.vp-card-label { font-family: var(--font-mono); font-weight: var(--fw-semibold); font-size: .8125rem; letter-spacing: .04em; color: var(--brand-blue-dark); text-transform: uppercase; margin-bottom: 14px; }
+.vp-card { background: var(--surface-card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: var(--space-7); margin-bottom: 20px; }
+.vp-card-label { font-family: var(--font-label); font-weight: var(--fw-semibold); font-size: .8125rem; letter-spacing: .04em; color: var(--brand-blue-dark); text-transform: uppercase; margin-bottom: 14px; }
 
 .vp-flow { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; row-gap: 12px; margin-bottom: 22px; }
 .vp-flow-step { border: 1px solid var(--border-strong); border-radius: var(--radius-sm); padding: 10px 16px; font-weight: var(--fw-semibold); color: var(--muted); white-space: nowrap; }
@@ -94,7 +94,7 @@
 .vp-match-col { display: flex; flex-direction: column; gap: 10px; }
 .vp-match-btn {
   text-align: left; border-radius: var(--radius-sm); padding: 12px 14px; font-size: .875rem; font-family: var(--font-body);
-  cursor: pointer; border: 1px solid var(--border-strong); background: #fff; color: var(--ink);
+  cursor: pointer; border: 1px solid var(--border-strong); background: var(--surface-card); color: var(--ink);
 }
 .vp-match-btn strong { margin-right: 6px; }
 .vp-match-btn.is-selected { border-color: var(--brand-blue); box-shadow: 0 0 0 1px var(--brand-blue) inset; }
@@ -114,7 +114,7 @@
 .vp-build-item:first-child { border-top: none; padding-top: 0; }
 .vp-build-strip { display: flex; flex-wrap: wrap; gap: 8px; min-height: 44px; background: var(--surface); border-radius: var(--radius-sm); padding: 10px; margin-bottom: 10px; }
 .vp-build-pool { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
-.vp-chip { border: 1px solid var(--border-strong); background: #fff; color: var(--ink); border-radius: var(--radius-sm); padding: 8px 12px; font-size: .875rem; font-weight: var(--fw-semibold); cursor: pointer; font-family: var(--font-body); }
+.vp-chip { border: 1px solid var(--border-strong); background: var(--surface-card); color: var(--ink); border-radius: var(--radius-sm); padding: 8px 12px; font-size: .875rem; font-weight: var(--fw-semibold); cursor: pointer; font-family: var(--font-body); }
 .vp-chip-chosen { border-color: var(--blue-300); background: var(--blue-50); color: var(--brand-blue-dark); }
 
 @keyframes vp-pop { 0% { transform: scale(1); } 45% { transform: scale(1.08); } 100% { transform: scale(1); } }
@@ -125,3 +125,129 @@
   .vp-hero-badges { flex-wrap: wrap; }
   .vp-flow { justify-content: center; }
 }
+
+/* ---------------------------------------------------------------------------
+   Reference panel (added with the generalized grammar workspace).
+
+   Topics like Adjektivdeklination and Modalverben explain themselves with a real
+   declension/conjugation table rather than a word list, so the collapsible panel
+   under "Wie funktioniert das?" can now hold tables, boxes, or both.
+--------------------------------------------------------------------------- */
+.vp-ref-table-wrap { margin-top: 16px; }
+.vp-ref-table-caption {
+  margin: 0 0 8px;
+  font-size: .8rem;
+  font-weight: var(--fw-bold);
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  color: var(--muted-soft);
+}
+/* Six-column tables (the modal-verb conjugation) overflow a phone; let the table
+   scroll inside its own box instead of pushing the page sideways. */
+.vp-ref-table-scroll { overflow-x: auto; border: 1px solid var(--border); border-radius: var(--radius-sm); }
+.vp-ref-table { width: 100%; border-collapse: collapse; font-size: .85rem; background: var(--surface-card); }
+.vp-ref-table th,
+.vp-ref-table td { padding: 8px 12px; text-align: left; white-space: nowrap; }
+.vp-ref-table thead th {
+  background: var(--surface);
+  font-size: .72rem;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  color: var(--muted);
+  border-bottom: 1px solid var(--border);
+}
+.vp-ref-table tbody tr + tr { border-top: 1px solid var(--border); }
+.vp-ref-table tbody th[scope="row"] { font-weight: var(--fw-bold); color: var(--brand-blue-dark); }
+.vp-ref-table tbody td { color: var(--ink); }
+.vp-ref-table-note { margin: 8px 0 0; font-size: .78rem; line-height: 1.5; color: var(--muted); }
+
+/* Tag on the right of a concept bullet ("schwach", "Pflicht", "(Sache)"). */
+.vp-qa-tag { margin-left: 6px; color: var(--muted-soft); font-size: .78rem; white-space: nowrap; }
+
+/* The table exercise can now carry a header row. */
+.vp-table-head { font-size: .72rem; letter-spacing: .05em; text-transform: uppercase; color: var(--muted-soft); font-weight: var(--fw-bold); }
+.vp-table-head span { padding-bottom: 2px; }
+
+/* ---------------------------------------------------------------------------
+   Sprachbausteine (telc format): a running text with gaps, plus either a
+   lettered word bank (Teil 1) or three options per gap (Teil 2).
+--------------------------------------------------------------------------- */
+/* The source texts are business letters — keep their paragraph breaks. */
+.vp-sb-text { white-space: pre-wrap; }
+
+.vp-sb-letter-bank {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  padding: 12px 14px;
+  margin-bottom: 16px;
+}
+.vp-sb-letter-bank ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 4px 14px;
+  font-size: .85rem;
+}
+.vp-sb-letter-bank li strong { color: var(--brand-blue-dark); margin-right: 6px; }
+/* A word already spent on another gap — still listed, visibly out of play. */
+.vp-sb-letter-bank li.is-used { color: var(--muted-soft); text-decoration: line-through; }
+.vp-sb-letter-bank li.is-used strong { color: var(--muted-soft); }
+
+.vp-gap-select {
+  font-family: var(--font-body);
+  font-size: .85rem;
+  font-weight: var(--fw-semibold);
+  color: var(--ink);
+  background: var(--surface-card);
+  border: 1px solid var(--border-strong);
+  border-radius: 6px;
+  padding: 2px 4px;
+  max-width: 190px;
+  vertical-align: baseline;
+}
+.vp-gap-select.is-correct { border-color: var(--success); background: var(--success-soft); color: var(--success); }
+.vp-gap-select.is-wrong { border-color: var(--danger); background: var(--danger-soft); color: var(--danger); }
+
+.vp-sb-gap {
+  display: inline-block;
+  min-width: 84px;
+  text-align: center;
+  padding: 1px 8px;
+  border-radius: 6px;
+  border: 1px dashed var(--border-strong);
+  background: var(--surface);
+  font-weight: var(--fw-semibold);
+  font-size: .9em;
+  color: var(--muted-soft);
+}
+.vp-sb-gap.is-filled { border-style: solid; border-color: var(--brand-blue); color: var(--ink); background: var(--blue-50); }
+.vp-sb-gap.is-correct { border-style: solid; border-color: var(--success); background: var(--success-soft); color: var(--success); }
+.vp-sb-gap.is-wrong { border-style: solid; border-color: var(--danger); background: var(--danger-soft); color: var(--danger); }
+
+.vp-sb-questions { display: flex; flex-direction: column; gap: 8px; margin-top: 18px; }
+.vp-sb-question { display: flex; align-items: center; gap: 10px; }
+.vp-sb-num {
+  flex: none;
+  width: 26px; height: 26px;
+  display: grid; place-items: center;
+  border-radius: 50%;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  font-size: .75rem;
+  font-weight: var(--fw-bold);
+  color: var(--muted);
+}
+.vp-sb-opts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; flex: 1; }
+.vp-sb-opt { padding: 6px 10px; font-size: .85rem; }
+/* After checking: the right answer is always marked, and a wrong pick is marked too. */
+.vp-sb-opt.is-wrongpick { border-color: var(--danger); background: var(--danger-soft); color: var(--danger); }
+
+@media (max-width: 560px) {
+  .vp-sb-opts { grid-template-columns: 1fr; }
+  .vp-gap-select { max-width: 100%; }
+}
+
+.sb-setpicker { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }

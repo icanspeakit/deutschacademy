@@ -1,0 +1,6524 @@
+{
+  "level": "A1",
+  "source": {
+    "rank": "OpenSubtitles 2018 German frequency list (hermitdave/FrequencyWords, MIT; data from the OPUS OpenSubtitles corpus)",
+    "lemmas": "Authored for DeutschAcademy against that frequency list. Level banding is frequency-derived, NOT the official Goethe/telc inventory - the UI must not claim otherwise.",
+    "generated": "2026-09-13"
+  },
+  "units": [
+    {
+      "id": "a1-01",
+      "title": "Person & Vorstellung",
+      "topics": [
+        "person"
+      ],
+      "words": [
+        {
+          "lemma": "Name",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Namen",
+          "en": "name",
+          "example": "Mein Name ist Ana.",
+          "rank": 440
+        },
+        {
+          "lemma": "Vorname",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Vornamen",
+          "en": "first name",
+          "example": "Bitte schreiben Sie hier Ihren Vornamen.",
+          "rank": 8371
+        },
+        {
+          "lemma": "Nachname",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Nachnamen",
+          "en": "surname, last name",
+          "example": "Mein Nachname ist schwer zu schreiben.",
+          "rank": 8754
+        },
+        {
+          "lemma": "Adresse",
+          "pos": "noun",
+          "gender": "die",
+          "plural": "Adressen",
+          "en": "address",
+          "example": "Wie ist deine Adresse?",
+          "rank": 1450
+        },
+        {
+          "lemma": "Straße",
+          "pos": "noun",
+          "gender": "die",
+          "plural": "Straßen",
+          "en": "street",
+          "example": "Ich wohne in der Goethestraße.",
+          "rank": 732
+        },
+        {
+          "lemma": "Stadt",
+          "pos": "noun",
+          "gender": "die",
+          "plural": "Städte",
+          "en": "city, town",
+          "example": "München ist eine große Stadt.",
+          "rank": 369
+        },
+        {
+          "lemma": "Land",
+          "pos": "noun",
+          "gender": "das",
+          "plural": "Länder",
+          "en": "country",
+          "example": "Aus welchem Land kommst du?",
+          "rank": 512
+        },
+        {
+          "lemma": "Telefonnummer",
+          "pos": "noun",
+          "gender": "die",
+          "plural": "Telefonnummern",
+          "en": "phone number",
+          "example": "Gib mir bitte deine Telefonnummer.",
+          "rank": 4812
+        },
+        {
+          "lemma": "Alter",
+          "pos": "noun",
+          "gender": "das",
+          "en": "age",
+          "example": "Wie ist Ihr Alter?",
+          "rank": 508
+        },
+        {
+          "lemma": "Geburtstag",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Geburtstage",
+          "en": "birthday",
+          "example": "Mein Geburtstag ist im Mai.",
+          "rank": 1192
+        },
+        {
+          "lemma": "Beruf",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Berufe",
+          "en": "job, profession",
+          "example": "Was sind Sie von Beruf?",
+          "rank": 2437
+        },
+        {
+          "lemma": "Sprache",
+          "pos": "noun",
+          "gender": "die",
+          "plural": "Sprachen",
+          "en": "language",
+          "example": "Ich lerne drei Sprachen.",
+          "rank": 1979
+        },
+        {
+          "lemma": "Herr",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Herren",
+          "en": "Mr, gentleman",
+          "example": "Guten Tag, Herr Müller!",
+          "rank": 300
+        },
+        {
+          "lemma": "Frau",
+          "pos": "noun",
+          "gender": "die",
+          "plural": "Frauen",
+          "en": "woman, Mrs",
+          "example": "Die Frau dort ist meine Lehrerin.",
+          "rank": 153
+        },
+        {
+          "lemma": "Mann",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Männer",
+          "en": "man",
+          "example": "Der Mann am Fenster liest eine Zeitung.",
+          "rank": 102
+        },
+        {
+          "lemma": "Person",
+          "pos": "noun",
+          "gender": "die",
+          "plural": "Personen",
+          "en": "person",
+          "example": "Wir sind vier Personen.",
+          "rank": 835
+        },
+        {
+          "lemma": "heißen",
+          "pos": "verb",
+          "aux": "haben",
+          "forms": [
+            "heißt",
+            "hieß",
+            "geheißen"
+          ],
+          "en": "to be called",
+          "example": "Wie heißt du?",
+          "rank": 810
+        },
+        {
+          "lemma": "kommen",
+          "pos": "verb",
+          "aux": "sein",
+          "forms": [
+            "kommt",
+            "kam",
+            "gekommen"
+          ],
+          "en": "to come",
+          "example": "Ich komme aus der Türkei.",
+          "rank": 140
+        },
+        {
+          "lemma": "wohnen",
+          "pos": "verb",
+          "aux": "haben",
+          "forms": [
+            "wohnt",
+            "wohnte",
+            "gewohnt"
+          ],
+          "en": "to live, to reside",
+          "example": "Wir wohnen in Berlin.",
+          "rank": 1295
+        },
+        {
+          "lemma": "sprechen",
+          "pos": "verb",
+          "aux": "haben",
+          "forms": [
+            "spricht",
+            "sprach",
+            "gesprochen"
+          ],
+          "en": "to speak",
+          "example": "Sprechen Sie Deutsch?",
+          "rank": 318
+        },
+        {
+          "lemma": "sein",
+          "pos": "verb",
+          "aux": "sein",
+          "forms": [
+            "ist",
+            "war",
+            "gewesen"
+          ],
+          "en": "to be",
+          "example": "Ich bin müde.",
+          "rank": 56
+        },
+        {
+          "lemma": "haben",
+          "pos": "verb",
+          "aux": "haben",
+          "forms": [
+            "hat",
+            "hatte",
+            "gehabt"
+          ],
+          "en": "to have",
+          "example": "Hast du Zeit?",
+          "rank": 30
+        },
+        {
+          "lemma": "alt",
+          "pos": "adj",
+          "comparative": "älter",
+          "superlative": "am ältesten",
+          "en": "old",
+          "example": "Wie alt bist du?",
+          "rank": 599
+        },
+        {
+          "lemma": "jung",
+          "pos": "adj",
+          "comparative": "jünger",
+          "superlative": "am jüngsten",
+          "en": "young",
+          "example": "Meine Schwester ist noch jung.",
+          "rank": 1171
+        },
+        {
+          "lemma": "verheiratet",
+          "pos": "adj",
+          "en": "married",
+          "example": "Sind Sie verheiratet?",
+          "rank": 970
+        }
+      ]
+    },
+    {
+      "id": "a1-02",
+      "title": "Familie & Beziehungen",
+      "topics": [
+        "familie"
+      ],
+      "words": [
+        {
+          "lemma": "Familie",
+          "pos": "noun",
+          "gender": "die",
+          "plural": "Familien",
+          "en": "family",
+          "example": "Meine Familie wohnt in Izmir.",
+          "rank": 303
+        },
+        {
+          "lemma": "Eltern",
+          "pos": "noun",
+          "pluralOnly": true,
+          "en": "parents",
+          "example": "Meine Eltern besuchen mich im Sommer.",
+          "rank": 593
+        },
+        {
+          "lemma": "Mutter",
+          "pos": "noun",
+          "gender": "die",
+          "plural": "Mütter",
+          "en": "mother",
+          "example": "Meine Mutter kocht sehr gut.",
+          "rank": 197
+        },
+        {
+          "lemma": "Vater",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Väter",
+          "en": "father",
+          "example": "Mein Vater arbeitet bei der Post.",
+          "rank": 178
+        },
+        {
+          "lemma": "Kind",
+          "pos": "noun",
+          "gender": "das",
+          "plural": "Kinder",
+          "en": "child",
+          "example": "Das Kind spielt im Garten.",
+          "rank": 336
+        },
+        {
+          "lemma": "Sohn",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Söhne",
+          "en": "son",
+          "example": "Ihr Sohn geht schon zur Schule.",
+          "rank": 311
+        },
+        {
+          "lemma": "Tochter",
+          "pos": "noun",
+          "gender": "die",
+          "plural": "Töchter",
+          "en": "daughter",
+          "example": "Meine Tochter ist sieben Jahre alt.",
+          "rank": 429
+        },
+        {
+          "lemma": "Bruder",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Brüder",
+          "en": "brother",
+          "example": "Mein Bruder wohnt in Hamburg.",
+          "rank": 341
+        },
+        {
+          "lemma": "Schwester",
+          "pos": "noun",
+          "gender": "die",
+          "plural": "Schwestern",
+          "en": "sister",
+          "example": "Ich habe zwei Schwestern.",
+          "rank": 432
+        },
+        {
+          "lemma": "Geschwister",
+          "pos": "noun",
+          "pluralOnly": true,
+          "en": "siblings",
+          "example": "Hast du Geschwister?",
+          "rank": 7036
+        },
+        {
+          "lemma": "Großmutter",
+          "pos": "noun",
+          "gender": "die",
+          "plural": "Großmütter",
+          "en": "grandmother",
+          "example": "Meine Großmutter ist 82 Jahre alt.",
+          "rank": 1971
+        },
+        {
+          "lemma": "Großvater",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Großväter",
+          "en": "grandfather",
+          "example": "Mein Großvater erzählt gern Geschichten.",
+          "rank": 1780
+        },
+        {
+          "lemma": "Oma",
+          "pos": "noun",
+          "gender": "die",
+          "plural": "Omas",
+          "en": "grandma",
+          "example": "Oma backt heute einen Kuchen.",
+          "rank": 1662
+        },
+        {
+          "lemma": "Opa",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Opas",
+          "en": "grandpa",
+          "example": "Mein Opa geht jeden Tag spazieren.",
+          "rank": 2021
+        },
+        {
+          "lemma": "Onkel",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Onkel",
+          "en": "uncle",
+          "example": "Mein Onkel hat ein kleines Restaurant.",
+          "rank": 740
+        },
+        {
+          "lemma": "Tante",
+          "pos": "noun",
+          "gender": "die",
+          "plural": "Tanten",
+          "en": "aunt",
+          "example": "Meine Tante kommt am Wochenende.",
+          "rank": 1163
+        },
+        {
+          "lemma": "Cousin",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Cousins",
+          "en": "cousin (male)",
+          "example": "Mein Cousin studiert in Köln.",
+          "rank": 2289
+        },
+        {
+          "lemma": "Ehemann",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Ehemänner",
+          "en": "husband",
+          "example": "Ihr Ehemann ist Lehrer.",
+          "rank": 1434
+        },
+        {
+          "lemma": "Ehefrau",
+          "pos": "noun",
+          "gender": "die",
+          "plural": "Ehefrauen",
+          "en": "wife",
+          "example": "Seine Ehefrau arbeitet im Krankenhaus.",
+          "rank": 3712
+        },
+        {
+          "lemma": "Freund",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Freunde",
+          "en": "friend (male), boyfriend",
+          "example": "Ein Freund von mir wohnt hier.",
+          "rank": 260
+        },
+        {
+          "lemma": "Freundin",
+          "pos": "noun",
+          "gender": "die",
+          "plural": "Freundinnen",
+          "en": "friend (female), girlfriend",
+          "example": "Meine Freundin lernt auch Deutsch.",
+          "rank": 543
+        },
+        {
+          "lemma": "Baby",
+          "pos": "noun",
+          "gender": "das",
+          "plural": "Babys",
+          "en": "baby",
+          "example": "Das Baby schläft gerade.",
+          "rank": 371
+        },
+        {
+          "lemma": "heiraten",
+          "pos": "verb",
+          "aux": "haben",
+          "forms": [
+            "heiratet",
+            "heiratete",
+            "geheiratet"
+          ],
+          "en": "to marry",
+          "example": "Sie heiraten im Juni.",
+          "rank": 734
+        },
+        {
+          "lemma": "lieben",
+          "pos": "verb",
+          "aux": "haben",
+          "forms": [
+            "liebt",
+            "liebte",
+            "geliebt"
+          ],
+          "en": "to love",
+          "example": "Ich liebe meine Familie.",
+          "rank": 658
+        },
+        {
+          "lemma": "kennen",
+          "pos": "verb",
+          "aux": "haben",
+          "forms": [
+            "kennt",
+            "kannte",
+            "gekannt"
+          ],
+          "en": "to know (a person)",
+          "example": "Kennst du meinen Bruder?",
+          "rank": 353
+        }
+      ]
+    },
+    {
+      "id": "a1-03",
+      "title": "Gefühle",
+      "topics": [
+        "gefuehle"
+      ],
+      "words": [
+        {
+          "lemma": "Gefühl",
+          "pos": "noun",
+          "gender": "das",
+          "plural": "Gefühle",
+          "en": "feeling",
+          "example": "Ich habe ein gutes Gefühl.",
+          "rank": 753
+        },
+        {
+          "lemma": "Angst",
+          "pos": "noun",
+          "gender": "die",
+          "plural": "Ängste",
+          "en": "fear",
+          "example": "Ich habe Angst vor Hunden.",
+          "rank": 267
+        },
+        {
+          "lemma": "Freude",
+          "pos": "noun",
+          "gender": "die",
+          "plural": "Freuden",
+          "en": "joy",
+          "example": "Der Brief war eine große Freude.",
+          "rank": 1433
+        },
+        {
+          "lemma": "Liebe",
+          "pos": "noun",
+          "gender": "die",
+          "en": "love",
+          "example": "Liebe ist wichtiger als Geld.",
+          "rank": 188
+        },
+        {
+          "lemma": "Glück",
+          "pos": "noun",
+          "gender": "das",
+          "en": "luck, happiness",
+          "example": "Viel Glück bei der Prüfung!",
+          "rank": 380
+        },
+        {
+          "lemma": "Stress",
+          "pos": "noun",
+          "gender": "der",
+          "en": "stress",
+          "example": "Ich habe im Moment viel Stress.",
+          "rank": 2905
+        },
+        {
+          "lemma": "Spaß",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Späße",
+          "en": "fun",
+          "example": "Der Kurs macht mir Spaß.",
+          "rank": 517
+        },
+        {
+          "lemma": "Problem",
+          "pos": "noun",
+          "gender": "das",
+          "plural": "Probleme",
+          "en": "problem",
+          "example": "Kein Problem!",
+          "rank": 310
+        },
+        {
+          "lemma": "Lust",
+          "pos": "noun",
+          "gender": "die",
+          "en": "desire, inclination",
+          "example": "Hast du Lust auf Kaffee?",
+          "rank": 1259
+        },
+        {
+          "lemma": "fühlen",
+          "pos": "verb",
+          "aux": "haben",
+          "forms": [
+            "fühlt",
+            "fühlte",
+            "gefühlt"
+          ],
+          "reflexive": true,
+          "en": "to feel",
+          "example": "Ich fühle mich heute besser.",
+          "rank": 844
+        },
+        {
+          "lemma": "freuen",
+          "pos": "verb",
+          "aux": "haben",
+          "forms": [
+            "freut",
+            "freute",
+            "gefreut"
+          ],
+          "reflexive": true,
+          "prep": "auf",
+          "case": "akk",
+          "en": "to be glad, to look forward to",
+          "example": "Ich freue mich auf das Wochenende.",
+          "rank": 1641
+        },
+        {
+          "lemma": "lachen",
+          "pos": "verb",
+          "aux": "haben",
+          "forms": [
+            "lacht",
+            "lachte",
+            "gelacht"
+          ],
+          "en": "to laugh",
+          "example": "Wir haben viel gelacht.",
+          "rank": 857
+        },
+        {
+          "lemma": "weinen",
+          "pos": "verb",
+          "aux": "haben",
+          "forms": [
+            "weint",
+            "weinte",
+            "geweint"
+          ],
+          "en": "to cry",
+          "example": "Das Kind weint, weil es müde ist.",
+          "rank": 1675
+        },
+        {
+          "lemma": "ärgern",
+          "pos": "verb",
+          "aux": "haben",
+          "forms": [
+            "ärgert",
+            "ärgerte",
+            "geärgert"
+          ],
+          "reflexive": true,
+          "prep": "über",
+          "case": "akk",
+          "en": "to annoy, to be annoyed",
+          "example": "Ich ärgere mich über den Lärm.",
+          "rank": 5528
+        },
+        {
+          "lemma": "mögen",
+          "pos": "verb",
+          "aux": "haben",
+          "forms": [
+            "mag",
+            "mochte",
+            "gemocht"
+          ],
+          "en": "to like",
+          "example": "Ich mag deutschen Kaffee nicht.",
+          "rank": 893
+        },
+        {
+          "lemma": "glücklich",
+          "pos": "adj",
+          "comparative": "glücklicher",
+          "superlative": "am glücklichsten",
+          "en": "happy",
+          "example": "Sie ist sehr glücklich.",
+          "rank": 597
+        },
+        {
+          "lemma": "traurig",
+          "pos": "adj",
+          "comparative": "trauriger",
+          "superlative": "am traurigsten",
+          "en": "sad",
+          "example": "Warum bist du so traurig?",
+          "rank": 1204
+        },
+        {
+          "lemma": "müde",
+          "pos": "adj",
+          "comparative": "müder",
+          "superlative": "am müdesten",
+          "en": "tired",
+          "example": "Ich bin heute sehr müde.",
+          "rank": 1083
+        },
+        {
+          "lemma": "fröhlich",
+          "pos": "adj",
+          "comparative": "fröhlicher",
+          "superlative": "am fröhlichsten",
+          "en": "cheerful",
+          "example": "Er ist immer fröhlich.",
+          "rank": 4965
+        },
+        {
+          "lemma": "wütend",
+          "pos": "adj",
+          "comparative": "wütender",
+          "superlative": "am wütendsten",
+          "en": "angry",
+          "example": "Mein Chef war sehr wütend.",
+          "rank": 1100
+        },
+        {
+          "lemma": "nervös",
+          "pos": "adj",
+          "comparative": "nervöser",
+          "superlative": "am nervösesten",
+          "en": "nervous",
+          "example": "Vor der Prüfung bin ich nervös.",
+          "rank": 1324
+        },
+        {
+          "lemma": "ruhig",
+          "pos": "adj",
+          "comparative": "ruhiger",
+          "superlative": "am ruhigsten",
+          "en": "calm, quiet",
+          "example": "Bitte sei ruhig!",
+          "rank": 434
+        },
+        {
+          "lemma": "zufrieden",
+          "pos": "adj",
+          "comparative": "zufriedener",
+          "superlative": "am zufriedensten",
+          "en": "content, satisfied",
+          "example": "Ich bin mit der Wohnung zufrieden.",
+          "rank": 1483
+        },
+        {
+          "lemma": "aufgeregt",
+          "pos": "adj",
+          "comparative": "aufgeregter",
+          "superlative": "am aufgeregtesten",
+          "en": "excited, agitated",
+          "example": "Die Kinder sind ganz aufgeregt.",
+          "rank": 2205
+        },
+        {
+          "lemma": "einsam",
+          "pos": "adj",
+          "comparative": "einsamer",
+          "superlative": "am einsamsten",
+          "en": "lonely",
+          "example": "Am Anfang war ich oft einsam.",
+          "rank": 2291
+        }
+      ]
+    },
+    {
+      "id": "a1-04",
+      "title": "Haus & Räume",
+      "topics": [
+        "wohnen"
+      ],
+      "words": [
+        {
+          "lemma": "Haus",
+          "pos": "noun",
+          "gender": "das",
+          "plural": "Häuser",
+          "en": "house",
+          "example": "Wir haben ein großes Haus.",
+          "rank": 255
+        },
+        {
+          "lemma": "Wohnung",
+          "pos": "noun",
+          "gender": "die",
+          "plural": "Wohnungen",
+          "en": "flat, apartment",
+          "example": "Die Wohnung hat drei Zimmer.",
+          "rank": 808
+        },
+        {
+          "lemma": "Zimmer",
+          "pos": "noun",
+          "gender": "das",
+          "plural": "Zimmer",
+          "en": "room",
+          "example": "Mein Zimmer ist klein, aber hell.",
+          "rank": 513
+        },
+        {
+          "lemma": "Küche",
+          "pos": "noun",
+          "gender": "die",
+          "plural": "Küchen",
+          "en": "kitchen",
+          "example": "In der Küche riecht es gut.",
+          "rank": 1341
+        },
+        {
+          "lemma": "Bad",
+          "pos": "noun",
+          "gender": "das",
+          "plural": "Bäder",
+          "en": "bathroom",
+          "example": "Das Bad ist neben der Küche.",
+          "rank": 1828
+        },
+        {
+          "lemma": "Schlafzimmer",
+          "pos": "noun",
+          "gender": "das",
+          "plural": "Schlafzimmer",
+          "en": "bedroom",
+          "example": "Das Schlafzimmer liegt nach hinten.",
+          "rank": 2458
+        },
+        {
+          "lemma": "Wohnzimmer",
+          "pos": "noun",
+          "gender": "das",
+          "plural": "Wohnzimmer",
+          "en": "living room",
+          "example": "Wir sitzen abends im Wohnzimmer.",
+          "rank": 3990
+        },
+        {
+          "lemma": "Kinderzimmer",
+          "pos": "noun",
+          "gender": "das",
+          "plural": "Kinderzimmer",
+          "en": "children's room",
+          "example": "Das Kinderzimmer ist bunt.",
+          "rank": 12615
+        },
+        {
+          "lemma": "Flur",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Flure",
+          "en": "hallway, corridor",
+          "example": "Die Schuhe stehen im Flur.",
+          "rank": 4081
+        },
+        {
+          "lemma": "Balkon",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Balkone",
+          "en": "balcony",
+          "example": "Wir frühstücken oft auf dem Balkon.",
+          "rank": 7317
+        },
+        {
+          "lemma": "Garten",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Gärten",
+          "en": "garden",
+          "example": "Im Garten stehen zwei Bäume.",
+          "rank": 1878
+        },
+        {
+          "lemma": "Keller",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Keller",
+          "en": "cellar, basement",
+          "example": "Die Fahrräder sind im Keller.",
+          "rank": 1673
+        },
+        {
+          "lemma": "Tür",
+          "pos": "noun",
+          "gender": "die",
+          "plural": "Türen",
+          "en": "door",
+          "example": "Bitte mach die Tür zu.",
+          "rank": 401
+        },
+        {
+          "lemma": "Fenster",
+          "pos": "noun",
+          "gender": "das",
+          "plural": "Fenster",
+          "en": "window",
+          "example": "Das Fenster ist offen.",
+          "rank": 980
+        },
+        {
+          "lemma": "Wand",
+          "pos": "noun",
+          "gender": "die",
+          "plural": "Wände",
+          "en": "wall",
+          "example": "An der Wand hängt ein Bild.",
+          "rank": 1604
+        },
+        {
+          "lemma": "Boden",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Böden",
+          "en": "floor, ground",
+          "example": "Der Boden ist noch nass.",
+          "rank": 846
+        },
+        {
+          "lemma": "Decke",
+          "pos": "noun",
+          "gender": "die",
+          "plural": "Decken",
+          "en": "ceiling, blanket",
+          "example": "Die Lampe hängt an der Decke.",
+          "rank": 2483
+        },
+        {
+          "lemma": "Treppe",
+          "pos": "noun",
+          "gender": "die",
+          "plural": "Treppen",
+          "en": "stairs",
+          "example": "Wir nehmen die Treppe, nicht den Aufzug.",
+          "rank": 2672
+        },
+        {
+          "lemma": "Dach",
+          "pos": "noun",
+          "gender": "das",
+          "plural": "Dächer",
+          "en": "roof",
+          "example": "Das Dach ist alt.",
+          "rank": 1710
+        },
+        {
+          "lemma": "Toilette",
+          "pos": "noun",
+          "gender": "die",
+          "plural": "Toiletten",
+          "en": "toilet",
+          "example": "Wo ist bitte die Toilette?",
+          "rank": 2139
+        },
+        {
+          "lemma": "Miete",
+          "pos": "noun",
+          "gender": "die",
+          "plural": "Mieten",
+          "en": "rent",
+          "example": "Die Miete ist sehr hoch.",
+          "rank": 3143
+        },
+        {
+          "lemma": "Nachbar",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Nachbarn",
+          "en": "neighbour",
+          "example": "Mein Nachbar ist sehr nett.",
+          "rank": 4596
+        },
+        {
+          "lemma": "mieten",
+          "pos": "verb",
+          "aux": "haben",
+          "forms": [
+            "mietet",
+            "mietete",
+            "gemietet"
+          ],
+          "en": "to rent",
+          "example": "Wir mieten eine kleine Wohnung.",
+          "rank": 6818
+        },
+        {
+          "lemma": "umziehen",
+          "pos": "verb",
+          "aux": "sein",
+          "separable": true,
+          "forms": [
+            "zieht um",
+            "zog um",
+            "umgezogen"
+          ],
+          "en": "to move house",
+          "example": "Nächsten Monat ziehen wir um.",
+          "rank": 3680
+        },
+        {
+          "lemma": "putzen",
+          "pos": "verb",
+          "aux": "haben",
+          "forms": [
+            "putzt",
+            "putzte",
+            "geputzt"
+          ],
+          "en": "to clean",
+          "example": "Am Samstag putze ich die Wohnung.",
+          "rank": 4506
+        }
+      ]
+    },
+    {
+      "id": "a1-05",
+      "title": "Möbel & Haushalt",
+      "topics": [
+        "wohnen"
+      ],
+      "words": [
+        {
+          "lemma": "Tisch",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Tische",
+          "en": "table",
+          "example": "Das Essen steht auf dem Tisch.",
+          "rank": 926
+        },
+        {
+          "lemma": "Stuhl",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Stühle",
+          "en": "chair",
+          "example": "Nimm dir bitte einen Stuhl.",
+          "rank": 2128
+        },
+        {
+          "lemma": "Bett",
+          "pos": "noun",
+          "gender": "das",
+          "plural": "Betten",
+          "en": "bed",
+          "example": "Das Bett ist sehr bequem.",
+          "rank": 554
+        },
+        {
+          "lemma": "Schrank",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Schränke",
+          "en": "cupboard, wardrobe",
+          "example": "Die Teller sind im Schrank.",
+          "rank": 2746
+        },
+        {
+          "lemma": "Sofa",
+          "pos": "noun",
+          "gender": "das",
+          "plural": "Sofas",
+          "en": "sofa",
+          "example": "Der Hund schläft auf dem Sofa.",
+          "rank": 4838
+        },
+        {
+          "lemma": "Sessel",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Sessel",
+          "en": "armchair",
+          "example": "Opa sitzt in seinem Sessel.",
+          "rank": 9180
+        },
+        {
+          "lemma": "Regal",
+          "pos": "noun",
+          "gender": "das",
+          "plural": "Regale",
+          "en": "shelf",
+          "example": "Im Regal stehen viele Bücher.",
+          "rank": 8681
+        },
+        {
+          "lemma": "Lampe",
+          "pos": "noun",
+          "gender": "die",
+          "plural": "Lampen",
+          "en": "lamp",
+          "example": "Mach bitte die Lampe an.",
+          "rank": 4977
+        },
+        {
+          "lemma": "Teppich",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Teppiche",
+          "en": "carpet, rug",
+          "example": "Der Teppich ist aus der Türkei.",
+          "rank": 4176
+        },
+        {
+          "lemma": "Spiegel",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Spiegel",
+          "en": "mirror",
+          "example": "Im Bad hängt ein großer Spiegel.",
+          "rank": 2502
+        },
+        {
+          "lemma": "Kühlschrank",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Kühlschränke",
+          "en": "fridge",
+          "example": "Die Milch ist im Kühlschrank.",
+          "rank": 3320
+        },
+        {
+          "lemma": "Herd",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Herde",
+          "en": "stove, cooker",
+          "example": "Der Herd ist noch heiß.",
+          "rank": 8152
+        },
+        {
+          "lemma": "Waschmaschine",
+          "pos": "noun",
+          "gender": "die",
+          "plural": "Waschmaschinen",
+          "en": "washing machine",
+          "example": "Die Waschmaschine ist kaputt.",
+          "rank": 12051
+        },
+        {
+          "lemma": "Topf",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Töpfe",
+          "en": "pot",
+          "example": "Die Suppe ist im Topf.",
+          "rank": 7941
+        },
+        {
+          "lemma": "Pfanne",
+          "pos": "noun",
+          "gender": "die",
+          "plural": "Pfannen",
+          "en": "pan",
+          "example": "Brate das Ei in der Pfanne.",
+          "rank": 11591
+        },
+        {
+          "lemma": "Teller",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Teller",
+          "en": "plate",
+          "example": "Stell bitte vier Teller auf den Tisch.",
+          "rank": 3595
+        },
+        {
+          "lemma": "Glas",
+          "pos": "noun",
+          "gender": "das",
+          "plural": "Gläser",
+          "en": "glass",
+          "example": "Ich trinke ein Glas Wasser.",
+          "rank": 1389
+        },
+        {
+          "lemma": "Tasse",
+          "pos": "noun",
+          "gender": "die",
+          "plural": "Tassen",
+          "en": "cup",
+          "example": "Möchtest du eine Tasse Tee?",
+          "rank": 3059
+        },
+        {
+          "lemma": "Messer",
+          "pos": "noun",
+          "gender": "das",
+          "plural": "Messer",
+          "en": "knife",
+          "example": "Das Messer ist nicht scharf.",
+          "rank": 1452
+        },
+        {
+          "lemma": "Gabel",
+          "pos": "noun",
+          "gender": "die",
+          "plural": "Gabeln",
+          "en": "fork",
+          "example": "Die Gabel liegt links vom Teller.",
+          "rank": 9483
+        },
+        {
+          "lemma": "Löffel",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Löffel",
+          "en": "spoon",
+          "example": "Ich brauche einen Löffel für die Suppe.",
+          "rank": 6236
+        },
+        {
+          "lemma": "Handtuch",
+          "pos": "noun",
+          "gender": "das",
+          "plural": "Handtücher",
+          "en": "towel",
+          "example": "Das Handtuch hängt im Bad.",
+          "rank": 5403
+        },
+        {
+          "lemma": "Seife",
+          "pos": "noun",
+          "gender": "die",
+          "plural": "Seifen",
+          "en": "soap",
+          "example": "Die Seife riecht nach Zitrone.",
+          "rank": 6304
+        },
+        {
+          "lemma": "kochen",
+          "pos": "verb",
+          "aux": "haben",
+          "forms": [
+            "kocht",
+            "kochte",
+            "gekocht"
+          ],
+          "en": "to cook",
+          "example": "Heute koche ich Nudeln.",
+          "rank": 2035
+        },
+        {
+          "lemma": "waschen",
+          "pos": "verb",
+          "aux": "haben",
+          "forms": [
+            "wäscht",
+            "wusch",
+            "gewaschen"
+          ],
+          "en": "to wash",
+          "example": "Ich wasche die Wäsche am Sonntag.",
+          "rank": 2777
+        }
+      ]
+    },
+    {
+      "id": "a1-06",
+      "title": "Essen & Trinken",
+      "topics": [
+        "essen"
+      ],
+      "words": [
+        {
+          "lemma": "Brot",
+          "pos": "noun",
+          "gender": "das",
+          "plural": "Brote",
+          "en": "bread",
+          "example": "Deutsches Brot schmeckt mir gut.",
+          "rank": 2535
+        },
+        {
+          "lemma": "Brötchen",
+          "pos": "noun",
+          "gender": "das",
+          "plural": "Brötchen",
+          "en": "bread roll",
+          "example": "Ich hole am Morgen frische Brötchen.",
+          "rank": 8261
+        },
+        {
+          "lemma": "Butter",
+          "pos": "noun",
+          "gender": "die",
+          "en": "butter",
+          "example": "Die Butter ist im Kühlschrank.",
+          "rank": 4847
+        },
+        {
+          "lemma": "Käse",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Käse",
+          "en": "cheese",
+          "example": "Ich esse gern Käse zum Frühstück.",
+          "rank": 2961
+        },
+        {
+          "lemma": "Ei",
+          "pos": "noun",
+          "gender": "das",
+          "plural": "Eier",
+          "en": "egg",
+          "example": "Möchtest du ein Ei?",
+          "rank": 2892
+        },
+        {
+          "lemma": "Milch",
+          "pos": "noun",
+          "gender": "die",
+          "en": "milk",
+          "example": "Wir brauchen noch Milch.",
+          "rank": 2028
+        },
+        {
+          "lemma": "Wasser",
+          "pos": "noun",
+          "gender": "das",
+          "en": "water",
+          "example": "Ein Glas Wasser, bitte.",
+          "rank": 491
+        },
+        {
+          "lemma": "Kaffee",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Kaffees",
+          "en": "coffee",
+          "example": "Ich trinke morgens zwei Kaffee.",
+          "rank": 706
+        },
+        {
+          "lemma": "Tee",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Tees",
+          "en": "tea",
+          "example": "Möchten Sie Tee oder Kaffee?",
+          "rank": 1306
+        },
+        {
+          "lemma": "Saft",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Säfte",
+          "en": "juice",
+          "example": "Der Saft ist frisch gepresst.",
+          "rank": 4853
+        },
+        {
+          "lemma": "Bier",
+          "pos": "noun",
+          "gender": "das",
+          "plural": "Biere",
+          "en": "beer",
+          "example": "In Bayern trinkt man viel Bier.",
+          "rank": 1014
+        },
+        {
+          "lemma": "Wein",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Weine",
+          "en": "wine",
+          "example": "Der Wein kommt aus Italien.",
+          "rank": 1248
+        },
+        {
+          "lemma": "Fleisch",
+          "pos": "noun",
+          "gender": "das",
+          "en": "meat",
+          "example": "Ich esse kein Fleisch.",
+          "rank": 1582
+        },
+        {
+          "lemma": "Fisch",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Fische",
+          "en": "fish",
+          "example": "Freitags gibt es oft Fisch.",
+          "rank": 1863
+        },
+        {
+          "lemma": "Gemüse",
+          "pos": "noun",
+          "gender": "das",
+          "en": "vegetables",
+          "example": "Gemüse ist gesund.",
+          "rank": 4861
+        },
+        {
+          "lemma": "Obst",
+          "pos": "noun",
+          "gender": "das",
+          "en": "fruit",
+          "example": "Iss jeden Tag Obst!",
+          "rank": 7235
+        },
+        {
+          "lemma": "Apfel",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Äpfel",
+          "en": "apple",
+          "example": "Der Apfel ist rot und süß.",
+          "rank": 5228
+        },
+        {
+          "lemma": "Banane",
+          "pos": "noun",
+          "gender": "die",
+          "plural": "Bananen",
+          "en": "banana",
+          "example": "Die Banane ist noch grün.",
+          "rank": 9786
+        },
+        {
+          "lemma": "Kartoffel",
+          "pos": "noun",
+          "gender": "die",
+          "plural": "Kartoffeln",
+          "en": "potato",
+          "example": "Zum Fisch gibt es Kartoffeln.",
+          "rank": 14091
+        },
+        {
+          "lemma": "Reis",
+          "pos": "noun",
+          "gender": "der",
+          "en": "rice",
+          "example": "Der Reis ist noch nicht fertig.",
+          "rank": 5129
+        },
+        {
+          "lemma": "Zucker",
+          "pos": "noun",
+          "gender": "der",
+          "en": "sugar",
+          "example": "Nimmst du Zucker in den Tee?",
+          "rank": 3048
+        },
+        {
+          "lemma": "Suppe",
+          "pos": "noun",
+          "gender": "die",
+          "plural": "Suppen",
+          "en": "soup",
+          "example": "Die Suppe ist zu heiß.",
+          "rank": 3171
+        },
+        {
+          "lemma": "Salat",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Salate",
+          "en": "salad, lettuce",
+          "example": "Ich nehme einen kleinen Salat.",
+          "rank": 4752
+        },
+        {
+          "lemma": "essen",
+          "pos": "verb",
+          "aux": "haben",
+          "forms": [
+            "isst",
+            "aß",
+            "gegessen"
+          ],
+          "en": "to eat",
+          "example": "Wann essen wir?",
+          "rank": 266
+        },
+        {
+          "lemma": "trinken",
+          "pos": "verb",
+          "aux": "haben",
+          "forms": [
+            "trinkt",
+            "trank",
+            "getrunken"
+          ],
+          "en": "to drink",
+          "example": "Was möchtest du trinken?",
+          "rank": 585
+        }
+      ]
+    },
+    {
+      "id": "a1-07",
+      "title": "Einkaufen & Preise",
+      "topics": [
+        "einkaufen",
+        "geld"
+      ],
+      "words": [
+        {
+          "lemma": "Geld",
+          "pos": "noun",
+          "gender": "das",
+          "en": "money",
+          "example": "Ich habe kein Geld dabei.",
+          "rank": 193
+        },
+        {
+          "lemma": "Euro",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Euro",
+          "en": "euro",
+          "example": "Das kostet zwölf Euro.",
+          "rank": 3526
+        },
+        {
+          "lemma": "Cent",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Cent",
+          "en": "cent",
+          "example": "Das Brötchen kostet fünfzig Cent.",
+          "rank": 2850
+        },
+        {
+          "lemma": "Preis",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Preise",
+          "en": "price",
+          "example": "Der Preis ist zu hoch.",
+          "rank": 1141
+        },
+        {
+          "lemma": "Kasse",
+          "pos": "noun",
+          "gender": "die",
+          "plural": "Kassen",
+          "en": "checkout, till",
+          "example": "Bitte zahlen Sie an der Kasse.",
+          "rank": 5006
+        },
+        {
+          "lemma": "Supermarkt",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Supermärkte",
+          "en": "supermarket",
+          "example": "Der Supermarkt schließt um 20 Uhr.",
+          "rank": 6135
+        },
+        {
+          "lemma": "Markt",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Märkte",
+          "en": "market",
+          "example": "Samstags gehe ich auf den Markt.",
+          "rank": 3073
+        },
+        {
+          "lemma": "Geschäft",
+          "pos": "noun",
+          "gender": "das",
+          "plural": "Geschäfte",
+          "en": "shop, business",
+          "example": "Das Geschäft ist heute geschlossen.",
+          "rank": 878
+        },
+        {
+          "lemma": "Laden",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Läden",
+          "en": "shop",
+          "example": "An der Ecke gibt es einen kleinen Laden.",
+          "rank": 868
+        },
+        {
+          "lemma": "Bäckerei",
+          "pos": "noun",
+          "gender": "die",
+          "plural": "Bäckereien",
+          "en": "bakery",
+          "example": "Die Bäckerei öffnet um sechs Uhr.",
+          "rank": 11355
+        },
+        {
+          "lemma": "Kunde",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Kunden",
+          "en": "customer",
+          "example": "Der Kunde wartet an der Kasse.",
+          "rank": 3959
+        },
+        {
+          "lemma": "Verkäufer",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Verkäufer",
+          "en": "salesperson",
+          "example": "Der Verkäufer war sehr freundlich.",
+          "rank": 7435
+        },
+        {
+          "lemma": "Rechnung",
+          "pos": "noun",
+          "gender": "die",
+          "plural": "Rechnungen",
+          "en": "bill, invoice",
+          "example": "Die Rechnung kommt per Post.",
+          "rank": 2275
+        },
+        {
+          "lemma": "Quittung",
+          "pos": "noun",
+          "gender": "die",
+          "plural": "Quittungen",
+          "en": "receipt",
+          "example": "Brauchen Sie eine Quittung?",
+          "rank": 8970
+        },
+        {
+          "lemma": "Tüte",
+          "pos": "noun",
+          "gender": "die",
+          "plural": "Tüten",
+          "en": "bag",
+          "example": "Möchten Sie eine Tüte?",
+          "rank": 5381
+        },
+        {
+          "lemma": "Angebot",
+          "pos": "noun",
+          "gender": "das",
+          "plural": "Angebote",
+          "en": "offer, special",
+          "example": "Heute ist Kaffee im Angebot.",
+          "rank": 1511
+        },
+        {
+          "lemma": "Liste",
+          "pos": "noun",
+          "gender": "die",
+          "plural": "Listen",
+          "en": "list",
+          "example": "Ich schreibe eine Liste für den Einkauf.",
+          "rank": 1144
+        },
+        {
+          "lemma": "kaufen",
+          "pos": "verb",
+          "aux": "haben",
+          "forms": [
+            "kauft",
+            "kaufte",
+            "gekauft"
+          ],
+          "en": "to buy",
+          "example": "Ich kaufe ein neues Handy.",
+          "rank": 754
+        },
+        {
+          "lemma": "bezahlen",
+          "pos": "verb",
+          "aux": "haben",
+          "forms": [
+            "bezahlt",
+            "bezahlte",
+            "bezahlt"
+          ],
+          "en": "to pay",
+          "example": "Kann ich mit Karte bezahlen?",
+          "rank": 960
+        },
+        {
+          "lemma": "kosten",
+          "pos": "verb",
+          "aux": "haben",
+          "forms": [
+            "kostet",
+            "kostete",
+            "gekostet"
+          ],
+          "en": "to cost",
+          "example": "Was kostet das?",
+          "rank": 1698
+        },
+        {
+          "lemma": "brauchen",
+          "pos": "verb",
+          "aux": "haben",
+          "forms": [
+            "braucht",
+            "brauchte",
+            "gebraucht"
+          ],
+          "en": "to need",
+          "example": "Wir brauchen noch Brot.",
+          "rank": 289
+        },
+        {
+          "lemma": "suchen",
+          "pos": "verb",
+          "aux": "haben",
+          "forms": [
+            "sucht",
+            "suchte",
+            "gesucht"
+          ],
+          "en": "to look for",
+          "example": "Ich suche eine Winterjacke.",
+          "rank": 446
+        },
+        {
+          "lemma": "teuer",
+          "pos": "adj",
+          "comparative": "teurer",
+          "superlative": "am teuersten",
+          "en": "expensive",
+          "example": "Die Wohnung ist zu teuer.",
+          "rank": 2154
+        },
+        {
+          "lemma": "billig",
+          "pos": "adj",
+          "comparative": "billiger",
+          "superlative": "am billigsten",
+          "en": "cheap",
+          "example": "Die Schuhe waren sehr billig.",
+          "rank": 4577
+        },
+        {
+          "lemma": "günstig",
+          "pos": "adj",
+          "comparative": "günstiger",
+          "superlative": "am günstigsten",
+          "en": "reasonably priced",
+          "example": "Hier ist das Obst günstig.",
+          "rank": 8908
+        }
+      ]
+    },
+    {
+      "id": "a1-08",
+      "title": "Kleidung & Farben",
+      "topics": [
+        "kleidung"
+      ],
+      "words": [
+        {
+          "lemma": "Kleidung",
+          "pos": "noun",
+          "gender": "die",
+          "en": "clothing",
+          "example": "Nimm warme Kleidung mit.",
+          "rank": 2528
+        },
+        {
+          "lemma": "Hose",
+          "pos": "noun",
+          "gender": "die",
+          "plural": "Hosen",
+          "en": "trousers",
+          "example": "Die Hose ist mir zu lang.",
+          "rank": 1797
+        },
+        {
+          "lemma": "Hemd",
+          "pos": "noun",
+          "gender": "das",
+          "plural": "Hemden",
+          "en": "shirt",
+          "example": "Er trägt ein weißes Hemd.",
+          "rank": 2548
+        },
+        {
+          "lemma": "T-Shirt",
+          "pos": "noun",
+          "gender": "das",
+          "plural": "T-Shirts",
+          "en": "T-shirt",
+          "example": "Das T-Shirt kostet zehn Euro.",
+          "rank": 5929
+        },
+        {
+          "lemma": "Pullover",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Pullover",
+          "en": "sweater",
+          "example": "Zieh einen Pullover an, es ist kalt.",
+          "rank": 8530
+        },
+        {
+          "lemma": "Jacke",
+          "pos": "noun",
+          "gender": "die",
+          "plural": "Jacken",
+          "en": "jacket",
+          "example": "Meine Jacke hängt im Flur.",
+          "rank": 2450
+        },
+        {
+          "lemma": "Mantel",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Mäntel",
+          "en": "coat",
+          "example": "Im Winter brauche ich einen dicken Mantel.",
+          "rank": 2690
+        },
+        {
+          "lemma": "Kleid",
+          "pos": "noun",
+          "gender": "das",
+          "plural": "Kleider",
+          "en": "dress",
+          "example": "Sie trägt ein blaues Kleid.",
+          "rank": 1395
+        },
+        {
+          "lemma": "Rock",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Röcke",
+          "en": "skirt",
+          "example": "Der Rock ist zu kurz.",
+          "rank": 2493
+        },
+        {
+          "lemma": "Schuh",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Schuhe",
+          "en": "shoe",
+          "example": "Die Schuhe sind neu.",
+          "rank": 4183
+        },
+        {
+          "lemma": "Socke",
+          "pos": "noun",
+          "gender": "die",
+          "plural": "Socken",
+          "en": "sock",
+          "example": "Wo ist meine zweite Socke?",
+          "rank": 11111
+        },
+        {
+          "lemma": "Mütze",
+          "pos": "noun",
+          "gender": "die",
+          "plural": "Mützen",
+          "en": "cap, woolly hat",
+          "example": "Setz die Mütze auf!",
+          "rank": 5434
+        },
+        {
+          "lemma": "Schal",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Schals",
+          "en": "scarf",
+          "example": "Der Schal ist aus Wolle.",
+          "rank": 7621
+        },
+        {
+          "lemma": "Handschuh",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Handschuhe",
+          "en": "glove",
+          "example": "Ich habe meine Handschuhe verloren.",
+          "rank": 9623
+        },
+        {
+          "lemma": "Größe",
+          "pos": "noun",
+          "gender": "die",
+          "plural": "Größen",
+          "en": "size",
+          "example": "Haben Sie das in Größe 40?",
+          "rank": 2257
+        },
+        {
+          "lemma": "rot",
+          "pos": "adj",
+          "en": "red",
+          "example": "Die Ampel ist rot.",
+          "rank": 1930
+        },
+        {
+          "lemma": "blau",
+          "pos": "adj",
+          "en": "blue",
+          "example": "Der Himmel ist heute blau.",
+          "rank": 2566
+        },
+        {
+          "lemma": "grün",
+          "pos": "adj",
+          "en": "green",
+          "example": "Im Frühling wird alles grün.",
+          "rank": 2943
+        },
+        {
+          "lemma": "gelb",
+          "pos": "adj",
+          "en": "yellow",
+          "example": "Die Zitrone ist gelb.",
+          "rank": 5955
+        },
+        {
+          "lemma": "schwarz",
+          "pos": "adj",
+          "en": "black",
+          "example": "Ich trinke Kaffee schwarz.",
+          "rank": 1912
+        },
+        {
+          "lemma": "weiß",
+          "pos": "adj",
+          "en": "white",
+          "example": "Der Schnee ist weiß.",
+          "rank": 70
+        },
+        {
+          "lemma": "braun",
+          "pos": "adj",
+          "en": "brown",
+          "example": "Sie hat braune Augen.",
+          "rank": 6208
+        },
+        {
+          "lemma": "grau",
+          "pos": "adj",
+          "en": "grey",
+          "example": "Heute ist der Himmel grau.",
+          "rank": 7631
+        },
+        {
+          "lemma": "anziehen",
+          "pos": "verb",
+          "aux": "haben",
+          "separable": true,
+          "forms": [
+            "zieht an",
+            "zog an",
+            "angezogen"
+          ],
+          "en": "to put on (clothes)",
+          "example": "Zieh bitte die Jacke an.",
+          "rank": 2381
+        },
+        {
+          "lemma": "tragen",
+          "pos": "verb",
+          "aux": "haben",
+          "forms": [
+            "trägt",
+            "trug",
+            "getragen"
+          ],
+          "en": "to wear, to carry",
+          "example": "Er trägt immer eine Brille.",
+          "rank": 823
+        }
+      ]
+    },
+    {
+      "id": "a1-09",
+      "title": "Körper & Befinden",
+      "topics": [
+        "koerper"
+      ],
+      "words": [
+        {
+          "lemma": "Körper",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Körper",
+          "en": "body",
+          "example": "Sport ist gut für den Körper.",
+          "rank": 792
+        },
+        {
+          "lemma": "Kopf",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Köpfe",
+          "en": "head",
+          "example": "Mein Kopf tut weh.",
+          "rank": 375
+        },
+        {
+          "lemma": "Haar",
+          "pos": "noun",
+          "gender": "das",
+          "plural": "Haare",
+          "en": "hair",
+          "example": "Sie hat lange Haare.",
+          "rank": 1702
+        },
+        {
+          "lemma": "Auge",
+          "pos": "noun",
+          "gender": "das",
+          "plural": "Augen",
+          "en": "eye",
+          "example": "Das Kind hat blaue Augen.",
+          "rank": 968
+        },
+        {
+          "lemma": "Ohr",
+          "pos": "noun",
+          "gender": "das",
+          "plural": "Ohren",
+          "en": "ear",
+          "example": "Mein linkes Ohr tut weh.",
+          "rank": 2247
+        },
+        {
+          "lemma": "Nase",
+          "pos": "noun",
+          "gender": "die",
+          "plural": "Nasen",
+          "en": "nose",
+          "example": "Meine Nase ist verstopft.",
+          "rank": 1226
+        },
+        {
+          "lemma": "Mund",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Münder",
+          "en": "mouth",
+          "example": "Mach bitte den Mund auf.",
+          "rank": 854
+        },
+        {
+          "lemma": "Zahn",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Zähne",
+          "en": "tooth",
+          "example": "Ein Zahn tut mir seit gestern weh.",
+          "rank": 4886
+        },
+        {
+          "lemma": "Hals",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Hälse",
+          "en": "neck, throat",
+          "example": "Ich habe Halsschmerzen im Hals.",
+          "rank": 1328
+        },
+        {
+          "lemma": "Arm",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Arme",
+          "en": "arm",
+          "example": "Mein rechter Arm ist gebrochen.",
+          "rank": 1034
+        },
+        {
+          "lemma": "Hand",
+          "pos": "noun",
+          "gender": "die",
+          "plural": "Hände",
+          "en": "hand",
+          "example": "Wasch dir bitte die Hände.",
+          "rank": 463
+        },
+        {
+          "lemma": "Finger",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Finger",
+          "en": "finger",
+          "example": "Ich habe mir den Finger geschnitten.",
+          "rank": 1022
+        },
+        {
+          "lemma": "Bein",
+          "pos": "noun",
+          "gender": "das",
+          "plural": "Beine",
+          "en": "leg",
+          "example": "Nach dem Sport tun mir die Beine weh.",
+          "rank": 1627
+        },
+        {
+          "lemma": "Fuß",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Füße",
+          "en": "foot",
+          "example": "Wir gehen zu Fuß.",
+          "rank": 1239
+        },
+        {
+          "lemma": "Rücken",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Rücken",
+          "en": "back",
+          "example": "Mein Rücken tut oft weh.",
+          "rank": 1150
+        },
+        {
+          "lemma": "Bauch",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Bäuche",
+          "en": "belly, stomach",
+          "example": "Mir tut der Bauch weh.",
+          "rank": 2384
+        },
+        {
+          "lemma": "Herz",
+          "pos": "noun",
+          "gender": "das",
+          "plural": "Herzen",
+          "en": "heart",
+          "example": "Mein Herz schlägt schnell.",
+          "rank": 595
+        },
+        {
+          "lemma": "Gesicht",
+          "pos": "noun",
+          "gender": "das",
+          "plural": "Gesichter",
+          "en": "face",
+          "example": "Sie hat ein freundliches Gesicht.",
+          "rank": 571
+        },
+        {
+          "lemma": "Haut",
+          "pos": "noun",
+          "gender": "die",
+          "plural": "Häute",
+          "en": "skin",
+          "example": "Meine Haut ist sehr trocken.",
+          "rank": 1193
+        },
+        {
+          "lemma": "wehtun",
+          "pos": "verb",
+          "aux": "haben",
+          "separable": true,
+          "forms": [
+            "tut weh",
+            "tat weh",
+            "wehgetan"
+          ],
+          "en": "to hurt",
+          "example": "Wo tut es weh?",
+          "rank": 2407
+        },
+        {
+          "lemma": "schlafen",
+          "pos": "verb",
+          "aux": "haben",
+          "forms": [
+            "schläft",
+            "schlief",
+            "geschlafen"
+          ],
+          "en": "to sleep",
+          "example": "Ich habe schlecht geschlafen.",
+          "rank": 566
+        },
+        {
+          "lemma": "gesund",
+          "pos": "adj",
+          "comparative": "gesünder",
+          "superlative": "am gesündesten",
+          "en": "healthy",
+          "example": "Obst ist gesund.",
+          "rank": 1453
+        },
+        {
+          "lemma": "krank",
+          "pos": "adj",
+          "comparative": "kränker",
+          "superlative": "am kränksten",
+          "en": "ill, sick",
+          "example": "Mein Sohn ist krank.",
+          "rank": 724
+        },
+        {
+          "lemma": "groß",
+          "pos": "adj",
+          "comparative": "größer",
+          "superlative": "am größten",
+          "en": "big, tall",
+          "example": "Mein Bruder ist sehr groß.",
+          "rank": 721
+        },
+        {
+          "lemma": "klein",
+          "pos": "adj",
+          "comparative": "kleiner",
+          "superlative": "am kleinsten",
+          "en": "small",
+          "example": "Die Wohnung ist klein.",
+          "rank": 1017
+        }
+      ]
+    },
+    {
+      "id": "a1-10",
+      "title": "Beim Arzt",
+      "topics": [
+        "gesundheit"
+      ],
+      "words": [
+        {
+          "lemma": "Arzt",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Ärzte",
+          "en": "doctor (male)",
+          "example": "Ich gehe morgen zum Arzt.",
+          "rank": 729
+        },
+        {
+          "lemma": "Ärztin",
+          "pos": "noun",
+          "gender": "die",
+          "plural": "Ärztinnen",
+          "en": "doctor (female)",
+          "example": "Die Ärztin hat viel Zeit für mich.",
+          "rank": 3895
+        },
+        {
+          "lemma": "Zahnarzt",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Zahnärzte",
+          "en": "dentist",
+          "example": "Ich habe Angst vor dem Zahnarzt.",
+          "rank": 5780
+        },
+        {
+          "lemma": "Praxis",
+          "pos": "noun",
+          "gender": "die",
+          "plural": "Praxen",
+          "en": "doctor's practice",
+          "example": "Die Praxis ist am Mittwoch geschlossen.",
+          "rank": 4662
+        },
+        {
+          "lemma": "Krankenhaus",
+          "pos": "noun",
+          "gender": "das",
+          "plural": "Krankenhäuser",
+          "en": "hospital",
+          "example": "Er liegt seit gestern im Krankenhaus.",
+          "rank": 811
+        },
+        {
+          "lemma": "Termin",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Termine",
+          "en": "appointment",
+          "example": "Ich habe um zehn Uhr einen Termin.",
+          "rank": 1935
+        },
+        {
+          "lemma": "Wartezimmer",
+          "pos": "noun",
+          "gender": "das",
+          "plural": "Wartezimmer",
+          "en": "waiting room",
+          "example": "Im Wartezimmer sitzen viele Leute.",
+          "rank": 17848
+        },
+        {
+          "lemma": "Krankenkasse",
+          "pos": "noun",
+          "gender": "die",
+          "plural": "Krankenkassen",
+          "en": "health insurance fund",
+          "example": "Welche Krankenkasse haben Sie?",
+          "rank": 34379
+        },
+        {
+          "lemma": "Medikament",
+          "pos": "noun",
+          "gender": "das",
+          "plural": "Medikamente",
+          "en": "medicine, drug",
+          "example": "Nehmen Sie das Medikament dreimal am Tag.",
+          "rank": 6936
+        },
+        {
+          "lemma": "Tablette",
+          "pos": "noun",
+          "gender": "die",
+          "plural": "Tabletten",
+          "en": "tablet, pill",
+          "example": "Ich nehme eine Tablette gegen Kopfschmerzen.",
+          "rank": 14139
+        },
+        {
+          "lemma": "Schmerz",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Schmerzen",
+          "en": "pain",
+          "example": "Ich habe Schmerzen im Rücken.",
+          "rank": 1499
+        },
+        {
+          "lemma": "Fieber",
+          "pos": "noun",
+          "gender": "das",
+          "en": "fever",
+          "example": "Das Kind hat hohes Fieber.",
+          "rank": 3237
+        },
+        {
+          "id": "husten-noun",
+          "lemma": "Husten",
+          "pos": "noun",
+          "gender": "der",
+          "en": "cough",
+          "example": "Der Husten geht nicht weg.",
+          "rank": 5893
+        },
+        {
+          "lemma": "Schnupfen",
+          "pos": "noun",
+          "gender": "der",
+          "en": "runny nose, cold",
+          "example": "Ich habe Schnupfen und Husten.",
+          "rank": 16134
+        },
+        {
+          "lemma": "Erkältung",
+          "pos": "noun",
+          "gender": "die",
+          "plural": "Erkältungen",
+          "en": "cold (illness)",
+          "example": "Eine Erkältung dauert etwa eine Woche.",
+          "rank": 9394
+        },
+        {
+          "lemma": "Grippe",
+          "pos": "noun",
+          "gender": "die",
+          "plural": "Grippen",
+          "en": "flu",
+          "example": "Bei Grippe muss man im Bett bleiben.",
+          "rank": 7746
+        },
+        {
+          "lemma": "Rezept",
+          "pos": "noun",
+          "gender": "das",
+          "plural": "Rezepte",
+          "en": "prescription, recipe",
+          "example": "Der Arzt schreibt mir ein Rezept.",
+          "rank": 4275
+        },
+        {
+          "lemma": "Unfall",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Unfälle",
+          "en": "accident",
+          "example": "Auf der Straße gab es einen Unfall.",
+          "rank": 1092
+        },
+        {
+          "lemma": "Gesundheit",
+          "pos": "noun",
+          "gender": "die",
+          "en": "health",
+          "example": "Gesundheit ist das Wichtigste.",
+          "rank": 2967
+        },
+        {
+          "lemma": "untersuchen",
+          "pos": "verb",
+          "aux": "haben",
+          "forms": [
+            "untersucht",
+            "untersuchte",
+            "untersucht"
+          ],
+          "en": "to examine",
+          "example": "Der Arzt untersucht mein Knie.",
+          "rank": 2215
+        },
+        {
+          "lemma": "helfen",
+          "pos": "verb",
+          "aux": "haben",
+          "forms": [
+            "hilft",
+            "half",
+            "geholfen"
+          ],
+          "case": "dat",
+          "en": "to help",
+          "example": "Können Sie mir bitte helfen?",
+          "rank": 218
+        },
+        {
+          "lemma": "warten",
+          "pos": "verb",
+          "aux": "haben",
+          "forms": [
+            "wartet",
+            "wartete",
+            "gewartet"
+          ],
+          "prep": "auf",
+          "case": "akk",
+          "en": "to wait",
+          "example": "Ich warte auf den Arzt.",
+          "rank": 304
+        },
+        {
+          "lemma": "anrufen",
+          "pos": "verb",
+          "aux": "haben",
+          "separable": true,
+          "forms": [
+            "ruft an",
+            "rief an",
+            "angerufen"
+          ],
+          "en": "to call, to phone",
+          "example": "Ich rufe die Praxis an.",
+          "rank": 841
+        },
+        {
+          "lemma": "schlimm",
+          "pos": "adj",
+          "comparative": "schlimmer",
+          "superlative": "am schlimmsten",
+          "en": "bad, serious",
+          "example": "So schlimm ist es nicht.",
+          "rank": 864
+        },
+        {
+          "lemma": "verletzt",
+          "pos": "adj",
+          "en": "injured",
+          "example": "Zum Glück ist niemand verletzt.",
+          "rank": 820
+        }
+      ]
+    },
+    {
+      "id": "a1-11",
+      "title": "Tagesablauf",
+      "topics": [
+        "zeit"
+      ],
+      "words": [
+        {
+          "lemma": "Tag",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Tage",
+          "en": "day",
+          "example": "Der Tag war sehr lang.",
+          "rank": 184
+        },
+        {
+          "lemma": "Morgen",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Morgen",
+          "en": "morning",
+          "example": "Am Morgen trinke ich Kaffee.",
+          "rank": 176
+        },
+        {
+          "lemma": "Vormittag",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Vormittage",
+          "en": "late morning",
+          "example": "Am Vormittag habe ich Unterricht.",
+          "rank": 10823
+        },
+        {
+          "lemma": "Mittag",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Mittage",
+          "en": "midday",
+          "example": "Um Mittag mache ich eine Pause.",
+          "rank": 2697
+        },
+        {
+          "lemma": "Nachmittag",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Nachmittage",
+          "en": "afternoon",
+          "example": "Am Nachmittag gehe ich einkaufen.",
+          "rank": 1749
+        },
+        {
+          "lemma": "Abend",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Abende",
+          "en": "evening",
+          "example": "Guten Abend!",
+          "rank": 254
+        },
+        {
+          "lemma": "Nacht",
+          "pos": "noun",
+          "gender": "die",
+          "plural": "Nächte",
+          "en": "night",
+          "example": "Gute Nacht!",
+          "rank": 219
+        },
+        {
+          "lemma": "Woche",
+          "pos": "noun",
+          "gender": "die",
+          "plural": "Wochen",
+          "en": "week",
+          "example": "Nächste Woche habe ich frei.",
+          "rank": 502
+        },
+        {
+          "lemma": "Wochenende",
+          "pos": "noun",
+          "gender": "das",
+          "plural": "Wochenenden",
+          "en": "weekend",
+          "example": "Schönes Wochenende!",
+          "rank": 1486
+        },
+        {
+          "lemma": "Frühstück",
+          "pos": "noun",
+          "gender": "das",
+          "plural": "Frühstücke",
+          "en": "breakfast",
+          "example": "Das Frühstück gibt es ab sieben Uhr.",
+          "rank": 1633
+        },
+        {
+          "lemma": "Mittagessen",
+          "pos": "noun",
+          "gender": "das",
+          "plural": "Mittagessen",
+          "en": "lunch",
+          "example": "Was gibt es zum Mittagessen?",
+          "rank": 2490
+        },
+        {
+          "lemma": "Abendessen",
+          "pos": "noun",
+          "gender": "das",
+          "plural": "Abendessen",
+          "en": "dinner",
+          "example": "Wir essen um acht Uhr Abendessen.",
+          "rank": 1400
+        },
+        {
+          "lemma": "Pause",
+          "pos": "noun",
+          "gender": "die",
+          "plural": "Pausen",
+          "en": "break",
+          "example": "Wir machen jetzt eine kurze Pause.",
+          "rank": 1670
+        },
+        {
+          "lemma": "aufstehen",
+          "pos": "verb",
+          "aux": "sein",
+          "separable": true,
+          "forms": [
+            "steht auf",
+            "stand auf",
+            "aufgestanden"
+          ],
+          "en": "to get up",
+          "example": "Ich stehe um sechs Uhr auf.",
+          "rank": 2023
+        },
+        {
+          "lemma": "aufwachen",
+          "pos": "verb",
+          "aux": "sein",
+          "separable": true,
+          "forms": [
+            "wacht auf",
+            "wachte auf",
+            "aufgewacht"
+          ],
+          "en": "to wake up",
+          "example": "Heute bin ich sehr früh aufgewacht.",
+          "rank": 2962
+        },
+        {
+          "lemma": "duschen",
+          "pos": "verb",
+          "aux": "haben",
+          "forms": [
+            "duscht",
+            "duschte",
+            "geduscht"
+          ],
+          "en": "to shower",
+          "example": "Ich dusche jeden Morgen.",
+          "rank": 3902
+        },
+        {
+          "lemma": "frühstücken",
+          "pos": "verb",
+          "aux": "haben",
+          "forms": [
+            "frühstückt",
+            "frühstückte",
+            "gefrühstückt"
+          ],
+          "en": "to have breakfast",
+          "example": "Wir frühstücken zusammen.",
+          "rank": 6411
+        },
+        {
+          "lemma": "anfangen",
+          "pos": "verb",
+          "aux": "haben",
+          "separable": true,
+          "forms": [
+            "fängt an",
+            "fing an",
+            "angefangen"
+          ],
+          "en": "to begin",
+          "example": "Der Kurs fängt um neun Uhr an.",
+          "rank": 933
+        },
+        {
+          "lemma": "aufhören",
+          "pos": "verb",
+          "aux": "haben",
+          "separable": true,
+          "forms": [
+            "hört auf",
+            "hörte auf",
+            "aufgehört"
+          ],
+          "en": "to stop",
+          "example": "Der Regen hört nicht auf.",
+          "rank": 715
+        },
+        {
+          "lemma": "gehen",
+          "pos": "verb",
+          "aux": "sein",
+          "forms": [
+            "geht",
+            "ging",
+            "gegangen"
+          ],
+          "en": "to go, to walk",
+          "example": "Ich gehe jetzt nach Hause.",
+          "rank": 106
+        },
+        {
+          "lemma": "fahren",
+          "pos": "verb",
+          "aux": "sein",
+          "forms": [
+            "fährt",
+            "fuhr",
+            "gefahren"
+          ],
+          "en": "to drive, to travel",
+          "example": "Ich fahre mit dem Bus zur Arbeit.",
+          "rank": 372
+        },
+        {
+          "lemma": "arbeiten",
+          "pos": "verb",
+          "aux": "haben",
+          "forms": [
+            "arbeitet",
+            "arbeitete",
+            "gearbeitet"
+          ],
+          "en": "to work",
+          "example": "Sie arbeitet acht Stunden am Tag.",
+          "rank": 419
+        },
+        {
+          "lemma": "einkaufen",
+          "pos": "verb",
+          "aux": "haben",
+          "separable": true,
+          "forms": [
+            "kauft ein",
+            "kaufte ein",
+            "eingekauft"
+          ],
+          "en": "to shop",
+          "example": "Am Samstag kaufe ich ein.",
+          "rank": 3282
+        },
+        {
+          "lemma": "fernsehen",
+          "pos": "verb",
+          "aux": "haben",
+          "separable": true,
+          "forms": [
+            "sieht fern",
+            "sah fern",
+            "ferngesehen"
+          ],
+          "en": "to watch TV",
+          "example": "Abends sehe ich eine Stunde fern.",
+          "rank": 1504
+        },
+        {
+          "lemma": "früh",
+          "pos": "adj",
+          "comparative": "früher",
+          "superlative": "am frühesten",
+          "en": "early",
+          "example": "Morgen muss ich früh aufstehen.",
+          "rank": 626
+        }
+      ]
+    },
+    {
+      "id": "a1-12",
+      "title": "Arbeit & Berufe",
+      "topics": [
+        "arbeit"
+      ],
+      "words": [
+        {
+          "lemma": "Arbeit",
+          "pos": "noun",
+          "gender": "die",
+          "plural": "Arbeiten",
+          "en": "work",
+          "example": "Die Arbeit macht mir Spaß.",
+          "rank": 296
+        },
+        {
+          "lemma": "Job",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Jobs",
+          "en": "job",
+          "example": "Ich suche einen neuen Job.",
+          "rank": 451
+        },
+        {
+          "lemma": "Firma",
+          "pos": "noun",
+          "gender": "die",
+          "plural": "Firmen",
+          "en": "company",
+          "example": "Die Firma hat 200 Mitarbeiter.",
+          "rank": 1148
+        },
+        {
+          "lemma": "Büro",
+          "pos": "noun",
+          "gender": "das",
+          "plural": "Büros",
+          "en": "office",
+          "example": "Mein Büro ist im dritten Stock.",
+          "rank": 660
+        },
+        {
+          "lemma": "Chef",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Chefs",
+          "en": "boss (male)",
+          "example": "Mein Chef ist heute nicht da.",
+          "rank": 1036
+        },
+        {
+          "lemma": "Chefin",
+          "pos": "noun",
+          "gender": "die",
+          "plural": "Chefinnen",
+          "en": "boss (female)",
+          "example": "Die Chefin kommt um neun.",
+          "rank": 6221
+        },
+        {
+          "lemma": "Kollege",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Kollegen",
+          "en": "colleague (male)",
+          "example": "Mein Kollege hilft mir oft.",
+          "rank": 3654
+        },
+        {
+          "lemma": "Kollegin",
+          "pos": "noun",
+          "gender": "die",
+          "plural": "Kolleginnen",
+          "en": "colleague (female)",
+          "example": "Meine Kollegin ist im Urlaub.",
+          "rank": 6519
+        },
+        {
+          "lemma": "Lehrer",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Lehrer",
+          "en": "teacher (male)",
+          "example": "Der Lehrer erklärt die Grammatik.",
+          "rank": 1745
+        },
+        {
+          "lemma": "Lehrerin",
+          "pos": "noun",
+          "gender": "die",
+          "plural": "Lehrerinnen",
+          "en": "teacher (female)",
+          "example": "Unsere Lehrerin kommt aus Wien.",
+          "rank": 3322
+        },
+        {
+          "lemma": "Koch",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Köche",
+          "en": "cook, chef",
+          "example": "Mein Vater ist Koch.",
+          "rank": 3701
+        },
+        {
+          "lemma": "Kellner",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Kellner",
+          "en": "waiter",
+          "example": "Der Kellner bringt die Karte.",
+          "rank": 5360
+        },
+        {
+          "lemma": "Fahrer",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Fahrer",
+          "en": "driver",
+          "example": "Der Fahrer wartet vor der Tür.",
+          "rank": 2183
+        },
+        {
+          "lemma": "Ingenieur",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Ingenieure",
+          "en": "engineer",
+          "example": "Er arbeitet als Ingenieur.",
+          "rank": 6770
+        },
+        {
+          "lemma": "Polizist",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Polizisten",
+          "en": "police officer",
+          "example": "Der Polizist kontrolliert die Papiere.",
+          "rank": 1614
+        },
+        {
+          "lemma": "Student",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Studenten",
+          "en": "student",
+          "example": "Mein Bruder ist Student.",
+          "rank": 7517
+        },
+        {
+          "lemma": "Praktikum",
+          "pos": "noun",
+          "gender": "das",
+          "plural": "Praktika",
+          "en": "internship",
+          "example": "Ich mache ein Praktikum bei einer Firma.",
+          "rank": 11296
+        },
+        {
+          "lemma": "Gehalt",
+          "pos": "noun",
+          "gender": "das",
+          "plural": "Gehälter",
+          "en": "salary",
+          "example": "Das Gehalt kommt am Ende des Monats.",
+          "rank": 4997
+        },
+        {
+          "lemma": "Stelle",
+          "pos": "noun",
+          "gender": "die",
+          "plural": "Stellen",
+          "en": "position, job",
+          "example": "Die Stelle ist leider schon weg.",
+          "rank": 701
+        },
+        {
+          "lemma": "Feierabend",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Feierabende",
+          "en": "end of the working day",
+          "example": "Ich habe um fünf Uhr Feierabend.",
+          "rank": 5862
+        },
+        {
+          "lemma": "Urlaub",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Urlaube",
+          "en": "holiday, vacation",
+          "example": "Im August habe ich Urlaub.",
+          "rank": 1735
+        },
+        {
+          "lemma": "verdienen",
+          "pos": "verb",
+          "aux": "haben",
+          "forms": [
+            "verdient",
+            "verdiente",
+            "verdient"
+          ],
+          "en": "to earn",
+          "example": "Sie verdient gut.",
+          "rank": 1562
+        },
+        {
+          "lemma": "machen",
+          "pos": "verb",
+          "aux": "haben",
+          "forms": [
+            "macht",
+            "machte",
+            "gemacht"
+          ],
+          "en": "to do, to make",
+          "example": "Was machst du gerade?",
+          "rank": 97
+        },
+        {
+          "lemma": "fleißig",
+          "pos": "adj",
+          "comparative": "fleißiger",
+          "superlative": "am fleißigsten",
+          "en": "hard-working",
+          "example": "Er ist ein fleißiger Schüler.",
+          "rank": 7184
+        },
+        {
+          "lemma": "nett",
+          "pos": "adj",
+          "comparative": "netter",
+          "superlative": "am nettesten",
+          "en": "nice, kind",
+          "example": "Die Kollegen sind sehr nett.",
+          "rank": 500
+        }
+      ]
+    },
+    {
+      "id": "a1-13",
+      "title": "Schule & Lernen",
+      "topics": [
+        "bildung"
+      ],
+      "words": [
+        {
+          "lemma": "Schule",
+          "pos": "noun",
+          "gender": "die",
+          "plural": "Schulen",
+          "en": "school",
+          "example": "Die Schule beginnt um acht Uhr.",
+          "rank": 559
+        },
+        {
+          "lemma": "Klasse",
+          "pos": "noun",
+          "gender": "die",
+          "plural": "Klassen",
+          "en": "class, year group",
+          "example": "In meiner Klasse sind 20 Kinder.",
+          "rank": 815
+        },
+        {
+          "lemma": "Kurs",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Kurse",
+          "en": "course",
+          "example": "Der Kurs dauert drei Monate.",
+          "rank": 1886
+        },
+        {
+          "lemma": "Unterricht",
+          "pos": "noun",
+          "gender": "der",
+          "en": "lesson, teaching",
+          "example": "Der Unterricht ist sehr interessant.",
+          "rank": 2944
+        },
+        {
+          "lemma": "Aufgabe",
+          "pos": "noun",
+          "gender": "die",
+          "plural": "Aufgaben",
+          "en": "task, exercise",
+          "example": "Die Aufgabe war nicht schwer.",
+          "rank": 1414
+        },
+        {
+          "lemma": "Übung",
+          "pos": "noun",
+          "gender": "die",
+          "plural": "Übungen",
+          "en": "exercise, practice",
+          "example": "Machen Sie bitte Übung drei.",
+          "rank": 3809
+        },
+        {
+          "lemma": "Prüfung",
+          "pos": "noun",
+          "gender": "die",
+          "plural": "Prüfungen",
+          "en": "exam",
+          "example": "Die Prüfung ist am Freitag.",
+          "rank": 3706
+        },
+        {
+          "lemma": "Test",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Tests",
+          "en": "test",
+          "example": "Der Test hat 30 Fragen.",
+          "rank": 1961
+        },
+        {
+          "lemma": "Note",
+          "pos": "noun",
+          "gender": "die",
+          "plural": "Noten",
+          "en": "grade, mark",
+          "example": "Ich habe eine gute Note bekommen.",
+          "rank": 8129
+        },
+        {
+          "lemma": "Buch",
+          "pos": "noun",
+          "gender": "das",
+          "plural": "Bücher",
+          "en": "book",
+          "example": "Das Buch liegt auf dem Tisch.",
+          "rank": 723
+        },
+        {
+          "lemma": "Heft",
+          "pos": "noun",
+          "gender": "das",
+          "plural": "Hefte",
+          "en": "exercise book",
+          "example": "Schreiben Sie das ins Heft.",
+          "rank": 12764
+        },
+        {
+          "lemma": "Stift",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Stifte",
+          "en": "pen",
+          "example": "Hast du einen Stift für mich?",
+          "rank": 4164
+        },
+        {
+          "lemma": "Bleistift",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Bleistifte",
+          "en": "pencil",
+          "example": "Schreib bitte mit Bleistift.",
+          "rank": 12388
+        },
+        {
+          "lemma": "Papier",
+          "pos": "noun",
+          "gender": "das",
+          "plural": "Papiere",
+          "en": "paper",
+          "example": "Ich brauche ein Blatt Papier.",
+          "rank": 2647
+        },
+        {
+          "lemma": "Tafel",
+          "pos": "noun",
+          "gender": "die",
+          "plural": "Tafeln",
+          "en": "blackboard",
+          "example": "Das Wort steht an der Tafel.",
+          "rank": 6009
+        },
+        {
+          "lemma": "Wort",
+          "pos": "noun",
+          "gender": "das",
+          "plural": "Wörter",
+          "en": "word",
+          "example": "Dieses Wort kenne ich nicht.",
+          "rank": 561
+        },
+        {
+          "lemma": "Satz",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Sätze",
+          "en": "sentence",
+          "example": "Bilden Sie einen Satz mit diesem Verb.",
+          "rank": 3546
+        },
+        {
+          "lemma": "Frage",
+          "pos": "noun",
+          "gender": "die",
+          "plural": "Fragen",
+          "en": "question",
+          "example": "Ich habe eine Frage.",
+          "rank": 356
+        },
+        {
+          "lemma": "Antwort",
+          "pos": "noun",
+          "gender": "die",
+          "plural": "Antworten",
+          "en": "answer",
+          "example": "Die Antwort ist richtig.",
+          "rank": 942
+        },
+        {
+          "lemma": "Beispiel",
+          "pos": "noun",
+          "gender": "das",
+          "plural": "Beispiele",
+          "en": "example",
+          "example": "Können Sie ein Beispiel geben?",
+          "rank": 1095
+        },
+        {
+          "lemma": "Universität",
+          "pos": "noun",
+          "gender": "die",
+          "plural": "Universitäten",
+          "en": "university",
+          "example": "Sie studiert an der Universität München.",
+          "rank": 3698
+        },
+        {
+          "lemma": "lernen",
+          "pos": "verb",
+          "aux": "haben",
+          "forms": [
+            "lernt",
+            "lernte",
+            "gelernt"
+          ],
+          "en": "to learn",
+          "example": "Ich lerne seit einem Jahr Deutsch.",
+          "rank": 689
+        },
+        {
+          "lemma": "lesen",
+          "pos": "verb",
+          "aux": "haben",
+          "forms": [
+            "liest",
+            "las",
+            "gelesen"
+          ],
+          "en": "to read",
+          "example": "Lies bitte den Text laut.",
+          "rank": 873
+        },
+        {
+          "lemma": "schreiben",
+          "pos": "verb",
+          "aux": "haben",
+          "forms": [
+            "schreibt",
+            "schrieb",
+            "geschrieben"
+          ],
+          "en": "to write",
+          "example": "Schreiben Sie Ihren Namen hier.",
+          "rank": 797
+        },
+        {
+          "lemma": "verstehen",
+          "pos": "verb",
+          "aux": "haben",
+          "forms": [
+            "versteht",
+            "verstand",
+            "verstanden"
+          ],
+          "en": "to understand",
+          "example": "Ich verstehe die Frage nicht.",
+          "rank": 455
+        }
+      ]
+    },
+    {
+      "id": "a1-14",
+      "title": "Freizeit & Hobbys",
+      "topics": [
+        "freizeit"
+      ],
+      "words": [
+        {
+          "lemma": "Freizeit",
+          "pos": "noun",
+          "gender": "die",
+          "en": "free time",
+          "example": "In meiner Freizeit koche ich gern.",
+          "rank": 7185
+        },
+        {
+          "lemma": "Hobby",
+          "pos": "noun",
+          "gender": "das",
+          "plural": "Hobbys",
+          "en": "hobby",
+          "example": "Mein Hobby ist Fotografieren.",
+          "rank": 6515
+        },
+        {
+          "lemma": "Sport",
+          "pos": "noun",
+          "gender": "der",
+          "en": "sport",
+          "example": "Ich mache dreimal pro Woche Sport.",
+          "rank": 3251
+        },
+        {
+          "lemma": "Fußball",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Fußbälle",
+          "en": "football",
+          "example": "Am Sonntag spielen wir Fußball.",
+          "rank": 4872
+        },
+        {
+          "lemma": "Musik",
+          "pos": "noun",
+          "gender": "die",
+          "en": "music",
+          "example": "Ich höre gern laute Musik.",
+          "rank": 295
+        },
+        {
+          "lemma": "Film",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Filme",
+          "en": "film, movie",
+          "example": "Der Film dauert zwei Stunden.",
+          "rank": 674
+        },
+        {
+          "lemma": "Kino",
+          "pos": "noun",
+          "gender": "das",
+          "plural": "Kinos",
+          "en": "cinema",
+          "example": "Gehen wir heute ins Kino?",
+          "rank": 2305
+        },
+        {
+          "lemma": "Konzert",
+          "pos": "noun",
+          "gender": "das",
+          "plural": "Konzerte",
+          "en": "concert",
+          "example": "Das Konzert war fantastisch.",
+          "rank": 3762
+        },
+        {
+          "lemma": "Party",
+          "pos": "noun",
+          "gender": "die",
+          "plural": "Partys",
+          "en": "party",
+          "example": "Am Samstag ist eine Party bei Tom.",
+          "rank": 743
+        },
+        {
+          "lemma": "Spiel",
+          "pos": "noun",
+          "gender": "das",
+          "plural": "Spiele",
+          "en": "game",
+          "example": "Das Spiel beginnt um halb vier.",
+          "rank": 538
+        },
+        {
+          "lemma": "Karte",
+          "pos": "noun",
+          "gender": "die",
+          "plural": "Karten",
+          "en": "card, ticket, map",
+          "example": "Ich habe zwei Karten fürs Konzert.",
+          "rank": 1208
+        },
+        {
+          "lemma": "Fahrrad",
+          "pos": "noun",
+          "gender": "das",
+          "plural": "Fahrräder",
+          "en": "bicycle",
+          "example": "Mein Fahrrad ist kaputt.",
+          "rank": 3640
+        },
+        {
+          "lemma": "Schwimmbad",
+          "pos": "noun",
+          "gender": "das",
+          "plural": "Schwimmbäder",
+          "en": "swimming pool",
+          "example": "Im Sommer gehen wir oft ins Schwimmbad.",
+          "rank": 15433
+        },
+        {
+          "lemma": "Park",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Parks",
+          "en": "park",
+          "example": "Der Park ist gleich um die Ecke.",
+          "rank": 1574
+        },
+        {
+          "lemma": "Café",
+          "pos": "noun",
+          "gender": "das",
+          "plural": "Cafés",
+          "en": "café",
+          "example": "Wir treffen uns im Café.",
+          "rank": 4470
+        },
+        {
+          "lemma": "Restaurant",
+          "pos": "noun",
+          "gender": "das",
+          "plural": "Restaurants",
+          "en": "restaurant",
+          "example": "Das Restaurant hat auch am Sonntag offen.",
+          "rank": 1810
+        },
+        {
+          "lemma": "Zeitung",
+          "pos": "noun",
+          "gender": "die",
+          "plural": "Zeitungen",
+          "en": "newspaper",
+          "example": "Mein Opa liest jeden Tag die Zeitung.",
+          "rank": 1587
+        },
+        {
+          "lemma": "Foto",
+          "pos": "noun",
+          "gender": "das",
+          "plural": "Fotos",
+          "en": "photo",
+          "example": "Darf ich ein Foto machen?",
+          "rank": 1064
+        },
+        {
+          "lemma": "spielen",
+          "pos": "verb",
+          "aux": "haben",
+          "forms": [
+            "spielt",
+            "spielte",
+            "gespielt"
+          ],
+          "en": "to play",
+          "example": "Die Kinder spielen im Garten.",
+          "rank": 456
+        },
+        {
+          "lemma": "schwimmen",
+          "pos": "verb",
+          "aux": "sein",
+          "forms": [
+            "schwimmt",
+            "schwamm",
+            "geschwommen"
+          ],
+          "en": "to swim",
+          "example": "Ich schwimme jeden Dienstag.",
+          "rank": 2231
+        },
+        {
+          "lemma": "tanzen",
+          "pos": "verb",
+          "aux": "haben",
+          "forms": [
+            "tanzt",
+            "tanzte",
+            "getanzt"
+          ],
+          "en": "to dance",
+          "example": "Wir haben die ganze Nacht getanzt.",
+          "rank": 1043
+        },
+        {
+          "lemma": "singen",
+          "pos": "verb",
+          "aux": "haben",
+          "forms": [
+            "singt",
+            "sang",
+            "gesungen"
+          ],
+          "en": "to sing",
+          "example": "Sie singt in einem Chor.",
+          "rank": 1228
+        },
+        {
+          "lemma": "malen",
+          "pos": "verb",
+          "aux": "haben",
+          "forms": [
+            "malt",
+            "malte",
+            "gemalt"
+          ],
+          "en": "to paint, to draw",
+          "example": "Mein Sohn malt gern Tiere.",
+          "rank": 4299
+        },
+        {
+          "lemma": "wandern",
+          "pos": "verb",
+          "aux": "sein",
+          "forms": [
+            "wandert",
+            "wanderte",
+            "gewandert"
+          ],
+          "en": "to hike",
+          "example": "Im Sommer wandern wir in den Bergen.",
+          "rank": 6215
+        },
+        {
+          "lemma": "treffen",
+          "pos": "verb",
+          "aux": "haben",
+          "forms": [
+            "trifft",
+            "traf",
+            "getroffen"
+          ],
+          "reflexive": true,
+          "prep": "mit",
+          "case": "dat",
+          "en": "to meet",
+          "example": "Ich treffe mich mit meiner Freundin.",
+          "rank": 415
+        }
+      ]
+    },
+    {
+      "id": "a1-15",
+      "title": "Stadt & Orte",
+      "topics": [
+        "stadt"
+      ],
+      "words": [
+        {
+          "lemma": "Zentrum",
+          "pos": "noun",
+          "gender": "das",
+          "plural": "Zentren",
+          "en": "centre",
+          "example": "Ich wohne im Zentrum.",
+          "rank": 4676
+        },
+        {
+          "lemma": "Platz",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Plätze",
+          "en": "square, space, seat",
+          "example": "Auf dem Platz ist ein Markt.",
+          "rank": 614
+        },
+        {
+          "lemma": "Bank",
+          "pos": "noun",
+          "gender": "die",
+          "plural": "Banken",
+          "en": "bank",
+          "example": "Die Bank öffnet um neun Uhr.",
+          "rank": 1229
+        },
+        {
+          "lemma": "Post",
+          "pos": "noun",
+          "gender": "die",
+          "en": "post office, mail",
+          "example": "Ich gehe schnell zur Post.",
+          "rank": 2200
+        },
+        {
+          "lemma": "Kirche",
+          "pos": "noun",
+          "gender": "die",
+          "plural": "Kirchen",
+          "en": "church",
+          "example": "Die Kirche ist sehr alt.",
+          "rank": 1185
+        },
+        {
+          "lemma": "Museum",
+          "pos": "noun",
+          "gender": "das",
+          "plural": "Museen",
+          "en": "museum",
+          "example": "Das Museum ist montags geschlossen.",
+          "rank": 3915
+        },
+        {
+          "lemma": "Bibliothek",
+          "pos": "noun",
+          "gender": "die",
+          "plural": "Bibliotheken",
+          "en": "library",
+          "example": "In der Bibliothek muss man leise sein.",
+          "rank": 3730
+        },
+        {
+          "lemma": "Hotel",
+          "pos": "noun",
+          "gender": "das",
+          "plural": "Hotels",
+          "en": "hotel",
+          "example": "Das Hotel liegt direkt am Bahnhof.",
+          "rank": 937
+        },
+        {
+          "lemma": "Rathaus",
+          "pos": "noun",
+          "gender": "das",
+          "plural": "Rathäuser",
+          "en": "town hall",
+          "example": "Das Rathaus steht am Marktplatz.",
+          "rank": 8056
+        },
+        {
+          "lemma": "Polizei",
+          "pos": "noun",
+          "gender": "die",
+          "en": "police",
+          "example": "Rufen Sie bitte die Polizei!",
+          "rank": 406
+        },
+        {
+          "lemma": "Bahnhof",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Bahnhöfe",
+          "en": "train station",
+          "example": "Wie komme ich zum Bahnhof?",
+          "rank": 3751
+        },
+        {
+          "lemma": "Flughafen",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Flughäfen",
+          "en": "airport",
+          "example": "Der Flughafen ist weit weg.",
+          "rank": 2171
+        },
+        {
+          "lemma": "Haltestelle",
+          "pos": "noun",
+          "gender": "die",
+          "plural": "Haltestellen",
+          "en": "stop (bus/tram)",
+          "example": "Die Haltestelle ist vor dem Haus.",
+          "rank": 17741
+        },
+        {
+          "lemma": "Parkplatz",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Parkplätze",
+          "en": "parking space",
+          "example": "Ich finde keinen Parkplatz.",
+          "rank": 4085
+        },
+        {
+          "lemma": "Brücke",
+          "pos": "noun",
+          "gender": "die",
+          "plural": "Brücken",
+          "en": "bridge",
+          "example": "Gehen Sie über die Brücke.",
+          "rank": 1656
+        },
+        {
+          "lemma": "Ecke",
+          "pos": "noun",
+          "gender": "die",
+          "plural": "Ecken",
+          "en": "corner",
+          "example": "Die Bäckerei ist an der Ecke.",
+          "rank": 1655
+        },
+        {
+          "lemma": "Weg",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Wege",
+          "en": "way, path",
+          "example": "Der Weg zum Park ist kurz.",
+          "rank": 129
+        },
+        {
+          "lemma": "Richtung",
+          "pos": "noun",
+          "gender": "die",
+          "plural": "Richtungen",
+          "en": "direction",
+          "example": "Fahren Sie in Richtung Zentrum.",
+          "rank": 1117
+        },
+        {
+          "lemma": "Plan",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Pläne",
+          "en": "plan, map",
+          "example": "Hast du einen Plan von der Stadt?",
+          "rank": 637
+        },
+        {
+          "lemma": "Dorf",
+          "pos": "noun",
+          "gender": "das",
+          "plural": "Dörfer",
+          "en": "village",
+          "example": "Ich komme aus einem kleinen Dorf.",
+          "rank": 1531
+        },
+        {
+          "lemma": "Gebäude",
+          "pos": "noun",
+          "gender": "das",
+          "plural": "Gebäude",
+          "en": "building",
+          "example": "Das Gebäude dort ist neu.",
+          "rank": 1336
+        },
+        {
+          "lemma": "finden",
+          "pos": "verb",
+          "aux": "haben",
+          "forms": [
+            "findet",
+            "fand",
+            "gefunden"
+          ],
+          "en": "to find",
+          "example": "Ich finde die Straße nicht.",
+          "rank": 220
+        },
+        {
+          "lemma": "zeigen",
+          "pos": "verb",
+          "aux": "haben",
+          "forms": [
+            "zeigt",
+            "zeigte",
+            "gezeigt"
+          ],
+          "en": "to show",
+          "example": "Können Sie mir das auf dem Plan zeigen?",
+          "rank": 523
+        },
+        {
+          "lemma": "links",
+          "pos": "adv",
+          "en": "left, on the left",
+          "example": "Gehen Sie an der Ampel links.",
+          "rank": 1177
+        },
+        {
+          "lemma": "rechts",
+          "pos": "adv",
+          "en": "right, on the right",
+          "example": "Die Post ist rechts.",
+          "rank": 1286
+        }
+      ]
+    },
+    {
+      "id": "a1-16",
+      "title": "Verkehr & Wege",
+      "topics": [
+        "verkehr"
+      ],
+      "words": [
+        {
+          "lemma": "Auto",
+          "pos": "noun",
+          "gender": "das",
+          "plural": "Autos",
+          "en": "car",
+          "example": "Das Auto steht vor dem Haus.",
+          "rank": 402
+        },
+        {
+          "lemma": "Bus",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Busse",
+          "en": "bus",
+          "example": "Der Bus kommt in fünf Minuten.",
+          "rank": 1605
+        },
+        {
+          "lemma": "Zug",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Züge",
+          "en": "train",
+          "example": "Der Zug hat zehn Minuten Verspätung.",
+          "rank": 1072
+        },
+        {
+          "lemma": "Bahn",
+          "pos": "noun",
+          "gender": "die",
+          "plural": "Bahnen",
+          "en": "railway, train",
+          "example": "Ich fahre mit der Bahn nach Köln.",
+          "rank": 4898
+        },
+        {
+          "lemma": "U-Bahn",
+          "pos": "noun",
+          "gender": "die",
+          "plural": "U-Bahnen",
+          "en": "underground, subway",
+          "example": "Die U-Bahn fährt alle drei Minuten.",
+          "rank": 5752
+        },
+        {
+          "lemma": "S-Bahn",
+          "pos": "noun",
+          "gender": "die",
+          "plural": "S-Bahnen",
+          "en": "city train",
+          "example": "Nimm die S-Bahn zum Flughafen.",
+          "rank": null
+        },
+        {
+          "lemma": "Straßenbahn",
+          "pos": "noun",
+          "gender": "die",
+          "plural": "Straßenbahnen",
+          "en": "tram",
+          "example": "Die Straßenbahn hält am Rathaus.",
+          "rank": 18862
+        },
+        {
+          "lemma": "Taxi",
+          "pos": "noun",
+          "gender": "das",
+          "plural": "Taxis",
+          "en": "taxi",
+          "example": "Wir nehmen ein Taxi.",
+          "rank": 1595
+        },
+        {
+          "lemma": "Fahrkarte",
+          "pos": "noun",
+          "gender": "die",
+          "plural": "Fahrkarten",
+          "en": "ticket",
+          "example": "Eine Fahrkarte nach Hamburg, bitte.",
+          "rank": 10762
+        },
+        {
+          "lemma": "Ticket",
+          "pos": "noun",
+          "gender": "das",
+          "plural": "Tickets",
+          "en": "ticket",
+          "example": "Das Ticket gilt zwei Stunden.",
+          "rank": 5085
+        },
+        {
+          "lemma": "Fahrplan",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Fahrpläne",
+          "en": "timetable",
+          "example": "Schau mal im Fahrplan nach.",
+          "rank": 27731
+        },
+        {
+          "lemma": "Gleis",
+          "pos": "noun",
+          "gender": "das",
+          "plural": "Gleise",
+          "en": "platform, track",
+          "example": "Der Zug fährt von Gleis drei.",
+          "rank": 12153
+        },
+        {
+          "lemma": "Ausgang",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Ausgänge",
+          "en": "exit",
+          "example": "Der Ausgang ist dort hinten.",
+          "rank": 4041
+        },
+        {
+          "lemma": "Eingang",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Eingänge",
+          "en": "entrance",
+          "example": "Wir treffen uns am Eingang.",
+          "rank": 4420
+        },
+        {
+          "lemma": "Ampel",
+          "pos": "noun",
+          "gender": "die",
+          "plural": "Ampeln",
+          "en": "traffic light",
+          "example": "An der Ampel musst du warten.",
+          "rank": 10301
+        },
+        {
+          "lemma": "Verkehr",
+          "pos": "noun",
+          "gender": "der",
+          "en": "traffic",
+          "example": "Am Morgen ist viel Verkehr.",
+          "rank": 4333
+        },
+        {
+          "lemma": "Stau",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Staus",
+          "en": "traffic jam",
+          "example": "Wir stehen seit einer Stunde im Stau.",
+          "rank": 11191
+        },
+        {
+          "lemma": "Benzin",
+          "pos": "noun",
+          "gender": "das",
+          "en": "petrol, gasoline",
+          "example": "Das Benzin ist wieder teurer.",
+          "rank": 3469
+        },
+        {
+          "lemma": "Motorrad",
+          "pos": "noun",
+          "gender": "das",
+          "plural": "Motorräder",
+          "en": "motorbike",
+          "example": "Mein Nachbar hat ein altes Motorrad.",
+          "rank": 4129
+        },
+        {
+          "lemma": "einsteigen",
+          "pos": "verb",
+          "aux": "sein",
+          "separable": true,
+          "forms": [
+            "steigt ein",
+            "stieg ein",
+            "eingestiegen"
+          ],
+          "en": "to get in, to board",
+          "example": "Bitte hinten einsteigen!",
+          "rank": 4248
+        },
+        {
+          "lemma": "aussteigen",
+          "pos": "verb",
+          "aux": "sein",
+          "separable": true,
+          "forms": [
+            "steigt aus",
+            "stieg aus",
+            "ausgestiegen"
+          ],
+          "en": "to get off",
+          "example": "Wir steigen an der nächsten Haltestelle aus.",
+          "rank": 3406
+        },
+        {
+          "lemma": "umsteigen",
+          "pos": "verb",
+          "aux": "sein",
+          "separable": true,
+          "forms": [
+            "steigt um",
+            "stieg um",
+            "umgestiegen"
+          ],
+          "en": "to change (trains)",
+          "example": "In Nürnberg müssen Sie umsteigen.",
+          "rank": 23980
+        },
+        {
+          "lemma": "abfahren",
+          "pos": "verb",
+          "aux": "sein",
+          "separable": true,
+          "forms": [
+            "fährt ab",
+            "fuhr ab",
+            "abgefahren"
+          ],
+          "en": "to depart",
+          "example": "Der Zug fährt um 8:15 Uhr ab.",
+          "rank": 13636
+        },
+        {
+          "lemma": "ankommen",
+          "pos": "verb",
+          "aux": "sein",
+          "separable": true,
+          "forms": [
+            "kommt an",
+            "kam an",
+            "angekommen"
+          ],
+          "en": "to arrive",
+          "example": "Wann kommen wir in Berlin an?",
+          "rank": 4346
+        },
+        {
+          "lemma": "laufen",
+          "pos": "verb",
+          "aux": "sein",
+          "forms": [
+            "läuft",
+            "lief",
+            "gelaufen"
+          ],
+          "en": "to run, to walk",
+          "example": "Ich laufe lieber, als zu fahren.",
+          "rank": 695
+        }
+      ]
+    },
+    {
+      "id": "a1-17",
+      "title": "Reisen & Urlaub",
+      "topics": [
+        "reisen"
+      ],
+      "words": [
+        {
+          "lemma": "Reise",
+          "pos": "noun",
+          "gender": "die",
+          "plural": "Reisen",
+          "en": "journey, trip",
+          "example": "Gute Reise!",
+          "rank": 1049
+        },
+        {
+          "lemma": "Ferien",
+          "pos": "noun",
+          "pluralOnly": true,
+          "en": "holidays (school)",
+          "example": "In den Ferien fahren wir ans Meer.",
+          "rank": 4046
+        },
+        {
+          "lemma": "Koffer",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Koffer",
+          "en": "suitcase",
+          "example": "Mein Koffer ist zu schwer.",
+          "rank": 1884
+        },
+        {
+          "lemma": "Tasche",
+          "pos": "noun",
+          "gender": "die",
+          "plural": "Taschen",
+          "en": "bag",
+          "example": "Die Tasche steht neben der Tür.",
+          "rank": 1127
+        },
+        {
+          "lemma": "Pass",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Pässe",
+          "en": "passport",
+          "example": "Mein Pass ist noch zwei Jahre gültig.",
+          "rank": 648
+        },
+        {
+          "lemma": "Ausweis",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Ausweise",
+          "en": "ID card",
+          "example": "Bitte zeigen Sie mir Ihren Ausweis.",
+          "rank": 3249
+        },
+        {
+          "lemma": "Doppelzimmer",
+          "pos": "noun",
+          "gender": "das",
+          "plural": "Doppelzimmer",
+          "en": "double room",
+          "example": "Wir möchten ein Doppelzimmer.",
+          "rank": 31469
+        },
+        {
+          "lemma": "Einzelzimmer",
+          "pos": "noun",
+          "gender": "das",
+          "plural": "Einzelzimmer",
+          "en": "single room",
+          "example": "Ein Einzelzimmer kostet 60 Euro.",
+          "rank": 24092
+        },
+        {
+          "lemma": "Rezeption",
+          "pos": "noun",
+          "gender": "die",
+          "plural": "Rezeptionen",
+          "en": "reception",
+          "example": "Den Schlüssel bekommen Sie an der Rezeption.",
+          "rank": 11127
+        },
+        {
+          "lemma": "Gepäck",
+          "pos": "noun",
+          "gender": "das",
+          "en": "luggage",
+          "example": "Wo kann ich mein Gepäck lassen?",
+          "rank": 3448
+        },
+        {
+          "lemma": "Strand",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Strände",
+          "en": "beach",
+          "example": "Der Strand war fast leer.",
+          "rank": 1910
+        },
+        {
+          "lemma": "Meer",
+          "pos": "noun",
+          "gender": "das",
+          "plural": "Meere",
+          "en": "sea",
+          "example": "Ich sehe zum ersten Mal das Meer.",
+          "rank": 1622
+        },
+        {
+          "lemma": "See",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Seen",
+          "en": "lake",
+          "example": "Der See ist im Winter zugefroren.",
+          "rank": 1597
+        },
+        {
+          "lemma": "Berg",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Berge",
+          "en": "mountain",
+          "example": "Die Berge sind noch weiß.",
+          "rank": 2393
+        },
+        {
+          "lemma": "Insel",
+          "pos": "noun",
+          "gender": "die",
+          "plural": "Inseln",
+          "en": "island",
+          "example": "Wir fahren mit dem Schiff auf die Insel.",
+          "rank": 1527
+        },
+        {
+          "lemma": "Ausland",
+          "pos": "noun",
+          "gender": "das",
+          "en": "abroad",
+          "example": "Meine Familie lebt im Ausland.",
+          "rank": 4989
+        },
+        {
+          "lemma": "Heimat",
+          "pos": "noun",
+          "gender": "die",
+          "en": "home, homeland",
+          "example": "Ich vermisse meine Heimat.",
+          "rank": 2841
+        },
+        {
+          "lemma": "Grenze",
+          "pos": "noun",
+          "gender": "die",
+          "plural": "Grenzen",
+          "en": "border",
+          "example": "An der Grenze gab es keine Kontrolle.",
+          "rank": 2041
+        },
+        {
+          "lemma": "Souvenir",
+          "pos": "noun",
+          "gender": "das",
+          "plural": "Souvenirs",
+          "en": "souvenir",
+          "example": "Ich kaufe ein kleines Souvenir.",
+          "rank": 13617
+        },
+        {
+          "lemma": "Aussicht",
+          "pos": "noun",
+          "gender": "die",
+          "plural": "Aussichten",
+          "en": "view",
+          "example": "Von hier hat man eine tolle Aussicht.",
+          "rank": 4168
+        },
+        {
+          "lemma": "reisen",
+          "pos": "verb",
+          "aux": "sein",
+          "forms": [
+            "reist",
+            "reiste",
+            "gereist"
+          ],
+          "en": "to travel",
+          "example": "Sie reist sehr gern allein.",
+          "rank": 1934
+        },
+        {
+          "lemma": "fliegen",
+          "pos": "verb",
+          "aux": "sein",
+          "forms": [
+            "fliegt",
+            "flog",
+            "geflogen"
+          ],
+          "en": "to fly",
+          "example": "Wir fliegen nach Istanbul.",
+          "rank": 881
+        },
+        {
+          "lemma": "buchen",
+          "pos": "verb",
+          "aux": "haben",
+          "forms": [
+            "bucht",
+            "buchte",
+            "gebucht"
+          ],
+          "en": "to book",
+          "example": "Ich habe das Hotel online gebucht.",
+          "rank": 11276
+        },
+        {
+          "lemma": "packen",
+          "pos": "verb",
+          "aux": "haben",
+          "forms": [
+            "packt",
+            "packte",
+            "gepackt"
+          ],
+          "en": "to pack",
+          "example": "Hast du schon den Koffer gepackt?",
+          "rank": 2335
+        },
+        {
+          "lemma": "besuchen",
+          "pos": "verb",
+          "aux": "haben",
+          "forms": [
+            "besucht",
+            "besuchte",
+            "besucht"
+          ],
+          "en": "to visit",
+          "example": "Im Juli besuche ich meine Eltern.",
+          "rank": 1330
+        }
+      ]
+    },
+    {
+      "id": "a1-18",
+      "title": "Zahlen, Zeit & Datum",
+      "topics": [
+        "zeit"
+      ],
+      "words": [
+        {
+          "lemma": "Uhr",
+          "pos": "noun",
+          "gender": "die",
+          "plural": "Uhren",
+          "en": "clock, o'clock",
+          "example": "Wie viel Uhr ist es?",
+          "rank": 368
+        },
+        {
+          "lemma": "Stunde",
+          "pos": "noun",
+          "gender": "die",
+          "plural": "Stunden",
+          "en": "hour",
+          "example": "Der Film dauert zwei Stunden.",
+          "rank": 650
+        },
+        {
+          "lemma": "Minute",
+          "pos": "noun",
+          "gender": "die",
+          "plural": "Minuten",
+          "en": "minute",
+          "example": "Warte bitte eine Minute.",
+          "rank": 1070
+        },
+        {
+          "lemma": "Sekunde",
+          "pos": "noun",
+          "gender": "die",
+          "plural": "Sekunden",
+          "en": "second",
+          "example": "Eine Minute hat sechzig Sekunden.",
+          "rank": 1196
+        },
+        {
+          "lemma": "Monat",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Monate",
+          "en": "month",
+          "example": "Der nächste Monat ist Mai.",
+          "rank": 1027
+        },
+        {
+          "lemma": "Jahr",
+          "pos": "noun",
+          "gender": "das",
+          "plural": "Jahre",
+          "en": "year",
+          "example": "Ich bin seit zwei Jahren hier.",
+          "rank": 465
+        },
+        {
+          "lemma": "Datum",
+          "pos": "noun",
+          "gender": "das",
+          "plural": "Daten",
+          "en": "date",
+          "example": "Welches Datum haben wir heute?",
+          "rank": 5267
+        },
+        {
+          "lemma": "Zeit",
+          "pos": "noun",
+          "gender": "die",
+          "plural": "Zeiten",
+          "en": "time",
+          "example": "Ich habe leider keine Zeit.",
+          "rank": 137
+        },
+        {
+          "lemma": "Montag",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Montage",
+          "en": "Monday",
+          "example": "Am Montag beginnt der Kurs.",
+          "rank": 2417
+        },
+        {
+          "lemma": "Dienstag",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Dienstage",
+          "en": "Tuesday",
+          "example": "Dienstag habe ich einen Termin.",
+          "rank": 3159
+        },
+        {
+          "lemma": "Mittwoch",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Mittwoche",
+          "en": "Wednesday",
+          "example": "Mittwochs gehe ich schwimmen.",
+          "rank": 4089
+        },
+        {
+          "lemma": "Donnerstag",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Donnerstage",
+          "en": "Thursday",
+          "example": "Am Donnerstag kommt Besuch.",
+          "rank": 3240
+        },
+        {
+          "lemma": "Freitag",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Freitage",
+          "en": "Friday",
+          "example": "Freitag ist mein letzter Arbeitstag.",
+          "rank": 2097
+        },
+        {
+          "lemma": "Samstag",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Samstage",
+          "en": "Saturday",
+          "example": "Am Samstag schlafe ich lange.",
+          "rank": 2365
+        },
+        {
+          "lemma": "Sonntag",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Sonntage",
+          "en": "Sunday",
+          "example": "Sonntags sind die Geschäfte zu.",
+          "rank": 2267
+        },
+        {
+          "lemma": "null",
+          "pos": "num",
+          "en": "zero",
+          "example": "Draußen sind null Grad.",
+          "rank": 2635
+        },
+        {
+          "lemma": "zehn",
+          "pos": "num",
+          "en": "ten",
+          "example": "Ich komme in zehn Minuten.",
+          "rank": 646
+        },
+        {
+          "lemma": "zwanzig",
+          "pos": "num",
+          "en": "twenty",
+          "example": "Das kostet zwanzig Euro.",
+          "rank": 5321
+        },
+        {
+          "lemma": "hundert",
+          "pos": "num",
+          "en": "hundred",
+          "example": "Der Kurs hat über hundert Teilnehmer.",
+          "rank": 3151
+        },
+        {
+          "lemma": "tausend",
+          "pos": "num",
+          "en": "thousand",
+          "example": "Die Stadt hat zehntausend Einwohner.",
+          "rank": 2709
+        },
+        {
+          "lemma": "dauern",
+          "pos": "verb",
+          "aux": "haben",
+          "forms": [
+            "dauert",
+            "dauerte",
+            "gedauert"
+          ],
+          "en": "to last, to take",
+          "example": "Wie lange dauert die Fahrt?",
+          "rank": 1528
+        },
+        {
+          "lemma": "beginnen",
+          "pos": "verb",
+          "aux": "haben",
+          "forms": [
+            "beginnt",
+            "begann",
+            "begonnen"
+          ],
+          "en": "to begin",
+          "example": "Der Unterricht beginnt gleich.",
+          "rank": 1410
+        },
+        {
+          "lemma": "heute",
+          "pos": "adv",
+          "en": "today",
+          "example": "Heute ist Donnerstag.",
+          "rank": 142
+        },
+        {
+          "id": "morgen-adv",
+          "lemma": "morgen",
+          "pos": "adv",
+          "en": "tomorrow",
+          "example": "Morgen habe ich frei.",
+          "rank": 176
+        },
+        {
+          "lemma": "gestern",
+          "pos": "adv",
+          "en": "yesterday",
+          "example": "Gestern war ich beim Arzt.",
+          "rank": 475
+        }
+      ]
+    },
+    {
+      "id": "a1-19",
+      "title": "Wetter & Jahreszeiten",
+      "topics": [
+        "wetter"
+      ],
+      "words": [
+        {
+          "lemma": "Wetter",
+          "pos": "noun",
+          "gender": "das",
+          "en": "weather",
+          "example": "Wie ist das Wetter heute?",
+          "rank": 2508
+        },
+        {
+          "lemma": "Sonne",
+          "pos": "noun",
+          "gender": "die",
+          "plural": "Sonnen",
+          "en": "sun",
+          "example": "Die Sonne scheint den ganzen Tag.",
+          "rank": 1218
+        },
+        {
+          "lemma": "Regen",
+          "pos": "noun",
+          "gender": "der",
+          "en": "rain",
+          "example": "Bei Regen bleibe ich zu Hause.",
+          "rank": 2163
+        },
+        {
+          "lemma": "Schnee",
+          "pos": "noun",
+          "gender": "der",
+          "en": "snow",
+          "example": "Im Januar liegt oft Schnee.",
+          "rank": 2822
+        },
+        {
+          "lemma": "Wind",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Winde",
+          "en": "wind",
+          "example": "Heute geht ein kalter Wind.",
+          "rank": 1599
+        },
+        {
+          "lemma": "Wolke",
+          "pos": "noun",
+          "gender": "die",
+          "plural": "Wolken",
+          "en": "cloud",
+          "example": "Am Himmel sind dunkle Wolken.",
+          "rank": 7397
+        },
+        {
+          "lemma": "Himmel",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Himmel",
+          "en": "sky",
+          "example": "Der Himmel ist ganz blau.",
+          "rank": 772
+        },
+        {
+          "lemma": "Temperatur",
+          "pos": "noun",
+          "gender": "die",
+          "plural": "Temperaturen",
+          "en": "temperature",
+          "example": "Die Temperatur steigt auf 25 Grad.",
+          "rank": 5584
+        },
+        {
+          "lemma": "Grad",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Grade",
+          "en": "degree",
+          "example": "Es sind nur fünf Grad.",
+          "rank": 1686
+        },
+        {
+          "lemma": "Frühling",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Frühlinge",
+          "en": "spring",
+          "example": "Im Frühling blühen die Bäume.",
+          "rank": 4987
+        },
+        {
+          "lemma": "Sommer",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Sommer",
+          "en": "summer",
+          "example": "Der Sommer war sehr heiß.",
+          "rank": 1781
+        },
+        {
+          "lemma": "Herbst",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Herbste",
+          "en": "autumn",
+          "example": "Im Herbst regnet es viel.",
+          "rank": 5804
+        },
+        {
+          "lemma": "Winter",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Winter",
+          "en": "winter",
+          "example": "Der Winter dauert hier lange.",
+          "rank": 2556
+        },
+        {
+          "lemma": "Jahreszeit",
+          "pos": "noun",
+          "gender": "die",
+          "plural": "Jahreszeiten",
+          "en": "season",
+          "example": "Welche Jahreszeit magst du am liebsten?",
+          "rank": 8310
+        },
+        {
+          "lemma": "Gewitter",
+          "pos": "noun",
+          "gender": "das",
+          "plural": "Gewitter",
+          "en": "thunderstorm",
+          "example": "Am Abend kommt ein Gewitter.",
+          "rank": 9098
+        },
+        {
+          "lemma": "Nebel",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Nebel",
+          "en": "fog",
+          "example": "Am Morgen war dichter Nebel.",
+          "rank": 4602
+        },
+        {
+          "lemma": "regnen",
+          "pos": "verb",
+          "aux": "haben",
+          "forms": [
+            "regnet",
+            "regnete",
+            "geregnet"
+          ],
+          "en": "to rain",
+          "example": "Es regnet seit gestern.",
+          "rank": 7999
+        },
+        {
+          "lemma": "schneien",
+          "pos": "verb",
+          "aux": "haben",
+          "forms": [
+            "schneit",
+            "schneite",
+            "geschneit"
+          ],
+          "en": "to snow",
+          "example": "Heute Nacht hat es geschneit.",
+          "rank": 21752
+        },
+        {
+          "lemma": "scheinen",
+          "pos": "verb",
+          "aux": "haben",
+          "forms": [
+            "scheint",
+            "schien",
+            "geschienen"
+          ],
+          "en": "to shine, to seem",
+          "example": "Die Sonne scheint.",
+          "rank": 1994
+        },
+        {
+          "lemma": "warm",
+          "pos": "adj",
+          "comparative": "wärmer",
+          "superlative": "am wärmsten",
+          "en": "warm",
+          "example": "Zieh dich warm an!",
+          "rank": 2074
+        },
+        {
+          "lemma": "kalt",
+          "pos": "adj",
+          "comparative": "kälter",
+          "superlative": "am kältesten",
+          "en": "cold",
+          "example": "Mir ist kalt.",
+          "rank": 1065
+        },
+        {
+          "lemma": "heiß",
+          "pos": "adj",
+          "comparative": "heißer",
+          "superlative": "am heißesten",
+          "en": "hot",
+          "example": "Der Kaffee ist noch zu heiß.",
+          "rank": 1063
+        },
+        {
+          "lemma": "kühl",
+          "pos": "adj",
+          "comparative": "kühler",
+          "superlative": "am kühlsten",
+          "en": "cool",
+          "example": "Abends wird es kühl.",
+          "rank": 7958
+        },
+        {
+          "lemma": "sonnig",
+          "pos": "adj",
+          "comparative": "sonniger",
+          "superlative": "am sonnigsten",
+          "en": "sunny",
+          "example": "Morgen wird es sonnig.",
+          "rank": 22289
+        },
+        {
+          "lemma": "nass",
+          "pos": "adj",
+          "comparative": "nasser",
+          "superlative": "am nassesten",
+          "en": "wet",
+          "example": "Meine Schuhe sind ganz nass.",
+          "rank": 3550
+        }
+      ]
+    },
+    {
+      "id": "a1-20",
+      "title": "Tiere & Natur",
+      "topics": [
+        "natur"
+      ],
+      "words": [
+        {
+          "lemma": "Tier",
+          "pos": "noun",
+          "gender": "das",
+          "plural": "Tiere",
+          "en": "animal",
+          "example": "In diesem Haus sind Tiere verboten.",
+          "rank": 1721
+        },
+        {
+          "lemma": "Hund",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Hunde",
+          "en": "dog",
+          "example": "Der Hund bellt die ganze Nacht.",
+          "rank": 676
+        },
+        {
+          "lemma": "Katze",
+          "pos": "noun",
+          "gender": "die",
+          "plural": "Katzen",
+          "en": "cat",
+          "example": "Die Katze schläft auf dem Sofa.",
+          "rank": 1772
+        },
+        {
+          "lemma": "Vogel",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Vögel",
+          "en": "bird",
+          "example": "Ein Vogel sitzt auf dem Dach.",
+          "rank": 1908
+        },
+        {
+          "lemma": "Pferd",
+          "pos": "noun",
+          "gender": "das",
+          "plural": "Pferde",
+          "en": "horse",
+          "example": "Meine Tochter reitet gern Pferde.",
+          "rank": 1165
+        },
+        {
+          "lemma": "Kuh",
+          "pos": "noun",
+          "gender": "die",
+          "plural": "Kühe",
+          "en": "cow",
+          "example": "Auf der Wiese stehen zehn Kühe.",
+          "rank": 2657
+        },
+        {
+          "lemma": "Schwein",
+          "pos": "noun",
+          "gender": "das",
+          "plural": "Schweine",
+          "en": "pig",
+          "example": "Ich esse kein Schwein.",
+          "rank": 1437
+        },
+        {
+          "lemma": "Maus",
+          "pos": "noun",
+          "gender": "die",
+          "plural": "Mäuse",
+          "en": "mouse",
+          "example": "Im Keller war eine Maus.",
+          "rank": 4491
+        },
+        {
+          "lemma": "Baum",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Bäume",
+          "en": "tree",
+          "example": "Vor dem Haus steht ein alter Baum.",
+          "rank": 1741
+        },
+        {
+          "lemma": "Blume",
+          "pos": "noun",
+          "gender": "die",
+          "plural": "Blumen",
+          "en": "flower",
+          "example": "Ich bringe ihr Blumen mit.",
+          "rank": 4646
+        },
+        {
+          "lemma": "Gras",
+          "pos": "noun",
+          "gender": "das",
+          "plural": "Gräser",
+          "en": "grass",
+          "example": "Das Gras ist noch nass.",
+          "rank": 2529
+        },
+        {
+          "lemma": "Wald",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Wälder",
+          "en": "forest",
+          "example": "Wir gehen im Wald spazieren.",
+          "rank": 1383
+        },
+        {
+          "lemma": "Fluss",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Flüsse",
+          "en": "river",
+          "example": "Der Fluss fließt durch die Stadt.",
+          "rank": 1954
+        },
+        {
+          "lemma": "Wiese",
+          "pos": "noun",
+          "gender": "die",
+          "plural": "Wiesen",
+          "en": "meadow",
+          "example": "Die Kinder spielen auf der Wiese.",
+          "rank": 11171
+        },
+        {
+          "lemma": "Natur",
+          "pos": "noun",
+          "gender": "die",
+          "en": "nature",
+          "example": "Ich bin gern in der Natur.",
+          "rank": 1813
+        },
+        {
+          "lemma": "Luft",
+          "pos": "noun",
+          "gender": "die",
+          "plural": "Lüfte",
+          "en": "air",
+          "example": "Die Luft ist hier sehr sauber.",
+          "rank": 707
+        },
+        {
+          "lemma": "Erde",
+          "pos": "noun",
+          "gender": "die",
+          "en": "earth, soil",
+          "example": "Die Erde im Topf ist trocken.",
+          "rank": 783
+        },
+        {
+          "lemma": "Feld",
+          "pos": "noun",
+          "gender": "das",
+          "plural": "Felder",
+          "en": "field",
+          "example": "Hinter dem Dorf liegen die Felder.",
+          "rank": 2767
+        },
+        {
+          "lemma": "Stein",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Steine",
+          "en": "stone",
+          "example": "Ein Stein liegt auf dem Weg.",
+          "rank": 1795
+        },
+        {
+          "lemma": "Blatt",
+          "pos": "noun",
+          "gender": "das",
+          "plural": "Blätter",
+          "en": "leaf, sheet",
+          "example": "Im Herbst fallen die Blätter.",
+          "rank": 4946
+        },
+        {
+          "lemma": "wachsen",
+          "pos": "verb",
+          "aux": "sein",
+          "forms": [
+            "wächst",
+            "wuchs",
+            "gewachsen"
+          ],
+          "en": "to grow",
+          "example": "Die Kinder wachsen so schnell.",
+          "rank": 2919
+        },
+        {
+          "lemma": "füttern",
+          "pos": "verb",
+          "aux": "haben",
+          "forms": [
+            "füttert",
+            "fütterte",
+            "gefüttert"
+          ],
+          "en": "to feed",
+          "example": "Wir füttern die Vögel im Winter.",
+          "rank": 4876
+        },
+        {
+          "lemma": "schön",
+          "pos": "adj",
+          "comparative": "schöner",
+          "superlative": "am schönsten",
+          "en": "beautiful, nice",
+          "example": "Was für ein schöner Tag!",
+          "rank": 179
+        },
+        {
+          "lemma": "sauber",
+          "pos": "adj",
+          "comparative": "sauberer",
+          "superlative": "am saubersten",
+          "en": "clean",
+          "example": "Die Küche ist jetzt sauber.",
+          "rank": 1315
+        },
+        {
+          "lemma": "wild",
+          "pos": "adj",
+          "comparative": "wilder",
+          "superlative": "am wildesten",
+          "en": "wild",
+          "example": "Im Wald leben wilde Tiere.",
+          "rank": 2453
+        }
+      ]
+    },
+    {
+      "id": "a1-21",
+      "title": "Verben des Alltags I",
+      "topics": [
+        "sprache"
+      ],
+      "words": [
+        {
+          "lemma": "sagen",
+          "pos": "verb",
+          "aux": "haben",
+          "forms": [
+            "sagt",
+            "sagte",
+            "gesagt"
+          ],
+          "en": "to say",
+          "example": "Was hast du gesagt?",
+          "rank": 96
+        },
+        {
+          "lemma": "sehen",
+          "pos": "verb",
+          "aux": "haben",
+          "forms": [
+            "sieht",
+            "sah",
+            "gesehen"
+          ],
+          "en": "to see",
+          "example": "Ich sehe dich morgen.",
+          "rank": 107
+        },
+        {
+          "lemma": "hören",
+          "pos": "verb",
+          "aux": "haben",
+          "forms": [
+            "hört",
+            "hörte",
+            "gehört"
+          ],
+          "en": "to hear, to listen",
+          "example": "Ich höre gern Radio.",
+          "rank": 242
+        },
+        {
+          "lemma": "geben",
+          "pos": "verb",
+          "aux": "haben",
+          "forms": [
+            "gibt",
+            "gab",
+            "gegeben"
+          ],
+          "en": "to give",
+          "example": "Gib mir bitte das Salz.",
+          "rank": 233
+        },
+        {
+          "lemma": "nehmen",
+          "pos": "verb",
+          "aux": "haben",
+          "forms": [
+            "nimmt",
+            "nahm",
+            "genommen"
+          ],
+          "en": "to take",
+          "example": "Ich nehme den Bus.",
+          "rank": 281
+        },
+        {
+          "lemma": "bringen",
+          "pos": "verb",
+          "aux": "haben",
+          "forms": [
+            "bringt",
+            "brachte",
+            "gebracht"
+          ],
+          "en": "to bring",
+          "example": "Bringst du mir einen Kaffee?",
+          "rank": 285
+        },
+        {
+          "lemma": "holen",
+          "pos": "verb",
+          "aux": "haben",
+          "forms": [
+            "holt",
+            "holte",
+            "geholt"
+          ],
+          "en": "to fetch, to get",
+          "example": "Ich hole die Kinder ab.",
+          "rank": 498
+        },
+        {
+          "lemma": "legen",
+          "pos": "verb",
+          "aux": "haben",
+          "forms": [
+            "legt",
+            "legte",
+            "gelegt"
+          ],
+          "en": "to lay, to put down",
+          "example": "Leg das Buch auf den Tisch.",
+          "rank": 1003
+        },
+        {
+          "lemma": "stellen",
+          "pos": "verb",
+          "aux": "haben",
+          "forms": [
+            "stellt",
+            "stellte",
+            "gestellt"
+          ],
+          "en": "to put, to place upright",
+          "example": "Stell die Flasche in den Kühlschrank.",
+          "rank": 580
+        },
+        {
+          "lemma": "setzen",
+          "pos": "verb",
+          "aux": "haben",
+          "forms": [
+            "setzt",
+            "setzte",
+            "gesetzt"
+          ],
+          "reflexive": true,
+          "en": "to set, to sit down",
+          "example": "Setzen Sie sich bitte.",
+          "rank": 627
+        },
+        {
+          "lemma": "stehen",
+          "pos": "verb",
+          "aux": "haben",
+          "forms": [
+            "steht",
+            "stand",
+            "gestanden"
+          ],
+          "en": "to stand",
+          "example": "Das Auto steht vor der Tür.",
+          "rank": 407
+        },
+        {
+          "lemma": "sitzen",
+          "pos": "verb",
+          "aux": "haben",
+          "forms": [
+            "sitzt",
+            "saß",
+            "gesessen"
+          ],
+          "en": "to sit",
+          "example": "Wir sitzen im Garten.",
+          "rank": 781
+        },
+        {
+          "lemma": "liegen",
+          "pos": "verb",
+          "aux": "haben",
+          "forms": [
+            "liegt",
+            "lag",
+            "gelegen"
+          ],
+          "en": "to lie, to be located",
+          "example": "Das Dorf liegt am See.",
+          "rank": 930
+        },
+        {
+          "lemma": "öffnen",
+          "pos": "verb",
+          "aux": "haben",
+          "forms": [
+            "öffnet",
+            "öffnete",
+            "geöffnet"
+          ],
+          "en": "to open",
+          "example": "Bitte öffnen Sie das Fenster.",
+          "rank": 1154
+        },
+        {
+          "lemma": "schließen",
+          "pos": "verb",
+          "aux": "haben",
+          "forms": [
+            "schließt",
+            "schloss",
+            "geschlossen"
+          ],
+          "en": "to close",
+          "example": "Die Bank schließt um 16 Uhr.",
+          "rank": 1484
+        },
+        {
+          "lemma": "bleiben",
+          "pos": "verb",
+          "aux": "sein",
+          "forms": [
+            "bleibt",
+            "blieb",
+            "geblieben"
+          ],
+          "en": "to stay",
+          "example": "Ich bleibe heute zu Hause.",
+          "rank": 268
+        },
+        {
+          "lemma": "werden",
+          "pos": "verb",
+          "aux": "sein",
+          "forms": [
+            "wird",
+            "wurde",
+            "geworden"
+          ],
+          "en": "to become",
+          "example": "Es wird langsam dunkel.",
+          "rank": 78
+        },
+        {
+          "lemma": "wissen",
+          "pos": "verb",
+          "aux": "haben",
+          "forms": [
+            "weiß",
+            "wusste",
+            "gewusst"
+          ],
+          "en": "to know (a fact)",
+          "example": "Ich weiß es nicht.",
+          "rank": 119
+        },
+        {
+          "lemma": "denken",
+          "pos": "verb",
+          "aux": "haben",
+          "forms": [
+            "denkt",
+            "dachte",
+            "gedacht"
+          ],
+          "prep": "an",
+          "case": "akk",
+          "en": "to think",
+          "example": "Ich denke oft an zu Hause.",
+          "rank": 344
+        },
+        {
+          "lemma": "glauben",
+          "pos": "verb",
+          "aux": "haben",
+          "forms": [
+            "glaubt",
+            "glaubte",
+            "geglaubt"
+          ],
+          "en": "to believe",
+          "example": "Ich glaube, das ist richtig.",
+          "rank": 284
+        },
+        {
+          "lemma": "fragen",
+          "pos": "verb",
+          "aux": "haben",
+          "forms": [
+            "fragt",
+            "fragte",
+            "gefragt"
+          ],
+          "en": "to ask",
+          "example": "Frag doch den Lehrer!",
+          "rank": 299
+        },
+        {
+          "lemma": "antworten",
+          "pos": "verb",
+          "aux": "haben",
+          "forms": [
+            "antwortet",
+            "antwortete",
+            "geantwortet"
+          ],
+          "prep": "auf",
+          "case": "akk",
+          "en": "to answer",
+          "example": "Bitte antworten Sie auf die Frage.",
+          "rank": 1280
+        },
+        {
+          "lemma": "erklären",
+          "pos": "verb",
+          "aux": "haben",
+          "forms": [
+            "erklärt",
+            "erklärte",
+            "erklärt"
+          ],
+          "en": "to explain",
+          "example": "Können Sie das noch einmal erklären?",
+          "rank": 744
+        },
+        {
+          "lemma": "üben",
+          "pos": "verb",
+          "aux": "haben",
+          "forms": [
+            "übt",
+            "übte",
+            "geübt"
+          ],
+          "en": "to practise",
+          "example": "Ich übe jeden Tag zwanzig Minuten.",
+          "rank": 3221
+        },
+        {
+          "lemma": "wiederholen",
+          "pos": "verb",
+          "aux": "haben",
+          "forms": [
+            "wiederholt",
+            "wiederholte",
+            "wiederholt"
+          ],
+          "en": "to repeat",
+          "example": "Können Sie das bitte wiederholen?",
+          "rank": 2975
+        }
+      ]
+    },
+    {
+      "id": "a1-22",
+      "title": "Verben des Alltags II",
+      "topics": [
+        "sprache"
+      ],
+      "words": [
+        {
+          "lemma": "können",
+          "pos": "verb",
+          "aux": "haben",
+          "forms": [
+            "kann",
+            "konnte",
+            "gekonnt"
+          ],
+          "en": "can, to be able to",
+          "example": "Ich kann heute nicht kommen.",
+          "rank": 94
+        },
+        {
+          "lemma": "müssen",
+          "pos": "verb",
+          "aux": "haben",
+          "forms": [
+            "muss",
+            "musste",
+            "gemusst"
+          ],
+          "en": "must, to have to",
+          "example": "Ich muss noch arbeiten.",
+          "rank": 121
+        },
+        {
+          "lemma": "wollen",
+          "pos": "verb",
+          "aux": "haben",
+          "forms": [
+            "will",
+            "wollte",
+            "gewollt"
+          ],
+          "en": "to want",
+          "example": "Wir wollen nach Italien fahren.",
+          "rank": 144
+        },
+        {
+          "lemma": "sollen",
+          "pos": "verb",
+          "aux": "haben",
+          "forms": [
+            "soll",
+            "sollte",
+            "gesollt"
+          ],
+          "en": "should, to be supposed to",
+          "example": "Soll ich dir helfen?",
+          "rank": 253
+        },
+        {
+          "lemma": "dürfen",
+          "pos": "verb",
+          "aux": "haben",
+          "forms": [
+            "darf",
+            "durfte",
+            "gedurft"
+          ],
+          "en": "may, to be allowed to",
+          "example": "Hier darf man nicht rauchen.",
+          "rank": 630
+        },
+        {
+          "lemma": "schicken",
+          "pos": "verb",
+          "aux": "haben",
+          "forms": [
+            "schickt",
+            "schickte",
+            "geschickt"
+          ],
+          "en": "to send",
+          "example": "Ich schicke dir das Foto.",
+          "rank": 834
+        },
+        {
+          "lemma": "bekommen",
+          "pos": "verb",
+          "aux": "haben",
+          "forms": [
+            "bekommt",
+            "bekam",
+            "bekommen"
+          ],
+          "en": "to get, to receive",
+          "example": "Ich habe deinen Brief bekommen.",
+          "rank": 374
+        },
+        {
+          "lemma": "verkaufen",
+          "pos": "verb",
+          "aux": "haben",
+          "forms": [
+            "verkauft",
+            "verkaufte",
+            "verkauft"
+          ],
+          "en": "to sell",
+          "example": "Wir verkaufen unser altes Auto.",
+          "rank": 931
+        },
+        {
+          "lemma": "benutzen",
+          "pos": "verb",
+          "aux": "haben",
+          "forms": [
+            "benutzt",
+            "benutzte",
+            "benutzt"
+          ],
+          "en": "to use",
+          "example": "Darf ich dein Handy benutzen?",
+          "rank": 1037
+        },
+        {
+          "lemma": "versuchen",
+          "pos": "verb",
+          "aux": "haben",
+          "forms": [
+            "versucht",
+            "versuchte",
+            "versucht"
+          ],
+          "en": "to try",
+          "example": "Versuch es noch einmal!",
+          "rank": 476
+        },
+        {
+          "lemma": "vergessen",
+          "pos": "verb",
+          "aux": "haben",
+          "forms": [
+            "vergisst",
+            "vergaß",
+            "vergessen"
+          ],
+          "en": "to forget",
+          "example": "Ich habe den Schlüssel vergessen.",
+          "rank": 355
+        },
+        {
+          "lemma": "erinnern",
+          "pos": "verb",
+          "aux": "haben",
+          "forms": [
+            "erinnert",
+            "erinnerte",
+            "erinnert"
+          ],
+          "reflexive": true,
+          "prep": "an",
+          "case": "akk",
+          "en": "to remember, to remind",
+          "example": "Ich erinnere mich an den Tag.",
+          "rank": 697
+        },
+        {
+          "lemma": "entscheiden",
+          "pos": "verb",
+          "aux": "haben",
+          "forms": [
+            "entscheidet",
+            "entschied",
+            "entschieden"
+          ],
+          "en": "to decide",
+          "example": "Du musst selbst entscheiden.",
+          "rank": 1288
+        },
+        {
+          "lemma": "ändern",
+          "pos": "verb",
+          "aux": "haben",
+          "forms": [
+            "ändert",
+            "änderte",
+            "geändert"
+          ],
+          "en": "to change",
+          "example": "Ich möchte den Termin ändern.",
+          "rank": 821
+        },
+        {
+          "lemma": "wechseln",
+          "pos": "verb",
+          "aux": "haben",
+          "forms": [
+            "wechselt",
+            "wechselte",
+            "gewechselt"
+          ],
+          "en": "to change, to switch",
+          "example": "Ich wechsle die Sprache auf Deutsch.",
+          "rank": 2617
+        },
+        {
+          "lemma": "aufmachen",
+          "pos": "verb",
+          "aux": "haben",
+          "separable": true,
+          "forms": [
+            "macht auf",
+            "machte auf",
+            "aufgemacht"
+          ],
+          "en": "to open",
+          "example": "Mach bitte das Fenster auf.",
+          "rank": 2322
+        },
+        {
+          "lemma": "zumachen",
+          "pos": "verb",
+          "aux": "haben",
+          "separable": true,
+          "forms": [
+            "macht zu",
+            "machte zu",
+            "zugemacht"
+          ],
+          "en": "to close",
+          "example": "Mach bitte die Tür zu.",
+          "rank": 8507
+        },
+        {
+          "lemma": "mitbringen",
+          "pos": "verb",
+          "aux": "haben",
+          "separable": true,
+          "forms": [
+            "bringt mit",
+            "brachte mit",
+            "mitgebracht"
+          ],
+          "en": "to bring along",
+          "example": "Bring bitte Brot mit.",
+          "rank": 3850
+        },
+        {
+          "lemma": "abholen",
+          "pos": "verb",
+          "aux": "haben",
+          "separable": true,
+          "forms": [
+            "holt ab",
+            "holte ab",
+            "abgeholt"
+          ],
+          "en": "to pick up",
+          "example": "Ich hole dich am Bahnhof ab.",
+          "rank": 1987
+        },
+        {
+          "lemma": "anmachen",
+          "pos": "verb",
+          "aux": "haben",
+          "separable": true,
+          "forms": [
+            "macht an",
+            "machte an",
+            "angemacht"
+          ],
+          "en": "to switch on",
+          "example": "Mach bitte das Licht an.",
+          "rank": 9734
+        },
+        {
+          "lemma": "ausmachen",
+          "pos": "verb",
+          "aux": "haben",
+          "separable": true,
+          "forms": [
+            "macht aus",
+            "machte aus",
+            "ausgemacht"
+          ],
+          "en": "to switch off",
+          "example": "Mach den Fernseher aus.",
+          "rank": 4274
+        },
+        {
+          "lemma": "zurückkommen",
+          "pos": "verb",
+          "aux": "sein",
+          "separable": true,
+          "forms": [
+            "kommt zurück",
+            "kam zurück",
+            "zurückgekommen"
+          ],
+          "en": "to come back",
+          "example": "Wann kommst du zurück?",
+          "rank": 2208
+        },
+        {
+          "lemma": "weggehen",
+          "pos": "verb",
+          "aux": "sein",
+          "separable": true,
+          "forms": [
+            "geht weg",
+            "ging weg",
+            "weggegangen"
+          ],
+          "en": "to leave, to go away",
+          "example": "Er ist ohne ein Wort weggegangen.",
+          "rank": 3594
+        },
+        {
+          "lemma": "verlieren",
+          "pos": "verb",
+          "aux": "haben",
+          "forms": [
+            "verliert",
+            "verlor",
+            "verloren"
+          ],
+          "en": "to lose",
+          "example": "Ich habe meinen Ausweis verloren.",
+          "rank": 703
+        },
+        {
+          "lemma": "gewinnen",
+          "pos": "verb",
+          "aux": "haben",
+          "forms": [
+            "gewinnt",
+            "gewann",
+            "gewonnen"
+          ],
+          "en": "to win",
+          "example": "Unsere Mannschaft hat gewonnen.",
+          "rank": 949
+        }
+      ]
+    },
+    {
+      "id": "a1-23",
+      "title": "Adjektive: Gegensätze",
+      "topics": [
+        "sprache"
+      ],
+      "words": [
+        {
+          "lemma": "gut",
+          "pos": "adj",
+          "comparative": "besser",
+          "superlative": "am besten",
+          "irregular": true,
+          "en": "good",
+          "example": "Das Essen war sehr gut.",
+          "rank": 52
+        },
+        {
+          "lemma": "schlecht",
+          "pos": "adj",
+          "comparative": "schlechter",
+          "superlative": "am schlechtesten",
+          "en": "bad",
+          "example": "Mir geht es heute schlecht.",
+          "rank": 558
+        },
+        {
+          "lemma": "neu",
+          "pos": "adj",
+          "comparative": "neuer",
+          "superlative": "am neuesten",
+          "en": "new",
+          "example": "Ich habe ein neues Handy.",
+          "rank": 959
+        },
+        {
+          "lemma": "lang",
+          "pos": "adj",
+          "comparative": "länger",
+          "superlative": "am längsten",
+          "en": "long",
+          "example": "Der Weg ist sehr lang.",
+          "rank": 450
+        },
+        {
+          "lemma": "kurz",
+          "pos": "adj",
+          "comparative": "kürzer",
+          "superlative": "am kürzesten",
+          "en": "short",
+          "example": "Mach es bitte kurz.",
+          "rank": 442
+        },
+        {
+          "lemma": "schwer",
+          "pos": "adj",
+          "comparative": "schwerer",
+          "superlative": "am schwersten",
+          "en": "heavy, difficult",
+          "example": "Die Prüfung war schwer.",
+          "rank": 486
+        },
+        {
+          "lemma": "leicht",
+          "pos": "adj",
+          "comparative": "leichter",
+          "superlative": "am leichtesten",
+          "en": "light, easy",
+          "example": "Diese Aufgabe ist leicht.",
+          "rank": 750
+        },
+        {
+          "lemma": "schnell",
+          "pos": "adj",
+          "comparative": "schneller",
+          "superlative": "am schnellsten",
+          "en": "fast",
+          "example": "Du sprichst zu schnell.",
+          "rank": 273
+        },
+        {
+          "lemma": "langsam",
+          "pos": "adj",
+          "comparative": "langsamer",
+          "superlative": "am langsamsten",
+          "en": "slow",
+          "example": "Bitte sprechen Sie langsam.",
+          "rank": 654
+        },
+        {
+          "lemma": "richtig",
+          "pos": "adj",
+          "comparative": "richtiger",
+          "superlative": "am richtigsten",
+          "en": "correct",
+          "example": "Das ist die richtige Antwort.",
+          "rank": 239
+        },
+        {
+          "lemma": "falsch",
+          "pos": "adj",
+          "comparative": "falscher",
+          "superlative": "am falschesten",
+          "en": "wrong",
+          "example": "Die Nummer war falsch.",
+          "rank": 618
+        },
+        {
+          "lemma": "voll",
+          "pos": "adj",
+          "comparative": "voller",
+          "superlative": "am vollsten",
+          "en": "full",
+          "example": "Der Bus war ganz voll.",
+          "rank": 673
+        },
+        {
+          "lemma": "leer",
+          "pos": "adj",
+          "comparative": "leerer",
+          "superlative": "am leersten",
+          "en": "empty",
+          "example": "Der Kühlschrank ist leer.",
+          "rank": 1664
+        },
+        {
+          "lemma": "offen",
+          "pos": "adj",
+          "comparative": "offener",
+          "superlative": "am offensten",
+          "en": "open",
+          "example": "Das Fenster ist noch offen.",
+          "rank": 1009
+        },
+        {
+          "lemma": "geschlossen",
+          "pos": "adj",
+          "en": "closed",
+          "example": "Die Praxis ist heute geschlossen.",
+          "rank": 1728
+        },
+        {
+          "lemma": "hell",
+          "pos": "adj",
+          "comparative": "heller",
+          "superlative": "am hellsten",
+          "en": "bright, light",
+          "example": "Das Zimmer ist sehr hell.",
+          "rank": 3980
+        },
+        {
+          "lemma": "dunkel",
+          "pos": "adj",
+          "comparative": "dunkler",
+          "superlative": "am dunkelsten",
+          "en": "dark",
+          "example": "Im Winter wird es früh dunkel.",
+          "rank": 2100
+        },
+        {
+          "lemma": "laut",
+          "pos": "adj",
+          "comparative": "lauter",
+          "superlative": "am lautesten",
+          "en": "loud",
+          "example": "Die Musik ist zu laut.",
+          "rank": 778
+        },
+        {
+          "lemma": "leise",
+          "pos": "adj",
+          "comparative": "leiser",
+          "superlative": "am leisesten",
+          "en": "quiet",
+          "example": "Sprich bitte leise.",
+          "rank": 1547
+        },
+        {
+          "lemma": "weit",
+          "pos": "adj",
+          "comparative": "weiter",
+          "superlative": "am weitesten",
+          "en": "far, wide",
+          "example": "Ist es noch weit?",
+          "rank": 397
+        },
+        {
+          "lemma": "nah",
+          "pos": "adj",
+          "comparative": "näher",
+          "superlative": "am nächsten",
+          "en": "near",
+          "example": "Der Bahnhof ist ganz nah.",
+          "rank": 1512
+        },
+        {
+          "lemma": "hoch",
+          "pos": "adj",
+          "comparative": "höher",
+          "superlative": "am höchsten",
+          "irregular": true,
+          "en": "high, tall",
+          "example": "Der Berg ist sehr hoch.",
+          "rank": 507
+        },
+        {
+          "lemma": "niedrig",
+          "pos": "adj",
+          "comparative": "niedriger",
+          "superlative": "am niedrigsten",
+          "en": "low",
+          "example": "Die Miete ist hier niedrig.",
+          "rank": 8396
+        },
+        {
+          "lemma": "dick",
+          "pos": "adj",
+          "comparative": "dicker",
+          "superlative": "am dicksten",
+          "en": "thick, fat",
+          "example": "Zieh eine dicke Jacke an.",
+          "rank": 2127
+        },
+        {
+          "lemma": "dünn",
+          "pos": "adj",
+          "comparative": "dünner",
+          "superlative": "am dünnsten",
+          "en": "thin",
+          "example": "Das Papier ist sehr dünn.",
+          "rank": 4988
+        }
+      ]
+    },
+    {
+      "id": "a1-24",
+      "title": "Präpositionen & Ortsangaben",
+      "topics": [
+        "sprache"
+      ],
+      "words": [
+        {
+          "lemma": "in",
+          "pos": "prep",
+          "case": "akk/dat",
+          "en": "in, into",
+          "example": "Ich bin in der Küche.",
+          "rank": 16
+        },
+        {
+          "lemma": "an",
+          "pos": "prep",
+          "case": "akk/dat",
+          "en": "at, on (vertical)",
+          "example": "Das Bild hängt an der Wand.",
+          "rank": 40
+        },
+        {
+          "lemma": "auf",
+          "pos": "prep",
+          "case": "akk/dat",
+          "en": "on, onto",
+          "example": "Das Buch liegt auf dem Tisch.",
+          "rank": 23
+        },
+        {
+          "lemma": "unter",
+          "pos": "prep",
+          "case": "akk/dat",
+          "en": "under",
+          "example": "Die Katze schläft unter dem Bett.",
+          "rank": 271
+        },
+        {
+          "lemma": "über",
+          "pos": "prep",
+          "case": "akk/dat",
+          "en": "over, above, about",
+          "example": "Die Lampe hängt über dem Tisch.",
+          "rank": 116
+        },
+        {
+          "lemma": "vor",
+          "pos": "prep",
+          "case": "akk/dat",
+          "en": "in front of, before",
+          "example": "Wir treffen uns vor dem Kino.",
+          "rank": 92
+        },
+        {
+          "lemma": "hinter",
+          "pos": "prep",
+          "case": "akk/dat",
+          "en": "behind",
+          "example": "Der Garten ist hinter dem Haus.",
+          "rank": 424
+        },
+        {
+          "lemma": "neben",
+          "pos": "prep",
+          "case": "akk/dat",
+          "en": "next to",
+          "example": "Setz dich neben mich.",
+          "rank": 1146
+        },
+        {
+          "lemma": "zwischen",
+          "pos": "prep",
+          "case": "akk/dat",
+          "en": "between",
+          "example": "Die Apotheke ist zwischen Bank und Post.",
+          "rank": 535
+        },
+        {
+          "lemma": "bei",
+          "pos": "prep",
+          "case": "dat",
+          "en": "at, near, with",
+          "example": "Ich wohne bei meiner Tante.",
+          "rank": 86
+        },
+        {
+          "lemma": "mit",
+          "pos": "prep",
+          "case": "dat",
+          "en": "with, by",
+          "example": "Ich fahre mit dem Bus.",
+          "rank": 19
+        },
+        {
+          "lemma": "nach",
+          "pos": "prep",
+          "case": "dat",
+          "en": "after, to (place)",
+          "example": "Nach der Arbeit gehe ich einkaufen.",
+          "rank": 73
+        },
+        {
+          "lemma": "zu",
+          "pos": "prep",
+          "case": "dat",
+          "en": "to",
+          "example": "Ich gehe zum Arzt.",
+          "rank": 13
+        },
+        {
+          "lemma": "von",
+          "pos": "prep",
+          "case": "dat",
+          "en": "from, of",
+          "example": "Das ist ein Brief von meiner Mutter.",
+          "rank": 34
+        },
+        {
+          "lemma": "aus",
+          "pos": "prep",
+          "case": "dat",
+          "en": "from, out of",
+          "example": "Ich komme aus Syrien.",
+          "rank": 61
+        },
+        {
+          "lemma": "seit",
+          "pos": "prep",
+          "case": "dat",
+          "en": "since, for",
+          "example": "Ich lerne seit einem Jahr Deutsch.",
+          "rank": 234
+        },
+        {
+          "lemma": "für",
+          "pos": "prep",
+          "case": "akk",
+          "en": "for",
+          "example": "Das Geschenk ist für dich.",
+          "rank": 31
+        },
+        {
+          "lemma": "ohne",
+          "pos": "prep",
+          "case": "akk",
+          "en": "without",
+          "example": "Ich trinke Kaffee ohne Zucker.",
+          "rank": 212
+        },
+        {
+          "lemma": "gegen",
+          "pos": "prep",
+          "case": "akk",
+          "en": "against, around (time)",
+          "example": "Ich nehme etwas gegen die Schmerzen.",
+          "rank": 290
+        },
+        {
+          "lemma": "um",
+          "pos": "prep",
+          "case": "akk",
+          "en": "at (time), around",
+          "example": "Der Kurs beginnt um neun Uhr.",
+          "rank": 63
+        },
+        {
+          "lemma": "durch",
+          "pos": "prep",
+          "case": "akk",
+          "en": "through",
+          "example": "Wir gehen durch den Park.",
+          "rank": 194
+        },
+        {
+          "lemma": "bis",
+          "pos": "prep",
+          "case": "akk",
+          "en": "until, to",
+          "example": "Ich arbeite bis fünf Uhr.",
+          "rank": 155
+        },
+        {
+          "lemma": "hier",
+          "pos": "adv",
+          "en": "here",
+          "example": "Hier ist meine Adresse.",
+          "rank": 29
+        },
+        {
+          "lemma": "dort",
+          "pos": "adv",
+          "en": "there",
+          "example": "Dort hinten ist die Kasse.",
+          "rank": 231
+        },
+        {
+          "lemma": "oben",
+          "pos": "adv",
+          "en": "up, above, upstairs",
+          "example": "Das Bad ist oben.",
+          "rank": 474
+        }
+      ]
+    },
+    {
+      "id": "a1-25",
+      "title": "Funktionswörter & Konnektoren",
+      "topics": [
+        "sprache"
+      ],
+      "words": [
+        {
+          "lemma": "und",
+          "pos": "conj",
+          "en": "and",
+          "example": "Ich trinke Kaffee und esse ein Brötchen.",
+          "rank": 9
+        },
+        {
+          "lemma": "oder",
+          "pos": "conj",
+          "en": "or",
+          "example": "Möchtest du Tee oder Kaffee?",
+          "rank": 72
+        },
+        {
+          "lemma": "aber",
+          "pos": "conj",
+          "en": "but",
+          "example": "Die Wohnung ist klein, aber schön.",
+          "rank": 25
+        },
+        {
+          "lemma": "denn",
+          "pos": "conj",
+          "en": "because, for",
+          "example": "Ich bleibe zu Hause, denn ich bin krank.",
+          "rank": 101
+        },
+        {
+          "lemma": "weil",
+          "pos": "conj",
+          "en": "because",
+          "example": "Ich komme später, weil der Bus Verspätung hat.",
+          "rank": 138
+        },
+        {
+          "lemma": "dass",
+          "pos": "conj",
+          "en": "that",
+          "example": "Ich glaube, dass er recht hat.",
+          "rank": 24
+        },
+        {
+          "lemma": "wenn",
+          "pos": "conj",
+          "en": "if, when",
+          "example": "Wenn es regnet, bleiben wir zu Hause.",
+          "rank": 35
+        },
+        {
+          "lemma": "ob",
+          "pos": "conj",
+          "en": "whether",
+          "example": "Ich weiß nicht, ob er kommt.",
+          "rank": 195
+        },
+        {
+          "lemma": "als",
+          "pos": "conj",
+          "en": "when (past), than",
+          "example": "Als ich klein war, wohnten wir in Ankara.",
+          "rank": 55
+        },
+        {
+          "lemma": "sondern",
+          "pos": "conj",
+          "en": "but rather",
+          "example": "Er kommt nicht heute, sondern morgen.",
+          "rank": 619
+        },
+        {
+          "lemma": "man",
+          "pos": "pron",
+          "en": "one, you (impersonal)",
+          "example": "Hier darf man nicht parken.",
+          "rank": 76
+        },
+        {
+          "lemma": "wer",
+          "pos": "pron",
+          "en": "who",
+          "example": "Wer ist das?",
+          "rank": 110
+        },
+        {
+          "lemma": "was",
+          "pos": "pron",
+          "en": "what",
+          "example": "Was machst du heute?",
+          "rank": 12
+        },
+        {
+          "lemma": "welcher",
+          "pos": "pron",
+          "en": "which",
+          "example": "Welcher Bus fährt zum Zentrum?",
+          "rank": 1000
+        },
+        {
+          "lemma": "wo",
+          "pos": "adv",
+          "en": "where",
+          "example": "Wo wohnst du?",
+          "rank": 82
+        },
+        {
+          "lemma": "wie",
+          "pos": "adv",
+          "en": "how",
+          "example": "Wie geht es dir?",
+          "rank": 20
+        },
+        {
+          "lemma": "warum",
+          "pos": "adv",
+          "en": "why",
+          "example": "Warum lernst du Deutsch?",
+          "rank": 91
+        },
+        {
+          "lemma": "wann",
+          "pos": "adv",
+          "en": "when",
+          "example": "Wann kommt der nächste Zug?",
+          "rank": 312
+        },
+        {
+          "lemma": "wohin",
+          "pos": "adv",
+          "en": "where to",
+          "example": "Wohin gehst du?",
+          "rank": 624
+        },
+        {
+          "lemma": "woher",
+          "pos": "adv",
+          "en": "where from",
+          "example": "Woher kommen Sie?",
+          "rank": 449
+        },
+        {
+          "lemma": "auch",
+          "pos": "adv",
+          "en": "also, too",
+          "example": "Ich komme auch mit.",
+          "rank": 53
+        },
+        {
+          "lemma": "nicht",
+          "pos": "adv",
+          "en": "not",
+          "example": "Das verstehe ich nicht.",
+          "rank": 6
+        },
+        {
+          "lemma": "sehr",
+          "pos": "adv",
+          "en": "very",
+          "example": "Das Essen ist sehr gut.",
+          "rank": 99
+        },
+        {
+          "lemma": "schon",
+          "pos": "adv",
+          "en": "already",
+          "example": "Bist du schon fertig?",
+          "rank": 54
+        },
+        {
+          "lemma": "noch",
+          "pos": "adv",
+          "en": "still, yet",
+          "example": "Ich bin noch nicht fertig.",
+          "rank": 42
+        }
+      ]
+    },
+    {
+      "id": "a1-26",
+      "title": "Ämter & Formulare",
+      "topics": [
+        "aemter"
+      ],
+      "words": [
+        {
+          "lemma": "Amt",
+          "pos": "noun",
+          "gender": "das",
+          "plural": "Ämter",
+          "en": "public office, authority",
+          "example": "Ich muss morgen zum Amt.",
+          "rank": 4378
+        },
+        {
+          "lemma": "Behörde",
+          "pos": "noun",
+          "gender": "die",
+          "plural": "Behörden",
+          "en": "authority, public agency",
+          "example": "Die Behörde schickt einen Brief.",
+          "rank": 9302
+        },
+        {
+          "lemma": "Formular",
+          "pos": "noun",
+          "gender": "das",
+          "plural": "Formulare",
+          "en": "form",
+          "example": "Füllen Sie bitte dieses Formular aus.",
+          "rank": 10427
+        },
+        {
+          "lemma": "Antrag",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Anträge",
+          "en": "application",
+          "example": "Ich stelle einen Antrag auf Kindergeld.",
+          "rank": 3024
+        },
+        {
+          "lemma": "Unterschrift",
+          "pos": "noun",
+          "gender": "die",
+          "plural": "Unterschriften",
+          "en": "signature",
+          "example": "Hier fehlt noch Ihre Unterschrift.",
+          "rank": 4415
+        },
+        {
+          "lemma": "Anmeldung",
+          "pos": "noun",
+          "gender": "die",
+          "plural": "Anmeldungen",
+          "en": "registration",
+          "example": "Die Anmeldung dauert zehn Minuten.",
+          "rank": 18318
+        },
+        {
+          "lemma": "Bürgeramt",
+          "pos": "noun",
+          "gender": "das",
+          "plural": "Bürgerämter",
+          "en": "citizens' office",
+          "example": "Das Bürgeramt hat bis 18 Uhr geöffnet.",
+          "rank": null
+        },
+        {
+          "lemma": "Ausländerbehörde",
+          "pos": "noun",
+          "gender": "die",
+          "plural": "Ausländerbehörden",
+          "en": "immigration office",
+          "example": "Ich habe einen Termin bei der Ausländerbehörde.",
+          "rank": null
+        },
+        {
+          "lemma": "Aufenthalt",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Aufenthalte",
+          "en": "stay, residence",
+          "example": "Mein Aufenthalt ist bis 2027 gültig.",
+          "rank": 6796
+        },
+        {
+          "lemma": "Visum",
+          "pos": "noun",
+          "gender": "das",
+          "plural": "Visa",
+          "en": "visa",
+          "example": "Mein Visum läuft im Juni ab.",
+          "rank": 14453
+        },
+        {
+          "lemma": "Geburtsurkunde",
+          "pos": "noun",
+          "gender": "die",
+          "plural": "Geburtsurkunden",
+          "en": "birth certificate",
+          "example": "Bringen Sie bitte Ihre Geburtsurkunde mit.",
+          "rank": 14703
+        },
+        {
+          "lemma": "Staatsangehörigkeit",
+          "pos": "noun",
+          "gender": "die",
+          "plural": "Staatsangehörigkeiten",
+          "en": "nationality",
+          "example": "Welche Staatsangehörigkeit haben Sie?",
+          "rank": null
+        },
+        {
+          "lemma": "Familienstand",
+          "pos": "noun",
+          "gender": "der",
+          "en": "marital status",
+          "example": "Familienstand: ledig oder verheiratet?",
+          "rank": null
+        },
+        {
+          "lemma": "Geburtsort",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Geburtsorte",
+          "en": "place of birth",
+          "example": "Mein Geburtsort ist Aleppo.",
+          "rank": 22313
+        },
+        {
+          "lemma": "Mitarbeiter",
+          "pos": "noun",
+          "gender": "der",
+          "plural": "Mitarbeiter",
+          "en": "employee, staff member",
+          "example": "Der Mitarbeiter am Schalter hilft Ihnen.",
+          "rank": 3227
+        },
+        {
+          "lemma": "Nummer",
+          "pos": "noun",
+          "gender": "die",
+          "plural": "Nummern",
+          "en": "number",
+          "example": "Ziehen Sie bitte eine Nummer.",
+          "rank": 621
+        },
+        {
+          "lemma": "Öffnungszeit",
+          "pos": "noun",
+          "gender": "die",
+          "plural": "Öffnungszeiten",
+          "en": "opening hours",
+          "example": "Die Öffnungszeiten stehen an der Tür.",
+          "rank": null
+        },
+        {
+          "lemma": "Dokument",
+          "pos": "noun",
+          "gender": "das",
+          "plural": "Dokumente",
+          "en": "document",
+          "example": "Haben Sie alle Dokumente dabei?",
+          "rank": 6780
+        },
+        {
+          "lemma": "Kopie",
+          "pos": "noun",
+          "gender": "die",
+          "plural": "Kopien",
+          "en": "copy",
+          "example": "Ich brauche eine Kopie vom Pass.",
+          "rank": 3612
+        },
+        {
+          "lemma": "Gebühr",
+          "pos": "noun",
+          "gender": "die",
+          "plural": "Gebühren",
+          "en": "fee",
+          "example": "Die Gebühr beträgt 30 Euro.",
+          "rank": 20328
+        },
+        {
+          "lemma": "ausfüllen",
+          "pos": "verb",
+          "aux": "haben",
+          "separable": true,
+          "forms": [
+            "füllt aus",
+            "füllte aus",
+            "ausgefüllt"
+          ],
+          "en": "to fill in",
+          "example": "Füllen Sie das Formular bitte in Druckschrift aus.",
+          "rank": 10066
+        },
+        {
+          "lemma": "unterschreiben",
+          "pos": "verb",
+          "aux": "haben",
+          "forms": [
+            "unterschreibt",
+            "unterschrieb",
+            "unterschrieben"
+          ],
+          "en": "to sign",
+          "example": "Bitte unterschreiben Sie hier unten.",
+          "rank": 2354
+        },
+        {
+          "lemma": "anmelden",
+          "pos": "verb",
+          "aux": "haben",
+          "separable": true,
+          "forms": [
+            "meldet an",
+            "meldete an",
+            "angemeldet"
+          ],
+          "reflexive": true,
+          "en": "to register",
+          "example": "Ich muss mich in der Stadt anmelden.",
+          "rank": 11483
+        },
+        {
+          "lemma": "abgeben",
+          "pos": "verb",
+          "aux": "haben",
+          "separable": true,
+          "forms": [
+            "gibt ab",
+            "gab ab",
+            "abgegeben"
+          ],
+          "en": "to hand in",
+          "example": "Wo kann ich den Antrag abgeben?",
+          "rank": 3726
+        },
+        {
+          "lemma": "beantragen",
+          "pos": "verb",
+          "aux": "haben",
+          "forms": [
+            "beantragt",
+            "beantragte",
+            "beantragt"
+          ],
+          "en": "to apply for",
+          "example": "Ich möchte einen neuen Ausweis beantragen.",
+          "rank": 11389
+        }
+      ]
+    }
+  ]
+}

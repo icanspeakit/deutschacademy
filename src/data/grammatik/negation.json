@@ -1,0 +1,155 @@
+{
+  "id": "negation",
+  "name": "Negation: nicht oder kein",
+  "level": "A2",
+  "subtitle": "Zwei Wörter teilen sich die Verneinung: „kein“ ersetzt „ein“ vor einem Nomen, „nicht“ verneint alles andere. Und „nicht“ steht fast immer weiter rechts, als man denkt.",
+  "source": "Negation.pdf (Kapitel 6, Position von nicht) · Negationswörter.pdf (Kapitel 74)",
+  "concept": {
+    "flow": [
+      { "text": "Nomen mit ein / ohne Artikel", "variant": "verb" },
+      { "text": "→ kein" },
+      { "text": "alles andere", "variant": "prep" },
+      { "text": "→ nicht" }
+    ],
+    "exampleHtml": "Ich habe <span class=\"vp-verb\">eine</span> Karte. → Ich habe <span class=\"vp-verb\">keine</span> Karte. · Ich kann weiterfahren. → Ich kann <span class=\"vp-prep\">nicht</span> weiterfahren.",
+    "qa": [
+      { "html": "<strong>kein</strong> steht vor Nomen mit <em>ein/eine</em> und vor Nomen ganz ohne Artikel: <em>kein Geld, keine Zeit, keine Karte</em>. Es wird wie <em>ein</em> dekliniert.", "tag": "kein" },
+      { "html": "<strong>nicht</strong> verneint Verben, Adjektive, Adverbien und Nomen mit bestimmtem Artikel: <em>Ich kenne den neuen Kollegen nicht.</em>", "tag": "nicht" },
+      { "html": "<strong>Satznegation</strong>: <em>nicht</em> steht möglichst weit rechts — aber immer <em>vor</em> Modalangabe, Ortsangabe und zweitem Verbteil.", "tag": "Position" },
+      { "html": "<strong>Teilnegation</strong>: <em>nicht</em> steht direkt vor dem Satzteil, den es verneint. Danach folgt oft <em>sondern</em>. <em>Ich schenke ihr <strong>nicht heute</strong> den Ring, sondern morgen.</em>", "tag": "sondern" }
+    ],
+    "noteHtml": "Die Merkhilfe für die Position von <em>nicht</em> heißt <strong>te-ka-<span class=\"vp-verb\">nicht</span>-mo-lo</strong>: <em>temporal – kausal – <strong>nicht</strong> – modal – lokal</em>. Alles, was vor <em>nicht</em> steht (Zeit, Grund, Pronomen, Objekte), bleibt links; Art und Weise, Ort und der zweite Verbteil kommen danach: <em>Ich konnte meinen Vater gestern wegen eines Termins <strong>nicht</strong> pünktlich am Bahnhof abholen.</em>",
+    "reference": {
+      "showLabel": "Übersicht anzeigen ▼",
+      "hideLabel": "Übersicht ausblenden ▲",
+      "tables": [
+        {
+          "caption": "te-ka-nicht-mo-lo",
+          "head": ["links von nicht", "", "", "nicht", "rechts von nicht", "", ""],
+          "rows": [
+            ["Subjekt", "Verb 1", "Objekte / temporal / kausal", "nicht", "modal", "lokal", "Verb 2"],
+            ["Ich", "konnte", "meinen Vater · gestern · wegen eines Termins", "nicht", "pünktlich", "am Bahnhof", "abholen."],
+            ["Ich", "kann", "mich · heute · wegen einer Konferenz", "nicht", "um meinen Kollegen", "—", "kümmern."]
+          ]
+        },
+        {
+          "caption": "kein — dekliniert wie ein",
+          "head": ["", "maskulin", "feminin", "neutral", "Plural"],
+          "rows": [
+            ["Nominativ", "kein Mann", "keine Frau", "kein Kind", "keine Kinder"],
+            ["Akkusativ", "keinen Mann", "keine Frau", "kein Kind", "keine Kinder"],
+            ["Dativ", "keinem Mann", "keiner Frau", "keinem Kind", "keinen Kindern"]
+          ]
+        }
+      ],
+      "boxes": [
+        {
+          "badge": "Teilnegation mit sondern",
+          "variant": "akk",
+          "items": [
+            "Nicht ich schenke ihr den Ring (sondern er).",
+            "Ich schenke nicht ihr den Ring (sondern ihm).",
+            "Ich schenke ihr nicht heute den Ring (sondern morgen).",
+            "Ich schenke ihr heute nicht den Ring (sondern die Blumen).",
+            "Ich schenke ihr den Ring nicht zur Verlobung (sondern zum Geburtstag)."
+          ]
+        },
+        {
+          "badge": "Weitere Negationswörter",
+          "variant": "dat",
+          "items": [
+            "nichts — Man bezahlt nichts.",
+            "niemand / keiner — Niemand kann die Karte kaufen.",
+            "nie / niemals — Ich kaufe nie eine Karte.",
+            "nirgends / nirgendwo — Man findet sie nirgendwo.",
+            "ohne — Ohne Fahrkarte kommen Sie nirgendwohin."
+          ]
+        }
+      ]
+    }
+  },
+  "exercises": [
+    {
+      "type": "fill",
+      "title": "nicht oder kein-?",
+      "hint": "Steht ein Nomen mit ein/ohne Artikel dahinter? Dann kein-. Achten Sie auf die Endung.",
+      "placeholder": "nicht / kein…",
+      "items": [
+        { "prompt": "Ich habe ___ Geld dabei.", "hint": "Nomen ohne Artikel, neutral.", "answer": ["kein"] },
+        { "prompt": "Ich habe ___ Zeit für dich.", "hint": "Nomen ohne Artikel, feminin.", "answer": ["keine"] },
+        { "prompt": "Ich kann heute ___ weiterfahren.", "hint": "Ein Verb wird verneint.", "answer": ["nicht"] },
+        { "prompt": "Ich kenne den neuen Kollegen ___.", "hint": "Bestimmter Artikel — also nicht.", "answer": ["nicht"] },
+        { "prompt": "Wir haben ___ Karten mehr.", "hint": "Plural.", "answer": ["keine"] },
+        { "prompt": "Das Buch ist ___ interessant.", "hint": "Adjektiv.", "answer": ["nicht"] },
+        { "prompt": "Er ist ___ Lehrer, er ist Ingenieur.", "hint": "Beruf ohne Artikel, maskulin.", "answer": ["kein"] }
+      ]
+    },
+    {
+      "type": "table",
+      "title": "Steht das Satzteil links oder rechts von „nicht“?",
+      "hint": "te-ka-nicht-mo-lo. Tippen Sie „links“ oder „rechts“.",
+      "columns": ["Satzteil", "links / rechts"],
+      "placeholder": "links / rechts",
+      "rows": [
+        { "term": "gestern (temporal)", "answer": "links" },
+        { "term": "wegen der Nachbarn (kausal)", "answer": "links" },
+        { "term": "sich (Pronomen)", "answer": "links" },
+        { "term": "meiner Frau (Dativobjekt)", "answer": "links" },
+        { "term": "das Klavier (Akkusativobjekt)", "answer": "links" },
+        { "term": "mit Mühe (modal)", "answer": "rechts" },
+        { "term": "ungern (modal)", "answer": "rechts" },
+        { "term": "zu Hause (lokal)", "answer": "rechts" },
+        { "term": "oben (lokal)", "answer": "rechts" },
+        { "term": "Klavier (spielen) (Verbgefährte)", "answer": "rechts" }
+      ]
+    },
+    {
+      "type": "build",
+      "title": "Verneinen Sie den ganzen Satz — wo steht „nicht“?",
+      "sentences": [
+        {
+          "id": "ng1",
+          "hint": "„Er versteht mich.“",
+          "correct": ["Er", "versteht", "mich", "nicht", "."],
+          "shuffled": ["mich", "Er", "nicht", ".", "versteht"]
+        },
+        {
+          "id": "ng2",
+          "hint": "„Er versteht mich gut.“ — gut ist modal.",
+          "correct": ["Er", "versteht", "mich", "nicht", "gut", "."],
+          "shuffled": ["gut", "mich", "nicht", "Er", ".", "versteht"]
+        },
+        {
+          "id": "ng3",
+          "hint": "„Sie geht auf den Balkon.“ — der Balkon ist lokal.",
+          "correct": ["Sie", "geht", "nicht", "auf", "den", "Balkon", "."],
+          "shuffled": ["den", "geht", "auf", "Sie", "Balkon", "nicht", "."]
+        },
+        {
+          "id": "ng4",
+          "hint": "„Ich kann heute Abend kommen.“ — das zweite Verb schließt den Satz.",
+          "correct": ["Ich", "kann", "heute", "Abend", "nicht", "kommen", "."],
+          "shuffled": ["Abend", "nicht", "Ich", "kommen", "heute", "kann", "."]
+        },
+        {
+          "id": "ng5",
+          "hint": "„Sie verabredet sich heute im Café.“",
+          "correct": ["Sie", "verabredet", "sich", "heute", "nicht", "im", "Café", "."],
+          "shuffled": ["heute", "sich", "im", "Sie", "nicht", "Café", "verabredet", "."]
+        }
+      ]
+    },
+    {
+      "type": "match",
+      "title": "Teilnegation: Was wird verneint?",
+      "hint": "Der Satzteil direkt nach „nicht“ ist gemeint.",
+      "pairs": [
+        { "q": "Nicht ich schenke ihr den Ring,", "a": "sondern er." },
+        { "q": "Ich schenke nicht ihr den Ring,", "a": "sondern ihm." },
+        { "q": "Ich schenke ihr nicht heute den Ring,", "a": "sondern morgen." },
+        { "q": "Ich schenke ihr heute nicht den Ring,", "a": "sondern die Blumen." },
+        { "q": "Ich schenke ihr den Ring nicht zur Verlobung,", "a": "sondern zum Geburtstag." }
+      ]
+    }
+  ]
+}

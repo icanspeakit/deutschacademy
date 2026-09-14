@@ -1,0 +1,154 @@
+{
+  "id": "satzstellung",
+  "name": "Satzstellung: die Satzbrücke",
+  "level": "A2",
+  "subtitle": "Im deutschen Aussagesatz steht das konjugierte Verb immer auf Position 2 — egal, was auf Position 1 steht. Der zweite Verbteil wartet am Satzende: das ist die Satzbrücke.",
+  "source": "Positionen im Satz.pdf (Kapitel 11) · Satzstellung.pdf (Kapitel 1) · Positionen im Satz Hausaufgabe.pdf · Sätze.pdf",
+  "concept": {
+    "flow": [
+      { "text": "Position 1" },
+      { "text": "Verb 1", "variant": "verb" },
+      { "text": "Mittelfeld" },
+      { "text": "Verb 2 · Ende", "variant": "prep" }
+    ],
+    "exampleHtml": "Heute <span class=\"vp-verb\">möchte</span> ich ins Schwimmbad <span class=\"vp-prep\">gehen</span>.",
+    "qa": [
+      { "html": "Auf <strong>Position 1</strong> kann fast jeder Satzteil stehen — auch mehrere Wörter: <em>Wie jeden Dienstag möchte ich ins Kino gehen.</em>", "tag": "frei" },
+      { "html": "Auf <strong>Position 2</strong> steht immer das konjugierte Verb. Das ist die feste Regel im Aussagesatz und in der W-Frage.", "tag": "Verb = 2" },
+      { "html": "Das <strong>Subjekt</strong> steht direkt neben dem Verb — links davon oder rechts davon: <em>Ich gehe heute … / Heute gehe ich …</em>", "tag": "Subjekt" },
+      { "html": "Der <strong>zweite Verbteil</strong> geht ans Satzende: trennbares Präfix, Infinitiv oder Partizip. <em>Ich hole dich um zwei Uhr <strong>ab</strong>.</em>", "tag": "Brücke" }
+    ],
+    "noteHtml": "Faustregel fürs Mittelfeld: die <strong>Zeit</strong> steht meistens links (oft schon auf Position 1), der <strong>Ort</strong> meistens rechts. <em>Ich wohne <strong>seit zwei Monaten</strong> in Deutschland.</em> — und nach Position 1 steht kein Komma, außer wenn dort ein ganzer Nebensatz steht.",
+    "reference": {
+      "showLabel": "Satzbrücke anzeigen ▼",
+      "hideLabel": "Satzbrücke ausblenden ▲",
+      "tables": [
+        {
+          "caption": "Position 2 und Satzende — dieselbe Brücke in jeder Zeitform",
+          "head": ["", "Position 1", "Position 2", "Mittelfeld", "Ende"],
+          "rows": [
+            ["Aussagesatz", "Ich", "gehe", "heute ins Schwimmbad.", "—"],
+            ["W-Frage", "Wohin", "gehst", "du heute?", "—"],
+            ["trennbares Verb", "Ich", "hole", "dich um zwei Uhr", "ab."],
+            ["Modalverb", "Ich", "möchte", "schon lange ins Schwimmbad", "gehen."],
+            ["Perfekt", "Ich", "bin", "letzte Woche ins Schwimmbad", "gegangen."],
+            ["Futur", "Die Sonne", "wird", "heute den ganzen Tag", "scheinen."],
+            ["Passiv", "Das Bad", "wird", "jetzt", "renoviert."],
+            ["Konjunktiv", "Ich", "würde", "am liebsten jeden Tag", "gehen."]
+          ]
+        },
+        {
+          "caption": "Position 1 wechselt, Position 2 bleibt",
+          "head": ["Position 1", "Position 2", "Position 3", "Ende"],
+          "rows": [
+            ["Ich", "gehe", "heute", "ins Kino."],
+            ["Heute", "gehe", "ich", "ins Kino."],
+            ["Wie jeden Dienstag", "möchte", "ich", "ins Kino gehen."],
+            ["Obwohl ich wenig Zeit habe,", "gehe", "ich", "ins Kino."]
+          ]
+        }
+      ],
+      "boxes": [
+        {
+          "badge": "Diese Sätze beginnen mit dem Verb",
+          "variant": "akk",
+          "items": [
+            "Ja/Nein-Frage: Holst du einen Kaffee?",
+            "Imperativ: Bring mir bitte einen Kaffee mit!",
+            "Wunschsatz: Wäre es doch bloß nicht so heiß!",
+            "Konditionalsatz: Hat der Kunde nicht bezahlt, bekommt er eine Mahnung."
+          ]
+        },
+        {
+          "badge": "Zeit links, Ort rechts",
+          "variant": "dat",
+          "items": [
+            "Ich wohne seit zwei Monaten in Deutschland.",
+            "Seit zwei Monaten wohne ich in Deutschland.",
+            "Am Abend essen wir Pizza.",
+            "Wir essen am Abend Pizza."
+          ]
+        }
+      ]
+    }
+  },
+  "exercises": [
+    {
+      "type": "build",
+      "title": "Bauen Sie den Satz — Verb auf Position 2.",
+      "sentences": [
+        {
+          "id": "ss1",
+          "hint": "Er heißt Peter Schmidt.",
+          "correct": ["Er", "heißt", "Peter", "Schmidt", "."],
+          "shuffled": ["Schmidt", "Er", ".", "Peter", "heißt"]
+        },
+        {
+          "id": "ss2",
+          "hint": "Zwei Subjekte, ein Verb — trotzdem Position 2.",
+          "correct": ["Peter", "und", "seine", "Frau", "wohnen", "jetzt", "in", "Heidelberg", "."],
+          "shuffled": ["wohnen", "Peter", "in", "seine", "jetzt", "und", "Heidelberg", "Frau", "."]
+        },
+        {
+          "id": "ss3",
+          "hint": "Trennbares Verb — das Präfix wandert ans Ende.",
+          "correct": ["Ich", "hole", "dich", "um", "zwei", "Uhr", "ab", "."],
+          "shuffled": ["um", "Ich", "ab", "dich", "zwei", "hole", ".", "Uhr"]
+        },
+        {
+          "id": "ss4",
+          "hint": "Modalverb auf Position 2, Infinitiv ans Ende.",
+          "correct": ["Am", "liebsten", "würde", "sie", "nächstes", "Jahr", "eine", "Wanderung", "machen", "."],
+          "shuffled": ["eine", "Am", "machen", "würde", "nächstes", "sie", "Wanderung", "liebsten", ".", "Jahr"]
+        },
+        {
+          "id": "ss5",
+          "hint": "Perfekt — das Partizip schließt den Satz.",
+          "correct": ["In", "diesem", "Jahr", "hat", "Marie", "keinen", "richtigen", "Urlaub", "gemacht", "."],
+          "shuffled": ["keinen", "hat", "In", "gemacht", "Marie", "Jahr", "richtigen", "diesem", ".", "Urlaub"]
+        }
+      ]
+    },
+    {
+      "type": "fill",
+      "title": "Wo steht das Verb? Schreiben Sie den Satz neu.",
+      "hint": "Der Satzteil in Klammern soll auf Position 1 stehen. Schreiben Sie nur das Wort, das dann auf Position 2 steht.",
+      "placeholder": "Verb auf Position 2",
+      "items": [
+        { "prompt": "Wir essen am Abend Pizza. (Am Abend …) — Auf Position 2 steht: ___", "hint": "Das konjugierte Verb bleibt, wo es war.", "answer": ["essen"] },
+        { "prompt": "Ich bin letzte Woche ins Schwimmbad gegangen. (Letzte Woche …) — Auf Position 2 steht: ___", "hint": "Nicht das Partizip!", "answer": ["bin"] },
+        { "prompt": "Ich möchte heute ins Kino gehen. (Heute …) — Auf Position 2 steht: ___", "hint": "Das Modalverb.", "answer": ["möchte"] },
+        { "prompt": "Ich hole dich um zwei Uhr ab. (Um zwei Uhr …) — Auf Position 2 steht: ___", "hint": "Ohne Präfix.", "answer": ["hole"] },
+        { "prompt": "Die Sonne wird heute scheinen. (Heute …) — Auf Position 2 steht: ___", "hint": "Das Hilfsverb.", "answer": ["wird"] }
+      ]
+    },
+    {
+      "type": "table",
+      "title": "Welches Wort steht am Satzende?",
+      "hint": "Der zweite Verbteil — Präfix, Infinitiv oder Partizip.",
+      "columns": ["Satz", "Wort am Ende"],
+      "placeholder": "Wort",
+      "rows": [
+        { "term": "Ich hole dich um zwei Uhr …", "answer": "ab" },
+        { "term": "Ich möchte schon lange ins Schwimmbad …", "answer": "gehen" },
+        { "term": "Ich bin letzte Woche nicht ins Schwimmbad …", "answer": "gegangen" },
+        { "term": "Das Bad wird jetzt …", "answer": "renoviert" },
+        { "term": "Es hatte den ganzen Tag …", "answer": "geregnet" },
+        { "term": "Ich gehe sehr gerne …", "answer": "schwimmen" }
+      ]
+    },
+    {
+      "type": "match",
+      "title": "Satzanfang und Fortsetzung.",
+      "hint": "Achten Sie darauf, wo das Subjekt landet.",
+      "pairs": [
+        { "q": "Am Abend", "a": "essen wir Pizza." },
+        { "q": "Wir", "a": "essen am Abend Pizza." },
+        { "q": "Seit zwei Monaten", "a": "wohne ich in Deutschland." },
+        { "q": "Wohin", "a": "gehst du heute Abend?" },
+        { "q": "Holst", "a": "du einen Kaffee?" },
+        { "q": "Bring", "a": "mir bitte einen Kaffee mit!" }
+      ]
+    }
+  ]
+}

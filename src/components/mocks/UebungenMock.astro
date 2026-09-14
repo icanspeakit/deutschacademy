@@ -1,0 +1,45 @@
+---
+// The exercises browser mockup from the homepage hero. See DashboardMock.astro
+// for why this lives as a component.
+import grammatik from "../../data/grammatik.json";
+
+const grammarQuestionCount = grammatik.reduce((sum, t) => sum + t.questions.length, 0);
+---
+<div class="lp-browser">
+  <div class="lp-browser-bar">
+    <div class="lp-browser-dot"></div><div class="lp-browser-dot"></div><div class="lp-browser-dot"></div>
+    <div class="lp-browser-url">deutschacademy.com/uebungen</div>
+  </div>
+  <div class="lp-browser-body">
+    <div class="lp-sidebar">
+      <img src="/assets/logo.png" alt="" />
+      <div class="lp-sidebar-link lp-sidebar-link--active">📚 <span data-i18n="tool.grammatik.title">Grammatik</span></div>
+      <div class="lp-sidebar-link">🎯 <span data-i18n="tool.artikel.title">der/die/das-Trainer</span></div>
+      <div class="lp-sidebar-link">🗂️ <span data-i18n="home.mock.wortschatzShort">Wortschatz</span></div>
+      <div class="lp-sidebar-link">🔊 <span data-i18n="tool.aussprache.title">Aussprache</span></div>
+      <div class="lp-sidebar-link">🗣️ <span data-i18n="home.mock.sprechenShort">Sprechen</span></div>
+      <div class="lp-sidebar-link">✍️ <span data-i18n="tool.lesen.title">Lesen &amp; Schreiben</span></div>
+      <div class="lp-sidebar-link">🗺️ <span data-i18n="tool.kultur.title">Kulturwissen</span></div>
+    </div>
+    <div class="lp-dash">
+      <div class="lp-dash-header">
+        <div class="lp-dash-greeting"><strong data-i18n="tool.grammatik.title">Grammatik</strong><span>Thema 1 von {grammatik.length}</span></div>
+      </div>
+      <div class="lp-dash-stat-row">
+        <div class="lp-dash-stat"><strong>{grammarQuestionCount}</strong><span data-i18n="home.mock.questionsLabel">Fragen</span></div>
+        <div class="lp-dash-stat"><strong>{grammatik.length}</strong><span data-i18n="home.mock.topicsLabel">Themen</span></div>
+        <div class="lp-dash-stat"><strong>0€</strong><span data-i18n="home.mock.costLabel">Kosten</span></div>
+      </div>
+      <div class="lp-dash-question">
+        <div class="lp-quiz-kicker">Akkusativ</div>
+        <p class="lp-quiz-prompt">Ich habe <span class="blank">___</span> Computer.</p>
+        <p class="lp-quiz-hint">(der Computer)</p>
+        <div class="lp-quiz-choices">
+          <span class="lp-quiz-choice">der</span>
+          <span class="lp-quiz-choice lp-quiz-choice--correct">den</span>
+          <span class="lp-quiz-choice">das</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

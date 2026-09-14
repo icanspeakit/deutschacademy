@@ -1,0 +1,145 @@
+---
+// Sprachbausteine trainer. Uses the same workspace shell and engine as the grammar
+// topics (src/lib/grammarWorkspace.js) — the two telc-specific exercise types
+// (wordbank, mcgap) live there alongside the grammar ones.
+import Layout from "../../../layouts/Layout.astro";
+import PracticeHeader from "../../../components/PracticeHeader.astro";
+import "../../../styles/practice.css";
+import "../../../styles/verben-praepositionen.css";
+// Sets are JSON files in src/data/pruefungen/sprachbausteine/ — adding one turns on the
+// picker automatically. The concept card comes from the first set; every set shares it.
+const modules = import.meta.glob("../../../data/pruefungen/sprachbausteine/*.json", { eager: true });
+const saetze = Object.values(modules)
+  .map((m) => m.default ?? m)
+  .sort((a, b) => a.setId.localeCompare(b.setId));
+const data = saetze[0];
+const concept = data.concept;
+const reference = concept.reference;
+---
+<Layout
+  title="Sprachbausteine üben – DeutschAcademy"
+  description="Sprachbausteine im telc-Format üben: Zuordnung aus dem Wortkasten (Teil 1) und Multiple Choice im Text (Teil 2), mit sofortiger Auswertung."
+>
+  <PracticeHeader title="Sprachbausteine" />
+
+  <main class="vp-page" id="vp-page">
+    <a href="/pruefungen/telc" class="vp-back-link">← Zurück zu telc</a>
+
+    <div class="vp-hero">
+      <div class="vp-hero-badges">
+        <span class="badge badge-brand">telc üben</span>
+        <span class="badge badge-info">{data.level}</span>
+      </div>
+      <h1>{data.name}</h1>
+      <p>{data.subtitle}</p>
+    </div>
+
+    <div class="vp-card">
+      <div class="vp-card-label">Wie funktioniert das?</div>
+
+      <div class="vp-flow">
+        {concept.flow.map((step, i) => (
+          <>
+            {i > 0 && <span class="vp-flow-arrow">→</span>}
+            <div class={`vp-flow-step ${step.variant ? `vp-flow-step--${step.variant}` : ""}`}>{step.text}</div>
+          </>
+        ))}
+      </div>
+
+      <p class="vp-example" set:html={concept.exampleHtml} />
+
+      <div class="vp-qa-grid">
+        {concept.qa.map((item) => (
+          <div class="vp-qa-item">
+            <span set:html={item.html} />
+            {item.tag && <span class="vp-qa-tag">{item.tag}</span>}
+          </div>
+        ))}
+      </div>
+
+      <p class="vp-note" set:html={concept.noteHtml} />
+
+      <button
+        type="button"
+        class="vp-toggle-ref"
+        id="vp-toggle-ref"
+        data-show={reference.showLabel}
+        data-hide={reference.hideLabel}
+      >{reference.showLabel}</button>
+
+      <div id="vp-ref-panel" hidden>
+        <div class="vp-ref-grid">
+          {reference.boxes.map((box) => (
+            <div class={`vp-ref-box vp-ref-box--${box.variant}`}>
+              <span class={`badge ${box.variant === "dat" ? "badge-info" : "badge-brand"}`}>{box.badge}</span>
+              <ul>{box.items.map((item) => <li>{item}</li>)}</ul>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+
+    <h2 class="vp-section-title">Übungen</h2>
+
+    {saetze.length > 1 && (
+      <div class="sb-setpicker" data-sb-setpicker>
+        {saetze.map((st, i) => (
+          <button type="button" class={`vp-chip ${i === 0 ? "vp-chip-chosen" : ""}`} data-set={st.setId}>{st.setLabel}</button>
+        ))}
+      </div>
+    )}
+
+    {data.exercises.map((ex, i) => (
+      <div class="vp-card" data-ex-card={i}>
+        <div class="vp-ex-head">
+          <span class="badge badge-neutral">{i + 1}</span>
+          <h3>{ex.title}</h3>
+        </div>
+        {ex.hint && <p class="vp-ex-hint">{ex.hint}</p>}
+        <div data-ex-index={i}></div>
+      </div>
+    ))}
+
+    <p class="format-note">{data.sourceNote}</p>
+  </main>
+
+  <script type="application/json" id="sb-data" set:html={JSON.stringify(saetze)}></script>
+  <script type="module">
+    import { mountGrammarWorkspace } from "../../../lib/grammarWorkspace.js";
+    import { recordAttempt } from "../../../lib/progress.js";
+
+    const saetze = JSON.parse(document.getElementById("sb-data").textContent);
+    const page = document.getElementById("vp-page");
+
+    function mount(satz) {
+      // Titles and hints are server-rendered from set 1; swap them when the set changes.
+      satz.exercises.forEach((ex, i) => {
+        const card = page.querySelector(`[data-ex-card="${i}"]`);
+        if (!card) return;
+        card.querySelector("h3").textContent = ex.title;
+        const hint = card.querySelector(".vp-ex-hint");
+        if (hint && ex.hint) hint.textContent = ex.hint;
+      });
+      mountGrammarWorkspace(page, satz, {
+        onAnswer: (ok) => recordAttempt({ skill: "grammatik", correct: ok }),
+      });
+    }
+    mount(saetze[0]);
+
+    const picker = document.querySelector("[data-sb-setpicker]");
+    picker?.querySelectorAll("[data-set]").forEach((btn) =>
+      btn.addEventListener("click", () => {
+        picker.querySelectorAll("[data-set]").forEach((b) => b.classList.toggle("vp-chip-chosen", b === btn));
+        mount(saetze.find((s) => s.setId === btn.dataset.set));
+        document.querySelector("[data-ex-card='0']").scrollIntoView({ block: "start", behavior: "smooth" });
+      })
+    );
+
+    const toggleRefBtn = document.getElementById("vp-toggle-ref");
+    const refPanel = document.getElementById("vp-ref-panel");
+    toggleRefBtn.addEventListener("click", () => {
+      refPanel.hidden = !refPanel.hidden;
+      toggleRefBtn.textContent = refPanel.hidden ? toggleRefBtn.dataset.show : toggleRefBtn.dataset.hide;
+    });
+  </script>
+</Layout>

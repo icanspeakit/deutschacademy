@@ -1,0 +1,290 @@
+/* /front — three arrangements of the same four fold blocks (headline, dashboard
+   mock, exercises mock, brand line). Only the placement rules differ between
+   variants; the blocks themselves are identical, so what you are comparing is
+   the layout and nothing else. Internal test page. */
+
+.fr-page {
+  --fr-bar-h: 62px;
+  min-height: 100vh;
+  background: var(--page-bg);
+}
+
+/* Control bar ---------------------------------------------------------------- */
+
+.fr-bar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  height: var(--fr-bar-h);
+  background: var(--page-bg);
+  border-bottom: 1px solid var(--border);
+}
+.fr-bar-inner {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  gap: var(--space-6);
+  padding: 0 clamp(14px, 3vw, 28px);
+}
+.fr-bar-text { min-width: 0; }
+.fr-bar-title {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  font-weight: var(--fw-bold);
+  color: var(--ink);
+  margin: 0;
+  line-height: 1.1;
+}
+.fr-bar-note {
+  font-size: var(--text-xs);
+  color: var(--muted);
+  margin: 1px 0 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.fr-switch {
+  display: flex;
+  gap: 3px;
+  padding: 3px;
+  margin-inline: auto;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+}
+.fr-switch-btn {
+  padding: 7px 16px;
+  border: none;
+  border-radius: var(--radius-pill);
+  background: none;
+  font-family: var(--font-label);
+  font-size: var(--text-xs);
+  font-weight: var(--fw-semibold);
+  letter-spacing: .04em;
+  color: var(--muted);
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background var(--duration-base) var(--ease-standard), color var(--duration-base) var(--ease-standard);
+}
+.fr-switch-btn:hover { color: var(--ink); }
+.fr-switch-btn[aria-selected="true"] { background: var(--gradient-brand); color: #fff; }
+
+.fr-bar-tools { display: flex; align-items: center; gap: var(--space-3); }
+
+/* Stage ---------------------------------------------------------------------- */
+
+/* Every variant gets exactly one viewport minus the bar, so "does it fit on the
+   fold" is the thing being judged. */
+.fr-stage {
+  height: calc(100vh - var(--fr-bar-h));
+  padding: clamp(10px, 2vh, 24px) clamp(14px, 3vw, 40px);
+  overflow: hidden;
+}
+.fr-grid { height: 100%; max-width: 1440px; margin: 0 auto; }
+
+.fr-block { min-width: 0; min-height: 0; }
+
+/* Shared block styling ------------------------------------------------------- */
+
+.fr-copy { display: flex; flex-direction: column; justify-content: center; gap: var(--space-2); }
+.fr-eyebrow {
+  font-family: var(--font-label);
+  font-size: var(--text-xs);
+  font-weight: var(--fw-bold);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--brand-blue-dark);
+  margin: 0;
+}
+.fr-title {
+  font-family: var(--font-display);
+  font-weight: var(--fw-extrabold);
+  font-size: clamp(2.2rem, 5vw, 4.2rem);
+  line-height: 1;
+  color: var(--ink-deep);
+  margin: 0;
+  text-align: left;
+}
+/* The Bungee line sits directly under the title in every variant — it is the
+   pairing being tested, so it never gets separated from the h1. */
+.fr-accent {
+  display: inline-block;
+  width: fit-content;
+  margin: 2px 0 0;
+  padding: 3px 12px;
+  border-radius: var(--radius-sm);
+  background: var(--blue-100);
+  color: var(--accent);
+  font-family: var(--font-accent);
+  font-size: clamp(.95rem, 1.9vw, 1.6rem);
+  line-height: 1.35;
+  text-transform: uppercase;
+  letter-spacing: .02em;
+}
+.fr-lead {
+  max-width: 46ch;
+  margin: var(--space-3) 0 0;
+  font-size: clamp(.9rem, 1.1vw, 1.05rem);
+  line-height: 1.55;
+  color: var(--muted);
+}
+.fr-actions { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-top: var(--space-4); }
+/* The fold is tight, so these sit a notch under the full hero size. */
+.fr-actions .lp-btn--primary { padding: 14px 28px; font-size: 15px; }
+.fr-actions .lp-btn--outline { padding: 13px 27px; font-size: 15px; }
+
+/* The mocks are fixed-size artwork (~760x450 at their design size), so they
+   cannot reflow into an arbitrary grid cell. Lay each one out at its design
+   width, taken out of flow, and let fitMocks() in front.astro scale it to its
+   cell — that keeps the aspect ratio exactly as drawn in every variant without
+   a per-variant fudge factor, and nothing inside the mock has to be re-tuned. */
+/* Overflow stays visible: fitMocks() guarantees the artwork fits its cell, and
+   clipping would cut the drop shadow and the frame's own rounded corners off
+   at the cell edge. */
+.fr-mock { position: relative; }
+/* The dashboard mock scrolls inside itself, so its frame height is fixed here
+   rather than left to its content (see mock-dashboard.css). */
+.fr-mock--dash { --dm-body-h: 440px; }
+.fr-mock .lp-browser {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: var(--fr-mock-w, 760px);
+  max-width: none;
+  transform-origin: top left;
+  box-shadow: var(--shadow-raised);
+}
+
+/* The brand line, where the counter row used to be. It is a statement, not a
+   card, so it gets the soft brand wash rather than the plain surface. */
+.fr-slogan {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: var(--space-5) var(--space-6);
+  background: var(--gradient-brand-soft);
+  border: 1px solid var(--blue-200);
+  border-radius: var(--radius-lg);
+}
+.fr-slogan-line {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: var(--fw-extrabold);
+  font-size: clamp(1.6rem, 3.2vw, 2.8rem);
+  line-height: 1.05;
+  letter-spacing: -.01em;
+  color: var(--ink-deep);
+}
+.fr-slogan-sub {
+  margin: 0;
+  max-width: 42ch;
+  font-size: clamp(.85rem, 1.05vw, 1rem);
+  line-height: 1.5;
+  color: var(--muted);
+}
+
+/* ---------------------------------------------------------------------------
+   A · Versetzt — the sketch. A 12x12 grid with deliberately overlapping spans,
+   so the blocks interlock at their seams instead of sitting in tidy rows.
+   --------------------------------------------------------------------------- */
+
+[data-variant="versetzt"] .fr-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-template-rows: repeat(12, 1fr);
+  gap: 0;
+}
+[data-variant="versetzt"] .fr-copy        { grid-area: 2 / 1 / 7 / 7;  padding-right: var(--space-8); }
+/* The dashboard is the block visitors actually operate, so it gets the most
+   room of the four — a column wider and a row taller than the sketch had it. */
+[data-variant="versetzt"] .fr-mock--dash  { grid-area: 1 / 6 / 9 / 13; z-index: 3; }
+[data-variant="versetzt"] .fr-mock--ueb   { grid-area: 7 / 1 / 13 / 6; z-index: 2; }
+/* Keeps its left edge clear of the exercises mock it slides under. */
+[data-variant="versetzt"] .fr-slogan      { grid-area: 9 / 5 / 13 / 13; padding-left: clamp(90px, 9vw, 180px); }
+
+/* ---------------------------------------------------------------------------
+   B · Bühne — headline across the full width, the two mocks staggered beneath
+   on a shared baseline offset, proof strip along the bottom.
+   --------------------------------------------------------------------------- */
+
+[data-variant="buehne"] .fr-grid {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  gap: clamp(10px, 2vh, 22px);
+}
+[data-variant="buehne"] .fr-copy {
+  align-items: center;
+  text-align: center;
+  gap: var(--space-1);
+}
+[data-variant="buehne"] .fr-title { text-align: center; }
+[data-variant="buehne"] .fr-lead { max-width: 58ch; text-align: center; }
+[data-variant="buehne"] .fr-stage-row,
+[data-variant="buehne"] .fr-grid > .fr-mock--dash { grid-row: 2; }
+[data-variant="buehne"] .fr-grid {
+  grid-template-columns: 1fr 1fr;
+}
+[data-variant="buehne"] .fr-copy      { grid-area: 1 / 1 / 2 / 3; }
+/* The stagger is the point of this variant: same row, but the two mocks sit on
+   offset baselines rather than lining up like a pair of tiles. */
+[data-variant="buehne"] .fr-mock--ueb { grid-area: 2 / 1 / 3 / 2; align-self: start; height: 86%; }
+[data-variant="buehne"] .fr-mock--dash{ grid-area: 2 / 2 / 3 / 3; align-self: end; height: 86%; }
+[data-variant="buehne"] .fr-slogan    { grid-area: 3 / 1 / 4 / 3; }
+
+/* ---------------------------------------------------------------------------
+   C · Split — a fixed reading column on the left with the proof strip stacked
+   under it, and the two mocks overlapping down the right.
+   --------------------------------------------------------------------------- */
+
+[data-variant="split"] .fr-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  grid-template-rows: 1fr auto;
+  column-gap: clamp(20px, 4vw, 56px);
+  row-gap: clamp(10px, 2vh, 20px);
+}
+[data-variant="split"] .fr-copy  { grid-area: 1 / 1 / 2 / 2; }
+[data-variant="split"] .fr-slogan { grid-area: 2 / 1 / 3 / 2; }
+/* Both mocks share the full right column and are sized as fractions of it, so
+   they overlap into one stack instead of sitting in two rows — putting the
+   lower one in the auto-sized second row would collapse it to the strip's
+   height and shrink the mock to nothing. */
+[data-variant="split"] .fr-mock--dash,
+[data-variant="split"] .fr-mock--ueb { grid-area: 1 / 2 / 3 / 3; }
+[data-variant="split"] .fr-mock--dash { align-self: start; height: 62%; }
+[data-variant="split"] .fr-mock--ueb {
+  align-self: end;
+  justify-self: end;
+  width: 84%;
+  height: 55%;
+  z-index: 2;
+}
+
+/* Narrow — the studies are about desktop; below 900px every variant collapses
+   to the same honest stack so the page stays usable on a phone. */
+@media (max-width: 900px) {
+  .fr-bar-inner { flex-wrap: wrap; height: auto; padding-block: var(--space-3); }
+  .fr-bar { height: auto; position: static; }
+  .fr-switch { margin-inline: 0; order: 3; width: 100%; justify-content: center; }
+  .fr-stage { height: auto; overflow: visible; }
+  .fr-grid,
+  [data-variant] .fr-grid {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+    height: auto;
+  }
+  [data-variant] .fr-copy,
+  [data-variant] .fr-mock--dash,
+  [data-variant] .fr-mock--ueb,
+  [data-variant] .fr-slogan { grid-area: auto; padding: 0; }
+  [data-variant] .fr-slogan { padding: var(--space-5) var(--space-5); }
+  .fr-mock { position: static; overflow: visible; height: auto !important; }
+  .fr-mock .lp-browser { position: static; width: 100%; transform: none !important; }
+  [data-variant="split"] .fr-mock--ueb { width: auto; height: auto; }
+  /* Sidebar links go back to a wrapping row on narrow screens (landing.css),
+     so they must stop being full-width blocks. */
+  .dm .lp-sidebar-link { width: auto; }
+}

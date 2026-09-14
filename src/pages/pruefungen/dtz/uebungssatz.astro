@@ -1,0 +1,78 @@
+---
+// Full DTZ practice sitting: nine parts, 45 scored items, plus the writing task.
+// Übungssätze are JSON files in src/data/pruefungen/dtz/ — adding one registers it
+// here automatically and turns on the set picker.
+import Layout from "../../../layouts/Layout.astro";
+import PracticeHeader from "../../../components/PracticeHeader.astro";
+import "../../../styles/practice.css";
+import "../../../styles/pruefungen.css";
+import "../../../styles/dtz.css";
+
+const modules = import.meta.glob("../../../data/pruefungen/dtz/*.json", { eager: true });
+const saetze = Object.values(modules)
+  .map((m) => m.default ?? m)
+  .sort((a, b) => a.id.localeCompare(b.id));
+const first = saetze[0];
+---
+<Layout
+  title="DTZ-Übungssatz – DeutschAcademy"
+  description="Kompletter DTZ-Übungssatz im Prüfungsformat: Hören und Lesen mit 45 Aufgaben und automatischer Auswertung nach den offiziellen Punktegrenzen, plus die Schreibaufgabe."
+>
+  <PracticeHeader title="DTZ-Übungssatz" />
+
+  <main class="practice-main practice-main--wide" id="dtz-root">
+    <a href="/pruefungen/dtz" class="vp-back-link">← Zurück zur DTZ-Übersicht</a>
+
+    <div class="practice-hero">
+      <p class="eyebrow">Prüfung simulieren</p>
+      <h1>{first.meta.title}</h1>
+      <p>
+        Neun Prüfungsteile, 45 bewertete Aufgaben — wie in der echten Prüfung. Die Auswertung nutzt
+        die offiziellen DTZ-Punktegrenzen: ab 33 Punkten B1, ab 20 Punkten A2.
+      </p>
+    </div>
+
+    {saetze.length > 1 && (
+      <div class="dtz-setpicker" data-dtz-setpicker>
+        {saetze.map((s, i) => (
+          <button type="button" class={`dtz-tab ${i === 0 ? "is-active" : ""}`} data-set={s.id}>{s.label}</button>
+        ))}
+      </div>
+    )}
+
+    <div class="dtz-audio-note">
+      <strong>Kein Ton?</strong> {first.meta.audioNote}
+    </div>
+
+    <div class="dtz-nav" data-dtz-nav></div>
+    <div class="dtz-body" data-dtz-body></div>
+    <div class="dtz-summary" data-dtz-summary></div>
+
+    <p class="format-note">{first.meta.sourceNote}</p>
+  </main>
+
+  <script type="application/json" id="dtz-data" set:html={JSON.stringify(saetze)}></script>
+  <script type="module">
+    import { mountDtzTrainer } from "../../../lib/dtzTrainer.js";
+    import { recordAttempt } from "../../../lib/progress.js";
+
+    const saetze = JSON.parse(document.getElementById("dtz-data").textContent);
+    const root = document.getElementById("dtz-root");
+
+    function mount(satz) {
+      mountDtzTrainer(root, satz, {
+        onAnswer: (ok) => recordAttempt({ skill: "lesen", correct: ok }),
+      });
+    }
+    mount(saetze[0]);
+
+    // Set picker only exists once a second Übungssatz is registered.
+    const picker = document.querySelector("[data-dtz-setpicker]");
+    picker?.querySelectorAll("[data-set]").forEach((btn) =>
+      btn.addEventListener("click", () => {
+        picker.querySelectorAll("[data-set]").forEach((b) => b.classList.toggle("is-active", b === btn));
+        mount(saetze.find((s) => s.id === btn.dataset.set));
+      })
+    );
+  </script>
+</Layout>

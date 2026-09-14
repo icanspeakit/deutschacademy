@@ -1,0 +1,121 @@
+---
+// Side-by-side test bed for the --font-label candidates that replaced IBM Plex
+// Mono: Albert Sans (current default) vs Big Shoulders Display (reusing the
+// heading face). The toggle rewrites --font-label on the page root, so every
+// specimen below is the real component CSS, not a mockup — what you see here is
+// what /uebungen, /pruefungen and the trainers will look like.
+// Internal reference; not linked from the public nav.
+import Layout from "../layouts/Layout.astro";
+import "../styles/font.css";
+
+const labelSpots = [
+  { where: ".eyebrow — section kickers", sample: "Deutsch von A1 bis C1" },
+  { where: ".vp-card-label — grammar cards", sample: "Akkusativ" },
+  { where: ".vt-position — trainer counters", sample: "Karte 14 / 37" },
+  { where: ".vt-kbd-hint — keyboard hints", sample: "Enter zum Prüfen · Esc zum Abbrechen" },
+  { where: ".vt-list-legend — wordlist legend", sample: "Gelernt · Wiederholen · Neu" },
+];
+---
+<Layout title="Font-Test – DeutschAcademy" description="Interner Schrift-Test: Albert Sans vs. Big Shoulders als Label-Schrift.">
+  <main class="ft-page" data-label-font="albert">
+    <header class="ft-bar">
+      <div class="ft-bar-inner">
+        <div class="ft-bar-text">
+          <p class="ft-bar-title">Label-Schrift testen</p>
+          <p class="ft-bar-sub">Ersetzt IBM Plex Mono in Eyebrows, Labels und Zählern.</p>
+        </div>
+        <div class="ft-switch-wrap">
+          <span class="ft-switch-label" data-switch-side="albert">Albert Sans</span>
+          <button type="button" class="ft-switch" role="switch" aria-checked="false"
+                  aria-label="Zwischen Albert Sans und Big Shoulders umschalten" data-font-switch>
+            <span class="ft-switch-knob"></span>
+          </button>
+          <span class="ft-switch-label" data-switch-side="shoulders">Big Shoulders</span>
+        </div>
+      </div>
+    </header>
+
+    <section class="ft-section">
+      <p class="ft-chip"><span data-active-name>Albert Sans</span> + Sora</p>
+
+      <h1 class="ft-hero-title">Deutsch lernen.</h1>
+      <p class="ft-hero-accent">Schritt für Schritt.</p>
+
+      <p class="ft-hero-body">
+        Übe jeden Tag ein bisschen — mit kurzen Lektionen, klarem Feedback
+        und einem Fortschritt, den du wirklich siehst.
+      </p>
+
+      <div class="ft-lesson-card">
+        <p class="ft-lesson-label">Lektion 12</p>
+        <h2 class="ft-lesson-title">Perfekt</h2>
+        <p class="ft-lesson-meta">In Arbeit · 64% abgeschlossen</p>
+        <div class="ft-progress"><span style="width: 64%"></span></div>
+      </div>
+
+      <a class="ft-cta" href="#belege">Weiter üben</a>
+    </section>
+
+    <section class="ft-section" id="belege">
+      <p class="eyebrow ft-eyebrow-left">Im Kontext</p>
+      <h2 class="ft-section-title">Wo die Label-Schrift wirklich auftaucht</h2>
+      <p class="ft-section-desc">
+        Jede Zeile nutzt die echte Komponenten-Regel aus dem Stylesheet — nur das
+        Token <code>--font-label</code> wechselt.
+      </p>
+
+      <ul class="ft-spot-list">
+        {labelSpots.map((spot) => (
+          <li class="ft-spot">
+            <code class="ft-spot-where">{spot.where}</code>
+            <span class="ft-spot-sample">{spot.sample}</span>
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <section class="ft-section">
+      <p class="eyebrow ft-eyebrow-left">Direkter Vergleich</p>
+      <h2 class="ft-section-title">Beide gleichzeitig</h2>
+      <p class="ft-section-desc">Unabhängig vom Schalter — für den Blick auf Laufweite und Höhe.</p>
+
+      <div class="ft-compare">
+        <div class="ft-compare-col ft-compare-col--albert">
+          <p class="ft-compare-name">Albert Sans</p>
+          <p class="ft-compare-label">Deutsch von A1 bis C1</p>
+          <p class="ft-compare-num">0123456789 · 64%</p>
+          <p class="ft-compare-glyphs">ÄÖÜ äöü ß — Prüfung, Gespräch</p>
+        </div>
+        <div class="ft-compare-col ft-compare-col--shoulders">
+          <p class="ft-compare-name">Big Shoulders Display</p>
+          <p class="ft-compare-label">Deutsch von A1 bis C1</p>
+          <p class="ft-compare-num">0123456789 · 64%</p>
+          <p class="ft-compare-glyphs">ÄÖÜ äöü ß — Prüfung, Gespräch</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const page = document.querySelector(".ft-page");
+    const btn = document.querySelector("[data-font-switch]");
+    const name = document.querySelector("[data-active-name]");
+    const KEY = "da-font-test";
+    const NAMES = { albert: "Albert Sans", shoulders: "Big Shoulders" };
+
+    function apply(mode) {
+      page.dataset.labelFont = mode;
+      btn.setAttribute("aria-checked", mode === "shoulders" ? "true" : "false");
+      name.textContent = NAMES[mode];
+      try { localStorage.setItem(KEY, mode); } catch {}
+    }
+
+    let saved = "albert";
+    try { saved = localStorage.getItem(KEY) === "shoulders" ? "shoulders" : "albert"; } catch {}
+    apply(saved);
+
+    btn.addEventListener("click", () => {
+      apply(page.dataset.labelFont === "shoulders" ? "albert" : "shoulders");
+    });
+  </script>
+</Layout>

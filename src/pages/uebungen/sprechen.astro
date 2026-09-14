@@ -6,13 +6,22 @@ import sprechen from "../../data/sprechen.json";
 ---
 <Layout title="Sprechen: Bildbeschreibung – DeutschAcademy">
   <PracticeHeader title="Sprechen: Bildbeschreibung" />
-  <main class="practice-main">
+  <main class="practice-main practice-main--wide">
     <div class="practice-hero">
       <p class="eyebrow" data-i18n="sprechen.hero.eyebrow">DTZ Sprechen, Teil 2</p>
       <h1 data-i18n="sprechen.hero.title">Bildbeschreibung üben</h1>
       <p data-i18n="sprechen.hero.subtitle">Echte Prüferfragen aus dem Unterricht. In der echten Prüfung hast du 90 Sekunden für die Beschreibung und 90 Sekunden für die Nachfragen — so wie hier.</p>
     </div>
     <div class="prompt-card" id="prompt-root"></div>
+
+    <div class="mock-cta">
+      <h2>Schon sicher auf A2/B1?</h2>
+      <p>
+        Für die mündliche Prüfung auf B1/B2 gilt ein anderes Format: nach der Bildbeschreibung folgen
+        ein Kurzvortrag und eine Diskussion. Drei Stufen, jede mit eigenem Timer.
+      </p>
+      <a class="quiz-btn quiz-btn--primary" href="/uebungen/sprechen-b1b2">Sprechen B1/B2 üben →</a>
+    </div>
   </main>
   <script type="application/json" id="sprechen-data" set:html={JSON.stringify(sprechen)}></script>
   <script type="module">
@@ -44,7 +53,7 @@ import sprechen from "../../data/sprechen.json";
       const p = prompts[idx];
       root.innerHTML = `
         <h3>${p.title}</h3>
-        <img class="prompt-image" src="${p.image}" alt="${p.title}" loading="lazy" />
+        <img class="prompt-image" src="${p.image}" alt="${p.title}" />
         <div class="prompt-timer" id="timer">90</div>
         <button class="quiz-btn quiz-btn--primary prompt-reveal-btn" id="start-timer" type="button">${tr("sprechen.startTimer")}</button>
         <div class="prompt-section-label">${tr("sprechen.descQuestions")}</div>
@@ -58,6 +67,17 @@ import sprechen from "../../data/sprechen.json";
           <button class="quiz-btn" id="prev-prompt" type="button">${tr("sprechen.prevImage")}</button>
           <button class="quiz-btn" id="next-prompt" type="button">${tr("sprechen.nextImage")}</button>
         </div>`;
+
+      // Landscape photos fill the card width; portrait ones are capped by height instead
+      // (see .prompt-image--portrait). Orientation isn't in the data, so read it off the
+      // decoded image.
+      const img = root.querySelector(".prompt-image");
+      const applyOrientation = () => {
+        if (!img.naturalWidth) return;
+        img.classList.toggle("prompt-image--portrait", img.naturalHeight > img.naturalWidth);
+      };
+      if (img.complete) applyOrientation();
+      else img.addEventListener("load", applyOrientation, { once: true });
 
       document.getElementById("start-timer").addEventListener("click", (e) => {
         stopTimer();

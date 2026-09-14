@@ -1,0 +1,42 @@
+{
+  "note": "Prüfungsformat Goethe-Zertifikat A1: Start Deutsch 1. Zeiten, Teile und Aufgabenzahlen sind aus dem Übungssatz abgelesen (Kandidatenblätter S. 5/13/25, Prüferblätter S. 40–42, Antwortbogen S. 43). Keine geschätzten Werte. Die Prüfungsaufgaben selbst (© Goethe-Institut) stehen nicht in dieser Datei — nur die Struktur.",
+  "formate": [
+    {
+      "id": "a1-start-deutsch-1",
+      "exam": "Goethe-Zertifikat A1",
+      "alt": "Start Deutsch 1",
+      "level": "A1",
+      "source": "Goethe-Zertifikat A1: Start Deutsch 1, Übungssatz 01 — Kandidaten- und Prüferblätter",
+      "intro": "Start Deutsch 1 ist eine gemeinsame Prüfung von Goethe-Institut und telc — Aufbau und mündlicher Teil sind bei beiden Anbietern identisch. Wer für telc A1 übt, übt damit zugleich für Goethe A1.",
+      "blocks": [
+        {
+          "label": "Schriftliche Prüfung",
+          "rows": [
+            { "part": "Hören", "what": "Kurze Gespräche, Ansagen und Durchsagen verstehen — drei Teile", "type": "15 Aufgaben: 6 × a/b/c, 4 × richtig/falsch, 5 × a/b/c", "time": "circa 20 Minuten" },
+            { "part": "Lesen", "what": "Kurze Briefe, Anzeigen und Hinweisschilder verstehen — drei Teile", "type": "15 Aufgaben: 5 × richtig/falsch, 5 × a/b, 5 × richtig/falsch", "time": "circa 25 Minuten" },
+            { "part": "Schreiben · Teil 1", "what": "Ein Formular ausfüllen", "type": "5 Aufgaben", "time": "circa 20 Minuten (gesamt Schreiben)" },
+            { "part": "Schreiben · Teil 2", "what": "Einen kurzen Text schreiben (ca. 30 Wörter)", "type": "3 Inhaltspunkte bearbeiten", "time": null }
+          ],
+          "total": { "time": "circa 45 Minuten (Lesen und Schreiben zusammen)" }
+        },
+        {
+          "label": "Mündliche Prüfung",
+          "rows": [
+            { "part": "Sprechen · Teil 1", "what": "Sich vorstellen", "type": "in der Gruppe", "time": "circa 15 Minuten (gesamt Sprechen)" },
+            { "part": "Sprechen · Teil 2", "what": "Um Informationen bitten und Informationen geben", "type": "Karten zu einem Thema", "time": null },
+            { "part": "Sprechen · Teil 3", "what": "Bitten formulieren und darauf reagieren", "type": "verdeckte Handlungskarten", "time": null }
+          ]
+        }
+      ],
+      "grading": {
+        "caption": "Bewertung Sprechen",
+        "columns": ["Bewertung", "Wann"],
+        "rows": [
+          ["volle Punktzahl", "Aufgabe voll erfüllt und verständlich"],
+          ["halbe Punktzahl", "Aufgabe wegen sprachlicher oder inhaltlicher Mängel nur teilweise erfüllt"],
+          ["0 Punkte", "Aufgabe nicht erfüllt und/oder unverständlich"]
+        ]
+      }
+    }
+  ]
+}

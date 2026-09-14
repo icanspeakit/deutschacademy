@@ -1,8 +1,13 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import LanguageSwitcher from "../../components/LanguageSwitcher.astro";
+import ThemeToggle from "../../components/ThemeToggle.astro";
 import "../../styles/akkusativ.css";
-import artikel from "../../data/artikel.json";
+import { nouns } from "../../lib/lexicon.js";
+
+// One session is SESSION_SIZE questions drawn from the chosen level — the pool is now
+// ~860 nouns (was 31 hand-listed ones), far too many for a single sitting.
+const SESSION_SIZE = 25;
 
 function explainArtikel(word, gender) {
   const lower = word.toLowerCase();
@@ -18,15 +23,24 @@ function explainArtikel(word, gender) {
   return `Für „${word}“ gibt es keine feste Regel – der Artikel wird mit dem Wort zusammen gelernt.`;
 }
 
-const questions = artikel.map((n, i) => ({
-  id: `art-${i}`,
-  prompt: `___ ${n.word}?`,
+// `id` is the lexicon's stable slug, not an array index, so a learner's progress for
+// "haus" survives every future addition to the pool.
+const pool = nouns({ level: ["A1", "A2"], has: "gender" }).map((n) => ({
+  id: n.id,
+  level: n.level,
+  prompt: `___ ${n.lemma}?`,
   options: ["der", "die", "das"],
   answer: n.gender,
-  explain: explainArtikel(n.word, n.gender),
-  change: `${n.gender} ${n.word}`,
+  explain: explainArtikel(n.lemma, n.gender),
+  change: `${n.gender} ${n.lemma}`,
 }));
-const total = questions.length;
+
+const levels = [
+  { key: "A1", label: "A1", count: pool.filter((q) => q.level === "A1").length },
+  { key: "A2", label: "A2", count: pool.filter((q) => q.level === "A2").length },
+  { key: "all", label: "Alle", count: pool.length },
+];
+const total = Math.min(SESSION_SIZE, pool.length);
 ---
 <Layout title="Artikel-Trainer – DeutschAcademy">
   <div class="akk">
@@ -37,7 +51,10 @@ const total = questions.length;
           <a href="/uebungen" data-i18n="nav.exercises">Übungen</a><span class="akk-crumb-sep">›</span>
           <span class="akk-crumb-current">Artikel-Trainer</span>
         </nav>
-        <div style="margin-left:auto;"><LanguageSwitcher /></div>
+        <div style="margin-left:auto; display:flex; align-items:center; gap:10px;">
+          <LanguageSwitcher />
+          <ThemeToggle />
+        </div>
       </div>
     </header>
 
@@ -62,6 +79,18 @@ const total = questions.length;
               <button class="akk-mode-btn active" data-mode="fokus" type="button" data-i18n="akk.mode.fokus">Fokus-Modus</button>
               <span class="akk-mode-sep">·</span>
               <button class="akk-mode-btn" data-mode="test" type="button" data-i18n="akk.mode.test">Testmodus</button>
+            </div>
+            <div class="akk-mode" role="group" aria-label="Niveau">
+              <span class="akk-mode-label">Niveau</span>
+              {levels.map((l, i) => (
+                <>
+                  {i > 0 && <span class="akk-mode-sep">·</span>}
+                  {/* aria-label, not title: a bare title becomes the button's accessible
+                      name in Chrome, so the level would be announced as "386 Nomen". */}
+                  <button class={`akk-level-btn${i === 0 ? " active" : ""}`} data-level={l.key} type="button" aria-label={`Niveau ${l.label}, ${l.count} Nomen`}>{l.label}</button>
+                </>
+              ))}
+              <button class="akk-level-btn akk-level-reload" id="akk-new-round" type="button">Neue Runde</button>
             </div>
           </div>
           <div id="akk-exercise-root"></div>
@@ -134,7 +163,8 @@ const total = questions.length;
     </main>
   </div>
 
-  <script type="application/json" id="akk-data" set:html={JSON.stringify(questions)}></script>
+  <script type="application/json" id="akk-data" set:html={JSON.stringify(pool)}></script>
+  <script type="application/json" id="akk-session-size" set:html={JSON.stringify(SESSION_SIZE)}></script>
   <script type="module">
     import { mountPracticeWorkspace } from "../../lib/practiceWorkspace.js";
     import { recordAttempt } from "../../lib/progress.js";
@@ -148,15 +178,28 @@ const total = questions.length;
       return str.replace(/\{(\w+)\}/g, (m, k) => (k in vars ? String(vars[k]) : m));
     }
 
-    const questions = JSON.parse(document.getElementById("akk-data").textContent);
+    const pool = JSON.parse(document.getElementById("akk-data").textContent);
+    const SESSION_SIZE = JSON.parse(document.getElementById("akk-session-size").textContent);
     const exerciseRoot = document.getElementById("akk-exercise-root");
+
+    // Fisher-Yates: every round is a fresh random draw from the selected level, so the
+    // same 25 nouns don't come up in the same order every visit.
+    function drawSession(level) {
+      const filtered = level === "all" ? pool : pool.filter((q) => q.level === level);
+      const shuffled = filtered.slice();
+      for (let i = shuffled.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+      }
+      return shuffled.slice(0, SESSION_SIZE);
+    }
 
     const ringFill = document.getElementById("akk-ring-fill");
     const ringNum = document.getElementById("akk-ring-num");
     const statsText = document.getElementById("akk-session-stats");
     const RING_CIRCUMFERENCE = 150.8;
 
-    let lastStats = { answered: 0, correct: 0, hints: 0, total: questions.length };
+    let lastStats = { answered: 0, correct: 0, hints: 0, total: Math.min(SESSION_SIZE, pool.length) };
     function renderStats() {
       const { answered, correct, hints, total } = lastStats;
       const pct = total ? Math.round((correct / total) * 100) : 0;
@@ -179,10 +222,31 @@ const total = questions.length;
     });
     bootI18n();
 
-    const practice = mountPracticeWorkspace(exerciseRoot, questions, {
-      onSessionUpdate,
-      onAnswer: (ok, id) => recordAttempt({ skill: "grammatik", correct: ok, id, trackVocab: true }),
+    // Changing level or starting a new round remounts the workspace — it builds all its
+    // state from the question array it is given, so a fresh mount is the clean reset.
+    let level = "A1";
+    let mode = "fokus";
+    let practice = null;
+
+    function startSession() {
+      exerciseRoot.innerHTML = "";
+      practice = mountPracticeWorkspace(exerciseRoot, drawSession(level), {
+        onSessionUpdate,
+        onAnswer: (ok, id) => recordAttempt({ skill: "grammatik", correct: ok, id, trackVocab: true }),
+      });
+      practice.setMode(mode);
+    }
+    startSession();
+
+    document.querySelectorAll(".akk-level-btn[data-level]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        document.querySelectorAll(".akk-level-btn[data-level]").forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+        level = btn.dataset.level;
+        startSession();
+      });
     });
+    document.getElementById("akk-new-round").addEventListener("click", startSession);
 
     const tabUebung = document.getElementById("akk-tab-uebung");
     const tabRegel = document.getElementById("akk-tab-regel");
@@ -214,7 +278,8 @@ const total = questions.length;
       btn.addEventListener("click", () => {
         document.querySelectorAll(".akk-mode-btn").forEach((b) => b.classList.remove("active"));
         btn.classList.add("active");
-        practice.setMode(btn.dataset.mode);
+        mode = btn.dataset.mode;
+        practice.setMode(mode);
       });
     });
   </script>

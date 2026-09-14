@@ -2,8 +2,10 @@
 import Layout from "../../layouts/Layout.astro";
 import PracticeHeader from "../../components/PracticeHeader.astro";
 import ExamPractice from "../../components/ExamPractice.astro";
+import ExamFormat from "../../components/ExamFormat.astro";
 import "../../styles/practice.css";
 import "../../styles/pruefungen.css";
+import goetheFormate from "../../data/pruefungen/goethe-formate.json";
 ---
 <Layout
   title="Goethe-Zertifikat – DeutschAcademy"
@@ -41,34 +43,31 @@ import "../../styles/pruefungen.css";
       </div>
     </section>
 
+    {goetheFormate.formate.map((f) => <ExamFormat format={f} />)}
+
     <section class="exam-section">
-      <!-- GENERIC FORMAT INFO: no deutschacademy source material for this exam yet -->
-      <h2>Format</h2>
-      <div class="format-table-wrap">
-        <table class="format-table">
-          <thead><tr><th>Teil</th><th>Was wird geprüft</th><th>Dauer / Umfang</th></tr></thead>
-          <tbody>
-            <tr><td>Lesen, Hören, Schreiben</td><td>An einem Termin, schriftlich</td><td>Variiert stark nach Niveau — bei A1 insgesamt gut eine Stunde, bei höheren Niveaus mehrere Stunden</td></tr>
-            <tr><td>Sprechen</td><td>Mündliche Prüfung, oft im Paar</td><td>Wenige Minuten bei A1, länger bei höheren Niveaus</td></tr>
-          </tbody>
-        </table>
-      </div>
+      <h2>Weitere Niveaus</h2>
       <p class="format-note">
-        Es liegt uns kein eigenes Goethe-Quellmaterial vor. Die Angaben hier sind allgemein bekannte,
-        öffentliche Informationen zum Goethe-Zertifikat-System, bewusst ohne erfundene Detailzahlen.
-        Für die genauen Zeiten und Bestehensgrenzen deines Niveaus prüfe den offiziellen Modellsatz des
-        Goethe-Instituts.
+        Oben steht das Niveau, für das uns ein Übungssatz als Quelle vorliegt. Zeiten, Aufgabenzahlen und
+        Bestehensgrenzen unterscheiden sich zwischen A1 und C2 erheblich — für A2, B1, B2, C1 oder C2
+        prüfe bitte den offiziellen Modellsatz des Goethe-Instituts. Wir tragen hier nur ein, was wir
+        belegen können, statt Werte zu schätzen.
       </p>
     </section>
 
-    <div class="mock-cta mock-cta--soon">
-      <h2>Mock-Test: bald verfügbar</h2>
-      <p>Uns liegt kein eigenes Goethe-Quellmaterial vor, aus dem wir einen echten Goethe-Mock-Test bauen könnten. Statt erfundener Prüfungsfragen gibt es hier vorerst keinen Mock-Test — nur die allgemeinen Übungstools unten.</p>
+    <div class="mock-cta">
+      <h2>Für A1 zugleich telc üben</h2>
+      <p>
+        Start Deutsch 1 ist eine gemeinsame Prüfung von Goethe-Institut und telc — der mündliche Teil ist
+        bei beiden identisch (Sich vorstellen · Um Informationen bitten · Bitten formulieren). Die
+        telc-Seite zeigt dieselbe Prüfung mit Punkteverteilung und Notenskala.
+      </p>
+      <a class="quiz-btn quiz-btn--primary" href="/pruefungen/telc">Zur telc-Seite →</a>
     </div>
 
     <ExamPractice
       heading="Üben für das Goethe-Zertifikat"
-      intro="Es gibt noch keine Goethe-spezifischen Übungen. Diese drei Tools sind niveau- und prüfungsübergreifend nützlich — sie stammen aus dem DTZ-Unterrichtsmaterial, prüfen aber allgemeine Artikel-, Grammatik- und Wortschatzkenntnisse, keinen Goethe-spezifischen Inhalt."
+      intro="Diese Tools sind niveau- und prüfungsübergreifend nützlich. Sie stammen aus dem DTZ-Unterrichtsmaterial und prüfen allgemeine Artikel-, Grammatik- und Wortschatzkenntnisse — keine Goethe-spezifischen Aufgabenformate."
       tools={["artikel", "grammatik", "wortschatz"]}
     />
   </main>

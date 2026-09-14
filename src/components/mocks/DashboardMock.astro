@@ -1,0 +1,335 @@
+---
+// The learner-dashboard browser mockup from the homepage hero, lifted into a
+// component so the /front layout studies can reuse it verbatim. index.astro
+// still carries its own copy; switch it over once a layout is chosen.
+//
+// Unlike the flat hero artwork this one is a working toy: the sidebar switches
+// panels, the quiz answers, the vocabulary cards reveal, and every panel is
+// taller than its frame so the body scrolls. It is still a mockup — nothing is
+// persisted and no route is hit — but a visitor can poke at it before signing
+// up, which is the point of putting it on the fold.
+import "../../styles/mock-dashboard.css";
+
+const tabs = [
+  { id: "dashboard", url: "deutschacademy.com/dashboard", key: "home.mock.dashboard", label: "Dashboard" },
+  { id: "grammatik", url: "deutschacademy.com/uebungen/grammatik", key: "home.mock.grammatikShort", label: "Grammatik" },
+  { id: "wortschatz", url: "deutschacademy.com/uebungen/wortschatz", key: "home.mock.wortschatzShort", label: "Wortschatz" },
+  { id: "sprechen", url: "deutschacademy.com/uebungen/sprechen", key: "home.mock.sprechenShort", label: "Sprechen" },
+  { id: "pruefungen", url: "deutschacademy.com/pruefungen", key: "nav.exams", label: "Prüfungen" },
+];
+
+// The choice matching `answer` is the one the quiz accepts; the rest are wrong.
+const quiz = [
+  {
+    kicker: "Akkusativ",
+    before: "Ich habe ",
+    after: " Computer.",
+    hint: "(der Computer)",
+    choices: ["der", "den", "das"],
+    answer: "den",
+    note: "Maskulin im Akkusativ: der wird zu den.",
+  },
+  {
+    kicker: "Dativ",
+    before: "Ich fahre mit ",
+    after: " Bus.",
+    hint: "(der Bus)",
+    choices: ["dem", "den", "der"],
+    answer: "dem",
+    note: "mit steht immer mit Dativ: der wird zu dem.",
+  },
+  {
+    kicker: "Perfekt",
+    before: "Gestern ",
+    after: " ich nach Berlin gefahren.",
+    hint: "(fahren)",
+    choices: ["habe", "bin", "war"],
+    answer: "bin",
+    note: "Bewegungsverben bilden das Perfekt mit sein.",
+  },
+];
+
+const vocab = [
+  { de: "die Bewerbung", en: "application", ex: "Ich schicke die Bewerbung heute ab." },
+  { de: "der Termin", en: "appointment", ex: "Ich habe einen Termin beim Amt." },
+  { de: "die Krankenkasse", en: "health insurance", ex: "Melde dich bei der Krankenkasse an." },
+  { de: "kündigen", en: "to give notice", ex: "Sie hat den Vertrag gekündigt." },
+  { de: "die Anmeldung", en: "registration", ex: "Die Anmeldung dauert zehn Minuten." },
+  { de: "zuverlässig", en: "reliable", ex: "Er ist ein zuverlässiger Kollege." },
+];
+
+const speaking = [
+  { title: "Termin beim Amt", level: "B1", line: "Guten Tag, ich möchte einen Termin vereinbaren." },
+  { title: "Sich vorstellen", level: "A2", line: "Ich heiße Ana und komme aus Brasilien." },
+  { title: "Beim Arzt", level: "A2", line: "Ich habe seit drei Tagen Halsschmerzen." },
+];
+
+const exams = [
+  { name: "DTZ", sub: "A2–B1 · Zuwanderer", premium: false },
+  { name: "telc B1", sub: "Beruf & Alltag", premium: false },
+  { name: "Goethe B2", sub: "Vorbereitungssatz", premium: true },
+];
+
+const weekdays = ["Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"];
+---
+<div class="lp-browser dm" data-dm>
+  <div class="lp-browser-bar">
+    <div class="lp-browser-dot"></div><div class="lp-browser-dot"></div><div class="lp-browser-dot"></div>
+    <div class="lp-browser-url"><span data-dm-url>{tabs[0].url}</span></div>
+  </div>
+
+  <div class="lp-browser-body">
+    <div class="lp-sidebar">
+      <img src="/assets/logo.png" alt="" />
+      {tabs.map((t, i) => (
+        <button
+          type="button"
+          class:list={["lp-sidebar-link", i === 0 && "lp-sidebar-link--active"]}
+          data-dm-tab={t.id}
+          data-dm-href={t.url}
+          aria-pressed={i === 0 ? "true" : "false"}
+        ><span data-i18n={t.key}>{t.label}</span></button>
+      ))}
+      <div class="lp-sidebar-upsell">
+        <strong data-i18n="home.mock.goPremium">Go Premium</strong>
+        <span data-i18n="home.mock.unlockDesc">Unlock exam prep and corrections.</span>
+      </div>
+    </div>
+
+    <div class="lp-dash" data-dm-scroll>
+      <!-- Dashboard -------------------------------------------------------- -->
+      <section class="dm-panel" data-dm-panel="dashboard">
+        <div class="lp-dash-header">
+          <div class="lp-dash-greeting">
+            <strong data-i18n="home.mock.greeting">Guten Morgen, Ana</strong>
+            <span data-i18n="home.mock.dayProgress">Day 34 · B1.2 in progress</span>
+          </div>
+          <div class="lp-avatar-initials">A</div>
+        </div>
+
+        <div class="lp-progress-card">
+          <div class="lp-progress-row"><span>Level B1 · Selbstständig</span><span class="pct">62%</span></div>
+          <div class="lp-progress-track"><div class="lp-progress-fill" style="width:62%"></div></div>
+          <div class="lp-progress-note">18 von 29 Lektionen · als Nächstes: Termin beim Amt</div>
+        </div>
+
+        <div class="lp-mini-grid">
+          <div class="lp-mini-card">
+            <img src="/assets/methods.jpg" alt="" />
+            <div class="lp-mini-card-body"><span data-i18n="home.mock.a2Alltag">A2 · Alltag</span><div class="lp-mini-bar"><div class="lp-mini-bar-fill" style="width:100%;background:var(--brand-blue-light)"></div></div></div>
+          </div>
+          <div class="lp-mini-card">
+            <img src="/assets/foto-buero-2.jpg" alt="" style="object-position: 50% 25%;" />
+            <div class="lp-mini-card-body"><span data-i18n="home.mock.b1Beruf">B1 · Beruf</span><div class="lp-mini-bar"><div class="lp-mini-bar-fill" style="width:62%;background:var(--brand-blue)"></div></div></div>
+          </div>
+          <div class="lp-mini-card">
+            <img src="/assets/online-is-futur.jpg" alt="" />
+            <div class="lp-mini-card-body"><span data-i18n="home.mock.authenticClips">Authentic clips</span><div class="lp-mini-bar"><div class="lp-mini-bar-fill" style="width:24%;background:var(--accent)"></div></div></div>
+          </div>
+          <div class="lp-locked-card">
+            <div class="icon">🔒</div>
+            <strong data-i18n="home.mock.goetheB2Prep">Goethe B2 prep</strong>
+            <span data-i18n="home.word.premium">Premium</span>
+          </div>
+        </div>
+
+        <!-- Past the bottom of the frame: what makes the body worth scrolling. -->
+        <div class="dm-block">
+          <div class="dm-block-head"><strong>Diese Woche</strong><span>5 Tage in Folge</span></div>
+          <div class="dm-streak">
+            {weekdays.map((d, i) => (
+              <div class:list={["dm-day", i < 5 && "dm-day--done", i === 5 && "dm-day--today"]}>
+                <span>{d}</span><i></i>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div class="dm-block">
+          <div class="dm-block-head"><strong>Zuletzt geübt</strong><span>7 Themen</span></div>
+          <ul class="dm-list">
+            <li><span class="dm-list-name">Akkusativ</span><span class="dm-list-meta">12 / 12 · gestern</span></li>
+            <li><span class="dm-list-name">Verben mit Präpositionen</span><span class="dm-list-meta">8 / 14 · vor 2 Tagen</span></li>
+            <li><span class="dm-list-name">Wortschatz: Behörden</span><span class="dm-list-meta">31 Karten · vor 3 Tagen</span></li>
+            <li><span class="dm-list-name">Aussprache: ü / ö</span><span class="dm-list-meta">6 Runden · letzte Woche</span></li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Grammatik -------------------------------------------------------- -->
+      <section class="dm-panel" data-dm-panel="grammatik" hidden>
+        <div class="lp-dash-header">
+          <div class="lp-dash-greeting">
+            <strong data-i18n="tool.grammatik.title">Grammatik</strong>
+            <span>Akkusativ, Dativ, Perfekt · antworte direkt hier</span>
+          </div>
+          <div class="dm-score" data-dm-score>0 / {quiz.length}</div>
+        </div>
+
+        {quiz.map((q) => (
+          <div class="lp-dash-question dm-quiz" data-dm-quiz>
+            <div class="lp-quiz-kicker">{q.kicker}</div>
+            <p class="lp-quiz-prompt">{q.before}<span class="blank">___</span>{q.after}</p>
+            <p class="lp-quiz-hint">{q.hint}</p>
+            <div class="lp-quiz-choices">
+              {q.choices.map((c) => (
+                <button
+                  type="button"
+                  class="lp-quiz-choice dm-choice"
+                  data-dm-choice
+                  data-correct={c === q.answer ? "true" : "false"}
+                >{c}</button>
+              ))}
+            </div>
+            <p class="dm-note" data-dm-note hidden>{q.note}</p>
+          </div>
+        ))}
+      </section>
+
+      <!-- Wortschatz ------------------------------------------------------- -->
+      <section class="dm-panel" data-dm-panel="wortschatz" hidden>
+        <div class="lp-dash-header">
+          <div class="lp-dash-greeting">
+            <strong data-i18n="home.mock.wortschatzShort">Wortschatz</strong>
+            <span>Behörden &amp; Beruf · tippe auf eine Karte</span>
+          </div>
+        </div>
+        <div class="dm-cards">
+          {vocab.map((w) => (
+            <button type="button" class="dm-card" data-dm-card aria-expanded="false">
+              <span class="dm-card-de">{w.de}</span>
+              <span class="dm-card-cue">Bedeutung zeigen</span>
+              <span class="dm-card-back">
+                <em>{w.en}</em>
+                <span>{w.ex}</span>
+              </span>
+            </button>
+          ))}
+        </div>
+      </section>
+
+      <!-- Sprechen --------------------------------------------------------- -->
+      <section class="dm-panel" data-dm-panel="sprechen" hidden>
+        <div class="lp-dash-header">
+          <div class="lp-dash-greeting">
+            <strong data-i18n="home.mock.sprechenShort">Sprechen</strong>
+            <span>Nachsprechen · 3 Situationen</span>
+          </div>
+        </div>
+        {speaking.map((s) => (
+          <div class="dm-speak">
+            <div class="dm-speak-head">
+              <strong>{s.title}</strong>
+              <span class="dm-level">{s.level}</span>
+            </div>
+            <p class="dm-speak-line">{s.line}</p>
+            <button type="button" class="dm-rec" data-dm-rec>
+              <i></i>
+              <span class="dm-rec-label">Aufnehmen</span>
+              <span class="dm-wave" aria-hidden="true"><b></b><b></b><b></b><b></b><b></b><b></b><b></b></span>
+            </button>
+          </div>
+        ))}
+      </section>
+
+      <!-- Prüfungen -------------------------------------------------------- -->
+      <section class="dm-panel" data-dm-panel="pruefungen" hidden>
+        <div class="lp-dash-header">
+          <div class="lp-dash-greeting">
+            <strong data-i18n="nav.exams">Prüfungen</strong>
+            <span>Übungssätze nach Prüfungsformat</span>
+          </div>
+        </div>
+        <div class="dm-exams">
+          {exams.map((e) => (
+            <div class:list={["dm-exam", e.premium && "dm-exam--locked"]}>
+              <div>
+                <strong>{e.name}</strong>
+                <span>{e.sub}</span>
+              </div>
+              <span class="dm-tag">{e.premium ? "Premium" : "Frei"}</span>
+            </div>
+          ))}
+        </div>
+        <div class="dm-block">
+          <div class="dm-block-head"><strong>Prüfungsteile</strong><span>DTZ</span></div>
+          <ul class="dm-list">
+            <li><span class="dm-list-name">Hören</span><span class="dm-list-meta">3 Teile · 25 Min</span></li>
+            <li><span class="dm-list-name">Lesen</span><span class="dm-list-meta">5 Teile · 45 Min</span></li>
+            <li><span class="dm-list-name">Schreiben</span><span class="dm-list-meta">1 Brief · 30 Min</span></li>
+            <li><span class="dm-list-name">Sprechen</span><span class="dm-list-meta">3 Teile · 16 Min</span></li>
+          </ul>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+
+<script>
+  for (const root of document.querySelectorAll("[data-dm]")) {
+    const scroller = root.querySelector("[data-dm-scroll]");
+    const urlSlot = root.querySelector("[data-dm-url]");
+    const tabs = [...root.querySelectorAll("[data-dm-tab]")];
+    const panels = [...root.querySelectorAll("[data-dm-panel]")];
+
+    for (const tab of tabs) {
+      tab.addEventListener("click", () => {
+        const id = tab.dataset.dmTab;
+        for (const t of tabs) {
+          const on = t === tab;
+          t.classList.toggle("lp-sidebar-link--active", on);
+          t.setAttribute("aria-pressed", String(on));
+        }
+        for (const p of panels) p.hidden = p.dataset.dmPanel !== id;
+        if (urlSlot) urlSlot.textContent = tab.dataset.dmHref;
+        // A panel switch starts at the top, not wherever the last one was left.
+        if (scroller) scroller.scrollTop = 0;
+      });
+    }
+
+    // Quiz: the first answer per question counts, then the row locks and the
+    // right choice is revealed, so a wrong guess still teaches something.
+    const scoreSlot = root.querySelector("[data-dm-score]");
+    const quizzes = [...root.querySelectorAll("[data-dm-quiz]")];
+    let right = 0;
+
+    for (const q of quizzes) {
+      const choices = [...q.querySelectorAll("[data-dm-choice]")];
+      const note = q.querySelector("[data-dm-note]");
+      for (const choice of choices) {
+        choice.addEventListener("click", () => {
+          if (q.dataset.answered) return;
+          q.dataset.answered = "true";
+          const correct = choice.dataset.correct === "true";
+          if (correct) right += 1;
+          choice.classList.add(correct ? "is-right" : "is-wrong");
+          if (!correct) choices.find((c) => c.dataset.correct === "true")?.classList.add("is-right");
+          for (const c of choices) c.disabled = true;
+          if (note) note.hidden = false;
+          if (scoreSlot) scoreSlot.textContent = right + " / " + quizzes.length;
+        });
+      }
+    }
+
+    for (const card of root.querySelectorAll("[data-dm-card]")) {
+      card.addEventListener("click", () => {
+        const open = card.classList.toggle("is-open");
+        card.setAttribute("aria-expanded", String(open));
+      });
+    }
+
+    // The recording is theatre: a 2.4s animated waveform, one card at a time.
+    const recs = [...root.querySelectorAll("[data-dm-rec]")];
+    let recTimer;
+    for (const rec of recs) {
+      rec.addEventListener("click", () => {
+        const wasOn = rec.classList.contains("is-rec");
+        clearTimeout(recTimer);
+        for (const r of recs) r.classList.remove("is-rec");
+        if (wasOn) return;
+        rec.classList.add("is-rec");
+        recTimer = setTimeout(() => rec.classList.remove("is-rec"), 2400);
+      });
+    }
+  }
+</script>

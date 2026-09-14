@@ -70,7 +70,7 @@
   position: absolute; bottom: 8px; left: 50%; transform: translateX(-50%);
   width: 120px; height: 5px; background: rgba(255, 255, 255, 0.45); border-radius: 3px; z-index: 2;
 }
-.m1-phone-screen { position: relative; background: #fff; border-radius: 32px; overflow: hidden; }
+.m1-phone-screen { position: relative; background: var(--surface-card); border-radius: 32px; overflow: hidden; }
 .m1-phone-content { padding: 56px 22px 28px; display: flex; flex-direction: column; gap: 14px; }
 .m1-phone-block .lp-eyebrow { font-size: 11px; }
 .m1-phone-block h1 {

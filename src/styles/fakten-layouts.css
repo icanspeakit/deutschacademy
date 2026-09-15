@@ -65,7 +65,7 @@
 
 .fk-hero { text-align: center; margin-bottom: 24px; }
 .fk-hero .eyebrow { text-align: center; }
-.fk-hero h1 { font-family: var(--font-display); font-size: clamp(1.6rem, 4vw, 2.2rem); color: var(--ink); margin: 0 0 10px; }
+.fk-hero h1 { font-family: var(--font-body); font-size: clamp(1.6rem, 4vw, 2.2rem); color: var(--ink); margin: 0 0 10px; font-weight: var(--fw-regular); }
 .fk-hero p { color: var(--muted); max-width: 560px; margin: 0 auto; line-height: 1.55; }
 .fk-hero p a { color: var(--brand-blue-dark); font-weight: 600; }
 
@@ -169,7 +169,7 @@
 .fk-tab.active { background: var(--gradient-brand); color: #fff; border-color: transparent; }
 .fk-tab-panel { display: none; background: var(--fk-card-bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 28px; max-width: 780px; margin: 0 auto; }
 .fk-tab-panel.active { display: block; }
-.fk-tab-panel h3 { text-align: left; margin: 0 0 14px; font-family: var(--font-display); color: var(--ink); }
+.fk-tab-panel h3 { text-align: left; margin: 0 0 14px; font-family: var(--font-body); color: var(--ink); font-weight: var(--fw-regular); }
 
 .fk-downloads-list { display: flex; flex-wrap: wrap; gap: 10px; }
 
@@ -184,7 +184,7 @@
 .fk-doc-nav a:hover { background: var(--fk-card-bg); color: var(--brand-blue-dark); }
 .fk-doc-nav-downloads a { font-weight: 500; color: var(--brand-blue-dark); font-size: .84rem; }
 .fk-doc-section { background: var(--fk-card-bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 26px 28px; margin-bottom: 18px; scroll-margin-top: 20px; }
-.fk-doc-section h3 { text-align: left; margin: 0 0 14px; font-family: var(--font-display); color: var(--ink); }
+.fk-doc-section h3 { text-align: left; margin: 0 0 14px; font-family: var(--font-body); color: var(--ink); font-weight: var(--fw-regular); }
 
 @media (max-width: 720px) {
   .fk-doc-grid { grid-template-columns: 1fr; }
@@ -201,7 +201,7 @@
 .fk-fact-card { background: var(--fk-card-bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 4px 22px; }
 .fk-fact-card summary { list-style: none; cursor: pointer; display: flex; align-items: center; justify-content: space-between; padding: 18px 0; gap: 10px; }
 .fk-fact-card summary::-webkit-details-marker { display: none; }
-.fk-fact-card-title { font-family: var(--font-display); font-weight: 700; color: var(--ink); }
+.fk-fact-card-title { font-family: var(--font-body); font-weight: var(--fw-regular); color: var(--ink); }
 .fk-fact-card-count { font-size: .76rem; font-weight: 700; color: var(--brand-blue-dark); background: var(--surface); border-radius: var(--radius-pill); padding: 4px 10px; white-space: nowrap; }
 .fk-fact-card[open] summary { border-bottom: 1px solid var(--border); }
 .fk-fact-card .fact-list { padding: 18px 0 20px 20px; margin: 0; }

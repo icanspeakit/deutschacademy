@@ -8,6 +8,7 @@ import Layout from "../../layouts/Layout.astro";
 import LanguageSwitcher from "../../components/LanguageSwitcher.astro";
 import ThemeToggle from "../../components/ThemeToggle.astro";
 import Icon from "../../components/Icon.astro";
+import VariantSwitch from "../../components/VariantSwitch.astro";
 import "../../styles/practice.css";
 import "../../styles/uebungen-vorschau.css";
 import "../../styles/dashboard.css";
@@ -53,7 +54,14 @@ const exerciseCount = tools.length;
 const examCount = exams.length;
 ---
 <Layout title="Übungen – DeutschAcademy">
-  <div class="uv">
+  <VariantSwitch
+    attr="hub"
+    target=".uv"
+    label="Ansicht"
+    storageKey="da-hub-view"
+    options={[{ value: "compact", label: "Kompakt" }, { value: "original", label: "Original" }]}
+  />
+  <div class="uv" data-hub="compact">
     <nav class="uv-nav">
       <div class="uv-nav-row">
         <a href="/" class="uv-brand"><img src="/assets/logo.png" alt="DeutschAcademy" /></a>

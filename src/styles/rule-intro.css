@@ -1,0 +1,99 @@
+/* Chrome for the rule-panel intro (src/lib/ruleIntro.js): the spotlight overlay,
+   its coach mark, and the simulated cursor. */
+
+.ri-overlay {
+  --ri-ease: cubic-bezier(.22, 1, .36, 1);
+  position: fixed;
+  inset: 0;
+  z-index: 9000;
+  /* The tour never traps the pointer: clicks go straight through to the page,
+     and ruleIntro.js treats one as "walk out of the tour". */
+  pointer-events: none;
+  /* The hole wears a 9999px shadow and the cursor starts outside the frame it is
+     travelling into; neither should be able to widen the document. On a phone that
+     showed up as real horizontal scroll on the page underneath. */
+  overflow: hidden;
+  opacity: 0;
+  transition: opacity .45s ease;
+}
+.ri-overlay.is-on { opacity: 1; }
+
+/* A zero-size box wearing a huge shadow — the shadow IS the scrim, so the box is
+   the only lit patch on the page and moving it moves the spotlight. */
+.ri-hole {
+  position: absolute;
+  left: 0; top: 0; width: 0; height: 0;
+  border-radius: 999px;
+  box-shadow: 0 0 0 9999px rgba(8, 20, 34, .62);
+  outline: 1.5px solid rgba(255, 255, 255, .5);
+  transition:
+    left .6s var(--ri-ease), top .6s var(--ri-ease),
+    width .6s var(--ri-ease), height .6s var(--ri-ease),
+    border-radius .4s ease;
+}
+
+.ri-coach {
+  position: absolute;
+  /* Measured by showCoach() rather than assumed — on a phone this is the narrower
+     of the two values and every clamp there depends on knowing which. */
+  width: min(300px, calc(100vw - 32px));
+  box-sizing: border-box;
+  background: var(--surface-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px 18px;
+  box-shadow: 0 20px 44px rgba(8, 20, 34, .3);
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity .3s ease, transform .3s var(--ri-ease);
+}
+.ri-coach.is-on { opacity: 1; transform: none; }
+.ri-coach-title {
+  margin: 0 0 6px;
+  font-family: var(--font-label);
+  font-size: .82rem;
+  font-weight: var(--fw-bold);
+  letter-spacing: .01em;
+  color: var(--ink);
+}
+.ri-coach-text { margin: 0; font-size: .82rem; line-height: 1.55; color: var(--muted); }
+/* Beak on whichever side of the target the card ended up on. */
+.ri-coach::after {
+  content: "";
+  position: absolute;
+  width: 10px; height: 10px;
+  background: var(--surface-card);
+  border: 1px solid var(--border);
+  transform: rotate(45deg);
+}
+.ri-coach[data-side="left"]::after { top: 22px; right: -6px; left: auto; border-left: none; border-bottom: none; }
+.ri-coach[data-side="right"]::after { top: 22px; left: -6px; right: auto; border-right: none; border-top: none; }
+.ri-coach[data-side="top"]::after { top: -6px; right: 44px; left: auto; border-right: none; border-bottom: none; }
+
+.ri-cursor {
+  position: absolute;
+  left: 0; top: 0; width: 0; height: 0;
+  opacity: 0;
+  transition: transform .8s cubic-bezier(.35, .1, .25, 1), opacity .3s ease;
+}
+.ri-cursor.is-on { opacity: 1; }
+.ri-cursor svg { position: absolute; left: -3px; top: -2px; filter: drop-shadow(0 4px 8px rgba(0, 0, 0, .4)); }
+.ri-ripple {
+  position: absolute;
+  left: 0; top: 0;
+  width: 16px; height: 16px;
+  margin: -8px 0 0 -8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, .9);
+  opacity: 0;
+}
+.ri-cursor.is-clicking .ri-ripple { animation: ri-ripple .42s ease-out; }
+@keyframes ri-ripple {
+  from { opacity: .9; transform: scale(.35); }
+  to { opacity: 0; transform: scale(3.6); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ri-hole, .ri-coach, .ri-cursor { transition: none; }
+  .ri-cursor.is-clicking .ri-ripple { animation: none; }
+}

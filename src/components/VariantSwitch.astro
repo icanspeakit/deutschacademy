@@ -1,0 +1,74 @@
+---
+// A/B switch for comparing two versions of a layout on the real device.
+//
+// It writes `data-<attr>` onto a target element and remembers the choice, so the
+// variants are plain CSS — `.uv[data-hub="original"] …` — with no JS per page and
+// no second copy of the markup. Preview-only: it renders on the dev server, or
+// behind ?compare on the live site, so production never sees it.
+//
+// Usage:
+//   <VariantSwitch attr="hub" target=".uv" label="Ansicht" storageKey="da-hub-view"
+//     options={[{ value: "compact", label: "Kompakt" }, { value: "original", label: "Original" }]} />
+// and give the target its default in the markup: <div class="uv" data-hub="compact">
+import "../styles/variant-switch.css";
+
+interface Props {
+  /** data-<attr> written on the target, e.g. "hub" -> data-hub */
+  attr: string;
+  /** CSS selector for the element that carries the attribute */
+  target: string;
+  /** Small caption above the switch */
+  label: string;
+  /** localStorage key for the remembered choice */
+  storageKey: string;
+  /** Exactly two options; the first is the default */
+  options: { value: string; label: string }[];
+}
+const { attr, target, label, storageKey, options } = Astro.props;
+---
+<div
+  class="vsw"
+  data-vsw
+  data-attr={attr}
+  data-target={target}
+  data-storage={storageKey}
+  data-value={options[0].value}
+  hidden
+>
+  <span class="vsw-label">{label}</span>
+  <div class="vsw-track" role="radiogroup" aria-label={label}>
+    <span class="vsw-thumb" aria-hidden="true"></span>
+    {options.map((o, i) => (
+      <button type="button" role="radio" data-value={o.value} aria-checked={i === 0 ? "true" : "false"}>{o.label}</button>
+    ))}
+  </div>
+</div>
+
+<script>
+  const sw = document.querySelector("[data-vsw]");
+  if (sw) {
+    const shown = import.meta.env.DEV || new URLSearchParams(location.search).has("compare");
+    const target = document.querySelector(sw.dataset.target);
+
+    if (shown && target) {
+      const KEY = sw.dataset.storage;
+      const ATTR = sw.dataset.attr;
+      const buttons = [...sw.querySelectorAll("[data-value]")];
+      const values = buttons.map((b) => b.dataset.value);
+
+      function apply(value) {
+        target.setAttribute(`data-${ATTR}`, value);
+        sw.dataset.value = value;
+        for (const b of buttons) b.setAttribute("aria-checked", String(b.dataset.value === value));
+        try { localStorage.setItem(KEY, value); } catch {}
+      }
+
+      let saved = null;
+      try { saved = localStorage.getItem(KEY); } catch {}
+      apply(values.includes(saved) ? saved : values[0]);
+
+      for (const b of buttons) b.addEventListener("click", () => apply(b.dataset.value));
+      sw.hidden = false;
+    }
+  }
+</script>

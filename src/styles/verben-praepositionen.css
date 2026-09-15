@@ -4,7 +4,7 @@
 
 .vp-page { max-width: 880px; margin: 0 auto; padding: clamp(20px, 5vw, 40px) clamp(14px, 4vw, 24px) 96px; }
 
-.vp-back-link { display: inline-block; margin-bottom: 20px; font-weight: 600; font-size: .875rem; color: var(--brand-blue-dark); text-decoration: none; }
+.vp-back-link { display: inline-block; margin-bottom: 20px; font-weight: var(--fw-light); font-size: .875rem; color: var(--brand-blue-dark); text-decoration: none; }
 .vp-back-link:hover { color: var(--accent-dark); }
 
 .vp-hero { text-align: center; margin-bottom: 32px; }
@@ -52,7 +52,7 @@
 .vp-section-title { font-weight: var(--fw-regular); letter-spacing: -.02em; font-size: 1.375rem; color: var(--ink); margin: 36px 0 18px; }
 
 .vp-ex-head { display: flex; align-items: center; gap: 10px; margin-bottom: 18px; }
-.vp-ex-head h3 { font-weight: var(--fw-regular); letter-spacing: -.02em; font-size: 1.0625rem; color: var(--ink); margin: 0; }
+.vp-ex-head h3 { font-weight: var(--fw-regular); letter-spacing: -.02em; font-size: 1.0625rem; color: var(--ink); margin: 0; text-align: left; }
 .vp-ex-hint { font-size: .8125rem; color: var(--muted); margin: 0 0 18px; }
 
 /* Shared exercise controls */
@@ -106,12 +106,63 @@
 .vp-match-btn:disabled { cursor: default; }
 
 /* Exercise 3: Tabelle */
+/* The two halves of a row are pushed apart by space-between, so the row is only
+   readable as a pair while it stays narrow — capped well inside the card rather
+   than letting a verb and its prepositions sit at opposite ends of 880px. */
+.vp-table { max-width: 640px; }
 .vp-table-row { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 14px 0; border-top: 1px solid var(--border); }
 .vp-table-row:first-child { border-top: none; padding-top: 0; }
 .vp-table-verb { font-weight: var(--fw-semibold); color: var(--ink); font-size: .9375rem; }
 
-/* Exercise 4: Geschichte */
+/* Exercise 4: Geschichte — sentence rows.
+   One sentence, then its answers, repeating: the same shape as the Lückensatz
+   exercise above it, so there is no second mechanic to learn and the words can
+   never scroll away from the gap. .vp-story-text remains for the bank fallback
+   that topics with more than INLINE_MAX answers still use. */
 .vp-story-text { font-size: 1rem; line-height: 2.1; color: var(--ink); }
+
+.vp-srow { padding: 16px 0; border-top: 1px solid var(--border); }
+.vp-srow:first-child { border-top: none; padding-top: 0; }
+.vp-srow-text { font-size: 1rem; line-height: 1.95; margin: 0 0 12px; color: var(--ink); }
+.vp-srow-answer { display: flex; align-items: center; gap: 10px; margin-top: 8px; }
+/* The pill row is right-aligned inside fill/table; under a sentence it reads as
+   an answer to that sentence only if it starts where the sentence starts. */
+.vp-srow-answer .vp-pills { justify-content: flex-start; flex: 1; }
+.vp-srow-num {
+  flex: none;
+  width: 22px; height: 22px;
+  display: grid; place-items: center;
+  border-radius: 50%;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  font-family: var(--font-label);
+  font-size: .7rem;
+  font-weight: var(--fw-bold);
+  color: var(--muted);
+}
+
+/* The gap itself. An underline, not a box: a box in the middle of a sentence
+   reads as a text field and invites typing, which does nothing here. */
+.vp-gap {
+  display: inline-block;
+  min-width: 62px;
+  padding: 1px 8px;
+  border-bottom: 2px dashed var(--border-strong);
+  border-radius: 5px 5px 0 0;
+  font-weight: var(--fw-semibold);
+  color: var(--muted-soft);
+  transition: background-color .18s ease, border-color .18s ease, color .18s ease;
+}
+.vp-gap.is-chosen { border-bottom-style: solid; border-bottom-color: var(--brand-blue); background: var(--blue-50); color: var(--brand-blue-dark); }
+.vp-gap.is-correct { border-bottom-style: solid; border-bottom-color: var(--success); background: var(--success-soft); color: var(--success); }
+.vp-gap.is-wrong { border-bottom-style: solid; border-bottom-color: var(--danger); background: var(--danger-soft); color: var(--danger); }
+.vp-gap-num { font-size: .68rem; font-weight: var(--fw-bold); color: var(--muted-soft); vertical-align: super; margin-right: 2px; }
+
+/* No mobile override for the pill row on purpose. Stretching the pills to equal
+   widths (flex:1 + min-width:0) squeezes them narrower than their own labels, and
+   a word like "gegangen" then spills out of its button and widens the document —
+   32px of horizontal scroll on Perfekt. Natural widths with the wrap they already
+   have cannot do that, and .vp-pill-opt is 38px tall either way. */
 
 /* Exercise 5: Satzbau */
 .vp-build-item { padding: 18px 0; border-top: 1px solid var(--border); }
@@ -124,6 +175,25 @@
 @keyframes vp-pop { 0% { transform: scale(1); } 45% { transform: scale(1.08); } 100% { transform: scale(1); } }
 @keyframes vp-shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } }
 @keyframes vp-fade-in { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+
+/* The first screen belongs to the first exercise.
+   ---------------------------------------------------------------------------
+   Everything above exercise 1 — back link, badges, title, subtitle, the rule
+   button, the "Übungen" heading — used to run to ~510px on a 390px phone, so a
+   learner met half a page of chrome before anything to do. Same elements, just
+   sized for the screen they are on; only the subtitle goes, because the title
+   and the rule button already say what it says. Scoped to the workspace so the
+   other pages using .vp-hero keep their full-size version.
+   Judge this at 390px — that is where the learners are. */
+@media (max-width: 640px) {
+  .vp-page--split .vp-back-link { margin-bottom: 10px; }
+  .vp-page--split .vp-hero { margin-bottom: 16px; }
+  .vp-page--split .vp-hero-badges { margin-bottom: 10px; }
+  .vp-page--split .vp-hero h1 { font-size: 1.5rem; margin-bottom: 6px; font-weight: var(--fw-regular); }
+  .vp-page--split .vp-hero p { display: none; }
+  .vp-page--split .vp-rule-peek { margin: 0 0 18px; }
+  .vp-page--split .vp-section-title { font-size: 1.125rem; margin: 0 0 12px; font-weight: var(--fw-regular); }
+}
 
 @media (max-width: 640px) {
   .vp-hero-badges { flex-wrap: wrap; }
@@ -268,9 +338,34 @@
    Mobile keeps the original single-column order (rule first, then exercises) —
    see the DOM note in [id].astro.
    --------------------------------------------------------------------------- */
-.vp-page--split { max-width: 1600px; }
+/* One exercise per row at the 880px the rest of the template uses, not two narrow
+   ones: a sentence plus its answer chips belongs on a single line. The page is
+   sized as "exercise column + whatever the rule column currently takes", so
+   opening the rule widens the page around a card that never changes width —
+   nothing in the exercise re-flows when the learner asks for the rule. */
+.vp-page--split {
+  --ex-w: 880px;
+  --rule-w: clamp(320px, 28vw, 440px);
+  --rule-gap: var(--space-10);
+  /* The page's own horizontal padding, which max-width includes (border-box).
+     Constant above 600px, which is everywhere the calc below applies. */
+  --vp-pad: 48px;
+  --vp-ease: cubic-bezier(.22, 1, .36, 1);
+  /* The rule panel is a layout change, not a button press: slow enough that
+     the eye can follow the column opening and see where the space came from.
+     Both halves of the motion read the same knob so they never drift apart. */
+  --vp-slide: .85s;
+  --vp-peek-h: 150px;
+  max-width: calc(var(--ex-w) + var(--vp-pad));
+}
+/* Set by the page script around the first, state-restoring paint so a remembered
+   "rule hidden" doesn't play as an animation on every load. */
+.vp-page--split[data-anim="off"],
+.vp-page--split[data-anim="off"] .vp-workspace,
+.vp-page--split[data-anim="off"] .vp-col--rule,
+.vp-page--split[data-anim="off"] .vp-rule-card { transition: none !important; }
 .vp-ex-toolbar { display: flex; align-items: baseline; gap: 16px; flex-wrap: wrap; }
-.vp-ex-toolbar .vp-section-title { margin-top: 0; }
+.vp-ex-toolbar .vp-section-title { margin-top: 0; font-weight: var(--fw-regular); }
 .vp-rule-toggle {
   margin-left: auto;
   border: 1px solid var(--border);
@@ -286,48 +381,159 @@
 .vp-rule-toggle:hover { color: var(--ink); border-color: var(--border-strong); }
 
 @media (min-width: 1001px) {
+  /* The page grows and shrinks with the rule column; the exercise column is what
+     is left over, which the max-width above keeps at --ex-w on a wide screen and
+     lets shrink on a narrow one. */
+  .vp-page--split { max-width: calc(var(--ex-w) + var(--rule-gap) + var(--rule-w) + var(--vp-pad)); transition: max-width var(--vp-slide) var(--vp-ease); }
   .vp-workspace {
     display: grid;
-    grid-template-columns: 1fr minmax(300px, 27%);
-    gap: var(--space-7);
+    grid-template-columns: minmax(0, 1fr) var(--rule-w);
+    gap: var(--rule-gap);
     align-items: start;
+    transition: grid-template-columns var(--vp-slide) var(--vp-ease), gap var(--vp-slide) var(--vp-ease);
   }
   /* Explicit placement rather than `order`: the rule is first in the DOM for
      mobile, but belongs on the right on desktop. */
   .vp-col--ex { grid-column: 1; grid-row: 1; min-width: 0; }
-  .vp-col--rule { grid-column: 2; grid-row: 1; min-width: 0; }
   .vp-col--rule {
+    grid-column: 2;
+    grid-row: 1;
+    min-width: 0;
     position: sticky;
     top: 16px;
     max-height: calc(100vh - 32px);
     overflow-y: auto;
     overscroll-behavior: contain;
     padding-right: 4px;
+    /* The panel slides rather than blinks — see the pop-out note below. */
+    transition: transform var(--vp-slide) var(--vp-ease), opacity calc(var(--vp-slide) * .6) ease;
   }
   /* Centred hero copy is right for a full-width page, wrong for a side column. */
   .vp-col--rule .vp-hero { text-align: left; margin-bottom: 20px; }
   .vp-col--rule .vp-hero-badges { justify-content: flex-start; }
-  .vp-col--rule .vp-hero h1 { font-size: clamp(1.4rem, 2vw, 1.75rem); }
+  .vp-col--rule .vp-hero h1 { font-size: clamp(1.4rem, 2vw, 1.75rem); font-weight: var(--fw-regular); }
 
-  /* The exercise tables are narrow; one per row would waste the width just
-     reclaimed. */
+  /* One card per row. Two side by side fit on the screen but not in the head —
+     the exercise you are doing and the one you are not, competing. A single broad
+     card is one task at a time, and wide enough that no exercise has to wrap its
+     sentence away from its answers. */
   .vp-ex-grid {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 20px;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-10);
     align-items: start;
   }
+  .vp-ex-grid .vp-card { margin-bottom: 0; padding: var(--space-8) var(--space-8) var(--space-9); }
+  .vp-col--ex .vp-ex-toolbar { margin-bottom: var(--space-6); }
 
-  /* Rule collapsed: the exercises take everything. */
-  .vp-page--split[data-rule="hidden"] .vp-workspace { grid-template-columns: 1fr; }
-  .vp-page--split[data-rule="hidden"] .vp-col--rule { display: none; }
-  .vp-page--split[data-rule="hidden"] .vp-ex-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  /* Rule collapsed: the column shrinks to nothing and the panel slides out past
+     its own (now clipped) edge. */
+  .vp-page--split[data-rule="hidden"] { --rule-w: 0px; --rule-gap: 0px; }
+  .vp-page--split[data-rule="hidden"] .vp-col--rule { transform: translateX(28px); opacity: 0; }
 }
 
-/* Below the breakpoint there is only one column, so the toggle has nothing to do. */
+/* The pop-out teaser.
+   ---------------------------------------------------------------------------
+   A rule panel that starts collapsed is a panel nobody knows about: the toggle
+   is one quiet pill in the corner of a page full of exercises. So on a learner's
+   first grammar page the panel plays itself once — slides out, holds long enough
+   to be read as "this is the rule", slides back — and the toggle glows while it
+   retreats so the eye follows it to the control that brings it back. Once per
+   browser; any click on the toggle cancels it. */
+.vp-rule-toggle[data-peek] {
+  color: var(--brand-blue-dark);
+  border-color: var(--blue-300);
+  animation: vp-peek-glow 1.4s ease-in-out 2;
+}
+@keyframes vp-peek-glow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0); }
+  50% { box-shadow: 0 0 0 5px rgba(37, 99, 235, .16); }
+}
+
+/* The phone version of the same idea.
+   ---------------------------------------------------------------------------
+   There is no second column to slide away below the breakpoint, and the toggle
+   that drives one is hidden. But the problem the split layout solved is worse on
+   a phone, not better: the hero plus a full "Wie funktioniert das?" card is the
+   entire first screen, so the learner meets the rule and never the exercise.
+   So the same collapsed-by-default preference contracts the card to nothing and
+   leaves the button. A cropped preview was the first try: 150px of faded rule is
+   still 150px of the first screen spent on something the learner has not asked
+   for, and half a sentence is not worth reading. The hero above it already says
+   what the page is, and the button says the rule exists — that is the whole job.
+   The hero stays whole: it is the page's title, not part of the explanation. */
 @media (max-width: 1000px) {
   .vp-rule-toggle { display: none; }
+
+  .vp-rule-card {
+    overflow: hidden;
+    transition:
+      max-height var(--vp-slide) var(--vp-ease),
+      padding var(--vp-slide) var(--vp-ease),
+      border-width var(--vp-slide) var(--vp-ease),
+      margin-bottom var(--vp-slide) var(--vp-ease),
+      opacity calc(var(--vp-slide) * .6) ease;
+  }
+  /* Everything that occupies height goes, not just the content box — a collapsed
+     card still leaves its padding, border and margin behind as a stray sliver. */
+  .vp-page--split[data-rule="hidden"] .vp-rule-card {
+    max-height: 0;
+    padding-block: 0;
+    border-width: 0;
+    margin-bottom: 0;
+    opacity: 0;
+  }
+  .vp-rule-peek {
+    display: block;
+    width: 100%;
+    margin: 0 0 26px;
+    border: 1px solid var(--border-strong);
+    background: var(--surface-card);
+    border-radius: var(--radius-pill);
+    padding: 12px 20px;
+    cursor: pointer;
+    font-family: var(--font-label);
+    font-size: var(--text-xs);
+    font-weight: var(--fw-semibold);
+    color: var(--brand-blue-dark);
+  }
+  .vp-rule-peek[data-peek] {
+    border-color: var(--blue-300);
+    animation: vp-peek-glow 1.4s ease-in-out 2;
+  }
 }
+
+/* The side column is the control on desktop; the button would be a second one. */
+@media (min-width: 1001px) {
+  .vp-rule-peek { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vp-page--split, .vp-workspace, .vp-col--rule, .vp-rule-card { transition: none; }
+  .vp-rule-toggle[data-peek], .vp-rule-peek[data-peek] { animation: none; }
+}
+
+/* Dev-only reset button (rendered behind import.meta.env.DEV in [id].astro).
+   Deliberately not styled like the site — dashed and monospace so it never reads
+   as something a learner is meant to press, and it sits above the tour's own scrim
+   (z-index 9000) so it stays reachable while the tour is running. */
+.vp-dev-reset {
+  position: fixed;
+  right: 12px;
+  bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+  z-index: 9100;
+  border: 1px dashed var(--border-strong);
+  border-radius: var(--radius-pill);
+  background: var(--surface-card);
+  color: var(--muted);
+  padding: 8px 14px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 12px;
+  cursor: pointer;
+  opacity: .75;
+  box-shadow: 0 4px 14px rgba(8, 20, 34, .18);
+}
+.vp-dev-reset:hover { opacity: 1; color: var(--ink); }
 
 /* Choice pills inside a table exercise (opt-in via `choices` in the topic JSON).
    A two- or three-way question — haben/sein, der/die/das — is answered faster by

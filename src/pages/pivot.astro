@@ -1,0 +1,223 @@
+---
+// Sketch page: six ways to stop /uebungen from being four screens of scroll on a
+// phone. ~90% of the learners arrive on a handset, and today the hub asks them to
+// scroll past thirteen cards before they have chosen anything — the list IS the
+// page, and the list is too long.
+//
+// Every idea runs live inside a real 390x664 frame on the real tool counts, so the
+// comparison is about structure, not about copy. Heights in the table are measured
+// in the browser, not typed in. Nothing here touches /uebungen until one wins.
+import Layout from "../layouts/Layout.astro";
+import PracticeHeader from "../components/PracticeHeader.astro";
+import Icon from "../components/Icon.astro";
+import "../styles/practice.css";
+import "../styles/verben-praepositionen.css";
+import "../styles/pivot.css";
+import { counts, asArtikelRows } from "../lib/lexicon.js";
+import artikel from "../data/artikel.json";
+import grammatik from "../data/grammatik.json";
+import wortschatz from "../data/wortschatz.json";
+import sprechen from "../data/sprechen.json";
+import lesen from "../data/lesen.json";
+import kultur from "../data/kultur.json";
+import lid from "../data/leben-in-deutschland.json";
+import verbenPraepositionen from "../data/grammatik/verben-praepositionen.json";
+
+// Same derivations as src/pages/uebungen/index.astro, so the prototypes carry the
+// real counts — a made-up "12 Themen" would quietly change where a row wraps.
+const grammarQuestionCount = grammatik.reduce((sum, t) => sum + t.questions.length, 0);
+const readingQuestionCount = lesen.groups.reduce((sum, g) => sum + g.questions.length, 0);
+const prepositionVerbCount = verbenPraepositionen.concept.reference.boxes.reduce((n, b) => n + b.items.length, 0);
+const lexiconCounts = counts();
+const artikelNounCount = asArtikelRows({ level: ["A1", "A2"] }).length;
+
+const tools = [
+  { id: "artikel", href: "/uebungen/artikel-trainer", icon: "target", title: "der/die/das-Trainer", short: "Artikel", desc: "Artikel gezielt üben, mit sofortigem Feedback.", count: `${artikelNounCount} Nomen` },
+  { id: "grammatik", href: "/uebungen/grammatik", icon: "book", title: "Grammatik", short: "Grammatik", desc: "Themen nach Niveau: Akkusativ, Dativ, Passiv und mehr.", count: `${grammatik.length} Themen` },
+  { id: "praep", href: "/uebungen/grammatik/verben-praepositionen", icon: "link", title: "Verben mit Präpositionen", short: "Präpositionen", desc: "Feste Präpositionen in fünf Aufgabentypen üben.", count: `${prepositionVerbCount} Verben` },
+  { id: "wortschatz", href: "/uebungen/wortschatz", icon: "folder", title: "Wortschatz & Redemittel", short: "Wortschatz", desc: "Karteikarten zum Umdrehen und Wiederholen.", count: `${wortschatz.length} Karten` },
+  { id: "aussprache", href: "/uebungen/aussprache", icon: "volume", title: "Aussprache-Training", short: "Aussprache", desc: "Wörter anhören und im Langsam-Modus üben.", count: `${wortschatz.length + artikel.length} Wörter` },
+  { id: "sprechen", href: "/uebungen/sprechen", icon: "mic", title: "Sprechen: Bildbeschreibung", short: "Sprechen", desc: "Echte DTZ-Prüferfragen, mit 90-Sekunden-Timer.", count: `${sprechen.length} Bilder` },
+  { id: "lesen", href: "/uebungen/lesen-schreiben", icon: "pencil", title: "Lesen & Schreiben", short: "Lesen", desc: "DTZ-Leseverstehen-Simulation plus Schreibaufgaben.", count: `${readingQuestionCount} Aufgaben` },
+  { id: "kultur", href: "/uebungen/kultur", icon: "map-pin", title: "Kulturwissen", short: "Kultur", desc: "Einblicke aus echten Unterrichtsgesprächen.", count: `${kultur.length} Thema${kultur.length === 1 ? "" : "n"}` },
+];
+
+const exams = [
+  { id: "telc", href: "/pruefungen/telc", icon: "document", title: "telc", short: "telc", count: "A1–C2" },
+  { id: "goethe", href: "/pruefungen/goethe", icon: "landmark", title: "Goethe-Zertifikat", short: "Goethe", count: "A1–C2" },
+  { id: "testdaf", href: "/pruefungen/testdaf", icon: "graduation-cap", title: "TestDaF", short: "TestDaF", count: "≈ B2–C1" },
+  { id: "dtz", href: "/pruefungen/dtz", icon: "book-open", title: "DTZ", short: "DTZ", count: "A2 / B1" },
+  { id: "lid", href: "/pruefungen/leben-in-deutschland", icon: "map-pin", title: "Leben in Deutschland", short: "Leben in DE", count: `${lid.bundeslaender.length} Bundesländer` },
+];
+
+// The grouping every "fewer things on screen" idea leans on. Four buckets plus the
+// exams turn thirteen decisions into five — and they use learner words ("Wörter"),
+// not the product's words ("Wortschatz & Redemittel").
+const groups = [
+  { id: "grammatik", icon: "book", name: "Grammatik", blurb: "Artikel, Fälle, Zeiten", tools: ["artikel", "grammatik", "praep"] },
+  { id: "woerter", icon: "folder", name: "Wörter & Aussprache", blurb: "Vokabeln hören und behalten", tools: ["wortschatz", "aussprache"] },
+  { id: "fertigkeiten", icon: "mic", name: "Sprechen, Lesen & Schreiben", blurb: "Prüfungsteile am Stück üben", tools: ["sprechen", "lesen"] },
+  { id: "kultur", icon: "map-pin", name: "Landeskunde", blurb: "Alltag und Kultur in Deutschland", tools: ["kultur"] },
+  { id: "pruefungen", icon: "graduation-cap", name: "Prüfungen", blurb: "telc, Goethe, TestDaF, DTZ", exams: true },
+];
+
+const data = {
+  tools,
+  exams,
+  groups,
+  pills: [`${tools.length} Übungen`, `${exams.length} Prüfungen`, `${lexiconCounts.total} Wörter`],
+  total: tools.length + exams.length,
+};
+
+const ICON_NAMES = [...new Set([...tools.map((t) => t.icon), ...exams.map((e) => e.icon), ...groups.map((g) => g.icon), "sparkle", "target"])];
+
+// The switch is authored here so caption, verdict and argument stay next to each
+// other; the phone content itself is built client-side in src/lib/pivotProtos.js.
+const IDEAS = [
+  {
+    id: "now", badge: "Jetzt", name: "Alles untereinander", verdict: ["bad", "Vier Bildschirme bis unten"], taps: "1 Tipp — nach viel Scrollen",
+    why: "Die Liste <b>ist</b> die Seite: Hero, Tabs, acht Übungen, fünf Prüfungen. Wer zu den Prüfungen will, scrollt an allem vorbei, was er nicht wollte. Jede Zeile ist gleich laut, also hilft nichts beim Auswählen.",
+  },
+  {
+    id: "grid", badge: "A", name: "Zwei pro Zeile", verdict: ["good", "Halbe Höhe, null Risiko"], taps: "1 Tipp, direkt",
+    why: "Rein visuell: aus acht Zeilen werden vier, aus fünf Prüfungskacheln drei. Nichts wird versteckt, nichts muss gelernt werden — <b>der kleinste Umbau mit echtem Effekt</b>, im Kern eine CSS-Änderung an der bestehenden Seite.",
+  },
+  {
+    id: "ask", badge: "B", name: "Erst fragen, dann listen", verdict: ["good", "Ein Bildschirm, ein Tipp mehr"], taps: "2 Tipps",
+    why: "Kein Katalog mehr. Fünf große Felder beantworten <b>„Was willst du üben?“</b>; das gewählte Feld ersetzt den Bildschirm durch seine drei, zwei oder fünf Übungen. Dreizehn Entscheidungen werden zu fünf — der eigentliche Pivot. Die getippte Karte <b>wandert mit</b> und wird zur Überschrift, damit klar bleibt, wo man gelandet ist.",
+  },
+  {
+    id: "resume", badge: "C", name: "Weitermachen statt wählen", verdict: ["good", "Beste Seite für Rückkehrer"], taps: "1 Tipp für den Normalfall",
+    why: "Oben steht, was du zuletzt gemacht hast, mit Fortschritt und einem Knopf. Darunter Suche und vier Schnellwahl-Chips, der volle Katalog klappt auf Wunsch auf. <b>Beim ersten Besuch ist die Karte leer</b> — dann braucht es B darunter.",
+  },
+  {
+    id: "accordion", badge: "D", name: "Fünf Klappen", verdict: ["meh", "Kurz, aber alles versteckt"], taps: "2 Tipps",
+    why: "Fünf zugeklappte Zeilen, jede mit Anzahl. Sehr kurz — aber ein Tipp öffnet nur eine Liste statt einer Übung, und geöffnet wächst die Seite sofort wieder. Gleiche Idee wie B, nur weniger entschieden.",
+  },
+  {
+    id: "rows", badge: "E", name: "Seitlich wischen", verdict: ["meh", "Kein Scrollen, dafür Verstecken"], taps: "1 Tipp — wenn man es findet",
+    why: "Drei Reihen, jede wischt horizontal. Vertikal passt alles auf einen Bildschirm. Der Preis: was rechts liegt, existiert für viele nicht — und jedes Seitwärts-Wischen konkurriert am Handy mit der Zurück-Geste am Rand.",
+  },
+];
+---
+<Layout title="Übungen kompakt – Ideen – DeutschAcademy">
+  <PracticeHeader title="Übungen · Ideen" />
+
+  <main class="vp-page pv-page">
+    <a href="/uebungen" class="vp-back-link">← Zurück zu den Übungen</a>
+
+    <header class="pv-head">
+      <h1>Die Übungsseite, vom Handy aus gedacht</h1>
+      <p class="pv-lede">
+        Auf 390&nbsp;px Breite ist die heutige Übersicht vor allem eins: lang. Hero, zwei
+        Tabs, acht Übungen, fünf Prüfungen — dreizehn gleich laute Entscheidungen
+        untereinander. Hier sechs Wege, das zu kürzen, jeder live in einem echten
+        Telefonfenster. <b>Die Höhen unten sind gemessen</b>, nicht geschätzt.
+      </p>
+    </header>
+
+    <!-- The toggle. One idea fills the frame at a time, so the comparison happens at
+         real size instead of six thumbnails nobody can read. -->
+    <div class="pv-switch" role="tablist" aria-label="Ansatz wählen" id="pv-switch">
+      {IDEAS.map((idea, i) => (
+        <button
+          type="button"
+          role="tab"
+          class="pv-swbtn"
+          data-idea={idea.id}
+          aria-selected={i === 0 ? "true" : "false"}
+          tabindex={i === 0 ? "0" : "-1"}
+        >
+          <span class="pv-swbadge">{idea.badge}</span>
+          <span class="pv-swname">{idea.name}</span>
+        </button>
+      ))}
+    </div>
+
+    <section class="pv-stage">
+      <div class="pv-side">
+        {IDEAS.map((idea, i) => (
+          <article class="pv-note" data-note={idea.id} hidden={i !== 0}>
+            <div class="pv-note-head">
+              <span class={`badge ${idea.id === "now" ? "badge-neutral" : "badge-brand"}`}>{idea.badge}</span>
+              <h2>{idea.name}</h2>
+            </div>
+            <p class={`pv-verdict pv-verdict--${idea.verdict[0]}`}>{idea.verdict[1]}</p>
+            <p class="pv-why" set:html={idea.why} />
+            {idea.id === "ask" && (
+              <button type="button" class="pv-demo" data-demo="ask">
+                <i>▶</i> Übergang abspielen
+              </button>
+            )}
+            <dl class="pv-metrics">
+              <div><dt>Seitenhöhe</dt><dd data-metric="height">–</dd></div>
+              <div><dt>Bildschirme</dt><dd data-metric="screens">–</dd></div>
+              <div><dt>Auswahl auf Screen 1</dt><dd data-metric="above">–</dd></div>
+              <div><dt>Weg zur Übung</dt><dd>{idea.taps}</dd></div>
+            </dl>
+          </article>
+        ))}
+      </div>
+
+      <div class="pv-phone" id="pv-phone"></div>
+    </section>
+
+    <section class="pv-compare">
+      <h2>Alle sechs, gemessen</h2>
+      <p class="pv-compare-note">
+        Im 390×664-Rahmen nach dem Rendern gemessen: Gesamthöhe des Dokuments, und
+        wie viele Auswahlpunkte ohne Scrollen vollständig sichtbar sind — gezählt
+        wird alles, was der Daumen antippen kann, also auch eine Kategorie, die eine
+        Übung öffnet. Deshalb steht die Tippzahl daneben: fünf Kategorien auf einem
+        Bildschirm sind nur dann besser als sechs Übungen, wenn der zweite Tipp
+        wirklich billig ist.
+      </p>
+      <div class="pv-table-wrap">
+        <table class="pv-table" id="pv-table">
+          <thead>
+            <tr><th>Ansatz</th><th>Höhe</th><th>Bildschirme</th><th>Auswahl auf Screen 1</th><th>Tipps</th><th>Urteil</th></tr>
+          </thead>
+          <tbody>
+            {IDEAS.map((idea) => (
+              <tr data-row={idea.id}>
+                <th scope="row"><span class="pv-rowbadge">{idea.badge}</span> {idea.name}</th>
+                <td data-cell="height" data-label="Höhe">–</td>
+                <td data-cell="screens" data-label="Bildschirme">–</td>
+                <td data-cell="above" data-label="Auswahl auf Screen 1">–</td>
+                <td class="pv-taps" data-label="Tipps">{idea.taps}</td>
+                <td data-label="Urteil"><span class={`pv-verdict pv-verdict--${idea.verdict[0]}`}>{idea.verdict[1]}</span></td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p class="pv-take">
+        <b>Empfehlung:</b> <b>A</b> sofort ausliefern — halbe Höhe, kein neues Verhalten,
+        im Wesentlichen CSS. Parallel <b>B</b> bauen: das ist der Umbau, der die Seite von
+        einem Katalog in eine Frage verwandelt. Sobald genug Fortschritt in localStorage
+        liegt, <b>C</b> als Kopf über B setzen — dann ist der Normalfall ein Tipp und die
+        Liste nur noch für alles andere zuständig.
+      </p>
+    </section>
+  </main>
+
+  <!-- Icon markup lifted out of Icon.astro so the client-side prototypes reuse the
+       exact same SVGs instead of a second, drifting copy. -->
+  <div id="pv-icons" hidden aria-hidden="true">
+    {ICON_NAMES.map((n) => <span data-icon={n}><Icon name={n} /></span>)}
+  </div>
+
+  <script type="application/json" id="pv-data" set:html={JSON.stringify(data)}></script>
+  <script type="module">
+    import { mountPivot } from "../lib/pivotProtos.js";
+    mountPivot({
+      data: JSON.parse(document.getElementById("pv-data").textContent),
+      iconHost: document.getElementById("pv-icons"),
+      phone: document.getElementById("pv-phone"),
+      switchEl: document.getElementById("pv-switch"),
+      table: document.getElementById("pv-table"),
+      notes: document.querySelector(".pv-side"),
+      storageKey: "da-pivot-idea",
+    });
+  </script>
+</Layout>

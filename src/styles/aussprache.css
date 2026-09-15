@@ -45,9 +45,9 @@
   margin: 0 0 var(--space-2);
 }
 .pr-rail-title {
-  font-family: var(--font-display);
+  font-family: var(--font-body);
   font-size: var(--text-2xl);
-  font-weight: var(--fw-bold);
+  font-weight: var(--fw-regular);
   color: var(--ink);
   margin: 0 0 var(--space-4);
   line-height: 1.1;
@@ -347,7 +347,7 @@
   .pr-stage { overflow-y: visible; }
   .pr-rail { border-right: none; border-bottom: 1px solid var(--border); }
   .pr-rail-head { padding: var(--space-5) var(--space-4) var(--space-3); }
-  .pr-rail-title { font-size: var(--text-xl); }
+  .pr-rail-title { font-size: var(--text-xl); font-weight: var(--fw-regular); }
   .pr-rail-progress { padding: 0 var(--space-4) var(--space-3); }
   .pr-rail-scroll {
     overflow-x: auto;

@@ -24,7 +24,7 @@
   box-shadow: 0 6px 14px rgba(249, 115, 22, .14);
   margin-bottom: 12px;
 }
-.exam-card h3 { text-align: left; margin: 0 0 6px; font-family: var(--font-display); }
+.exam-card h3 { text-align: left; margin: 0 0 6px; font-family: var(--font-body); font-weight: var(--fw-regular); }
 .exam-card p { margin: 0 0 12px; color: var(--muted); font-size: .95rem; }
 .exam-card-level {
   display: inline-block;
@@ -38,11 +38,11 @@
 /* Detail page */
 .exam-section { max-width: 780px; margin: 0 auto 40px; }
 .exam-section h2 {
-  font-family: var(--font-display);
+  font-family: var(--font-body);
   text-align: left;
   font-size: 1.4rem;
   color: var(--ink);
-  margin: 0 0 14px;
+  margin: 0 0 14px; font-weight: var(--fw-regular);
 }
 .exam-section p { margin: 0 0 12px; }
 .exam-section ul { margin: 0 0 12px; padding-left: 20px; }
@@ -72,7 +72,7 @@
   text-align: center;
 }
 .skill-card-icon { font-size: 1.4rem; margin-bottom: 6px; }
-.skill-card h4 { margin: 0 0 4px; font-size: .95rem; }
+.skill-card h4 { margin: 0 0 4px; font-size: .95rem; font-weight: var(--fw-regular); }
 .skill-card p { margin: 0; color: var(--muted); font-size: .82rem; }
 .skill-card--na { opacity: .55; }
 .skill-card--na .skill-card-icon { filter: grayscale(1); }
@@ -93,7 +93,7 @@
   max-width: 780px;
   margin: 0 auto 40px;
 }
-.exam-cta h2 { color: #fff; }
+.exam-cta h2 { color: #fff; font-weight: var(--fw-regular); }
 .exam-cta p { color: rgba(255,255,255,.9); }
 .exam-cta a.quiz-btn {
   display: inline-block;
@@ -106,11 +106,11 @@
 
 .exam-practice { max-width: 780px; margin: 0 auto 40px; }
 .exam-practice h2 {
-  font-family: var(--font-display);
+  font-family: var(--font-body);
   text-align: left;
   font-size: 1.4rem;
   color: var(--ink);
-  margin: 0 0 10px;
+  margin: 0 0 10px; font-weight: var(--fw-regular);
 }
 .exam-practice > p { color: var(--muted); margin: 0 0 4px; }
 .exam-practice .tool-grid { margin-top: 20px; }
@@ -125,7 +125,7 @@
   border-radius: var(--radius);
   padding: 24px 28px;
 }
-.mock-cta h2 { font-family: var(--font-display); text-align: left; font-size: 1.2rem; color: var(--ink); margin: 0 0 8px; }
+.mock-cta h2 { font-family: var(--font-body); text-align: left; font-size: 1.2rem; color: var(--ink); margin: 0 0 8px; font-weight: var(--fw-regular); }
 .mock-cta p { margin: 0 0 12px; color: var(--muted); }
 .mock-cta--soon { opacity: .85; }
 .mock-cta--soon .exam-meta-badge { margin-top: 4px; }
@@ -181,7 +181,7 @@
   margin: 20px 0;
 }
 .pricing-tie-card { background: rgba(255,255,255,.14); border-radius: 12px; padding: 18px 20px; }
-.pricing-tie-card h3 { color: #fff; margin: 0 0 4px; font-size: 1.05rem; text-align: left; }
+.pricing-tie-card h3 { color: #fff; margin: 0 0 4px; font-size: 1.05rem; text-align: left; font-weight: var(--fw-regular); }
 .pricing-tie-card .tie-price { font-weight: 700; margin-bottom: 10px; }
 .pricing-tie-card ul { margin: 0; padding-left: 18px; font-size: .85rem; color: rgba(255,255,255,.9); }
 .pricing-tie-card li { margin-bottom: 4px; }

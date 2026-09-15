@@ -318,17 +318,67 @@ function mountTable(root, ex, notify) {
   render();
 }
 
-/* --------------------------------------------------------------- story ---- */
+/* --------------------------------------------------------------- story ----
+ * Sentence rows, not a word bank.
+ *
+ * The bank sat at the top and the blanks ran down the page, which on a 664px phone
+ * put the words 328px above the gap being filled by the time the learner reached
+ * the last one: you pick a word, scroll down, and forget which blank you were on.
+ * It was also a two-move interaction (word, then blank) in a page whose other
+ * exercises answer in one, and nothing said so.
+ *
+ * So the text breaks at its own sentence boundaries and each sentence carries its
+ * own answer row — the same shape as the `fill` exercise directly above it, which
+ * means no new mechanic to learn and nothing that can scroll out of reach.
+ *
+ * Two things the data forced (see the counts in src/data/grammatik):
+ *   - 11 of 15 stories have a sentence holding two or three blanks, so a row with
+ *     more than one gets numbered gaps and numbered answer rows. A single-gap
+ *     sentence stays unnumbered — a "1" there is noise.
+ *   - The option set repeats under EVERY gap, so the cost is options x gaps, not
+ *     options. INLINE_MAX (8) is the right threshold for `fill`, where each item
+ *     has one gap; here it produced 96 pills and a 9000px card on Perfekt (8
+ *     answers, 12 gaps) — the exact wall of choices the bank was invented to
+ *     avoid. Five is where a row still reads as one line of answers on a phone,
+ *     so five is the cut. Longer sets keep the bank.
+ */
+const STORY_ROWS_MAX_OPTIONS = 5;
+
+/** Cut the segment list into sentences. The boundaries sit INSIDE the text
+ *  segments — one routinely ends a sentence and opens the next ("… das Wochenende.
+ *  Sie wartet ") — so this splits the text, not just the list. */
+function storyRows(segments) {
+  const rows = [];
+  let cur = [];
+  for (const seg of segments) {
+    if (seg.text === undefined) { cur.push(seg); continue; }
+    let rest = seg.text;
+    let m;
+    while ((m = rest.match(/^[\s\S]*?[.!?](?=\s|$)/))) {
+      cur.push({ text: m[0] });
+      rows.push(cur);
+      cur = [];
+      rest = rest.slice(m[0].length).replace(/^\s+/, "");
+      if (!rest) break;
+    }
+    if (rest) cur.push({ text: rest });
+  }
+  if (cur.length) rows.push(cur);
+  return rows.filter((r) => r.length);
+}
+
 function mountStory(root, ex, notify) {
   const blanks = ex.segments.filter((s) => s.blank !== undefined);
   const options = shuffleList(optionSet(ex, blanks.map((b) => b.answer)));
   const state = { values: {}, checked: false, selected: null };
 
+  if (options.length <= STORY_ROWS_MAX_OPTIONS) return mountStoryRows(root, ex, options, state, blanks, notify);
+
   function render() {
     const html = ex.segments
       .map((seg) => {
         if (seg.text !== undefined) return escapeHtml(seg.text);
-        // Always bank mode: these blanks sit inside running prose.
+        // Bank mode: too many options to repeat under every gap.
         return slotHtml(seg.blank, state.values[seg.blank] || "", state.checked, seg.answer, "…");
       })
       .join("");
@@ -357,6 +407,71 @@ function mountStory(root, ex, notify) {
   function reset() {
     state.values = {};
     state.selected = null;
+    state.checked = false;
+    render();
+  }
+  render();
+}
+
+/** The sentence-row layout: one sentence, its gaps, its answers underneath. */
+function mountStoryRows(root, ex, options, state, blanks, notify) {
+  const rows = storyRows(ex.segments);
+
+  function gapHtml(seg, numbered) {
+    const value = state.values[seg.blank] || "";
+    const ok = state.checked && accepts(seg.answer, value);
+    const cls = state.checked ? (ok ? "is-correct" : "is-wrong") : value ? "is-chosen" : "";
+    const num = numbered ? `<span class="vp-gap-num">${seg.blank + 1}</span>` : "";
+    return `<span class="vp-gap ${cls}" data-gap="${seg.blank}">${num}${value ? escapeHtml(value) : "&nbsp;&nbsp;&nbsp;"}</span>`;
+  }
+
+  function render() {
+    const body = rows
+      .map((segs) => {
+        const gaps = segs.filter((s) => s.blank !== undefined);
+        // Only a sentence with more than one gap needs its gaps told apart.
+        const numbered = gaps.length > 1;
+        const text = segs
+          .map((s) => (s.text !== undefined ? escapeHtml(s.text) : gapHtml(s, numbered)))
+          .join("");
+        const answers = gaps
+          .map((g) => `<div class="vp-srow-answer">${
+            numbered ? `<span class="vp-srow-num">${g.blank + 1}</span>` : ""
+          }${pillsHtml(options, g.blank, state.values[g.blank] || "", state.checked, g.answer)}</div>`)
+          .join("");
+        return `<div class="vp-srow"><p class="vp-srow-text">${text}</p>${answers}</div>`;
+      })
+      .join("");
+
+    const allCorrect = state.checked && blanks.every((s) => accepts(s.answer, state.values[s.blank] || ""));
+    const missed = state.checked ? blanks.filter((s) => !accepts(s.answer, state.values[s.blank] || "")) : [];
+
+    root.innerHTML = `
+      ${body}
+      <div class="vp-actions">
+        ${state.checked ? "" : `<button type="button" class="vp-btn-check" data-story-check>${LABEL.check}</button>`}
+        <button type="button" class="vp-link-btn" data-story-reset>${LABEL.reset}</button>
+        ${state.checked ? `<span class="vp-feedback ${allCorrect ? "is-correct" : "is-wrong"}">${allCorrect ? LABEL.allCorrect : LABEL.someWrong}</span>` : ""}
+      </div>
+      ${missed.length ? `<p class="vp-fill-hint">${missed.map((s) => `${s.blank + 1}. <strong>${escapeHtml(modelAnswer(s.answer))}</strong>`).join(" · ")}</p>` : ""}`;
+
+    root.querySelectorAll("[data-slot]").forEach((b) => {
+      b.addEventListener("click", () => {
+        state.values[+b.dataset.slot] = b.dataset.val;
+        render();
+      });
+    });
+    root.querySelector("[data-story-check]")?.addEventListener("click", check);
+    root.querySelector("[data-story-reset]").addEventListener("click", reset);
+  }
+
+  function check() {
+    state.checked = true;
+    blanks.forEach((s) => notify(accepts(s.answer, state.values[s.blank] || "")));
+    render();
+  }
+  function reset() {
+    state.values = {};
     state.checked = false;
     render();
   }

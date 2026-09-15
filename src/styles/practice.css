@@ -16,21 +16,26 @@
 .practice-back {
   color: var(--brand-blue-dark);
   text-decoration: none;
-  font-weight: 600;
+  font-weight: var(--fw-light);
   display: inline-block;
   padding: 10px 4px;
   margin: -10px -4px;
 }
 .practice-back:hover { text-decoration: underline; }
 .practice-header-title {
-  font-family: var(--font-display);
-  font-weight: 700;
+  font-family: var(--font-body);
+  font-weight: var(--fw-light);
   color: var(--ink);
 }
 
-@media (max-width: 480px) {
-  .practice-header-inner { flex-wrap: wrap; justify-content: center; row-gap: 6px; text-align: center; }
-  .practice-header-title { order: -1; width: 100%; }
+/* On a phone this header was ~400px tall: the title, the back link and the four
+   right-hand controls each claimed their own row at full desktop type size, so the
+   first screen of every practice page was navigation. Two tight rows instead. */
+@media (max-width: 700px) {
+  .practice-header { padding: 8px 14px; }
+  .practice-header-inner { flex-wrap: wrap; justify-content: space-between; row-gap: 2px; column-gap: 10px; }
+  .practice-header-title { order: -1; width: 100%; text-align: center; font-size: .85rem; font-weight: var(--fw-regular); }
+  .practice-back { font-size: .78rem; padding: 7px 2px; margin: -7px -2px; }
 }
 
 .practice-main { max-width: 880px; margin: 0 auto; padding: 40px 24px 80px; }
@@ -38,16 +43,16 @@
    880px wastes most of a desktop viewport. */
 .practice-main--wide { max-width: 1240px; }
 
-.practice-back-link { display: inline-block; margin-bottom: 20px; font-weight: 600; font-size: .875rem; color: var(--brand-blue-dark); text-decoration: none; }
+.practice-back-link { display: inline-block; margin-bottom: 20px; font-weight: var(--fw-light); font-size: .875rem; color: var(--brand-blue-dark); text-decoration: none; }
 .practice-back-link:hover { color: var(--accent-dark); }
 
 .practice-hero { text-align: center; margin-bottom: 40px; }
 .practice-hero .eyebrow { text-align: center; }
 .practice-hero h1 {
-  font-family: var(--font-display);
+  font-family: var(--font-body);
   font-size: clamp(1.6rem, 4vw, 2.4rem);
   color: var(--ink);
-  margin: 0 0 12px;
+  margin: 0 0 12px; font-weight: var(--fw-regular);
 }
 .practice-hero p { color: var(--muted); max-width: 560px; margin: 0 auto; }
 
@@ -82,7 +87,7 @@
   margin-bottom: 16px;
   box-shadow: 0 6px 14px rgba(13, 148, 136, .14);
 }
-.tool-card h3 { text-align: left; margin: 0 0 8px; font-family: var(--font-display); }
+.tool-card h3 { text-align: left; margin: 0 0 8px; font-family: var(--font-body); font-weight: var(--fw-regular); }
 .tool-card p { margin: 0 0 16px; color: var(--muted); font-size: .95rem; }
 .tool-card-count {
   display: inline-flex;
@@ -231,7 +236,7 @@
 
 /* Speaking prompts */
 .prompt-card { background: var(--surface-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 28px; max-width: 100%; margin: 0 auto; }
-.prompt-card h3 { text-align: left; margin: 0 0 6px; }
+.prompt-card h3 { text-align: left; margin: 0 0 6px; font-weight: var(--fw-regular); }
 /* No fixed height and no `contain` box: a fixed 640x420 frame letterboxed every photo
    against a grey slab — badly for the 1200x1800 portrait shot, which rendered only 280px
    wide. Sizing by natural aspect ratio instead lets each photo be as large as the card
@@ -254,14 +259,14 @@
    cap the text columns and centre them under the image. */
 .prompt-section-label { font-weight: 700; color: var(--brand-blue-dark); margin: 18px auto 6px; max-width: 70ch; font-size: .85rem; text-transform: uppercase; letter-spacing: .04em; }
 .prompt-card ul { margin: 0 auto; max-width: 70ch; padding-left: 20px; }
-.prompt-card h3 { max-width: 70ch; margin-inline: auto; }
+.prompt-card h3 { max-width: 70ch; margin-inline: auto; font-weight: var(--fw-regular); }
 .prompt-card li { margin-bottom: 6px; }
 .prompt-nav { display: flex; gap: 10px; justify-content: center; margin-top: 20px; }
 .prompt-reveal-btn { display: block; margin: 16px auto 0; }
 
 /* Reading / writing blocks */
 .reading-block { background: var(--surface-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 28px; margin-bottom: 32px; }
-.reading-block h3 { text-align: left; margin: 0 0 4px; }
+.reading-block h3 { text-align: left; margin: 0 0 4px; font-weight: var(--fw-regular); }
 .reading-level { color: var(--muted); font-size: .85rem; margin-bottom: 16px; }
 .reading-text { white-space: pre-line; background: var(--surface); border-radius: 10px; padding: 18px; margin-bottom: 20px; line-height: 1.6; }
 .form-field { display: flex; justify-content: space-between; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--border); }
@@ -277,10 +282,10 @@ textarea.writing-area {
 
 /* Culture notes */
 .culture-card { background: var(--surface-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 28px; max-width: 720px; margin: 0 auto 24px; }
-.culture-card h3 { text-align: left; margin: 0 0 10px; }
+.culture-card h3 { text-align: left; margin: 0 0 10px; font-weight: var(--fw-regular); }
 .culture-question { font-weight: 700; color: var(--brand-blue-dark); }
 .culture-pros-cons { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin: 16px 0; }
-.culture-pros-cons h4 { margin: 0 0 8px; font-size: .95rem; }
+.culture-pros-cons h4 { margin: 0 0 8px; font-size: .95rem; font-weight: var(--fw-regular); }
 .culture-pros-cons ul { margin: 0; padding-left: 20px; }
 .culture-pros-cons li { margin-bottom: 6px; font-size: .92rem; }
 .culture-table-wrap { margin-top: 16px; }

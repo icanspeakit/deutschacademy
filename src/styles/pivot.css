@@ -1,0 +1,671 @@
+/* Sketch page for the /uebungen hub (/pivot): six ways to make the exercise list
+   fit a phone, judged at 390px because that is where ~90% of the learners are.
+   Two namespaces live here:
+     .pv-*   the sketch page itself (switch, notes, phone frame, table)
+     .pvx-*  the prototypes running inside the frame — always scoped under
+             .pv-screen so none of it can leak onto a real page.
+   Prototype-only. Whatever wins moves into uebungen-vorschau.css and this file
+   gets deleted. */
+
+.pv-page { max-width: 1240px; }
+
+.pv-head { max-width: 70ch; margin-bottom: var(--space-8); }
+.pv-head h1 {
+  font-family: var(--font-body);
+  font-weight: var(--fw-regular);
+  letter-spacing: -.02em;
+  font-size: clamp(1.6rem, 3vw, 2.125rem);
+  color: var(--ink);
+  margin: 0 0 12px;
+}
+.pv-lede { color: var(--muted); font-size: 1rem; line-height: 1.65; margin: 0; }
+.pv-lede b { color: var(--ink); font-weight: var(--fw-semibold); }
+
+/* --- the switch -----------------------------------------------------------
+   Six options, so this is a wrapping row of pills rather than a two-state
+   track (that is what VariantSwitch is for). On a phone it scrolls sideways
+   instead of wrapping to three lines above the frame it controls. */
+.pv-switch {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: var(--space-8);
+  padding: 6px;
+  background: var(--surface-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+}
+.pv-swbtn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 14px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-pill);
+  background: transparent;
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-size: .875rem;
+  color: var(--muted);
+  transition: background-color var(--duration-fast) var(--ease-standard), color var(--duration-fast) var(--ease-standard);
+}
+.pv-swbtn:hover { background: var(--surface); color: var(--ink); }
+.pv-swbtn[aria-selected="true"] {
+  background: var(--gradient-brand);
+  border-color: transparent;
+  color: #fff;
+  font-weight: var(--fw-semibold);
+  box-shadow: var(--shadow-sm);
+}
+.pv-swbadge {
+  display: grid;
+  place-items: center;
+  min-width: 26px;
+  height: 22px;
+  padding: 0 7px;
+  border-radius: var(--radius-pill);
+  background: var(--surface);
+  color: var(--muted);
+  font-family: var(--font-label);
+  font-size: .7rem;
+  font-weight: var(--fw-bold);
+  letter-spacing: .04em;
+}
+.pv-swbtn[aria-selected="true"] .pv-swbadge { background: rgba(255,255,255,.22); color: #fff; }
+
+/* --- stage: argument on the left, phone on the right ---------------------- */
+.pv-stage {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 408px;
+  gap: var(--space-10);
+  /* The frame is 664px and the argument beside it is about half that, so top
+     alignment leaves a hole the height of a paragraph. Centred, the note reads
+     as being about the phone rather than stranded above it. */
+  align-items: center;
+  margin-bottom: var(--space-12);
+}
+@media (max-width: 900px) { .pv-stage { grid-template-columns: minmax(0, 1fr); } }
+
+.pv-note-head { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; flex-wrap: wrap; }
+.pv-note-head h2 {
+  font-family: var(--font-body);
+  font-weight: var(--fw-regular);
+  letter-spacing: -.02em;
+  font-size: 1.25rem;
+  text-align: left;
+  color: var(--ink);
+  margin: 0;
+}
+.pv-why { font-size: .92rem; line-height: 1.7; color: var(--muted); margin: 14px 0 20px; max-width: 58ch; }
+.pv-why b { color: var(--ink); font-weight: var(--fw-semibold); }
+
+.pv-verdict {
+  display: inline-block;
+  margin: 0;
+  padding: 6px 12px;
+  border-radius: var(--radius-sm);
+  font-size: .78rem;
+  font-weight: var(--fw-semibold);
+}
+.pv-verdict--good { background: var(--success-soft); color: var(--success); }
+.pv-verdict--meh { background: var(--info-soft); color: var(--brand-blue-dark); }
+.pv-verdict--bad { background: var(--danger-soft); color: var(--danger); }
+
+.pv-metrics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 1px;
+  margin: 0;
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.pv-metrics > div { background: var(--surface-card); padding: 12px 14px; }
+.pv-metrics dt {
+  font-family: var(--font-label);
+  font-size: .68rem;
+  font-weight: var(--fw-semibold);
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--muted-soft);
+  margin-bottom: 5px;
+}
+.pv-metrics dd { margin: 0; font-size: .95rem; font-weight: var(--fw-semibold); color: var(--ink); }
+
+/* --- the phone ------------------------------------------------------------
+   Same frame as /no3: a real 390x664 viewport with its own scroll, so a sticky
+   bar behaves here the way it would on a handset and no idea can win by having
+   a desktop amount of room. */
+.pv-phone {
+  position: relative;
+  box-sizing: content-box;
+  width: 390px;
+  max-width: 100%;
+  height: 664px;
+  border: 9px solid #111b26;
+  border-radius: 30px;
+  background: var(--surface-card);
+  overflow: hidden;
+  box-shadow: 0 16px 40px rgba(8, 20, 34, .18);
+}
+/* On a handset a bezel is both a lie and a bug — 390 + 18px of border does not
+   fit a 390px column, and drawing a phone inside a phone tests nothing. */
+@media (max-width: 480px) {
+  .pv-phone {
+    box-sizing: border-box;
+    width: 100%;
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 6px 18px rgba(8, 20, 34, .1);
+  }
+}
+
+/* Every screen stays in the layout even when it is not the active one, because
+   `display: none` would zero its scrollHeight and the measured table is the
+   whole argument of this page. */
+.pv-screen {
+  position: absolute;
+  inset: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  background: var(--surface);
+  visibility: hidden;
+}
+.pv-screen.is-active { visibility: visible; }
+
+/* --- the comparison table ------------------------------------------------- */
+.pv-compare h2 {
+  font-family: var(--font-body);
+  font-weight: var(--fw-regular);
+  letter-spacing: -.02em;
+  font-size: 1.375rem;
+  text-align: left;
+  color: var(--ink);
+  margin: 0 0 10px;
+}
+.pv-compare-note { font-size: .9rem; line-height: 1.65; color: var(--muted); margin: 0 0 18px; max-width: 70ch; }
+.pv-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.pv-table {
+  width: 100%;
+  min-width: 780px;
+  border-collapse: collapse;
+  font-size: .9rem;
+}
+.pv-table th, .pv-table td { padding: 12px 14px; text-align: left; border-bottom: 1px solid var(--border); }
+.pv-table thead th {
+  font-family: var(--font-label);
+  font-size: .68rem;
+  font-weight: var(--fw-semibold);
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--muted-soft);
+}
+.pv-table tbody th { font-weight: var(--fw-semibold); color: var(--ink); white-space: nowrap; }
+.pv-table tbody td { color: var(--muted); font-variant-numeric: tabular-nums; }
+.pv-table tbody tr { cursor: pointer; }
+.pv-table tbody tr:hover { background: var(--surface); }
+.pv-table tbody tr.is-current { background: var(--blue-50); }
+.pv-table tbody tr.is-current th { color: var(--brand-blue-dark); }
+.pv-table tr.is-best td[data-cell="height"] { color: var(--success); font-weight: var(--fw-semibold); }
+.pv-table tr.is-worst td[data-cell="height"] { color: var(--danger); font-weight: var(--fw-semibold); }
+.pv-rowbadge {
+  display: inline-grid;
+  place-items: center;
+  min-width: 24px;
+  padding: 2px 6px;
+  margin-right: 8px;
+  border-radius: var(--radius-pill);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  font-family: var(--font-label);
+  font-size: .66rem;
+  font-weight: var(--fw-bold);
+  color: var(--muted);
+}
+.pv-take {
+  margin: 24px 0 0;
+  padding: 18px 20px;
+  border-left: 3px solid var(--brand-blue);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  background: var(--surface-card);
+  font-size: .95rem;
+  line-height: 1.75;
+  color: var(--muted);
+  max-width: 80ch;
+}
+.pv-take b { color: var(--ink); font-weight: var(--fw-semibold); }
+
+/* ==========================================================================
+   The prototypes. Everything below runs at 390px inside .pv-screen.
+   ========================================================================== */
+
+/* Several prototypes collapse a list with the `hidden` attribute, and the UA rule
+   behind it is weaker than any class here — .pvx-stack--tight's `display: flex`
+   alone was enough to render "Alle 13 Werkzeuge" permanently open. One guard for
+   all of them, rather than a :not([hidden]) on every display rule below. */
+.pv-screen [hidden] { display: none !important; }
+
+.pv-screen .pvx-nav {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  background: var(--surface-card);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+.pv-screen .pvx-logo { font-family: var(--font-display); font-weight: var(--fw-bold); font-size: .95rem; color: var(--ink); }
+.pv-screen .pvx-logo i { font-family: var(--font-accent); font-style: italic; font-weight: var(--fw-regular); color: var(--muted); }
+.pv-screen .pvx-navcta {
+  margin-left: auto;
+  padding: 7px 12px;
+  border-radius: var(--radius-pill);
+  background: var(--gradient-brand);
+  color: #fff;
+  font-size: .72rem;
+  font-weight: var(--fw-semibold);
+}
+.pv-screen .pvx-burger { display: grid; gap: 4px; width: 20px; }
+.pv-screen .pvx-burger i { display: block; height: 2px; background: var(--ink); border-radius: 2px; }
+
+.pv-screen .pvx-body { padding: 0 0 32px; }
+
+.pv-screen .pvx-hero { padding: 22px 16px; background: var(--gradient-brand); }
+.pv-screen .pvx-hero h2 { font-family: var(--font-body); font-size: 1.45rem; color: #fff; margin: 0 0 8px; text-align: left; font-weight: var(--fw-regular); }
+.pv-screen .pvx-hero p { margin: 0 0 14px; color: rgba(255,255,255,.9); font-size: .85rem; line-height: 1.5; }
+.pv-screen .pvx-hero--slim { padding: 14px 16px; }
+.pv-screen .pvx-hero--slim h2 { font-size: 1.15rem; margin-bottom: 10px; font-weight: var(--fw-regular); }
+.pv-screen .pvx-hpills { display: flex; flex-wrap: wrap; gap: 6px; }
+.pv-screen .pvx-hpills span {
+  padding: 5px 10px;
+  border-radius: var(--radius-pill);
+  background: rgba(255,255,255,.18);
+  border: 1px solid rgba(255,255,255,.4);
+  color: #fff;
+  font-size: .7rem;
+  font-weight: var(--fw-semibold);
+}
+
+.pv-screen .pvx-tabs { display: flex; gap: 6px; padding: 14px 16px 0; }
+.pv-screen .pvx-tabs button {
+  flex: 1;
+  padding: 9px 8px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  background: var(--surface-card);
+  font-family: var(--font-body);
+  font-size: .75rem;
+  color: var(--muted);
+}
+.pv-screen .pvx-tabs button.is-on { background: var(--ink); border-color: var(--ink); color: var(--surface-card); font-weight: var(--fw-semibold); }
+
+.pv-screen .pvx-eyebrow {
+  margin: 20px 16px 10px;
+  font-family: var(--font-label);
+  font-size: .66rem;
+  font-weight: var(--fw-semibold);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--muted-soft);
+}
+
+.pv-screen .pvx-ic {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  flex: none;
+  border-radius: 12px;
+  background: var(--gradient-brand);
+  color: #fff;
+}
+.pv-screen .pvx-ic svg { width: 20px; height: 20px; }
+.pv-screen .pvx-ic--lg { width: 46px; height: 46px; border-radius: 14px; }
+.pv-screen .pvx-ic--lg svg { width: 24px; height: 24px; }
+.pv-screen .pvx-ic--sm { width: 30px; height: 30px; border-radius: 10px; }
+.pv-screen .pvx-ic--sm svg { width: 16px; height: 16px; }
+.pv-screen .pvx-ic--ghost { background: none; color: var(--muted-soft); width: 20px; height: 20px; }
+.pv-screen .pvx-ic--ghost svg { width: 16px; height: 16px; }
+
+.pv-screen .pvx-count {
+  display: inline-block;
+  padding: 5px 10px;
+  border-radius: var(--radius-pill);
+  background: var(--gradient-brand-soft);
+  color: var(--brand-blue-dark);
+  font-size: .72rem;
+  font-weight: var(--fw-semibold);
+  white-space: nowrap;
+}
+.pv-screen .pvx-count--xs { padding: 3px 8px; font-size: .66rem; }
+
+/* --- "Jetzt": the full card, thirteen times -------------------------------- */
+.pv-screen .pvx-stack { display: flex; flex-direction: column; gap: 12px; padding: 0 16px; }
+.pv-screen .pvx-stack--tight { gap: 0; background: var(--surface-card); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; margin: 0 16px; padding: 0; }
+.pv-screen .pvx-stack--tight .pvx-row { border-top: 1px solid var(--border); }
+.pv-screen .pvx-stack--tight .pvx-row:first-child { border-top: none; }
+
+.pv-screen .pvx-card {
+  display: block;
+  padding: 20px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--surface-card);
+  text-decoration: none;
+}
+.pv-screen .pvx-card h3 { font-family: var(--font-body); font-size: .98rem; color: var(--ink); margin: 12px 0 6px; text-align: left; font-weight: var(--fw-regular); }
+.pv-screen .pvx-card p { margin: 0 0 14px; color: var(--muted); font-size: .8rem; line-height: 1.5; }
+
+/* --- A: two per row -------------------------------------------------------- */
+.pv-screen .pvx-grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 0 16px; }
+.pv-screen .pvx-tile {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface-card);
+  text-decoration: none;
+}
+.pv-screen .pvx-tile-t { font-size: .84rem; font-weight: var(--fw-semibold); color: var(--ink); line-height: 1.3; }
+.pv-screen .pvx-tile--exam .pvx-ic { background: linear-gradient(135deg, #fdba74, var(--accent)); }
+.pv-screen .pvx-tile--exam .pvx-count { background: var(--gradient-accent-soft); color: var(--accent-dark); }
+
+/* --- shared list row ------------------------------------------------------- */
+.pv-screen .pvx-row {
+  display: grid;
+  grid-template-columns: 38px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 14px;
+  background: var(--surface-card);
+  text-decoration: none;
+}
+.pv-screen .pvx-row-t { font-size: .875rem; font-weight: var(--fw-semibold); color: var(--ink); line-height: 1.3; }
+
+/* --- B: the question ------------------------------------------------------- */
+.pv-screen .pvx-ask-head { padding: 22px 16px 16px; }
+.pv-screen .pvx-ask-head h2 { font-family: var(--font-body); font-size: 1.45rem; color: var(--ink); margin: 0 0 6px; text-align: left; font-weight: var(--fw-regular); }
+.pv-screen .pvx-ask-head p { margin: 0; color: var(--muted); font-size: .82rem; }
+.pv-screen .pvx-choice {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  width: calc(100% - 32px);
+  margin: 0 16px 10px;
+  padding: 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface-card);
+  text-align: left;
+  cursor: pointer;
+}
+.pv-screen .pvx-choice:active { background: var(--surface); }
+.pv-screen .pvx-choice-txt { display: grid; gap: 3px; min-width: 0; flex: 1; }
+.pv-screen .pvx-choice-txt b { font-family: var(--font-body); font-size: .95rem; font-weight: var(--fw-semibold); color: var(--ink); }
+.pv-screen .pvx-choice-txt i { font-style: normal; font-size: .76rem; color: var(--muted); }
+.pv-screen .pvx-choice-n {
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  flex: none;
+  border-radius: 50%;
+  background: var(--surface);
+  color: var(--muted);
+  font-size: .76rem;
+  font-weight: var(--fw-bold);
+}
+.pv-screen .pvx-plain {
+  display: block;
+  margin: 6px auto 0;
+  padding: 10px 14px;
+  border: none;
+  background: none;
+  color: var(--brand-blue-dark);
+  font-family: var(--font-body);
+  font-size: .8rem;
+  font-weight: var(--fw-semibold);
+  cursor: pointer;
+}
+.pv-screen .pvx-plain--wide {
+  width: calc(100% - 32px);
+  margin: 14px 16px 0;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-pill);
+  background: var(--surface-card);
+}
+.pv-screen .pvx-ask-detail { padding: 16px 0 0; }
+/* The icon keeps the 46px it had on the card, so the FLIP between the two
+   screens is a translate with no scaling: 30px across, ~100px up. Moving almost
+   straight up is what makes it read as the tapped card rising into the header
+   rather than an icon flying off somewhere new. */
+.pv-screen .pvx-detail-head {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  padding: 0 16px 14px;
+}
+.pv-screen .pvx-detail-title {
+  font-family: var(--font-body);
+  font-size: 1.05rem;
+  font-weight: var(--fw-semibold);
+  color: var(--ink);
+  min-width: 0;
+}
+.pv-screen .pvx-back {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  flex: none;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  background: var(--surface-card);
+  color: var(--brand-blue-dark);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1;
+  cursor: pointer;
+}
+.pv-screen .pvx-back:active { background: var(--surface); }
+
+/* --- C: continue first ----------------------------------------------------- */
+.pv-screen .pvx-resume {
+  display: grid;
+  gap: 8px;
+  margin: 16px;
+  padding: 18px;
+  border-radius: var(--radius-lg);
+  background: var(--gradient-brand);
+  color: #fff;
+  text-decoration: none;
+}
+.pv-screen .pvx-resume-eyebrow {
+  font-family: var(--font-label);
+  font-size: .64rem;
+  font-weight: var(--fw-semibold);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.75);
+}
+.pv-screen .pvx-resume-title { font-family: var(--font-body); font-size: 1.2rem; font-weight: var(--fw-regular); }
+.pv-screen .pvx-bar { display: block; height: 6px; border-radius: 3px; background: rgba(255,255,255,.28); overflow: hidden; }
+.pv-screen .pvx-bar i { display: block; height: 100%; background: #fff; border-radius: 3px; }
+.pv-screen .pvx-resume-meta { font-size: .74rem; color: rgba(255,255,255,.85); }
+.pv-screen .pvx-btn {
+  justify-self: start;
+  margin-top: 4px;
+  padding: 9px 18px;
+  border-radius: var(--radius-pill);
+  background: #fff;
+  color: var(--brand-blue-dark);
+  font-size: .8rem;
+  font-weight: var(--fw-bold);
+}
+.pv-screen .pvx-search {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 16px;
+  padding: 10px 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  background: var(--surface-card);
+}
+.pv-screen .pvx-search input {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  background: none;
+  outline: none;
+  font-family: var(--font-body);
+  font-size: .85rem;
+  color: var(--ink);
+}
+.pv-screen .pvx-chips { display: flex; flex-wrap: wrap; gap: 7px; padding: 12px 16px 0; }
+.pv-screen .pvx-chip {
+  padding: 7px 13px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  background: var(--surface-card);
+  font-size: .76rem;
+  color: var(--muted);
+}
+
+/* --- D: accordion ---------------------------------------------------------- */
+.pv-screen .pvx-acc { margin: 16px; border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; background: var(--surface-card); }
+.pv-screen .pvx-accgroup + .pvx-accgroup { border-top: 1px solid var(--border); }
+.pv-screen .pvx-acchead {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  width: 100%;
+  padding: 13px 14px;
+  border: none;
+  background: var(--surface-card);
+  text-align: left;
+  cursor: pointer;
+}
+.pv-screen .pvx-acc-t { flex: 1; min-width: 0; font-family: var(--font-body); font-size: .875rem; font-weight: var(--fw-semibold); color: var(--ink); }
+.pv-screen .pvx-chev { color: var(--muted-soft); font-size: .8rem; transition: transform var(--duration-fast) var(--ease-standard); }
+.pv-screen .pvx-accgroup.is-open .pvx-chev { transform: rotate(180deg); }
+.pv-screen .pvx-accbody { background: var(--surface); border-top: 1px solid var(--border); }
+.pv-screen .pvx-accbody .pvx-row { background: transparent; padding-left: 18px; }
+.pv-screen .pvx-accbody .pvx-row + .pvx-row { border-top: 1px solid var(--border); }
+
+/* --- E: horizontal rails --------------------------------------------------- */
+.pv-screen .pvx-eyebrow--row { display: flex; align-items: center; gap: 8px; }
+.pv-screen .pvx-eyebrow--row i {
+  font-style: normal;
+  padding: 2px 7px;
+  border-radius: var(--radius-pill);
+  background: var(--surface-card);
+  border: 1px solid var(--border);
+  letter-spacing: 0;
+}
+.pv-screen .pvx-rail {
+  display: flex;
+  gap: 10px;
+  padding: 0 16px 4px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.pv-screen .pvx-rail::-webkit-scrollbar { display: none; }
+.pv-screen .pvx-railcard {
+  flex: none;
+  width: 142px;
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 13px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface-card);
+  text-decoration: none;
+}
+.pv-screen .pvx-railcard-t { font-size: .84rem; font-weight: var(--fw-semibold); color: var(--ink); line-height: 1.3; }
+.pv-screen .pvx-railcard .pvx-count { align-self: flex-start; }
+
+/* The taps column is prose, not a number, so it gets to wrap instead of forcing
+   the table wider and pushing the verdict off the scroll. */
+.pv-table .pv-taps { min-width: 150px; font-size: .84rem; line-height: 1.4; }
+
+/* A six-column table needs 780px, and a sideways-scrolling comparison on a phone
+   is the same sin this whole page is about. Below 640px every row becomes a card
+   and each cell carries its own label, so the numbers stay readable with the
+   thumb going one way only. */
+@media (max-width: 640px) {
+  .pv-table { min-width: 0; display: block; }
+  .pv-table thead { display: none; }
+  .pv-table tbody, .pv-table tbody tr { display: block; }
+  .pv-table tbody tr {
+    margin-bottom: 10px;
+    padding: 12px 14px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface-card);
+  }
+  .pv-table tbody tr.is-current { border-color: var(--brand-blue); }
+  .pv-table tbody th {
+    display: block;
+    padding: 0 0 10px;
+    border: none;
+    white-space: normal;
+    font-size: .95rem;
+  }
+  .pv-table tbody td {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 14px;
+    padding: 7px 0;
+    border: none;
+    text-align: right;
+  }
+  .pv-table tbody td + td { border-top: 1px solid var(--border); }
+  .pv-table tbody td::before {
+    content: attr(data-label);
+    flex: none;
+    font-family: var(--font-label);
+    font-size: .64rem;
+    font-weight: var(--fw-semibold);
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    color: var(--muted-soft);
+    text-align: left;
+  }
+  .pv-table .pv-taps { min-width: 0; }
+}
+
+/* --- replay ---------------------------------------------------------------
+   A transition cannot be judged from a screenshot, and it is over before you
+   have finished reading the paragraph describing it, so B's note gets a button
+   that plays the whole trip — in and back out again — on demand. */
+.pv-demo {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 18px;
+  padding: 9px 16px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-pill);
+  background: var(--surface-card);
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-size: .82rem;
+  font-weight: var(--fw-semibold);
+  color: var(--brand-blue-dark);
+}
+.pv-demo:hover:not(:disabled) { border-color: var(--brand-blue); background: var(--blue-50); }
+.pv-demo:disabled { opacity: .55; cursor: default; }
+.pv-demo i { font-style: normal; font-size: .7rem; }

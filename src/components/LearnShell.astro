@@ -575,11 +575,6 @@ const defaultVariant = variants[0];
 
       <!-- ── Inhalt ────────────────────────────────────────────────────── -->
       <main class="nv-main">
-        <nav class="nv-crumbs" aria-label="Pfad">
-          <span>Dein Kurs</span> <span>/</span> <strong data-crumb-section>Dein Weg</strong>
-          <span data-crumb-tail hidden> / <strong data-crumb-item></strong></span>
-        </nav>
-
         <!-- Stufenübersicht: eine pro Gruppe, serverseitig gerendert. -->
         {sections.map((section) => {
           const st = sectionStats[section.id];
@@ -670,8 +665,6 @@ const defaultVariant = variants[0];
 
         <!-- Einzelansicht: eine Hülle, aus den Daten des geklickten Eintrags gefüllt. -->
         <div class="nv-view" data-item-view hidden>
-          <button type="button" class="nv-back" data-back>← <span data-back-label>Zurück</span></button>
-
           {topicLayout === "focus" && (
             <>
               {/* The /v1 head: the topic, its level, its progress as one line —
@@ -967,6 +960,28 @@ const defaultVariant = variants[0];
       "—": "",
     };
 
+    let railShown: string | null = null;
+    let itemShown: string | null = null;
+
+    // Akkusativ → W-Fragen only rewrote the card's text in place, so the swap fell
+    // between two frames and read as a repaint. Slide the card in from the side the
+    // new topic sits on: down the list enters from the right, up from the left, and
+    // the direction itself says which way you moved. Only the card moves — the view
+    // holds a fixed-position dock, and transforming its container would drag that
+    // along for the ride.
+    function playItemSwap(id: string, section: string) {
+      const view = $("[data-item-view]");
+      if (!view) return;
+      const rows = $$(`[data-rail-section="${section}"] .nvb-item`).map((b) => b.dataset.navItem);
+      const from = itemShown ? rows.indexOf(itemShown) : -1;
+      const to = rows.indexOf(id);
+      const back = from > -1 && to > -1 && to < from;
+      itemShown = id;
+      view.classList.remove("nv-view--fwd", "nv-view--back");
+      void view.offsetWidth;
+      view.classList.add(back ? "nv-view--back" : "nv-view--fwd");
+    }
+
     function selectSection(id: string, keepItem = false) {
       current.section = id;
       if (!keepItem) current.item = null;
@@ -975,7 +990,17 @@ const defaultVariant = variants[0];
       const itemView = $("[data-item-view]");
       if (itemView) itemView.hidden = !current.item;
 
-      $$("[data-rail-section]").forEach((s) => { s.hidden = s.dataset.railSection !== id; });
+      // Swapping levels used to be a single frame: one list gone, another there.
+      // Replay the stagger so the new list visibly arrives. Picking a topic inside
+      // the same level must not replay it — that list did not change.
+      const railChanged = railShown !== id;
+      railShown = id;
+      $$("[data-rail-section]").forEach((s) => {
+        const on = s.dataset.railSection === id;
+        s.hidden = !on;
+        s.classList.remove("nvb-section--enter");
+        if (on && railChanged) { void s.offsetWidth; s.classList.add("nvb-section--enter"); }
+      });
       $$("[data-section-btn]").forEach((b) => b.classList.toggle("active", b.dataset.sectionBtn === id));
       $("[data-nvb]")?.classList.remove("collapsed");
 
@@ -990,12 +1015,8 @@ const defaultVariant = variants[0];
       }
 
       if (!current.item) {
+        itemShown = null;
         stopQuiz();
-        const h1 = $(`[data-section-view="${id}"] h1`);
-        const crumbSection = $("[data-crumb-section]");
-        if (crumbSection) crumbSection.textContent = h1 ? h1.textContent! : id;
-        const tail = $("[data-crumb-tail]");
-        if (tail) tail.hidden = true;
         $$("[data-nav-item]").forEach((el) => { el.classList.remove("active"); el.setAttribute("aria-current", "false"); });
         repaint(true);
         mountQuickExercise(id);
@@ -1009,10 +1030,16 @@ const defaultVariant = variants[0];
       current.item = id;
       selectSection(it.section, true);
 
+      const wasActive = $(".nvb-item.active")?.dataset.navItem;
       $$("[data-nav-item]").forEach((el) => {
         const on = el.dataset.navItem === id;
         el.classList.toggle("active", on);
+        el.classList.remove("nvb-item--pick");
         el.setAttribute("aria-current", on ? "page" : "false");
+        if (on && el.classList.contains("nvb-item") && wasActive !== id) {
+          void el.offsetWidth;
+          el.classList.add("nvb-item--pick");
+        }
       });
 
       const set = (sel: string, text: string) => { const el = $(sel); if (el) el.textContent = text; };
@@ -1027,15 +1054,11 @@ const defaultVariant = variants[0];
       paintItemRing(id, true);
       paintFocusHead(id);
 
-      set("[data-crumb-section]", it.sectionLabel);
-      const tail = $("[data-crumb-tail]");
-      if (tail) tail.hidden = false;
-      set("[data-crumb-item]", it.label);
-      set("[data-back-label]", "Zurück zu " + it.sectionLabel);
 
       $$("[data-section-view]").forEach((v) => (v.hidden = true));
       const itemView = $("[data-item-view]");
       if (itemView) itemView.hidden = false;
+      playItemSwap(id, it.section);
 
       mountPractice(id);
       try { localStorage.setItem("nv-view", JSON.stringify(current)); } catch (e) {}
@@ -1357,7 +1380,6 @@ const defaultVariant = variants[0];
     // ── Wiring ────────────────────────────────────────────────────────
     $$("[data-section-btn]").forEach((b) => b.addEventListener("click", () => selectSection(b.dataset.sectionBtn!)));
     $$("[data-nav-item]").forEach((b) => b.addEventListener("click", () => selectItem(b.dataset.navItem!)));
-    $$("[data-back]").forEach((b) => b.addEventListener("click", () => selectSection(current.section)));
     $$("[data-reset-progress]").forEach((b) =>
       b.addEventListener("click", () => {
         if (!confirm("Deinen gesamten Fortschritt löschen? Das lässt sich nicht rückgängig machen.")) return;
@@ -1366,6 +1388,8 @@ const defaultVariant = variants[0];
         repaint(true);
         toast("Fortschritt zurückgesetzt");
       }));
+    // Still live for the card's own "Zurück zur Stufe" button.
+    $$("[data-back]").forEach((b) => b.addEventListener("click", () => selectSection(current.section)));
     $$("[data-nvb-collapse]").forEach((b) =>
       b.addEventListener("click", (e) => { e.stopPropagation(); $("[data-nvb]")?.classList.toggle("collapsed"); }));
 

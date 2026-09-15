@@ -37,11 +37,11 @@
   font-size: clamp(.9rem, 2.2vw, 1.25rem);
   line-height: 1.4;
   text-transform: uppercase;
-  letter-spacing: .02em;
+  letter-spacing: .02em; font-weight: var(--fw-regular);
 }
 
 /* Sit tight under the h1 rather than a full column gap away. */
-.lp-hero-copy .lp-hero-accent { margin-top: -16px; }
+.lp-hero-copy .lp-hero-accent { margin-top: -16px; font-weight: var(--fw-regular); }
 /* The phone-frame hero styles every <p> as muted body copy — win on
    specificity so the accent keeps its own color and scale there. */
 .m1-phone-block .lp-hero-accent {
@@ -63,8 +63,8 @@
 }
 .lp-section-head h2 {
   margin: 0;
-  font-family: var(--font-display);
-  font-weight: 700;
+  font-family: var(--font-body);
+  font-weight: var(--fw-regular);
   font-size: clamp(1.6rem, 3vw, 2.125rem);
   line-height: 1.2;
   color: var(--ink);
@@ -142,8 +142,8 @@
 .lp-hero-copy { display: flex; flex-direction: column; gap: 22px; }
 .lp-hero-copy h1 {
   margin: 0;
-  font-family: var(--font-display);
-  font-weight: 700;
+  font-family: var(--font-body);
+  font-weight: var(--fw-regular);
   font-size: clamp(2rem, 4vw, 3.25rem);
   line-height: 1.1;
   letter-spacing: -.02em;
@@ -201,7 +201,7 @@
 .lp-value-card { border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; background: var(--surface-card); display: flex; flex-direction: column; }
 .lp-value-card img { width: 100%; height: 140px; object-fit: cover; }
 .lp-value-card-body { padding: 22px; display: flex; flex-direction: column; gap: 9px; }
-.lp-value-card-body h3 { margin: 0; font-size: 17.5px; font-weight: 700; line-height: 1.3; color: var(--ink); }
+.lp-value-card-body h3 { margin: 0; font-size: 17.5px; font-weight: var(--fw-regular); line-height: 1.3; color: var(--ink); }
 .lp-value-card-body p { margin: 0; font-size: 13.5px; line-height: 1.55; color: var(--muted); }
 
 /* How it works — Concept 9 roadmap track */
@@ -217,7 +217,7 @@
 }
 .lp-road-step:nth-child(2) .lp-road-node { background: var(--accent); }
 .lp-road-label { font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted-soft); margin-bottom: 8px; font-weight: 700; }
-.lp-road-step h3 { margin: 0 0 8px; font-size: 17px; font-weight: 700; color: var(--ink); }
+.lp-road-step h3 { margin: 0 0 8px; font-size: 17px; font-weight: var(--fw-regular); color: var(--ink); }
 .lp-road-step p { margin: 0; font-size: 13.5px; line-height: 1.55; color: var(--muted); }
 @media (max-width: 900px) { .lp-track { flex-direction: column; gap: 30px; } .lp-track::before { display: none; } }
 
@@ -239,7 +239,7 @@
 .lp-tool-card:hover { border-color: var(--brand-blue); box-shadow: var(--shadow-hover); transform: translateY(-2px); }
 .lp-tool-tile { width: 44px; height: 44px; border-radius: var(--radius-lg); background: var(--gradient-brand); color: #fff; box-shadow: 0 6px 14px rgba(13,148,136,.14); display: flex; align-items: center; justify-content: center; }
 .lp-tools-group--exams .lp-tool-tile { background: linear-gradient(135deg, #fdba74, var(--accent)); box-shadow: 0 6px 14px rgba(249,115,22,.14); }
-.lp-tool-card h4 { margin: 0; font-size: 15px; font-weight: 700; color: var(--ink); line-height: 1.3; }
+.lp-tool-card h4 { margin: 0; font-size: 15px; font-weight: var(--fw-regular); color: var(--ink); line-height: 1.3; }
 .lp-tool-card p { margin: 0; font-size: 12.5px; line-height: 1.5; color: var(--muted); flex-grow: 1; }
 
 /* Product showcase */
@@ -339,7 +339,7 @@ button.lp-quiz-choice:disabled { cursor: default; }
 .lp-locked-card span { font-size: 10.5px; color: var(--muted-soft); }
 
 .lp-showcase-copy { display: flex; flex-direction: column; gap: 22px; }
-.lp-showcase-copy h2 { margin: 0; font-family: var(--font-display); font-weight: 700; font-size: clamp(1.5rem, 3vw, 2.125rem); line-height: 1.2; color: var(--ink); }
+.lp-showcase-copy h2 { margin: 0; font-family: var(--font-body); font-weight: var(--fw-regular); font-size: clamp(1.5rem, 3vw, 2.125rem); line-height: 1.2; color: var(--ink); }
 .lp-showcase-copy > p { margin: 0; font-size: 16px; line-height: 1.55; color: var(--muted); }
 .lp-checklist { display: flex; flex-direction: column; gap: 14px; }
 .lp-check-item { display: flex; gap: 12px; align-items: flex-start; }
@@ -362,7 +362,7 @@ button.lp-quiz-choice:disabled { cursor: default; }
 .lp-deep-card--cyan { border-top-color: var(--brand-cyan); }
 .lp-deep-icon { width: 48px; height: 48px; border-radius: 12px; background: var(--blue-100); display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-weight: 700; font-size: 18px; color: var(--brand-blue-dark); }
 .lp-deep-icon--featured { background: var(--gradient-brand); color: #fff; }
-.lp-deep-head h3 { margin: 0 0 7px; font-family: var(--font-display); font-weight: 700; font-size: 20px; line-height: 1.25; color: var(--ink); }
+.lp-deep-head h3 { margin: 0 0 7px; font-family: var(--font-body); font-weight: var(--fw-regular); font-size: 20px; line-height: 1.25; color: var(--ink); }
 .lp-deep-head p { margin: 0; font-size: 13.5px; line-height: 1.5; color: var(--muted); }
 .lp-deep-list { display: flex; flex-direction: column; gap: 11px; }
 .lp-deep-item { display: flex; gap: 10px; }
@@ -406,7 +406,7 @@ button.lp-quiz-choice:disabled { cursor: default; }
 /* Final CTA */
 .lp-final-cta { background: var(--gradient-brand); }
 .lp-final-cta-inner { padding-top: 96px; padding-bottom: 96px; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 20px; }
-.lp-final-cta-inner h2 { margin: 0; font-family: var(--font-display); font-weight: 700; font-size: clamp(1.75rem, 4vw, 2.75rem); line-height: 1.12; letter-spacing: -.015em; color: #fff; max-width: 24ch; }
+.lp-final-cta-inner h2 { margin: 0; font-family: var(--font-body); font-weight: var(--fw-regular); font-size: clamp(1.75rem, 4vw, 2.75rem); line-height: 1.12; letter-spacing: -.015em; color: #fff; max-width: 24ch; }
 .lp-final-cta-inner p { margin: 0; font-size: 17px; line-height: 1.55; color: rgba(255,255,255,.9); max-width: 52ch; }
 .lp-final-cta-btn { padding: 20px 46px; border-radius: var(--radius-pill); background: var(--surface-card); color: var(--brand-blue-dark); font-size: 17.5px; font-weight: 700; margin-top: 8px; box-shadow: 0 12px 30px rgba(28,43,63,.22); }
 .lp-final-cta-login { font-size: 14px; color: rgba(255,255,255,.85); }

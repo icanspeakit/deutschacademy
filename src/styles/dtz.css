@@ -54,7 +54,7 @@
   padding: 24px;
 }
 .dtz-part-head { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 6px; }
-.dtz-part-head h3 { margin: 0; font-family: var(--font-display); font-size: 1.2rem; }
+.dtz-part-head h3 { margin: 0; font-family: var(--font-body); font-size: 1.2rem; font-weight: var(--fw-regular); }
 .dtz-instruction { margin: 0 0 20px; color: var(--muted); font-size: .9rem; line-height: 1.6; }
 
 .dtz-group { border-top: 1px solid var(--border); padding-top: 18px; margin-top: 18px; }
@@ -136,7 +136,7 @@
   padding: 16px 18px;
   margin-bottom: 16px;
 }
-.dtz-reading h4 { margin: 0 0 10px; font-family: var(--font-display); font-size: 1rem; }
+.dtz-reading h4 { margin: 0 0 10px; font-family: var(--font-body); font-size: 1rem; font-weight: var(--fw-regular); }
 .dtz-reading p { margin: 0 0 10px; font-size: .9rem; line-height: 1.65; }
 .dtz-reading p:last-child { margin-bottom: 0; }
 .dtz-reading--letter { border-left: 3px solid var(--brand-blue); }

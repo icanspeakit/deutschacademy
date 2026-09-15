@@ -1,0 +1,273 @@
+/* Sketch page for the Lückentext exercise (/no3), judged at phone width because
+   that is where ~90% of the learners are. Prototype-only styles: whatever wins moves
+   into verben-praepositionen.css and this file gets deleted. */
+
+.no3-page { max-width: 1400px; }
+
+.no3-head { margin-bottom: var(--space-10); max-width: 1100px; --no3-peek-h: 104px; }
+.no3-head[data-anim="off"] .no3-brief { transition: none !important; }
+.no3-head h1 {
+  font-family: var(--font-body);
+  font-weight: var(--fw-regular);
+  letter-spacing: -.02em;
+  font-size: clamp(1.6rem, 3vw, 2.125rem);
+  color: var(--ink);
+  margin: 0 0 12px;
+}
+.no3-brief-lede { color: var(--muted); font-size: 1rem; line-height: 1.65; margin: 0 0 18px; max-width: 62ch; }
+.no3-problems { margin: 0; padding-left: 20px; color: var(--muted); font-size: .9rem; line-height: 1.9; }
+.no3-problems strong { color: var(--ink); font-weight: var(--fw-semibold); }
+.no3-problems em { font-style: normal; color: var(--danger); font-weight: var(--fw-semibold); }
+
+/* Two columns once there is width for them: the lede and the four measurements are
+   read side by side rather than as 780px of stacked prose, which is most of what
+   used to stand between the page and the prototypes it is about. */
+@media (min-width: 901px) {
+  .no3-brief {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+    gap: var(--space-10);
+    align-items: start;
+  }
+  .no3-brief-lede { margin: 0; }
+  .no3-brief-toggle { display: none; }
+}
+
+/* Below that the briefing is the whole first screen, so it crops to a preview and
+   the button opens it — the pattern from the grammar pages, same lib. */
+@media (max-width: 900px) {
+  .no3-brief {
+    overflow: hidden;
+    transition: max-height .45s cubic-bezier(.22, 1, .36, 1);
+  }
+  .no3-head[data-brief="hidden"] .no3-brief {
+    max-height: var(--no3-peek-h);
+    /* Faded rather than guillotined — a cut edge reads as a rendering bug. */
+    -webkit-mask-image: linear-gradient(to bottom, #000 calc(var(--no3-peek-h) - 56px), transparent);
+    mask-image: linear-gradient(to bottom, #000 calc(var(--no3-peek-h) - 56px), transparent);
+  }
+  .no3-brief-toggle {
+    display: block;
+    width: 100%;
+    margin-top: 14px;
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius-pill);
+    background: var(--surface-card);
+    padding: 12px 20px;
+    cursor: pointer;
+    font-family: var(--font-label);
+    font-size: var(--text-xs);
+    font-weight: var(--fw-semibold);
+    color: var(--brand-blue-dark);
+  }
+  .no3-brief-toggle[data-peek] {
+    border-color: var(--blue-300);
+    animation: vp-peek-glow 1.4s ease-in-out 2;
+  }
+}
+
+/* Tracks are exactly one phone wide (390 + 2×9 bezel). The old minmax(440px, 1fr)
+   stretched each column to ~700px around a 408px phone, so a 1440px screen spent
+   580px on nothing and fitted two ideas per row; this fits three, and five ideas
+   become two rows instead of three. */
+.no3-grid { display: grid; grid-template-columns: repeat(auto-fit, 408px); justify-content: start; gap: var(--space-10); }
+@media (max-width: 900px) { .no3-grid { grid-template-columns: 1fr; } }
+
+/* Cards stretch to the tallest in their row and the phone hangs off the bottom, so
+   the phones line up however many lines of description sit above them — no guessed
+   min-heights, and no subgrid needed. */
+.no3-card { min-width: 0; display: flex; flex-direction: column; }
+.no3-phone { margin-top: auto; }
+.no3-card-head { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; flex-wrap: wrap; }
+.no3-card-head h2 {
+  font-family: var(--font-body);
+  font-weight: var(--fw-regular);
+  letter-spacing: -.02em;
+  font-size: 1.125rem;
+  text-align: left;
+  color: var(--ink);
+  margin: 0;
+}
+.no3-why { font-size: .86rem; line-height: 1.65; color: var(--muted); margin: 0 0 16px; }
+.no3-why b { color: var(--ink); font-weight: var(--fw-semibold); }
+.no3-verdict {
+  display: inline-block;
+  margin: 0;
+  padding: 6px 12px;
+  border-radius: var(--radius-sm);
+  font-size: .78rem;
+  font-weight: var(--fw-semibold);
+}
+.no3-verdict--good { background: var(--success-soft); color: var(--success); }
+.no3-verdict--meh { background: var(--info-soft); color: var(--brand-blue-dark); }
+.no3-verdict--bad { background: var(--danger-soft); color: var(--danger); }
+
+/* --- the phone ------------------------------------------------------------
+   Each prototype runs inside a real 390px viewport that scrolls on its own, so a
+   sticky answer bar behaves here exactly as it would on a handset — and so the
+   comparison cannot be won by having a desktop-sized amount of room. */
+.no3-phone {
+  position: relative;
+  /* content-box so the 390 is the viewport, not 390 minus the bezel. */
+  box-sizing: content-box;
+  width: 390px;
+  max-width: 100%;
+  /* 390x664 is the iPhone 13 viewport Playwright reports, and the exercise head is
+     rendered inside, so the room each idea gets is the room it would really get. */
+  height: 664px;
+  border: 9px solid #111b26;
+  border-radius: 30px;
+  background: var(--surface-card);
+  overflow: hidden;
+  box-shadow: 0 16px 40px rgba(8, 20, 34, .18);
+}
+/* On a handset the bezel is both a lie and a bug: a 390px frame plus 18px of border
+   does not fit a 380px column (it overflowed the page by 2px), and drawing a phone
+   inside a phone tests nothing. Below 480px the frame drops to a hairline and the
+   prototype runs at the real device width — the 664px scrollport, which is the part
+   actually under test, stays. */
+@media (max-width: 480px) {
+  .no3-phone {
+    box-sizing: border-box;
+    width: 100%;
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 6px 18px rgba(8, 20, 34, .1);
+  }
+}
+
+.no3-screen {
+  position: absolute;
+  inset: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  display: flex;
+  flex-direction: column;
+  background: var(--surface);
+}
+/* Page padding + card padding reproduced exactly, so each idea gets the ~300px of
+   text width the real card gets at 390px — not the 358px a bare frame would give it. */
+.no3-body { padding: 16px; }
+.no3-cardbox {
+  background: var(--surface-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 28px 28px 24px;
+}
+
+/* The exercises above and below, inert, so the frame scrolls the distance the real
+   page scrolls. Without them the card is the only thing that moves and the word bank
+   never actually leaves the screen — which is the whole thing being tested. */
+.no3-stub {
+  background: var(--surface-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 28px;
+  opacity: .4;
+  pointer-events: none;
+  user-select: none;
+}
+.no3-stub + .no3-cardbox,
+.no3-cardbox + .no3-stub { margin-top: 20px; }
+.no3-stub-lines { display: flex; flex-direction: column; gap: 11px; }
+.no3-stub-lines span { display: block; height: 36px; border-radius: var(--radius-sm); background: var(--surface); }
+
+.no3-hint { font-size: .8125rem; line-height: 1.5; color: var(--muted); margin: 0 0 14px; }
+.no3-hint b { color: var(--brand-blue-dark); font-weight: var(--fw-bold); }
+
+.no3-text { font-size: 1rem; line-height: 2.3; color: var(--ink); margin: 0 0 20px; }
+.no3-text:last-child { margin-bottom: 0; }
+
+/* --- the gap, shared by every idea ---------------------------------------- */
+.no3-gap {
+  display: inline-block;
+  min-width: 68px;
+  padding: 2px 8px;
+  border: none;
+  border-bottom: 2px dashed var(--border-strong);
+  border-radius: 6px 6px 0 0;
+  background: transparent;
+  font-family: var(--font-body);
+  font-size: .95rem;
+  font-weight: var(--fw-semibold);
+  color: var(--muted-soft);
+  cursor: pointer;
+  vertical-align: baseline;
+  transition: background-color .18s ease, border-color .18s ease, color .18s ease;
+}
+.no3-gap:disabled { cursor: default; }
+.no3-gap.is-filled { border-bottom-style: solid; border-bottom-color: var(--brand-blue); background: var(--blue-50); color: var(--brand-blue-dark); }
+.no3-gap.is-open,
+.no3-gap.is-active { border-bottom-color: var(--accent); background: #fff7ed; color: var(--accent-dark); }
+.no3-gap.is-target { border-bottom-color: var(--brand-blue); background: var(--blue-50); }
+.no3-gap.is-correct { border-bottom-style: solid; border-bottom-color: var(--success); background: var(--success-soft); color: var(--success); }
+.no3-gap.is-wrong { border-bottom-style: solid; border-bottom-color: var(--danger); background: var(--danger-soft); color: var(--danger); }
+.no3-gap-num { font-size: .68rem; font-weight: var(--fw-bold); color: var(--muted-soft); vertical-align: super; margin-right: 1px; }
+.no3-text.is-stepping .no3-gap:not(.is-active):not(.is-filled) { opacity: .4; }
+
+/* --- the pinned answer bar ------------------------------------------------
+   The measured flaw in today's version: by the time you reach gap 5, the word bank
+   is 328px above the fold on a 664px screen. A bar that sticks to the bottom of the
+   scrollport is never more than a thumb away, whatever you have scrolled past. */
+.no3-bar {
+  position: sticky;
+  bottom: 0;
+  margin-top: auto;
+  padding: 11px 16px 14px;
+  background: var(--surface-card);
+  border-top: 1px solid var(--border);
+  box-shadow: 0 -8px 20px rgba(8, 20, 34, .07);
+}
+.no3-bar-label {
+  display: block;
+  font-family: var(--font-label);
+  font-size: .68rem;
+  font-weight: var(--fw-bold);
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  color: var(--muted-soft);
+  margin-bottom: 9px;
+}
+.no3-bar-opts { display: flex; gap: 7px; }
+.no3-bar-opts button {
+  flex: 1;
+  min-width: 0;
+  min-height: 46px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  background: var(--surface-card);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: .95rem;
+  font-weight: var(--fw-semibold);
+  cursor: pointer;
+}
+.no3-bar-opts button.is-armed { background: var(--gradient-brand); border-color: transparent; color: #fff; }
+.no3-bar-opts button.is-chosen { border-color: var(--brand-blue); background: var(--blue-50); color: var(--brand-blue-dark); }
+.no3-bar-foot { display: flex; align-items: center; gap: 12px; margin-top: 11px; flex-wrap: wrap; }
+.no3-bar-foot .vp-btn-check { min-height: 42px; }
+.no3-bar-clear { margin-left: auto; }
+
+.no3-nav { display: flex; gap: 5px; margin-left: auto; }
+.no3-nav button {
+  border: 1px solid var(--border);
+  background: var(--surface-card);
+  color: var(--muted);
+  border-radius: 50%;
+  width: 34px; height: 34px;
+  font-size: .95rem;
+  line-height: 1;
+  cursor: pointer;
+}
+.no3-nav button:disabled { opacity: .35; cursor: default; }
+
+/* --- B: one row per sentence ---------------------------------------------- */
+.no3-row { padding: 14px 0; border-top: 1px solid var(--border); }
+.no3-row:first-child { border-top: none; padding-top: 0; }
+.no3-row-text { font-size: .98rem; line-height: 1.95; margin: 0 0 11px; color: var(--ink); }
+.no3-row-opts { display: flex; gap: 7px; }
+.no3-row-opts button { flex: 1; min-width: 0; min-height: 44px; }
+
+.no3-solution { margin: 10px 0 0; font-size: .8rem; line-height: 1.6; color: var(--muted); }
+.no3-solution strong { color: var(--ink); }
+.no3-foot { padding-top: 16px; }

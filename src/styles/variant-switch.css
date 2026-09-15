@@ -1,0 +1,77 @@
+/* VariantSwitch — the floating A/B control (src/components/VariantSwitch.astro).
+   Preview chrome, not site furniture: it only renders on the dev server or behind
+   ?compare. Sized for a thumb, because the comparison it exists for is made on a
+   phone. */
+
+.vsw {
+  position: fixed;
+  right: 14px;
+  /* Clear of Astro's dev toolbar, which sits bottom-centre and overlaps this on a
+     phone — and dev is the only place this control ever renders. */
+  bottom: calc(62px + env(safe-area-inset-bottom, 0px));
+  z-index: 9500;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 11px 13px;
+  background: var(--surface-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: 0 14px 34px rgba(8, 20, 34, .22);
+  font-family: var(--font-label);
+}
+.vsw[hidden] { display: none; }
+
+.vsw-label {
+  font-size: .64rem;
+  font-weight: var(--fw-bold);
+  letter-spacing: .09em;
+  text-transform: uppercase;
+  color: var(--muted-soft);
+}
+
+.vsw-track {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding: 3px;
+  background: var(--surface);
+  border-radius: 999px;
+}
+.vsw-thumb {
+  position: absolute;
+  left: 3px;
+  top: 3px;
+  width: calc(50% - 3px);
+  height: calc(100% - 6px);
+  border-radius: 999px;
+  background: var(--surface-card);
+  box-shadow: 0 1px 3px rgba(8, 20, 34, .2);
+  transition: transform .3s cubic-bezier(.4, 0, .2, 1);
+}
+/* The thumb follows the second option. Written against the switch's own state so
+   the CSS never needs to know what the options are called. */
+.vsw[data-value]:not([data-value=""]) .vsw-thumb { transform: none; }
+.vsw-track button:last-of-type[aria-checked="true"] ~ .vsw-thumb,
+.vsw:has(button:last-of-type[aria-checked="true"]) .vsw-thumb { transform: translateX(100%); }
+
+.vsw-track button {
+  position: relative;
+  z-index: 1;
+  border: none;
+  background: none;
+  padding: 9px 16px;
+  min-height: 40px;
+  font-family: inherit;
+  font-size: .76rem;
+  font-weight: var(--fw-semibold);
+  color: var(--muted);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: color .2s ease;
+}
+.vsw-track button[aria-checked="true"] { color: var(--ink); }
+
+@media (prefers-reduced-motion: reduce) {
+  .vsw-thumb { transition: none; }
+}

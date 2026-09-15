@@ -28,9 +28,9 @@
 }
 .fr-bar-text { min-width: 0; }
 .fr-bar-title {
-  font-family: var(--font-display);
+  font-family: var(--font-body);
   font-size: var(--text-lg);
-  font-weight: var(--fw-bold);
+  font-weight: var(--fw-regular);
   color: var(--ink);
   margin: 0;
   line-height: 1.1;
@@ -98,8 +98,8 @@
   margin: 0;
 }
 .fr-title {
-  font-family: var(--font-display);
-  font-weight: var(--fw-extrabold);
+  font-family: var(--font-body);
+  font-weight: var(--fw-regular);
   font-size: clamp(2.2rem, 5vw, 4.2rem);
   line-height: 1;
   color: var(--ink-deep);
@@ -120,7 +120,7 @@
   font-size: clamp(.95rem, 1.9vw, 1.6rem);
   line-height: 1.35;
   text-transform: uppercase;
-  letter-spacing: .02em;
+  letter-spacing: .02em; font-weight: var(--fw-regular);
 }
 .fr-lead {
   max-width: 46ch;
@@ -219,7 +219,7 @@
   text-align: center;
   gap: var(--space-1);
 }
-[data-variant="buehne"] .fr-title { text-align: center; }
+[data-variant="buehne"] .fr-title { text-align: center; font-weight: var(--fw-regular); }
 [data-variant="buehne"] .fr-lead { max-width: 58ch; text-align: center; }
 [data-variant="buehne"] .fr-stage-row,
 [data-variant="buehne"] .fr-grid > .fr-mock--dash { grid-row: 2; }

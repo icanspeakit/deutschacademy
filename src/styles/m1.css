@@ -27,7 +27,7 @@
 /* The two mockups sit on a diagonal, so keep their h1s from touching
    full-bleed width at the narrower cross columns, and keep the whole
    block compact enough to clear the fold. */
-.m1-copy-1 h1, .m1-copy-2 h1 { font-size: clamp(1.3rem, 2.2vw, 1.8rem); margin: 2px 0 4px; line-height: 1.15; }
+.m1-copy-1 h1, .m1-copy-2 h1 { font-size: clamp(1.3rem, 2.2vw, 1.8rem); margin: 2px 0 4px; line-height: 1.15; font-weight: var(--fw-regular); }
 .m1-copy-1 .lp-eyebrow, .m1-copy-2 .lp-eyebrow { font-size: 10px; }
 .m1-copy-1 .lp-hero-lead, .m1-copy-2 .lp-hero-lead { font-size: 13px; line-height: 1.35; margin: 0; }
 .m1-copy-1 .lp-hero-actions, .m1-copy-2 .lp-hero-actions { padding-top: 0; }
@@ -74,7 +74,7 @@
 .m1-phone-content { padding: 56px 22px 28px; display: flex; flex-direction: column; gap: 14px; }
 .m1-phone-block .lp-eyebrow { font-size: 11px; }
 .m1-phone-block h1 {
-  font-family: var(--font-display); font-weight: 700; font-size: 1.5rem;
+  font-family: var(--font-body); font-weight: var(--fw-regular); font-size: 1.5rem;
   line-height: 1.15; margin: 6px 0; color: var(--ink);
 }
 .m1-phone-block p { font-size: 13.5px; line-height: 1.4; color: var(--muted); margin: 0 0 14px; }

@@ -1,0 +1,456 @@
+---
+// Sketch page: four ways to fix Übung 3 (the Lückentext), plus today's version for
+// comparison. Every prototype runs inside a 390px phone frame that scrolls on its own,
+// because ~90% of the learners arrive on a handset and the current design fails
+// specifically there: on a 664px screen the word bank ends up 328px above the gap you
+// are trying to fill.
+//
+// All five run on the real "Verben mit Präpositionen" story data, so the comparison is
+// about interaction, not content. grammarWorkspace.js is untouched until one wins.
+import Layout from "../layouts/Layout.astro";
+import PracticeHeader from "../components/PracticeHeader.astro";
+import "../styles/practice.css";
+import "../styles/verben-praepositionen.css";
+// The briefing borrows the grammar pages' collapse + intro tour, and the tour's
+// spotlight is entirely CSS — without this it renders as three unstyled divs at the
+// bottom of the document and dims nothing.
+import "../styles/rule-intro.css";
+import "../styles/no3.css";
+import topic from "../data/grammatik/verben-praepositionen.json";
+
+const story = topic.exercises.find((e) => e.type === "story");
+const idx = topic.exercises.indexOf(story);
+// Titles of the exercises that sit above and below this one on the real page.
+const neighbours = {
+  before: { n: idx, title: topic.exercises[idx - 1]?.title ?? "" },
+  after: { n: idx + 2, title: topic.exercises[idx + 1]?.title ?? "" },
+};
+
+const IDEAS = [
+  {
+    id: "now",
+    badge: "Jetzt",
+    name: "Wortbank oben",
+    verdict: ["bad", "Fällt auf dem Handy durch"],
+    why: "Scroll im Rahmen nach unten: sobald du bei Lücke 4 bist, ist die Wortbank weg. Dazu sehen die Lücken aus wie Eingabefelder, zerreißen den Satz — und dass ein Klick nur der halbe Zug ist, steht nirgends.",
+  },
+  {
+    id: "pop",
+    badge: "A",
+    name: "Lücke antippen",
+    verdict: ["good", "Ein Zug, Wörter am Daumen"],
+    why: "Keine Bank. Tippe eine Lücke — die Wörter erscheinen <b>unten am Rand</b>, dort wo der Daumen ohnehin liegt, und die Lücke rutscht darüber ins Bild. Auswahl und Ziel immer gleichzeitig sichtbar, egal wie weit du gescrollt hast.",
+  },
+  {
+    id: "rows",
+    badge: "B",
+    name: "Satz für Satz",
+    verdict: ["meh", "Sicher, aber der Text zerfällt"],
+    why: "Der Text zerfällt in seine fünf Sätze, jeder mit eigener Antwortreihe — <b>genau das Muster aus Übung 1</b>. Nichts Neues zu lernen, nichts kann wegscrollen. Der zusammenhängende Text ist dafür weg, und damit der Grund, warum das ein Lückentext ist.",
+  },
+  {
+    id: "bar",
+    badge: "C",
+    name: "Wortleiste unten",
+    verdict: ["meh", "Kleinster Eingriff"],
+    why: "Die Bank bleibt, wandert aber nach unten und <b>klebt dort fest</b>. Erst Wort, dann Lücke — weiterhin zwei Züge, aber beide Enden sind immer erreichbar, und eine Zeile sagt, was gerade dran ist. Der kleinste Umbau von heute aus.",
+  },
+  {
+    id: "step",
+    badge: "D",
+    name: "Lücke für Lücke",
+    verdict: ["good", "Am klarsten geführt"],
+    why: "Der Text bleibt ganz, aber nur <b>eine Lücke ist aktiv</b> — sie scrollt sich selbst ins Bild, unten stehen „Lücke 3 von 5“ und die Wörter. Nach der Wahl rückt es weiter. Man kann sich nicht verlaufen; man kann auch nicht springen.",
+  },
+];
+---
+
+<Layout title="Übung 3 – Ideen – DeutschAcademy">
+  <PracticeHeader title="Übung 3 · Lückentext" />
+
+  <main class="vp-page no3-page">
+    <a href="/uebungen/grammatik/verben-praepositionen" class="vp-back-link">← Zurück zur Übung</a>
+
+    <!-- The briefing is four dense paragraphs of "why this page exists", and on a
+         phone that is the whole first screen — the same failure this page is about.
+         So it crops to a preview there and opens on demand; on a desktop there is
+         width to spend, so it runs as two columns instead and stays open. -->
+    <header class="no3-head" id="no3-head" data-brief="hidden" data-anim="off">
+      <h1>Lückentext, vom Handy aus gedacht</h1>
+      <div class="no3-brief" id="no3-brief">
+        <p class="no3-brief-lede">
+        Jede Variante läuft in einem echten 390-px-Fenster mit eigenem Scroll — so wie auf
+        einem Handy, nicht so wie auf einem 1500-px-Monitor. Scrollen im Rahmen ist Teil
+        des Tests: daran scheitert die heutige Fassung.
+      </p>
+      <ul class="no3-problems">
+        <li><strong>Die Wortbank scrollt weg.</strong> Gemessen: bei Lücke 5 liegt sie <em>328 px</em> über dem Bildrand eines 664-px-Screens. Man füllt eine Lücke, scrollt hoch, vergisst welche.</li>
+        <li><strong>Zwei Züge, nicht einer.</strong> Erst Wort wählen, dann Lücke — nirgends erklärt, und ohne Hover gibt es auf dem Touchscreen keinen Hinweis darauf, dass ein Wort „scharf“ ist.</li>
+        <li><strong>Die Lücken zerreißen den Satz.</strong> Als 96 px breite Kästen in einer 390-px-Zeile bleiben vom Satz Bruchstücke übrig.</li>
+        <li><strong>Vier Wörter, fünf Lücken.</strong> Dass „auf“ zweimal drankommt, sagt niemand.</li>
+      </ul>
+      </div>
+      <button
+        type="button"
+        class="no3-brief-toggle"
+        id="no3-brief-toggle"
+        data-show="Worum es geht — aufklappen"
+        data-hide="Einklappen"
+        aria-controls="no3-brief"
+      >Worum es geht — aufklappen</button>
+    </header>
+
+    <section class="no3-grid">
+      {IDEAS.map((idea) => (
+        <article class="no3-card">
+          <div class="no3-card-head">
+            <span class={`badge ${idea.id === "now" ? "badge-neutral" : "badge-brand"}`}>{idea.badge}</span>
+            <h2>{idea.name}</h2>
+            <span class={`no3-verdict no3-verdict--${idea.verdict[0]}`}>{idea.verdict[1]}</span>
+          </div>
+          <p class="no3-why" set:html={idea.why} />
+          <div class="no3-phone">
+            <div class="no3-screen" data-proto={idea.id}></div>
+          </div>
+        </article>
+      ))}
+    </section>
+
+    {import.meta.env.DEV && (
+      <button type="button" class="vp-dev-reset" id="no3-dev-reset" title="Intro-Flag löschen und neu laden">
+        ↻ Tour neu
+      </button>
+    )}
+  </main>
+
+  <script type="application/json" id="story-data" set:html={JSON.stringify(story)}></script>
+  <script type="application/json" id="neighbour-data" set:html={JSON.stringify(neighbours)}></script>
+  <script type="module">
+    import { createRuleIntro } from "../lib/ruleIntro.js";
+    import { createCardCollapse } from "../lib/cardCollapse.js";
+
+    /* --- the briefing: cropped on a phone, two columns on a desktop -----------
+       Same mechanics as the grammar pages (src/lib/cardCollapse.js): CSS owns the
+       preview height, the lib owns the trip to and from it. The stored flags are
+       this page's own, so playing with the sketch never spends the one first-run
+       tour a real learner gets on /uebungen/grammatik/*. */
+    const head = document.getElementById("no3-head");
+    const brief = document.getElementById("no3-brief");
+    const briefBtn = document.getElementById("no3-brief-toggle");
+    const BRIEF_KEY = "da-no3-brief";
+    const SEEN_KEY = "da-no3-brief-seen";
+    const narrow = matchMedia("(max-width: 900px)");
+    const calm = matchMedia("(prefers-reduced-motion: reduce)");
+
+    const crop = createCardCollapse({ card: brief, toggle: briefBtn, active: narrow, calm });
+
+    function applyBrief(hidden, persist = true) {
+      crop.animate(hidden);
+      head.dataset.brief = hidden ? "hidden" : "";
+      briefBtn.textContent = hidden ? briefBtn.dataset.show : briefBtn.dataset.hide;
+      briefBtn.setAttribute("aria-expanded", hidden ? "false" : "true");
+      // Only the cropped state hides anything; above the breakpoint it is always open.
+      brief.inert = hidden && narrow.matches;
+      if (persist) { try { localStorage.setItem(BRIEF_KEY, hidden ? "hidden" : "shown"); } catch {} }
+    }
+
+    let briefSaved = null, briefSeen = true;
+    try {
+      briefSaved = localStorage.getItem(BRIEF_KEY);
+      briefSeen = localStorage.getItem(SEEN_KEY) === "1";
+    } catch {}
+
+    // Desktop has the width to just show it; the crop is a phone answer to a phone
+    // problem, so it is not the default up there.
+    applyBrief(narrow.matches ? (briefSaved === null ? true : briefSaved === "hidden") : false, false);
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      delete head.dataset.anim;
+      crop.arm();
+    }));
+
+    const briefIntro = createRuleIntro({
+      ruleEl: brief,
+      ruleBtn: briefBtn,
+      setRule: (hidden) => applyBrief(hidden, false),
+      compact: true,
+      coach: [
+        ["Kurzfassung oben",
+         "Warum es diese Seite gibt, steht eingeklappt oben — so beginnen die Prototypen schon auf dem ersten Bildschirm."],
+        ["Hier ganz aufklappen",
+         "Ein Tippen zeigt die vier gemessenen Probleme, ein zweites klappt sie wieder ein."],
+      ],
+    });
+
+    const forcedIntro = new URLSearchParams(location.search).has("intro");
+    if (narrow.matches && !calm.matches && (forcedIntro || (briefSaved === null && !briefSeen))) {
+      if (!forcedIntro) { try { localStorage.setItem(SEEN_KEY, "1"); } catch {} }
+      requestAnimationFrame(() => briefIntro.play());
+    }
+
+    briefBtn.addEventListener("click", () => {
+      briefIntro.cancel();
+      applyBrief(head.dataset.brief !== "hidden");
+    });
+
+    document.getElementById("no3-dev-reset")?.addEventListener("click", () => {
+      try {
+        localStorage.removeItem(BRIEF_KEY);
+        localStorage.removeItem(SEEN_KEY);
+      } catch {}
+      history.scrollRestoration = "manual";
+      window.scrollTo(0, 0);
+      location.replace(location.pathname);
+    });
+
+    const story = JSON.parse(document.getElementById("story-data").textContent);
+    const SEGS = story.segments;
+    const BLANKS = SEGS.filter((s) => s.blank !== undefined);
+    const N = BLANKS.length;
+    const OPTIONS = [...new Set(BLANKS.map((b) => b.answer))].sort((a, b) => a.localeCompare(b, "de"));
+    const answerOf = (i) => BLANKS.find((b) => b.blank === i).answer;
+
+    const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+
+    // The real card header, because it eats the top of the screen on a phone and that
+    // is precisely what pushes the word bank out of reach in today's version.
+    const HEAD = `<div class="vp-ex-head"><span class="badge badge-neutral">3</span><h3>${story.title}</h3></div>`;
+
+    // Everything a prototype renders lives in the card; the answer bar, when there is
+    // one, sits outside it and pins to the bottom of the screen the way it would on a
+    // real handset.
+    const NB = JSON.parse(document.getElementById("neighbour-data").textContent);
+    const stub = (o) => o.title
+      ? `<div class="no3-stub"><div class="vp-ex-head"><span class="badge badge-neutral">${o.n}</span><h3>${esc(o.title)}</h3></div>
+         <div class="no3-stub-lines"><span></span><span></span><span></span></div></div>`
+      : "";
+    const shell = (inner, bar = "") =>
+      `<div class="no3-body">${stub(NB.before)}<div class="no3-cardbox">${HEAD}${inner}</div>${stub(NB.after)}</div>${bar}`;
+
+    const newState = () => ({ values: {}, checked: false, armed: null, open: null, cur: 0 });
+    const score = (st) => BLANKS.filter((b) => st.values[b.blank] === b.answer).length;
+    const label = (st, i) => st.values[i] || "";
+
+    function gapClass(st, i) {
+      if (st.checked) return st.values[i] === answerOf(i) ? "is-correct" : "is-wrong";
+      return st.values[i] ? "is-filled" : "";
+    }
+    const gapBody = (st, i) => (label(st, i) ? esc(label(st, i)) : `<span class="no3-gap-num">${i + 1}</span>&nbsp;`);
+
+    // Scroll inside the phone only — never the real page underneath it.
+    function reveal(screen, el) {
+      if (!el) return;
+      const sr = screen.getBoundingClientRect();
+      const er = el.getBoundingClientRect();
+      const top = screen.scrollTop + (er.top - sr.top) - screen.clientHeight * 0.34;
+      screen.scrollTo({ top: Math.max(0, top), behavior: "smooth" });
+    }
+
+    function checkBtn(st) {
+      const done = score(st) === N;
+      return `${st.checked ? "" : '<button type="button" class="vp-btn-check" data-check>Prüfen</button>'}
+        <button type="button" class="vp-link-btn" data-reset>Zurücksetzen</button>
+        ${st.checked ? `<span class="vp-feedback ${done ? "is-correct" : "is-wrong"}">${done ? "Alles richtig!" : `${score(st)} von ${N} richtig`}</span>` : ""}`;
+    }
+    function solution(st) {
+      return st.checked && score(st) < N
+        ? `<p class="no3-solution">Lösung: ${BLANKS.map((b) => `${b.blank + 1}. <strong>${esc(b.answer)}</strong>`).join(" · ")}</p>`
+        : "";
+    }
+    function wireActions(root, st, render) {
+      root.querySelector("[data-check]")?.addEventListener("click", () => { st.checked = true; render(); });
+      root.querySelector("[data-reset]")?.addEventListener("click", () => {
+        Object.assign(st, newState()); render();
+      });
+    }
+
+    const prose = (st, extra = () => "") =>
+      SEGS.map((s) =>
+        s.text !== undefined
+          ? esc(s.text)
+          : `<button type="button" class="no3-gap ${gapClass(st, s.blank)}${extra(s.blank)}" data-gap="${s.blank}" ${st.checked ? "disabled" : ""}>${gapBody(st, s.blank)}</button>`
+      ).join("");
+
+    /* --- Jetzt: word bank at the top, slots inline (today's behaviour) ------- */
+    function protoNow(screen) {
+      const st = newState();
+      function render() {
+        const text = SEGS.map((s) =>
+          s.text !== undefined
+            ? esc(s.text)
+            : `<button type="button" class="vp-slot ${st.checked ? (st.values[s.blank] === s.answer ? "is-correct" : "is-wrong") : st.values[s.blank] ? "is-chosen" : ""}" data-slot="${s.blank}" ${st.checked ? "disabled" : ""}>${esc(st.values[s.blank] || "…")}</button>`
+        ).join("");
+        screen.innerHTML = shell(`
+          <div class="vp-bank">${OPTIONS.map((o) => `<button type="button" class="vp-bankword${st.armed === o ? " is-selected" : ""}" data-bank="${esc(o)}">${esc(o)}</button>`).join("")}</div>
+          <p class="vp-story-text">${text}</p>
+          <div class="no3-foot"><div class="vp-actions">${checkBtn(st)}</div>${solution(st)}</div>`);
+        screen.querySelectorAll("[data-bank]").forEach((b) =>
+          b.addEventListener("click", () => { st.armed = st.armed === b.dataset.bank ? null : b.dataset.bank; render(); }));
+        screen.querySelectorAll("[data-slot]").forEach((b) =>
+          b.addEventListener("click", () => {
+            const i = +b.dataset.slot;
+            if (st.values[i]) delete st.values[i];
+            else if (st.armed) { st.values[i] = st.armed; st.armed = null; }
+            render();
+          }));
+        wireActions(screen, st, render);
+      }
+      render();
+    }
+
+    /* --- A: tap a gap, the words rise from the bottom edge ------------------ */
+    function protoPop(screen) {
+      const st = newState();
+      function render(scrollTo) {
+        const open = !st.checked && st.open !== null;
+        screen.innerHTML = shell(`
+          <p class="no3-hint">Tippe auf eine Lücke — die Wörter kommen unten.</p>
+          <p class="no3-text">${prose(st, (i) => (st.open === i && !st.checked ? " is-open" : ""))}</p>
+          ${solution(st)}`, `
+          <div class="no3-bar">
+            ${open
+              ? `<span class="no3-bar-label">Lücke ${st.open + 1} von ${N}</span>
+                 <div class="no3-bar-opts">${OPTIONS.map((o) =>
+                   `<button type="button" class="${st.values[st.open] === o ? "is-chosen" : ""}" data-pick="${esc(o)}">${esc(o)}</button>`).join("")}</div>
+                 <div class="no3-bar-foot">${checkBtn(st)}
+                   ${st.values[st.open] ? '<button type="button" class="vp-link-btn no3-bar-clear" data-clear>leeren</button>' : ""}</div>`
+              : `<div class="no3-bar-foot">${checkBtn(st)}</div>`}
+          </div>`);
+
+        screen.querySelectorAll("[data-gap]").forEach((b) =>
+          b.addEventListener("click", () => { const i = +b.dataset.gap; st.open = st.open === i ? null : i; render(st.open); }));
+        screen.querySelectorAll("[data-pick]").forEach((b) =>
+          b.addEventListener("click", () => {
+            st.values[st.open] = b.dataset.pick;
+            // Straight on to the next empty gap: the bar is already open, so this
+            // costs the learner nothing and keeps the rhythm going.
+            const next = BLANKS.map((x) => x.blank).find((i) => i > st.open && !st.values[i]);
+            st.open = next ?? null;
+            render(st.open);
+          }));
+        screen.querySelector("[data-clear]")?.addEventListener("click", () => { delete st.values[st.open]; render(st.open); });
+        wireActions(screen, st, render);
+
+        if (scrollTo != null) reveal(screen, screen.querySelector(`[data-gap="${scrollTo}"]`));
+      }
+      render();
+    }
+
+    /* --- B: one row per sentence, answers underneath ----------------------- */
+    function protoRows(screen) {
+      // The cut points sit INSIDE the text segments — one segment routinely ends one
+      // sentence and opens the next ("… das Wochenende. Sie wartet ") — so this splits
+      // the text, not just the segment list.
+      const rows = [];
+      let cur = [];
+      for (const s of SEGS) {
+        if (s.text === undefined) { cur.push(s); continue; }
+        let rest = s.text, m;
+        while ((m = rest.match(/^[\s\S]*?[.!?](?=\s|$)/))) {
+          cur.push({ text: m[0] });
+          rows.push(cur);
+          cur = [];
+          rest = rest.slice(m[0].length).replace(/^\s+/, "");
+          if (!rest) break;
+        }
+        if (rest) cur.push({ text: rest });
+      }
+      if (cur.length) rows.push(cur);
+
+      const st = newState();
+      function render() {
+        screen.innerHTML = shell(`
+          <p class="no3-hint">Ein Satz, eine Antwort — wie in Übung 1.</p>
+          ${rows.map((segs) => {
+            const gaps = segs.filter((s) => s.blank !== undefined).map((s) => s.blank);
+            const text = segs.map((s) =>
+              s.text !== undefined
+                ? esc(s.text)
+                : `<span class="no3-gap ${gapClass(st, s.blank)}">${esc(label(st, s.blank) || "  ")}</span>`
+            ).join("");
+            return `<div class="no3-row">
+              <p class="no3-row-text">${text}</p>
+              ${gaps.map((i) => `<div class="no3-row-opts">${OPTIONS.map((o) =>
+                `<button type="button" class="vp-pill-opt ${st.checked ? (o === answerOf(i) ? "is-correct" : st.values[i] === o ? "is-wrong" : "") : st.values[i] === o ? "is-chosen" : ""}" data-pick="${esc(o)}" data-for="${i}" ${st.checked ? "disabled" : ""}>${esc(o)}</button>`).join("")}</div>`).join("")}
+            </div>`;
+          }).join("")}
+          <div class="no3-foot"><div class="vp-actions">${checkBtn(st)}</div>${solution(st)}</div>`);
+        screen.querySelectorAll("[data-pick]").forEach((b) =>
+          b.addEventListener("click", () => { st.values[+b.dataset.for] = b.dataset.pick; render(); }));
+        wireActions(screen, st, render);
+      }
+      render();
+    }
+
+    /* --- C: the bank, moved to the bottom edge and pinned there ------------- */
+    function protoBar(screen) {
+      const st = newState();
+      function render() {
+        screen.innerHTML = shell(`
+          <p class="no3-hint">${st.armed
+            ? `<b>„${esc(st.armed)}“</b> gewählt — jetzt auf eine Lücke tippen.`
+            : "Erst ein Wort unten wählen, dann die Lücke antippen."}</p>
+          <p class="no3-text">${prose(st, () => (st.armed ? " is-target" : ""))}</p>
+          ${solution(st)}`, `
+          <div class="no3-bar">
+            <span class="no3-bar-label">Wörter · mehrfach nutzbar</span>
+            <div class="no3-bar-opts">${OPTIONS.map((o) =>
+              `<button type="button" class="${st.armed === o ? "is-armed" : ""}" data-word="${esc(o)}">${esc(o)}</button>`).join("")}</div>
+            <div class="no3-bar-foot">${checkBtn(st)}</div>
+          </div>`);
+        screen.querySelectorAll("[data-word]").forEach((b) =>
+          b.addEventListener("click", () => { st.armed = st.armed === b.dataset.word ? null : b.dataset.word; render(); }));
+        screen.querySelectorAll("[data-gap]").forEach((b) =>
+          b.addEventListener("click", () => {
+            const i = +b.dataset.gap;
+            if (st.values[i]) delete st.values[i];
+            else if (st.armed) { st.values[i] = st.armed; st.armed = null; }
+            render();
+          }));
+        wireActions(screen, st, render);
+      }
+      render();
+    }
+
+    /* --- D: one gap at a time, it scrolls itself into view ------------------ */
+    function protoStep(screen) {
+      const st = newState();
+      function render(scroll) {
+        screen.innerHTML = shell(`
+          <p class="no3-hint">Eine Lücke nach der anderen — der Rest wartet.</p>
+          <p class="no3-text${st.checked ? "" : " is-stepping"}">${prose(st, (i) => (!st.checked && i === st.cur ? " is-active" : ""))}</p>
+          ${solution(st)}`, `
+          <div class="no3-bar">
+            ${st.checked ? "" : `<span class="no3-bar-label">Lücke ${st.cur + 1} von ${N}</span>
+              <div class="no3-bar-opts">${OPTIONS.map((o) =>
+                `<button type="button" class="${st.values[st.cur] === o ? "is-chosen" : ""}" data-pick="${esc(o)}">${esc(o)}</button>`).join("")}</div>`}
+            <div class="no3-bar-foot">${checkBtn(st)}
+              ${st.checked ? "" : `<div class="no3-nav">
+                <button type="button" data-step="-1" ${st.cur === 0 ? "disabled" : ""} aria-label="Zurück">←</button>
+                <button type="button" data-step="1" ${st.cur === N - 1 ? "disabled" : ""} aria-label="Weiter">→</button>
+              </div>`}</div>
+          </div>`);
+
+        screen.querySelectorAll("[data-pick]").forEach((b) =>
+          b.addEventListener("click", () => {
+            st.values[st.cur] = b.dataset.pick;
+            if (st.cur < N - 1) st.cur += 1;
+            render(true);
+          }));
+        screen.querySelectorAll("[data-step]").forEach((b) =>
+          b.addEventListener("click", () => { st.cur = Math.min(N - 1, Math.max(0, st.cur + +b.dataset.step)); render(true); }));
+        screen.querySelectorAll("[data-gap]").forEach((b) =>
+          b.addEventListener("click", () => { st.cur = +b.dataset.gap; render(true); }));
+        wireActions(screen, st, render);
+
+        if (scroll) reveal(screen, screen.querySelector(".no3-gap.is-active"));
+      }
+      render();
+    }
+
+    const MOUNT = { now: protoNow, pop: protoPop, rows: protoRows, bar: protoBar, step: protoStep };
+    for (const [id, mount] of Object.entries(MOUNT)) {
+      const el = document.querySelector(`[data-proto="${id}"]`);
+      if (el) mount(el);
+    }
+  </script>
+</Layout>

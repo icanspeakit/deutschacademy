@@ -7,7 +7,7 @@
 
 .vt-hero { text-align: left; margin-bottom: 18px; }
 .vt-hero h1 {
-  font-family: var(--font-display); font-size: clamp(1.05rem, 1.8vw, 1.25rem); font-weight: 500;
+  font-family: var(--font-body); font-size: clamp(1.05rem, 1.8vw, 1.25rem); font-weight: 500;
   color: var(--vt-muted); margin: 2px 0 0;
 }
 

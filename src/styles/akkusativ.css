@@ -122,7 +122,7 @@
   padding: 20px 20px 16px;
 }
 .akk-title-group { display: flex; align-items: center; gap: 10px; }
-.akk-title { margin: 0; font-family: var(--font-display); font-size: 1.4rem; font-weight: 700; color: var(--akk-ink); }
+.akk-title { margin: 0; font-family: var(--font-body); font-size: 1.4rem; font-weight: var(--fw-regular); color: var(--akk-ink); }
 
 .akk-difficulty {
   display: inline-flex;

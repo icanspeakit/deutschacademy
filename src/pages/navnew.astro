@@ -30,6 +30,7 @@ import "../styles/practice.css";
 import "../styles/landing.css";
 import "../styles/verben-praepositionen.css";
 import "../styles/rule-intro.css";
+import "../styles/nav.css";
 import "../styles/navnew.css";
 
 // Every grammar topic on the site, with the two things the variants need: the progress key
@@ -72,13 +73,54 @@ const byLevel = NAV_LEVELS.map((level: string) => ({
   level,
   items: allTopics.filter((t) => t.level === level),
 }));
+
+// The rail's sections, in the dashboard's own order and shape: the course first, the
+// four levels, the exams last. Everything here is a link — on /dashboard these buttons
+// swap a panel in place, which is exactly why the rail could not simply be lifted across.
+const railSections = [
+  {
+    id: "weg",
+    label: "Dein Weg",
+    badge: null,
+    icon: "sparkle",
+    overview: { label: "Kursübersicht öffnen →", href: "/uebungen" },
+    items: [
+      { key: null, label: "Start", icon: "sparkle", href: "/uebungen", meta: "Übersicht" },
+      { key: null, label: "Grammatik-Basis", icon: "book", href: "/uebungen/grammatik", meta: `${allTopics.length} Themen` },
+      { key: null, label: "Wortschatz-Karten", icon: "folder", href: "/uebungen/wortschatz", meta: "Karten" },
+      { key: null, label: "Prüfungssimulation", icon: "document", href: "/pruefungen/dtz/uebungssatz", meta: "45 Aufgaben" },
+    ],
+  },
+  ...byLevel.map((g) => ({
+    id: g.level.toLowerCase(),
+    label: `Stufe ${g.level}`,
+    badge: g.level,
+    icon: "book",
+    overview: { label: "Stufenübersicht öffnen →", href: `/uebungen/grammatik#niveau-${g.level.toLowerCase()}` },
+    items: g.items.map((t) => ({ key: t.key, label: t.name, icon: "book", href: t.href, tasks: t.tasks })),
+  })),
+  {
+    id: "pruefungen",
+    label: "Prüfungen",
+    badge: null,
+    icon: "landmark",
+    overview: { label: "Alle Prüfungen öffnen →", href: "/pruefungen" },
+    items: [
+      { key: null, label: "Start Deutsch 1", icon: "document", href: "/pruefungen/start-deutsch-1", meta: "A1" },
+      { key: null, label: "DTZ-Übungssatz", icon: "book-open", href: "/pruefungen/dtz/uebungssatz", meta: "A2/B1" },
+      { key: null, label: "TestDaF", icon: "graduation-cap", href: "/pruefungen/testdaf/uebungssatz", meta: "TDN" },
+      { key: null, label: "Leben in Deutschland", icon: "map-pin", href: "/pruefungen/leben-in-deutschland/test", meta: "Test" },
+    ],
+  },
+];
+const openSection = demo.level.toLowerCase();
 const siblings = allTopics.filter((t) => t.level === demo.level);
 const at = siblings.findIndex((t) => t.key === demoKey);
 const prev = siblings[at - 1] ?? null;
 const next = siblings[at + 1] ?? null;
 ---
 <Layout title="Nav-Varianten – DeutschAcademy">
-  <div class="nn" data-nn data-variant="jetzt">
+  <div class="nn" data-nn data-variant="c">
     <SiteNav active="grammatik" />
     <TopicBar topic={demoKey} kind="Grammatik" title={demo.name} level={demo.level} tasks={demoTasks} />
 
@@ -98,37 +140,64 @@ const next = siblings[at + 1] ?? null;
     </div>
 
     <div class="nn-body">
-      <!-- C: the dashboard rail, ported. Level switcher on the left edge, the level's
-           topics beside it, each with its own progress. On this route its buttons have to
-           be links — on /dashboard they swap a panel in place, which is the whole reason
-           it cannot simply be lifted across. -->
-      <aside class="nn-rail" data-nn-only="c">
-        <div class="nn-rail-levels">
-          {byLevel.map((g) => (
-            <button type="button" class:list={["nn-rail-lv", g.level === demo.level && "is-on"]} data-nn-level={g.level}>
-              {g.level}
-              <span class="nn-rail-dot" data-nn-leveldot={g.level}></span>
-            </button>
-          ))}
-        </div>
-        <div class="nn-rail-list">
-          <p class="nn-rail-head">Stufe <b data-nn-railhead>{demo.level}</b></p>
-          {byLevel.map((g) => (
-            <div class="nn-rail-group" data-nn-levelview={g.level} hidden={g.level !== demo.level}>
-              {g.items.map((t) => (
-                <a
-                  class:list={["nn-rail-item", t.key === demoKey && "is-cur"]}
-                  href={t.href}
-                  data-nn-topic={t.key}
-                  data-nn-tasks={t.tasks}
-                >
-                  <span class="nn-rail-name">{t.name}</span>
-                  <span class="nn-rail-n" data-nn-count>0/{t.tasks}</span>
-                </a>
-              ))}
-              <a class="nn-rail-overview" href="/uebungen/grammatik">Stufenübersicht öffnen →</a>
-            </div>
-          ))}
+      <!-- C: the dashboard rail itself — the same .nvb markup and the same nav.css that
+           /dashboard uses, not a lookalike. The one necessary difference is that every
+           row here is an <a>: on /dashboard a row swaps the panel beside it, on a
+           standalone topic route it has to navigate. -->
+      <!-- Dimmed while the panel is out, so overlaying the exercises reads as a thing
+           that is open rather than as a layout that broke. Click it to fold. -->
+      <div class="nn-scrim" data-nn-scrim hidden></div>
+
+      <aside class="nn-rail-wrap" data-nn-only="c">
+        <div class="nvb collapsed" data-nvb>
+          <div class="nvb-rail" role="tablist" aria-label="Bereich">
+            {railSections.map((sec) => (
+              <button
+                type="button"
+                class:list={["nvb-railbtn", sec.id === openSection && "active"]}
+                data-nn-sec={sec.id}
+                role="tab"
+                aria-label={sec.label}
+              >
+                {sec.badge ? <span class="nvb-railbadge">{sec.badge}</span> : <Icon name={sec.icon} size={20} />}
+                <span class="nvb-raildot" data-nn-secdot={sec.id}></span>
+                <span class="nvb-tip">{sec.label}</span>
+              </button>
+            ))}
+          </div>
+
+          <div class="nvb-panel">
+            {railSections.map((sec) => (
+              <div class="nvb-section" data-nn-secview={sec.id} hidden={sec.id !== openSection}>
+                <div class="nvb-panelhead">
+                  <h3>{sec.label}</h3>
+                  <button type="button" class="nvb-collapse" data-nn-collapse aria-label="Liste einklappen">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>
+                  </button>
+                </div>
+
+                <div class="nvb-panelprogress" data-nn-secprog={sec.id} hidden={!sec.items.some((i: any) => i.tasks)}>
+                  <span class="nvb-panelbar"><span data-nn-secbar={sec.id} style="width:0%"></span></span>
+                  <span data-nn-secpct={sec.id}>0 %</span>
+                </div>
+
+                <a class="nvb-overview" href={sec.overview.href}>{sec.overview.label}</a>
+
+                {sec.items.map((item: any) => (
+                  <a
+                    class:list={["nvb-item", item.key === demoKey && "active"]}
+                    href={item.href}
+                    data-nn-topic={item.key ?? undefined}
+                    data-nn-tasks={item.tasks ?? undefined}
+                  >
+                    <span class="nv-icon"><Icon name={item.icon} size={16} /></span>
+                    <span>{item.label}</span>
+                    <span class="nv-count" data-nn-count>{item.meta ?? `0/${item.tasks}`}</span>
+                  </a>
+                ))}
+              </div>
+            ))}
+          </div>
         </div>
       </aside>
 
@@ -201,13 +270,14 @@ const next = siblings[at + 1] ?? null;
          scrolling up for every comparison. -->
     <div class="nn-bar">
       <div class="nn-bar-group" role="tablist" aria-label="Variante">
-        <button type="button" class="nn-tab is-on" data-nn-set="jetzt" role="tab">Jetzt</button>
+        <button type="button" class="nn-tab" data-nn-set="jetzt" role="tab">Jetzt</button>
         <button type="button" class="nn-tab" data-nn-set="a" role="tab">A · Zahlen im Menü</button>
         <button type="button" class="nn-tab" data-nn-set="b" role="tab">B · Weiter-Leiste</button>
         <button type="button" class="nn-tab" data-nn-set="ab" role="tab">A + B</button>
-        <button type="button" class="nn-tab" data-nn-set="c" role="tab">C · Rail</button>
+        <button type="button" class="nn-tab is-on" data-nn-set="c" role="tab">C · Rail</button>
       </div>
       <button type="button" class="nn-seed" data-nn-seed>Demo-Fortschritt</button>
+      <button type="button" class="nn-seed" data-nn-tour>Regel-Tour abspielen</button>
       <p class="nn-hint" data-nn-hint></p>
     </div>
   </div>
@@ -236,9 +306,17 @@ const next = siblings[at + 1] ?? null;
     } else {
       mountQuiz(document.getElementById("quiz-root"), withChoices(demo.questions), { mode: "choice", onAnswer });
     }
-    mountRuleColumn(document.getElementById("vp-page"), {
+    // The rule column's collapse behaviour AND its first-visit tour — the same
+    // createRuleIntro the real topic page gets, via the same mount.
+    const ruleCol = mountRuleColumn(document.getElementById("vp-page"), {
       storageKey: "da-navnew-rule",
       seenKey: "da-navnew-rule-peek",
+    });
+
+    // It only plays once per browser, which is fine for a learner and useless for
+    // judging a sketch — so the switcher can replay it on demand.
+    root.querySelector("[data-nn-tour]")?.addEventListener("click", () => {
+      ruleCol?.intro?.play?.();
     });
 
     /* ---- variant switching -------------------------------------------------- */
@@ -247,15 +325,20 @@ const next = siblings[at + 1] ?? null;
       a: "Die Menüs listen diese Themen längst. A hängt nur die Zahl dran, die das Dashboard-Rail trägt. Kein neues Element auf der Seite. Menü öffnen zum Ansehen.",
       b: "Eine Zeile unter der Themenleiste: davor, danach, und wie viele Themen die Stufe hat. Funktioniert auf dem Handy genauso.",
       ab: "Beide zusammen — sie hängen nicht voneinander ab.",
-      c: "Das Rail aus dem Dashboard, hier eingebaut. Auf dem Desktop wird die Seite dreispaltig (Rail · Übungen · Regel); auf dem Handy bleibt davon nichts übrig.",
+      c: "Dasselbe Rail wie im Dashboard — gleiche Markup, gleiches nav.css, nur sind die Zeilen hier Links. Es startet als 64px-Streifen und legt sich beim Öffnen ÜBER die Seite: nebeneinander ginge nicht, ohne den Übungen Platz wegzunehmen (mit offener Regelspalte ist die Seite schon ~1400px breit). So bleibt die Übungsspalte exakt so breit wie auf der normalen Themenseite: 880px. Unter 1100px gibt es das Rail nicht.",
     };
     const hint = root.querySelector("[data-nn-hint]");
+    // setVariant runs before syncScrim is defined on first call, so guard it.
+    const syncScrimSafe = () => { try { syncScrim(); } catch {} };
 
     function setVariant(v) {
       root.dataset.variant = v;
       for (const b of root.querySelectorAll("[data-nn-set]")) b.classList.toggle("is-on", b.dataset.nnSet === v);
       hint.textContent = HINT[v] ?? "";
       decorateMenus(v === "a" || v === "ab");
+      // Leaving C with the panel out would strand a scrim over another variant.
+      if (v !== "c") root.querySelector("[data-nvb]")?.classList.add("collapsed");
+      syncScrimSafe();
       try { localStorage.setItem("da-navnew-variant", v); } catch {}
     }
     for (const b of root.querySelectorAll("[data-nn-set]")) {
@@ -298,37 +381,95 @@ const next = siblings[at + 1] ?? null;
       }
     }
 
-    /* ---- C: the rail's own numbers + level switching ------------------------ */
+    /* ---- C: the rail's numbers, section switching and collapse -------------- */
     function safeProgress() {
       try { return getTopicProgress() ?? {}; } catch { return {}; }
     }
+
     function paintProgress() {
       const prog = safeProgress();
+
+      // Row counts.
       for (const a of root.querySelectorAll("[data-nn-topic]")) {
         const tasks = Number(a.dataset.nnTasks || 0);
-        const done = Math.min(prog[a.dataset.nnTopic]?.done ?? 0, tasks || Infinity);
+        if (!tasks) continue;
+        const done = Math.min(prog[a.dataset.nnTopic]?.done ?? 0, tasks);
         const el = a.querySelector("[data-nn-count]");
         if (el) el.textContent = `${done}/${tasks}`;
-        a.classList.toggle("is-done", tasks > 0 && done >= tasks);
-        a.classList.toggle("is-part", done > 0 && done < tasks);
       }
-      // A dot per level: any progress anywhere in it.
-      for (const d of root.querySelectorAll("[data-nn-leveldot]")) {
-        const lv = d.dataset.nnLeveldot;
-        const any = topics.filter((t) => t.level === lv).some((t) => (prog[t.key]?.done ?? 0) > 0);
-        d.classList.toggle("is-on", any);
+
+      // Per-section bar and percentage, summed over the rows that have a task count —
+      // the same arithmetic the dashboard's own panel header does.
+      for (const view of root.querySelectorAll("[data-nn-secview]")) {
+        const id = view.dataset.nnSecview;
+        const rows = [...view.querySelectorAll("[data-nn-topic]")];
+        const total = rows.reduce((n, a) => n + Number(a.dataset.nnTasks || 0), 0);
+        const done = rows.reduce(
+          (n, a) => n + Math.min(prog[a.dataset.nnTopic]?.done ?? 0, Number(a.dataset.nnTasks || 0)),
+          0
+        );
+        const pct = total ? Math.round((done / total) * 100) : 0;
+        const bar = root.querySelector(`[data-nn-secbar="${id}"]`);
+        const txt = root.querySelector(`[data-nn-secpct="${id}"]`);
+        const dot = root.querySelector(`[data-nn-secdot="${id}"]`);
+        if (bar) bar.style.width = pct + "%";
+        if (txt) txt.textContent = pct + " %";
+        // Same three states the dashboard rail's dot carries.
+        if (dot) dot.dataset.state = !total ? "" : pct >= 100 ? "done" : pct > 0 ? "current" : "";
       }
+
       if (root.dataset.variant === "a" || root.dataset.variant === "ab") decorateMenus(true);
     }
-    for (const b of root.querySelectorAll("[data-nn-level]")) {
+
+    for (const b of root.querySelectorAll("[data-nn-sec]")) {
       b.addEventListener("click", () => {
-        const lv = b.dataset.nnLevel;
-        for (const x of root.querySelectorAll("[data-nn-level]")) x.classList.toggle("is-on", x === b);
-        for (const v of root.querySelectorAll("[data-nn-levelview]")) v.hidden = v.dataset.nnLevelview !== lv;
-        const head = root.querySelector("[data-nn-railhead]");
-        if (head) head.textContent = lv;
+        const id = b.dataset.nnSec;
+        const openBefore = root.querySelector("[data-nn-secview]:not([hidden])")?.dataset.nnSecview;
+        for (const x of root.querySelectorAll("[data-nn-sec]")) x.classList.toggle("active", x === b);
+        for (const v of root.querySelectorAll("[data-nn-secview]")) {
+          const on = v.dataset.nnSecview === id;
+          v.hidden = !on;
+          // The dashboard staggers the rows in when a section changes; same class.
+          if (on) {
+            v.classList.remove("nvb-section--enter");
+            void v.offsetWidth;
+            v.classList.add("nvb-section--enter");
+          }
+        }
+        // The rail icon is a toggle: tapping the section already open folds the panel
+        // away again, so the strip can be put back to 64px without hunting for the
+        // chevron inside the panel it just covered.
+        const nvb = root.querySelector("[data-nvb]");
+        if (nvb) {
+          const wasOpenHere = !nvb.classList.contains("collapsed") && b.dataset.nnSec === openBefore;
+          nvb.classList.toggle("collapsed", wasOpenHere);
+        }
+        syncScrim();
       });
     }
+
+    const scrim = root.querySelector("[data-nn-scrim]");
+    function syncScrim() {
+      const nvb = root.querySelector("[data-nvb]");
+      const out = nvb && !nvb.classList.contains("collapsed") && root.dataset.variant === "c";
+      if (scrim) scrim.hidden = !out;
+    }
+    for (const b of root.querySelectorAll("[data-nn-collapse]")) {
+      b.addEventListener("click", () => {
+        root.querySelector("[data-nvb]")?.classList.add("collapsed");
+        syncScrim();
+      });
+    }
+    scrim?.addEventListener("click", () => {
+      root.querySelector("[data-nvb]")?.classList.add("collapsed");
+      syncScrim();
+    });
+    // Esc folds it too — it behaves like an overlay, so it should close like one.
+    document.addEventListener("keydown", (e) => {
+      if (e.key !== "Escape") return;
+      root.querySelector("[data-nvb]")?.classList.add("collapsed");
+      syncScrim();
+    });
 
     /* ---- demo data, so the variants can be judged with numbers on them ------- */
     // An empty store shows 0/N everywhere, which tells you nothing about whether the
@@ -358,9 +499,9 @@ const next = siblings[at + 1] ?? null;
       location.reload();
     });
 
-    let saved = "jetzt";
-    try { saved = localStorage.getItem("da-navnew-variant") || "jetzt"; } catch {}
-    setVariant(HINT[saved] ? saved : "jetzt");
+    let saved = "c";
+    try { saved = localStorage.getItem("da-navnew-variant") || "c"; } catch {}
+    setVariant(HINT[saved] ? saved : "c");
     paintProgress();
   </script>
 </Layout>

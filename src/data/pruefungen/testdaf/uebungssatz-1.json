@@ -1,0 +1,125 @@
+{
+  "setId": "tdaf-01",
+  "exam": "TestDaF",
+  "level": "TDN 3–5 (≈ B2–C1)",
+  "sourcing": "Uns liegt KEIN TestDaF-Quellmaterial vor. Der Aufbau unten — drei Leseaufgaben in der Reihenfolge Zuordnung, Multiple Choice, Ja/Nein/Text-sagt-dazu-nichts, dazu ein Schreibauftrag zu einer Grafik — ist allgemein bekanntes, öffentliches Wissen über das Prüfungsformat, abgelesen aus keiner geschützten Quelle. Alle Texte und alle Aufgaben in dieser Datei sind von DeutschAcademy selbst geschrieben. Es ist kein Satz aus einem TestDaF-Modellsatz übernommen. Genaue aktuelle Zeiten und Aufgabenzahlen stehen im offiziellen TestDaF-Modellsatz; wo wir eine Zahl nennen, ist sie als „circa“ gekennzeichnet.",
+  "scoringNote": "TestDaF hat keine Bestehensgrenze in Prozent: Jede Fertigkeit wird einzeln als TDN 3, 4 oder 5 eingestuft, und jede Hochschule legt selbst fest, welche Kombination sie verlangt. Die Einstufung unten ist deshalb KEINE TDN-Note — sie ist nur eine grobe Rückmeldung zu diesem Übungssatz. Was du für dein Studienfach brauchst, steht bei deiner Hochschule.",
+
+  "leseverstehen": {
+    "aufgabe1": {
+      "title": "Zuordnung",
+      "instruction": "Zehn Studierende suchen ein Angebot an der Universität. Lies die acht Anzeigen A–H und ordne jeder Person das passende Angebot zu. Für zwei Personen gibt es kein passendes Angebot — kreuze dann „—“ an.",
+      "anzeigen": [
+        { "key": "a", "gist": "Schreibwerkstatt", "title": "A · Schreibwerkstatt", "body": "Hausarbeit, Bachelorarbeit, Exposé: In wöchentlichen Terminen arbeiten Sie mit einer Tutorin an Ihrem eigenen Text — Aufbau, Argumentation, wissenschaftlicher Stil. Keine Korrektur fertiger Texte, sondern Begleitung beim Schreiben. Anmeldung jederzeit, kostenlos für Studierende." },
+        { "key": "b", "gist": "Sprachtandem", "title": "B · Sprachtandem-Börse", "body": "Sie sprechen Deutsch und möchten eine andere Sprache lernen? Wir vermitteln Paare: zwei Menschen, zwei Sprachen, eine Stunde pro Woche, je zur Hälfte. Ort und Zeit vereinbaren Sie selbst. Nur Vermittlung, kein Unterricht." },
+        { "key": "c", "gist": "Statistik-Beratung", "title": "C · Statistik-Beratung", "body": "Offene Sprechstunde für alle, die Daten auswerten müssen: Welches Verfahren passt zu meiner Fragestellung? Wie lese ich meine Ergebnisse? Bringen Sie Ihre Daten und Ihre Frage mit. Dienstags 14–17 Uhr, ohne Anmeldung." },
+        { "key": "d", "gist": "Wohnen", "title": "D · Zimmerbörse", "body": "Aktuelle Angebote für WG-Zimmer und Apartments im Stadtgebiet, aktualisiert jeden Morgen. Zusätzlich: Beratung zu Mietvertrag, Kaution und Anmeldung beim Einwohnermeldeamt. Persönlich im Servicebüro oder online." },
+        { "key": "e", "gist": "Praktikum & Beruf", "title": "E · Career Service", "body": "Von der Bewerbungsmappe bis zum Vorstellungsgespräch: Wir lesen Ihren Lebenslauf gegen, üben Gespräche im Rollenspiel und vermitteln Praktikumsplätze in der Region. Einzeltermine nach Vereinbarung." },
+        { "key": "f", "gist": "Prüfungsangst", "title": "F · Psychologische Beratung", "body": "Prüfungsangst, Aufschieben, Zweifel am Studium: In vertraulichen Einzelgesprächen suchen wir gemeinsam nach einem nächsten Schritt. Kurzfristige Termine in der Krisensprechstunde, Montag bis Freitag 9–11 Uhr." },
+        { "key": "g", "gist": "Bibliothek/Recherche", "title": "G · Kurs Literaturrecherche", "body": "Wie finde ich Fachliteratur, die es wert ist? Datenbanken, Schlagwortsuche, Zitierprogramme. Zweistündiger Kurs, jeden ersten Mittwoch im Monat, Treffpunkt Eingangshalle der Bibliothek." },
+        { "key": "h", "gist": "Kinderbetreuung", "title": "H · Campus-Kita", "body": "Betreuung für Kinder von einem bis sechs Jahren, direkt auf dem Campus, montags bis freitags 7.30–17 Uhr. Plätze sind knapp; studierende Eltern werden bevorzugt. Warteliste im Familienbüro." }
+      ],
+      "items": [
+        { "id": "lv1-1", "situation": "Ravi schreibt seine Bachelorarbeit und kommt seit Wochen nicht über die Gliederung hinaus. Er möchte regelmäßig mit jemandem über den Aufbau seines Textes sprechen.", "answer": "a" },
+        { "id": "lv1-2", "situation": "Chiara hat ihre Umfrage abgeschlossen und sitzt nun vor einer Tabelle mit 300 Zeilen. Sie weiß nicht, welches Verfahren zu ihrer Fragestellung passt.", "answer": "c" },
+        { "id": "lv1-3", "situation": "Tomás möchte nach dem Studium in Deutschland arbeiten und sucht jemanden, der seinen Lebenslauf durchsieht, bevor er sich bewirbt.", "answer": "e" },
+        { "id": "lv1-4", "situation": "Aiko schläft vor jeder Klausur kaum und bricht Prüfungen inzwischen ab. Sie möchte mit jemandem darüber sprechen, möglichst bald.", "answer": "f" },
+        { "id": "lv1-5", "situation": "Malik hat ein Seminar zu einem neuen Thema belegt und findet in der Datenbank entweder nichts oder zweitausend Treffer. Er braucht eine Einführung in die Suche.", "answer": "g" },
+        { "id": "lv1-6", "situation": "Elif zieht zum Semester in die Stadt, hat noch kein Zimmer und weiß auch nicht, wo sie sich anmelden muss.", "answer": "d" },
+        { "id": "lv1-7", "situation": "Jonas spricht gut Deutsch und möchte sein Portugiesisch verbessern, ohne einen weiteren Kurs zu belegen.", "answer": "b" },
+        { "id": "lv1-8", "situation": "Fatima studiert Vollzeit und sucht eine Betreuung für ihre zweijährige Tochter während der Vorlesungen.", "answer": "h" },
+        { "id": "lv1-9", "situation": "Lukas möchte seine fertige Masterarbeit von einem Profi Korrektur lesen und sprachlich glätten lassen, bevor er sie abgibt.", "answer": "x" },
+        { "id": "lv1-10", "situation": "Nadia sucht ein günstiges Sportangebot auf dem Campus, am liebsten Schwimmen zweimal die Woche.", "answer": "x" }
+      ]
+    },
+
+    "aufgabe2": {
+      "title": "Multiple Choice",
+      "instruction": "Lies den Text und wähle zu jeder Aufgabe die passende Antwort: a, b oder c.",
+      "text": {
+        "label": "Text — Zeitungsartikel",
+        "title": "Die Rückkehr der Nachtzüge",
+        "body": "Zwanzig Jahre lang galt der Nachtzug in Europa als Auslaufmodell. Eine Reihe von Bahngesellschaften stellte ihre Verbindungen ein; die Wagen waren alt, die Auslastung schwankte, und gegen einen Billigflug von München nach Stockholm war preislich kaum anzukommen. 2016 gab die Deutsche Bahn ihr Nachtzuggeschäft auf. Damals schien die Sache entschieden.\n\nHeute fahren wieder mehr Nachtzüge durch Europa als vor zehn Jahren. Den Anfang machte die österreichische ÖBB, die die aufgegebenen Verbindungen übernahm und in neue Wagen investierte, statt die alten weiterzufahren. Inzwischen sind andere Anbieter nachgezogen, und einzelne Strecken sind monatelang im Voraus ausgebucht.\n\nÜber die Gründe sind sich Fachleute uneinig. Die naheliegende Erklärung lautet: Klimabewusstsein. Eine Nachtzugfahrt verursacht einen Bruchteil der Emissionen eines Flugs, und tatsächlich geben viele Reisende in Befragungen an, aus Umweltgründen umgestiegen zu sein. Die Verkehrsforscherin Ines Halbritter hält diese Erklärung allein jedoch für zu einfach. „Was Menschen als Grund angeben, und was ihre Entscheidung tatsächlich trägt, fällt selten zusammen“, sagt sie. Ihre Untersuchung an vier Strecken zeigt ein anderes Muster: Gebucht wird vor allem dort, wo der Nachtzug schlicht bequemer ist als die Alternative — wo er am Abend in der Innenstadt abfährt und am Morgen in einer Innenstadt ankommt, ohne Anfahrt zum Flughafen, ohne Sicherheitskontrolle, ohne Hotelnacht.\n\nDamit rückt ein Kostenargument in den Vordergrund, das in der Debatte oft übersehen wird. Wer die eingesparte Hotelübernachtung mitrechnet, für den ist der Nachtzug auf mittleren Entfernungen häufig nicht teurer als der Flug, sondern günstiger. Auf sehr langen Strecken kippt die Rechnung allerdings wieder: Ab etwa 1500 Kilometern verliert der Zug den Zeitvorteil, den er über Nacht hat.\n\nDie Grenzen des Aufschwungs liegen weniger beim Publikum als beim Betrieb. Ein Nachtzug bindet teure Wagen für eine einzige Fahrt pro Nacht, während ein Hochgeschwindigkeitszug dieselbe Strecke am Tag dreimal bedient. Dazu kommt, dass ein Zug, der durch fünf Länder fährt, fünf Genehmigungen, fünf Sicherheitssysteme und fünf Trassenpreise braucht. „Das eigentliche Hindernis ist nicht die Nachfrage“, sagt Halbritter. „Es ist die Frage, wer ein Fahrzeug bezahlt, das in vierundzwanzig Stunden einmal fährt.“"
+      },
+      "items": [
+        { "id": "lv2-1", "prompt": "Warum wurden Nachtzüge um 2016 eingestellt?", "options": ["Weil es keine Nachfrage nach Nachtreisen mehr gab.", "Weil sie mit alten Wagen fuhren und preislich nicht mit Flügen mithalten konnten.", "Weil die Strecken durch zu viele Länder führten."], "answer": "Weil sie mit alten Wagen fuhren und preislich nicht mit Flügen mithalten konnten." },
+        { "id": "lv2-2", "prompt": "Was unterscheidet das Vorgehen der ÖBB von dem der anderen Gesellschaften?", "options": ["Sie fuhr die übernommenen Wagen unverändert weiter.", "Sie beschränkte sich auf kurze Strecken.", "Sie übernahm aufgegebene Verbindungen und kaufte neue Wagen."], "answer": "Sie übernahm aufgegebene Verbindungen und kaufte neue Wagen." },
+        { "id": "lv2-3", "prompt": "Wie beurteilt Halbritter die Erklärung „Klimabewusstsein“?", "options": ["Sie hält sie für falsch.", "Sie hält sie für richtig, aber nicht für ausreichend.", "Sie hält sie für die einzige tragfähige Erklärung."], "answer": "Sie hält sie für richtig, aber nicht für ausreichend." },
+        { "id": "lv2-4", "prompt": "Was zeigt Halbritters Untersuchung an vier Strecken?", "options": ["Gebucht wird vor allem dort, wo der Nachtzug bequemer ist als die Alternative.", "Gebucht wird vor allem von jüngeren Reisenden.", "Gebucht wird vor allem auf sehr langen Strecken."], "answer": "Gebucht wird vor allem dort, wo der Nachtzug bequemer ist als die Alternative." },
+        { "id": "lv2-5", "prompt": "Welcher Vorteil des Nachtzugs wird im Text genannt?", "options": ["Er ist immer billiger als jeder Flug.", "Er fährt und kommt in der Innenstadt an, ohne Flughafenanfahrt und Sicherheitskontrolle.", "Er ist schneller als ein Hochgeschwindigkeitszug."], "answer": "Er fährt und kommt in der Innenstadt an, ohne Flughafenanfahrt und Sicherheitskontrolle." },
+        { "id": "lv2-6", "prompt": "Wie verändert sich die Kostenrechnung, wenn man die Hotelnacht mitrechnet?", "options": ["Der Nachtzug ist auf mittleren Strecken oft günstiger als der Flug.", "Der Nachtzug wird dadurch teurer.", "An der Rechnung ändert sich nichts."], "answer": "Der Nachtzug ist auf mittleren Strecken oft günstiger als der Flug." },
+        { "id": "lv2-7", "prompt": "Was passiert laut Text ab etwa 1500 Kilometern?", "options": ["Der Zug wird deutlich billiger.", "Der Zug verliert seinen Zeitvorteil.", "Der Zug braucht keine weiteren Genehmigungen."], "answer": "Der Zug verliert seinen Zeitvorteil." },
+        { "id": "lv2-8", "prompt": "Worin liegt das wirtschaftliche Problem eines Nachtzugs?", "options": ["Die Fahrkarten lassen sich nicht im Voraus verkaufen.", "Teure Wagen sind für nur eine Fahrt pro Nacht gebunden.", "Es gibt zu wenig ausgebildetes Personal."], "answer": "Teure Wagen sind für nur eine Fahrt pro Nacht gebunden." },
+        { "id": "lv2-9", "prompt": "Was erschwert den grenzüberschreitenden Betrieb zusätzlich?", "options": ["Unterschiedliche Sprachen an Bord.", "Genehmigungen, Sicherheitssysteme und Trassenpreise in jedem Land.", "Das Fehlen von Nachtzugbahnhöfen."], "answer": "Genehmigungen, Sicherheitssysteme und Trassenpreise in jedem Land." },
+        { "id": "lv2-10", "prompt": "Was ist laut Halbritter das eigentliche Hindernis?", "options": ["Die fehlende Nachfrage der Reisenden.", "Die Finanzierung eines Fahrzeugs, das nur einmal täglich fährt.", "Der Widerstand der Fluggesellschaften."], "answer": "Die Finanzierung eines Fahrzeugs, das nur einmal täglich fährt." }
+      ]
+    },
+
+    "aufgabe3": {
+      "title": "Ja / Nein / Text sagt dazu nichts",
+      "instruction": "Lies den wissenschaftlichen Text. Steht die Aussage so im Text? Wähle „Ja“, „Nein“ oder „Text sagt dazu nichts“. Achtung: „Nein“ heißt, der Text sagt etwas anderes — nicht, dass er schweigt.",
+      "text": {
+        "label": "Text — aus einer Fachzeitschrift",
+        "title": "Wie zuverlässig ist das Gedächtnis von Augenzeugen?",
+        "body": "Die Aussage einer Augenzeugin gilt vor Gericht traditionell als starkes Beweismittel. Die Gedächtnisforschung hat dieses Vertrauen seit den 1970er Jahren in Frage gestellt, ohne es vollständig zu widerlegen: Erinnerung ist demnach kein Abruf einer gespeicherten Aufzeichnung, sondern eine Rekonstruktion, die bei jedem Abruf neu zusammengesetzt wird — und dabei durch Informationen beeinflusst werden kann, die erst nach dem Ereignis hinzukamen.\n\nDen klassischen Nachweis dafür lieferten Experimente, in denen Versuchspersonen denselben Unfallfilm sahen und anschließend unterschiedlich formulierte Fragen beantworteten. Wurde nach der Geschwindigkeit gefragt, mit der die Fahrzeuge „zusammenstießen“, fielen die Schätzungen niedriger aus als bei der Formulierung „ineinander krachten“. Eine Woche später erinnerten sich Personen der zweiten Gruppe häufiger an zersplittertes Glas — obwohl im Film keines zu sehen war. Die Formulierung der Frage hatte die Erinnerung verändert, nicht nur die Antwort darauf.\n\nSpätere Arbeiten haben das Bild verfeinert. Nicht alle Gedächtnisinhalte sind gleich anfällig: Randdetails lassen sich leichter verschieben als das Kerngeschehen, und eine Zeugin, die ein Ereignis mit starker emotionaler Beteiligung erlebt hat, behält dessen Zentrum oft bemerkenswert stabil, während sie die Umstände schlechter erinnert. Das Bild „das Gedächtnis ist unzuverlässig“ ist also zu grob; zutreffender ist, dass es selektiv zuverlässig ist.\n\nPraktisch bedeutsam ist vor allem eine Beobachtung: Die Sicherheit, mit der eine Zeugin ihre Aussage vorträgt, sagt für sich genommen wenig über deren Richtigkeit. Der Zusammenhang zwischen Überzeugtheit und Treffsicherheit ist schwach — und er wird noch schwächer, wenn die Zeugin zwischen Ereignis und Aussage eine Rückmeldung erhalten hat, etwa den Hinweis, sie habe „die richtige Person“ erkannt. Solche Rückmeldungen erhöhen die Sicherheit, ohne die Richtigkeit zu erhöhen.\n\nAus dieser Forschung sind Empfehlungen für die Praxis entstanden: Gegenüberstellungen sollten von Personen durchgeführt werden, die selbst nicht wissen, wer der oder die Verdächtige ist; die Zeugin sollte vorab erfahren, dass die gesuchte Person möglicherweise gar nicht dabei ist; und die geäußerte Sicherheit sollte unmittelbar protokolliert werden, bevor irgendeine Rückmeldung erfolgt. Mehrere Rechtssysteme haben solche Verfahren übernommen. Ob sie die Zahl der Fehlurteile messbar senken, ist bislang nicht abschließend geklärt."
+      },
+      "items": [
+        { "id": "lv3-1", "prompt": "Die Gedächtnisforschung hat gezeigt, dass Augenzeugenaussagen vor Gericht wertlos sind.", "answer": "n" },
+        { "id": "lv3-2", "prompt": "Erinnerung wird laut Text bei jedem Abruf neu zusammengesetzt.", "answer": "j" },
+        { "id": "lv3-3", "prompt": "Die Experimente wurden an Universitäten in den USA durchgeführt.", "answer": "k" },
+        { "id": "lv3-4", "prompt": "Die Formulierung „ineinander krachten“ führte zu höheren Geschwindigkeitsschätzungen als „zusammenstießen“.", "answer": "j" },
+        { "id": "lv3-5", "prompt": "Im gezeigten Unfallfilm war zersplittertes Glas zu sehen.", "answer": "n" },
+        { "id": "lv3-6", "prompt": "Die Experimente wurden auch mit Kindern als Versuchspersonen durchgeführt.", "answer": "k" },
+        { "id": "lv3-7", "prompt": "Randdetails lassen sich leichter verändern als das Kerngeschehen.", "answer": "j" },
+        { "id": "lv3-8", "prompt": "Wie sicher eine Zeugin auftritt, sagt wenig darüber aus, ob ihre Aussage stimmt.", "answer": "j" },
+        { "id": "lv3-9", "prompt": "Eine Rückmeldung nach der Aussage erhöht sowohl die Sicherheit als auch die Richtigkeit.", "answer": "n" },
+        { "id": "lv3-10", "prompt": "Es ist erwiesen, dass die neuen Verfahren die Zahl der Fehlurteile senken.", "answer": "n" }
+      ]
+    }
+  },
+
+  "schreiben": {
+    "instruction": "Im TestDaF schreiben Sie einen zusammenhängenden Text zu einer Grafik: Sie beschreiben zuerst die Daten und nehmen dann begründet Stellung zu einer Frage. Circa 60 Minuten.",
+    "thema": "Wohnen Studierende länger bei den Eltern?",
+    "grafik": {
+      "caption": "Studierende in Deutschland nach Wohnform (erfundene Beispieldaten von DeutschAcademy — keine echte Statistik)",
+      "unit": "Anteil in Prozent",
+      "years": ["2005", "2015", "2025"],
+      "series": [
+        { "label": "bei den Eltern", "values": [22, 26, 34] },
+        { "label": "Wohngemeinschaft", "values": [31, 30, 24] },
+        { "label": "eigene Wohnung", "values": [35, 33, 30] },
+        { "label": "Wohnheim", "values": [12, 11, 12] }
+      ]
+    },
+    "aufgabe": [
+      "Beschreiben Sie die Grafik: Welche Wohnformen werden verglichen, über welchen Zeitraum, und welche Entwicklung ist zu erkennen?",
+      "Nehmen Sie Stellung: Sollte der Staat mehr Wohnheimplätze bauen, oder sollten Studierende länger zu Hause wohnen? Begründen Sie Ihre Meinung.",
+      "Gehen Sie auch auf die Situation in Ihrem Herkunftsland ein."
+    ],
+    "aufbau": [
+      "Einleitung: Was zeigt die Grafik? Thema, Quelle, Zeitraum, Einheit — in ein bis zwei Sätzen.",
+      "Beschreibung: die auffälligste Entwicklung zuerst, dann die übrigen. Zahlen nennen, aber nicht alle.",
+      "Vergleich: Was steigt, was fällt, was bleibt gleich?",
+      "Stellungnahme: eine klare Position, zwei bis drei Begründungen, ein Gegenargument und Ihre Antwort darauf.",
+      "Schluss: ein Satz, der die Position noch einmal bündelt — keine neuen Argumente."
+    ],
+    "redemittel": [
+      "Die Grafik zeigt / stellt dar / gibt Auskunft über …",
+      "Im Jahr 2005 lag der Anteil bei 22 Prozent, zwanzig Jahre später bei 34 Prozent.",
+      "Am deutlichsten verändert hat sich …",
+      "Während der Anteil der WG-Bewohner sinkt, steigt …",
+      "Meiner Ansicht nach … / Dafür spricht, dass … / Dagegen lässt sich einwenden, dass …",
+      "Aus diesen Gründen halte ich es für sinnvoll, dass …"
+    ],
+    "checklist": [
+      "Einleitung nennt Thema, Zeitraum und Einheit der Grafik.",
+      "Mindestens eine konkrete Zahl ist genannt und richtig abgelesen.",
+      "Eine Entwicklung über die Zeit ist beschrieben, nicht nur ein einzelner Wert.",
+      "Die Stellungnahme hat eine klare Position und mindestens zwei Begründungen.",
+      "Ein Gegenargument kommt vor und wird beantwortet.",
+      "Das Herkunftsland ist erwähnt.",
+      "Der Text hängt zusammen: Konnektoren statt aneinandergereihter Sätze."
+    ]
+  }
+}

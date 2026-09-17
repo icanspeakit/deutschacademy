@@ -123,6 +123,11 @@
 .exam-main {
   padding: 16px;
   min-height: 320px;
+  /* A grid item defaults to min-width:auto, i.e. it refuses to shrink below the widest
+     min-content in it — so one wide child (the TestDaF ad grid, a table) pushed the pane
+     to 472px inside a 310px shell, and .exam-shell's overflow:hidden clipped the rest
+     rather than showing a scrollbar. Every section's content now wraps instead. */
+  min-width: 0;
   transition: opacity .18s ease, transform .18s ease;
 }
 .exam-main.is-swapping { opacity: 0; transform: translateY(6px); }
@@ -255,7 +260,13 @@
 }
 .exam-band.mid { background: color-mix(in srgb, var(--accent) 18%, transparent); color: var(--accent-dark); }
 .exam-band.low { background: color-mix(in srgb, var(--danger) 14%, transparent); color: var(--danger); }
+/* A two-column breakdown always fits; the TestDaF chart table has a column per year
+   and does not, so the card scrolls sideways rather than clipping the last year — the
+   same answer .format-table-wrap gives the exam pages. */
+.exam-result { overflow-x: auto; }
 .exam-breakdown { width: 100%; border-collapse: collapse; font-size: .84rem; }
+.exam-breakdown td, .exam-breakdown th { white-space: nowrap; }
+.exam-breakdown td:first-child, .exam-breakdown th:first-child { white-space: normal; }
 .exam-breakdown th, .exam-breakdown td { padding: 8px 6px; border-bottom: 1px solid var(--border); text-align: left; }
 .exam-breakdown td:last-child, .exam-breakdown th:last-child { text-align: right; font-variant-numeric: tabular-nums; }
 .exam-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
@@ -370,6 +381,105 @@
 }
 .model-answer[hidden] { display: none; }
 
+/* --- TestDaF: ad grid, long folding texts, the chart -------------------------- */
+
+.format-note--loud {
+  border-left: 3px solid var(--accent);
+  padding-left: 14px;
+}
+
+/* The eight ads in Aufgabe 1 are scanned, not read through, so they sit as small
+   cards side by side rather than as one column of prose. */
+.ad-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr));
+  gap: 12px;
+  margin-bottom: 22px;
+}
+.ad-card {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  padding: 14px 16px;
+}
+.ad-card-title { margin: 0 0 6px; font-weight: var(--fw-semibold); font-size: .92rem; color: var(--ink); }
+.ad-card-body { margin: 0; font-size: .86rem; line-height: 1.65; color: var(--muted); }
+
+/* A ~330-word text is four phone screens. It stays reachable while answering, so it
+   folds to a peek in place instead of being hidden behind a toggle that removes it. */
+.lese-text--long .lese-text-body { transition: max-height .25s ease; }
+.lese-text--long .lese-text-body p { margin: 0 0 12px; }
+.lese-text--long .lese-text-body p:last-child { margin-bottom: 0; }
+.lese-text--long.is-folded .lese-text-body {
+  max-height: 84px;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(to bottom, #000 40%, transparent);
+  mask-image: linear-gradient(to bottom, #000 40%, transparent);
+}
+.lese-text-title {
+  margin: 0 0 10px;
+  font-family: var(--font-body);
+  font-size: 1.05rem;
+  font-weight: var(--fw-semibold);
+  color: var(--ink);
+}
+@media (prefers-reduced-motion: reduce) {
+  .lese-text--long .lese-text-body { transition: none; }
+}
+
+/* The Schreiben chart is drawn from the data, not shipped as an image: it has to hold
+   up at 390px and follow the theme, and a PNG does neither. Four series, so the colours
+   come from the brand ramp rather than four unrelated hues. */
+.tdaf-chart {
+  margin: 0 0 18px;
+  padding: 16px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+}
+.tdaf-chart-cap { margin: 0 0 14px; font-size: .8rem; line-height: 1.5; color: var(--muted); }
+.tdaf-bars { display: flex; gap: 10px; align-items: flex-end; }
+.tdaf-bargroup { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 6px; }
+.tdaf-bargroup-bars { display: flex; gap: 3px; align-items: flex-end; height: 150px; }
+.tdaf-bar {
+  flex: 1;
+  min-width: 0;
+  height: var(--h);
+  border-radius: 4px 4px 0 0;
+  background: var(--series);
+  position: relative;
+}
+.tdaf-bar-val {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  padding-bottom: 3px;
+  font-size: .66rem;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+.tdaf-barlabel { text-align: center; font-size: .78rem; color: var(--muted); }
+
+.tdaf-bar[data-series="0"], .tdaf-swatch[data-series="0"] { --series: var(--brand-blue); }
+.tdaf-bar[data-series="1"], .tdaf-swatch[data-series="1"] { --series: var(--accent); }
+.tdaf-bar[data-series="2"], .tdaf-swatch[data-series="2"] { --series: color-mix(in srgb, var(--brand-blue) 45%, var(--surface-card)); }
+.tdaf-bar[data-series="3"], .tdaf-swatch[data-series="3"] { --series: color-mix(in srgb, var(--accent) 40%, var(--surface-card)); }
+
+.tdaf-legend {
+  list-style: none;
+  margin: 14px 0 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 16px;
+  font-size: .8rem;
+  color: var(--muted);
+}
+.tdaf-legend li { display: flex; align-items: center; gap: 7px; }
+.tdaf-swatch { width: 12px; height: 12px; border-radius: 3px; background: var(--series); flex-shrink: 0; }
+.tdaf-chart-unit { margin: 10px 0 0; font-size: .74rem; color: var(--muted); }
+
 /* --- wider than a phone ------------------------------------------------------ */
 @media (min-width: 860px) {
   .exam-shell { grid-template-columns: 236px minmax(0, 1fr); gap: 0; }
@@ -394,4 +504,12 @@
   .form-table tr { display: block; padding: 8px 0; border-bottom: 1px solid var(--border); }
   .form-answer { display: none; margin-left: 0; }
   .form-table.show-answers .form-answer { display: block; margin-top: 6px; }
+}
+
+@media (max-width: 460px) {
+  /* Twelve bars across 358px is 12px each before gaps, and the value labels collide.
+     Below this width the value sits inside nothing and the chart just gets shorter. */
+  .tdaf-bargroup-bars { height: 110px; }
+  .tdaf-bar-val { font-size: .6rem; }
+  .tdaf-bars { gap: 6px; }
 }

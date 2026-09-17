@@ -2,7 +2,7 @@
 // Plain JS, no schema library — package.json deliberately carries only `astro` at runtime.
 //   node scripts/validate-lexicon.mjs
 // Exits non-zero on any error, so it can gate a build or a commit hook.
-import { readFileSync } from "node:fs";
+import { readdirSync, readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import path from "node:path";
 import { slugify } from "../src/lib/audioSlug.js";
@@ -28,10 +28,25 @@ const TOPICS = new Set([
   "wortbildung",
 ]);
 
+// Provenance values scripts/fetch-wiktionary.mjs is allowed to stamp. A sourced field has to say
+// where it came from, so a later pass can find the rows that were never sourced instead of
+// guessing which of them to re-check. See docs/lexicon-enrichment-v1.md §2.1.
+const IPA_SOURCES = ["wiktionary"];
+
+// grammar_anchor keys to a grammar topic that must actually exist — same reasoning as the closed
+// §4 topic taxonomy: an unchecked free-text field accumulates typos that no page ever selects,
+// and the mistake only surfaces as a silently missing cross-link months later.
+const GRAMMAR_IDS = new Set(
+  readdirSync(path.join(ROOT, "src/data/grammatik"))
+    .filter((f) => f.endsWith(".json"))
+    .map((f) => f.replace(/\.json$/, ""))
+);
+
 const errors = [];
 const warnings = [];
 const seenIds = new Map();
 const seenUnits = new Set();
+const sourced = { ipa: 0, anchor: 0 };
 let total = 0;
 
 function err(where, msg) {
@@ -86,6 +101,32 @@ for (const level of LEVELS) {
       if (w.case && !CASES.includes(w.case)) err(where, `bad case "${w.case}"`);
       if (w.en == null) err(where, "missing English gloss");
       if (w.example != null && !w.example.trim()) err(where, "empty example");
+
+      // --- sourced fields (scripts/fetch-wiktionary.mjs) ---
+      if (w.ipa) sourced.ipa++;
+      if (w.grammar_anchor) sourced.anchor++;
+      if (w.ipa != null) {
+        if (typeof w.ipa !== "string" || !w.ipa.trim()) err(where, "empty ipa — omit the field instead");
+        if (!w.ipaSource) err(where, "ipa without ipaSource — a sourced field must record its provenance");
+        else if (!IPA_SOURCES.includes(w.ipaSource)) err(where, `unknown ipaSource "${w.ipaSource}"`);
+      } else {
+        if (w.ipaSource) err(where, "ipaSource without ipa");
+        if (w.ipaVariants) err(where, "ipaVariants without ipa");
+      }
+      if (w.ipaVariants != null) {
+        if (!Array.isArray(w.ipaVariants) || !w.ipaVariants.length) {
+          err(where, "ipaVariants must be a non-empty array — omit the field when there is one pronunciation");
+        } else {
+          if (w.ipaVariants.some((v) => typeof v !== "string" || !v.trim())) err(where, "ipaVariants contains an empty entry");
+          if (w.ipaVariants.includes(w.ipa)) err(where, "ipaVariants repeats ipa");
+        }
+      }
+
+      if (w.grammar_anchor != null) {
+        if (!GRAMMAR_IDS.has(w.grammar_anchor)) {
+          err(where, `grammar_anchor "${w.grammar_anchor}" is not a topic in src/data/grammatik/`);
+        }
+      }
     }
   }
 }
@@ -94,4 +135,5 @@ for (const w of warnings) console.warn(`warn  ${w}`);
 for (const e of errors) console.error(`ERROR ${e}`);
 
 console.log(`\n${total} words, ${seenUnits.size} units, ${errors.length} errors, ${warnings.length} warnings`);
+console.log(`${sourced.ipa} with sourced ipa (${total - sourced.ipa} still unsourced), ${sourced.anchor} with grammar_anchor`);
 if (errors.length) process.exit(1);

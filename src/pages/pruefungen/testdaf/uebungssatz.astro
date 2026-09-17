@@ -1,0 +1,396 @@
+---
+// TestDaF Leseverstehen + Schriftlicher Ausdruck on the exam shell (src/lib/examApp.js).
+//
+// This is the exam with the weakest sourcing on the site: there is no TestDaF material in
+// the teaching folder at all. So two things are true at once and both are said out loud on
+// the Start part — the *structure* (three reading tasks: matching, multiple choice, then
+// ja/nein/steht-nicht-im-Text, plus one writing task about a chart) is public knowledge
+// about the format, and every text and every item is written by DeutschAcademy.
+//
+// Hörverstehen is deliberately absent. At A1 a transcript is a workable stand-in for a
+// missing recording; at C1, where the task is following an academic lecture, reading it
+// is a different exercise wearing the same name. It comes when there is audio.
+import Layout from "../../../layouts/Layout.astro";
+import PracticeHeader from "../../../components/PracticeHeader.astro";
+import ExamApp from "../../../components/ExamApp.astro";
+import "../../../styles/practice.css";
+import "../../../styles/pruefungen.css";
+import satz from "../../../data/pruefungen/testdaf/uebungssatz-1.json";
+---
+<Layout
+  title="TestDaF: Leseverstehen üben – DeutschAcademy"
+  description="TestDaF-Leseverstehen im Prüfungsformat üben: Zuordnung, Multiple Choice und Ja/Nein/Text-sagt-dazu-nichts, dazu der Schreibauftrag zur Grafik — mit Fortschritt je Aufgabe und Auswertung."
+>
+  <PracticeHeader title="TestDaF" />
+  <main class="practice-main practice-main--wide">
+    <a href="/pruefungen/testdaf" class="vp-back-link">← Zurück zur TestDaF-Seite</a>
+
+    <div class="practice-hero">
+      <p class="eyebrow">TestDaF · Übungssatz</p>
+      <h1>Leseverstehen und Schreiben</h1>
+      <p>
+        Drei Leseaufgaben im TestDaF-Format, dazu der Schreibauftrag zur Grafik. Wie die Aufgaben
+        entstanden sind, steht im Teil „Start“ — bitte einmal lesen.
+      </p>
+    </div>
+
+    <ExamApp brand="TestDaF" sub="Leseverstehen · Schreiben" unit="Aufgaben" />
+  </main>
+
+  <script type="application/json" id="tdaf-data" set:html={JSON.stringify(satz)}></script>
+  <script type="module">
+    import { mountExamApp } from "../../../lib/examApp.js";
+    import { choiceCard, el, sectionHeader, escapeHtml, practiceToggle } from "../../../lib/exam/renderHelpers.js";
+    import { countAnswered, countCorrect, percent } from "../../../lib/exam/scoring.js";
+    import { recordAttempt } from "../../../lib/progress.js";
+
+    const data = JSON.parse(document.getElementById("tdaf-data").textContent);
+    const { leseverstehen: lv, schreiben } = data;
+    const LETTERS = "abcdefgh";
+    const idsOf = (part) => part.items.map((i) => i.id);
+
+    const a1Ids = idsOf(lv.aufgabe1);
+    const a2Ids = idsOf(lv.aufgabe2);
+    const a3Ids = idsOf(lv.aufgabe3);
+    const allLeseIds = [...a1Ids, ...a2Ids, ...a3Ids];
+
+    /* A long text the items below are answered against. Collapsible, because at ~330
+       words it is four phone screens, and once you have read it you want it out of the
+       way — but it must still be reachable while answering, so it collapses in place
+       rather than disappearing. */
+    function readingText(t) {
+      const box = el("div", "lese-text lese-text--long");
+      box.appendChild(el("p", "lese-text-label", escapeHtml(t.label)));
+      if (t.title) box.appendChild(el("h3", "lese-text-title", escapeHtml(t.title)));
+      const body = el("div", "lese-text-body");
+      for (const para of t.body.split("\n\n")) body.appendChild(el("p", null, escapeHtml(para)));
+      box.appendChild(body);
+
+      const toggle = el("button", "quiz-btn quiz-btn--ghost", "Text einklappen");
+      toggle.type = "button";
+      toggle.addEventListener("click", () => {
+        const folded = box.classList.toggle("is-folded");
+        toggle.textContent = folded ? "Text wieder aufklappen" : "Text einklappen";
+      });
+      box.appendChild(toggle);
+      return box;
+    }
+
+    const sections = [
+      {
+        key: "start",
+        label: "Start",
+        ids: null,
+        render(main, ctx) {
+          sectionHeader(main, {
+            eyebrow: "Übungssatz",
+            title: "TestDaF — Leseverstehen und Schreiben",
+            instruction:
+              "TestDaF kennt kein Niveau, das man bucht: Alle schreiben dieselbe Prüfung, und jede Fertigkeit wird einzeln als TDN 3, 4 oder 5 bewertet.",
+          });
+
+          const facts = el("table", "exam-breakdown");
+          facts.innerHTML =
+            "<thead><tr><th>Aufgabe</th><th>Was zu tun ist</th></tr></thead><tbody>" +
+            "<tr><td>Lesen 1</td><td>Zuordnung · 10 Aufgaben</td></tr>" +
+            "<tr><td>Lesen 2</td><td>Multiple Choice · 10 Aufgaben</td></tr>" +
+            "<tr><td>Lesen 3</td><td>Ja / Nein / steht nicht im Text · 10 Aufgaben</td></tr>" +
+            "<tr><td>Schreiben</td><td>Grafik beschreiben und Stellung nehmen · ca. 60 Min.</td></tr>" +
+            "</tbody>";
+          main.appendChild(el("div", "exam-result")).appendChild(facts);
+
+          // The sourcing note is not a footnote here. This is the one exam on the site
+          // with no source material at all, so it goes above the start button.
+          main.appendChild(el("p", "format-note format-note--loud", escapeHtml(data.sourcing)));
+          main.appendChild(el("p", "format-note", escapeHtml(data.scoringNote)));
+          main.appendChild(
+            el("p", "format-note",
+              "Hörverstehen fehlt in diesem Übungssatz: Dafür brauchen wir Tonaufnahmen. Einen Vortrag zu lesen statt zu hören wäre eine andere Übung unter demselben Namen.")
+          );
+
+          const go = el("button", "quiz-btn quiz-btn--primary", "Übungssatz starten →");
+          go.type = "button";
+          go.addEventListener("click", () => ctx.goTo("lesen1"));
+          main.appendChild(el("div", "exam-actions")).appendChild(go);
+        },
+      },
+
+      {
+        key: "lesen1",
+        label: "Lesen 1",
+        ids: a1Ids,
+        render(main, ctx) {
+          const a = lv.aufgabe1;
+          sectionHeader(main, { eyebrow: "Leseverstehen · Aufgabe 1", title: a.title, instruction: escapeHtml(a.instruction) });
+
+          // The eight ads, then the ten people. Each ad is its own small card rather
+          // than one block of prose: you scan these, you do not read them through.
+          const ads = el("div", "ad-grid");
+          for (const ad of a.anzeigen) {
+            const card = el("div", "ad-card");
+            card.appendChild(el("p", "ad-card-title", escapeHtml(ad.title)));
+            card.appendChild(el("p", "ad-card-body", escapeHtml(ad.body)));
+            ads.appendChild(card);
+          }
+          main.appendChild(ads);
+
+          // Options are the ad letters plus "—", labelled with a two-word gist so a
+          // phone row stays short: the full ads are right above, and the real answer
+          // sheet is lettered too.
+          const options = [
+            ...a.anzeigen.map((ad) => ({ key: ad.key, label: ad.gist })),
+            { key: "x", label: "kein Angebot passt" },
+          ];
+          a.items.forEach((item, i) => {
+            main.appendChild(
+              choiceCard({
+                qLabel: "Aufgabe " + (i + 1),
+                questionText: item.situation,
+                options,
+                correctKey: item.answer,
+                layout: "grid",
+                existing: ctx.state.answers[item.id],
+                onAnswer: (given, correct) => ctx.record(item.id, given, correct),
+              })
+            );
+          });
+        },
+      },
+
+      {
+        key: "lesen2",
+        label: "Lesen 2",
+        ids: a2Ids,
+        render(main, ctx) {
+          const a = lv.aufgabe2;
+          sectionHeader(main, { eyebrow: "Leseverstehen · Aufgabe 2", title: a.title, instruction: escapeHtml(a.instruction) });
+          main.appendChild(readingText(a.text));
+          a.items.forEach((item, i) => {
+            main.appendChild(
+              choiceCard({
+                qLabel: "Aufgabe " + (i + 11),
+                questionText: item.prompt,
+                options: item.options.map((o, n) => ({ key: LETTERS[n], label: o })),
+                correctKey: LETTERS[item.options.indexOf(item.answer)],
+                existing: ctx.state.answers[item.id],
+                onAnswer: (given, correct) => ctx.record(item.id, given, correct),
+              })
+            );
+          });
+        },
+      },
+
+      {
+        key: "lesen3",
+        label: "Lesen 3",
+        ids: a3Ids,
+        render(main, ctx) {
+          const a = lv.aufgabe3;
+          sectionHeader(main, { eyebrow: "Leseverstehen · Aufgabe 3", title: a.title, instruction: escapeHtml(a.instruction) });
+          main.appendChild(readingText(a.text));
+          const options = [
+            { key: "j", label: "Ja" },
+            { key: "n", label: "Nein" },
+            { key: "k", label: "Text sagt dazu nichts" },
+          ];
+          a.items.forEach((item, i) => {
+            main.appendChild(
+              choiceCard({
+                qLabel: "Aufgabe " + (i + 21),
+                questionText: item.prompt,
+                options,
+                correctKey: item.answer,
+                layout: "wrap",
+                existing: ctx.state.answers[item.id],
+                onAnswer: (given, correct) => ctx.record(item.id, given, correct),
+              })
+            );
+          });
+        },
+      },
+
+      {
+        key: "schreiben",
+        label: "Schreiben",
+        // Not auto-graded — a chart description is marked by a human. It carries a
+        // "geübt" mark so it counts as done without pretending to be scored.
+        ids: ["tdaf-schreiben"],
+        render(main, ctx) {
+          sectionHeader(main, {
+            eyebrow: "Schriftlicher Ausdruck",
+            title: schreiben.thema,
+            instruction: escapeHtml(schreiben.instruction),
+          });
+
+          /* The chart, drawn from the data rather than shipped as an image: it has to
+             be readable at 390px and in dark mode, and a PNG is neither. Grouped bars,
+             one group per year, because the task is about change over time. */
+          const g = schreiben.grafik;
+          const max = Math.max(...g.series.flatMap((s) => s.values));
+          const chart = el("figure", "tdaf-chart");
+          chart.appendChild(el("figcaption", "tdaf-chart-cap", escapeHtml(g.caption)));
+
+          const plot = el("div", "tdaf-bars");
+          g.years.forEach((year, yi) => {
+            const group = el("div", "tdaf-bargroup");
+            const bars = el("div", "tdaf-bargroup-bars");
+            g.series.forEach((s, si) => {
+              const bar = el("div", "tdaf-bar");
+              bar.style.setProperty("--h", Math.round((s.values[yi] / max) * 100) + "%");
+              bar.dataset.series = String(si);
+              bar.appendChild(el("span", "tdaf-bar-val", s.values[yi] + ""));
+              bar.setAttribute("role", "img");
+              bar.setAttribute("aria-label", `${s.label}, ${year}: ${s.values[yi]} ${g.unit}`);
+              bars.appendChild(bar);
+            });
+            group.appendChild(bars);
+            group.appendChild(el("span", "tdaf-barlabel", year));
+            plot.appendChild(group);
+          });
+          chart.appendChild(plot);
+
+          const legend = el("ul", "tdaf-legend");
+          g.series.forEach((s, si) => {
+            const li = el("li");
+            const swatch = el("span", "tdaf-swatch");
+            swatch.dataset.series = String(si);
+            li.appendChild(swatch);
+            li.appendChild(el("span", null, escapeHtml(s.label)));
+            legend.appendChild(li);
+          });
+          chart.appendChild(legend);
+          chart.appendChild(el("p", "tdaf-chart-unit", escapeHtml(g.unit)));
+          main.appendChild(chart);
+
+          // The same numbers as a table, so a screen reader and a learner who wants to
+          // check a value both get them without squinting at bar heights.
+          const tbl = el("table", "exam-breakdown");
+          tbl.innerHTML =
+            "<thead><tr><th>Wohnform</th>" + g.years.map((y) => `<th>${y}</th>`).join("") + "</tr></thead><tbody>" +
+            g.series.map((s) => `<tr><td>${escapeHtml(s.label)}</td>${s.values.map((v) => `<td>${v}</td>`).join("")}</tr>`).join("") +
+            "</tbody>";
+          main.appendChild(el("div", "exam-result")).appendChild(tbl);
+
+          main.appendChild(el("h3", "sub-title", "Ihre Aufgabe"));
+          const task = el("ul", "task-points");
+          for (const t of schreiben.aufgabe) task.appendChild(el("li", null, escapeHtml(t)));
+          main.appendChild(task);
+
+          const box = el("textarea", "write-box");
+          box.rows = 12;
+          box.placeholder = "Schreibe deinen Text hier …";
+          box.setAttribute("aria-label", "Dein Text");
+          try {
+            box.value = localStorage.getItem("da-tdaf-schreiben") ?? "";
+            box.addEventListener("input", () => localStorage.setItem("da-tdaf-schreiben", box.value));
+          } catch {}
+          main.appendChild(box);
+
+          const words = el("p", "word-count");
+          const paint = () => {
+            const n = box.value.trim() ? box.value.trim().split(/\s+/).length : 0;
+            words.textContent = n + " Wörter";
+          };
+          paint();
+          box.addEventListener("input", paint);
+          main.appendChild(words);
+
+          /* Aufbau, Redemittel and the checklist are help, not task — so they are
+             behind one button rather than three screens of scaffolding above the box
+             the learner is supposed to be writing in. */
+          const helpBtn = el("button", "quiz-btn quiz-btn--ghost", "Aufbau, Redemittel und Checkliste zeigen");
+          helpBtn.type = "button";
+          const help = el("div", "model-answer");
+          help.hidden = true;
+
+          help.appendChild(el("p", "lese-text-label", "Aufbau"));
+          const steps = el("ol", "task-points");
+          for (const a of schreiben.aufbau) steps.appendChild(el("li", null, escapeHtml(a)));
+          help.appendChild(steps);
+
+          help.appendChild(el("p", "lese-text-label", "Redemittel"));
+          const rm = el("ul", "task-points");
+          for (const r of schreiben.redemittel) rm.appendChild(el("li", null, escapeHtml(r)));
+          help.appendChild(rm);
+
+          help.appendChild(el("p", "lese-text-label", "Checkliste"));
+          const ck = el("ul", "task-points");
+          for (const c of schreiben.checklist) ck.appendChild(el("li", null, escapeHtml(c)));
+          help.appendChild(ck);
+
+          helpBtn.addEventListener("click", () => {
+            help.hidden = !help.hidden;
+            helpBtn.textContent = help.hidden
+              ? "Aufbau, Redemittel und Checkliste zeigen"
+              : "Aufbau, Redemittel und Checkliste verbergen";
+          });
+          main.appendChild(el("div", "exam-actions")).appendChild(helpBtn);
+          main.appendChild(help);
+
+          main.appendChild(
+            practiceToggle({
+              existing: ctx.state.answers["tdaf-schreiben"],
+              onToggle: (marked) => ctx.record("tdaf-schreiben", marked ? "done" : "", marked),
+            })
+          );
+        },
+      },
+
+      {
+        key: "ergebnis",
+        label: "Ergebnis",
+        ids: null,
+        render(main, ctx) {
+          const answered = countAnswered(allLeseIds, ctx.state);
+          const correct = countCorrect(allLeseIds, ctx.state);
+          const pct = percent(correct, allLeseIds.length);
+
+          sectionHeader(main, { eyebrow: "Auswertung", title: "Dein Ergebnis im Leseverstehen" });
+
+          const card = el("div", "exam-result");
+          if (!answered) {
+            card.appendChild(el("p", "instruction", "Noch keine Aufgabe beantwortet — fang bei „Lesen 1“ an."));
+          } else {
+            card.appendChild(el("div", "exam-score", correct + " <small>von " + allLeseIds.length + " richtig</small>"));
+            // Explicitly not a TDN. TestDaF grades each skill separately and every
+            // university sets its own requirement, so a percentage here is feedback on
+            // this practice set and nothing more.
+            const band = pct >= 80 ? ["", "Sehr sicher in diesem Übungssatz"]
+              : pct >= 60 ? ["mid", "Solide, mit Lücken"]
+              : ["low", "Hier lohnt sich weiteres Üben"];
+            card.appendChild(el("span", "exam-band " + band[0], band[1]));
+            card.appendChild(el("p", "instruction", pct + "% richtig. Das ist keine TDN-Einstufung — siehe den Hinweis darunter."));
+
+            const table = el("table", "exam-breakdown");
+            table.innerHTML =
+              "<thead><tr><th>Aufgabe</th><th>Richtig</th></tr></thead><tbody>" +
+              "<tr><td>1 · Zuordnung</td><td>" + countCorrect(a1Ids, ctx.state) + " / " + a1Ids.length + "</td></tr>" +
+              "<tr><td>2 · Multiple Choice</td><td>" + countCorrect(a2Ids, ctx.state) + " / " + a2Ids.length + "</td></tr>" +
+              "<tr><td>3 · Ja/Nein/nichts</td><td>" + countCorrect(a3Ids, ctx.state) + " / " + a3Ids.length + "</td></tr>" +
+              "</tbody>";
+            card.appendChild(table);
+
+            if (answered < allLeseIds.length) {
+              card.appendChild(el("p", "instruction", "Noch offen: " + (allLeseIds.length - answered) + " Aufgaben."));
+            }
+          }
+          main.appendChild(card);
+          main.appendChild(el("p", "format-note", escapeHtml(data.scoringNote)));
+
+          const actions = el("div", "exam-actions");
+          const back = el("a", "quiz-btn", "Zur TestDaF-Seite");
+          back.href = "/pruefungen/testdaf";
+          actions.appendChild(back);
+          main.appendChild(actions);
+        },
+      },
+    ];
+
+    mountExamApp(document.querySelector("[data-exam-root]"), {
+      examId: "testdaf",
+      unit: "Aufgaben",
+      sections,
+      onAnswer: (ok) => recordAttempt({ skill: "pruefungen", correct: ok }),
+    });
+  </script>
+</Layout>

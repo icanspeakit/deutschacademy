@@ -25,6 +25,21 @@ const artikelNounCount = asArtikelRows({ level: ["A1", "A2"] }).length;
 const kulturTopicCount = kultur.topics.length;
 const kulturQuizCount = kultur.topics.reduce((n, t) => n + t.quiz.length, 0);
 
+/* The Landeskunde menu's entries: the quiz first, because it is the one thing that
+   spans every topic, then the topics in the hub's own order. No i18n keys — topic
+   titles live in kultur.json and are not translated yet, so they render as written. */
+const kulturNavItems = [
+  { id: "kultur-quiz", href: "/uebungen/kultur/quiz", icon: "target",
+    title: "Quiz über alle Themen", count: `${kulturQuizCount} Fragen` },
+  ...kultur.topics.map((t) => ({
+    id: `kultur-${t.id}`,
+    href: `/uebungen/kultur/${t.id}`,
+    icon: t.icon,
+    title: t.title,
+    count: `${t.level} · ${t.quiz.length} Fragen`,
+  })),
+];
+
 export const lexiconCounts = counts();
 
 export const tools = [
@@ -116,7 +131,7 @@ export const navSections = [
   { id: "landeskunde", icon: "map-pin", href: "/uebungen/kultur",
     nameKey: "group.kultur.name", name: "Landeskunde",
     blurbKey: "group.kultur.blurb", blurb: "Alltag und Kultur in Deutschland",
-    items: itemsOf("kultur") },
+    items: kulturNavItems },
   { id: "pruefungen", icon: "graduation-cap", href: "/pruefungen",
     nameKey: "nav.exams", name: "Prüfungen",
     blurbKey: "group.pruefungen.blurb", blurb: "telc, Goethe, TestDaF, DTZ",

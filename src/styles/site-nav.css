@@ -60,13 +60,75 @@
   transition: transform .18s ease;
 }
 .lp-menu.is-open .lp-menu-caret { transform: rotate(180deg); }
+.lp-menu-btn--plain { text-decoration: none; }
+
+/* --- Niveaus panel ---------------------------------------------------------- */
+
+/* Four tiles across, because the whole point of the level menu is comparing A1…B2
+   at a glance; stacked rows would make that a scan instead of a look. */
+.lp-levels {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+  margin-bottom: 16px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border);
+}
+.lp-level-tile {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: none;
+  font: inherit;
+  text-align: left;
+  color: var(--ink);
+  cursor: pointer;
+  transition: border-color .15s ease, background-color .15s ease;
+}
+.lp-level-tile b { font-family: var(--font-display, inherit); font-size: 15px; font-weight: 600; }
+.lp-level-tile i { font-size: 11.5px; font-style: normal; color: var(--muted); line-height: 1.35; }
+.lp-level-tile:hover { border-color: var(--brand-blue); }
+.lp-level-tile.is-on {
+  border-color: var(--brand-blue);
+  background: var(--blue-50, rgba(13, 148, 136, .06));
+}
+.lp-level-tile.is-on b { color: var(--brand-blue-dark); }
+
+.lp-level-view[hidden] { display: none; }
+
+/* A level's grammar rows carry a title and nothing else, so they do not need the
+   two-line row height the tool lists use. */
+.lp-level-view .lp-panel-col a { padding-block: 6px; }
+.lp-level-view .lp-panel-col a b { margin-bottom: 0; }
+
+.lp-level-more {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+  font-size: 12.5px;
+  font-weight: 500;
+  color: var(--brand-blue);
+  text-decoration: none;
+}
+.lp-level-more:hover { text-decoration: underline; }
+
+.lp-level-empty {
+  margin: 0;
+  font-size: 12.5px;
+  line-height: 1.45;
+  color: var(--muted);
+}
 
 .lp-panel {
   position: absolute;
   top: calc(100% + 10px);
   left: 0;
   z-index: 30;
-  min-width: 260px;
+  min-width: 280px;
   padding: 18px;
   border: 1px solid var(--border);
   border-radius: 16px;
@@ -75,7 +137,7 @@
   animation: lp-panel-in .16s ease-out;
 }
 .lp-panel[hidden] { display: none; }
-.lp-panel--wide { min-width: 640px; }
+.lp-panel--wide { min-width: 620px; }
 
 /* The 10px gap above is dead space the pointer crosses on its way down, and leaving on
    the way through would close the panel mid-reach. This bridges it. */
@@ -261,6 +323,9 @@
   cursor: pointer;
 }
 .lp-drawer-row:active { background: var(--surface-sunken, rgba(0, 0, 0, .05)); }
+/* Icon-less variant, for lists where every row would carry the same icon. Still
+   48px tall, comfortably over the 44px tap-target floor. */
+.lp-drawer-row--compact { padding: 11px 12px; }
 
 .lp-drawer-ic {
   display: inline-flex;
@@ -288,7 +353,7 @@
 }
 .lp-drawer-chev { width: 18px; height: 18px; flex-shrink: 0; color: var(--muted); opacity: .6; }
 
-.lp-drawer-sub[hidden] { display: none; }
+[data-pane][hidden] { display: none; }
 .lp-drawer-back {
   display: inline-flex;
   align-items: center;
@@ -312,6 +377,33 @@
   text-transform: uppercase;
   color: var(--muted);
 }
+/* Second-level heading inside a level pane: "Grammatik", then "Wortschatz". */
+.lp-drawer-grouphead {
+  margin: 14px 0 2px 12px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.lp-drawer-grouphead:first-of-type { margin-top: 6px; }
+
+/* 2x2, not four rows: on a phone the four levels still have to be comparable, and
+   two-up keeps all four above the fold with room for the footer. */
+.lp-drawer-levels {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  padding: 2px 12px 6px;
+}
+.lp-level-tile--grid {
+  gap: 3px;
+  /* Roomier than the desktop tile: this is the tap target, not a hover target. */
+  padding: 14px 12px;
+  min-height: 84px;
+}
+.lp-level-tile--grid b { font-size: 20px; }
+.lp-level-meta { font-size: 11px; color: var(--muted); }
 .lp-drawer-all {
   display: flex;
   align-items: center;
@@ -351,6 +443,32 @@
   .lp-drawer { display: none; }
 }
 
+/* Six top-level items instead of two: between the breakpoint and a comfortable desktop
+   there is not room for both the old 44px logo gap and the CTA, so the bar tightens
+   rather than wrapping. */
+@media (max-width: 1120px) and (min-width: 901px) {
+  .lp-nav-row { gap: 12px; padding-inline: 16px; }
+  .lp-nav-left { gap: 16px; }
+  .lp-menubar { gap: 0; }
+  .lp-menu-btn { padding-inline: 8px; font-size: 13.5px; }
+  .lp-nav-right, .lp-nav-utils { gap: 12px; }
+  .lp-nav .lp-btn--primary { padding: 10px 16px; font-size: 13.5px; }
+}
+
+/* The Niveaus panel is the last menu before the right-hand cluster, so a panel anchored
+   to its left edge would run off-screen; it hangs from the right instead. */
+@media (min-width: 901px) {
+  .lp-menu[data-menu="niveaus"] .lp-panel { left: auto; right: 0; }
+}
+
+/* Hanging from the right only works while there is room to the left of the button. On a
+   small laptop there is not, so the panel halves its width and the tiles go 2x2 — the
+   same shape the drawer uses, for the same reason. */
+@media (max-width: 1120px) and (min-width: 901px) {
+  .lp-panel--wide { min-width: 460px; }
+  .lp-levels { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
 /* The nav's right cluster never shrank below the 900px breakpoint, so it ran past the
    screen edge on phones — 376px of content in a 360px viewport. */
 @media (max-width: 600px) {
@@ -366,4 +484,19 @@
 @media (max-width: 430px) {
   .lp-nav .lp-btn--primary { display: none; }
   .lp-drawer .lp-btn--primary { display: block; }
+}
+
+/* Landeskunde's menu carries sixteen entries — the quiz plus fifteen topics — and in
+   one column that ran 1198px tall on a 900px screen, i.e. off the bottom. Two columns
+   and a scroll cap on the list (not the panel, so "Übersicht" stays reachable) keep the
+   whole thing on screen. Targeted by id because the panel id is section.id, and no
+   other section is anywhere near this long. */
+@media (min-width: 901px) {
+  #lp-panel-landeskunde { min-width: 580px; }
+  #lp-panel-landeskunde .lp-panel-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 2px 22px;
+    max-height: min(62vh, 560px);
+    overflow-y: auto;
+  }
 }

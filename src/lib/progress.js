@@ -6,6 +6,10 @@ const NAME_KEY = "da_display_name";
 const GOAL_KEY = "da_weekly_goal";
 const DEFAULT_WEEKLY_GOAL = 50;
 const DAILY_ACTIVITY_RETENTION_DAYS = 60;
+const RECENTS_MAX = 6;
+// Routes worth remembering as "where I was". Everything else (the hubs, the landing page,
+// a study route) is a place you pass through, not a place you resume.
+const RESUMABLE = /^\/(uebungen|pruefungen)\/.+/;
 
 function todayStr(d = new Date()) {
   return d.toISOString().slice(0, 10);
@@ -30,14 +34,33 @@ function load() {
         dailyActivity: data.dailyActivity || {},
         vocabMastered: data.vocabMastered || [],
         topics: data.topics || {},
+        recents: data.recents || [],
       };
     }
   } catch {}
-  return { streak: 0, lastActiveDate: null, lastSkill: null, skills: {}, dailyActivity: {}, vocabMastered: [], topics: {} };
+  return { streak: 0, lastActiveDate: null, lastSkill: null, skills: {}, dailyActivity: {}, vocabMastered: [], topics: {}, recents: [] };
 }
 
 function save(data) {
   try { localStorage.setItem(STORE_KEY, JSON.stringify(data)); } catch {}
+}
+
+// Where the learner was when something got graded. recordAttempt/recordSession always run
+// inside the tool's own page, so the route and its <title> ARE the record — no call site has
+// to pass them, and a page that never grades anything never appears here. This is the only
+// thing the "Weitermachen" card on /uebungen and / is built from; if it is empty, that card
+// does not render at all rather than inventing a plausible last session.
+function remember(data) {
+  if (typeof location === "undefined") return;
+  const path = location.pathname.replace(/\/+$/, "") || "/";
+  if (!RESUMABLE.test(path)) return;
+  // "Perfekt – Grammatik – DeutschAcademy" -> "Perfekt". The suffix is the same on every
+  // page, so keeping it would make every card in the list read as the site's name.
+  const title = (typeof document === "undefined" ? "" : document.title).split(/\s[–—-]\s/)[0].trim();
+  const list = data.recents.filter((r) => r.path !== path);
+  const prev = data.recents.find((r) => r.path === path);
+  list.unshift({ path, title: title || path, n: (prev?.n || 0) + 1, at: todayStr() });
+  data.recents = list.slice(0, RECENTS_MAX);
 }
 
 function touch(data, skill) {
@@ -48,6 +71,7 @@ function touch(data, skill) {
   }
   data.dailyActivity[t] = (data.dailyActivity[t] || 0) + 1;
   if (skill) data.lastSkill = skill;
+  remember(data);
   const cutoff = daysAgoStr(DAILY_ACTIVITY_RETENTION_DAYS);
   for (const key of Object.keys(data.dailyActivity)) {
     if (key < cutoff) delete data.dailyActivity[key];
@@ -107,6 +131,26 @@ export function getProgress() {
 // { [topicSlug]: { done, attempts } } — what /dashboard draws its bars from.
 export function getTopicProgress() {
   return load().topics;
+}
+
+// What the "Weitermachen" card needs, or null when this browser has never practised anything.
+// `remote` is the seam for a logged-in learner: when there is an account to read from, the
+// caller fetches that record and passes it here, and the newer of the two wins. Nothing in
+// this module ever fabricates one — no login exists yet, so today it is always local.
+export function getResume({ remote } = {}) {
+  const data = load();
+  let list = (data.recents || []).filter((r) => r && r.path);
+  if (remote?.path) {
+    list = [{ ...remote }, ...list.filter((r) => r.path !== remote.path)]
+      .sort((a, b) => String(b.at || "").localeCompare(String(a.at || "")));
+  }
+  if (!list.length) return null;
+  return {
+    last: list[0],
+    recents: list.slice(1, 4),
+    week: { count: getWeeklyCount(data), goal: getWeeklyGoal() },
+    streak: data.streak,
+  };
 }
 
 // Clears everything this module stores. Behind an explicit user action only

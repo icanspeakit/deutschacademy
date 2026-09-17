@@ -83,6 +83,18 @@ Every tier ends with a **Definition of Done** and a required **sourcing/decision
 
 ---
 
+## Decisions (answered by Edgar, 2026-09-16)
+
+- **Ship telc/Goethe/TestDaF now**, on the public format information, rather than waiting for
+  source material. Items we write ourselves follow the DTZ Übungssatz precedent: our own
+  tasks, built to the official published format, never presented as official exam material.
+- **Everything is free for now.** No premium tier, no pricing copy — the `€XX/month (TBD)`
+  placeholder is not to be filled in, it is to be left out.
+- **Every exam gets a real interactive trainer**, built the way the Pflegeplace project builds
+  them (`src/lib/exam/*` + `src/lib/examApp.js` + `src/styles/exam-app.css` here): one sitting
+  split into parts, a rail with per-part progress, progress that survives a reload, and a
+  result part that scores against the exam's own published pass mark.
+
 ## Open decisions this prompt does NOT resolve (flag to Edgar, don't guess)
 
 - Whether telc/Goethe/TestDaF pages ship in Tier 1 with only generic public-knowledge format info, or wait until real source material for those exams exists.

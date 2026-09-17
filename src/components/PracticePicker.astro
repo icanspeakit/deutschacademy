@@ -1,0 +1,78 @@
+---
+// "Was willst du üben?" — the ask-first picker (idea B from /pivot).
+//
+// Thirteen tools and exams under each other is four screens on a 390px phone, and ~90% of
+// the learners are on one. So the first screen asks a question with five answers, and the
+// answer replaces it with its own short list: thirteen decisions become five, and nothing
+// is ever longer than one screen. The card you tap becomes the header you land under —
+// see src/lib/practicePicker.js for that part.
+//
+// Every panel is rendered here, on the server, rather than built by JS: the links are in
+// the HTML for crawlers, and the <noscript> rule below simply shows all of them at once.
+import Icon from "./Icon.astro";
+import { groups, itemsOf, total } from "../lib/catalog.js";
+import "../styles/practice-picker.css";
+
+interface Props {
+  /** Extra class on the root, for page-specific spacing. */
+  class?: string;
+  /** Where the "ganze Liste" button scrolls to instead of opening the flat list panel. */
+  fullListHref?: string;
+}
+const { class: extraClass = "", fullListHref } = Astro.props;
+
+const panels = [...groups.map((g) => ({ id: g.id, name: g.name, nameKey: g.nameKey, items: itemsOf(g.id) })),
+                { id: "alle", name: "Alle Werkzeuge", nameKey: "picker.all.title", items: [...itemsOf("grammatik"), ...itemsOf("woerter"), ...itemsOf("fertigkeiten"), ...itemsOf("kultur"), ...itemsOf("pruefungen")] }];
+---
+<section class={`pp ${extraClass}`} data-pp data-view="home">
+  <!-- Filled client-side from real localStorage activity (src/lib/progress.js). A first
+       visit has nothing to continue, so this stays empty rather than showing a fake card. -->
+  <div class="pp-resume-slot" data-pp-resume hidden></div>
+
+  <div class="pp-home" data-pp-home>
+    {groups.map((g) => (
+      <button class="pp-choice" type="button" data-group={g.id}>
+        <span class="pp-ic pp-ic--lg"><Icon name={g.icon} /></span>
+        <span class="pp-choice-txt">
+          <b data-i18n={g.nameKey}>{g.name}</b>
+          <i data-i18n={g.blurbKey}>{g.blurb}</i>
+        </span>
+        <span class="pp-choice-n">{itemsOf(g.id).length}</span>
+      </button>
+    ))}
+    {fullListHref
+      ? <a class="pp-plain" href={fullListHref} data-i18n="picker.all.cta">Lieber die ganze Liste sehen</a>
+      : <button class="pp-plain" type="button" data-group="alle" data-i18n="picker.all.cta">Lieber die ganze Liste sehen</button>}
+  </div>
+
+  <div class="pp-detail" data-pp-detail hidden>
+    <div class="pp-detail-head">
+      <button class="pp-back" type="button" data-pp-back aria-label="Zurück" data-i18n-attr="aria-label:picker.back">←</button>
+      <span class="pp-ic pp-ic--lg" data-pp-icon></span>
+      <span class="pp-detail-title" data-pp-title></span>
+    </div>
+    {panels.map((p) => (
+      <div class="pp-list" data-panel={p.id} hidden>
+        <p class="pp-panel-label" data-i18n={p.nameKey}>{p.name}</p>
+        {p.items.map((t) => (
+          <a class="pp-row" href={t.href}>
+            <span class="pp-ic"><Icon name={t.icon} /></span>
+            <span class="pp-row-t" data-i18n={t.titleKey}>{t.title}</span>
+            <span class="pp-count" data-i18n={t.countKey} data-i18n-vars={t.countVars ? JSON.stringify(t.countVars) : undefined}>{t.count}</span>
+          </a>
+        ))}
+      </div>
+    ))}
+  </div>
+
+  <p class="pp-foot"><span data-i18n="picker.total" data-i18n-vars={JSON.stringify({ n: total })}>{total} Werkzeuge, in fünf Richtungen sortiert.</span></p>
+</section>
+
+<noscript>
+  <style>
+    /* No JS: the question cannot be answered, so every panel is simply a list. */
+    [data-pp-home], [data-pp] .pp-detail-head, [data-pp] .pp-foot { display: none; }
+    [data-pp-detail], [data-pp] .pp-list, [data-pp] .pp-panel-label { display: block !important; }
+    [data-pp] .pp-list[data-panel="alle"] { display: none !important; }
+  </style>
+</noscript>

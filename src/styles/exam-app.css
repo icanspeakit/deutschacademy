@@ -1,0 +1,278 @@
+/* Chrome for the exam trainers (src/lib/examApp.js).
+ *
+ * Ported from Pflegeplace's src/styles/exam-app.css onto this project's design tokens.
+ * Phone first: below 860px the rail collapses into one select and the pane runs full
+ * width, because that is the width ~90% of the learners arrive at.
+ */
+.exam-app {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 16px 48px;
+}
+
+.exam-shell {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  background: var(--surface-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+/* --- top bar ---------------------------------------------------------------- */
+.exam-topbar {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
+}
+.exam-brand {
+  font-family: var(--font-body);
+  font-size: .95rem;
+  font-weight: var(--fw-semibold);
+  color: var(--ink);
+}
+.exam-brand small {
+  display: block;
+  font-size: .7rem;
+  font-weight: var(--fw-regular);
+  color: var(--muted);
+}
+.topbar-progress { display: flex; align-items: center; gap: 10px; flex: 1; min-width: 160px; }
+.topbar-track {
+  flex: 1;
+  height: 6px;
+  border-radius: 3px;
+  background: var(--border);
+  overflow: hidden;
+}
+.topbar-fill {
+  display: block;
+  height: 100%;
+  width: 0;
+  border-radius: 3px;
+  background: var(--gradient-brand);
+  transition: width .4s ease;
+}
+.topbar-count { font-size: .74rem; font-weight: var(--fw-semibold); color: var(--muted); white-space: nowrap; }
+
+/* --- rail ------------------------------------------------------------------- */
+.exam-sidebar { display: none; }
+.navitem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 10px 12px;
+  border: none;
+  border-radius: var(--radius);
+  background: none;
+  text-align: left;
+  font-family: var(--font-body);
+  font-size: .85rem;
+  color: var(--ink);
+  cursor: pointer;
+}
+.navitem:hover { background: var(--surface); }
+.navitem.active { background: var(--gradient-brand-soft); color: var(--brand-blue-dark); font-weight: var(--fw-semibold); }
+.navitem > span:nth-child(2) { flex: 1; min-width: 0; }
+.navfrac { font-size: .72rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+/* The dot is the part's progress: a ring that fills as the part is answered. */
+.navdot {
+  width: 12px;
+  height: 12px;
+  flex: none;
+  border-radius: 50%;
+  border: 2px solid var(--border-strong);
+  background: conic-gradient(var(--brand-blue) var(--pct, 0%), transparent 0);
+}
+.navdot.partial { border-color: var(--brand-blue); }
+.navdot.done { border-color: var(--brand-blue); background: var(--brand-blue); }
+.sidebar-foot { margin-top: auto; padding-top: 12px; }
+.reset-link {
+  border: none;
+  background: none;
+  padding: 6px 12px;
+  font-family: var(--font-body);
+  font-size: .76rem;
+  color: var(--muted);
+  text-decoration: underline;
+  cursor: pointer;
+}
+.reset-link:hover { color: var(--danger); }
+
+/* --- mobile rail ------------------------------------------------------------ */
+.mobile-nav { padding: 12px 16px 0; }
+.mobile-nav-select {
+  width: 100%;
+  padding: 11px 12px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius);
+  background: var(--surface-card);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: .9rem;
+}
+
+/* --- section pane ----------------------------------------------------------- */
+.exam-main {
+  padding: 16px;
+  min-height: 320px;
+  transition: opacity .18s ease, transform .18s ease;
+}
+.exam-main.is-swapping { opacity: 0; transform: translateY(6px); }
+
+.section-eyebrow {
+  margin: 0 0 6px;
+  font-family: var(--font-label);
+  font-size: .66rem;
+  font-weight: var(--fw-semibold);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--muted-soft);
+}
+.section-title {
+  font-family: var(--font-body);
+  font-size: 1.3rem;
+  font-weight: var(--fw-regular);
+  color: var(--ink);
+  margin: 0 0 8px;
+}
+.instruction { margin: 0 0 18px; color: var(--muted); font-size: .88rem; line-height: 1.55; }
+
+/* --- question card ---------------------------------------------------------- */
+.qcard {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface-card);
+  padding: 14px;
+  margin-bottom: 12px;
+}
+.qhead { margin-bottom: 8px; }
+.qnum {
+  display: inline-block;
+  padding: 3px 9px;
+  border-radius: var(--radius-pill);
+  background: var(--surface);
+  font-family: var(--font-label);
+  font-size: .68rem;
+  font-weight: var(--fw-semibold);
+  color: var(--muted);
+}
+.qcontext { margin: 0 0 6px; font-size: .82rem; color: var(--muted); }
+.qtext { margin: 0 0 12px; font-size: .96rem; line-height: 1.5; color: var(--ink); }
+
+.options { display: grid; gap: 8px; }
+.options.grid { grid-template-columns: 1fr 1fr; }
+.options.wrap { display: flex; flex-wrap: wrap; }
+.opt {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 11px 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface-card);
+  font-family: var(--font-body);
+  font-size: .9rem;
+  color: var(--ink);
+  text-align: left;
+  cursor: pointer;
+}
+.opt:hover:not(:disabled) { border-color: var(--brand-blue); }
+.optbadge {
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  flex: none;
+  border-radius: 50%;
+  background: var(--surface);
+  font-size: .72rem;
+  font-weight: var(--fw-bold);
+  color: var(--muted);
+}
+.opt.correct { border-color: var(--success); background: color-mix(in srgb, var(--success) 12%, transparent); }
+.opt.correct .optbadge { background: var(--success); color: #fff; }
+.opt.incorrect { border-color: var(--danger); background: color-mix(in srgb, var(--danger) 12%, transparent); }
+.opt.incorrect .optbadge { background: var(--danger); color: #fff; }
+.opt.dim { opacity: .5; }
+.opt:disabled { cursor: default; }
+
+.feedback {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
+  padding: 9px 12px;
+  border-radius: var(--radius);
+  font-size: .84rem;
+}
+.feedback.correct { background: color-mix(in srgb, var(--success) 14%, transparent); color: var(--success); }
+.feedback.incorrect { background: color-mix(in srgb, var(--danger) 12%, transparent); color: var(--danger); }
+.feedback b { color: inherit; }
+
+.practice-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-pill);
+  background: var(--surface-card);
+  font-family: var(--font-body);
+  font-size: .8rem;
+  color: var(--ink);
+  cursor: pointer;
+}
+.practice-toggle.marked { border-color: var(--success); color: var(--success); }
+.practice-toggle-dot { width: 10px; height: 10px; border-radius: 50%; border: 2px solid var(--border-strong); }
+
+/* --- result ----------------------------------------------------------------- */
+.exam-result {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--surface-card);
+  padding: 18px;
+}
+.exam-score { font-family: var(--font-body); font-size: 2.2rem; font-weight: var(--fw-regular); color: var(--ink); }
+.exam-score small { font-size: 1rem; color: var(--muted); }
+.exam-band {
+  display: inline-block;
+  margin: 8px 0 14px;
+  padding: 6px 14px;
+  border-radius: var(--radius-pill);
+  background: var(--gradient-brand-soft);
+  color: var(--brand-blue-dark);
+  font-size: .8rem;
+  font-weight: var(--fw-semibold);
+}
+.exam-band.mid { background: color-mix(in srgb, var(--accent) 18%, transparent); color: var(--accent-dark); }
+.exam-band.low { background: color-mix(in srgb, var(--danger) 14%, transparent); color: var(--danger); }
+.exam-breakdown { width: 100%; border-collapse: collapse; font-size: .84rem; }
+.exam-breakdown th, .exam-breakdown td { padding: 8px 6px; border-bottom: 1px solid var(--border); text-align: left; }
+.exam-breakdown td:last-child, .exam-breakdown th:last-child { text-align: right; font-variant-numeric: tabular-nums; }
+.exam-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
+
+/* --- wider than a phone ------------------------------------------------------ */
+@media (min-width: 860px) {
+  .exam-shell { grid-template-columns: 236px minmax(0, 1fr); gap: 0; }
+  .exam-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 14px 12px;
+    border-right: 1px solid var(--border);
+    background: var(--surface);
+    min-height: 100%;
+  }
+  .mobile-nav { display: none; }
+  .exam-main { padding: 22px 24px 28px; }
+  .options.grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}

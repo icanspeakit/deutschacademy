@@ -78,62 +78,44 @@
 
 /* Phone: the hub is a menu, not a showcase.
    ---------------------------------------------------------------------------
-   Stacked one per row, the 8 exercise cards ran 233px each — 3.0 screens — and the
-   5 exam cards another 1.4, so choosing what to do meant scrolling past everything
-   twice. A card that fills the screen is only worth it when there are three of
-   them. Below 640px the exercises become a single bordered list (icon, name,
-   count) and the exams a two-up tile grid, which is what both actually are: a
-   list of places to go. Nothing is removed from the page — only the descriptions
-   stop rendering, and the name plus the count is what the choice is made on.
+   /uebungen now opens on the ask-first picker (src/components/PracticePicker.astro),
+   so the only thing that matters here is how much chrome stands between the learner
+   and the question. Measured at 390x664 before this block existed: a nav that wrapped
+   onto three rows (199px), a hero with a subtitle nobody reads (278px) and the mode
+   tabs put the first choice card at y=594 — one pixel-perfect screen, zero choices on
+   it. Tightening the two of them puts four of the five on the first screen.
 
-   Everything compact hangs off .uv[data-hub="compact"], which the markup sets as
-   the default and VariantSwitch flips, so the old layout stays testable on a real
-   phone without a second copy of anything. */
+   The old `.uv[data-hub="compact"]` list styles lived here; they styled `.uv-grid`,
+   which /uebungen no longer renders. /uebungen-vorschau keeps the grid and never set
+   `data-hub`, so those rules were unreachable and are gone. */
 @media (max-width: 640px) {
-  .uv-nav-row { flex-wrap: wrap; }
-  .uv-nav-links { order: 3; width: 100%; }
-  .uv-hero-inner { align-items: flex-start; }
+  .uv-nav-row { flex-wrap: wrap; padding: 10px 16px; gap: 10px 14px; }
+  .uv-nav-links { order: 3; gap: 18px; }
+  /* Without this the CTA leads the second row and the two nav links trail it. */
+  .uv-nav-row .uv-btn--primary { order: 4; margin-left: auto; }
+  .uv-brand img { height: 30px; }
+  .uv-btn { padding: 8px 16px; }
 
-  /* --- "original": one full card per row, as it was --- */
+  .uv-hero { padding: 18px 16px; }
+  .uv-hero-inner { align-items: flex-start; gap: 12px; }
+  /* The subtitle says "choose an exercise"; the five cards below say it better. */
+  .uv-hero p { display: none; }
+
+  .uv-main { padding: 18px 16px 48px; }
+
+  /* /uebungen-vorschau only: one full card per row, as it was. */
   .uv-grid, .uv-grid--exams { grid-template-columns: minmax(0, 1fr); }
+}
 
-  /* --- "compact" --- */
-  .uv[data-hub="compact"] .uv-main { padding: 24px 16px 48px; }
-  .uv[data-hub="compact"] .uv-eyebrow { margin-bottom: 10px; }
-  .uv[data-hub="compact"] .uv-eyebrow:not(:first-child) { margin-top: var(--space-8); }
-
-  /* Exercises: one list, hairline-separated. */
-  .uv[data-hub="compact"] .uv-grid:not(.uv-grid--exams) {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 0;
-    background: var(--surface-card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    overflow: hidden;
-  }
-  .uv[data-hub="compact"] .uv-grid:not(.uv-grid--exams) .uv-card {
-    display: grid;
-    grid-template-columns: 38px minmax(0, 1fr) auto;
-    align-items: center;
-    gap: 13px;
-    padding: 12px 14px;
-    border: none;
-    border-top: 1px solid var(--border);
-    border-radius: 0;
-  }
-  .uv[data-hub="compact"] .uv-grid:not(.uv-grid--exams) .uv-card:first-child { border-top: none; }
-  .uv[data-hub="compact"] .uv-grid:not(.uv-grid--exams) .uv-card:hover { transform: none; box-shadow: none; background: var(--surface); }
-  .uv[data-hub="compact"] .uv-grid:not(.uv-grid--exams) .uv-card-icon {
-    width: 38px; height: 38px; margin: 0; border-radius: 12px; box-shadow: none;
-  }
-  .uv[data-hub="compact"] .uv-grid:not(.uv-grid--exams) .uv-card h3 { margin: 0; font-size: var(--text-base); font-weight: var(--fw-regular); }
-  /* The name and the count are the choice; the sentence under it is not. */
-  .uv[data-hub="compact"] .uv-grid:not(.uv-grid--exams) .uv-card p { display: none; }
-  .uv[data-hub="compact"] .uv-grid:not(.uv-grid--exams) .uv-pill { white-space: nowrap; }
-
-  /* Exams: two up. They carry no description, so a tile is already compact. */
-  .uv[data-hub="compact"] .uv-grid--exams { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
-  .uv[data-hub="compact"] .uv-grid--exams .uv-card { padding: 16px 12px; }
-  .uv[data-hub="compact"] .uv-grid--exams .uv-card-icon { width: 34px; height: 34px; margin-bottom: 10px; border-radius: 12px; }
-  .uv[data-hub="compact"] .uv-grid--exams .uv-card h3 { font-size: var(--text-sm); margin-bottom: 8px; font-weight: var(--fw-regular); }
+/* --- The catalogue: grid on a desktop, question on a phone -----------------
+   The same thirteen entries in two shapes, both in the HTML, one shown at a
+   time. 640px is not a taste: it is the width at which .uv-grid above drops to
+   a single column. Wider than that the grid is at least 2-up and reads at a
+   glance, so it stays exactly as it was. Narrower, thirteen cards under each
+   other are four screens of scroll, and the ask-first picker (idea B from
+   /pivot) replaces them. */
+.uv-ask { display: none; }
+@media (max-width: 640px) {
+  .uv-catalogue { display: none; }
+  .uv-ask { display: block; }
 }

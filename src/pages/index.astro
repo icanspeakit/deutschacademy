@@ -5,64 +5,16 @@ import ThemeToggle from "../components/ThemeToggle.astro";
 import DashboardMock from "../components/mocks/DashboardMock.astro";
 import UebungenMock from "../components/mocks/UebungenMock.astro";
 import LevelFold from "../components/LevelFold.astro";
+import PracticePicker from "../components/PracticePicker.astro";
+import Icon from "../components/Icon.astro";
+// One catalogue for / and /uebungen — see src/lib/catalog.js.
+import { tools, exams } from "../lib/catalog.js";
 import "../styles/landing.css";
 import "../styles/m1.css";
 import "../styles/front.css";
 // Last, so its fold-switching rules win over front.css at equal specificity.
 import "../styles/home-fold.css";
-import artikel from "../data/artikel.json";
-import grammatik from "../data/grammatik.json";
-import wortschatz from "../data/wortschatz.json";
-import sprechen from "../data/sprechen.json";
-import lesen from "../data/lesen.json";
-import kultur from "../data/kultur.json";
-import verbenPraepositionen from "../data/grammatik/verben-praepositionen.json";
-import lid from "../data/leben-in-deutschland.json";
 
-const grammarQuestionCount = grammatik.reduce((sum, t) => sum + t.questions.length, 0);
-const readingQuestionCount = lesen.groups.reduce((sum, g) => sum + g.questions.length, 0);
-const prepositionVerbCount = verbenPraepositionen.concept.reference.boxes.reduce((n, b) => n + b.items.length, 0);
-
-// Icons: inner <path>/<circle> markup for a 24x24 viewBox, fill="currentColor" —
-// ported from the "DA für Dich – Übungsseite" design mockup so the homepage grid
-// matches it (gradient tile + real iconography instead of emoji).
-const ICON = {
-  artikel: `<path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm0 14a4 4 0 1 1 0-8 4 4 0 0 1 0 8Z" fill-rule="evenodd"/><circle cx="12" cy="12" r="1.4"/>`,
-  grammatik: `<path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H12v17H6.5A2.5 2.5 0 0 1 4 17.5v-12Z"/><path d="M12 3h5.5A2.5 2.5 0 0 1 20 5.5v12a2.5 2.5 0 0 1-2.5 2.5H12V3Z" opacity="0.55"/>`,
-  wortschatz: `<path d="M3 7a2 2 0 0 1 2-2h4.5l1.5 2H19a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7Z"/>`,
-  aussprache: `<path d="M3 9h3.5l5-4v14l-5-4H3V9Z"/><path d="M15.5 9a3 3 0 0 1 0 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>`,
-  sprechen: `<rect x="9" y="2" width="6" height="12" rx="3"/><path d="M6.5 11a5.5 5.5 0 0 0 11 0h-1.6a3.9 3.9 0 0 1-7.8 0H6.5Z"/><rect x="11.2" y="18" width="1.6" height="3"/>`,
-  lesen: `<path d="M4 20 15 9l3 3-11 11H4v-3Z"/><path d="M13 6l3-3 3 3-3 3-3-3Z" opacity="0.55"/>`,
-  kultur: `<path d="M12 21s7-6.2 7-11.6A7 7 0 0 0 5 9.4C5 14.8 12 21 12 21Zm0-6.5a3 3 0 1 1 0-6 3 3 0 0 1 0 6Z" fill-rule="evenodd"/>`,
-  praepositionen: `<path d="M9.6 14.4 14.4 9.6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M13.2 6.6 15 4.8a3.8 3.8 0 0 1 5.4 5.4l-1.8 1.8" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M10.8 17.4 9 19.2a3.8 3.8 0 0 1-5.4-5.4l1.8-1.8" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>`,
-  comingSoon: `<path d="M12 2l2 6 6 2-6 2-2 6-2-6-6-2 6-2 2-6Z"/>`,
-  telc: `<path d="M6 2h9l3 3v17H6V2Z"/><rect x="9" y="12" width="6" height="1.4" fill="#fff" opacity="0.9"/><rect x="9" y="16" width="6" height="1.4" fill="#fff" opacity="0.9"/>`,
-  goethe: `<path d="M12 3 3 8h18L12 3Z"/><path d="M5 9h14v2H5V9Zm1 3h2v6H6v-6Zm4.5 0h2v6h-2v-6Zm4.5 0h2v6h-2v-6ZM4 19h16v2H4v-2Z"/>`,
-  testdaf: `<path d="M12 3 2 8l10 5 10-5-10-5Z"/><path d="M6 12.2v4.3c0 1.4 2.8 2.5 6 2.5s6-1.1 6-2.5v-4.3l-6 3-6-3Z" opacity="0.55"/>`,
-  dtz: `<path d="M12 5c-2-1.3-5-1.3-7 0v13c2-1.3 5-1.3 7 0V5Z"/><path d="M12 5c2-1.3 5-1.3 7 0v13c-2-1.3-5-1.3-7 0V5Z" opacity="0.55"/>`,
-};
-
-// Real catalog — matches /uebungen and /pruefungen exactly, no placeholder numbers.
-// title/desc/count are the German fallback shown before JS applies a translation;
-// titleKey/descKey/countKey + countVars point at the matching public/i18n/*.json entries.
-const tools = [
-  { href: "/uebungen/artikel-trainer", icon: ICON.artikel, titleKey: "tool.artikel.title", title: "der/die/das-Trainer", descKey: "tool.artikel.desc", desc: "Artikel gezielt üben, mit sofortigem Feedback.", countKey: "tool.artikel.count", countVars: { n: artikel.length }, count: `${artikel.length} Nomen` },
-  { href: "/uebungen/grammatik", icon: ICON.grammatik, titleKey: "tool.grammatik.title", title: "Grammatik", descKey: "tool.grammatik.desc", desc: "Themen nach Niveau: Akkusativ, Dativ, Passiv und mehr.", countKey: "tool.grammatik.count", countVars: { n: grammatik.length, q: grammarQuestionCount }, count: `${grammatik.length} Themen · ${grammarQuestionCount} Fragen` },
-  { href: "/uebungen/grammatik/verben-praepositionen", icon: ICON.praepositionen, titleKey: "tool.praepositionen.title", title: "Verben mit Präpositionen", descKey: "tool.praepositionen.desc", desc: "Feste Präpositionen in fünf Aufgabentypen üben.", countKey: "tool.praepositionen.count", countVars: { n: prepositionVerbCount }, count: `${prepositionVerbCount} Verben` },
-  { href: "/uebungen/wortschatz", icon: ICON.wortschatz, titleKey: "tool.wortschatz.title", title: "Wortschatz & Redemittel", descKey: "tool.wortschatz.desc", desc: "Karteikarten zum Umdrehen und Wiederholen.", countKey: "tool.wortschatz.count", countVars: { n: wortschatz.length }, count: `${wortschatz.length} Karten` },
-  { href: "/uebungen/aussprache", icon: ICON.aussprache, titleKey: "tool.aussprache.title", title: "Aussprache-Training", descKey: "tool.aussprache.desc", desc: "Wörter anhören und im Langsam-Modus üben.", countKey: "tool.aussprache.count", countVars: { n: wortschatz.length + artikel.length }, count: `${wortschatz.length + artikel.length} Wörter` },
-  { href: "/uebungen/sprechen", icon: ICON.sprechen, titleKey: "tool.sprechen.title", title: "Sprechen: Bildbeschreibung", descKey: "tool.sprechen.desc", desc: "Echte DTZ-Prüferfragen, mit 90-Sekunden-Timer.", countKey: "tool.sprechen.count", countVars: { n: sprechen.length }, count: `${sprechen.length} Bilder` },
-  { href: "/uebungen/lesen-schreiben", icon: ICON.lesen, titleKey: "tool.lesen.title", title: "Lesen & Schreiben", descKey: "tool.lesen.desc", desc: "DTZ-Leseverstehen-Simulation plus Schreibaufgaben.", countKey: "tool.lesen.count", countVars: { n: readingQuestionCount }, count: `${readingQuestionCount} Aufgaben` },
-  { href: "/uebungen/kultur", icon: ICON.kultur, titleKey: "tool.kultur.title", title: "Kulturwissen", descKey: "tool.kultur.desc", desc: "Einblicke aus echten Unterrichtsgesprächen.", countKey: "tool.kultur.count", countVars: { n: kultur.length }, count: `${kultur.length} Thema${kultur.length === 1 ? "" : "n"}` },
-];
-
-const exams = [
-  { href: "/pruefungen/telc", icon: ICON.telc, title: "telc", level: "A1–C2" },
-  { href: "/pruefungen/goethe", icon: ICON.goethe, title: "Goethe-Zertifikat", level: "A1–C2" },
-  { href: "/pruefungen/testdaf", icon: ICON.testdaf, title: "TestDaF", level: "≈ B2–C1" },
-  { href: "/pruefungen/dtz", icon: ICON.dtz, title: "DTZ", level: "A2 / B1" },
-  { href: "/pruefungen/leben-in-deutschland", icon: ICON.kultur, title: "Leben in Deutschland", level: `${lid.bundeslaender.length} Bundesländer` },
-];
 
 const toolCount = tools.length;
 const examCount = exams.length;
@@ -123,6 +75,10 @@ const userCount = 412; // actual signups so far
          paragraph. Below that width the two mockups cannot be shown at a size
          where their controls are clickable, so they are replaced rather than
          shrunk; they reappear further down, at real width, in the peek band. -->
+    <!-- Returning learners only: "Wo stehst du?" below is a question they have already
+         answered, so the thing they were last doing goes above it. Filled client-side from
+         this browser's own record; a first visit renders nothing here at all. -->
+    <div class="lp-resume-band" data-pp-resume-top hidden></div>
     <LevelFold />
 
     <!-- HERO FOLD, >1024px: the "A · Versetzt" arrangement promoted from the
@@ -279,36 +235,51 @@ const userCount = 412; // actual signups so far
     <!-- TOOLS -->
     <section class="lp-section">
       <div class="lp-wrap">
-        <div class="lp-section-head" style="max-width:600px">
+        <!-- One catalogue, two shapes, one per width — see the swap rule at the end of
+             landing.css. Wide enough for a grid, the grid is the better answer: thirteen
+             tools read at a glance and nothing has to be asked. It is only when the grid
+             collapses to one card per row that the list becomes the page, and there the
+             question earns its tap. Both are in the HTML; CSS shows one. -->
+        <div class="lp-section-head lp-desk" style="max-width:600px">
           <div class="lp-eyebrow" data-i18n="home.tools.eyebrow">Alle Werkzeuge</div>
           <h2 data-i18n="home.tools.heading2">Übungen und Prüfungsvorbereitung, an einem Ort</h2>
           <p data-i18n="home.tools.subtitle">Kein Zusammensuchen zwischen Apps und Karteikarten — alles lebt im selben Dashboard.</p>
         </div>
-        <div class="lp-tools-group">
-          <div class="lp-tools-label" data-i18n="nav.exercises">Übungen</div>
-          <div class="lp-tools-grid lp-tools-grid--tools">
-            {tools.map((t) => (
-              <a href={t.href} class="lp-tool-card">
-                <div class="lp-tool-tile"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" set:html={t.icon} /></div>
-                <h4 data-i18n={t.titleKey}>{t.title}</h4>
-                <p data-i18n={t.descKey}>{t.desc}</p>
-                <span class="badge badge-brand" data-i18n={t.countKey} data-i18n-vars={JSON.stringify(t.countVars)}>{t.count}</span>
-              </a>
-            ))}
+        <div class="lp-section-head lp-phone" style="max-width:600px">
+          <div class="lp-eyebrow" data-i18n="home.tools.eyebrow">Alle Werkzeuge</div>
+          <h2 data-i18n="picker.title">Was willst du üben?</h2>
+          <p data-i18n="home.tools.subtitle">Kein Zusammensuchen zwischen Apps und Karteikarten — alles lebt im selben Dashboard.</p>
+        </div>
+
+        <div class="lp-desk">
+          <div class="lp-tools-group">
+            <div class="lp-tools-label" data-i18n="nav.exercises">Übungen</div>
+            <div class="lp-tools-grid lp-tools-grid--tools">
+              {tools.map((t) => (
+                <a href={t.href} class="lp-tool-card">
+                  <div class="lp-tool-tile"><Icon name={t.icon} /></div>
+                  <h4 data-i18n={t.titleKey}>{t.title}</h4>
+                  <p data-i18n={t.descKey}>{t.desc}</p>
+                  <span class="badge badge-brand" data-i18n={t.countKey} data-i18n-vars={JSON.stringify(t.countVars)}>{t.count}</span>
+                </a>
+              ))}
+            </div>
+          </div>
+          <div class="lp-tools-group lp-tools-group--exams">
+            <div class="lp-tools-label" data-i18n="nav.exams">Prüfungen</div>
+            <div class="lp-tools-grid lp-tools-grid--exams">
+              {exams.map((e) => (
+                <a href={e.href} class="lp-tool-card">
+                  <div class="lp-tool-tile"><Icon name={e.icon} /></div>
+                  <h4>{e.title}</h4>
+                  <span class="badge badge-neutral" data-i18n={e.countKey} data-i18n-vars={e.countVars ? JSON.stringify(e.countVars) : undefined}>{e.count}</span>
+                </a>
+              ))}
+            </div>
           </div>
         </div>
-        <div class="lp-tools-group lp-tools-group--exams">
-          <div class="lp-tools-label" data-i18n="nav.exams">Prüfungen</div>
-          <div class="lp-tools-grid lp-tools-grid--exams">
-            {exams.map((e) => (
-              <a href={e.href} class="lp-tool-card">
-                <div class="lp-tool-tile"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" set:html={e.icon} /></div>
-                <h4>{e.title}</h4>
-                <span class="badge badge-neutral">{e.level}</span>
-              </a>
-            ))}
-          </div>
-        </div>
+
+        <PracticePicker class="lp-picker lp-phone" />
       </div>
     </section>
 
@@ -457,4 +428,15 @@ const userCount = 412; // actual signups so far
       </div>
     </footer>
   </div>
+
+  <script type="module">
+    import { mountPracticePicker, mountResumeCard } from "../lib/practicePicker.js";
+
+    // `remote` stays null until there is an account to read a last session from; the
+    // "Weitermachen" card falls back to this browser's own record (src/lib/progress.js)
+    // and renders nothing at all on a first visit.
+    mountPracticePicker(document.querySelector("[data-pp]"), { remote: null });
+    // Same card at the top of the page, without the recents list — one line of a long page.
+    mountResumeCard(document.querySelector("[data-pp-resume-top]"), { remote: null, recents: false });
+  </script>
 </Layout>

@@ -1,0 +1,32 @@
+---
+// The markup shell every exam trainer mounts into (src/lib/examApp.js fills it).
+// Ported from the Pflegeplace exam pages: top progress bar, section rail, pane.
+//
+//   <ExamApp brand="Leben in Deutschland" sub="Übungstest" unit="Fragen" />
+//   mountExamApp(document.querySelector("[data-exam-root]"), { examId, sections });
+import "../styles/exam-app.css";
+
+interface Props {
+  /** Left of the top bar — which exam this is. */
+  brand: string;
+  /** Second line under the brand. */
+  sub?: string;
+  /** What the counter counts ("Fragen", "Aufgaben"). */
+  unit?: string;
+}
+const { brand, sub, unit = "Fragen" } = Astro.props;
+---
+<div class="exam-app" data-exam-root>
+  <div class="exam-shell">
+    <div class="exam-topbar">
+      <div class="exam-brand">{brand}{sub && <small>{sub}</small>}</div>
+      <div class="topbar-progress">
+        <div class="topbar-track"><span class="topbar-fill" data-exam-topfill></span></div>
+        <div class="topbar-count" data-exam-topcount>0 / 0 {unit}</div>
+      </div>
+    </div>
+    <nav class="exam-sidebar" data-exam-sidebar aria-label="Prüfungsteile"></nav>
+    <div class="mobile-nav" data-exam-mobile-nav></div>
+    <main class="exam-main" data-exam-main></main>
+  </div>
+</div>

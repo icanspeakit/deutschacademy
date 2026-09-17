@@ -585,3 +585,16 @@ button.lp-quiz-choice:disabled { cursor: default; }
   .lp-bild { flex-direction: column; }
   .lp-bild img { width: 100%; max-height: 150px; }
 }
+
+/* --- Alle Werkzeuge: grid on a desktop, question on a phone ----------------
+   The same thirteen entries in two shapes, both in the HTML, one shown at a
+   time. 720px is not a taste: it is the width at which .lp-tools-grid above
+   drops to a single column. Wider than that, the grid is at least 2-up and the
+   whole catalogue reads at a glance — nothing to ask, so it stays as it was.
+   Narrower, it is thirteen cards under each other and the list becomes the
+   page; there the ask-first picker (idea B from /pivot) takes over. */
+.lp-phone { display: none; }
+@media (max-width: 720px) {
+  .lp-desk { display: none; }
+  .lp-phone { display: block; }
+}

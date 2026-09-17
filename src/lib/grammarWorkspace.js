@@ -331,22 +331,41 @@ function mountTable(root, ex, notify) {
  * own answer row — the same shape as the `fill` exercise directly above it, which
  * means no new mechanic to learn and nothing that can scroll out of reach.
  *
- * Two things the data forced (see the counts in src/data/grammatik):
- *   - 11 of 15 stories have a sentence holding two or three blanks, so a row with
- *     more than one gets numbered gaps and numbered answer rows. A single-gap
- *     sentence stays unnumbered — a "1" there is noise.
- *   - The option set repeats under EVERY gap, so the cost is options x gaps, not
- *     options. INLINE_MAX (8) is the right threshold for `fill`, where each item
- *     has one gap; here it produced 96 pills and a 9000px card on Perfekt (8
- *     answers, 12 gaps) — the exact wall of choices the bank was invented to
- *     avoid. Five is where a row still reads as one line of answers on a phone,
- *     so five is the cut. Longer sets keep the bank.
+ * Every story uses this layout, whatever its answers cost. The row set used to be
+ * capped at five options because the set repeats under EVERY gap, so the price is
+ * options x gaps, not options: Perfekt (8 answers, 12 gaps) rendered 96 pills and
+ * a 9000px card — the exact wall of choices the bank was invented to avoid — and
+ * anything wider fell back to the bank. That price is now paid per gap instead of
+ * per exercise (see `gapOptions`), so a text may range over as many answers as it
+ * likes — fourteen connectors, ten negation words, one preposition per sentence —
+ * without any row growing past a line.
+ *
+ * One thing the data forced (see src/data/grammatik): 11 of 15 stories have a
+ * sentence holding two or three blanks, so a row with more than one gets numbered
+ * gaps and numbered answer rows. A single-gap sentence stays unnumbered — a "1"
+ * there is noise.
  */
-const STORY_ROWS_MAX_OPTIONS = 5;
+
+/** Five is where a row still reads as one line of answers on a 390px phone. */
+const STORY_ROW_OPTIONS = 5;
+
+/** The options offered under one gap: its own answer plus distractors drawn from
+ *  the exercise's other answers. Anything `accepts` would also mark correct here
+ *  is excluded, so a row never offers two right answers against one key. */
+function gapOptions(pool, answer, max) {
+  const correct = String(Array.isArray(answer) ? answer[0] : answer);
+  const distractors = shuffleList(pool.filter((o) => o !== correct && !accepts(answer, o)));
+  return shuffleList([correct, ...distractors.slice(0, Math.max(0, max - 1))]);
+}
 
 /** Cut the segment list into sentences. The boundaries sit INSIDE the text
  *  segments — one routinely ends a sentence and opens the next ("… das Wochenende.
- *  Sie wartet ") — so this splits the text, not just the list. */
+ *  Sie wartet ") — so this splits the text, not just the list.
+ *
+ *  A row is a sentence and the answers that belong to it, so a piece with no blank
+ *  in it is not a row: it joins the next one. Without that, the list-numbered texts
+ *  (zweiteilige-konnektoren opens its items "1. Jan möchte …") each spend a row on
+ *  a bare "1." above the sentence it numbers. */
 function storyRows(segments) {
   const rows = [];
   let cur = [];
@@ -364,58 +383,39 @@ function storyRows(segments) {
     if (rest) cur.push({ text: rest });
   }
   if (cur.length) rows.push(cur);
-  return rows.filter((r) => r.length);
+
+  const hasBlank = (r) => r.some((s) => s.blank !== undefined);
+  const merged = [];
+  let carry = [];
+  for (const row of rows.filter((r) => r.length)) {
+    // The split ate the whitespace between the two pieces; put one back.
+    const next = carry.length ? [...carry, { text: " " }, ...row] : [...row];
+    carry = [];
+    if (hasBlank(next)) merged.push(next);
+    else carry = next;
+  }
+  // A gapless tail has nothing to carry into, so it rides on the last row.
+  if (carry.length) {
+    if (merged.length) merged[merged.length - 1].push({ text: " " }, ...carry);
+    else merged.push(carry);
+  }
+  return merged;
 }
 
 function mountStory(root, ex, notify) {
   const blanks = ex.segments.filter((s) => s.blank !== undefined);
-  const options = shuffleList(optionSet(ex, blanks.map((b) => b.answer)));
-  const state = { values: {}, checked: false, selected: null };
-
-  if (options.length <= STORY_ROWS_MAX_OPTIONS) return mountStoryRows(root, ex, options, state, blanks, notify);
-
-  function render() {
-    const html = ex.segments
-      .map((seg) => {
-        if (seg.text !== undefined) return escapeHtml(seg.text);
-        // Bank mode: too many options to repeat under every gap.
-        return slotHtml(seg.blank, state.values[seg.blank] || "", state.checked, seg.answer, "…");
-      })
-      .join("");
-    const allCorrect = state.checked && blanks.every((s) => accepts(s.answer, state.values[s.blank] || ""));
-    const missed = state.checked ? blanks.filter((s) => !accepts(s.answer, state.values[s.blank] || "")) : [];
-
-    root.innerHTML = `
-      ${bankHtml(options, state.selected)}
-      <p class="vp-story-text">${html}</p>
-      <div class="vp-actions">
-        ${state.checked ? "" : `<button type="button" class="vp-btn-check" data-story-check>${LABEL.check}</button>`}
-        <button type="button" class="vp-link-btn" data-story-reset>${LABEL.reset}</button>
-        ${state.checked ? `<span class="vp-feedback ${allCorrect ? "is-correct" : "is-wrong"}">${allCorrect ? LABEL.allCorrect : LABEL.someWrong}</span>` : ""}
-      </div>
-      ${missed.length ? `<p class="vp-fill-hint">${missed.map((s) => `${s.blank + 1}. <strong>${escapeHtml(modelAnswer(s.answer))}</strong>`).join(" · ")}</p>` : ""}`;
-
-    wireBank(root, state, render);
-    root.querySelector("[data-story-check]")?.addEventListener("click", check);
-    root.querySelector("[data-story-reset]").addEventListener("click", reset);
-  }
-  function check() {
-    state.checked = true;
-    blanks.forEach((s) => notify(accepts(s.answer, state.values[s.blank] || "")));
-    render();
-  }
-  function reset() {
-    state.values = {};
-    state.selected = null;
-    state.checked = false;
-    render();
-  }
-  render();
-}
-
-/** The sentence-row layout: one sentence, its gaps, its answers underneath. */
-function mountStoryRows(root, ex, options, state, blanks, notify) {
+  const pool = optionSet(ex, blanks.map((b) => b.answer));
   const rows = storyRows(ex.segments);
+  const state = { values: {}, checked: false };
+
+  // An exercise whose whole answer set already fits the cap keeps showing all of
+  // it everywhere: with four prepositions on the table the learner is comparing
+  // them, and thinning that per gap would hand out free eliminations.
+  const shared = pool.length <= STORY_ROW_OPTIONS ? shuffleList(pool) : null;
+  // Drawn once, not per render — re-drawing a row must not reshuffle the answers
+  // under the learner's thumb between one tap and the next.
+  const optionsFor = {};
+  blanks.forEach((s) => { optionsFor[s.blank] = shared || gapOptions(pool, s.answer, STORY_ROW_OPTIONS); });
 
   function gapHtml(seg, numbered) {
     const value = state.values[seg.blank] || "";
@@ -437,7 +437,7 @@ function mountStoryRows(root, ex, options, state, blanks, notify) {
         const answers = gaps
           .map((g) => `<div class="vp-srow-answer">${
             numbered ? `<span class="vp-srow-num">${g.blank + 1}</span>` : ""
-          }${pillsHtml(options, g.blank, state.values[g.blank] || "", state.checked, g.answer)}</div>`)
+          }${pillsHtml(optionsFor[g.blank], g.blank, state.values[g.blank] || "", state.checked, g.answer)}</div>`)
           .join("");
         return `<div class="vp-srow"><p class="vp-srow-text">${text}</p>${answers}</div>`;
       })

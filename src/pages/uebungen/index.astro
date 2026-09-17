@@ -1,67 +1,29 @@
 ---
-// /uebungen: the main exercises + exams hub. Defaults to the static grid (design from
-// uebungen-vorschau.astro / the "DA für Dich – Übungsseite" mockup); the personalized
-// dashboard (streak, weekly goal, per-skill stats — computed client-side from real
-// localStorage activity via src/lib/progress.js) lives behind the "Mein Fortschritt"
-// toggle instead of being the default view.
+// /uebungen: the main exercises + exams hub. The catalogue has two shapes and the
+// viewport picks one: the card grid on anything wide enough to still be a grid, and
+// below 640px the ask-first picker (src/components/PracticePicker.astro) — one question
+// with five answers instead of thirteen tools under each other, which on a 390px phone
+// was four screens of scroll. Both are server-rendered; the swap is CSS, in
+// uebungen-vorschau.css.
+// The personalized dashboard (streak, weekly goal, per-skill stats — computed client-side
+// from real localStorage activity via src/lib/progress.js) still lives behind the
+// "Mein Fortschritt" toggle.
 import Layout from "../../layouts/Layout.astro";
 import LanguageSwitcher from "../../components/LanguageSwitcher.astro";
 import ThemeToggle from "../../components/ThemeToggle.astro";
+import PracticePicker from "../../components/PracticePicker.astro";
 import Icon from "../../components/Icon.astro";
-import VariantSwitch from "../../components/VariantSwitch.astro";
 import "../../styles/practice.css";
 import "../../styles/uebungen-vorschau.css";
 import "../../styles/dashboard.css";
-import { counts, asArtikelRows } from "../../lib/lexicon.js";
-// Aussprache still reads the legacy artikel.json/wortschatz.json pair, because audio is
-// out of scope for the lexicon's first phase — see docs/wortschatz-programm-v1.md §7.
-import artikel from "../../data/artikel.json";
-import grammatik from "../../data/grammatik.json";
-import wortschatz from "../../data/wortschatz.json";
-import sprechen from "../../data/sprechen.json";
-import lesen from "../../data/lesen.json";
-import kultur from "../../data/kultur.json";
-import lid from "../../data/leben-in-deutschland.json";
-import verbenPraepositionen from "../../data/grammatik/verben-praepositionen.json";
-
-const grammarQuestionCount = grammatik.reduce((sum, t) => sum + t.questions.length, 0);
-const readingQuestionCount = lesen.groups.reduce((sum, g) => sum + g.questions.length, 0);
-const prepositionVerbCount = verbenPraepositionen.concept.reference.boxes.reduce((n, b) => n + b.items.length, 0);
-// Derived from the lexicon, never hand-typed — see docs/wortschatz-programm-v1.md.
-const lexiconCounts = counts();
-const artikelNounCount = asArtikelRows({ level: ["A1", "A2"] }).length;
-
-const tools = [
-  { href: "/uebungen/artikel-trainer", icon: "target", titleKey: "tool.artikel.title", title: "der/die/das-Trainer", descKey: "tool.artikel.desc", desc: "Artikel gezielt üben, mit sofortigem Feedback.", countKey: "tool.artikel.count", countVars: { n: artikelNounCount }, count: `${artikelNounCount} Nomen` },
-  { href: "/uebungen/grammatik", icon: "book", titleKey: "tool.grammatik.title", title: "Grammatik", descKey: "tool.grammatik.desc", desc: "Themen nach Niveau: Akkusativ, Dativ, Passiv und mehr.", countKey: "tool.grammatik.count", countVars: { n: grammatik.length, q: grammarQuestionCount }, count: `${grammatik.length} Themen · ${grammarQuestionCount} Fragen` },
-  { href: "/uebungen/grammatik/verben-praepositionen", icon: "link", titleKey: "tool.praepositionen.title", title: "Verben mit Präpositionen", descKey: "tool.praepositionen.desc", desc: "Feste Präpositionen in fünf Aufgabentypen üben.", countKey: "tool.praepositionen.count", countVars: { n: prepositionVerbCount }, count: `${prepositionVerbCount} Verben` },
-  { href: "/uebungen/wortschatz", icon: "folder", titleKey: "tool.wortschatz.title", title: "Wortschatz & Redemittel", descKey: "tool.wortschatz.desc", desc: "Karteikarten zum Umdrehen und Wiederholen.", countKey: "tool.wortschatz.count", countVars: { n: wortschatz.length }, count: `${wortschatz.length} Karten` },
-  { href: "/uebungen/aussprache", icon: "volume", titleKey: "tool.aussprache.title", title: "Aussprache-Training", descKey: "tool.aussprache.desc", desc: "Wörter anhören und im Langsam-Modus üben.", countKey: "tool.aussprache.count", countVars: { n: wortschatz.length + artikel.length }, count: `${wortschatz.length + artikel.length} Wörter` },
-  { href: "/uebungen/sprechen", icon: "mic", titleKey: "tool.sprechen.title", title: "Sprechen: Bildbeschreibung", descKey: "tool.sprechen.desc", desc: "Echte DTZ-Prüferfragen, mit 90-Sekunden-Timer.", countKey: "tool.sprechen.count", countVars: { n: sprechen.length }, count: `${sprechen.length} Bilder` },
-  { href: "/uebungen/lesen-schreiben", icon: "pencil", titleKey: "tool.lesen.title", title: "Lesen & Schreiben", descKey: "tool.lesen.desc", desc: "DTZ-Leseverstehen-Simulation plus Schreibaufgaben.", countKey: "tool.lesen.count", countVars: { n: readingQuestionCount }, count: `${readingQuestionCount} Aufgaben` },
-  { href: "/uebungen/kultur", icon: "map-pin", titleKey: "tool.kultur.title", title: "Kulturwissen", descKey: "tool.kultur.desc", desc: "Einblicke aus echten Unterrichtsgesprächen.", countKey: "tool.kultur.count", countVars: { n: kultur.length }, count: `${kultur.length} Thema${kultur.length === 1 ? "" : "n"}` },
-];
-
-const exams = [
-  { href: "/pruefungen/telc", icon: "document", title: "telc", level: "A1–C2" },
-  { href: "/pruefungen/goethe", icon: "landmark", title: "Goethe-Zertifikat", level: "A1–C2" },
-  { href: "/pruefungen/testdaf", icon: "graduation-cap", title: "TestDaF", level: "≈ B2–C1" },
-  { href: "/pruefungen/dtz", icon: "book-open", title: "DTZ", level: "A2 / B1" },
-  { href: "/pruefungen/leben-in-deutschland", icon: "map-pin", title: "Leben in Deutschland", level: `${lid.bundeslaender.length} Bundesländer` },
-];
+// One catalogue for /uebungen and / — see src/lib/catalog.js.
+import { tools, exams, lexiconCounts } from "../../lib/catalog.js";
 
 const exerciseCount = tools.length;
 const examCount = exams.length;
 ---
 <Layout title="Übungen – DeutschAcademy">
-  <VariantSwitch
-    attr="hub"
-    target=".uv"
-    label="Ansicht"
-    storageKey="da-hub-view"
-    options={[{ value: "compact", label: "Kompakt" }, { value: "original", label: "Original" }]}
-  />
-  <div class="uv" data-hub="compact">
+  <div class="uv">
     <nav class="uv-nav">
       <div class="uv-nav-row">
         <a href="/" class="uv-brand"><img src="/assets/logo.png" alt="DeutschAcademy" /></a>
@@ -96,28 +58,37 @@ const examCount = exams.length;
       </div>
 
       <div id="view-grid-mode">
-        <p class="uv-eyebrow" data-i18n="nav.exercises">Übungen</p>
-        <div class="uv-grid">
-          {tools.map((t) => (
-            <a class="uv-card" href={t.href}>
-              <div class="uv-card-icon"><Icon name={t.icon} /></div>
-              <h3 data-i18n={t.titleKey}>{t.title}</h3>
-              <p data-i18n={t.descKey}>{t.desc}</p>
-              <span class="uv-pill" data-i18n={t.countKey} data-i18n-vars={JSON.stringify(t.countVars)}>{t.count}</span>
-            </a>
-          ))}
+        <!-- One catalogue, two shapes, one per width — see the swap rule in
+             uebungen-vorschau.css. Where the grid is still a grid it answers the
+             question by itself, so it stays as it was; the ask-first picker takes
+             over only below the width where the grid collapses to one card per row
+             and thirteen of them become four screens of scroll. -->
+        <div class="uv-catalogue">
+          <p class="uv-eyebrow" data-i18n="nav.exercises">Übungen</p>
+          <div class="uv-grid">
+            {tools.map((t) => (
+              <a class="uv-card" href={t.href}>
+                <div class="uv-card-icon"><Icon name={t.icon} /></div>
+                <h3 data-i18n={t.titleKey}>{t.title}</h3>
+                <p data-i18n={t.descKey}>{t.desc}</p>
+                <span class="uv-pill" data-i18n={t.countKey} data-i18n-vars={JSON.stringify(t.countVars)}>{t.count}</span>
+              </a>
+            ))}
+          </div>
+
+          <p class="uv-eyebrow" data-i18n="nav.exams">Prüfungen</p>
+          <div class="uv-grid uv-grid--exams">
+            {exams.map((e) => (
+              <a class="uv-card uv-card--exam" href={e.href}>
+                <div class="uv-card-icon uv-card-icon--exam"><Icon name={e.icon} /></div>
+                <h3>{e.title}</h3>
+                <span class="uv-pill uv-pill--exam" data-i18n={e.countKey} data-i18n-vars={e.countVars ? JSON.stringify(e.countVars) : undefined}>{e.count}</span>
+              </a>
+            ))}
+          </div>
         </div>
 
-        <p class="uv-eyebrow" data-i18n="nav.exams">Prüfungen</p>
-        <div class="uv-grid uv-grid--exams">
-          {exams.map((e) => (
-            <a class="uv-card uv-card--exam" href={e.href}>
-              <div class="uv-card-icon uv-card-icon--exam"><Icon name={e.icon} /></div>
-              <h3>{e.title}</h3>
-              <span class="uv-pill uv-pill--exam">{e.level}</span>
-            </a>
-          ))}
-        </div>
+        <PracticePicker class="uv-ask" />
       </div>
 
       <div id="view-dashboard-mode" hidden>
@@ -210,6 +181,12 @@ const examCount = exams.length;
   <script type="module">
     import { getProgress, getWeeklyCount, getWeeklyGoal, setWeeklyGoal, getDisplayName, setDisplayName, activeToday } from "../../lib/progress.js";
     import { getLang, loadDict, onLangChange } from "../../lib/i18n.js";
+    import { mountPracticePicker } from "../../lib/practicePicker.js";
+
+    // The picker is the default view, so it mounts on load rather than with the dashboard.
+    // `remote` stays null until there is an account to read a last session from; see
+    // getResume() in src/lib/progress.js for the seam.
+    mountPracticePicker(document.querySelector("[data-pp]"), { remote: null });
 
     let dict = {};
     function tr(key, vars) {

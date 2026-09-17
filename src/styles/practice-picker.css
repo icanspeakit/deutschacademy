@@ -1,0 +1,229 @@
+/* "Was willst du üben?" — the ask-first picker, ported from the /pivot study (idea B).
+ *
+ * Phone first: every size here is the one measured inside the 390px frame on /pivot, where
+ * the five cards plus the resume card fit on one screen. The wider layout below is the
+ * variation, not the source — see docs/uebungen-redesign-tier1-v1.md for why.
+ */
+.pp {
+  --pp-gap: 10px;
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+/* --- shared pieces --------------------------------------------------------- */
+.pp-ic {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  flex: none;
+  border-radius: 12px;
+  background: var(--gradient-brand);
+  color: #fff;
+}
+.pp-ic svg { width: 20px; height: 20px; }
+.pp-ic--lg { width: 46px; height: 46px; border-radius: 14px; }
+.pp-ic--lg svg { width: 24px; height: 24px; }
+
+.pp-count {
+  display: inline-block;
+  padding: 5px 10px;
+  border-radius: var(--radius-pill);
+  background: var(--gradient-brand-soft);
+  color: var(--brand-blue-dark);
+  font-size: .72rem;
+  font-weight: var(--fw-semibold);
+  white-space: nowrap;
+}
+
+/* --- the question ---------------------------------------------------------- */
+.pp-choice {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  width: 100%;
+  margin: 0 0 var(--pp-gap);
+  padding: 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface-card);
+  text-align: left;
+  cursor: pointer;
+  transition: border-color .15s ease, background .15s ease;
+}
+.pp-choice:hover { border-color: var(--border-strong); }
+.pp-choice:active { background: var(--surface); }
+.pp-choice-txt { display: grid; gap: 3px; min-width: 0; flex: 1; }
+.pp-choice-txt b { font-family: var(--font-body); font-size: .95rem; font-weight: var(--fw-semibold); color: var(--ink); }
+.pp-choice-txt i { font-style: normal; font-size: .78rem; color: var(--muted); }
+.pp-choice-n {
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  flex: none;
+  border-radius: 50%;
+  background: var(--surface);
+  color: var(--muted);
+  font-size: .76rem;
+  font-weight: var(--fw-bold);
+}
+
+.pp-plain {
+  display: block;
+  margin: 6px auto 0;
+  padding: 10px 14px;
+  border: none;
+  background: none;
+  color: var(--brand-blue-dark);
+  font-family: var(--font-body);
+  font-size: .82rem;
+  font-weight: var(--fw-semibold);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.pp-foot {
+  margin: 14px 0 0;
+  text-align: center;
+  font-size: .74rem;
+  color: var(--muted-soft);
+}
+
+/* --- the answer ------------------------------------------------------------ */
+.pp-detail-head {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  padding: 0 0 14px;
+}
+.pp-detail-title {
+  font-family: var(--font-body);
+  font-size: 1.05rem;
+  font-weight: var(--fw-semibold);
+  color: var(--ink);
+  min-width: 0;
+}
+.pp-back {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  flex: none;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  background: var(--surface-card);
+  color: var(--brand-blue-dark);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1;
+  cursor: pointer;
+}
+.pp-back:active { background: var(--surface); }
+
+.pp-list {
+  background: var(--surface-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.pp-list + .pp-list { margin-top: 12px; }
+.pp-panel-label {
+  display: none;
+  margin: 0;
+  padding: 12px 14px 4px;
+  font-family: var(--font-label);
+  font-size: .66rem;
+  font-weight: var(--fw-semibold);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--muted-soft);
+}
+.pp-row {
+  display: grid;
+  grid-template-columns: 38px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 14px;
+  background: var(--surface-card);
+  text-decoration: none;
+  border-top: 1px solid var(--border);
+}
+.pp-row:first-child { border-top: none; }
+.pp-panel-label + .pp-row { border-top: none; }
+.pp-row:hover { background: var(--surface); }
+.pp-row-t { font-size: .875rem; font-weight: var(--fw-semibold); color: var(--ink); line-height: 1.3; }
+
+/* --- "Weitermachen": returning learners only -------------------------------- */
+.pp-resume {
+  display: grid;
+  gap: 8px;
+  margin: 0 0 18px;
+  padding: 18px;
+  border-radius: var(--radius-lg);
+  background: var(--gradient-brand);
+  color: #fff;
+  text-decoration: none;
+}
+.pp-resume-eyebrow {
+  font-family: var(--font-label);
+  font-size: .64rem;
+  font-weight: var(--fw-semibold);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, .78);
+}
+.pp-resume-title { font-family: var(--font-body); font-size: 1.2rem; font-weight: var(--fw-regular); }
+.pp-bar { display: block; height: 6px; border-radius: 3px; background: rgba(255, 255, 255, .28); overflow: hidden; }
+.pp-bar i { display: block; height: 100%; background: #fff; border-radius: 3px; transition: width .5s ease; }
+.pp-resume-meta { font-size: .74rem; color: rgba(255, 255, 255, .85); }
+.pp-btn {
+  justify-self: start;
+  margin-top: 4px;
+  padding: 9px 18px;
+  border-radius: var(--radius-pill);
+  background: #fff;
+  /* Fixed, not var(--brand-blue-dark): the card is the brand gradient in both themes, and
+     in dark mode that token flips to pale mint — which on this white pill is unreadable. */
+  color: #0f766e;
+  font-size: .8rem;
+  font-weight: var(--fw-bold);
+}
+/* The two or three places you were before that one. Same row as everywhere else, so
+   coming back does not introduce a fourth way of listing a tool. */
+.pp-recents { margin: -6px 0 16px; }
+.pp-recents-label {
+  margin: 0 0 8px;
+  font-family: var(--font-label);
+  font-size: .66rem;
+  font-weight: var(--fw-semibold);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--muted-soft);
+}
+.pp-recents .pp-list { border-radius: var(--radius); }
+.pp-recents .pp-row { grid-template-columns: minmax(0, 1fr) auto; }
+.pp-recents .pp-count { background: var(--surface); color: var(--muted); }
+
+/* The standalone card at the top of the homepage. */
+.lp-resume-band { max-width: 760px; margin: 0 auto; padding: 16px 16px 0; }
+.lp-resume-band .pp-resume { margin-bottom: 0; }
+
+/* --- wider than a phone ----------------------------------------------------- */
+@media (min-width: 700px) {
+  .pp { --pp-gap: 12px; }
+  /* "Weitermachen" is a phone affordance: it exists so a returning learner does not have
+     to scroll past the pitch to get back to work. On a desktop screen the picker and the
+     hero are both already visible, so the card only pushes the page down. Hidden here
+     rather than skipped at render time because the card is filled client-side and the
+     breakpoint can change without a reload. Note this beats the JS clearing [hidden]. */
+  .lp-resume-band, .pp-resume-slot { display: none; }
+  /* :not([hidden]) because an author `display` beats the UA rule behind the hidden
+     attribute — without it, answering the question leaves the question on screen. */
+  .pp-home:not([hidden]) { display: grid; grid-template-columns: 1fr 1fr; gap: var(--pp-gap); }
+  .pp-choice { margin: 0; height: 100%; }
+  /* The plain link is not a choice, so it sits under both columns rather than
+     becoming a sixth card with nothing in it. */
+  .pp-home > .pp-plain { grid-column: 1 / -1; }
+}

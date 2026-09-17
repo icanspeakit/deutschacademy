@@ -1,5 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import SiteNav from "../components/SiteNav.astro";
+// Still used in the footer; the nav imports its own copies.
 import LanguageSwitcher from "../components/LanguageSwitcher.astro";
 import ThemeToggle from "../components/ThemeToggle.astro";
 import DashboardMock from "../components/mocks/DashboardMock.astro";
@@ -22,54 +24,7 @@ const userCount = 412; // actual signups so far
 ---
 <Layout>
   <div class="lp">
-    <!-- NAV -->
-    <nav class="lp-nav">
-      <div class="lp-nav-row">
-        <div class="lp-nav-left">
-          <a href="/"><img src="/assets/logo.png" alt="DeutschAcademy" /></a>
-          <div class="lp-nav-links" id="lp-nav-links">
-            <a href="/uebungen" data-i18n="nav.exercises">Übungen</a>
-            <a href="/pruefungen" data-i18n="nav.exams">Prüfungen</a>
-          </div>
-        </div>
-        <div class="lp-nav-right">
-          <a href="/uebungen" class="lp-btn lp-btn--primary" data-i18n="nav.cta">Kostenlos üben</a>
-          <LanguageSwitcher />
-          <ThemeToggle />
-          <button
-            class="lp-nav-toggle"
-            type="button"
-            aria-expanded="false"
-            aria-controls="lp-nav-links"
-            aria-label="Menü öffnen"
-            data-i18n-attr="aria-label:nav.menuOpen"
-          >
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-              <line x1="3" y1="6" x2="21" y2="6"></line>
-              <line x1="3" y1="12" x2="21" y2="12"></line>
-              <line x1="3" y1="18" x2="21" y2="18"></line>
-            </svg>
-          </button>
-        </div>
-      </div>
-    </nav>
-
-    <script>
-      const lpToggle = document.querySelector(".lp-nav-toggle");
-      const lpLinks = document.getElementById("lp-nav-links");
-
-      lpToggle?.addEventListener("click", () => {
-        const isOpen = lpLinks?.classList.toggle("lp-nav-links--open");
-        lpToggle.setAttribute("aria-expanded", String(!!isOpen));
-      });
-
-      lpLinks?.addEventListener("click", (e) => {
-        if ((e.target as HTMLElement).tagName === "A") {
-          lpLinks.classList.remove("lp-nav-links--open");
-          lpToggle?.setAttribute("aria-expanded", "false");
-        }
-      });
-    </script>
+    <SiteNav />
 
     <!-- HERO FOLD, ≤1024px: "Wo stehst du?" — five tap targets instead of a
          paragraph. Below that width the two mockups cannot be shown at a size

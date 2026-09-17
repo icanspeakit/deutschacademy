@@ -1,0 +1,335 @@
+---
+// The site nav, one component for both widths, driven by src/lib/catalog.js so the menu
+// can never drift from what /uebungen actually offers.
+//
+// Desktop (>900px): "Übungen" and "Prüfungen" open a panel instead of only being links.
+// Thirteen tools were two hops away — the homepage, then the picker — on a screen with
+// room to simply show them, so the groups the picker asks about are laid out flat here.
+//
+// Mobile (≤900px): the small two-link dropdown is replaced by a full-height panel sliding
+// in from the right, the same shape as the colevitate one: icon rows big enough to tap,
+// and the utilities (language, theme, CTA) pinned to the bottom, in the thumb's reach,
+// rather than at the top where the burger is.
+//
+// Both menus are rendered here on the server and merely shown/hidden, so the links are in
+// the HTML for crawlers and the nav still navigates with JS off.
+import Icon from "./Icon.astro";
+import LanguageSwitcher from "./LanguageSwitcher.astro";
+import ThemeToggle from "./ThemeToggle.astro";
+import { groups, itemsOf } from "../lib/catalog.js";
+import "../styles/site-nav.css";
+
+interface Props {
+  /** Marks the current section so its nav item reads as active. */
+  active?: "uebungen" | "pruefungen";
+}
+const { active } = Astro.props;
+
+// "Prüfungen" is its own top-level menu, so the Übungen panel shows the other four groups.
+const practiceGroups = groups.filter((g) => g.id !== "pruefungen");
+const examItems = itemsOf("pruefungen");
+---
+<nav class="lp-nav" data-nav>
+  <div class="lp-nav-row">
+    <div class="lp-nav-left">
+      <a href="/" class="lp-nav-logo"><img src="/assets/logo.png" alt="DeutschAcademy" /></a>
+
+      <!-- Desktop menu bar. Hidden below 900px, where the panel below takes over. -->
+      <div class="lp-menubar" data-menubar>
+        <div class="lp-menu" data-menu="uebungen">
+          <a
+            class:list={["lp-menu-btn", active === "uebungen" && "is-active"]}
+            href="/uebungen"
+            aria-expanded="false"
+            aria-controls="lp-panel-uebungen"
+            data-menu-btn
+          >
+            <span data-i18n="nav.exercises">Übungen</span>
+            <svg class="lp-menu-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </a>
+          <div class="lp-panel lp-panel--wide" id="lp-panel-uebungen" data-menu-panel hidden>
+            <div class="lp-panel-grid">
+              {practiceGroups.map((g) => (
+                <div class="lp-panel-col">
+                  <p class="lp-panel-head">
+                    <span class="lp-panel-head-ic"><Icon name={g.icon} size={16} /></span>
+                    <span data-i18n={g.nameKey}>{g.name}</span>
+                  </p>
+                  <ul>
+                    {itemsOf(g.id).map((item) => (
+                      <li>
+                        <a href={item.href}>
+                          <b data-i18n={item.titleKey}>{item.title}</b>
+                          <i>{item.count}</i>
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+            <a class="lp-panel-foot" href="/uebungen">
+              <span data-i18n="nav.panel.allTools">Alle Übungen ansehen</span>
+              <span aria-hidden="true">→</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="lp-menu" data-menu="pruefungen">
+          <a
+            class:list={["lp-menu-btn", active === "pruefungen" && "is-active"]}
+            href="/pruefungen"
+            aria-expanded="false"
+            aria-controls="lp-panel-pruefungen"
+            data-menu-btn
+          >
+            <span data-i18n="nav.exams">Prüfungen</span>
+            <svg class="lp-menu-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </a>
+          <div class="lp-panel" id="lp-panel-pruefungen" data-menu-panel hidden>
+            <ul class="lp-panel-list">
+              {examItems.map((e) => (
+                <li>
+                  <a href={e.href}>
+                    <span class="lp-panel-ic"><Icon name={e.icon} size={18} /></span>
+                    <span class="lp-panel-txt">
+                      <b>{e.title}</b>
+                      <i>{e.count}</i>
+                    </span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+            <a class="lp-panel-foot" href="/pruefungen">
+              <span data-i18n="nav.panel.allExams">Alle Prüfungen ansehen</span>
+              <span aria-hidden="true">→</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- No JS: neither the panels nor the drawer can open, so the two section pages
+           get plain links and the menus get out of the way entirely. -->
+      <noscript>
+        <div class="lp-nav-fallback">
+          <a href="/uebungen" data-i18n="nav.exercises">Übungen</a>
+          <a href="/pruefungen" data-i18n="nav.exams">Prüfungen</a>
+        </div>
+      </noscript>
+    </div>
+
+    <div class="lp-nav-right">
+      <a href="/uebungen" class="lp-btn lp-btn--primary" data-i18n="nav.cta">Kostenlos üben</a>
+      <div class="lp-nav-utils"><LanguageSwitcher /><ThemeToggle /></div>
+      <button
+        class="lp-nav-toggle"
+        type="button"
+        aria-expanded="false"
+        aria-controls="lp-drawer"
+        aria-label="Menü öffnen"
+        data-drawer-open
+        data-i18n-attr="aria-label:nav.menuOpen"
+      >
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile drawer. Outside .lp-nav, which is `position: sticky` with a background —
+     a fixed child of a stacking context like that is fine, but the drawer also needs to
+     sit above the sticky bar's own z-index, so it is a sibling at the top level. -->
+<div class="lp-drawer" id="lp-drawer" data-drawer hidden>
+  <div class="lp-drawer-scrim" data-drawer-close></div>
+  <div class="lp-drawer-panel" role="dialog" aria-modal="true" aria-label="Menü">
+    <div class="lp-drawer-top">
+      <img src="/assets/logo.png" alt="DeutschAcademy" />
+      <button class="lp-drawer-x" type="button" aria-label="Menü schließen" data-drawer-close data-i18n-attr="aria-label:nav.menuClose">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="6" y1="6" x2="18" y2="18"></line><line x1="18" y1="6" x2="6" y2="18"></line></svg>
+      </button>
+    </div>
+
+    <!-- One row per group rather than per tool: thirteen rows would scroll, five do not.
+         Tapping a row opens its own list in place — the same one-screen-at-a-time rule
+         the picker follows, so the drawer and the homepage teach the same shape. -->
+    <div class="lp-drawer-body" data-drawer-body>
+      <div class="lp-drawer-home" data-drawer-home>
+        {groups.map((g) => (
+          <button class="lp-drawer-row" type="button" data-drawer-group={g.id}>
+            <span class="lp-drawer-ic"><Icon name={g.icon} size={18} /></span>
+            <span class="lp-drawer-txt">
+              <b data-i18n={g.nameKey}>{g.name}</b>
+              <i data-i18n={g.blurbKey}>{g.blurb}</i>
+            </span>
+            <span class="lp-drawer-n">{itemsOf(g.id).length}</span>
+            <svg class="lp-drawer-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 6 15 12 9 18"></polyline></svg>
+          </button>
+        ))}
+      </div>
+
+      {groups.map((g) => (
+        <div class="lp-drawer-sub" data-drawer-sub={g.id} hidden>
+          <button class="lp-drawer-back" type="button" data-drawer-back>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 6 9 12 15 18"></polyline></svg>
+            <span data-i18n="picker.back">Zurück</span>
+          </button>
+          <p class="lp-drawer-subhead" data-i18n={g.nameKey}>{g.name}</p>
+          {itemsOf(g.id).map((item) => (
+            <a class="lp-drawer-row" href={item.href}>
+              <span class="lp-drawer-ic"><Icon name={item.icon} size={18} /></span>
+              <span class="lp-drawer-txt">
+                <b data-i18n={item.titleKey}>{item.title}</b>
+                <i>{item.count}</i>
+              </span>
+              <svg class="lp-drawer-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 6 15 12 9 18"></polyline></svg>
+            </a>
+          ))}
+          <a class="lp-drawer-all" href={g.id === "pruefungen" ? "/pruefungen" : "/uebungen"}>
+            <span data-i18n="nav.panel.all">Übersicht</span>
+            <span aria-hidden="true">→</span>
+          </a>
+        </div>
+      ))}
+    </div>
+
+    <!-- Bottom, not top: language, theme and the CTA are where the thumb rests. -->
+    <div class="lp-drawer-foot">
+      <a href="/uebungen" class="lp-btn lp-btn--primary lp-drawer-cta" data-i18n="nav.cta">Kostenlos üben</a>
+      <div class="lp-drawer-utils"><LanguageSwitcher /><ThemeToggle /></div>
+    </div>
+  </div>
+</div>
+
+<noscript>
+  <style>
+    /* Both menus are click-driven, so with JS off they are dead weight — the plain
+       links in .lp-nav-fallback take over at every width. */
+    .lp-menubar, .lp-nav-toggle, .lp-drawer { display: none !important; }
+    .lp-nav-fallback { display: flex; align-items: center; gap: 28px; font-size: 14px; font-weight: 500; }
+    .lp-nav-fallback a { color: var(--ink); text-decoration: none; }
+  </style>
+</noscript>
+
+<script>
+  /* Desktop panels ------------------------------------------------------------ */
+  const menus = Array.from(document.querySelectorAll<HTMLElement>("[data-menu]"));
+
+  function closeMenus(except?: HTMLElement) {
+    for (const m of menus) {
+      if (m === except) continue;
+      m.querySelector("[data-menu-btn]")?.setAttribute("aria-expanded", "false");
+      m.querySelector<HTMLElement>("[data-menu-panel]")?.setAttribute("hidden", "");
+      m.classList.remove("is-open");
+    }
+  }
+
+  // "Übungen" and "Prüfungen" are links to their own pages first and menu triggers
+  // second: with a mouse, hovering opens the panel and clicking still goes to the
+  // section page. Without hover, there is nothing to hover — so the first tap opens
+  // the panel instead of navigating, and the panel's own footer link is the way in.
+  const canHover = window.matchMedia("(hover: hover)").matches;
+
+  for (const menu of menus) {
+    const btn = menu.querySelector<HTMLAnchorElement>("[data-menu-btn]");
+    const panel = menu.querySelector<HTMLElement>("[data-menu-panel]");
+    if (!btn || !panel) continue;
+
+    const open = () => {
+      closeMenus(menu);
+      panel.removeAttribute("hidden");
+      btn.setAttribute("aria-expanded", "true");
+      menu.classList.add("is-open");
+    };
+    const close = () => {
+      panel.setAttribute("hidden", "");
+      btn.setAttribute("aria-expanded", "false");
+      menu.classList.remove("is-open");
+    };
+
+    btn.addEventListener("click", (e) => {
+      if (canHover) return; // let the link navigate
+      if (!menu.classList.contains("is-open")) {
+        e.preventDefault();
+        open();
+      }
+    });
+    // Keyboard users never fire pointerenter, so focus opens the panel for them.
+    btn.addEventListener("focus", () => { if (canHover) open(); });
+
+    menu.addEventListener("pointerenter", (e) => {
+      if (e.pointerType === "mouse") open();
+    });
+    menu.addEventListener("pointerleave", (e) => {
+      if (e.pointerType === "mouse") close();
+    });
+    menu.addEventListener("focusout", (e) => {
+      if (!menu.contains(e.relatedTarget as Node)) close();
+    });
+  }
+
+  document.addEventListener("click", (e) => {
+    if (!(e.target as HTMLElement).closest("[data-menu]")) closeMenus();
+  });
+
+  /* Mobile drawer ------------------------------------------------------------- */
+  const drawer = document.querySelector<HTMLElement>("[data-drawer]");
+  const openBtn = document.querySelector<HTMLButtonElement>("[data-drawer-open]");
+  const home = drawer?.querySelector<HTMLElement>("[data-drawer-home]");
+  const subs = Array.from(drawer?.querySelectorAll<HTMLElement>("[data-drawer-sub]") ?? []);
+
+  // Back to the top level, so reopening the drawer never resumes inside a group the
+  // learner left two taps ago.
+  function resetDrawer() {
+    home?.removeAttribute("hidden");
+    for (const s of subs) s.setAttribute("hidden", "");
+  }
+
+  function openDrawer() {
+    if (!drawer) return;
+    resetDrawer();
+    drawer.removeAttribute("hidden");
+    // Next frame, so the transition has a "closed" state to animate away from.
+    requestAnimationFrame(() => drawer.classList.add("is-open"));
+    openBtn?.setAttribute("aria-expanded", "true");
+    document.body.style.overflow = "hidden";
+    drawer.querySelector<HTMLElement>("[data-drawer-close]")?.focus();
+  }
+
+  function closeDrawer() {
+    if (!drawer) return;
+    drawer.classList.remove("is-open");
+    openBtn?.setAttribute("aria-expanded", "false");
+    document.body.style.overflow = "";
+    // Keep it mounted for the slide-out; 240ms matches the transition in landing.css.
+    window.setTimeout(() => drawer.setAttribute("hidden", ""), 240);
+  }
+
+  openBtn?.addEventListener("click", openDrawer);
+  for (const el of document.querySelectorAll("[data-drawer-close]")) {
+    el.addEventListener("click", closeDrawer);
+  }
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && drawer && !drawer.hasAttribute("hidden")) closeDrawer();
+  });
+
+  for (const btn of drawer?.querySelectorAll<HTMLElement>("[data-drawer-group]") ?? []) {
+    btn.addEventListener("click", () => {
+      const id = btn.getAttribute("data-drawer-group");
+      home?.setAttribute("hidden", "");
+      drawer?.querySelector(`[data-drawer-sub="${id}"]`)?.removeAttribute("hidden");
+      drawer?.querySelector<HTMLElement>("[data-drawer-body]")?.scrollTo({ top: 0 });
+    });
+  }
+  for (const btn of drawer?.querySelectorAll<HTMLElement>("[data-drawer-back]") ?? []) {
+    btn.addEventListener("click", resetDrawer);
+  }
+
+  // Navigating away closes it, so the back button never lands on a locked-scroll page.
+  drawer?.addEventListener("click", (e) => {
+    if ((e.target as HTMLElement).closest("a")) closeDrawer();
+  });
+</script>

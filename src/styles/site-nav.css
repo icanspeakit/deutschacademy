@@ -1,0 +1,369 @@
+/* Site nav — the bar, the desktop panels, the mobile drawer.
+ *
+ * Lifted out of landing.css when the nav stopped being two links: it is now a component
+ * (src/components/SiteNav.astro) that any page can mount, so its styles travel with it
+ * rather than living in the homepage's stylesheet.
+ *
+ * Depends on .lp-btn from landing.css for the CTA — pages mounting SiteNav load that too.
+ */
+
+.lp-nav {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: var(--surface-card);
+  border-bottom: 1px solid var(--border);
+}
+.lp-nav-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+  padding: 12px 24px;
+  max-width: 1240px;
+  margin: 0 auto;
+}
+.lp-nav-left { display: flex; align-items: center; gap: 44px; }
+.lp-nav-logo { display: inline-flex; }
+.lp-nav-left img { height: 44px; }
+.lp-nav-right { display: flex; align-items: center; gap: 20px; }
+.lp-nav-utils { display: flex; align-items: center; gap: 20px; }
+.lp-nav .lp-btn--primary { padding: 11px 22px; font-size: 14px; }
+
+/* --- Desktop menu bar ------------------------------------------------------- */
+
+.lp-menubar { display: flex; align-items: center; gap: 8px; }
+.lp-menu { position: relative; }
+
+.lp-menu-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 10px;
+  background: none;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--ink);
+  cursor: pointer;
+  transition: background-color .15s ease, color .15s ease;
+}
+.lp-menu-btn:hover,
+.lp-menu.is-open .lp-menu-btn { background: var(--surface-sunken, rgba(0, 0, 0, .04)); }
+.lp-menu-btn.is-active { color: var(--brand-blue); }
+.lp-menu-caret {
+  width: 14px;
+  height: 14px;
+  opacity: .55;
+  transition: transform .18s ease;
+}
+.lp-menu.is-open .lp-menu-caret { transform: rotate(180deg); }
+
+.lp-panel {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 0;
+  z-index: 30;
+  min-width: 260px;
+  padding: 18px;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: var(--surface-card);
+  box-shadow: var(--shadow-hover);
+  animation: lp-panel-in .16s ease-out;
+}
+.lp-panel[hidden] { display: none; }
+.lp-panel--wide { min-width: 640px; }
+
+/* The 10px gap above is dead space the pointer crosses on its way down, and leaving on
+   the way through would close the panel mid-reach. This bridges it. */
+.lp-panel::before {
+  content: "";
+  position: absolute;
+  inset: -12px 0 100% 0;
+}
+
+@keyframes lp-panel-in {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .lp-panel { animation: none; }
+}
+
+.lp-panel-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22px 32px;
+}
+.lp-panel-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 10px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.lp-panel-head-ic { display: inline-flex; color: var(--brand-blue); }
+.lp-panel-col ul,
+.lp-panel-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
+
+.lp-panel-col a,
+.lp-panel-list a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  margin-inline: -10px;
+  border-radius: 10px;
+  text-decoration: none;
+  transition: background-color .15s ease;
+}
+.lp-panel-col a:hover,
+.lp-panel-list a:hover { background: var(--surface-sunken, rgba(0, 0, 0, .04)); }
+.lp-panel-col a b,
+.lp-panel-txt b { display: block; font-size: 14px; font-weight: 500; color: var(--ink); }
+.lp-panel-col a i,
+.lp-panel-txt i { display: block; font-size: 12px; font-style: normal; color: var(--muted); }
+.lp-panel-col a b { margin-bottom: 1px; }
+
+.lp-panel-ic {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  flex-shrink: 0;
+  border-radius: 9px;
+  background: var(--surface-sunken, rgba(0, 0, 0, .05));
+  color: var(--brand-blue);
+}
+.lp-panel-txt { min-width: 0; }
+
+.lp-panel-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--brand-blue);
+  text-decoration: none;
+}
+.lp-panel-foot:hover { text-decoration: underline; }
+
+/* --- Burger ---------------------------------------------------------------- */
+
+.lp-nav-toggle {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: none;
+  background: none;
+  color: var(--ink);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+.lp-nav-toggle svg { width: 24px; height: 24px; }
+
+/* --- Mobile drawer --------------------------------------------------------- */
+
+.lp-drawer { position: fixed; inset: 0; z-index: 60; }
+.lp-drawer[hidden] { display: none; }
+
+.lp-drawer-scrim {
+  position: absolute;
+  inset: 0;
+  background: rgba(15, 23, 42, .45);
+  backdrop-filter: blur(2px);
+  opacity: 0;
+  transition: opacity .24s ease;
+}
+.lp-drawer.is-open .lp-drawer-scrim { opacity: 1; }
+
+.lp-drawer-panel {
+  position: absolute;
+  inset-block: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  width: min(86vw, 360px);
+  background: var(--surface-card);
+  border-left: 1px solid var(--border);
+  box-shadow: -20px 0 50px -20px rgba(15, 23, 42, .4);
+  transform: translateX(100%);
+  transition: transform .24s ease-out;
+}
+.lp-drawer.is-open .lp-drawer-panel { transform: none; }
+@media (prefers-reduced-motion: reduce) {
+  .lp-drawer-scrim, .lp-drawer-panel { transition: none; }
+}
+
+.lp-drawer-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-shrink: 0;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+}
+.lp-drawer-top img { height: 32px; }
+.lp-drawer-x {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: none;
+  color: var(--muted);
+  cursor: pointer;
+}
+.lp-drawer-x svg { width: 18px; height: 18px; }
+
+.lp-drawer-body {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 10px;
+}
+
+.lp-drawer-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  /* 12px block padding puts the row at 58px — above the 44px tap-target floor with
+     room to spare, since this is the only way to navigate on a phone. */
+  padding: 12px;
+  border: none;
+  border-radius: 14px;
+  background: none;
+  font: inherit;
+  text-align: left;
+  text-decoration: none;
+  color: var(--ink);
+  cursor: pointer;
+}
+.lp-drawer-row:active { background: var(--surface-sunken, rgba(0, 0, 0, .05)); }
+
+.lp-drawer-ic {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  flex-shrink: 0;
+  border-radius: 11px;
+  background: var(--surface-sunken, rgba(0, 0, 0, .05));
+  color: var(--brand-blue);
+}
+.lp-drawer-txt { min-width: 0; flex: 1; }
+.lp-drawer-txt b { display: block; font-size: 15px; font-weight: 500; }
+.lp-drawer-txt i { display: block; font-size: 12.5px; font-style: normal; color: var(--muted); }
+.lp-drawer-n {
+  flex-shrink: 0;
+  min-width: 24px;
+  padding: 2px 7px;
+  border-radius: 999px;
+  background: var(--surface-sunken, rgba(0, 0, 0, .05));
+  font-size: 12px;
+  color: var(--muted);
+  text-align: center;
+}
+.lp-drawer-chev { width: 18px; height: 18px; flex-shrink: 0; color: var(--muted); opacity: .6; }
+
+.lp-drawer-sub[hidden] { display: none; }
+.lp-drawer-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px 8px 8px;
+  margin-bottom: 4px;
+  border: none;
+  border-radius: 999px;
+  background: none;
+  font: inherit;
+  font-size: 13px;
+  color: var(--muted);
+  cursor: pointer;
+}
+.lp-drawer-back svg { width: 16px; height: 16px; }
+.lp-drawer-subhead {
+  margin: 0 0 6px 12px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.lp-drawer-all {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 6px 12px 0;
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--brand-blue);
+  text-decoration: none;
+}
+
+.lp-drawer-foot {
+  flex-shrink: 0;
+  display: grid;
+  gap: 12px;
+  padding: 12px 16px;
+  padding-bottom: max(12px, env(safe-area-inset-bottom));
+  border-top: 1px solid var(--border);
+}
+.lp-drawer-cta { text-align: center; }
+.lp-drawer-utils { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+
+/* --- Breakpoints ------------------------------------------------------------ */
+
+@media (max-width: 900px) {
+  .lp-menubar { display: none; }
+  .lp-nav-toggle { display: inline-flex; }
+  /* The language and theme controls move into the drawer's footer, where there is
+     room for them and the thumb can reach them. */
+  .lp-nav-utils { display: none; }
+}
+
+@media (min-width: 901px) {
+  .lp-drawer { display: none; }
+}
+
+/* The nav's right cluster never shrank below the 900px breakpoint, so it ran past the
+   screen edge on phones — 376px of content in a 360px viewport. */
+@media (max-width: 600px) {
+  .lp-nav-row { gap: 12px; padding-inline: 16px; }
+  .lp-nav-left { gap: 16px; }
+  .lp-nav-left img { height: 36px; }
+  .lp-nav-right { gap: 10px; }
+  .lp-nav .lp-btn--primary { padding: 9px 14px; font-size: 13px; }
+}
+
+/* Narrower still: drop the nav CTA. It duplicates "Kostenlos starten" a few hundred
+   pixels below it in the fold, and the drawer carries its own copy at the bottom. */
+@media (max-width: 430px) {
+  .lp-nav .lp-btn--primary { display: none; }
+  .lp-drawer .lp-btn--primary { display: block; }
+}

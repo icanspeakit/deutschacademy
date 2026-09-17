@@ -1,0 +1,379 @@
+/* /fortschritt — the cross-exam progress view.
+ *
+ * Two columns above 900px (rail + panel), one below, where the rail becomes a
+ * horizontal exam switcher and the parts live in the table instead. ~90% of learners
+ * are on a phone, so the phone layout is the one that decides the structure: a rail
+ * pinned to the left of a 390px screen would leave nothing for the panel.
+ */
+
+.fs-topbar {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding: 14px 18px;
+  margin-bottom: 18px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--surface-card);
+}
+.fs-topbar-brand { font-weight: var(--fw-semibold); color: var(--brand-blue-dark); }
+.fs-topbar-brand small { margin-left: 8px; font-weight: var(--fw-regular); color: var(--muted); }
+.fs-topbar-hint { font-size: .78rem; color: var(--muted); }
+
+/* Both children get min-width:0: as grid items they otherwise refuse to shrink below
+   their widest min-content, and the phone exam switcher (four columns of 140px inside
+   its own overflow-x:auto) would push the whole page to 608px on a 390px screen. */
+.fs-shell { display: grid; grid-template-columns: 1fr; gap: 18px; }
+.fs-shell > * { min-width: 0; }
+
+/* ------------------------------------------------------------------ rail -- */
+
+.fs-rail {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--surface-card);
+  padding: 14px;
+  align-self: start;
+}
+
+.fs-rail-head,
+.fs-rail-result {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  font-weight: var(--fw-semibold);
+  color: var(--brand-blue-dark);
+  text-decoration: none;
+}
+.fs-rail-head { background: var(--gradient-brand-soft); margin-bottom: 4px; }
+.fs-rail-result { color: var(--ink); font-weight: var(--fw-regular); }
+.fs-rail-result:hover { background: var(--surface-sunken, rgba(0, 0, 0, .04)); }
+.fs-rail-flag { font-size: .7rem; color: var(--brand-blue); }
+
+.fs-parts { display: grid; gap: 1px; }
+.fs-part {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  /* Indented under the exam above it: the nesting is the whole point of the rail —
+     you are inside this exam, and these are its parts. */
+  padding: 9px 12px 9px 22px;
+  border-radius: 10px;
+  text-decoration: none;
+  color: var(--ink);
+  font-size: .88rem;
+}
+.fs-part:hover { background: var(--surface-sunken, rgba(0, 0, 0, .04)); }
+.fs-part-label { flex: 1; min-width: 0; }
+.fs-part-n {
+  flex-shrink: 0;
+  font-size: .78rem;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+/* A ring that fills clockwise: empty reads as an outline, part-done as a wedge,
+   finished as a solid dot — three states you can tell apart without reading the count. */
+.fs-dot {
+  flex-shrink: 0;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border-strong);
+  background: conic-gradient(var(--brand-blue) var(--pct, 0%), transparent 0);
+}
+.fs-dot.is-part { border-color: var(--brand-blue); }
+.fs-dot.is-done { border-color: var(--brand-blue); background: var(--brand-blue); }
+
+.fs-reset {
+  display: block;
+  width: 100%;
+  margin: 10px 0 16px;
+  padding: 8px 12px;
+  border: none;
+  border-top: 1px solid var(--border);
+  border-radius: 0;
+  background: none;
+  font: inherit;
+  font-size: .8rem;
+  text-align: left;
+  color: var(--muted);
+  text-decoration: underline;
+  cursor: pointer;
+}
+.fs-reset:hover { color: var(--danger); }
+
+.fs-rail-label {
+  margin: 0 0 8px 12px;
+  font-size: .68rem;
+  font-weight: var(--fw-semibold);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.fs-examlist { display: grid; gap: 2px; }
+.fs-examitem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  width: 100%;
+  padding: 10px 12px;
+  border: none;
+  border-radius: 10px;
+  background: none;
+  font: inherit;
+  font-size: .9rem;
+  text-align: left;
+  color: var(--ink);
+  cursor: pointer;
+}
+.fs-examitem:hover { background: var(--surface-sunken, rgba(0, 0, 0, .04)); }
+.fs-examitem.is-on { background: var(--gradient-brand-soft); color: var(--brand-blue-dark); font-weight: var(--fw-semibold); }
+.fs-examitem-n { font-size: .78rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+.fs-examitem.is-on .fs-examitem-n { color: var(--brand-blue-dark); }
+
+/* ------------------------------------------------------------------ main -- */
+
+.fs-main { min-width: 0; }
+
+.fs-viewtabs {
+  display: inline-flex;
+  gap: 2px;
+  padding: 3px;
+  margin-bottom: 16px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  background: var(--surface);
+}
+.fs-viewtab {
+  padding: 7px 18px;
+  border: none;
+  border-radius: var(--radius-pill);
+  background: none;
+  font: inherit;
+  font-size: .85rem;
+  color: var(--muted);
+  cursor: pointer;
+}
+.fs-viewtab.is-on { background: var(--surface-card); color: var(--ink); font-weight: var(--fw-semibold); box-shadow: var(--shadow); }
+
+.fs-head {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 18px;
+  padding: 20px;
+  margin-bottom: 18px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--surface-card);
+}
+.fs-head-main { min-width: 0; }
+.fs-eyebrow {
+  margin: 0 0 6px;
+  font-size: .68rem;
+  font-weight: var(--fw-semibold);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.fs-exam-title {
+  margin: 0 0 14px;
+  font-family: var(--font-body);
+  font-size: 1.3rem;
+  font-weight: var(--fw-regular);
+  color: var(--brand-blue-dark);
+}
+.fs-exam-title small { margin-left: 8px; font-size: .8rem; color: var(--muted); }
+.fs-points { margin: 0 0 12px; font-size: .95rem; color: var(--muted); }
+.fs-points b {
+  display: block;
+  font-family: var(--font-body);
+  font-size: 2.6rem;
+  font-weight: var(--fw-regular);
+  line-height: 1.1;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+.fs-sub { margin: 10px 0 0; font-size: .84rem; color: var(--muted); }
+.fs-note { margin: 10px 0 0; font-size: .78rem; line-height: 1.55; color: var(--muted); }
+
+.fs-bar {
+  display: block;
+  height: 8px;
+  border-radius: var(--radius-pill);
+  background: var(--surface-sunken, rgba(0, 0, 0, .07));
+  overflow: hidden;
+}
+.fs-bar-fill { display: block; height: 100%; background: var(--gradient-brand); border-radius: inherit; }
+.fs-bar--wide { height: 10px; }
+
+.fs-head-side { display: grid; gap: 12px; align-content: start; }
+.fs-ringcard {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 18px;
+  border-radius: var(--radius-lg);
+  background: var(--gradient-brand);
+  color: #fff;
+}
+.fs-ring { width: 54px; height: 54px; flex-shrink: 0; transform: rotate(-90deg); }
+.fs-ring-track { fill: none; stroke: rgba(255, 255, 255, .3); stroke-width: 4; }
+.fs-ring-fill { fill: none; stroke: #fff; stroke-width: 4; stroke-linecap: round; transition: stroke-dasharray .4s ease; }
+.fs-ringcard-txt b { display: block; font-family: var(--font-body); font-size: 1.5rem; font-weight: var(--fw-regular); }
+.fs-ringcard-txt span { font-size: .76rem; opacity: .9; }
+
+.fs-next {
+  display: block;
+  padding: 14px 18px;
+  border-radius: var(--radius-pill);
+  background: var(--brand-blue-dark);
+  color: #fff;
+  font-weight: var(--fw-semibold);
+  font-size: .9rem;
+  text-align: center;
+  text-decoration: none;
+}
+.fs-next:hover { filter: brightness(1.08); }
+
+/* ----------------------------------------------------------------- table -- */
+
+.fs-tablewrap {
+  overflow-x: auto;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--surface-card);
+}
+.fs-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: .88rem;
+}
+.fs-table th {
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--border);
+  font-size: .68rem;
+  font-weight: var(--fw-semibold);
+  letter-spacing: .09em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-align: left;
+}
+.fs-table td { padding: 12px 14px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+.fs-table tr:last-child td { border-bottom: none; }
+
+.fs-td-mod { display: flex; align-items: center; gap: 12px; }
+.fs-td-mod b { display: block; font-weight: var(--fw-regular); color: var(--ink); }
+.fs-td-mod i { display: block; font-size: .76rem; font-style: normal; color: var(--muted); }
+.fs-modmark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  flex-shrink: 0;
+  border-radius: 9px;
+  background: var(--surface-sunken, rgba(0, 0, 0, .05));
+  color: var(--muted);
+  font-size: .8rem;
+}
+.fs-modmark.is-part { background: color-mix(in srgb, var(--accent) 18%, transparent); color: var(--accent-dark); }
+.fs-modmark.is-done { background: var(--gradient-brand); color: #fff; }
+
+.fs-td-bar { width: 32%; }
+.fs-td-pts { white-space: nowrap; font-variant-numeric: tabular-nums; color: var(--muted); }
+.fs-td-go { text-align: right; white-space: nowrap; }
+.fs-td-go a { font-weight: var(--fw-semibold); color: var(--brand-blue); text-decoration: none; }
+.fs-td-go a:hover { text-decoration: underline; }
+
+/* ----------------------------------------------------------------- cards -- */
+
+.fs-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr)); gap: 12px; }
+.fs-card {
+  display: grid;
+  gap: 8px;
+  padding: 16px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--surface-card);
+  text-decoration: none;
+}
+.fs-card:hover { border-color: var(--brand-blue); }
+.fs-card.is-done { border-color: color-mix(in srgb, var(--brand-blue) 40%, var(--border)); }
+.fs-card-label { margin: 0; font-size: .82rem; color: var(--muted); }
+.fs-card-n {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 1.6rem;
+  font-weight: var(--fw-regular);
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+.fs-card-n small { font-size: .9rem; color: var(--muted); }
+.fs-card-go { font-size: .8rem; font-weight: var(--fw-semibold); color: var(--brand-blue); }
+
+.fs-noscript { margin: 0; padding-left: 20px; display: grid; gap: 8px; }
+
+/* ----------------------------------------------------------- wider screens -- */
+
+@media (min-width: 900px) {
+  .fs-shell { grid-template-columns: 268px minmax(0, 1fr); gap: 22px; }
+  .fs-head { grid-template-columns: minmax(0, 1fr) 260px; }
+}
+
+@media (max-width: 899px) {
+  /* The rail's nested parts repeat what the table already says at this width, so only
+     the exam switcher survives — scrolling sideways through four exams beats stacking
+     four exams plus nine parts above the panel. */
+  .fs-rail-head, .fs-parts, .fs-rail-result, .fs-reset, .fs-rail-label { display: none; }
+  .fs-rail { padding: 8px; }
+  .fs-examlist {
+    grid-auto-flow: column;
+    /* max-content, not a fixed 140px: a 140px track is narrower than "Leben in
+       Deutschland 0/33", and the name then ran under the next chip's label. */
+    grid-auto-columns: max-content;
+    gap: 4px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .fs-examlist::-webkit-scrollbar { display: none; }
+  .fs-examitem {
+    width: auto;
+    justify-content: flex-start;
+    gap: 8px;
+    white-space: nowrap;
+  }
+}
+
+@media (max-width: 620px) {
+  /* Four columns do not fit a phone; the bar is the one that carries least, since the
+     points column says the same thing in numbers. */
+  .fs-td-bar, .fs-table th:nth-child(2) { display: none; }
+  .fs-table td, .fs-table th { padding: 10px; }
+  .fs-points b { font-size: 2.1rem; }
+}
+
+/* The way in from /pruefungen. Lives here rather than in pruefungen.css because it is
+   the dashboard's front door, and it travels with the stylesheet the dashboard owns. */
+.fs-entry {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px 20px;
+  margin-bottom: 20px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--surface-card);
+  text-decoration: none;
+  transition: border-color .15s ease;
+}
+.fs-entry:hover { border-color: var(--brand-blue); }
+.fs-entry-txt b { display: block; font-weight: var(--fw-semibold); color: var(--ink); }
+.fs-entry-txt i { display: block; margin-top: 3px; font-size: .84rem; font-style: normal; line-height: 1.5; color: var(--muted); }
+.fs-entry-go { flex-shrink: 0; font-size: 1.2rem; color: var(--brand-blue); }

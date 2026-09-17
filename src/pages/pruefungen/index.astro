@@ -4,6 +4,7 @@ import PracticeHeader from "../../components/PracticeHeader.astro";
 import Icon from "../../components/Icon.astro";
 import "../../styles/practice.css";
 import "../../styles/pruefungen.css";
+import "../../styles/exam-dashboard.css";
 
 const exams = [
   {
@@ -129,6 +130,14 @@ const comparison = [
       <h1 data-i18n="pruefungen.hero.title">Welche Prüfung machst du?</h1>
       <p data-i18n="pruefungen.hero.subtitle">Ein Überblick über die fünf wichtigsten deutschen Sprach- und Integrationsprüfungen — Niveau, Aufbau und wie du dich vorbereiten kannst.</p>
     </div>
+
+    <a class="fs-entry" href="/fortschritt">
+      <span class="fs-entry-txt">
+        <b>Mein Fortschritt</b>
+        <i>Punkte, begonnene Teile und der nächste offene Prüfungsteil — für jede Prüfung.</i>
+      </span>
+      <span class="fs-entry-go" aria-hidden="true">→</span>
+    </a>
 
     <div class="topic-tabs" id="hub-view-tabs">
       <button class="topic-tab active" type="button" data-view="exam" data-i18n="pruefungen.tab.byExam">Nach Prüfung</button>

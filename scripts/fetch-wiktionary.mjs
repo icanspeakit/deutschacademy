@@ -36,6 +36,18 @@ const ALL_LEVELS = ["a1", "a2", "b1", "b2", "c1", "c2"];
 
 const argv = process.argv.slice(2);
 const DRY = argv.includes("--dry");
+
+// --fill writes sourced morphology into fields that are null or absent. It never touches a field
+// that already holds a value — filling a gap is not the same as overruling a human, and only the
+// first is safe to automate. Generated rows arrive with gender/plural/forms explicitly null for
+// exactly this pass to find; curated A1/A2 rows have values, so they stay audit-only either way.
+const FILL = argv.includes("--fill");
+
+// An explicit `null` means "awaiting sourcing" — generated rows arrive that way on purpose.
+// An ABSENT field means a curator left it out, which is often deliberate (Alter has no plural in
+// the "age" sense even though Wiktionary lists one). --fill writes the first and never the second.
+// Proven necessary: the naive `== null` check filled Alter's plural on curated A1 data.
+const awaiting = (w, field) => field in w && w[field] === null;
 const unitFilter = argv.includes("--unit") ? argv[argv.indexOf("--unit") + 1] : null;
 const levels = argv.filter((a) => ALL_LEVELS.includes(a.toLowerCase())).map((a) => a.toLowerCase());
 const targetLevels = levels.length ? levels : ALL_LEVELS;
@@ -79,6 +91,38 @@ async function fetchBatch(titles) {
   }
   for (const t of titles) if (!out.has(t)) out.set(t, "");
   return out;
+}
+
+/** Single title, cache-first — used by the compound-head fallback, which needs a few extra pages. */
+async function onePage(title) {
+  const hit = cached(title);
+  if (hit !== null) return hit;
+  const got = await fetchBatch([title]);
+  const text = got.get(title) ?? "";
+  cache(title, text);
+  await sleep(PAUSE_MS);
+  return text;
+}
+
+/**
+ * Walks the compound's head candidates and returns the first that is a German noun with a
+ * {{Deutsch Substantiv Übersicht}} block. Caps the number of lookups — a long compound has many
+ * candidate suffixes and most are nonsense.
+ */
+async function resolveViaHead(lemma) {
+  let tries = 0;
+  for (const head of headCandidates(lemma)) {
+    if (tries++ >= 24) break;
+    const sec = germanSection(await onePage(head));
+    if (!sec) continue;
+    const block = uebersicht(sec, "Substantiv");
+    if (!block) continue;
+    const gender = toGender(param(block, "Genus") ?? param(block, "Genus 1"));
+    if (!gender) continue;
+    const pl = plurals(block);
+    return { head, gender, plural: pluralFromHead(lemma, head, pl[0] ?? null) };
+  }
+  return null;
 }
 
 async function wikitextFor(titles) {
@@ -153,6 +197,46 @@ function extractIpa(section) {
   return out;
 }
 
+/**
+ * COMPOUND HEAD FALLBACK.
+ *
+ * German Wiktionary has thin coverage of long administrative compounds — measured at 18 of 125
+ * generated B1 lemmas, all of them real words (Niederlassungserlaubnis, Wohnberechtigungsschein,
+ * Mietspiegel, Prüfungsordnung, Lebensmittelverschwendung). A missing page there is a coverage
+ * gap, not evidence the word was invented, and treating the two the same made the quality gate
+ * useless.
+ *
+ * A German compound takes its gender and its plural pattern from its LAST element:
+ * die Erlaubnis → die Niederlassungserlaubnis; Erlaubnis/Erlaubnisse → …erlaubnis/…erlaubnisse.
+ * So when the whole compound misses, look up progressively shorter suffixes and inherit from the
+ * head. Anything sourced this way is stamped `wiktionary-compound-head` — it is an inference from
+ * a sourced fact, not the same thing as a sourced fact, and the audit report must say so.
+ *
+ * Returns candidate heads longest-first, capitalised as a noun.
+ */
+function headCandidates(lemma) {
+  const out = [];
+  for (let i = 1; i <= lemma.length - 4; i++) {
+    const tail = lemma.slice(i);
+    out.push(tail[0].toUpperCase() + tail.slice(1));
+  }
+  return out;
+  // LONGEST FIRST, deliberately. A short suffix can be a real word without being the head —
+  // Lebensmittelverschwendung ends in "…endung", and die Endung would give the right gender but
+  // build the plural as "Lebensmittelverschendungen". Finding the true head first avoids that.
+  // Two earlier bugs, both measured: skipping heads that start with s/n threw away …schein, and
+  // a 6-try cap never reached Erlaubnis in Niederlassungserlaubnis (14 suffixes down).
+}
+
+/** Applies the head's plural pattern to the compound: Erlaubnis→Erlaubnisse ⇒ …erlaubnis→…erlaubnisse. */
+function pluralFromHead(lemma, head, headPlural) {
+  if (!headPlural) return null;
+  const idx = lemma.toLowerCase().lastIndexOf(head.toLowerCase());
+  if (idx < 0) return null;
+  const prefix = lemma.slice(0, idx);
+  return prefix + headPlural[0].toLowerCase() + headPlural.slice(1);
+}
+
 /** First {{Deutsch <kind> Übersicht}} block in the German section. */
 function uebersicht(section, kind) {
   if (!section) return null;
@@ -183,8 +267,14 @@ function plurals(block) {
   return out;
 }
 
-/** RULE 7 — Wiktionary uses m/f/n, this repo uses der/die/das. */
+/**
+ * RULE 7 — Wiktionary uses m/f/n, this repo uses der/die/das.
+ * Only those three map. A template can carry `Genus=0` or other junk in the slot, and passing it
+ * through produced `bad gender "0"` on Heizkosten — caught by validate-lexicon.mjs, which is the
+ * argument for the validator running after every fill rather than at the end of the project.
+ */
 const GENUS = { m: "der", f: "die", n: "das" };
+const toGender = (g) => (g && GENUS[g]) || null;
 
 /** RULE 6 — normalise for comparison only; the repo stores "am ältesten" and keeps it. */
 const bare = (s) => (s == null ? null : String(s).replace(/^am\s+/, "").trim());
@@ -194,7 +284,7 @@ const bare = (s) => (s == null ? null : String(s).replace(/^am\s+/, "").trim());
 // ---------------------------------------------------------------------------
 
 const audit = [];
-const stats = { words: 0, ipa: 0, noGerman: 0, noIpa: 0, checked: 0, mismatch: 0 };
+const stats = { words: 0, ipa: 0, noGerman: 0, noIpa: 0, checked: 0, mismatch: 0, filled: 0, gaps: 0, viaHead: 0, unresolved: 0 };
 
 for (const level of targetLevels) {
   const file = path.join(ROOT, "src/content/lexicon", `${level}.json`);
@@ -221,6 +311,51 @@ for (const level of targetLevels) {
 
       if (!section) {
         stats.noGerman++;
+        // A missing page is a coverage gap for compounds, not proof of invention. Try the head.
+        // pluralOnly nouns (Heizkosten, Eltern) have no gender by design — the validator exempts
+        // them, and filling one in is a regression, not a gap being closed.
+        if (w.pos === "noun" && !w.pluralOnly && (awaiting(w, "gender") || awaiting(w, "plural"))) {
+          const viaHead = await resolveViaHead(w.lemma);
+          if (viaHead) {
+            stats.viaHead++;
+            if (FILL) {
+              if (awaiting(w, "gender") && viaHead.gender) w.gender = viaHead.gender;
+              if (awaiting(w, "plural")) w.plural = viaHead.plural; // may stay null — honest
+              w.morphSource = "wiktionary-compound-head";
+              stats.filled++;
+            }
+            audit.push({
+              where,
+              field: "gender/plural",
+              repo: FILL ? `${viaHead.gender ?? "?"} / ${viaHead.plural ?? "(none)"}` : "(null)",
+              wiktionary: `inherited from head "${viaHead.head}"`,
+              note: FILL ? "INFERRED from the compound head, not sourced directly — verify" : "head resolvable — re-run with --fill",
+            });
+            continue;
+          }
+          audit.push({ where, field: "—", repo: "", wiktionary: "", note: "no page AND no resolvable head — verify this word exists" });
+          stats.unresolved++;
+          continue;
+        }
+        // A VERB with no page is as doubtful as a noun with no page — it just fails quieter,
+        // because the validator does not require `forms` the way it requires `gender`.
+        // `instandsetzen` shipped that way in b2-tranche-4 and was caught by hand, not by this
+        // number: no page (the standard spelling is the separated *instand setzen*), so `forms`
+        // stayed null and the Verbformen trainer would never have seen the row. There is no head
+        // to inherit verb forms from, so it counts straight as unresolved.
+        //
+        // ADJECTIVES are deliberately NOT counted here, though the first version of this check
+        // did count them. Measured across the whole lexicon it flagged exactly four —
+        // berufsbegleitend, eigenverantwortlich, überparteilich, verkehrsberuhigt — every one of
+        // them ordinary current German that de.wiktionary simply has no page for. An adjective
+        // with no page loses only `ipa` and a comparative that most of these do not have anyway;
+        // nothing required goes missing. That is a Wiktionary coverage gap, the same kind the
+        // compound-head fallback exists for, not a reason to doubt the word.
+        if (w.pos === "verb") {
+          audit.push({ where, field: "—", repo: "", wiktionary: "", note: "no page for this verb — verify the lemma and its spelling" });
+          stats.unresolved++;
+          continue;
+        }
         audit.push({ where, field: "—", repo: "", wiktionary: "", note: "no German section on page (or page missing)" });
         continue;
       }
@@ -256,16 +391,44 @@ for (const level of targetLevels) {
         }
       };
 
+      // Fill a gap, or audit a value. `null` and absent both count as a gap; anything else is a
+      // human's answer and only gets compared.
+      const fillOrCmp = (field, wikiVal, transform = (v) => v) => {
+        if (wikiVal == null) return;
+        if (w[field] == null) {
+          if (!awaiting(w, field)) return; // absent by a curator's choice — leave it alone
+          if (FILL) {
+            w[field] = transform(wikiVal);
+            stats.filled++;
+          } else {
+            stats.gaps++;
+            audit.push({ where, field, repo: "(null)", wiktionary: String(wikiVal), note: "gap — re-run with --fill to write it" });
+          }
+          return;
+        }
+        cmp(field, w[field], wikiVal);
+      };
+
       if (w.pos === "noun") {
-        const g = param(block, "Genus") ?? param(block, "Genus 1");
-        cmp("gender", w.gender, g ? GENUS[g] ?? g : null);
+        if (!w.pluralOnly) fillOrCmp("gender", toGender(param(block, "Genus") ?? param(block, "Genus 1")));
 
         const pl = plurals(block);
-        if (pl.length) {
-          if (!pl.some((p) => bare(p) === bare(w.plural))) {
+        if (pl.length && (w.plural != null || awaiting(w, "plural"))) {
+          if (w.plural == null) {
+            // Several valid plurals is normal (Mädchen/Mädchens). Take the first, which is
+            // Wiktionary's primary, and record that a choice was made.
+            if (FILL) {
+              w.plural = pl[0];
+              stats.filled++;
+              if (pl.length > 1) audit.push({ where, field: "plural", repo: pl[0], wiktionary: pl.join(" / "), note: "filled with the first of several valid plurals" });
+            } else {
+              stats.gaps++;
+              audit.push({ where, field: "plural", repo: "(null)", wiktionary: pl.join(" / "), note: "gap — re-run with --fill to write it" });
+            }
+          } else if (!pl.some((p) => bare(p) === bare(w.plural))) {
             stats.checked++;
             stats.mismatch++;
-            audit.push({ where, field: "plural", repo: w.plural ?? "(none)", wiktionary: pl.join(" / "), note: pl.length > 1 ? "several valid plurals" : "" });
+            audit.push({ where, field: "plural", repo: w.plural, wiktionary: pl.join(" / "), note: pl.length > 1 ? "several valid plurals" : "" });
           } else {
             stats.checked++;
             if (pl.length > 1) audit.push({ where, field: "plural", repo: w.plural, wiktionary: pl.join(" / "), note: "repo picks one of several valid plurals — fine, noted" });
@@ -274,8 +437,9 @@ for (const level of targetLevels) {
       }
 
       if (w.pos === "adj") {
-        cmp("comparative", w.comparative, param(block, "Komparativ"));
-        cmp("superlative", w.superlative, param(block, "Superlativ"));
+        fillOrCmp("comparative", param(block, "Komparativ"));
+        // The repo stores the superlative with the `am ` prefix; Wiktionary does not.
+        fillOrCmp("superlative", param(block, "Superlativ"), (v) => (/^am\s/.test(v) ? v : `am ${v}`));
       }
 
       // Verb forms. Parameter names confirmed 2026-09-17 against the live blocks for heißen,
@@ -287,9 +451,33 @@ for (const level of targetLevels) {
           param(block, "Präteritum_ich"),
           param(block, "Partizip II"),
         ];
-        const repo = w.forms ?? [];
-        const labels = ["forms[0] 3.Sg", "forms[1] Präteritum", "forms[2] Partizip II"];
-        wiki.forEach((v, i) => cmp(labels[i], repo[i], v));
+        if (w.forms == null && !awaiting(w, "forms")) {
+          // absent by a curator's choice (a verb they chose not to give forms for) — leave it
+        } else if (w.forms == null) {
+          // forms is all-or-nothing: the validator requires exactly 3, so a partial source is a
+          // gap to report, never a two-element array written into the data.
+          if (wiki.every((v) => v)) {
+            if (FILL) {
+              w.forms = wiki;
+              stats.filled++;
+            } else {
+              stats.gaps++;
+              audit.push({ where, field: "forms", repo: "(null)", wiktionary: wiki.join(", "), note: "gap — re-run with --fill to write it" });
+            }
+          } else {
+            stats.gaps++;
+            audit.push({ where, field: "forms", repo: "(null)", wiktionary: wiki.map((v) => v ?? "?").join(", "), note: "INCOMPLETE on Wiktionary — needs a human" });
+          }
+        } else {
+          const labels = ["forms[0] 3.Sg", "forms[1] Präteritum", "forms[2] Partizip II"];
+          wiki.forEach((v, i) => cmp(labels[i], w.forms[i], v));
+        }
+        const aux = param(block, "Hilfsverb");
+        if (aux && !["haben", "sein"].includes(aux)) {
+          audit.push({ where, field: "aux", repo: w.aux ?? "(null)", wiktionary: aux, note: "unexpected Hilfsverb value — not written" });
+        } else {
+          fillOrCmp("aux", aux);
+        }
       }
     }
   }
@@ -314,9 +502,19 @@ const lines = [
   `\`ipa\`/\`ipaVariants\`/\`ipaSource\`. A disagreement is not automatically an error — the repo may`,
   `be simplifying deliberately. Decide per row.`,
   ``,
-  `| words | ipa attached | no German section | no IPA | morphology checks | disagreements |`,
-  `| ---: | ---: | ---: | ---: | ---: | ---: |`,
-  `| ${stats.words} | ${stats.ipa} | ${stats.noGerman} | ${stats.noIpa} | ${stats.checked} | ${stats.mismatch} |`,
+  `| words | ipa attached | no German section | no IPA | morphology checks | disagreements | ${FILL ? "fields filled" : "gaps"} |`,
+  `| ---: | ---: | ---: | ---: | ---: | ---: | ---: |`,
+  `| ${stats.words} | ${stats.ipa} | ${stats.noGerman} | ${stats.noIpa} | ${stats.checked} | ${stats.mismatch} | ${FILL ? stats.filled : stats.gaps} |`,
+  ``,
+  `> **The quality signal for generated rows is \`unresolved\`, not \`no German section\`.**`,
+  `> German Wiktionary covers long administrative compounds poorly, so a missing page usually means`,
+  `> thin coverage, not an invented word. ${stats.noGerman} of ${stats.words} lemmas had no page;`,
+  `> ${stats.viaHead} of those resolved through their compound head; **${stats.unresolved} resolved`,
+  `> neither way and are the rows worth doubting** (${stats.words ? Math.round((stats.unresolved / stats.words) * 100) : 0}%).`,
+  ``,
+  `> Rows marked \`morphSource: "wiktionary-compound-head"\` are INFERRED from the head's gender and`,
+  `> plural pattern (die Erlaubnis ⇒ die Niederlassungserlaubnis). Sound German morphology, but an`,
+  `> inference — spot-check them.`,
   ``,
 ];
 
@@ -334,6 +532,10 @@ writeFileSync(reportPath, lines.join("\n") + "\n", "utf8");
 
 console.log(
   `\n${stats.words} words · ${stats.ipa} IPA attached · ${stats.noIpa} without IPA · ` +
-    `${stats.noGerman} without a German section · ${stats.checked} morphology checks, ${stats.mismatch} disagreements`
+    `${stats.noGerman} without a German section · ${stats.checked} morphology checks, ${stats.mismatch} disagreements` +
+    (FILL ? ` · ${stats.filled} fields filled` : ` · ${stats.gaps} gaps (use --fill)`)
 );
-console.log(`report: docs/lexicon-audit-v1.md${DRY ? "  (--dry: lexicon not written)" : ""}`);
+console.log(
+  `${stats.noGerman} without a page: ${stats.viaHead} resolved via compound head, ${stats.unresolved} unresolved (these are the doubtful ones)`
+);
+console.log(`report: docs/lexicon-audit-v1.md${DRY ? "  (--dry: lexicon not written)" : ""}  [HEAD_FALLBACK_V4]`);

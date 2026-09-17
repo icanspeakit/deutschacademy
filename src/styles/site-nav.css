@@ -48,6 +48,9 @@
   font-weight: 500;
   color: var(--ink);
   cursor: pointer;
+  /* The nav is now mounted on practice pages too, whose stylesheets underline bare links.
+     A component that changes shape depending on which page hosts it is not a component. */
+  text-decoration: none;
   transition: background-color .15s ease, color .15s ease;
 }
 .lp-menu-btn:hover,
@@ -446,13 +449,21 @@
 /* Six top-level items instead of two: between the breakpoint and a comfortable desktop
    there is not room for both the old 44px logo gap and the CTA, so the bar tightens
    rather than wrapping. */
-@media (max-width: 1120px) and (min-width: 901px) {
+/* Seven top-level items, not the two this bar was built for. Between the breakpoint and a
+   comfortable desktop there is no longer room for the menus AND the CTA AND the utilities:
+   measured across 901–1500px, the right-hand cluster ran up to 144px past the edge.
+   Tightening alone could not close that, so below 1280px the nav CTA goes.
+
+   It is the least load-bearing thing in the bar: the hero already carries "Kostenlos
+   starten", the drawer carries its own copy, and the ≤430px rule below has always dropped
+   it for the same reason. */
+@media (max-width: 1280px) and (min-width: 901px) {
   .lp-nav-row { gap: 12px; padding-inline: 16px; }
   .lp-nav-left { gap: 16px; }
   .lp-menubar { gap: 0; }
   .lp-menu-btn { padding-inline: 8px; font-size: 13.5px; }
   .lp-nav-right, .lp-nav-utils { gap: 12px; }
-  .lp-nav .lp-btn--primary { padding: 10px 16px; font-size: 13.5px; }
+  .lp-nav .lp-btn--primary { display: none; }
 }
 
 /* The Niveaus panel is the last menu before the right-hand cluster, so a panel anchored
@@ -486,17 +497,105 @@
   .lp-drawer .lp-btn--primary { display: block; }
 }
 
-/* Landeskunde's menu carries sixteen entries — the quiz plus fifteen topics — and in
-   one column that ran 1198px tall on a 900px screen, i.e. off the bottom. Two columns
-   and a scroll cap on the list (not the panel, so "Übersicht" stays reachable) keep the
-   whole thing on screen. Targeted by id because the panel id is section.id, and no
-   other section is anywhere near this long. */
-@media (min-width: 901px) {
-  #lp-panel-landeskunde { min-width: 580px; }
-  #lp-panel-landeskunde .lp-panel-list {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 2px 22px;
-    max-height: min(62vh, 560px);
-    overflow-y: auto;
-  }
+/* --- Grouped panels -------------------------------------------------------- */
+
+/* Landeskunde's sixteen entries were first one column 1198px tall (off the bottom of a
+   900px screen), then a two-column scroll box that scrolled in BOTH directions and still
+   could not be scanned: sixteen equal rows with nothing to navigate by. Sub-sections fix
+   the scanning and the height at once — five short lists under headings fit on screen with
+   no scrollbar at all, and the eye has somewhere to land. */
+.lp-panel--grouped { min-width: 520px; }
+
+.lp-panel-cols {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px 28px;
 }
+
+/* The one entry that belongs to every group rather than to one of them. */
+.lp-panel-feature {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: -4px 0 14px;
+  padding: 9px 10px;
+  margin-inline: -10px;
+  border-radius: 10px;
+  text-decoration: none;
+  transition: background-color .15s ease;
+}
+.lp-panel-feature:hover { background: var(--surface-sunken, rgba(0, 0, 0, .04)); }
+.lp-panel-feature .lp-panel-txt { flex: 1; min-width: 0; }
+.lp-panel-feature > span[aria-hidden] { color: var(--brand-blue); }
+
+/* A grouped panel's rows carry no icon: the headings are what organises them, and a tile
+   on every row competes with that. The shared .lp-panel-col rule lays an item out as a row
+   because the Niveaus panel's items are title-only; here they have a count too, so they
+   stack — otherwise "864 Nomen" sits beside the title in a column half as wide. */
+.lp-panel-cols .lp-panel-col a {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0;
+  padding-block: 6px;
+}
+.lp-panel-cols .lp-panel-col a b { margin-bottom: 1px; }
+
+/* Short titles (a CEFR level) keep the count on the same line — stacked, four levels take
+   eight lines to say what four say. */
+.lp-panel-cols .lp-panel-col--inline a {
+  flex-direction: row;
+  align-items: baseline;
+  gap: 8px;
+}
+.lp-panel-cols .lp-panel-col--inline a b { margin-bottom: 0; font-weight: 600; }
+
+@media (max-width: 1280px) and (min-width: 901px) {
+  /* Anchored to the button's left edge, a 620px panel runs off the right on a small
+     laptop. Two columns and a narrower panel keep it on screen. */
+  .lp-panel--grouped { min-width: 420px; }
+}
+
+/* --- Tabbed panels --------------------------------------------------------- */
+
+/* The height of a tabbed panel is one group's worth, not the whole catalogue's, which is
+   the point: Landeskunde can grow to forty topics without the menu reaching the bottom of
+   the screen again. */
+.lp-panel--tabbed { min-width: 470px; }
+
+.lp-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-bottom: 14px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border);
+}
+.lp-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  background: none;
+  font: inherit;
+  font-size: 12.5px;
+  font-weight: 500;
+  color: var(--muted);
+  cursor: pointer;
+  transition: background-color .15s ease, color .15s ease, border-color .15s ease;
+}
+.lp-tab i {
+  font-style: normal;
+  font-size: 11px;
+  color: var(--muted-soft);
+}
+.lp-tab:hover { border-color: var(--border); color: var(--ink); }
+.lp-tab.is-on {
+  border-color: var(--brand-blue);
+  background: var(--blue-50, rgba(13, 148, 136, .06));
+  color: var(--brand-blue-dark);
+}
+.lp-tab.is-on i { color: var(--brand-blue); }
+
+.lp-tabview[hidden] { display: none; }

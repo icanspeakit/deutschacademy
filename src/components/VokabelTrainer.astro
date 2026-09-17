@@ -1,0 +1,167 @@
+---
+// The flashcard trainer's shell, shared by every deck that mounts it.
+//
+// Lifted out of src/pages/uebungen/wortschatz.astro when the nav's Niveaus menu gained
+// per-level word lists: /uebungen/wortschatz (the curated Redemittel deck) and
+// /uebungen/wortschatz/a1 (the lexicon's A1 words) are the same tool over different
+// cards, and a second copy of this markup would have drifted from the first inside a
+// week. The page decides which cards to hand over; everything below is identical.
+//
+// Cards arrive already in the engine's shape: `{ front, note, translations }`.
+import PracticeHeader from "./PracticeHeader.astro";
+import LernsetPicker from "./LernsetPicker.astro";
+import "../styles/practice.css";
+// The split layout itself — the grid, the sliding column, the phone collapse — is the
+// same stylesheet the grammar topics and the exam pages load. Only the width tokens and
+// the card's own look are overridden, in vokabeltrainer.css.
+import "../styles/verben-praepositionen.css";
+import "../styles/vokabeltrainer.css";
+
+interface Props {
+  /** `{ front, note, translations }` rows — see src/lib/wortschatz-app.js. */
+  cards: Array<{ front: string; note?: string; translations?: Record<string, string> }>;
+  /** Shown in the practice header's breadcrumb. */
+  title: string;
+  /** The deck's <h1> — the curated deck and a level deck are named differently. */
+  heading: string;
+  /** i18n key for the heading, when the deck has a translated name. */
+  headingKey?: string;
+  /** Deck id for the picker: "redemittel", a level ("a1") or a unit id ("a1-04"). */
+  deck: string;
+  /** Where this deck sits — "A1 · Wohnen · 25 Wörter". Shown on the picker bar. */
+  sub: string;
+  /**
+   * Which languages this deck actually has. The lexicon ships `en` only (§7 decision 3),
+   * so a lexicon deck must not render three tabs that resolve to "Übersetzung folgt" on
+   * every card — that is a promise the content cannot keep. The curated Redemittel deck
+   * really does carry all four and passes them.
+   */
+  langs?: string[];
+}
+const { cards, title, heading, headingKey, deck, sub, langs = ["en"] } = Astro.props;
+
+// The trainer quizzes German against one other language at a time.
+const ALL_LANGUAGES = [
+  { code: "en", label: "English", deName: "Englisch", deInto: "Englische" },
+  { code: "ar", label: "العربية", deName: "Arabisch", deInto: "Arabische", rtl: true },
+  { code: "ru", label: "Русский", deName: "Russisch", deInto: "Russische" },
+  { code: "tr", label: "Türkçe", deName: "Türkisch", deInto: "Türkische" },
+];
+const languages = ALL_LANGUAGES.filter((l) => langs.includes(l.code));
+---
+<PracticeHeader title={title} />
+
+<!-- The same split layout the grammar topics use (src/lib/ruleColumn.js): a column that
+     is sticky beside the work on a desktop and collapses behind one button on a phone.
+     Rendered collapsed, then opened by the script — which state that ends up being is a
+     remembered per-browser preference, defaulting to open on a desktop, where a nav
+     column costs the trainer nothing, and closed on a phone, where it costs a screen. -->
+<main class="vt-shell vp-page vp-page--split vt-split" id="vp-page" data-rule="hidden" data-anim="off">
+  <div class="vt-hero">
+    <p class="eyebrow" id="vt-eyebrow">Karteikarten</p>
+    <h1 data-i18n={headingKey}>{heading}</h1>
+    <p class="vt-hero-sub">{sub}</p>
+  </div>
+
+  <div class="vp-workspace">
+    <!-- First in the DOM so that on a phone — where scroll order is the only hierarchy
+         there is — you meet "which set am I doing" before the cards. The card under it
+         collapses to zero height, so "first" costs the trainer one button. -->
+    <aside class="vp-col vp-col--rule" id="vp-rule">
+      <div class="vp-card vp-rule-card" id="vp-rule-card">
+        <div class="vp-card-label">Lernsets</div>
+        <LernsetPicker current={deck} />
+      </div>
+
+      <button
+        type="button"
+        class="vp-rule-peek"
+        id="vp-rule-peek"
+        data-show="Lernset wechseln"
+        data-hide="Lernsets ausblenden"
+        aria-controls="vp-rule-card"
+      >Lernset wechseln</button>
+    </aside>
+
+    <section class="vp-col vp-col--ex">
+      <div class="vt-tool">
+        <div class="vt-tabs" id="vt-tabs">
+          <button class="vt-tab active" type="button" data-tab="cards" data-i18n="wortschatz.tab.cards">Karteikarten</button>
+          <button class="vt-tab" type="button" data-tab="learn" data-i18n="wortschatz.tab.learn">Lernen</button>
+          <button class="vt-tab" type="button" data-tab="test" data-i18n="wortschatz.tab.test">Testen</button>
+          <button class="vt-tab" type="button" data-tab="list" data-i18n="wortschatz.tab.list">Wortliste</button>
+        </div>
+
+        <div class="vt-toolbar">
+          <div class:list={["vt-lang-tabs", languages.length < 2 && "is-single"]} id="vt-lang-tabs"></div>
+          <div class="vt-toolbar-right">
+            <label class="vt-direction">
+              <input type="checkbox" class="vt-switch" id="vt-dir-switch" checked />
+              <span id="vt-dir-label"></span>
+            </label>
+            <button class="vt-pill" id="vt-deck-chip" type="button"></button>
+            <span class="vt-position" id="vt-position"></span>
+            <!-- Hidden below 1001px by verben-praepositionen.css: there is no column to
+                 slide down there, and .vp-rule-peek is the control instead. -->
+            <button
+              type="button"
+              class="vp-rule-toggle"
+              id="vp-rule-toggle"
+              data-show="Lernsets einblenden"
+              data-hide="Lernsets ausblenden"
+            >Lernsets einblenden</button>
+          </div>
+        </div>
+
+        <div id="vt-content"></div>
+      </div>
+    </section>
+  </div>
+</main>
+
+<script type="application/json" id="fc-data" set:html={JSON.stringify(cards)}></script>
+<script type="application/json" id="fc-langs" set:html={JSON.stringify(languages)}></script>
+<script>
+  import { mountWortschatzApp } from "../lib/wortschatz-app.js";
+  import { mountRuleColumn } from "../lib/ruleColumn.js";
+  import { recordAttempt, recordSession } from "../lib/progress.js";
+
+  // Its own keys: whether you keep a grammar rule open says nothing about whether you
+  // want the Lernset list beside your cards.
+  //
+  // Unlike a rule, this column is navigation, so it opens by default where there is room
+  // for it. And no pop-out tour: that exists to advertise a panel nobody can see, which
+  // is not this one — on a phone the button says "Lernset wechseln" in so many words.
+  mountRuleColumn(document.getElementById("vp-page"), {
+    storageKey: "da-wortschatz-lernsets",
+    defaultHidden: ({ wide }) => !wide,
+    intro: false,
+  });
+
+  const cards = JSON.parse(document.getElementById("fc-data").textContent);
+  const languages = JSON.parse(document.getElementById("fc-langs").textContent);
+
+  // Night mode used to be page-local here; it is now the site-wide toggle in the
+  // header, so .vt-shell just reads <html data-theme> from vokabeltrainer.css.
+
+  mountWortschatzApp(
+    {
+      tabsEl: document.getElementById("vt-tabs"),
+      langTabsEl: document.getElementById("vt-lang-tabs"),
+      dirSwitch: document.getElementById("vt-dir-switch"),
+      dirLabel: document.getElementById("vt-dir-label"),
+      deckChip: document.getElementById("vt-deck-chip"),
+      counterEl: document.getElementById("vt-position"),
+      contentEl: document.getElementById("vt-content"),
+      eyebrowEl: document.getElementById("vt-eyebrow"),
+    },
+    cards,
+    languages,
+    {
+      onAnswer: (ok, card) => {
+        recordAttempt({ skill: "wortschatz", correct: ok, id: card.front, trackVocab: true });
+      },
+      onSessionStart: () => recordSession("wortschatz"),
+    }
+  );
+</script>

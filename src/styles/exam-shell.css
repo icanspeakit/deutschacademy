@@ -1,0 +1,47 @@
+/* Fitting the /pruefungen explanation into the side column (ExamShell.astro).
+
+   The prose, tables and skill grid were written for an 780px article column and are
+   now inside a 320–440px aside. Nothing about the content changes; it is the same
+   sections, the same tables, the same source notes — they just have to stop behaving
+   like a page and start behaving like a panel. */
+
+/* The card is the container now, so the sections inside it drop their own page-level
+   width and centring and become plain stacked blocks. */
+.vp-rule-card .exam-section { max-width: none; margin: 0 0 26px; }
+.vp-rule-card .exam-section:last-child { margin-bottom: 0; }
+.vp-rule-card .exam-section h2 {
+  font-size: 1.0625rem;
+  text-align: left;
+  margin: 0 0 10px;
+}
+.vp-rule-card .exam-section h3 { font-size: .95rem; margin: 18px 0 8px; }
+.vp-rule-card .exam-section p { font-size: .875rem; line-height: 1.6; }
+
+/* Four skill cards side by side need ~600px. Two by two is the same information at
+   half the width, and on a phone the card is only ever opened deliberately. */
+.vp-rule-card .skill-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+.vp-rule-card .skill-card { padding: 10px 12px; }
+.vp-rule-card .skill-card-icon { font-size: 1.15rem; }
+
+/* A five-column format table cannot be made to fit, so it stays a horizontal
+   scroller (.format-table-wrap already is one) — but at panel type size, so fewer
+   columns need the scroll in the first place. */
+.vp-rule-card .format-table th,
+.vp-rule-card .format-table td { padding: 8px 10px; font-size: .8125rem; }
+.vp-rule-card .format-note { font-size: .78rem; }
+
+/* The exam pages stack CTAs and a tool grid in the practice column; they were
+   centred blocks on a full-width page and are the column's whole content here. */
+.vp-col--ex .mock-cta,
+.vp-col--ex .exam-practice { max-width: none; margin-left: 0; margin-right: 0; }
+.vp-col--ex .exam-practice h2 { text-align: left; }
+
+/* The first CTA is the one the page exists for. It does not need to shout, but it
+   should not read as the third of three equal boxes either. */
+.vp-col--ex .mock-cta--lead { border-color: var(--blue-300); background: var(--blue-50); }
+
+@media (min-width: 1001px) {
+  /* The practice column is narrower than the old article column was; the tool grid's
+     three-across default leaves cards too thin to read. */
+  .vp-col--ex .tool-grid { grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); }
+}

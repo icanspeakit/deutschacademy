@@ -5,7 +5,7 @@
     "lemmas": "Authored for DeutschAcademy against that frequency list. Level banding is frequency-derived, NOT the official Goethe/telc inventory - the UI must not claim otherwise.",
     "generated": "2026-09-13"
   },
-  "generated": "2026-09-14",
+  "generated": "2026-09-17",
   "sets": 26,
   "words": 650,
   "lernsets": [
@@ -50,6 +50,8 @@
           "plural": "Namen",
           "en": "name",
           "example": "Mein Name ist Ana.",
+          "ipa": "ˈnaːmə",
+          "ipaSource": "wiktionary",
           "id": "name",
           "level": "A1",
           "unit": "a1-01"
@@ -66,6 +68,8 @@
           "plural": "Vornamen",
           "en": "first name",
           "example": "Bitte schreiben Sie hier Ihren Vornamen.",
+          "ipa": "ˈfoːɐ̯ˌnaːmə",
+          "ipaSource": "wiktionary",
           "id": "vorname",
           "level": "A1",
           "unit": "a1-01"
@@ -82,6 +86,8 @@
           "plural": "Nachnamen",
           "en": "surname, last name",
           "example": "Mein Nachname ist schwer zu schreiben.",
+          "ipa": "ˈnaːxˌnaːmə",
+          "ipaSource": "wiktionary",
           "id": "nachname",
           "level": "A1",
           "unit": "a1-01"
@@ -98,6 +104,8 @@
           "plural": "Adressen",
           "en": "address",
           "example": "Wie ist deine Adresse?",
+          "ipa": "aˈdʁɛsə",
+          "ipaSource": "wiktionary",
           "id": "adresse",
           "level": "A1",
           "unit": "a1-01"
@@ -114,6 +122,8 @@
           "plural": "Straßen",
           "en": "street",
           "example": "Ich wohne in der Goethestraße.",
+          "ipa": "ˈʃtʁaːsə",
+          "ipaSource": "wiktionary",
           "id": "strasse",
           "level": "A1",
           "unit": "a1-01"
@@ -130,6 +140,8 @@
           "plural": "Städte",
           "en": "city, town",
           "example": "München ist eine große Stadt.",
+          "ipa": "ʃtat",
+          "ipaSource": "wiktionary",
           "id": "stadt",
           "level": "A1",
           "unit": "a1-01"
@@ -146,6 +158,8 @@
           "plural": "Länder",
           "en": "country",
           "example": "Aus welchem Land kommst du?",
+          "ipa": "lant",
+          "ipaSource": "wiktionary",
           "id": "land",
           "level": "A1",
           "unit": "a1-01"
@@ -162,6 +176,8 @@
           "plural": "Telefonnummern",
           "en": "phone number",
           "example": "Gib mir bitte deine Telefonnummer.",
+          "ipa": "teləˈfoːnˌnʊmɐ",
+          "ipaSource": "wiktionary",
           "id": "telefonnummer",
           "level": "A1",
           "unit": "a1-01"
@@ -177,6 +193,8 @@
           "gender": "das",
           "en": "age",
           "example": "Wie ist Ihr Alter?",
+          "ipa": "ˈaltɐ",
+          "ipaSource": "wiktionary",
           "id": "alter",
           "level": "A1",
           "unit": "a1-01"
@@ -193,6 +211,11 @@
           "plural": "Geburtstage",
           "en": "birthday",
           "example": "Mein Geburtstag ist im Mai.",
+          "ipa": "ɡəˈbuːɐ̯t͡sˌtaːk",
+          "ipaVariants": [
+            "ɡəˈbʊʁt͡sˌtaːk"
+          ],
+          "ipaSource": "wiktionary",
           "id": "geburtstag",
           "level": "A1",
           "unit": "a1-01"
@@ -209,6 +232,8 @@
           "plural": "Berufe",
           "en": "job, profession",
           "example": "Was sind Sie von Beruf?",
+          "ipa": "bəˈʁuːf",
+          "ipaSource": "wiktionary",
           "id": "beruf",
           "level": "A1",
           "unit": "a1-01"
@@ -225,6 +250,8 @@
           "plural": "Sprachen",
           "en": "language",
           "example": "Ich lerne drei Sprachen.",
+          "ipa": "ˈʃpʁaːxə",
+          "ipaSource": "wiktionary",
           "id": "sprache",
           "level": "A1",
           "unit": "a1-01"
@@ -241,6 +268,8 @@
           "plural": "Herren",
           "en": "Mr, gentleman",
           "example": "Guten Tag, Herr Müller!",
+          "ipa": "hɛʁ",
+          "ipaSource": "wiktionary",
           "id": "herr",
           "level": "A1",
           "unit": "a1-01"
@@ -257,6 +286,8 @@
           "plural": "Frauen",
           "en": "woman, Mrs",
           "example": "Die Frau dort ist meine Lehrerin.",
+          "ipa": "fʁaʊ̯",
+          "ipaSource": "wiktionary",
           "id": "frau",
           "level": "A1",
           "unit": "a1-01"
@@ -273,6 +304,8 @@
           "plural": "Männer",
           "en": "man",
           "example": "Der Mann am Fenster liest eine Zeitung.",
+          "ipa": "man",
+          "ipaSource": "wiktionary",
           "id": "mann",
           "level": "A1",
           "unit": "a1-01"
@@ -289,6 +322,8 @@
           "plural": "Personen",
           "en": "person",
           "example": "Wir sind vier Personen.",
+          "ipa": "pɛʁˈzoːn",
+          "ipaSource": "wiktionary",
           "id": "person",
           "level": "A1",
           "unit": "a1-01"
@@ -309,6 +344,8 @@
           ],
           "en": "to be called",
           "example": "Wie heißt du?",
+          "ipa": "ˈhaɪ̯sn̩",
+          "ipaSource": "wiktionary",
           "id": "heissen",
           "level": "A1",
           "unit": "a1-01"
@@ -329,6 +366,8 @@
           ],
           "en": "to come",
           "example": "Ich komme aus der Türkei.",
+          "ipa": "ˈkɔmən",
+          "ipaSource": "wiktionary",
           "id": "kommen",
           "level": "A1",
           "unit": "a1-01"
@@ -349,6 +388,8 @@
           ],
           "en": "to live, to reside",
           "example": "Wir wohnen in Berlin.",
+          "ipa": "ˈvoːnən",
+          "ipaSource": "wiktionary",
           "id": "wohnen",
           "level": "A1",
           "unit": "a1-01"
@@ -369,6 +410,8 @@
           ],
           "en": "to speak",
           "example": "Sprechen Sie Deutsch?",
+          "ipa": "ˈʃpʁɛçn̩",
+          "ipaSource": "wiktionary",
           "id": "sprechen",
           "level": "A1",
           "unit": "a1-01"
@@ -389,6 +432,8 @@
           ],
           "en": "to be",
           "example": "Ich bin müde.",
+          "ipa": "zaɪ̯n",
+          "ipaSource": "wiktionary",
           "id": "sein",
           "level": "A1",
           "unit": "a1-01"
@@ -409,6 +454,11 @@
           ],
           "en": "to have",
           "example": "Hast du Zeit?",
+          "ipa": "ˈhaːbn̩",
+          "ipaVariants": [
+            "ˈhaːbm̩"
+          ],
+          "ipaSource": "wiktionary",
           "id": "haben",
           "level": "A1",
           "unit": "a1-01"
@@ -425,6 +475,8 @@
           "superlative": "am ältesten",
           "en": "old",
           "example": "Wie alt bist du?",
+          "ipa": "alt",
+          "ipaSource": "wiktionary",
           "id": "alt",
           "level": "A1",
           "unit": "a1-01"
@@ -441,6 +493,8 @@
           "superlative": "am jüngsten",
           "en": "young",
           "example": "Meine Schwester ist noch jung.",
+          "ipa": "jʊŋ",
+          "ipaSource": "wiktionary",
           "id": "jung",
           "level": "A1",
           "unit": "a1-01"
@@ -455,6 +509,8 @@
           "pos": "adj",
           "en": "married",
           "example": "Sind Sie verheiratet?",
+          "ipa": "fɛɐ̯ˈhaɪ̯ʁaːtət",
+          "ipaSource": "wiktionary",
           "id": "verheiratet",
           "level": "A1",
           "unit": "a1-01"
@@ -501,6 +557,8 @@
           "plural": "Familien",
           "en": "family",
           "example": "Meine Familie wohnt in Izmir.",
+          "ipa": "faˈmiːli̯ə",
+          "ipaSource": "wiktionary",
           "id": "familie",
           "level": "A1",
           "unit": "a1-02"
@@ -516,6 +574,8 @@
           "pluralOnly": true,
           "en": "parents",
           "example": "Meine Eltern besuchen mich im Sommer.",
+          "ipa": "ˈɛltɐn",
+          "ipaSource": "wiktionary",
           "id": "eltern",
           "level": "A1",
           "unit": "a1-02"
@@ -532,6 +592,8 @@
           "plural": "Mütter",
           "en": "mother",
           "example": "Meine Mutter kocht sehr gut.",
+          "ipa": "ˈmʊtɐ",
+          "ipaSource": "wiktionary",
           "id": "mutter",
           "level": "A1",
           "unit": "a1-02"
@@ -548,6 +610,8 @@
           "plural": "Väter",
           "en": "father",
           "example": "Mein Vater arbeitet bei der Post.",
+          "ipa": "ˈfaːtɐ",
+          "ipaSource": "wiktionary",
           "id": "vater",
           "level": "A1",
           "unit": "a1-02"
@@ -564,6 +628,8 @@
           "plural": "Kinder",
           "en": "child",
           "example": "Das Kind spielt im Garten.",
+          "ipa": "kɪnt",
+          "ipaSource": "wiktionary",
           "id": "kind",
           "level": "A1",
           "unit": "a1-02"
@@ -580,6 +646,8 @@
           "plural": "Söhne",
           "en": "son",
           "example": "Ihr Sohn geht schon zur Schule.",
+          "ipa": "zoːn",
+          "ipaSource": "wiktionary",
           "id": "sohn",
           "level": "A1",
           "unit": "a1-02"
@@ -596,6 +664,8 @@
           "plural": "Töchter",
           "en": "daughter",
           "example": "Meine Tochter ist sieben Jahre alt.",
+          "ipa": "ˈtɔxtɐ",
+          "ipaSource": "wiktionary",
           "id": "tochter",
           "level": "A1",
           "unit": "a1-02"
@@ -612,6 +682,8 @@
           "plural": "Brüder",
           "en": "brother",
           "example": "Mein Bruder wohnt in Hamburg.",
+          "ipa": "ˈbʁuːdɐ",
+          "ipaSource": "wiktionary",
           "id": "bruder",
           "level": "A1",
           "unit": "a1-02"
@@ -628,6 +700,8 @@
           "plural": "Schwestern",
           "en": "sister",
           "example": "Ich habe zwei Schwestern.",
+          "ipa": "ˈʃvɛstɐ",
+          "ipaSource": "wiktionary",
           "id": "schwester",
           "level": "A1",
           "unit": "a1-02"
@@ -643,6 +717,8 @@
           "pluralOnly": true,
           "en": "siblings",
           "example": "Hast du Geschwister?",
+          "ipa": "ɡəˈʃvɪstɐ",
+          "ipaSource": "wiktionary",
           "id": "geschwister",
           "level": "A1",
           "unit": "a1-02"
@@ -659,6 +735,8 @@
           "plural": "Großmütter",
           "en": "grandmother",
           "example": "Meine Großmutter ist 82 Jahre alt.",
+          "ipa": "ˈɡʁoːsˌmʊtɐ",
+          "ipaSource": "wiktionary",
           "id": "grossmutter",
           "level": "A1",
           "unit": "a1-02"
@@ -675,6 +753,8 @@
           "plural": "Großväter",
           "en": "grandfather",
           "example": "Mein Großvater erzählt gern Geschichten.",
+          "ipa": "ˈɡʁoːsˌfaːtɐ",
+          "ipaSource": "wiktionary",
           "id": "grossvater",
           "level": "A1",
           "unit": "a1-02"
@@ -691,6 +771,8 @@
           "plural": "Omas",
           "en": "grandma",
           "example": "Oma backt heute einen Kuchen.",
+          "ipa": "ˈoːma",
+          "ipaSource": "wiktionary",
           "id": "oma",
           "level": "A1",
           "unit": "a1-02"
@@ -707,6 +789,8 @@
           "plural": "Opas",
           "en": "grandpa",
           "example": "Mein Opa geht jeden Tag spazieren.",
+          "ipa": "ˈoːpa",
+          "ipaSource": "wiktionary",
           "id": "opa",
           "level": "A1",
           "unit": "a1-02"
@@ -723,6 +807,8 @@
           "plural": "Onkel",
           "en": "uncle",
           "example": "Mein Onkel hat ein kleines Restaurant.",
+          "ipa": "ˈɔŋkl̩",
+          "ipaSource": "wiktionary",
           "id": "onkel",
           "level": "A1",
           "unit": "a1-02"
@@ -739,6 +825,8 @@
           "plural": "Tanten",
           "en": "aunt",
           "example": "Meine Tante kommt am Wochenende.",
+          "ipa": "ˈtantə",
+          "ipaSource": "wiktionary",
           "id": "tante",
           "level": "A1",
           "unit": "a1-02"
@@ -755,6 +843,11 @@
           "plural": "Cousins",
           "en": "cousin (male)",
           "example": "Mein Cousin studiert in Köln.",
+          "ipa": "kuˈzɛ̃ː",
+          "ipaVariants": [
+            "kuˈzɛŋ"
+          ],
+          "ipaSource": "wiktionary",
           "id": "cousin",
           "level": "A1",
           "unit": "a1-02"
@@ -771,6 +864,8 @@
           "plural": "Ehemänner",
           "en": "husband",
           "example": "Ihr Ehemann ist Lehrer.",
+          "ipa": "ˈeːəˌman",
+          "ipaSource": "wiktionary",
           "id": "ehemann",
           "level": "A1",
           "unit": "a1-02"
@@ -787,6 +882,8 @@
           "plural": "Ehefrauen",
           "en": "wife",
           "example": "Seine Ehefrau arbeitet im Krankenhaus.",
+          "ipa": "ˈeːəˌfʁaʊ̯",
+          "ipaSource": "wiktionary",
           "id": "ehefrau",
           "level": "A1",
           "unit": "a1-02"
@@ -803,6 +900,8 @@
           "plural": "Freunde",
           "en": "friend (male), boyfriend",
           "example": "Ein Freund von mir wohnt hier.",
+          "ipa": "fʁɔɪ̯nt",
+          "ipaSource": "wiktionary",
           "id": "freund",
           "level": "A1",
           "unit": "a1-02"
@@ -819,6 +918,8 @@
           "plural": "Freundinnen",
           "en": "friend (female), girlfriend",
           "example": "Meine Freundin lernt auch Deutsch.",
+          "ipa": "ˈfʁɔɪ̯ndɪn",
+          "ipaSource": "wiktionary",
           "id": "freundin",
           "level": "A1",
           "unit": "a1-02"
@@ -835,6 +936,8 @@
           "plural": "Babys",
           "en": "baby",
           "example": "Das Baby schläft gerade.",
+          "ipa": "ˈbeːbi",
+          "ipaSource": "wiktionary",
           "id": "baby",
           "level": "A1",
           "unit": "a1-02"
@@ -855,6 +958,8 @@
           ],
           "en": "to marry",
           "example": "Sie heiraten im Juni.",
+          "ipa": "ˈhaɪ̯ʁaːtn̩",
+          "ipaSource": "wiktionary",
           "id": "heiraten",
           "level": "A1",
           "unit": "a1-02"
@@ -875,6 +980,8 @@
           ],
           "en": "to love",
           "example": "Ich liebe meine Familie.",
+          "ipa": "ˈliːbn̩",
+          "ipaSource": "wiktionary",
           "id": "lieben",
           "level": "A1",
           "unit": "a1-02"
@@ -895,6 +1002,8 @@
           ],
           "en": "to know (a person)",
           "example": "Kennst du meinen Bruder?",
+          "ipa": "ˈkɛnən",
+          "ipaSource": "wiktionary",
           "id": "kennen",
           "level": "A1",
           "unit": "a1-02"
@@ -942,6 +1051,8 @@
           "plural": "Gefühle",
           "en": "feeling",
           "example": "Ich habe ein gutes Gefühl.",
+          "ipa": "ɡəˈfyːl",
+          "ipaSource": "wiktionary",
           "id": "gefuehl",
           "level": "A1",
           "unit": "a1-03"
@@ -958,6 +1069,8 @@
           "plural": "Ängste",
           "en": "fear",
           "example": "Ich habe Angst vor Hunden.",
+          "ipa": "aŋst",
+          "ipaSource": "wiktionary",
           "id": "angst",
           "level": "A1",
           "unit": "a1-03"
@@ -974,6 +1087,8 @@
           "plural": "Freuden",
           "en": "joy",
           "example": "Der Brief war eine große Freude.",
+          "ipa": "ˈfʁɔɪ̯də",
+          "ipaSource": "wiktionary",
           "id": "freude",
           "level": "A1",
           "unit": "a1-03"
@@ -989,6 +1104,8 @@
           "gender": "die",
           "en": "love",
           "example": "Liebe ist wichtiger als Geld.",
+          "ipa": "ˈliːbə",
+          "ipaSource": "wiktionary",
           "id": "liebe",
           "level": "A1",
           "unit": "a1-03"
@@ -1004,6 +1121,8 @@
           "gender": "das",
           "en": "luck, happiness",
           "example": "Viel Glück bei der Prüfung!",
+          "ipa": "ɡlʏk",
+          "ipaSource": "wiktionary",
           "id": "glueck",
           "level": "A1",
           "unit": "a1-03"
@@ -1019,6 +1138,11 @@
           "gender": "der",
           "en": "stress",
           "example": "Ich habe im Moment viel Stress.",
+          "ipa": "ʃtʁɛs",
+          "ipaVariants": [
+            "stʁɛs"
+          ],
+          "ipaSource": "wiktionary",
           "id": "stress",
           "level": "A1",
           "unit": "a1-03"
@@ -1035,6 +1159,8 @@
           "plural": "Späße",
           "en": "fun",
           "example": "Der Kurs macht mir Spaß.",
+          "ipa": "ʃpaːs",
+          "ipaSource": "wiktionary",
           "id": "spass",
           "level": "A1",
           "unit": "a1-03"
@@ -1051,6 +1177,8 @@
           "plural": "Probleme",
           "en": "problem",
           "example": "Kein Problem!",
+          "ipa": "pʁoˈbleːm",
+          "ipaSource": "wiktionary",
           "id": "problem",
           "level": "A1",
           "unit": "a1-03"
@@ -1066,6 +1194,8 @@
           "gender": "die",
           "en": "desire, inclination",
           "example": "Hast du Lust auf Kaffee?",
+          "ipa": "lʊst",
+          "ipaSource": "wiktionary",
           "id": "lust",
           "level": "A1",
           "unit": "a1-03"
@@ -1087,6 +1217,8 @@
           "reflexive": true,
           "en": "to feel",
           "example": "Ich fühle mich heute besser.",
+          "ipa": "ˈfyːlən",
+          "ipaSource": "wiktionary",
           "id": "fuehlen",
           "level": "A1",
           "unit": "a1-03"
@@ -1110,6 +1242,8 @@
           "case": "akk",
           "en": "to be glad, to look forward to",
           "example": "Ich freue mich auf das Wochenende.",
+          "ipa": "ˈfʁɔɪ̯ən",
+          "ipaSource": "wiktionary",
           "id": "freuen",
           "level": "A1",
           "unit": "a1-03"
@@ -1130,6 +1264,8 @@
           ],
           "en": "to laugh",
           "example": "Wir haben viel gelacht.",
+          "ipa": "ˈlaxn̩",
+          "ipaSource": "wiktionary",
           "id": "lachen",
           "level": "A1",
           "unit": "a1-03"
@@ -1150,6 +1286,8 @@
           ],
           "en": "to cry",
           "example": "Das Kind weint, weil es müde ist.",
+          "ipa": "ˈvaɪ̯nən",
+          "ipaSource": "wiktionary",
           "id": "weinen",
           "level": "A1",
           "unit": "a1-03"
@@ -1173,6 +1311,8 @@
           "case": "akk",
           "en": "to annoy, to be annoyed",
           "example": "Ich ärgere mich über den Lärm.",
+          "ipa": "ˈɛʁɡɐn",
+          "ipaSource": "wiktionary",
           "id": "aergern",
           "level": "A1",
           "unit": "a1-03"
@@ -1193,6 +1333,8 @@
           ],
           "en": "to like",
           "example": "Ich mag deutschen Kaffee nicht.",
+          "ipa": "ˈmøːɡn̩",
+          "ipaSource": "wiktionary",
           "id": "moegen",
           "level": "A1",
           "unit": "a1-03"
@@ -1209,6 +1351,8 @@
           "superlative": "am glücklichsten",
           "en": "happy",
           "example": "Sie ist sehr glücklich.",
+          "ipa": "ˈɡlʏklɪç",
+          "ipaSource": "wiktionary",
           "id": "gluecklich",
           "level": "A1",
           "unit": "a1-03"
@@ -1225,6 +1369,11 @@
           "superlative": "am traurigsten",
           "en": "sad",
           "example": "Warum bist du so traurig?",
+          "ipa": "ˈtʁaʊ̯ʁɪç",
+          "ipaVariants": [
+            "ˈtʁaʊ̯ʁɪk"
+          ],
+          "ipaSource": "wiktionary",
           "id": "traurig",
           "level": "A1",
           "unit": "a1-03"
@@ -1241,6 +1390,8 @@
           "superlative": "am müdesten",
           "en": "tired",
           "example": "Ich bin heute sehr müde.",
+          "ipa": "ˈmyːdə",
+          "ipaSource": "wiktionary",
           "id": "muede",
           "level": "A1",
           "unit": "a1-03"
@@ -1257,6 +1408,8 @@
           "superlative": "am fröhlichsten",
           "en": "cheerful",
           "example": "Er ist immer fröhlich.",
+          "ipa": "ˈfʁøːlɪç",
+          "ipaSource": "wiktionary",
           "id": "froehlich",
           "level": "A1",
           "unit": "a1-03"
@@ -1273,6 +1426,8 @@
           "superlative": "am wütendsten",
           "en": "angry",
           "example": "Mein Chef war sehr wütend.",
+          "ipa": "ˈvyːtn̩t",
+          "ipaSource": "wiktionary",
           "id": "wuetend",
           "level": "A1",
           "unit": "a1-03"
@@ -1289,6 +1444,8 @@
           "superlative": "am nervösesten",
           "en": "nervous",
           "example": "Vor der Prüfung bin ich nervös.",
+          "ipa": "nɛʁˈvøːs",
+          "ipaSource": "wiktionary",
           "id": "nervoes",
           "level": "A1",
           "unit": "a1-03"
@@ -1305,6 +1462,11 @@
           "superlative": "am ruhigsten",
           "en": "calm, quiet",
           "example": "Bitte sei ruhig!",
+          "ipa": "ˈʁuːɪç",
+          "ipaVariants": [
+            "ˈʁuːɪk"
+          ],
+          "ipaSource": "wiktionary",
           "id": "ruhig",
           "level": "A1",
           "unit": "a1-03"
@@ -1321,6 +1483,8 @@
           "superlative": "am zufriedensten",
           "en": "content, satisfied",
           "example": "Ich bin mit der Wohnung zufrieden.",
+          "ipa": "t͡suˈfʁiːdn̩",
+          "ipaSource": "wiktionary",
           "id": "zufrieden",
           "level": "A1",
           "unit": "a1-03"
@@ -1337,6 +1501,8 @@
           "superlative": "am aufgeregtesten",
           "en": "excited, agitated",
           "example": "Die Kinder sind ganz aufgeregt.",
+          "ipa": "ˈaʊ̯fɡəˌʁeːkt",
+          "ipaSource": "wiktionary",
           "id": "aufgeregt",
           "level": "A1",
           "unit": "a1-03"
@@ -1353,6 +1519,8 @@
           "superlative": "am einsamsten",
           "en": "lonely",
           "example": "Am Anfang war ich oft einsam.",
+          "ipa": "ˈaɪ̯nzaːm",
+          "ipaSource": "wiktionary",
           "id": "einsam",
           "level": "A1",
           "unit": "a1-03"
@@ -1399,6 +1567,8 @@
           "plural": "Häuser",
           "en": "house",
           "example": "Wir haben ein großes Haus.",
+          "ipa": "haʊ̯s",
+          "ipaSource": "wiktionary",
           "id": "haus",
           "level": "A1",
           "unit": "a1-04"
@@ -1415,6 +1585,8 @@
           "plural": "Wohnungen",
           "en": "flat, apartment",
           "example": "Die Wohnung hat drei Zimmer.",
+          "ipa": "ˈvoːnʊŋ",
+          "ipaSource": "wiktionary",
           "id": "wohnung",
           "level": "A1",
           "unit": "a1-04"
@@ -1431,6 +1603,8 @@
           "plural": "Zimmer",
           "en": "room",
           "example": "Mein Zimmer ist klein, aber hell.",
+          "ipa": "ˈt͡sɪmɐ",
+          "ipaSource": "wiktionary",
           "id": "zimmer",
           "level": "A1",
           "unit": "a1-04"
@@ -1447,6 +1621,11 @@
           "plural": "Küchen",
           "en": "kitchen",
           "example": "In der Küche riecht es gut.",
+          "ipa": "ˈkʏçə",
+          "ipaVariants": [
+            "ˈkyːçə"
+          ],
+          "ipaSource": "wiktionary",
           "id": "kueche",
           "level": "A1",
           "unit": "a1-04"
@@ -1463,6 +1642,8 @@
           "plural": "Bäder",
           "en": "bathroom",
           "example": "Das Bad ist neben der Küche.",
+          "ipa": "baːt",
+          "ipaSource": "wiktionary",
           "id": "bad",
           "level": "A1",
           "unit": "a1-04"
@@ -1479,6 +1660,8 @@
           "plural": "Schlafzimmer",
           "en": "bedroom",
           "example": "Das Schlafzimmer liegt nach hinten.",
+          "ipa": "ˈʃlaːfˌt͡sɪmɐ",
+          "ipaSource": "wiktionary",
           "id": "schlafzimmer",
           "level": "A1",
           "unit": "a1-04"
@@ -1495,6 +1678,8 @@
           "plural": "Wohnzimmer",
           "en": "living room",
           "example": "Wir sitzen abends im Wohnzimmer.",
+          "ipa": "ˈvoːnˌt͡sɪmɐ",
+          "ipaSource": "wiktionary",
           "id": "wohnzimmer",
           "level": "A1",
           "unit": "a1-04"
@@ -1511,6 +1696,8 @@
           "plural": "Kinderzimmer",
           "en": "children's room",
           "example": "Das Kinderzimmer ist bunt.",
+          "ipa": "ˈkɪndɐˌt͡sɪmɐ",
+          "ipaSource": "wiktionary",
           "id": "kinderzimmer",
           "level": "A1",
           "unit": "a1-04"
@@ -1527,6 +1714,8 @@
           "plural": "Flure",
           "en": "hallway, corridor",
           "example": "Die Schuhe stehen im Flur.",
+          "ipa": "fluːɐ̯",
+          "ipaSource": "wiktionary",
           "id": "flur",
           "level": "A1",
           "unit": "a1-04"
@@ -1575,6 +1764,8 @@
           "plural": "Keller",
           "en": "cellar, basement",
           "example": "Die Fahrräder sind im Keller.",
+          "ipa": "ˈkɛlɐ",
+          "ipaSource": "wiktionary",
           "id": "keller",
           "level": "A1",
           "unit": "a1-04"
@@ -1591,6 +1782,8 @@
           "plural": "Türen",
           "en": "door",
           "example": "Bitte mach die Tür zu.",
+          "ipa": "tyːɐ̯",
+          "ipaSource": "wiktionary",
           "id": "tuer",
           "level": "A1",
           "unit": "a1-04"
@@ -1607,6 +1800,8 @@
           "plural": "Fenster",
           "en": "window",
           "example": "Das Fenster ist offen.",
+          "ipa": "ˈfɛnstɐ",
+          "ipaSource": "wiktionary",
           "id": "fenster",
           "level": "A1",
           "unit": "a1-04"
@@ -1623,6 +1818,8 @@
           "plural": "Wände",
           "en": "wall",
           "example": "An der Wand hängt ein Bild.",
+          "ipa": "vant",
+          "ipaSource": "wiktionary",
           "id": "wand",
           "level": "A1",
           "unit": "a1-04"
@@ -1639,6 +1836,8 @@
           "plural": "Böden",
           "en": "floor, ground",
           "example": "Der Boden ist noch nass.",
+          "ipa": "ˈboːdn̩",
+          "ipaSource": "wiktionary",
           "id": "boden",
           "level": "A1",
           "unit": "a1-04"
@@ -1655,6 +1854,8 @@
           "plural": "Decken",
           "en": "ceiling, blanket",
           "example": "Die Lampe hängt an der Decke.",
+          "ipa": "ˈdɛkə",
+          "ipaSource": "wiktionary",
           "id": "decke",
           "level": "A1",
           "unit": "a1-04"
@@ -1671,6 +1872,8 @@
           "plural": "Treppen",
           "en": "stairs",
           "example": "Wir nehmen die Treppe, nicht den Aufzug.",
+          "ipa": "ˈtʁɛpə",
+          "ipaSource": "wiktionary",
           "id": "treppe",
           "level": "A1",
           "unit": "a1-04"
@@ -1687,6 +1890,8 @@
           "plural": "Dächer",
           "en": "roof",
           "example": "Das Dach ist alt.",
+          "ipa": "dax",
+          "ipaSource": "wiktionary",
           "id": "dach",
           "level": "A1",
           "unit": "a1-04"
@@ -1703,6 +1908,12 @@
           "plural": "Toiletten",
           "en": "toilet",
           "example": "Wo ist bitte die Toilette?",
+          "ipa": "toˈlɛtə",
+          "ipaVariants": [
+            "to̯aˈlɛtə",
+            "tɔɪ̯ˈlɛtə"
+          ],
+          "ipaSource": "wiktionary",
           "id": "toilette",
           "level": "A1",
           "unit": "a1-04"
@@ -1719,6 +1930,8 @@
           "plural": "Mieten",
           "en": "rent",
           "example": "Die Miete ist sehr hoch.",
+          "ipa": "ˈmiːtə",
+          "ipaSource": "wiktionary",
           "id": "miete",
           "level": "A1",
           "unit": "a1-04"
@@ -1735,6 +1948,8 @@
           "plural": "Nachbarn",
           "en": "neighbour",
           "example": "Mein Nachbar ist sehr nett.",
+          "ipa": "ˈnaxˌbaːɐ̯",
+          "ipaSource": "wiktionary",
           "id": "nachbar",
           "level": "A1",
           "unit": "a1-04"
@@ -1755,6 +1970,8 @@
           ],
           "en": "to rent",
           "example": "Wir mieten eine kleine Wohnung.",
+          "ipa": "ˈmiːtn̩",
+          "ipaSource": "wiktionary",
           "id": "mieten",
           "level": "A1",
           "unit": "a1-04"
@@ -1776,6 +1993,8 @@
           ],
           "en": "to move house",
           "example": "Nächsten Monat ziehen wir um.",
+          "ipa": "ˈʊmˌt͡siːən",
+          "ipaSource": "wiktionary",
           "id": "umziehen",
           "level": "A1",
           "unit": "a1-04"
@@ -1796,6 +2015,8 @@
           ],
           "en": "to clean",
           "example": "Am Samstag putze ich die Wohnung.",
+          "ipa": "ˈpʊt͡sn̩",
+          "ipaSource": "wiktionary",
           "id": "putzen",
           "level": "A1",
           "unit": "a1-04"
@@ -1842,6 +2063,8 @@
           "plural": "Tische",
           "en": "table",
           "example": "Das Essen steht auf dem Tisch.",
+          "ipa": "tɪʃ",
+          "ipaSource": "wiktionary",
           "id": "tisch",
           "level": "A1",
           "unit": "a1-05"
@@ -1858,6 +2081,8 @@
           "plural": "Stühle",
           "en": "chair",
           "example": "Nimm dir bitte einen Stuhl.",
+          "ipa": "ʃtuːl",
+          "ipaSource": "wiktionary",
           "id": "stuhl",
           "level": "A1",
           "unit": "a1-05"
@@ -1874,6 +2099,8 @@
           "plural": "Betten",
           "en": "bed",
           "example": "Das Bett ist sehr bequem.",
+          "ipa": "bɛt",
+          "ipaSource": "wiktionary",
           "id": "bett",
           "level": "A1",
           "unit": "a1-05"
@@ -1890,6 +2117,8 @@
           "plural": "Schränke",
           "en": "cupboard, wardrobe",
           "example": "Die Teller sind im Schrank.",
+          "ipa": "ʃʁaŋk",
+          "ipaSource": "wiktionary",
           "id": "schrank",
           "level": "A1",
           "unit": "a1-05"
@@ -1906,6 +2135,8 @@
           "plural": "Sofas",
           "en": "sofa",
           "example": "Der Hund schläft auf dem Sofa.",
+          "ipa": "ˈzoːfa",
+          "ipaSource": "wiktionary",
           "id": "sofa",
           "level": "A1",
           "unit": "a1-05"
@@ -1922,6 +2153,8 @@
           "plural": "Sessel",
           "en": "armchair",
           "example": "Opa sitzt in seinem Sessel.",
+          "ipa": "ˈzɛsl̩",
+          "ipaSource": "wiktionary",
           "id": "sessel",
           "level": "A1",
           "unit": "a1-05"
@@ -1938,6 +2171,8 @@
           "plural": "Regale",
           "en": "shelf",
           "example": "Im Regal stehen viele Bücher.",
+          "ipa": "ʁeˈɡaːl",
+          "ipaSource": "wiktionary",
           "id": "regal",
           "level": "A1",
           "unit": "a1-05"
@@ -1954,6 +2189,8 @@
           "plural": "Lampen",
           "en": "lamp",
           "example": "Mach bitte die Lampe an.",
+          "ipa": "ˈlampə",
+          "ipaSource": "wiktionary",
           "id": "lampe",
           "level": "A1",
           "unit": "a1-05"
@@ -1970,6 +2207,8 @@
           "plural": "Teppiche",
           "en": "carpet, rug",
           "example": "Der Teppich ist aus der Türkei.",
+          "ipa": "ˈtɛpɪç",
+          "ipaSource": "wiktionary",
           "id": "teppich",
           "level": "A1",
           "unit": "a1-05"
@@ -1986,6 +2225,8 @@
           "plural": "Spiegel",
           "en": "mirror",
           "example": "Im Bad hängt ein großer Spiegel.",
+          "ipa": "ˈʃpiːɡl̩",
+          "ipaSource": "wiktionary",
           "id": "spiegel",
           "level": "A1",
           "unit": "a1-05"
@@ -2002,6 +2243,8 @@
           "plural": "Kühlschränke",
           "en": "fridge",
           "example": "Die Milch ist im Kühlschrank.",
+          "ipa": "ˈkyːlˌʃʁaŋk",
+          "ipaSource": "wiktionary",
           "id": "kuehlschrank",
           "level": "A1",
           "unit": "a1-05"
@@ -2018,6 +2261,11 @@
           "plural": "Herde",
           "en": "stove, cooker",
           "example": "Der Herd ist noch heiß.",
+          "ipa": "heːɐ̯t",
+          "ipaVariants": [
+            "hɛʁt"
+          ],
+          "ipaSource": "wiktionary",
           "id": "herd",
           "level": "A1",
           "unit": "a1-05"
@@ -2034,6 +2282,8 @@
           "plural": "Waschmaschinen",
           "en": "washing machine",
           "example": "Die Waschmaschine ist kaputt.",
+          "ipa": "ˈvaʃmaˌʃiːnə",
+          "ipaSource": "wiktionary",
           "id": "waschmaschine",
           "level": "A1",
           "unit": "a1-05"
@@ -2050,6 +2300,8 @@
           "plural": "Töpfe",
           "en": "pot",
           "example": "Die Suppe ist im Topf.",
+          "ipa": "tɔp͡f",
+          "ipaSource": "wiktionary",
           "id": "topf",
           "level": "A1",
           "unit": "a1-05"
@@ -2066,6 +2318,8 @@
           "plural": "Pfannen",
           "en": "pan",
           "example": "Brate das Ei in der Pfanne.",
+          "ipa": "ˈp͡fanə",
+          "ipaSource": "wiktionary",
           "id": "pfanne",
           "level": "A1",
           "unit": "a1-05"
@@ -2082,6 +2336,8 @@
           "plural": "Teller",
           "en": "plate",
           "example": "Stell bitte vier Teller auf den Tisch.",
+          "ipa": "ˈtɛlɐ",
+          "ipaSource": "wiktionary",
           "id": "teller",
           "level": "A1",
           "unit": "a1-05"
@@ -2098,6 +2354,8 @@
           "plural": "Gläser",
           "en": "glass",
           "example": "Ich trinke ein Glas Wasser.",
+          "ipa": "ɡlaːs",
+          "ipaSource": "wiktionary",
           "id": "glas",
           "level": "A1",
           "unit": "a1-05"
@@ -2114,6 +2372,8 @@
           "plural": "Tassen",
           "en": "cup",
           "example": "Möchtest du eine Tasse Tee?",
+          "ipa": "ˈtasə",
+          "ipaSource": "wiktionary",
           "id": "tasse",
           "level": "A1",
           "unit": "a1-05"
@@ -2130,6 +2390,8 @@
           "plural": "Messer",
           "en": "knife",
           "example": "Das Messer ist nicht scharf.",
+          "ipa": "ˈmɛsɐ",
+          "ipaSource": "wiktionary",
           "id": "messer",
           "level": "A1",
           "unit": "a1-05"
@@ -2146,6 +2408,8 @@
           "plural": "Gabeln",
           "en": "fork",
           "example": "Die Gabel liegt links vom Teller.",
+          "ipa": "ˈɡaːbl̩",
+          "ipaSource": "wiktionary",
           "id": "gabel",
           "level": "A1",
           "unit": "a1-05"
@@ -2162,6 +2426,8 @@
           "plural": "Löffel",
           "en": "spoon",
           "example": "Ich brauche einen Löffel für die Suppe.",
+          "ipa": "ˈlœfl̩",
+          "ipaSource": "wiktionary",
           "id": "loeffel",
           "level": "A1",
           "unit": "a1-05"
@@ -2178,6 +2444,8 @@
           "plural": "Handtücher",
           "en": "towel",
           "example": "Das Handtuch hängt im Bad.",
+          "ipa": "ˈhantˌtuːx",
+          "ipaSource": "wiktionary",
           "id": "handtuch",
           "level": "A1",
           "unit": "a1-05"
@@ -2194,6 +2462,8 @@
           "plural": "Seifen",
           "en": "soap",
           "example": "Die Seife riecht nach Zitrone.",
+          "ipa": "ˈzaɪ̯fə",
+          "ipaSource": "wiktionary",
           "id": "seife",
           "level": "A1",
           "unit": "a1-05"
@@ -2214,6 +2484,8 @@
           ],
           "en": "to cook",
           "example": "Heute koche ich Nudeln.",
+          "ipa": "ˈkɔxn̩",
+          "ipaSource": "wiktionary",
           "id": "kochen",
           "level": "A1",
           "unit": "a1-05"
@@ -2234,6 +2506,8 @@
           ],
           "en": "to wash",
           "example": "Ich wasche die Wäsche am Sonntag.",
+          "ipa": "ˈvaʃn̩",
+          "ipaSource": "wiktionary",
           "id": "waschen",
           "level": "A1",
           "unit": "a1-05"
@@ -2280,6 +2554,8 @@
           "plural": "Brote",
           "en": "bread",
           "example": "Deutsches Brot schmeckt mir gut.",
+          "ipa": "bʁoːt",
+          "ipaSource": "wiktionary",
           "id": "brot",
           "level": "A1",
           "unit": "a1-06"
@@ -2296,6 +2572,8 @@
           "plural": "Brötchen",
           "en": "bread roll",
           "example": "Ich hole am Morgen frische Brötchen.",
+          "ipa": "ˈbʁøːtçən",
+          "ipaSource": "wiktionary",
           "id": "broetchen",
           "level": "A1",
           "unit": "a1-06"
@@ -2311,6 +2589,8 @@
           "gender": "die",
           "en": "butter",
           "example": "Die Butter ist im Kühlschrank.",
+          "ipa": "ˈbʊtɐ",
+          "ipaSource": "wiktionary",
           "id": "butter",
           "level": "A1",
           "unit": "a1-06"
@@ -2327,6 +2607,11 @@
           "plural": "Käse",
           "en": "cheese",
           "example": "Ich esse gern Käse zum Frühstück.",
+          "ipa": "ˈkɛːzə",
+          "ipaVariants": [
+            "ˈkeːzə"
+          ],
+          "ipaSource": "wiktionary",
           "id": "kaese",
           "level": "A1",
           "unit": "a1-06"
@@ -2343,6 +2628,8 @@
           "plural": "Eier",
           "en": "egg",
           "example": "Möchtest du ein Ei?",
+          "ipa": "aɪ̯",
+          "ipaSource": "wiktionary",
           "id": "ei",
           "level": "A1",
           "unit": "a1-06"
@@ -2358,6 +2645,8 @@
           "gender": "die",
           "en": "milk",
           "example": "Wir brauchen noch Milch.",
+          "ipa": "mɪlç",
+          "ipaSource": "wiktionary",
           "id": "milch",
           "level": "A1",
           "unit": "a1-06"
@@ -2373,6 +2662,8 @@
           "gender": "das",
           "en": "water",
           "example": "Ein Glas Wasser, bitte.",
+          "ipa": "ˈvasɐ",
+          "ipaSource": "wiktionary",
           "id": "wasser",
           "level": "A1",
           "unit": "a1-06"
@@ -2389,6 +2680,12 @@
           "plural": "Kaffees",
           "en": "coffee",
           "example": "Ich trinke morgens zwei Kaffee.",
+          "ipa": "ˈkafe",
+          "ipaVariants": [
+            "ˈkafeː",
+            "kaˈfeː"
+          ],
+          "ipaSource": "wiktionary",
           "id": "kaffee",
           "level": "A1",
           "unit": "a1-06"
@@ -2405,6 +2702,8 @@
           "plural": "Tees",
           "en": "tea",
           "example": "Möchten Sie Tee oder Kaffee?",
+          "ipa": "teː",
+          "ipaSource": "wiktionary",
           "id": "tee",
           "level": "A1",
           "unit": "a1-06"
@@ -2421,6 +2720,8 @@
           "plural": "Säfte",
           "en": "juice",
           "example": "Der Saft ist frisch gepresst.",
+          "ipa": "zaft",
+          "ipaSource": "wiktionary",
           "id": "saft",
           "level": "A1",
           "unit": "a1-06"
@@ -2437,6 +2738,8 @@
           "plural": "Biere",
           "en": "beer",
           "example": "In Bayern trinkt man viel Bier.",
+          "ipa": "biːɐ̯",
+          "ipaSource": "wiktionary",
           "id": "bier",
           "level": "A1",
           "unit": "a1-06"
@@ -2453,6 +2756,8 @@
           "plural": "Weine",
           "en": "wine",
           "example": "Der Wein kommt aus Italien.",
+          "ipa": "vaɪ̯n",
+          "ipaSource": "wiktionary",
           "id": "wein",
           "level": "A1",
           "unit": "a1-06"
@@ -2468,6 +2773,8 @@
           "gender": "das",
           "en": "meat",
           "example": "Ich esse kein Fleisch.",
+          "ipa": "flaɪ̯ʃ",
+          "ipaSource": "wiktionary",
           "id": "fleisch",
           "level": "A1",
           "unit": "a1-06"
@@ -2484,6 +2791,8 @@
           "plural": "Fische",
           "en": "fish",
           "example": "Freitags gibt es oft Fisch.",
+          "ipa": "fɪʃ",
+          "ipaSource": "wiktionary",
           "id": "fisch",
           "level": "A1",
           "unit": "a1-06"
@@ -2499,6 +2808,8 @@
           "gender": "das",
           "en": "vegetables",
           "example": "Gemüse ist gesund.",
+          "ipa": "ɡəˈmyːzə",
+          "ipaSource": "wiktionary",
           "id": "gemuese",
           "level": "A1",
           "unit": "a1-06"
@@ -2514,6 +2825,11 @@
           "gender": "das",
           "en": "fruit",
           "example": "Iss jeden Tag Obst!",
+          "ipa": "oːpst",
+          "ipaVariants": [
+            "ɔpst"
+          ],
+          "ipaSource": "wiktionary",
           "id": "obst",
           "level": "A1",
           "unit": "a1-06"
@@ -2530,6 +2846,8 @@
           "plural": "Äpfel",
           "en": "apple",
           "example": "Der Apfel ist rot und süß.",
+          "ipa": "ˈap͡fl̩",
+          "ipaSource": "wiktionary",
           "id": "apfel",
           "level": "A1",
           "unit": "a1-06"
@@ -2546,6 +2864,8 @@
           "plural": "Bananen",
           "en": "banana",
           "example": "Die Banane ist noch grün.",
+          "ipa": "baˈnaːnə",
+          "ipaSource": "wiktionary",
           "id": "banane",
           "level": "A1",
           "unit": "a1-06"
@@ -2562,6 +2882,8 @@
           "plural": "Kartoffeln",
           "en": "potato",
           "example": "Zum Fisch gibt es Kartoffeln.",
+          "ipa": "kaʁˈtɔfl̩",
+          "ipaSource": "wiktionary",
           "id": "kartoffel",
           "level": "A1",
           "unit": "a1-06"
@@ -2577,6 +2899,8 @@
           "gender": "der",
           "en": "rice",
           "example": "Der Reis ist noch nicht fertig.",
+          "ipa": "ʁaɪ̯s",
+          "ipaSource": "wiktionary",
           "id": "reis",
           "level": "A1",
           "unit": "a1-06"
@@ -2592,6 +2916,8 @@
           "gender": "der",
           "en": "sugar",
           "example": "Nimmst du Zucker in den Tee?",
+          "ipa": "ˈt͡sʊkɐ",
+          "ipaSource": "wiktionary",
           "id": "zucker",
           "level": "A1",
           "unit": "a1-06"
@@ -2608,6 +2934,8 @@
           "plural": "Suppen",
           "en": "soup",
           "example": "Die Suppe ist zu heiß.",
+          "ipa": "ˈzʊpə",
+          "ipaSource": "wiktionary",
           "id": "suppe",
           "level": "A1",
           "unit": "a1-06"
@@ -2624,6 +2952,12 @@
           "plural": "Salate",
           "en": "salad, lettuce",
           "example": "Ich nehme einen kleinen Salat.",
+          "ipa": "zaˈlaːt",
+          "ipaVariants": [
+            "ˈzalat",
+            "saˈlaːt"
+          ],
+          "ipaSource": "wiktionary",
           "id": "salat",
           "level": "A1",
           "unit": "a1-06"
@@ -2644,6 +2978,8 @@
           ],
           "en": "to eat",
           "example": "Wann essen wir?",
+          "ipa": "ˈɛsn̩",
+          "ipaSource": "wiktionary",
           "id": "essen",
           "level": "A1",
           "unit": "a1-06"
@@ -2664,6 +3000,11 @@
           ],
           "en": "to drink",
           "example": "Was möchtest du trinken?",
+          "ipa": "ˈtʁɪŋkn̩",
+          "ipaVariants": [
+            "ˈtʁɪŋkŋ̩"
+          ],
+          "ipaSource": "wiktionary",
           "id": "trinken",
           "level": "A1",
           "unit": "a1-06"
@@ -2712,6 +3053,8 @@
           "gender": "das",
           "en": "money",
           "example": "Ich habe kein Geld dabei.",
+          "ipa": "ɡɛlt",
+          "ipaSource": "wiktionary",
           "id": "geld",
           "level": "A1",
           "unit": "a1-07"
@@ -2729,6 +3072,8 @@
           "plural": "Euro",
           "en": "euro",
           "example": "Das kostet zwölf Euro.",
+          "ipa": "ˈɔɪ̯ʁo",
+          "ipaSource": "wiktionary",
           "id": "euro",
           "level": "A1",
           "unit": "a1-07"
@@ -2746,6 +3091,11 @@
           "plural": "Cent",
           "en": "cent",
           "example": "Das Brötchen kostet fünfzig Cent.",
+          "ipa": "t͡sɛnt",
+          "ipaVariants": [
+            "sɛnt"
+          ],
+          "ipaSource": "wiktionary",
           "id": "cent",
           "level": "A1",
           "unit": "a1-07"
@@ -2763,6 +3113,8 @@
           "plural": "Preise",
           "en": "price",
           "example": "Der Preis ist zu hoch.",
+          "ipa": "pʁaɪ̯s",
+          "ipaSource": "wiktionary",
           "id": "preis",
           "level": "A1",
           "unit": "a1-07"
@@ -2780,6 +3132,8 @@
           "plural": "Kassen",
           "en": "checkout, till",
           "example": "Bitte zahlen Sie an der Kasse.",
+          "ipa": "ˈkasə",
+          "ipaSource": "wiktionary",
           "id": "kasse",
           "level": "A1",
           "unit": "a1-07"
@@ -2797,6 +3151,8 @@
           "plural": "Supermärkte",
           "en": "supermarket",
           "example": "Der Supermarkt schließt um 20 Uhr.",
+          "ipa": "ˈzuːpɐˌmaʁkt",
+          "ipaSource": "wiktionary",
           "id": "supermarkt",
           "level": "A1",
           "unit": "a1-07"
@@ -2814,6 +3170,8 @@
           "plural": "Märkte",
           "en": "market",
           "example": "Samstags gehe ich auf den Markt.",
+          "ipa": "maʁkt",
+          "ipaSource": "wiktionary",
           "id": "markt",
           "level": "A1",
           "unit": "a1-07"
@@ -2831,6 +3189,8 @@
           "plural": "Geschäfte",
           "en": "shop, business",
           "example": "Das Geschäft ist heute geschlossen.",
+          "ipa": "ɡəˈʃɛft",
+          "ipaSource": "wiktionary",
           "id": "geschaeft",
           "level": "A1",
           "unit": "a1-07"
@@ -2848,6 +3208,8 @@
           "plural": "Läden",
           "en": "shop",
           "example": "An der Ecke gibt es einen kleinen Laden.",
+          "ipa": "ˈlaːdn̩",
+          "ipaSource": "wiktionary",
           "id": "laden",
           "level": "A1",
           "unit": "a1-07"
@@ -2865,6 +3227,8 @@
           "plural": "Bäckereien",
           "en": "bakery",
           "example": "Die Bäckerei öffnet um sechs Uhr.",
+          "ipa": "ˌbɛkəˈʁaɪ̯",
+          "ipaSource": "wiktionary",
           "id": "baeckerei",
           "level": "A1",
           "unit": "a1-07"
@@ -2882,6 +3246,8 @@
           "plural": "Kunden",
           "en": "customer",
           "example": "Der Kunde wartet an der Kasse.",
+          "ipa": "ˈkʊndə",
+          "ipaSource": "wiktionary",
           "id": "kunde",
           "level": "A1",
           "unit": "a1-07"
@@ -2899,6 +3265,8 @@
           "plural": "Verkäufer",
           "en": "salesperson",
           "example": "Der Verkäufer war sehr freundlich.",
+          "ipa": "fɛɐ̯ˈkɔɪ̯fɐ",
+          "ipaSource": "wiktionary",
           "id": "verkaeufer",
           "level": "A1",
           "unit": "a1-07"
@@ -2916,6 +3284,8 @@
           "plural": "Rechnungen",
           "en": "bill, invoice",
           "example": "Die Rechnung kommt per Post.",
+          "ipa": "ˈʁɛçnʊŋ",
+          "ipaSource": "wiktionary",
           "id": "rechnung",
           "level": "A1",
           "unit": "a1-07"
@@ -2933,6 +3303,8 @@
           "plural": "Quittungen",
           "en": "receipt",
           "example": "Brauchen Sie eine Quittung?",
+          "ipa": "ˈkvɪtʊŋ",
+          "ipaSource": "wiktionary",
           "id": "quittung",
           "level": "A1",
           "unit": "a1-07"
@@ -2950,6 +3322,8 @@
           "plural": "Tüten",
           "en": "bag",
           "example": "Möchten Sie eine Tüte?",
+          "ipa": "ˈtyːtə",
+          "ipaSource": "wiktionary",
           "id": "tuete",
           "level": "A1",
           "unit": "a1-07"
@@ -2967,6 +3341,8 @@
           "plural": "Angebote",
           "en": "offer, special",
           "example": "Heute ist Kaffee im Angebot.",
+          "ipa": "ˈanɡəˌboːt",
+          "ipaSource": "wiktionary",
           "id": "angebot",
           "level": "A1",
           "unit": "a1-07"
@@ -2984,6 +3360,8 @@
           "plural": "Listen",
           "en": "list",
           "example": "Ich schreibe eine Liste für den Einkauf.",
+          "ipa": "ˈlɪstə",
+          "ipaSource": "wiktionary",
           "id": "liste",
           "level": "A1",
           "unit": "a1-07"
@@ -3005,6 +3383,11 @@
           ],
           "en": "to buy",
           "example": "Ich kaufe ein neues Handy.",
+          "ipa": "ˈkaʊ̯fn̩",
+          "ipaVariants": [
+            "ˈkaʊ̯fm̩"
+          ],
+          "ipaSource": "wiktionary",
           "id": "kaufen",
           "level": "A1",
           "unit": "a1-07"
@@ -3026,6 +3409,8 @@
           ],
           "en": "to pay",
           "example": "Kann ich mit Karte bezahlen?",
+          "ipa": "bəˈt͡saːlən",
+          "ipaSource": "wiktionary",
           "id": "bezahlen",
           "level": "A1",
           "unit": "a1-07"
@@ -3047,6 +3432,8 @@
           ],
           "en": "to cost",
           "example": "Was kostet das?",
+          "ipa": "ˈkɔstn̩",
+          "ipaSource": "wiktionary",
           "id": "kosten",
           "level": "A1",
           "unit": "a1-07"
@@ -3068,6 +3455,8 @@
           ],
           "en": "to need",
           "example": "Wir brauchen noch Brot.",
+          "ipa": "ˈbʁaʊ̯xn̩",
+          "ipaSource": "wiktionary",
           "id": "brauchen",
           "level": "A1",
           "unit": "a1-07"
@@ -3089,6 +3478,8 @@
           ],
           "en": "to look for",
           "example": "Ich suche eine Winterjacke.",
+          "ipa": "ˈzuːxn̩",
+          "ipaSource": "wiktionary",
           "id": "suchen",
           "level": "A1",
           "unit": "a1-07"
@@ -3106,6 +3497,8 @@
           "superlative": "am teuersten",
           "en": "expensive",
           "example": "Die Wohnung ist zu teuer.",
+          "ipa": "ˈtɔɪ̯ɐ",
+          "ipaSource": "wiktionary",
           "id": "teuer",
           "level": "A1",
           "unit": "a1-07"
@@ -3123,6 +3516,11 @@
           "superlative": "am billigsten",
           "en": "cheap",
           "example": "Die Schuhe waren sehr billig.",
+          "ipa": "ˈbɪlɪç",
+          "ipaVariants": [
+            "ˈbɪlɪk"
+          ],
+          "ipaSource": "wiktionary",
           "id": "billig",
           "level": "A1",
           "unit": "a1-07"
@@ -3140,6 +3538,11 @@
           "superlative": "am günstigsten",
           "en": "reasonably priced",
           "example": "Hier ist das Obst günstig.",
+          "ipa": "ˈɡʏnstɪç",
+          "ipaVariants": [
+            "ˈɡʏnstɪk"
+          ],
+          "ipaSource": "wiktionary",
           "id": "guenstig",
           "level": "A1",
           "unit": "a1-07"
@@ -3186,6 +3589,8 @@
           "gender": "die",
           "en": "clothing",
           "example": "Nimm warme Kleidung mit.",
+          "ipa": "ˈklaɪ̯dʊŋ",
+          "ipaSource": "wiktionary",
           "id": "kleidung",
           "level": "A1",
           "unit": "a1-08"
@@ -3202,6 +3607,8 @@
           "plural": "Hosen",
           "en": "trousers",
           "example": "Die Hose ist mir zu lang.",
+          "ipa": "ˈhoːzə",
+          "ipaSource": "wiktionary",
           "id": "hose",
           "level": "A1",
           "unit": "a1-08"
@@ -3218,6 +3625,8 @@
           "plural": "Hemden",
           "en": "shirt",
           "example": "Er trägt ein weißes Hemd.",
+          "ipa": "hɛmt",
+          "ipaSource": "wiktionary",
           "id": "hemd",
           "level": "A1",
           "unit": "a1-08"
@@ -3234,6 +3643,8 @@
           "plural": "T-Shirts",
           "en": "T-shirt",
           "example": "Das T-Shirt kostet zehn Euro.",
+          "ipa": "ˈtiːˌʃœːɐ̯t",
+          "ipaSource": "wiktionary",
           "id": "t-shirt",
           "level": "A1",
           "unit": "a1-08"
@@ -3250,6 +3661,11 @@
           "plural": "Pullover",
           "en": "sweater",
           "example": "Zieh einen Pullover an, es ist kalt.",
+          "ipa": "pʊˈloːvɐ",
+          "ipaVariants": [
+            "pʊlˈʔoːvɐ"
+          ],
+          "ipaSource": "wiktionary",
           "id": "pullover",
           "level": "A1",
           "unit": "a1-08"
@@ -3266,6 +3682,8 @@
           "plural": "Jacken",
           "en": "jacket",
           "example": "Meine Jacke hängt im Flur.",
+          "ipa": "ˈjakə",
+          "ipaSource": "wiktionary",
           "id": "jacke",
           "level": "A1",
           "unit": "a1-08"
@@ -3282,6 +3700,8 @@
           "plural": "Mäntel",
           "en": "coat",
           "example": "Im Winter brauche ich einen dicken Mantel.",
+          "ipa": "ˈmantl̩",
+          "ipaSource": "wiktionary",
           "id": "mantel",
           "level": "A1",
           "unit": "a1-08"
@@ -3298,6 +3718,8 @@
           "plural": "Kleider",
           "en": "dress",
           "example": "Sie trägt ein blaues Kleid.",
+          "ipa": "klaɪ̯t",
+          "ipaSource": "wiktionary",
           "id": "kleid",
           "level": "A1",
           "unit": "a1-08"
@@ -3314,6 +3736,8 @@
           "plural": "Röcke",
           "en": "skirt",
           "example": "Der Rock ist zu kurz.",
+          "ipa": "ʁɔk",
+          "ipaSource": "wiktionary",
           "id": "rock",
           "level": "A1",
           "unit": "a1-08"
@@ -3330,6 +3754,8 @@
           "plural": "Schuhe",
           "en": "shoe",
           "example": "Die Schuhe sind neu.",
+          "ipa": "ʃuː",
+          "ipaSource": "wiktionary",
           "id": "schuh",
           "level": "A1",
           "unit": "a1-08"
@@ -3346,6 +3772,8 @@
           "plural": "Socken",
           "en": "sock",
           "example": "Wo ist meine zweite Socke?",
+          "ipa": "ˈzɔkə",
+          "ipaSource": "wiktionary",
           "id": "socke",
           "level": "A1",
           "unit": "a1-08"
@@ -3362,6 +3790,8 @@
           "plural": "Mützen",
           "en": "cap, woolly hat",
           "example": "Setz die Mütze auf!",
+          "ipa": "ˈmʏt͡sə",
+          "ipaSource": "wiktionary",
           "id": "muetze",
           "level": "A1",
           "unit": "a1-08"
@@ -3378,6 +3808,8 @@
           "plural": "Schals",
           "en": "scarf",
           "example": "Der Schal ist aus Wolle.",
+          "ipa": "ʃaːl",
+          "ipaSource": "wiktionary",
           "id": "schal",
           "level": "A1",
           "unit": "a1-08"
@@ -3394,6 +3826,8 @@
           "plural": "Handschuhe",
           "en": "glove",
           "example": "Ich habe meine Handschuhe verloren.",
+          "ipa": "ˈhantˌʃuː",
+          "ipaSource": "wiktionary",
           "id": "handschuh",
           "level": "A1",
           "unit": "a1-08"
@@ -3410,6 +3844,8 @@
           "plural": "Größen",
           "en": "size",
           "example": "Haben Sie das in Größe 40?",
+          "ipa": "ˈɡʁøːsə",
+          "ipaSource": "wiktionary",
           "id": "groesse",
           "level": "A1",
           "unit": "a1-08"
@@ -3424,6 +3860,8 @@
           "pos": "adj",
           "en": "red",
           "example": "Die Ampel ist rot.",
+          "ipa": "ʁoːt",
+          "ipaSource": "wiktionary",
           "id": "rot",
           "level": "A1",
           "unit": "a1-08"
@@ -3438,6 +3876,8 @@
           "pos": "adj",
           "en": "blue",
           "example": "Der Himmel ist heute blau.",
+          "ipa": "blaʊ̯",
+          "ipaSource": "wiktionary",
           "id": "blau",
           "level": "A1",
           "unit": "a1-08"
@@ -3452,6 +3892,8 @@
           "pos": "adj",
           "en": "green",
           "example": "Im Frühling wird alles grün.",
+          "ipa": "ɡʁyːn",
+          "ipaSource": "wiktionary",
           "id": "gruen",
           "level": "A1",
           "unit": "a1-08"
@@ -3466,6 +3908,8 @@
           "pos": "adj",
           "en": "yellow",
           "example": "Die Zitrone ist gelb.",
+          "ipa": "ɡɛlp",
+          "ipaSource": "wiktionary",
           "id": "gelb",
           "level": "A1",
           "unit": "a1-08"
@@ -3480,6 +3924,8 @@
           "pos": "adj",
           "en": "black",
           "example": "Ich trinke Kaffee schwarz.",
+          "ipa": "ʃvaʁt͡s",
+          "ipaSource": "wiktionary",
           "id": "schwarz",
           "level": "A1",
           "unit": "a1-08"
@@ -3494,6 +3940,8 @@
           "pos": "adj",
           "en": "white",
           "example": "Der Schnee ist weiß.",
+          "ipa": "vaɪ̯s",
+          "ipaSource": "wiktionary",
           "id": "weiss",
           "level": "A1",
           "unit": "a1-08"
@@ -3508,6 +3956,8 @@
           "pos": "adj",
           "en": "brown",
           "example": "Sie hat braune Augen.",
+          "ipa": "bʁaʊ̯n",
+          "ipaSource": "wiktionary",
           "id": "braun",
           "level": "A1",
           "unit": "a1-08"
@@ -3522,6 +3972,8 @@
           "pos": "adj",
           "en": "grey",
           "example": "Heute ist der Himmel grau.",
+          "ipa": "ɡʁaʊ̯",
+          "ipaSource": "wiktionary",
           "id": "grau",
           "level": "A1",
           "unit": "a1-08"
@@ -3543,6 +3995,8 @@
           ],
           "en": "to put on (clothes)",
           "example": "Zieh bitte die Jacke an.",
+          "ipa": "ˈanˌt͡siːən",
+          "ipaSource": "wiktionary",
           "id": "anziehen",
           "level": "A1",
           "unit": "a1-08"
@@ -3563,6 +4017,11 @@
           ],
           "en": "to wear, to carry",
           "example": "Er trägt immer eine Brille.",
+          "ipa": "ˈtʁaːɡn̩",
+          "ipaVariants": [
+            "ˈtʁaːɡŋ̍"
+          ],
+          "ipaSource": "wiktionary",
           "id": "tragen",
           "level": "A1",
           "unit": "a1-08"
@@ -3610,6 +4069,8 @@
           "plural": "Körper",
           "en": "body",
           "example": "Sport ist gut für den Körper.",
+          "ipa": "ˈkœʁpɐ",
+          "ipaSource": "wiktionary",
           "id": "koerper",
           "level": "A1",
           "unit": "a1-09"
@@ -3626,6 +4087,8 @@
           "plural": "Köpfe",
           "en": "head",
           "example": "Mein Kopf tut weh.",
+          "ipa": "kɔp͡f",
+          "ipaSource": "wiktionary",
           "id": "kopf",
           "level": "A1",
           "unit": "a1-09"
@@ -3642,6 +4105,8 @@
           "plural": "Haare",
           "en": "hair",
           "example": "Sie hat lange Haare.",
+          "ipa": "haːɐ̯",
+          "ipaSource": "wiktionary",
           "id": "haar",
           "level": "A1",
           "unit": "a1-09"
@@ -3658,6 +4123,8 @@
           "plural": "Augen",
           "en": "eye",
           "example": "Das Kind hat blaue Augen.",
+          "ipa": "ˈaʊ̯ɡə",
+          "ipaSource": "wiktionary",
           "id": "auge",
           "level": "A1",
           "unit": "a1-09"
@@ -3674,6 +4141,8 @@
           "plural": "Ohren",
           "en": "ear",
           "example": "Mein linkes Ohr tut weh.",
+          "ipa": "oːɐ̯",
+          "ipaSource": "wiktionary",
           "id": "ohr",
           "level": "A1",
           "unit": "a1-09"
@@ -3690,6 +4159,8 @@
           "plural": "Nasen",
           "en": "nose",
           "example": "Meine Nase ist verstopft.",
+          "ipa": "ˈnaːzə",
+          "ipaSource": "wiktionary",
           "id": "nase",
           "level": "A1",
           "unit": "a1-09"
@@ -3706,6 +4177,8 @@
           "plural": "Münder",
           "en": "mouth",
           "example": "Mach bitte den Mund auf.",
+          "ipa": "mʊnt",
+          "ipaSource": "wiktionary",
           "id": "mund",
           "level": "A1",
           "unit": "a1-09"
@@ -3722,6 +4195,8 @@
           "plural": "Zähne",
           "en": "tooth",
           "example": "Ein Zahn tut mir seit gestern weh.",
+          "ipa": "t͡saːn",
+          "ipaSource": "wiktionary",
           "id": "zahn",
           "level": "A1",
           "unit": "a1-09"
@@ -3738,6 +4213,8 @@
           "plural": "Hälse",
           "en": "neck, throat",
           "example": "Ich habe Halsschmerzen im Hals.",
+          "ipa": "hals",
+          "ipaSource": "wiktionary",
           "id": "hals",
           "level": "A1",
           "unit": "a1-09"
@@ -3754,6 +4231,8 @@
           "plural": "Arme",
           "en": "arm",
           "example": "Mein rechter Arm ist gebrochen.",
+          "ipa": "aʁm",
+          "ipaSource": "wiktionary",
           "id": "arm",
           "level": "A1",
           "unit": "a1-09"
@@ -3770,6 +4249,8 @@
           "plural": "Hände",
           "en": "hand",
           "example": "Wasch dir bitte die Hände.",
+          "ipa": "hant",
+          "ipaSource": "wiktionary",
           "id": "hand",
           "level": "A1",
           "unit": "a1-09"
@@ -3786,6 +4267,8 @@
           "plural": "Finger",
           "en": "finger",
           "example": "Ich habe mir den Finger geschnitten.",
+          "ipa": "ˈfɪŋɐ",
+          "ipaSource": "wiktionary",
           "id": "finger",
           "level": "A1",
           "unit": "a1-09"
@@ -3802,6 +4285,8 @@
           "plural": "Beine",
           "en": "leg",
           "example": "Nach dem Sport tun mir die Beine weh.",
+          "ipa": "baɪ̯n",
+          "ipaSource": "wiktionary",
           "id": "bein",
           "level": "A1",
           "unit": "a1-09"
@@ -3818,6 +4303,8 @@
           "plural": "Füße",
           "en": "foot",
           "example": "Wir gehen zu Fuß.",
+          "ipa": "fuːs",
+          "ipaSource": "wiktionary",
           "id": "fuss",
           "level": "A1",
           "unit": "a1-09"
@@ -3834,6 +4321,8 @@
           "plural": "Rücken",
           "en": "back",
           "example": "Mein Rücken tut oft weh.",
+          "ipa": "ˈʁʏkn̩",
+          "ipaSource": "wiktionary",
           "id": "ruecken",
           "level": "A1",
           "unit": "a1-09"
@@ -3850,6 +4339,8 @@
           "plural": "Bäuche",
           "en": "belly, stomach",
           "example": "Mir tut der Bauch weh.",
+          "ipa": "baʊ̯x",
+          "ipaSource": "wiktionary",
           "id": "bauch",
           "level": "A1",
           "unit": "a1-09"
@@ -3866,6 +4357,8 @@
           "plural": "Herzen",
           "en": "heart",
           "example": "Mein Herz schlägt schnell.",
+          "ipa": "hɛʁt͡s",
+          "ipaSource": "wiktionary",
           "id": "herz",
           "level": "A1",
           "unit": "a1-09"
@@ -3882,6 +4375,8 @@
           "plural": "Gesichter",
           "en": "face",
           "example": "Sie hat ein freundliches Gesicht.",
+          "ipa": "ɡəˈzɪçt",
+          "ipaSource": "wiktionary",
           "id": "gesicht",
           "level": "A1",
           "unit": "a1-09"
@@ -3898,6 +4393,8 @@
           "plural": "Häute",
           "en": "skin",
           "example": "Meine Haut ist sehr trocken.",
+          "ipa": "haʊ̯t",
+          "ipaSource": "wiktionary",
           "id": "haut",
           "level": "A1",
           "unit": "a1-09"
@@ -3919,6 +4416,8 @@
           ],
           "en": "to hurt",
           "example": "Wo tut es weh?",
+          "ipa": "ˈveːˌtuːn",
+          "ipaSource": "wiktionary",
           "id": "wehtun",
           "level": "A1",
           "unit": "a1-09"
@@ -3939,6 +4438,8 @@
           ],
           "en": "to sleep",
           "example": "Ich habe schlecht geschlafen.",
+          "ipa": "ˈʃlaːfn̩",
+          "ipaSource": "wiktionary",
           "id": "schlafen",
           "level": "A1",
           "unit": "a1-09"
@@ -3955,6 +4456,8 @@
           "superlative": "am gesündesten",
           "en": "healthy",
           "example": "Obst ist gesund.",
+          "ipa": "ɡəˈzʊnt",
+          "ipaSource": "wiktionary",
           "id": "gesund",
           "level": "A1",
           "unit": "a1-09"
@@ -3971,6 +4474,8 @@
           "superlative": "am kränksten",
           "en": "ill, sick",
           "example": "Mein Sohn ist krank.",
+          "ipa": "kʁaŋk",
+          "ipaSource": "wiktionary",
           "id": "krank",
           "level": "A1",
           "unit": "a1-09"
@@ -3987,6 +4492,8 @@
           "superlative": "am größten",
           "en": "big, tall",
           "example": "Mein Bruder ist sehr groß.",
+          "ipa": "ɡʁoːs",
+          "ipaSource": "wiktionary",
           "id": "gross",
           "level": "A1",
           "unit": "a1-09"
@@ -4003,6 +4510,8 @@
           "superlative": "am kleinsten",
           "en": "small",
           "example": "Die Wohnung ist klein.",
+          "ipa": "klaɪ̯n",
+          "ipaSource": "wiktionary",
           "id": "klein",
           "level": "A1",
           "unit": "a1-09"
@@ -4050,6 +4559,11 @@
           "plural": "Ärzte",
           "en": "doctor (male)",
           "example": "Ich gehe morgen zum Arzt.",
+          "ipa": "aːɐ̯t͡st",
+          "ipaVariants": [
+            "aʁt͡st"
+          ],
+          "ipaSource": "wiktionary",
           "id": "arzt",
           "level": "A1",
           "unit": "a1-10"
@@ -4066,6 +4580,11 @@
           "plural": "Ärztinnen",
           "en": "doctor (female)",
           "example": "Die Ärztin hat viel Zeit für mich.",
+          "ipa": "ˈɛːɐ̯t͡stɪn",
+          "ipaVariants": [
+            "ˈɛʁt͡stɪn"
+          ],
+          "ipaSource": "wiktionary",
           "id": "aerztin",
           "level": "A1",
           "unit": "a1-10"
@@ -4082,6 +4601,11 @@
           "plural": "Zahnärzte",
           "en": "dentist",
           "example": "Ich habe Angst vor dem Zahnarzt.",
+          "ipa": "ˈt͡saːnˌʔaːɐ̯t͡st",
+          "ipaVariants": [
+            "ˈt͡saːnˌʔaʁt͡st"
+          ],
+          "ipaSource": "wiktionary",
           "id": "zahnarzt",
           "level": "A1",
           "unit": "a1-10"
@@ -4098,6 +4622,8 @@
           "plural": "Praxen",
           "en": "doctor's practice",
           "example": "Die Praxis ist am Mittwoch geschlossen.",
+          "ipa": "ˈpʁaksɪs",
+          "ipaSource": "wiktionary",
           "id": "praxis",
           "level": "A1",
           "unit": "a1-10"
@@ -4114,6 +4640,11 @@
           "plural": "Krankenhäuser",
           "en": "hospital",
           "example": "Er liegt seit gestern im Krankenhaus.",
+          "ipa": "ˈkʁaŋkn̩ˌhaʊ̯s",
+          "ipaVariants": [
+            "ˈkʁaŋkŋ̩ˌhaʊ̯s"
+          ],
+          "ipaSource": "wiktionary",
           "id": "krankenhaus",
           "level": "A1",
           "unit": "a1-10"
@@ -4130,6 +4661,8 @@
           "plural": "Termine",
           "en": "appointment",
           "example": "Ich habe um zehn Uhr einen Termin.",
+          "ipa": "tɛʁˈmiːn",
+          "ipaSource": "wiktionary",
           "id": "termin",
           "level": "A1",
           "unit": "a1-10"
@@ -4146,6 +4679,8 @@
           "plural": "Wartezimmer",
           "en": "waiting room",
           "example": "Im Wartezimmer sitzen viele Leute.",
+          "ipa": "ˈvaʁtəˌt͡sɪmɐ",
+          "ipaSource": "wiktionary",
           "id": "wartezimmer",
           "level": "A1",
           "unit": "a1-10"
@@ -4162,6 +4697,8 @@
           "plural": "Krankenkassen",
           "en": "health insurance fund",
           "example": "Welche Krankenkasse haben Sie?",
+          "ipa": "ˈkʁaŋkn̩ˌkasə",
+          "ipaSource": "wiktionary",
           "id": "krankenkasse",
           "level": "A1",
           "unit": "a1-10"
@@ -4178,6 +4715,8 @@
           "plural": "Medikamente",
           "en": "medicine, drug",
           "example": "Nehmen Sie das Medikament dreimal am Tag.",
+          "ipa": "medikaˈmɛnt",
+          "ipaSource": "wiktionary",
           "id": "medikament",
           "level": "A1",
           "unit": "a1-10"
@@ -4194,6 +4733,8 @@
           "plural": "Tabletten",
           "en": "tablet, pill",
           "example": "Ich nehme eine Tablette gegen Kopfschmerzen.",
+          "ipa": "taˈblɛtə",
+          "ipaSource": "wiktionary",
           "id": "tablette",
           "level": "A1",
           "unit": "a1-10"
@@ -4210,6 +4751,8 @@
           "plural": "Schmerzen",
           "en": "pain",
           "example": "Ich habe Schmerzen im Rücken.",
+          "ipa": "ʃmɛʁt͡s",
+          "ipaSource": "wiktionary",
           "id": "schmerz",
           "level": "A1",
           "unit": "a1-10"
@@ -4225,6 +4768,8 @@
           "gender": "das",
           "en": "fever",
           "example": "Das Kind hat hohes Fieber.",
+          "ipa": "ˈfiːbɐ",
+          "ipaSource": "wiktionary",
           "id": "fieber",
           "level": "A1",
           "unit": "a1-10"
@@ -4241,6 +4786,8 @@
           "gender": "der",
           "en": "cough",
           "example": "Der Husten geht nicht weg.",
+          "ipa": "ˈhuːstn̩",
+          "ipaSource": "wiktionary",
           "level": "A1",
           "unit": "a1-10"
         },
@@ -4255,6 +4802,8 @@
           "gender": "der",
           "en": "runny nose, cold",
           "example": "Ich habe Schnupfen und Husten.",
+          "ipa": "ˈʃnʊp͡fn̩",
+          "ipaSource": "wiktionary",
           "id": "schnupfen",
           "level": "A1",
           "unit": "a1-10"
@@ -4271,6 +4820,8 @@
           "plural": "Erkältungen",
           "en": "cold (illness)",
           "example": "Eine Erkältung dauert etwa eine Woche.",
+          "ipa": "ɛɐ̯ˈkɛltʊŋ",
+          "ipaSource": "wiktionary",
           "id": "erkaeltung",
           "level": "A1",
           "unit": "a1-10"
@@ -4287,6 +4838,8 @@
           "plural": "Grippen",
           "en": "flu",
           "example": "Bei Grippe muss man im Bett bleiben.",
+          "ipa": "ˈɡʁɪpə",
+          "ipaSource": "wiktionary",
           "id": "grippe",
           "level": "A1",
           "unit": "a1-10"
@@ -4303,6 +4856,8 @@
           "plural": "Rezepte",
           "en": "prescription, recipe",
           "example": "Der Arzt schreibt mir ein Rezept.",
+          "ipa": "ʁeˈt͡sɛpt",
+          "ipaSource": "wiktionary",
           "id": "rezept",
           "level": "A1",
           "unit": "a1-10"
@@ -4319,6 +4874,8 @@
           "plural": "Unfälle",
           "en": "accident",
           "example": "Auf der Straße gab es einen Unfall.",
+          "ipa": "ˈʊnfal",
+          "ipaSource": "wiktionary",
           "id": "unfall",
           "level": "A1",
           "unit": "a1-10"
@@ -4334,6 +4891,8 @@
           "gender": "die",
           "en": "health",
           "example": "Gesundheit ist das Wichtigste.",
+          "ipa": "ɡəˈzʊnthaɪ̯t",
+          "ipaSource": "wiktionary",
           "id": "gesundheit",
           "level": "A1",
           "unit": "a1-10"
@@ -4354,6 +4913,8 @@
           ],
           "en": "to examine",
           "example": "Der Arzt untersucht mein Knie.",
+          "ipa": "ˌʊntɐˈzuːxn̩",
+          "ipaSource": "wiktionary",
           "id": "untersuchen",
           "level": "A1",
           "unit": "a1-10"
@@ -4375,6 +4936,8 @@
           "case": "dat",
           "en": "to help",
           "example": "Können Sie mir bitte helfen?",
+          "ipa": "ˈhɛlfn̩",
+          "ipaSource": "wiktionary",
           "id": "helfen",
           "level": "A1",
           "unit": "a1-10"
@@ -4397,6 +4960,8 @@
           "case": "akk",
           "en": "to wait",
           "example": "Ich warte auf den Arzt.",
+          "ipa": "ˈvaʁtn̩",
+          "ipaSource": "wiktionary",
           "id": "warten",
           "level": "A1",
           "unit": "a1-10"
@@ -4418,6 +4983,8 @@
           ],
           "en": "to call, to phone",
           "example": "Ich rufe die Praxis an.",
+          "ipa": "ˈanˌʁuːfn̩",
+          "ipaSource": "wiktionary",
           "id": "anrufen",
           "level": "A1",
           "unit": "a1-10"
@@ -4434,6 +5001,8 @@
           "superlative": "am schlimmsten",
           "en": "bad, serious",
           "example": "So schlimm ist es nicht.",
+          "ipa": "ʃlɪm",
+          "ipaSource": "wiktionary",
           "id": "schlimm",
           "level": "A1",
           "unit": "a1-10"
@@ -4448,6 +5017,8 @@
           "pos": "adj",
           "en": "injured",
           "example": "Zum Glück ist niemand verletzt.",
+          "ipa": "fɛɐ̯ˈlɛt͡st",
+          "ipaSource": "wiktionary",
           "id": "verletzt",
           "level": "A1",
           "unit": "a1-10"
@@ -4495,6 +5066,8 @@
           "plural": "Tage",
           "en": "day",
           "example": "Der Tag war sehr lang.",
+          "ipa": "taːk",
+          "ipaSource": "wiktionary",
           "id": "tag",
           "level": "A1",
           "unit": "a1-11"
@@ -4511,6 +5084,11 @@
           "plural": "Morgen",
           "en": "morning",
           "example": "Am Morgen trinke ich Kaffee.",
+          "ipa": "ˈmɔʁɡn̩",
+          "ipaVariants": [
+            "ˈmɔʁɡŋ̍"
+          ],
+          "ipaSource": "wiktionary",
           "id": "morgen",
           "level": "A1",
           "unit": "a1-11"
@@ -4527,6 +5105,8 @@
           "plural": "Vormittage",
           "en": "late morning",
           "example": "Am Vormittag habe ich Unterricht.",
+          "ipa": "ˈfoːɐ̯mɪˌtaːk",
+          "ipaSource": "wiktionary",
           "id": "vormittag",
           "level": "A1",
           "unit": "a1-11"
@@ -4543,6 +5123,8 @@
           "plural": "Mittage",
           "en": "midday",
           "example": "Um Mittag mache ich eine Pause.",
+          "ipa": "ˈmɪtaːk",
+          "ipaSource": "wiktionary",
           "id": "mittag",
           "level": "A1",
           "unit": "a1-11"
@@ -4559,6 +5141,11 @@
           "plural": "Nachmittage",
           "en": "afternoon",
           "example": "Am Nachmittag gehe ich einkaufen.",
+          "ipa": "ˈnaːxmɪˌtaːk",
+          "ipaVariants": [
+            "ˈnaxmɪˌtaːk"
+          ],
+          "ipaSource": "wiktionary",
           "id": "nachmittag",
           "level": "A1",
           "unit": "a1-11"
@@ -4575,6 +5162,11 @@
           "plural": "Abende",
           "en": "evening",
           "example": "Guten Abend!",
+          "ipa": "ˈaːbn̩t",
+          "ipaVariants": [
+            "ˈaːbm̩t"
+          ],
+          "ipaSource": "wiktionary",
           "id": "abend",
           "level": "A1",
           "unit": "a1-11"
@@ -4591,6 +5183,8 @@
           "plural": "Nächte",
           "en": "night",
           "example": "Gute Nacht!",
+          "ipa": "naxt",
+          "ipaSource": "wiktionary",
           "id": "nacht",
           "level": "A1",
           "unit": "a1-11"
@@ -4607,6 +5201,8 @@
           "plural": "Wochen",
           "en": "week",
           "example": "Nächste Woche habe ich frei.",
+          "ipa": "ˈvɔxə",
+          "ipaSource": "wiktionary",
           "id": "woche",
           "level": "A1",
           "unit": "a1-11"
@@ -4623,6 +5219,8 @@
           "plural": "Wochenenden",
           "en": "weekend",
           "example": "Schönes Wochenende!",
+          "ipa": "ˈvɔxn̩ˌʔɛndə",
+          "ipaSource": "wiktionary",
           "id": "wochenende",
           "level": "A1",
           "unit": "a1-11"
@@ -4639,6 +5237,8 @@
           "plural": "Frühstücke",
           "en": "breakfast",
           "example": "Das Frühstück gibt es ab sieben Uhr.",
+          "ipa": "ˈfʁyːˌʃtʏk",
+          "ipaSource": "wiktionary",
           "id": "fruehstueck",
           "level": "A1",
           "unit": "a1-11"
@@ -4655,6 +5255,8 @@
           "plural": "Mittagessen",
           "en": "lunch",
           "example": "Was gibt es zum Mittagessen?",
+          "ipa": "ˈmɪtaːkˌʔɛsn̩",
+          "ipaSource": "wiktionary",
           "id": "mittagessen",
           "level": "A1",
           "unit": "a1-11"
@@ -4671,6 +5273,8 @@
           "plural": "Abendessen",
           "en": "dinner",
           "example": "Wir essen um acht Uhr Abendessen.",
+          "ipa": "ˈaːbn̩tˌʔɛsn̩",
+          "ipaSource": "wiktionary",
           "id": "abendessen",
           "level": "A1",
           "unit": "a1-11"
@@ -4687,6 +5291,8 @@
           "plural": "Pausen",
           "en": "break",
           "example": "Wir machen jetzt eine kurze Pause.",
+          "ipa": "ˈpaʊ̯zə",
+          "ipaSource": "wiktionary",
           "id": "pause",
           "level": "A1",
           "unit": "a1-11"
@@ -4708,6 +5314,8 @@
           ],
           "en": "to get up",
           "example": "Ich stehe um sechs Uhr auf.",
+          "ipa": "ˈaʊ̯fˌʃteːən",
+          "ipaSource": "wiktionary",
           "id": "aufstehen",
           "level": "A1",
           "unit": "a1-11"
@@ -4729,6 +5337,8 @@
           ],
           "en": "to wake up",
           "example": "Heute bin ich sehr früh aufgewacht.",
+          "ipa": "ˈaʊ̯fˌvaxn̩",
+          "ipaSource": "wiktionary",
           "id": "aufwachen",
           "level": "A1",
           "unit": "a1-11"
@@ -4749,6 +5359,11 @@
           ],
           "en": "to shower",
           "example": "Ich dusche jeden Morgen.",
+          "ipa": "ˈduːʃn̩",
+          "ipaVariants": [
+            "ˈdʊʃn̩"
+          ],
+          "ipaSource": "wiktionary",
           "id": "duschen",
           "level": "A1",
           "unit": "a1-11"
@@ -4769,6 +5384,11 @@
           ],
           "en": "to have breakfast",
           "example": "Wir frühstücken zusammen.",
+          "ipa": "ˈfʁyːˌʃtʏkn̩",
+          "ipaVariants": [
+            "ˈfʁyːˌʃtʏkŋ̩"
+          ],
+          "ipaSource": "wiktionary",
           "id": "fruehstuecken",
           "level": "A1",
           "unit": "a1-11"
@@ -4790,6 +5410,8 @@
           ],
           "en": "to begin",
           "example": "Der Kurs fängt um neun Uhr an.",
+          "ipa": "ˈanˌfaŋən",
+          "ipaSource": "wiktionary",
           "id": "anfangen",
           "level": "A1",
           "unit": "a1-11"
@@ -4811,6 +5433,8 @@
           ],
           "en": "to stop",
           "example": "Der Regen hört nicht auf.",
+          "ipa": "ˈaʊ̯fˌhøːʁən",
+          "ipaSource": "wiktionary",
           "id": "aufhoeren",
           "level": "A1",
           "unit": "a1-11"
@@ -4831,6 +5455,11 @@
           ],
           "en": "to go, to walk",
           "example": "Ich gehe jetzt nach Hause.",
+          "ipa": "ˈɡeːən",
+          "ipaVariants": [
+            "ɡeːn"
+          ],
+          "ipaSource": "wiktionary",
           "id": "gehen",
           "level": "A1",
           "unit": "a1-11"
@@ -4851,6 +5480,8 @@
           ],
           "en": "to drive, to travel",
           "example": "Ich fahre mit dem Bus zur Arbeit.",
+          "ipa": "ˈfaːʁən",
+          "ipaSource": "wiktionary",
           "id": "fahren",
           "level": "A1",
           "unit": "a1-11"
@@ -4871,6 +5502,8 @@
           ],
           "en": "to work",
           "example": "Sie arbeitet acht Stunden am Tag.",
+          "ipa": "ˈaʁbaɪ̯tn̩",
+          "ipaSource": "wiktionary",
           "id": "arbeiten",
           "level": "A1",
           "unit": "a1-11"
@@ -4892,6 +5525,8 @@
           ],
           "en": "to shop",
           "example": "Am Samstag kaufe ich ein.",
+          "ipa": "ˈaɪ̯nˌkaʊ̯fn̩",
+          "ipaSource": "wiktionary",
           "id": "einkaufen",
           "level": "A1",
           "unit": "a1-11"
@@ -4913,6 +5548,8 @@
           ],
           "en": "to watch TV",
           "example": "Abends sehe ich eine Stunde fern.",
+          "ipa": "ˈfɛʁnˌzeːən",
+          "ipaSource": "wiktionary",
           "id": "fernsehen",
           "level": "A1",
           "unit": "a1-11"
@@ -4929,6 +5566,8 @@
           "superlative": "am frühesten",
           "en": "early",
           "example": "Morgen muss ich früh aufstehen.",
+          "ipa": "fʁyː",
+          "ipaSource": "wiktionary",
           "id": "frueh",
           "level": "A1",
           "unit": "a1-11"
@@ -4976,6 +5615,8 @@
           "plural": "Arbeiten",
           "en": "work",
           "example": "Die Arbeit macht mir Spaß.",
+          "ipa": "ˈaʁbaɪ̯t",
+          "ipaSource": "wiktionary",
           "id": "arbeit",
           "level": "A1",
           "unit": "a1-12"
@@ -4992,6 +5633,8 @@
           "plural": "Jobs",
           "en": "job",
           "example": "Ich suche einen neuen Job.",
+          "ipa": "d͡ʒɔp",
+          "ipaSource": "wiktionary",
           "id": "job",
           "level": "A1",
           "unit": "a1-12"
@@ -5008,6 +5651,8 @@
           "plural": "Firmen",
           "en": "company",
           "example": "Die Firma hat 200 Mitarbeiter.",
+          "ipa": "ˈfɪʁma",
+          "ipaSource": "wiktionary",
           "id": "firma",
           "level": "A1",
           "unit": "a1-12"
@@ -5024,6 +5669,11 @@
           "plural": "Büros",
           "en": "office",
           "example": "Mein Büro ist im dritten Stock.",
+          "ipa": "byˈʁoː",
+          "ipaVariants": [
+            "ˈbyʁo"
+          ],
+          "ipaSource": "wiktionary",
           "id": "buero",
           "level": "A1",
           "unit": "a1-12"
@@ -5040,6 +5690,11 @@
           "plural": "Chefs",
           "en": "boss (male)",
           "example": "Mein Chef ist heute nicht da.",
+          "ipa": "ʃɛf",
+          "ipaVariants": [
+            "ʃeːf"
+          ],
+          "ipaSource": "wiktionary",
           "id": "chef",
           "level": "A1",
           "unit": "a1-12"
@@ -5056,6 +5711,11 @@
           "plural": "Chefinnen",
           "en": "boss (female)",
           "example": "Die Chefin kommt um neun.",
+          "ipa": "ˈʃɛfɪn",
+          "ipaVariants": [
+            "ˈʃeːfɪn"
+          ],
+          "ipaSource": "wiktionary",
           "id": "chefin",
           "level": "A1",
           "unit": "a1-12"
@@ -5072,6 +5732,8 @@
           "plural": "Kollegen",
           "en": "colleague (male)",
           "example": "Mein Kollege hilft mir oft.",
+          "ipa": "kɔˈleːɡə",
+          "ipaSource": "wiktionary",
           "id": "kollege",
           "level": "A1",
           "unit": "a1-12"
@@ -5088,6 +5750,8 @@
           "plural": "Kolleginnen",
           "en": "colleague (female)",
           "example": "Meine Kollegin ist im Urlaub.",
+          "ipa": "ˌkɔˈleːɡɪn",
+          "ipaSource": "wiktionary",
           "id": "kollegin",
           "level": "A1",
           "unit": "a1-12"
@@ -5104,6 +5768,8 @@
           "plural": "Lehrer",
           "en": "teacher (male)",
           "example": "Der Lehrer erklärt die Grammatik.",
+          "ipa": "ˈleːʁɐ",
+          "ipaSource": "wiktionary",
           "id": "lehrer",
           "level": "A1",
           "unit": "a1-12"
@@ -5120,6 +5786,8 @@
           "plural": "Lehrerinnen",
           "en": "teacher (female)",
           "example": "Unsere Lehrerin kommt aus Wien.",
+          "ipa": "ˈleːʁəʁɪn",
+          "ipaSource": "wiktionary",
           "id": "lehrerin",
           "level": "A1",
           "unit": "a1-12"
@@ -5136,6 +5804,8 @@
           "plural": "Köche",
           "en": "cook, chef",
           "example": "Mein Vater ist Koch.",
+          "ipa": "kɔx",
+          "ipaSource": "wiktionary",
           "id": "koch",
           "level": "A1",
           "unit": "a1-12"
@@ -5152,6 +5822,8 @@
           "plural": "Kellner",
           "en": "waiter",
           "example": "Der Kellner bringt die Karte.",
+          "ipa": "ˈkɛlnɐ",
+          "ipaSource": "wiktionary",
           "id": "kellner",
           "level": "A1",
           "unit": "a1-12"
@@ -5168,6 +5840,8 @@
           "plural": "Fahrer",
           "en": "driver",
           "example": "Der Fahrer wartet vor der Tür.",
+          "ipa": "ˈfaːʁɐ",
+          "ipaSource": "wiktionary",
           "id": "fahrer",
           "level": "A1",
           "unit": "a1-12"
@@ -5184,6 +5858,11 @@
           "plural": "Ingenieure",
           "en": "engineer",
           "example": "Er arbeitet als Ingenieur.",
+          "ipa": "ɪnʒeˈni̯øːɐ̯",
+          "ipaVariants": [
+            "ˈɛ̃ːʃeni̯øːɐ̯"
+          ],
+          "ipaSource": "wiktionary",
           "id": "ingenieur",
           "level": "A1",
           "unit": "a1-12"
@@ -5200,6 +5879,8 @@
           "plural": "Polizisten",
           "en": "police officer",
           "example": "Der Polizist kontrolliert die Papiere.",
+          "ipa": "poliˈt͡sɪst",
+          "ipaSource": "wiktionary",
           "id": "polizist",
           "level": "A1",
           "unit": "a1-12"
@@ -5216,6 +5897,8 @@
           "plural": "Studenten",
           "en": "student",
           "example": "Mein Bruder ist Student.",
+          "ipa": "ʃtuˈdɛnt",
+          "ipaSource": "wiktionary",
           "id": "student",
           "level": "A1",
           "unit": "a1-12"
@@ -5232,6 +5915,8 @@
           "plural": "Praktika",
           "en": "internship",
           "example": "Ich mache ein Praktikum bei einer Firma.",
+          "ipa": "ˈpʁaktikʊm",
+          "ipaSource": "wiktionary",
           "id": "praktikum",
           "level": "A1",
           "unit": "a1-12"
@@ -5248,6 +5933,8 @@
           "plural": "Gehälter",
           "en": "salary",
           "example": "Das Gehalt kommt am Ende des Monats.",
+          "ipa": "ɡəˈhalt",
+          "ipaSource": "wiktionary",
           "id": "gehalt",
           "level": "A1",
           "unit": "a1-12"
@@ -5264,6 +5951,8 @@
           "plural": "Stellen",
           "en": "position, job",
           "example": "Die Stelle ist leider schon weg.",
+          "ipa": "ˈʃtɛlə",
+          "ipaSource": "wiktionary",
           "id": "stelle",
           "level": "A1",
           "unit": "a1-12"
@@ -5280,6 +5969,8 @@
           "plural": "Feierabende",
           "en": "end of the working day",
           "example": "Ich habe um fünf Uhr Feierabend.",
+          "ipa": "ˈfaɪ̯ɐˌʔaːbn̩t",
+          "ipaSource": "wiktionary",
           "id": "feierabend",
           "level": "A1",
           "unit": "a1-12"
@@ -5296,6 +5987,8 @@
           "plural": "Urlaube",
           "en": "holiday, vacation",
           "example": "Im August habe ich Urlaub.",
+          "ipa": "ˈuːɐ̯ˌlaʊ̯p",
+          "ipaSource": "wiktionary",
           "id": "urlaub",
           "level": "A1",
           "unit": "a1-12"
@@ -5316,6 +6009,8 @@
           ],
           "en": "to earn",
           "example": "Sie verdient gut.",
+          "ipa": "fɛɐ̯ˈdiːnən",
+          "ipaSource": "wiktionary",
           "id": "verdienen",
           "level": "A1",
           "unit": "a1-12"
@@ -5336,6 +6031,8 @@
           ],
           "en": "to do, to make",
           "example": "Was machst du gerade?",
+          "ipa": "ˈmaxn̩",
+          "ipaSource": "wiktionary",
           "id": "machen",
           "level": "A1",
           "unit": "a1-12"
@@ -5352,6 +6049,11 @@
           "superlative": "am fleißigsten",
           "en": "hard-working",
           "example": "Er ist ein fleißiger Schüler.",
+          "ipa": "ˈflaɪ̯sɪç",
+          "ipaVariants": [
+            "ˈflaɪ̯sɪk"
+          ],
+          "ipaSource": "wiktionary",
           "id": "fleissig",
           "level": "A1",
           "unit": "a1-12"
@@ -5368,6 +6070,8 @@
           "superlative": "am nettesten",
           "en": "nice, kind",
           "example": "Die Kollegen sind sehr nett.",
+          "ipa": "nɛt",
+          "ipaSource": "wiktionary",
           "id": "nett",
           "level": "A1",
           "unit": "a1-12"
@@ -5414,6 +6118,8 @@
           "plural": "Schulen",
           "en": "school",
           "example": "Die Schule beginnt um acht Uhr.",
+          "ipa": "ˈʃuːlə",
+          "ipaSource": "wiktionary",
           "id": "schule",
           "level": "A1",
           "unit": "a1-13"
@@ -5430,6 +6136,8 @@
           "plural": "Klassen",
           "en": "class, year group",
           "example": "In meiner Klasse sind 20 Kinder.",
+          "ipa": "ˈklasə",
+          "ipaSource": "wiktionary",
           "id": "klasse",
           "level": "A1",
           "unit": "a1-13"
@@ -5446,6 +6154,8 @@
           "plural": "Kurse",
           "en": "course",
           "example": "Der Kurs dauert drei Monate.",
+          "ipa": "kʊʁs",
+          "ipaSource": "wiktionary",
           "id": "kurs",
           "level": "A1",
           "unit": "a1-13"
@@ -5461,6 +6171,8 @@
           "gender": "der",
           "en": "lesson, teaching",
           "example": "Der Unterricht ist sehr interessant.",
+          "ipa": "ˈʊntɐˌʁɪçt",
+          "ipaSource": "wiktionary",
           "id": "unterricht",
           "level": "A1",
           "unit": "a1-13"
@@ -5477,6 +6189,8 @@
           "plural": "Aufgaben",
           "en": "task, exercise",
           "example": "Die Aufgabe war nicht schwer.",
+          "ipa": "ˈaʊ̯fˌɡaːbə",
+          "ipaSource": "wiktionary",
           "id": "aufgabe",
           "level": "A1",
           "unit": "a1-13"
@@ -5493,6 +6207,8 @@
           "plural": "Übungen",
           "en": "exercise, practice",
           "example": "Machen Sie bitte Übung drei.",
+          "ipa": "ˈyːbʊŋ",
+          "ipaSource": "wiktionary",
           "id": "uebung",
           "level": "A1",
           "unit": "a1-13"
@@ -5509,6 +6225,8 @@
           "plural": "Prüfungen",
           "en": "exam",
           "example": "Die Prüfung ist am Freitag.",
+          "ipa": "ˈpʁyːfʊŋ",
+          "ipaSource": "wiktionary",
           "id": "pruefung",
           "level": "A1",
           "unit": "a1-13"
@@ -5525,6 +6243,8 @@
           "plural": "Tests",
           "en": "test",
           "example": "Der Test hat 30 Fragen.",
+          "ipa": "tɛst",
+          "ipaSource": "wiktionary",
           "id": "test",
           "level": "A1",
           "unit": "a1-13"
@@ -5541,6 +6261,8 @@
           "plural": "Noten",
           "en": "grade, mark",
           "example": "Ich habe eine gute Note bekommen.",
+          "ipa": "ˈnoːtə",
+          "ipaSource": "wiktionary",
           "id": "note",
           "level": "A1",
           "unit": "a1-13"
@@ -5557,6 +6279,8 @@
           "plural": "Bücher",
           "en": "book",
           "example": "Das Buch liegt auf dem Tisch.",
+          "ipa": "buːx",
+          "ipaSource": "wiktionary",
           "id": "buch",
           "level": "A1",
           "unit": "a1-13"
@@ -5573,6 +6297,8 @@
           "plural": "Hefte",
           "en": "exercise book",
           "example": "Schreiben Sie das ins Heft.",
+          "ipa": "hɛft",
+          "ipaSource": "wiktionary",
           "id": "heft",
           "level": "A1",
           "unit": "a1-13"
@@ -5589,6 +6315,8 @@
           "plural": "Stifte",
           "en": "pen",
           "example": "Hast du einen Stift für mich?",
+          "ipa": "ʃtɪft",
+          "ipaSource": "wiktionary",
           "id": "stift",
           "level": "A1",
           "unit": "a1-13"
@@ -5605,6 +6333,8 @@
           "plural": "Bleistifte",
           "en": "pencil",
           "example": "Schreib bitte mit Bleistift.",
+          "ipa": "ˈblaɪ̯ˌʃtɪft",
+          "ipaSource": "wiktionary",
           "id": "bleistift",
           "level": "A1",
           "unit": "a1-13"
@@ -5621,6 +6351,8 @@
           "plural": "Papiere",
           "en": "paper",
           "example": "Ich brauche ein Blatt Papier.",
+          "ipa": "paˈpiːɐ̯",
+          "ipaSource": "wiktionary",
           "id": "papier",
           "level": "A1",
           "unit": "a1-13"
@@ -5637,6 +6369,8 @@
           "plural": "Tafeln",
           "en": "blackboard",
           "example": "Das Wort steht an der Tafel.",
+          "ipa": "ˈtaːfl̩",
+          "ipaSource": "wiktionary",
           "id": "tafel",
           "level": "A1",
           "unit": "a1-13"
@@ -5653,6 +6387,8 @@
           "plural": "Wörter",
           "en": "word",
           "example": "Dieses Wort kenne ich nicht.",
+          "ipa": "vɔʁt",
+          "ipaSource": "wiktionary",
           "id": "wort",
           "level": "A1",
           "unit": "a1-13"
@@ -5669,6 +6405,8 @@
           "plural": "Sätze",
           "en": "sentence",
           "example": "Bilden Sie einen Satz mit diesem Verb.",
+          "ipa": "zat͡s",
+          "ipaSource": "wiktionary",
           "id": "satz",
           "level": "A1",
           "unit": "a1-13"
@@ -5685,6 +6423,8 @@
           "plural": "Fragen",
           "en": "question",
           "example": "Ich habe eine Frage.",
+          "ipa": "ˈfʁaːɡə",
+          "ipaSource": "wiktionary",
           "id": "frage",
           "level": "A1",
           "unit": "a1-13"
@@ -5701,6 +6441,8 @@
           "plural": "Antworten",
           "en": "answer",
           "example": "Die Antwort ist richtig.",
+          "ipa": "ˈantvɔʁt",
+          "ipaSource": "wiktionary",
           "id": "antwort",
           "level": "A1",
           "unit": "a1-13"
@@ -5717,6 +6459,8 @@
           "plural": "Beispiele",
           "en": "example",
           "example": "Können Sie ein Beispiel geben?",
+          "ipa": "ˈbaɪ̯ˌʃpiːl",
+          "ipaSource": "wiktionary",
           "id": "beispiel",
           "level": "A1",
           "unit": "a1-13"
@@ -5733,6 +6477,8 @@
           "plural": "Universitäten",
           "en": "university",
           "example": "Sie studiert an der Universität München.",
+          "ipa": "ˌunivɛʁziˈtɛːt",
+          "ipaSource": "wiktionary",
           "id": "universitaet",
           "level": "A1",
           "unit": "a1-13"
@@ -5753,6 +6499,8 @@
           ],
           "en": "to learn",
           "example": "Ich lerne seit einem Jahr Deutsch.",
+          "ipa": "ˈlɛʁnən",
+          "ipaSource": "wiktionary",
           "id": "lernen",
           "level": "A1",
           "unit": "a1-13"
@@ -5773,6 +6521,8 @@
           ],
           "en": "to read",
           "example": "Lies bitte den Text laut.",
+          "ipa": "ˈleːzn̩",
+          "ipaSource": "wiktionary",
           "id": "lesen",
           "level": "A1",
           "unit": "a1-13"
@@ -5793,6 +6543,11 @@
           ],
           "en": "to write",
           "example": "Schreiben Sie Ihren Namen hier.",
+          "ipa": "ˈʃʁaɪ̯bn̩",
+          "ipaVariants": [
+            "ˈʃʁaɪ̯bm̩"
+          ],
+          "ipaSource": "wiktionary",
           "id": "schreiben",
           "level": "A1",
           "unit": "a1-13"
@@ -5813,6 +6568,8 @@
           ],
           "en": "to understand",
           "example": "Ich verstehe die Frage nicht.",
+          "ipa": "fɛɐ̯ˈʃteːən",
+          "ipaSource": "wiktionary",
           "id": "verstehen",
           "level": "A1",
           "unit": "a1-13"
@@ -5858,6 +6615,8 @@
           "gender": "die",
           "en": "free time",
           "example": "In meiner Freizeit koche ich gern.",
+          "ipa": "ˈfʁaɪ̯ˌt͡saɪ̯t",
+          "ipaSource": "wiktionary",
           "id": "freizeit",
           "level": "A1",
           "unit": "a1-14"
@@ -5874,6 +6633,8 @@
           "plural": "Hobbys",
           "en": "hobby",
           "example": "Mein Hobby ist Fotografieren.",
+          "ipa": "ˈhɔbi",
+          "ipaSource": "wiktionary",
           "id": "hobby",
           "level": "A1",
           "unit": "a1-14"
@@ -5889,6 +6650,8 @@
           "gender": "der",
           "en": "sport",
           "example": "Ich mache dreimal pro Woche Sport.",
+          "ipa": "ʃpɔʁt",
+          "ipaSource": "wiktionary",
           "id": "sport",
           "level": "A1",
           "unit": "a1-14"
@@ -5905,6 +6668,8 @@
           "plural": "Fußbälle",
           "en": "football",
           "example": "Am Sonntag spielen wir Fußball.",
+          "ipa": "ˈfuːsˌbal",
+          "ipaSource": "wiktionary",
           "id": "fussball",
           "level": "A1",
           "unit": "a1-14"
@@ -5920,6 +6685,12 @@
           "gender": "die",
           "en": "music",
           "example": "Ich höre gern laute Musik.",
+          "ipa": "muˈziːk",
+          "ipaVariants": [
+            "muˈsɪk",
+            "ˈmʊzɪk"
+          ],
+          "ipaSource": "wiktionary",
           "id": "musik",
           "level": "A1",
           "unit": "a1-14"
@@ -5936,6 +6707,8 @@
           "plural": "Filme",
           "en": "film, movie",
           "example": "Der Film dauert zwei Stunden.",
+          "ipa": "fɪlm",
+          "ipaSource": "wiktionary",
           "id": "film",
           "level": "A1",
           "unit": "a1-14"
@@ -5952,6 +6725,8 @@
           "plural": "Kinos",
           "en": "cinema",
           "example": "Gehen wir heute ins Kino?",
+          "ipa": "ˈkiːno",
+          "ipaSource": "wiktionary",
           "id": "kino",
           "level": "A1",
           "unit": "a1-14"
@@ -5968,6 +6743,8 @@
           "plural": "Konzerte",
           "en": "concert",
           "example": "Das Konzert war fantastisch.",
+          "ipa": "kɔnˈt͡sɛʁt",
+          "ipaSource": "wiktionary",
           "id": "konzert",
           "level": "A1",
           "unit": "a1-14"
@@ -5984,6 +6761,8 @@
           "plural": "Partys",
           "en": "party",
           "example": "Am Samstag ist eine Party bei Tom.",
+          "ipa": "ˈpaːɐ̯ti",
+          "ipaSource": "wiktionary",
           "id": "party",
           "level": "A1",
           "unit": "a1-14"
@@ -6000,6 +6779,8 @@
           "plural": "Spiele",
           "en": "game",
           "example": "Das Spiel beginnt um halb vier.",
+          "ipa": "ʃpiːl",
+          "ipaSource": "wiktionary",
           "id": "spiel",
           "level": "A1",
           "unit": "a1-14"
@@ -6016,6 +6797,8 @@
           "plural": "Karten",
           "en": "card, ticket, map",
           "example": "Ich habe zwei Karten fürs Konzert.",
+          "ipa": "ˈkaʁtə",
+          "ipaSource": "wiktionary",
           "id": "karte",
           "level": "A1",
           "unit": "a1-14"
@@ -6032,6 +6815,8 @@
           "plural": "Fahrräder",
           "en": "bicycle",
           "example": "Mein Fahrrad ist kaputt.",
+          "ipa": "ˈfaːɐ̯ˌʁaːt",
+          "ipaSource": "wiktionary",
           "id": "fahrrad",
           "level": "A1",
           "unit": "a1-14"
@@ -6048,6 +6833,8 @@
           "plural": "Schwimmbäder",
           "en": "swimming pool",
           "example": "Im Sommer gehen wir oft ins Schwimmbad.",
+          "ipa": "ˈʃvɪmˌbaːt",
+          "ipaSource": "wiktionary",
           "id": "schwimmbad",
           "level": "A1",
           "unit": "a1-14"
@@ -6064,6 +6851,8 @@
           "plural": "Parks",
           "en": "park",
           "example": "Der Park ist gleich um die Ecke.",
+          "ipa": "paʁk",
+          "ipaSource": "wiktionary",
           "id": "park",
           "level": "A1",
           "unit": "a1-14"
@@ -6080,6 +6869,8 @@
           "plural": "Cafés",
           "en": "café",
           "example": "Wir treffen uns im Café.",
+          "ipa": "kaˈfeː",
+          "ipaSource": "wiktionary",
           "id": "caf",
           "level": "A1",
           "unit": "a1-14"
@@ -6096,6 +6887,12 @@
           "plural": "Restaurants",
           "en": "restaurant",
           "example": "Das Restaurant hat auch am Sonntag offen.",
+          "ipa": "ʁɛstoˈʁɑ̃ː",
+          "ipaVariants": [
+            "ˌʁɛstoˈʁant",
+            "ˌʁɛstoˈʁaŋ"
+          ],
+          "ipaSource": "wiktionary",
           "id": "restaurant",
           "level": "A1",
           "unit": "a1-14"
@@ -6112,6 +6909,8 @@
           "plural": "Zeitungen",
           "en": "newspaper",
           "example": "Mein Opa liest jeden Tag die Zeitung.",
+          "ipa": "ˈt͡saɪ̯tʊŋ",
+          "ipaSource": "wiktionary",
           "id": "zeitung",
           "level": "A1",
           "unit": "a1-14"
@@ -6128,6 +6927,8 @@
           "plural": "Fotos",
           "en": "photo",
           "example": "Darf ich ein Foto machen?",
+          "ipa": "ˈfoːto",
+          "ipaSource": "wiktionary",
           "id": "foto",
           "level": "A1",
           "unit": "a1-14"
@@ -6148,6 +6949,8 @@
           ],
           "en": "to play",
           "example": "Die Kinder spielen im Garten.",
+          "ipa": "ˈʃpiːlən",
+          "ipaSource": "wiktionary",
           "id": "spielen",
           "level": "A1",
           "unit": "a1-14"
@@ -6168,6 +6971,8 @@
           ],
           "en": "to swim",
           "example": "Ich schwimme jeden Dienstag.",
+          "ipa": "ˈʃvɪmən",
+          "ipaSource": "wiktionary",
           "id": "schwimmen",
           "level": "A1",
           "unit": "a1-14"
@@ -6188,6 +6993,8 @@
           ],
           "en": "to dance",
           "example": "Wir haben die ganze Nacht getanzt.",
+          "ipa": "ˈtant͡sn̩",
+          "ipaSource": "wiktionary",
           "id": "tanzen",
           "level": "A1",
           "unit": "a1-14"
@@ -6208,6 +7015,8 @@
           ],
           "en": "to sing",
           "example": "Sie singt in einem Chor.",
+          "ipa": "ˈzɪŋən",
+          "ipaSource": "wiktionary",
           "id": "singen",
           "level": "A1",
           "unit": "a1-14"
@@ -6228,6 +7037,8 @@
           ],
           "en": "to paint, to draw",
           "example": "Mein Sohn malt gern Tiere.",
+          "ipa": "ˈmaːlən",
+          "ipaSource": "wiktionary",
           "id": "malen",
           "level": "A1",
           "unit": "a1-14"
@@ -6248,6 +7059,8 @@
           ],
           "en": "to hike",
           "example": "Im Sommer wandern wir in den Bergen.",
+          "ipa": "ˈvandɐn",
+          "ipaSource": "wiktionary",
           "id": "wandern",
           "level": "A1",
           "unit": "a1-14"
@@ -6271,6 +7084,8 @@
           "case": "dat",
           "en": "to meet",
           "example": "Ich treffe mich mit meiner Freundin.",
+          "ipa": "ˈtʁɛfn̩",
+          "ipaSource": "wiktionary",
           "id": "treffen",
           "level": "A1",
           "unit": "a1-14"
@@ -6318,6 +7133,8 @@
           "plural": "Zentren",
           "en": "centre",
           "example": "Ich wohne im Zentrum.",
+          "ipa": "ˈt͡sɛntʁʊm",
+          "ipaSource": "wiktionary",
           "id": "zentrum",
           "level": "A1",
           "unit": "a1-15"
@@ -6334,6 +7151,8 @@
           "plural": "Plätze",
           "en": "square, space, seat",
           "example": "Auf dem Platz ist ein Markt.",
+          "ipa": "plat͡s",
+          "ipaSource": "wiktionary",
           "id": "platz",
           "level": "A1",
           "unit": "a1-15"
@@ -6350,6 +7169,8 @@
           "plural": "Banken",
           "en": "bank",
           "example": "Die Bank öffnet um neun Uhr.",
+          "ipa": "baŋk",
+          "ipaSource": "wiktionary",
           "id": "bank",
           "level": "A1",
           "unit": "a1-15"
@@ -6365,6 +7186,8 @@
           "gender": "die",
           "en": "post office, mail",
           "example": "Ich gehe schnell zur Post.",
+          "ipa": "pɔst",
+          "ipaSource": "wiktionary",
           "id": "post",
           "level": "A1",
           "unit": "a1-15"
@@ -6381,6 +7204,8 @@
           "plural": "Kirchen",
           "en": "church",
           "example": "Die Kirche ist sehr alt.",
+          "ipa": "ˈkɪʁçə",
+          "ipaSource": "wiktionary",
           "id": "kirche",
           "level": "A1",
           "unit": "a1-15"
@@ -6397,6 +7222,8 @@
           "plural": "Museen",
           "en": "museum",
           "example": "Das Museum ist montags geschlossen.",
+          "ipa": "muˈzeːʊm",
+          "ipaSource": "wiktionary",
           "id": "museum",
           "level": "A1",
           "unit": "a1-15"
@@ -6413,6 +7240,8 @@
           "plural": "Bibliotheken",
           "en": "library",
           "example": "In der Bibliothek muss man leise sein.",
+          "ipa": "biblioˈteːk",
+          "ipaSource": "wiktionary",
           "id": "bibliothek",
           "level": "A1",
           "unit": "a1-15"
@@ -6429,6 +7258,8 @@
           "plural": "Hotels",
           "en": "hotel",
           "example": "Das Hotel liegt direkt am Bahnhof.",
+          "ipa": "hoˈtɛl",
+          "ipaSource": "wiktionary",
           "id": "hotel",
           "level": "A1",
           "unit": "a1-15"
@@ -6445,6 +7276,8 @@
           "plural": "Rathäuser",
           "en": "town hall",
           "example": "Das Rathaus steht am Marktplatz.",
+          "ipa": "ˈʁaːtˌhaʊ̯s",
+          "ipaSource": "wiktionary",
           "id": "rathaus",
           "level": "A1",
           "unit": "a1-15"
@@ -6460,6 +7293,8 @@
           "gender": "die",
           "en": "police",
           "example": "Rufen Sie bitte die Polizei!",
+          "ipa": "poliˈt͡saɪ̯",
+          "ipaSource": "wiktionary",
           "id": "polizei",
           "level": "A1",
           "unit": "a1-15"
@@ -6476,6 +7311,8 @@
           "plural": "Bahnhöfe",
           "en": "train station",
           "example": "Wie komme ich zum Bahnhof?",
+          "ipa": "ˈbaːnˌhoːf",
+          "ipaSource": "wiktionary",
           "id": "bahnhof",
           "level": "A1",
           "unit": "a1-15"
@@ -6492,6 +7329,8 @@
           "plural": "Flughäfen",
           "en": "airport",
           "example": "Der Flughafen ist weit weg.",
+          "ipa": "ˈfluːkˌhaːfn̩",
+          "ipaSource": "wiktionary",
           "id": "flughafen",
           "level": "A1",
           "unit": "a1-15"
@@ -6508,6 +7347,8 @@
           "plural": "Haltestellen",
           "en": "stop (bus/tram)",
           "example": "Die Haltestelle ist vor dem Haus.",
+          "ipa": "ˈhaltəˌʃtɛlə",
+          "ipaSource": "wiktionary",
           "id": "haltestelle",
           "level": "A1",
           "unit": "a1-15"
@@ -6524,6 +7365,8 @@
           "plural": "Parkplätze",
           "en": "parking space",
           "example": "Ich finde keinen Parkplatz.",
+          "ipa": "ˈpaʁkˌplat͡s",
+          "ipaSource": "wiktionary",
           "id": "parkplatz",
           "level": "A1",
           "unit": "a1-15"
@@ -6540,6 +7383,8 @@
           "plural": "Brücken",
           "en": "bridge",
           "example": "Gehen Sie über die Brücke.",
+          "ipa": "ˈbʁʏkə",
+          "ipaSource": "wiktionary",
           "id": "bruecke",
           "level": "A1",
           "unit": "a1-15"
@@ -6556,6 +7401,8 @@
           "plural": "Ecken",
           "en": "corner",
           "example": "Die Bäckerei ist an der Ecke.",
+          "ipa": "ˈɛkə",
+          "ipaSource": "wiktionary",
           "id": "ecke",
           "level": "A1",
           "unit": "a1-15"
@@ -6572,6 +7419,8 @@
           "plural": "Wege",
           "en": "way, path",
           "example": "Der Weg zum Park ist kurz.",
+          "ipa": "veːk",
+          "ipaSource": "wiktionary",
           "id": "weg",
           "level": "A1",
           "unit": "a1-15"
@@ -6588,6 +7437,8 @@
           "plural": "Richtungen",
           "en": "direction",
           "example": "Fahren Sie in Richtung Zentrum.",
+          "ipa": "ˈʁɪçtʊŋ",
+          "ipaSource": "wiktionary",
           "id": "richtung",
           "level": "A1",
           "unit": "a1-15"
@@ -6604,6 +7455,8 @@
           "plural": "Pläne",
           "en": "plan, map",
           "example": "Hast du einen Plan von der Stadt?",
+          "ipa": "plaːn",
+          "ipaSource": "wiktionary",
           "id": "plan",
           "level": "A1",
           "unit": "a1-15"
@@ -6620,6 +7473,8 @@
           "plural": "Dörfer",
           "en": "village",
           "example": "Ich komme aus einem kleinen Dorf.",
+          "ipa": "dɔʁf",
+          "ipaSource": "wiktionary",
           "id": "dorf",
           "level": "A1",
           "unit": "a1-15"
@@ -6636,6 +7491,8 @@
           "plural": "Gebäude",
           "en": "building",
           "example": "Das Gebäude dort ist neu.",
+          "ipa": "ɡəˈbɔɪ̯də",
+          "ipaSource": "wiktionary",
           "id": "gebaeude",
           "level": "A1",
           "unit": "a1-15"
@@ -6656,6 +7513,8 @@
           ],
           "en": "to find",
           "example": "Ich finde die Straße nicht.",
+          "ipa": "ˈfɪndn̩",
+          "ipaSource": "wiktionary",
           "id": "finden",
           "level": "A1",
           "unit": "a1-15"
@@ -6676,6 +7535,11 @@
           ],
           "en": "to show",
           "example": "Können Sie mir das auf dem Plan zeigen?",
+          "ipa": "ˈt͡saɪ̯ɡn̩",
+          "ipaVariants": [
+            "ˈt͡saɪ̯ɡŋ̩"
+          ],
+          "ipaSource": "wiktionary",
           "id": "zeigen",
           "level": "A1",
           "unit": "a1-15"
@@ -6690,6 +7554,8 @@
           "pos": "adv",
           "en": "left, on the left",
           "example": "Gehen Sie an der Ampel links.",
+          "ipa": "lɪŋks",
+          "ipaSource": "wiktionary",
           "id": "links",
           "level": "A1",
           "unit": "a1-15"
@@ -6704,6 +7570,8 @@
           "pos": "adv",
           "en": "right, on the right",
           "example": "Die Post ist rechts.",
+          "ipa": "ʁɛçt͡s",
+          "ipaSource": "wiktionary",
           "id": "rechts",
           "level": "A1",
           "unit": "a1-15"
@@ -6750,6 +7618,8 @@
           "plural": "Autos",
           "en": "car",
           "example": "Das Auto steht vor dem Haus.",
+          "ipa": "ˈaʊ̯to",
+          "ipaSource": "wiktionary",
           "id": "auto",
           "level": "A1",
           "unit": "a1-16"
@@ -6766,6 +7636,8 @@
           "plural": "Busse",
           "en": "bus",
           "example": "Der Bus kommt in fünf Minuten.",
+          "ipa": "bʊs",
+          "ipaSource": "wiktionary",
           "id": "bus",
           "level": "A1",
           "unit": "a1-16"
@@ -6782,6 +7654,11 @@
           "plural": "Züge",
           "en": "train",
           "example": "Der Zug hat zehn Minuten Verspätung.",
+          "ipa": "t͡suːk",
+          "ipaVariants": [
+            "t͡suːɡ"
+          ],
+          "ipaSource": "wiktionary",
           "id": "zug",
           "level": "A1",
           "unit": "a1-16"
@@ -6798,6 +7675,8 @@
           "plural": "Bahnen",
           "en": "railway, train",
           "example": "Ich fahre mit der Bahn nach Köln.",
+          "ipa": "baːn",
+          "ipaSource": "wiktionary",
           "id": "bahn",
           "level": "A1",
           "unit": "a1-16"
@@ -6814,6 +7693,8 @@
           "plural": "U-Bahnen",
           "en": "underground, subway",
           "example": "Die U-Bahn fährt alle drei Minuten.",
+          "ipa": "ˈuːˌbaːn",
+          "ipaSource": "wiktionary",
           "id": "u-bahn",
           "level": "A1",
           "unit": "a1-16"
@@ -6830,6 +7711,8 @@
           "plural": "S-Bahnen",
           "en": "city train",
           "example": "Nimm die S-Bahn zum Flughafen.",
+          "ipa": "ˈɛsˌbaːn",
+          "ipaSource": "wiktionary",
           "id": "s-bahn",
           "level": "A1",
           "unit": "a1-16"
@@ -6846,6 +7729,8 @@
           "plural": "Straßenbahnen",
           "en": "tram",
           "example": "Die Straßenbahn hält am Rathaus.",
+          "ipa": "ˈʃtʁaːsn̩ˌbaːn",
+          "ipaSource": "wiktionary",
           "id": "strassenbahn",
           "level": "A1",
           "unit": "a1-16"
@@ -6862,6 +7747,8 @@
           "plural": "Taxis",
           "en": "taxi",
           "example": "Wir nehmen ein Taxi.",
+          "ipa": "ˈtaksi",
+          "ipaSource": "wiktionary",
           "id": "taxi",
           "level": "A1",
           "unit": "a1-16"
@@ -6878,6 +7765,8 @@
           "plural": "Fahrkarten",
           "en": "ticket",
           "example": "Eine Fahrkarte nach Hamburg, bitte.",
+          "ipa": "ˈfaːɐ̯ˌkaʁtə",
+          "ipaSource": "wiktionary",
           "id": "fahrkarte",
           "level": "A1",
           "unit": "a1-16"
@@ -6894,6 +7783,8 @@
           "plural": "Tickets",
           "en": "ticket",
           "example": "Das Ticket gilt zwei Stunden.",
+          "ipa": "ˈtɪkət",
+          "ipaSource": "wiktionary",
           "id": "ticket",
           "level": "A1",
           "unit": "a1-16"
@@ -6910,6 +7801,8 @@
           "plural": "Fahrpläne",
           "en": "timetable",
           "example": "Schau mal im Fahrplan nach.",
+          "ipa": "ˈfaːɐ̯ˌplaːn",
+          "ipaSource": "wiktionary",
           "id": "fahrplan",
           "level": "A1",
           "unit": "a1-16"
@@ -6926,6 +7819,8 @@
           "plural": "Gleise",
           "en": "platform, track",
           "example": "Der Zug fährt von Gleis drei.",
+          "ipa": "ɡlaɪ̯s",
+          "ipaSource": "wiktionary",
           "id": "gleis",
           "level": "A1",
           "unit": "a1-16"
@@ -6942,6 +7837,8 @@
           "plural": "Ausgänge",
           "en": "exit",
           "example": "Der Ausgang ist dort hinten.",
+          "ipa": "ˈaʊ̯sˌɡaŋ",
+          "ipaSource": "wiktionary",
           "id": "ausgang",
           "level": "A1",
           "unit": "a1-16"
@@ -6958,6 +7855,8 @@
           "plural": "Eingänge",
           "en": "entrance",
           "example": "Wir treffen uns am Eingang.",
+          "ipa": "ˈaɪ̯nˌɡaŋ",
+          "ipaSource": "wiktionary",
           "id": "eingang",
           "level": "A1",
           "unit": "a1-16"
@@ -6974,6 +7873,8 @@
           "plural": "Ampeln",
           "en": "traffic light",
           "example": "An der Ampel musst du warten.",
+          "ipa": "ˈampl̩",
+          "ipaSource": "wiktionary",
           "id": "ampel",
           "level": "A1",
           "unit": "a1-16"
@@ -6989,6 +7890,8 @@
           "gender": "der",
           "en": "traffic",
           "example": "Am Morgen ist viel Verkehr.",
+          "ipa": "fɛɐ̯ˈkeːɐ̯",
+          "ipaSource": "wiktionary",
           "id": "verkehr",
           "level": "A1",
           "unit": "a1-16"
@@ -7005,6 +7908,8 @@
           "plural": "Staus",
           "en": "traffic jam",
           "example": "Wir stehen seit einer Stunde im Stau.",
+          "ipa": "ʃtaʊ̯",
+          "ipaSource": "wiktionary",
           "id": "stau",
           "level": "A1",
           "unit": "a1-16"
@@ -7020,6 +7925,8 @@
           "gender": "das",
           "en": "petrol, gasoline",
           "example": "Das Benzin ist wieder teurer.",
+          "ipa": "bɛnˈt͡siːn",
+          "ipaSource": "wiktionary",
           "id": "benzin",
           "level": "A1",
           "unit": "a1-16"
@@ -7036,6 +7943,11 @@
           "plural": "Motorräder",
           "en": "motorbike",
           "example": "Mein Nachbar hat ein altes Motorrad.",
+          "ipa": "ˈmoːtoːɐ̯ˌʁaːt",
+          "ipaVariants": [
+            "moˈtoːɐ̯ˌʁaːt"
+          ],
+          "ipaSource": "wiktionary",
           "id": "motorrad",
           "level": "A1",
           "unit": "a1-16"
@@ -7057,6 +7969,8 @@
           ],
           "en": "to get in, to board",
           "example": "Bitte hinten einsteigen!",
+          "ipa": "ˈaɪ̯nˌʃtaɪ̯ɡn̩",
+          "ipaSource": "wiktionary",
           "id": "einsteigen",
           "level": "A1",
           "unit": "a1-16"
@@ -7078,6 +7992,11 @@
           ],
           "en": "to get off",
           "example": "Wir steigen an der nächsten Haltestelle aus.",
+          "ipa": "ˈaʊ̯sˌʃtaɪ̯ɡn̩",
+          "ipaVariants": [
+            "ˈaʊ̯sˌʃtaɪ̯ɡŋ̩"
+          ],
+          "ipaSource": "wiktionary",
           "id": "aussteigen",
           "level": "A1",
           "unit": "a1-16"
@@ -7099,6 +8018,8 @@
           ],
           "en": "to change (trains)",
           "example": "In Nürnberg müssen Sie umsteigen.",
+          "ipa": "ˈʊmˌʃtaɪ̯ɡn̩",
+          "ipaSource": "wiktionary",
           "id": "umsteigen",
           "level": "A1",
           "unit": "a1-16"
@@ -7120,6 +8041,8 @@
           ],
           "en": "to depart",
           "example": "Der Zug fährt um 8:15 Uhr ab.",
+          "ipa": "ˈapˌfaːʁən",
+          "ipaSource": "wiktionary",
           "id": "abfahren",
           "level": "A1",
           "unit": "a1-16"
@@ -7141,6 +8064,8 @@
           ],
           "en": "to arrive",
           "example": "Wann kommen wir in Berlin an?",
+          "ipa": "ˈanˌkɔmən",
+          "ipaSource": "wiktionary",
           "id": "ankommen",
           "level": "A1",
           "unit": "a1-16"
@@ -7161,6 +8086,11 @@
           ],
           "en": "to run, to walk",
           "example": "Ich laufe lieber, als zu fahren.",
+          "ipa": "ˈlaʊ̯fn̩",
+          "ipaVariants": [
+            "ˈlaʊ̯fm̩"
+          ],
+          "ipaSource": "wiktionary",
           "id": "laufen",
           "level": "A1",
           "unit": "a1-16"
@@ -7207,6 +8137,8 @@
           "plural": "Reisen",
           "en": "journey, trip",
           "example": "Gute Reise!",
+          "ipa": "ˈʁaɪ̯zə",
+          "ipaSource": "wiktionary",
           "id": "reise",
           "level": "A1",
           "unit": "a1-17"
@@ -7222,6 +8154,8 @@
           "pluralOnly": true,
           "en": "holidays (school)",
           "example": "In den Ferien fahren wir ans Meer.",
+          "ipa": "ˈfeːʁiən",
+          "ipaSource": "wiktionary",
           "id": "ferien",
           "level": "A1",
           "unit": "a1-17"
@@ -7238,6 +8172,8 @@
           "plural": "Koffer",
           "en": "suitcase",
           "example": "Mein Koffer ist zu schwer.",
+          "ipa": "ˈkɔfɐ",
+          "ipaSource": "wiktionary",
           "id": "koffer",
           "level": "A1",
           "unit": "a1-17"
@@ -7254,6 +8190,8 @@
           "plural": "Taschen",
           "en": "bag",
           "example": "Die Tasche steht neben der Tür.",
+          "ipa": "ˈtaʃə",
+          "ipaSource": "wiktionary",
           "id": "tasche",
           "level": "A1",
           "unit": "a1-17"
@@ -7270,6 +8208,8 @@
           "plural": "Pässe",
           "en": "passport",
           "example": "Mein Pass ist noch zwei Jahre gültig.",
+          "ipa": "pas",
+          "ipaSource": "wiktionary",
           "id": "pass",
           "level": "A1",
           "unit": "a1-17"
@@ -7286,6 +8226,8 @@
           "plural": "Ausweise",
           "en": "ID card",
           "example": "Bitte zeigen Sie mir Ihren Ausweis.",
+          "ipa": "ˈaʊ̯sˌvaɪ̯s",
+          "ipaSource": "wiktionary",
           "id": "ausweis",
           "level": "A1",
           "unit": "a1-17"
@@ -7302,6 +8244,8 @@
           "plural": "Doppelzimmer",
           "en": "double room",
           "example": "Wir möchten ein Doppelzimmer.",
+          "ipa": "ˈdɔpl̩ˌt͡sɪmɐ",
+          "ipaSource": "wiktionary",
           "id": "doppelzimmer",
           "level": "A1",
           "unit": "a1-17"
@@ -7318,6 +8262,8 @@
           "plural": "Einzelzimmer",
           "en": "single room",
           "example": "Ein Einzelzimmer kostet 60 Euro.",
+          "ipa": "ˈaɪ̯nt͡sl̩ˌt͡sɪmɐ",
+          "ipaSource": "wiktionary",
           "id": "einzelzimmer",
           "level": "A1",
           "unit": "a1-17"
@@ -7334,6 +8280,8 @@
           "plural": "Rezeptionen",
           "en": "reception",
           "example": "Den Schlüssel bekommen Sie an der Rezeption.",
+          "ipa": "ˌʁet͡sɛpˈt͡si̯oːn",
+          "ipaSource": "wiktionary",
           "id": "rezeption",
           "level": "A1",
           "unit": "a1-17"
@@ -7349,6 +8297,8 @@
           "gender": "das",
           "en": "luggage",
           "example": "Wo kann ich mein Gepäck lassen?",
+          "ipa": "ɡəˈpɛk",
+          "ipaSource": "wiktionary",
           "id": "gepaeck",
           "level": "A1",
           "unit": "a1-17"
@@ -7365,6 +8315,8 @@
           "plural": "Strände",
           "en": "beach",
           "example": "Der Strand war fast leer.",
+          "ipa": "ʃtʁant",
+          "ipaSource": "wiktionary",
           "id": "strand",
           "level": "A1",
           "unit": "a1-17"
@@ -7381,6 +8333,8 @@
           "plural": "Meere",
           "en": "sea",
           "example": "Ich sehe zum ersten Mal das Meer.",
+          "ipa": "meːɐ̯",
+          "ipaSource": "wiktionary",
           "id": "meer",
           "level": "A1",
           "unit": "a1-17"
@@ -7397,6 +8351,8 @@
           "plural": "Seen",
           "en": "lake",
           "example": "Der See ist im Winter zugefroren.",
+          "ipa": "zeː",
+          "ipaSource": "wiktionary",
           "id": "see",
           "level": "A1",
           "unit": "a1-17"
@@ -7413,6 +8369,8 @@
           "plural": "Berge",
           "en": "mountain",
           "example": "Die Berge sind noch weiß.",
+          "ipa": "bɛʁk",
+          "ipaSource": "wiktionary",
           "id": "berg",
           "level": "A1",
           "unit": "a1-17"
@@ -7429,6 +8387,8 @@
           "plural": "Inseln",
           "en": "island",
           "example": "Wir fahren mit dem Schiff auf die Insel.",
+          "ipa": "ˈɪnzl̩",
+          "ipaSource": "wiktionary",
           "id": "insel",
           "level": "A1",
           "unit": "a1-17"
@@ -7444,6 +8404,8 @@
           "gender": "das",
           "en": "abroad",
           "example": "Meine Familie lebt im Ausland.",
+          "ipa": "ˈaʊ̯slant",
+          "ipaSource": "wiktionary",
           "id": "ausland",
           "level": "A1",
           "unit": "a1-17"
@@ -7459,6 +8421,8 @@
           "gender": "die",
           "en": "home, homeland",
           "example": "Ich vermisse meine Heimat.",
+          "ipa": "ˈhaɪ̯maːt",
+          "ipaSource": "wiktionary",
           "id": "heimat",
           "level": "A1",
           "unit": "a1-17"
@@ -7475,6 +8439,8 @@
           "plural": "Grenzen",
           "en": "border",
           "example": "An der Grenze gab es keine Kontrolle.",
+          "ipa": "ˈɡʁɛnt͡sə",
+          "ipaSource": "wiktionary",
           "id": "grenze",
           "level": "A1",
           "unit": "a1-17"
@@ -7491,6 +8457,11 @@
           "plural": "Souvenirs",
           "en": "souvenir",
           "example": "Ich kaufe ein kleines Souvenir.",
+          "ipa": "zuvəˈniːɐ̯",
+          "ipaVariants": [
+            "suvəˈniːɐ̯"
+          ],
+          "ipaSource": "wiktionary",
           "id": "souvenir",
           "level": "A1",
           "unit": "a1-17"
@@ -7507,6 +8478,8 @@
           "plural": "Aussichten",
           "en": "view",
           "example": "Von hier hat man eine tolle Aussicht.",
+          "ipa": "ˈaʊ̯sˌz̥ɪçt",
+          "ipaSource": "wiktionary",
           "id": "aussicht",
           "level": "A1",
           "unit": "a1-17"
@@ -7527,6 +8500,8 @@
           ],
           "en": "to travel",
           "example": "Sie reist sehr gern allein.",
+          "ipa": "ˈʁaɪ̯zn̩",
+          "ipaSource": "wiktionary",
           "id": "reisen",
           "level": "A1",
           "unit": "a1-17"
@@ -7547,6 +8522,11 @@
           ],
           "en": "to fly",
           "example": "Wir fliegen nach Istanbul.",
+          "ipa": "ˈfliːɡn̩",
+          "ipaVariants": [
+            "ˈfliːɡŋ̍"
+          ],
+          "ipaSource": "wiktionary",
           "id": "fliegen",
           "level": "A1",
           "unit": "a1-17"
@@ -7567,6 +8547,8 @@
           ],
           "en": "to book",
           "example": "Ich habe das Hotel online gebucht.",
+          "ipa": "ˈbuːxn̩",
+          "ipaSource": "wiktionary",
           "id": "buchen",
           "level": "A1",
           "unit": "a1-17"
@@ -7587,6 +8569,11 @@
           ],
           "en": "to pack",
           "example": "Hast du schon den Koffer gepackt?",
+          "ipa": "ˈpakn̩",
+          "ipaVariants": [
+            "ˈpakŋ̍"
+          ],
+          "ipaSource": "wiktionary",
           "id": "packen",
           "level": "A1",
           "unit": "a1-17"
@@ -7607,6 +8594,8 @@
           ],
           "en": "to visit",
           "example": "Im Juli besuche ich meine Eltern.",
+          "ipa": "bəˈzuːxn̩",
+          "ipaSource": "wiktionary",
           "id": "besuchen",
           "level": "A1",
           "unit": "a1-17"
@@ -7655,6 +8644,8 @@
           "plural": "Uhren",
           "en": "clock, o'clock",
           "example": "Wie viel Uhr ist es?",
+          "ipa": "uːɐ̯",
+          "ipaSource": "wiktionary",
           "id": "uhr",
           "level": "A1",
           "unit": "a1-18"
@@ -7671,6 +8662,8 @@
           "plural": "Stunden",
           "en": "hour",
           "example": "Der Film dauert zwei Stunden.",
+          "ipa": "ˈʃtʊndə",
+          "ipaSource": "wiktionary",
           "id": "stunde",
           "level": "A1",
           "unit": "a1-18"
@@ -7687,6 +8680,8 @@
           "plural": "Minuten",
           "en": "minute",
           "example": "Warte bitte eine Minute.",
+          "ipa": "miˈnuːtə",
+          "ipaSource": "wiktionary",
           "id": "minute",
           "level": "A1",
           "unit": "a1-18"
@@ -7703,6 +8698,8 @@
           "plural": "Sekunden",
           "en": "second",
           "example": "Eine Minute hat sechzig Sekunden.",
+          "ipa": "zeˈkʊndə",
+          "ipaSource": "wiktionary",
           "id": "sekunde",
           "level": "A1",
           "unit": "a1-18"
@@ -7719,6 +8716,8 @@
           "plural": "Monate",
           "en": "month",
           "example": "Der nächste Monat ist Mai.",
+          "ipa": "ˈmoːnat",
+          "ipaSource": "wiktionary",
           "id": "monat",
           "level": "A1",
           "unit": "a1-18"
@@ -7735,6 +8734,8 @@
           "plural": "Jahre",
           "en": "year",
           "example": "Ich bin seit zwei Jahren hier.",
+          "ipa": "jaːɐ̯",
+          "ipaSource": "wiktionary",
           "id": "jahr",
           "level": "A1",
           "unit": "a1-18"
@@ -7751,6 +8752,8 @@
           "plural": "Daten",
           "en": "date",
           "example": "Welches Datum haben wir heute?",
+          "ipa": "ˈdaːtʊm",
+          "ipaSource": "wiktionary",
           "id": "datum",
           "level": "A1",
           "unit": "a1-18"
@@ -7767,6 +8770,8 @@
           "plural": "Zeiten",
           "en": "time",
           "example": "Ich habe leider keine Zeit.",
+          "ipa": "t͡saɪ̯t",
+          "ipaSource": "wiktionary",
           "id": "zeit",
           "level": "A1",
           "unit": "a1-18"
@@ -7783,6 +8788,8 @@
           "plural": "Montage",
           "en": "Monday",
           "example": "Am Montag beginnt der Kurs.",
+          "ipa": "ˈmoːnˌtaːk",
+          "ipaSource": "wiktionary",
           "id": "montag",
           "level": "A1",
           "unit": "a1-18"
@@ -7799,6 +8806,8 @@
           "plural": "Dienstage",
           "en": "Tuesday",
           "example": "Dienstag habe ich einen Termin.",
+          "ipa": "ˈdiːnsˌtaːk",
+          "ipaSource": "wiktionary",
           "id": "dienstag",
           "level": "A1",
           "unit": "a1-18"
@@ -7815,6 +8824,8 @@
           "plural": "Mittwoche",
           "en": "Wednesday",
           "example": "Mittwochs gehe ich schwimmen.",
+          "ipa": "ˈmɪtˌvɔx",
+          "ipaSource": "wiktionary",
           "id": "mittwoch",
           "level": "A1",
           "unit": "a1-18"
@@ -7831,6 +8842,8 @@
           "plural": "Donnerstage",
           "en": "Thursday",
           "example": "Am Donnerstag kommt Besuch.",
+          "ipa": "ˈdɔnɐsˌtaːk",
+          "ipaSource": "wiktionary",
           "id": "donnerstag",
           "level": "A1",
           "unit": "a1-18"
@@ -7847,6 +8860,8 @@
           "plural": "Freitage",
           "en": "Friday",
           "example": "Freitag ist mein letzter Arbeitstag.",
+          "ipa": "ˈfʁaɪ̯ˌtaːk",
+          "ipaSource": "wiktionary",
           "id": "freitag",
           "level": "A1",
           "unit": "a1-18"
@@ -7863,6 +8878,8 @@
           "plural": "Samstage",
           "en": "Saturday",
           "example": "Am Samstag schlafe ich lange.",
+          "ipa": "ˈzamstaːk",
+          "ipaSource": "wiktionary",
           "id": "samstag",
           "level": "A1",
           "unit": "a1-18"
@@ -7879,6 +8896,8 @@
           "plural": "Sonntage",
           "en": "Sunday",
           "example": "Sonntags sind die Geschäfte zu.",
+          "ipa": "ˈzɔnˌtaːk",
+          "ipaSource": "wiktionary",
           "id": "sonntag",
           "level": "A1",
           "unit": "a1-18"
@@ -7893,6 +8912,8 @@
           "pos": "num",
           "en": "zero",
           "example": "Draußen sind null Grad.",
+          "ipa": "nʊl",
+          "ipaSource": "wiktionary",
           "id": "null",
           "level": "A1",
           "unit": "a1-18"
@@ -7907,6 +8928,8 @@
           "pos": "num",
           "en": "ten",
           "example": "Ich komme in zehn Minuten.",
+          "ipa": "t͡seːn",
+          "ipaSource": "wiktionary",
           "id": "zehn",
           "level": "A1",
           "unit": "a1-18"
@@ -7921,6 +8944,11 @@
           "pos": "num",
           "en": "twenty",
           "example": "Das kostet zwanzig Euro.",
+          "ipa": "ˈt͡svant͡sɪç",
+          "ipaVariants": [
+            "ˈt͡svant͡sɪk"
+          ],
+          "ipaSource": "wiktionary",
           "id": "zwanzig",
           "level": "A1",
           "unit": "a1-18"
@@ -7935,6 +8963,11 @@
           "pos": "num",
           "en": "hundred",
           "example": "Der Kurs hat über hundert Teilnehmer.",
+          "ipa": "ˈhʊndɐt",
+          "ipaVariants": [
+            "ˈhʊndɐtə"
+          ],
+          "ipaSource": "wiktionary",
           "id": "hundert",
           "level": "A1",
           "unit": "a1-18"
@@ -7949,6 +8982,11 @@
           "pos": "num",
           "en": "thousand",
           "example": "Die Stadt hat zehntausend Einwohner.",
+          "ipa": "ˈtaʊ̯zn̩t",
+          "ipaVariants": [
+            "ˈtaʊ̯zn̩də"
+          ],
+          "ipaSource": "wiktionary",
           "id": "tausend",
           "level": "A1",
           "unit": "a1-18"
@@ -7969,6 +9007,8 @@
           ],
           "en": "to last, to take",
           "example": "Wie lange dauert die Fahrt?",
+          "ipa": "ˈdaʊ̯ɐn",
+          "ipaSource": "wiktionary",
           "id": "dauern",
           "level": "A1",
           "unit": "a1-18"
@@ -7989,6 +9029,8 @@
           ],
           "en": "to begin",
           "example": "Der Unterricht beginnt gleich.",
+          "ipa": "bəˈɡɪnən",
+          "ipaSource": "wiktionary",
           "id": "beginnen",
           "level": "A1",
           "unit": "a1-18"
@@ -8003,6 +9045,8 @@
           "pos": "adv",
           "en": "today",
           "example": "Heute ist Donnerstag.",
+          "ipa": "ˈhɔɪ̯tə",
+          "ipaSource": "wiktionary",
           "id": "heute",
           "level": "A1",
           "unit": "a1-18"
@@ -8018,6 +9062,11 @@
           "pos": "adv",
           "en": "tomorrow",
           "example": "Morgen habe ich frei.",
+          "ipa": "ˈmɔʁɡn̩",
+          "ipaVariants": [
+            "ˈmɔʁɡŋ̍"
+          ],
+          "ipaSource": "wiktionary",
           "level": "A1",
           "unit": "a1-18"
         },
@@ -8031,6 +9080,8 @@
           "pos": "adv",
           "en": "yesterday",
           "example": "Gestern war ich beim Arzt.",
+          "ipa": "ˈɡɛstɐn",
+          "ipaSource": "wiktionary",
           "id": "gestern",
           "level": "A1",
           "unit": "a1-18"
@@ -8077,6 +9128,8 @@
           "gender": "das",
           "en": "weather",
           "example": "Wie ist das Wetter heute?",
+          "ipa": "ˈvɛtɐ",
+          "ipaSource": "wiktionary",
           "id": "wetter",
           "level": "A1",
           "unit": "a1-19"
@@ -8093,6 +9146,8 @@
           "plural": "Sonnen",
           "en": "sun",
           "example": "Die Sonne scheint den ganzen Tag.",
+          "ipa": "ˈzɔnə",
+          "ipaSource": "wiktionary",
           "id": "sonne",
           "level": "A1",
           "unit": "a1-19"
@@ -8108,6 +9163,11 @@
           "gender": "der",
           "en": "rain",
           "example": "Bei Regen bleibe ich zu Hause.",
+          "ipa": "ˈʁeːɡn̩",
+          "ipaVariants": [
+            "ˈʁeːɡŋ̩"
+          ],
+          "ipaSource": "wiktionary",
           "id": "regen",
           "level": "A1",
           "unit": "a1-19"
@@ -8123,6 +9183,8 @@
           "gender": "der",
           "en": "snow",
           "example": "Im Januar liegt oft Schnee.",
+          "ipa": "ʃneː",
+          "ipaSource": "wiktionary",
           "id": "schnee",
           "level": "A1",
           "unit": "a1-19"
@@ -8139,6 +9201,8 @@
           "plural": "Winde",
           "en": "wind",
           "example": "Heute geht ein kalter Wind.",
+          "ipa": "vɪnt",
+          "ipaSource": "wiktionary",
           "id": "wind",
           "level": "A1",
           "unit": "a1-19"
@@ -8155,6 +9219,8 @@
           "plural": "Wolken",
           "en": "cloud",
           "example": "Am Himmel sind dunkle Wolken.",
+          "ipa": "ˈvɔlkə",
+          "ipaSource": "wiktionary",
           "id": "wolke",
           "level": "A1",
           "unit": "a1-19"
@@ -8171,6 +9237,8 @@
           "plural": "Himmel",
           "en": "sky",
           "example": "Der Himmel ist ganz blau.",
+          "ipa": "ˈhɪml̩",
+          "ipaSource": "wiktionary",
           "id": "himmel",
           "level": "A1",
           "unit": "a1-19"
@@ -8187,6 +9255,8 @@
           "plural": "Temperaturen",
           "en": "temperature",
           "example": "Die Temperatur steigt auf 25 Grad.",
+          "ipa": "tɛmpəʁaˈtuːɐ̯",
+          "ipaSource": "wiktionary",
           "id": "temperatur",
           "level": "A1",
           "unit": "a1-19"
@@ -8203,6 +9273,8 @@
           "plural": "Grade",
           "en": "degree",
           "example": "Es sind nur fünf Grad.",
+          "ipa": "ɡʁaːt",
+          "ipaSource": "wiktionary",
           "id": "grad",
           "level": "A1",
           "unit": "a1-19"
@@ -8219,6 +9291,8 @@
           "plural": "Frühlinge",
           "en": "spring",
           "example": "Im Frühling blühen die Bäume.",
+          "ipa": "ˈfʁyːlɪŋ",
+          "ipaSource": "wiktionary",
           "id": "fruehling",
           "level": "A1",
           "unit": "a1-19"
@@ -8235,6 +9309,8 @@
           "plural": "Sommer",
           "en": "summer",
           "example": "Der Sommer war sehr heiß.",
+          "ipa": "ˈzɔmɐ",
+          "ipaSource": "wiktionary",
           "id": "sommer",
           "level": "A1",
           "unit": "a1-19"
@@ -8251,6 +9327,8 @@
           "plural": "Herbste",
           "en": "autumn",
           "example": "Im Herbst regnet es viel.",
+          "ipa": "hɛʁpst",
+          "ipaSource": "wiktionary",
           "id": "herbst",
           "level": "A1",
           "unit": "a1-19"
@@ -8267,6 +9345,8 @@
           "plural": "Winter",
           "en": "winter",
           "example": "Der Winter dauert hier lange.",
+          "ipa": "ˈvɪntɐ",
+          "ipaSource": "wiktionary",
           "id": "winter",
           "level": "A1",
           "unit": "a1-19"
@@ -8283,6 +9363,8 @@
           "plural": "Jahreszeiten",
           "en": "season",
           "example": "Welche Jahreszeit magst du am liebsten?",
+          "ipa": "ˈjaːʁəsˌt͡saɪ̯t",
+          "ipaSource": "wiktionary",
           "id": "jahreszeit",
           "level": "A1",
           "unit": "a1-19"
@@ -8299,6 +9381,8 @@
           "plural": "Gewitter",
           "en": "thunderstorm",
           "example": "Am Abend kommt ein Gewitter.",
+          "ipa": "ɡəˈvɪtɐ",
+          "ipaSource": "wiktionary",
           "id": "gewitter",
           "level": "A1",
           "unit": "a1-19"
@@ -8315,6 +9399,8 @@
           "plural": "Nebel",
           "en": "fog",
           "example": "Am Morgen war dichter Nebel.",
+          "ipa": "ˈneːbl̩",
+          "ipaSource": "wiktionary",
           "id": "nebel",
           "level": "A1",
           "unit": "a1-19"
@@ -8335,6 +9421,8 @@
           ],
           "en": "to rain",
           "example": "Es regnet seit gestern.",
+          "ipa": "ˈʁeːɡnən",
+          "ipaSource": "wiktionary",
           "id": "regnen",
           "level": "A1",
           "unit": "a1-19"
@@ -8355,6 +9443,8 @@
           ],
           "en": "to snow",
           "example": "Heute Nacht hat es geschneit.",
+          "ipa": "ˈʃnaɪ̯ən",
+          "ipaSource": "wiktionary",
           "id": "schneien",
           "level": "A1",
           "unit": "a1-19"
@@ -8375,6 +9465,8 @@
           ],
           "en": "to shine, to seem",
           "example": "Die Sonne scheint.",
+          "ipa": "ˈʃaɪ̯nən",
+          "ipaSource": "wiktionary",
           "id": "scheinen",
           "level": "A1",
           "unit": "a1-19"
@@ -8391,6 +9483,8 @@
           "superlative": "am wärmsten",
           "en": "warm",
           "example": "Zieh dich warm an!",
+          "ipa": "vaʁm",
+          "ipaSource": "wiktionary",
           "id": "warm",
           "level": "A1",
           "unit": "a1-19"
@@ -8407,6 +9501,8 @@
           "superlative": "am kältesten",
           "en": "cold",
           "example": "Mir ist kalt.",
+          "ipa": "kalt",
+          "ipaSource": "wiktionary",
           "id": "kalt",
           "level": "A1",
           "unit": "a1-19"
@@ -8423,6 +9519,8 @@
           "superlative": "am heißesten",
           "en": "hot",
           "example": "Der Kaffee ist noch zu heiß.",
+          "ipa": "haɪ̯s",
+          "ipaSource": "wiktionary",
           "id": "heiss",
           "level": "A1",
           "unit": "a1-19"
@@ -8439,6 +9537,8 @@
           "superlative": "am kühlsten",
           "en": "cool",
           "example": "Abends wird es kühl.",
+          "ipa": "kyːl",
+          "ipaSource": "wiktionary",
           "id": "kuehl",
           "level": "A1",
           "unit": "a1-19"
@@ -8455,6 +9555,11 @@
           "superlative": "am sonnigsten",
           "en": "sunny",
           "example": "Morgen wird es sonnig.",
+          "ipa": "ˈzɔnɪç",
+          "ipaVariants": [
+            "ˈzɔnɪk"
+          ],
+          "ipaSource": "wiktionary",
           "id": "sonnig",
           "level": "A1",
           "unit": "a1-19"
@@ -8471,6 +9576,8 @@
           "superlative": "am nassesten",
           "en": "wet",
           "example": "Meine Schuhe sind ganz nass.",
+          "ipa": "nas",
+          "ipaSource": "wiktionary",
           "id": "nass",
           "level": "A1",
           "unit": "a1-19"
@@ -8518,6 +9625,8 @@
           "plural": "Tiere",
           "en": "animal",
           "example": "In diesem Haus sind Tiere verboten.",
+          "ipa": "tiːɐ̯",
+          "ipaSource": "wiktionary",
           "id": "tier",
           "level": "A1",
           "unit": "a1-20"
@@ -8534,6 +9643,8 @@
           "plural": "Hunde",
           "en": "dog",
           "example": "Der Hund bellt die ganze Nacht.",
+          "ipa": "hʊnt",
+          "ipaSource": "wiktionary",
           "id": "hund",
           "level": "A1",
           "unit": "a1-20"
@@ -8550,6 +9661,8 @@
           "plural": "Katzen",
           "en": "cat",
           "example": "Die Katze schläft auf dem Sofa.",
+          "ipa": "ˈkat͡sə",
+          "ipaSource": "wiktionary",
           "id": "katze",
           "level": "A1",
           "unit": "a1-20"
@@ -8566,6 +9679,8 @@
           "plural": "Vögel",
           "en": "bird",
           "example": "Ein Vogel sitzt auf dem Dach.",
+          "ipa": "ˈfoːɡl̩",
+          "ipaSource": "wiktionary",
           "id": "vogel",
           "level": "A1",
           "unit": "a1-20"
@@ -8582,6 +9697,11 @@
           "plural": "Pferde",
           "en": "horse",
           "example": "Meine Tochter reitet gern Pferde.",
+          "ipa": "p͡feːɐ̯t",
+          "ipaVariants": [
+            "p͡fɛʁt"
+          ],
+          "ipaSource": "wiktionary",
           "id": "pferd",
           "level": "A1",
           "unit": "a1-20"
@@ -8598,6 +9718,8 @@
           "plural": "Kühe",
           "en": "cow",
           "example": "Auf der Wiese stehen zehn Kühe.",
+          "ipa": "kuː",
+          "ipaSource": "wiktionary",
           "id": "kuh",
           "level": "A1",
           "unit": "a1-20"
@@ -8614,6 +9736,8 @@
           "plural": "Schweine",
           "en": "pig",
           "example": "Ich esse kein Schwein.",
+          "ipa": "ʃvaɪ̯n",
+          "ipaSource": "wiktionary",
           "id": "schwein",
           "level": "A1",
           "unit": "a1-20"
@@ -8630,6 +9754,8 @@
           "plural": "Mäuse",
           "en": "mouse",
           "example": "Im Keller war eine Maus.",
+          "ipa": "maʊ̯s",
+          "ipaSource": "wiktionary",
           "id": "maus",
           "level": "A1",
           "unit": "a1-20"
@@ -8646,6 +9772,8 @@
           "plural": "Bäume",
           "en": "tree",
           "example": "Vor dem Haus steht ein alter Baum.",
+          "ipa": "baʊ̯m",
+          "ipaSource": "wiktionary",
           "id": "baum",
           "level": "A1",
           "unit": "a1-20"
@@ -8662,6 +9790,8 @@
           "plural": "Blumen",
           "en": "flower",
           "example": "Ich bringe ihr Blumen mit.",
+          "ipa": "ˈbluːmə",
+          "ipaSource": "wiktionary",
           "id": "blume",
           "level": "A1",
           "unit": "a1-20"
@@ -8678,6 +9808,8 @@
           "plural": "Gräser",
           "en": "grass",
           "example": "Das Gras ist noch nass.",
+          "ipa": "ɡʁaːs",
+          "ipaSource": "wiktionary",
           "id": "gras",
           "level": "A1",
           "unit": "a1-20"
@@ -8694,6 +9826,8 @@
           "plural": "Wälder",
           "en": "forest",
           "example": "Wir gehen im Wald spazieren.",
+          "ipa": "valt",
+          "ipaSource": "wiktionary",
           "id": "wald",
           "level": "A1",
           "unit": "a1-20"
@@ -8710,6 +9844,8 @@
           "plural": "Flüsse",
           "en": "river",
           "example": "Der Fluss fließt durch die Stadt.",
+          "ipa": "flʊs",
+          "ipaSource": "wiktionary",
           "id": "fluss",
           "level": "A1",
           "unit": "a1-20"
@@ -8726,6 +9862,8 @@
           "plural": "Wiesen",
           "en": "meadow",
           "example": "Die Kinder spielen auf der Wiese.",
+          "ipa": "ˈviːzə",
+          "ipaSource": "wiktionary",
           "id": "wiese",
           "level": "A1",
           "unit": "a1-20"
@@ -8741,6 +9879,8 @@
           "gender": "die",
           "en": "nature",
           "example": "Ich bin gern in der Natur.",
+          "ipa": "naˈtuːɐ̯",
+          "ipaSource": "wiktionary",
           "id": "natur",
           "level": "A1",
           "unit": "a1-20"
@@ -8757,6 +9897,8 @@
           "plural": "Lüfte",
           "en": "air",
           "example": "Die Luft ist hier sehr sauber.",
+          "ipa": "lʊft",
+          "ipaSource": "wiktionary",
           "id": "luft",
           "level": "A1",
           "unit": "a1-20"
@@ -8772,6 +9914,8 @@
           "gender": "die",
           "en": "earth, soil",
           "example": "Die Erde im Topf ist trocken.",
+          "ipa": "ˈeːɐ̯də",
+          "ipaSource": "wiktionary",
           "id": "erde",
           "level": "A1",
           "unit": "a1-20"
@@ -8788,6 +9932,8 @@
           "plural": "Felder",
           "en": "field",
           "example": "Hinter dem Dorf liegen die Felder.",
+          "ipa": "fɛlt",
+          "ipaSource": "wiktionary",
           "id": "feld",
           "level": "A1",
           "unit": "a1-20"
@@ -8804,6 +9950,8 @@
           "plural": "Steine",
           "en": "stone",
           "example": "Ein Stein liegt auf dem Weg.",
+          "ipa": "ʃtaɪ̯n",
+          "ipaSource": "wiktionary",
           "id": "stein",
           "level": "A1",
           "unit": "a1-20"
@@ -8820,6 +9968,8 @@
           "plural": "Blätter",
           "en": "leaf, sheet",
           "example": "Im Herbst fallen die Blätter.",
+          "ipa": "blat",
+          "ipaSource": "wiktionary",
           "id": "blatt",
           "level": "A1",
           "unit": "a1-20"
@@ -8840,6 +9990,8 @@
           ],
           "en": "to grow",
           "example": "Die Kinder wachsen so schnell.",
+          "ipa": "ˈvaksn̩",
+          "ipaSource": "wiktionary",
           "id": "wachsen",
           "level": "A1",
           "unit": "a1-20"
@@ -8860,6 +10012,8 @@
           ],
           "en": "to feed",
           "example": "Wir füttern die Vögel im Winter.",
+          "ipa": "ˈfʏtɐn",
+          "ipaSource": "wiktionary",
           "id": "fuettern",
           "level": "A1",
           "unit": "a1-20"
@@ -8876,6 +10030,8 @@
           "superlative": "am schönsten",
           "en": "beautiful, nice",
           "example": "Was für ein schöner Tag!",
+          "ipa": "ʃøːn",
+          "ipaSource": "wiktionary",
           "id": "schoen",
           "level": "A1",
           "unit": "a1-20"
@@ -8892,6 +10048,8 @@
           "superlative": "am saubersten",
           "en": "clean",
           "example": "Die Küche ist jetzt sauber.",
+          "ipa": "ˈzaʊ̯bɐ",
+          "ipaSource": "wiktionary",
           "id": "sauber",
           "level": "A1",
           "unit": "a1-20"
@@ -8908,6 +10066,8 @@
           "superlative": "am wildesten",
           "en": "wild",
           "example": "Im Wald leben wilde Tiere.",
+          "ipa": "vɪlt",
+          "ipaSource": "wiktionary",
           "id": "wild",
           "level": "A1",
           "unit": "a1-20"
@@ -8957,6 +10117,11 @@
           ],
           "en": "to say",
           "example": "Was hast du gesagt?",
+          "ipa": "ˈzaːɡn̩",
+          "ipaVariants": [
+            "ˈzaːɡŋ̩"
+          ],
+          "ipaSource": "wiktionary",
           "id": "sagen",
           "level": "A1",
           "unit": "a1-21"
@@ -8977,6 +10142,12 @@
           ],
           "en": "to see",
           "example": "Ich sehe dich morgen.",
+          "ipa": "ˈzeːən",
+          "ipaVariants": [
+            "zeːn",
+            "seːn"
+          ],
+          "ipaSource": "wiktionary",
           "id": "sehen",
           "level": "A1",
           "unit": "a1-21"
@@ -8997,6 +10168,11 @@
           ],
           "en": "to hear, to listen",
           "example": "Ich höre gern Radio.",
+          "ipa": "ˈhøːʁən",
+          "ipaVariants": [
+            "ˈhøːɐ̯n"
+          ],
+          "ipaSource": "wiktionary",
           "id": "hoeren",
           "level": "A1",
           "unit": "a1-21"
@@ -9017,6 +10193,11 @@
           ],
           "en": "to give",
           "example": "Gib mir bitte das Salz.",
+          "ipa": "ˈɡeːbn̩",
+          "ipaVariants": [
+            "ˈɡeːbm̩"
+          ],
+          "ipaSource": "wiktionary",
           "id": "geben",
           "level": "A1",
           "unit": "a1-21"
@@ -9037,6 +10218,8 @@
           ],
           "en": "to take",
           "example": "Ich nehme den Bus.",
+          "ipa": "ˈneːmən",
+          "ipaSource": "wiktionary",
           "id": "nehmen",
           "level": "A1",
           "unit": "a1-21"
@@ -9057,6 +10240,8 @@
           ],
           "en": "to bring",
           "example": "Bringst du mir einen Kaffee?",
+          "ipa": "ˈbʁɪŋən",
+          "ipaSource": "wiktionary",
           "id": "bringen",
           "level": "A1",
           "unit": "a1-21"
@@ -9077,6 +10262,8 @@
           ],
           "en": "to fetch, to get",
           "example": "Ich hole die Kinder ab.",
+          "ipa": "ˈhoːlən",
+          "ipaSource": "wiktionary",
           "id": "holen",
           "level": "A1",
           "unit": "a1-21"
@@ -9097,6 +10284,11 @@
           ],
           "en": "to lay, to put down",
           "example": "Leg das Buch auf den Tisch.",
+          "ipa": "ˈleːɡn̩",
+          "ipaVariants": [
+            "ˈleːɡŋ̩"
+          ],
+          "ipaSource": "wiktionary",
           "id": "legen",
           "level": "A1",
           "unit": "a1-21"
@@ -9117,6 +10309,8 @@
           ],
           "en": "to put, to place upright",
           "example": "Stell die Flasche in den Kühlschrank.",
+          "ipa": "ˈʃtɛlən",
+          "ipaSource": "wiktionary",
           "id": "stellen",
           "level": "A1",
           "unit": "a1-21"
@@ -9138,6 +10332,8 @@
           "reflexive": true,
           "en": "to set, to sit down",
           "example": "Setzen Sie sich bitte.",
+          "ipa": "ˈzɛt͡sn̩",
+          "ipaSource": "wiktionary",
           "id": "setzen",
           "level": "A1",
           "unit": "a1-21"
@@ -9158,6 +10354,11 @@
           ],
           "en": "to stand",
           "example": "Das Auto steht vor der Tür.",
+          "ipa": "ˈʃteːən",
+          "ipaVariants": [
+            "ʃteːn"
+          ],
+          "ipaSource": "wiktionary",
           "id": "stehen",
           "level": "A1",
           "unit": "a1-21"
@@ -9178,6 +10379,8 @@
           ],
           "en": "to sit",
           "example": "Wir sitzen im Garten.",
+          "ipa": "ˈzɪt͡sn̩",
+          "ipaSource": "wiktionary",
           "id": "sitzen",
           "level": "A1",
           "unit": "a1-21"
@@ -9198,6 +10401,11 @@
           ],
           "en": "to lie, to be located",
           "example": "Das Dorf liegt am See.",
+          "ipa": "ˈliːɡn̩",
+          "ipaVariants": [
+            "ˈliːɡŋ̍"
+          ],
+          "ipaSource": "wiktionary",
           "id": "liegen",
           "level": "A1",
           "unit": "a1-21"
@@ -9218,6 +10426,8 @@
           ],
           "en": "to open",
           "example": "Bitte öffnen Sie das Fenster.",
+          "ipa": "ˈœfnən",
+          "ipaSource": "wiktionary",
           "id": "oeffnen",
           "level": "A1",
           "unit": "a1-21"
@@ -9238,6 +10448,8 @@
           ],
           "en": "to close",
           "example": "Die Bank schließt um 16 Uhr.",
+          "ipa": "ˈʃliːsn̩",
+          "ipaSource": "wiktionary",
           "id": "schliessen",
           "level": "A1",
           "unit": "a1-21"
@@ -9258,6 +10470,11 @@
           ],
           "en": "to stay",
           "example": "Ich bleibe heute zu Hause.",
+          "ipa": "ˈblaɪ̯bn̩",
+          "ipaVariants": [
+            "ˈblaɪ̯bm̩"
+          ],
+          "ipaSource": "wiktionary",
           "id": "bleiben",
           "level": "A1",
           "unit": "a1-21"
@@ -9278,6 +10495,8 @@
           ],
           "en": "to become",
           "example": "Es wird langsam dunkel.",
+          "ipa": "ˈveːɐ̯dn̩",
+          "ipaSource": "wiktionary",
           "id": "werden",
           "level": "A1",
           "unit": "a1-21"
@@ -9298,6 +10517,8 @@
           ],
           "en": "to know (a fact)",
           "example": "Ich weiß es nicht.",
+          "ipa": "ˈvɪsn̩",
+          "ipaSource": "wiktionary",
           "id": "wissen",
           "level": "A1",
           "unit": "a1-21"
@@ -9320,6 +10541,8 @@
           "case": "akk",
           "en": "to think",
           "example": "Ich denke oft an zu Hause.",
+          "ipa": "ˈdɛŋkn̩",
+          "ipaSource": "wiktionary",
           "id": "denken",
           "level": "A1",
           "unit": "a1-21"
@@ -9340,6 +10563,8 @@
           ],
           "en": "to believe",
           "example": "Ich glaube, das ist richtig.",
+          "ipa": "ˈɡlaʊ̯bn̩",
+          "ipaSource": "wiktionary",
           "id": "glauben",
           "level": "A1",
           "unit": "a1-21"
@@ -9360,6 +10585,11 @@
           ],
           "en": "to ask",
           "example": "Frag doch den Lehrer!",
+          "ipa": "ˈfʁaːɡn̩",
+          "ipaVariants": [
+            "ˈfʁaːɡŋ̩"
+          ],
+          "ipaSource": "wiktionary",
           "id": "fragen",
           "level": "A1",
           "unit": "a1-21"
@@ -9382,6 +10612,8 @@
           "case": "akk",
           "en": "to answer",
           "example": "Bitte antworten Sie auf die Frage.",
+          "ipa": "ˈantˌvɔʁtn̩",
+          "ipaSource": "wiktionary",
           "id": "antworten",
           "level": "A1",
           "unit": "a1-21"
@@ -9402,6 +10634,8 @@
           ],
           "en": "to explain",
           "example": "Können Sie das noch einmal erklären?",
+          "ipa": "ɛɐ̯ˈklɛːʁən",
+          "ipaSource": "wiktionary",
           "id": "erklaeren",
           "level": "A1",
           "unit": "a1-21"
@@ -9422,6 +10656,8 @@
           ],
           "en": "to practise",
           "example": "Ich übe jeden Tag zwanzig Minuten.",
+          "ipa": "ˈyːbn̩",
+          "ipaSource": "wiktionary",
           "id": "ueben",
           "level": "A1",
           "unit": "a1-21"
@@ -9442,6 +10678,8 @@
           ],
           "en": "to repeat",
           "example": "Können Sie das bitte wiederholen?",
+          "ipa": "ˌviːdɐˈhoːlən",
+          "ipaSource": "wiktionary",
           "id": "wiederholen",
           "level": "A1",
           "unit": "a1-21"
@@ -9491,6 +10729,8 @@
           ],
           "en": "can, to be able to",
           "example": "Ich kann heute nicht kommen.",
+          "ipa": "ˈkœnən",
+          "ipaSource": "wiktionary",
           "id": "koennen",
           "level": "A1",
           "unit": "a1-22"
@@ -9511,6 +10751,8 @@
           ],
           "en": "must, to have to",
           "example": "Ich muss noch arbeiten.",
+          "ipa": "ˈmʏsn̩",
+          "ipaSource": "wiktionary",
           "id": "muessen",
           "level": "A1",
           "unit": "a1-22"
@@ -9531,6 +10773,8 @@
           ],
           "en": "to want",
           "example": "Wir wollen nach Italien fahren.",
+          "ipa": "ˈvɔlən",
+          "ipaSource": "wiktionary",
           "id": "wollen",
           "level": "A1",
           "unit": "a1-22"
@@ -9551,6 +10795,8 @@
           ],
           "en": "should, to be supposed to",
           "example": "Soll ich dir helfen?",
+          "ipa": "ˈzɔlən",
+          "ipaSource": "wiktionary",
           "id": "sollen",
           "level": "A1",
           "unit": "a1-22"
@@ -9571,6 +10817,8 @@
           ],
           "en": "may, to be allowed to",
           "example": "Hier darf man nicht rauchen.",
+          "ipa": "ˈdʏʁfn̩",
+          "ipaSource": "wiktionary",
           "id": "duerfen",
           "level": "A1",
           "unit": "a1-22"
@@ -9591,6 +10839,8 @@
           ],
           "en": "to send",
           "example": "Ich schicke dir das Foto.",
+          "ipa": "ˈʃɪkn̩",
+          "ipaSource": "wiktionary",
           "id": "schicken",
           "level": "A1",
           "unit": "a1-22"
@@ -9611,6 +10861,8 @@
           ],
           "en": "to get, to receive",
           "example": "Ich habe deinen Brief bekommen.",
+          "ipa": "bəˈkɔmən",
+          "ipaSource": "wiktionary",
           "id": "bekommen",
           "level": "A1",
           "unit": "a1-22"
@@ -9631,6 +10883,8 @@
           ],
           "en": "to sell",
           "example": "Wir verkaufen unser altes Auto.",
+          "ipa": "fɛɐ̯ˈkaʊ̯fn̩",
+          "ipaSource": "wiktionary",
           "id": "verkaufen",
           "level": "A1",
           "unit": "a1-22"
@@ -9651,6 +10905,8 @@
           ],
           "en": "to use",
           "example": "Darf ich dein Handy benutzen?",
+          "ipa": "bəˈnʊt͡sn̩",
+          "ipaSource": "wiktionary",
           "id": "benutzen",
           "level": "A1",
           "unit": "a1-22"
@@ -9671,6 +10927,8 @@
           ],
           "en": "to try",
           "example": "Versuch es noch einmal!",
+          "ipa": "fɛɐ̯ˈzuːxn̩",
+          "ipaSource": "wiktionary",
           "id": "versuchen",
           "level": "A1",
           "unit": "a1-22"
@@ -9691,6 +10949,8 @@
           ],
           "en": "to forget",
           "example": "Ich habe den Schlüssel vergessen.",
+          "ipa": "fɛɐ̯ˈɡɛsn̩",
+          "ipaSource": "wiktionary",
           "id": "vergessen",
           "level": "A1",
           "unit": "a1-22"
@@ -9714,6 +10974,11 @@
           "case": "akk",
           "en": "to remember, to remind",
           "example": "Ich erinnere mich an den Tag.",
+          "ipa": "ɛɐ̯ˈʔɪnɐn",
+          "ipaVariants": [
+            "ɜˈʁɪnɐn"
+          ],
+          "ipaSource": "wiktionary",
           "id": "erinnern",
           "level": "A1",
           "unit": "a1-22"
@@ -9734,6 +10999,8 @@
           ],
           "en": "to decide",
           "example": "Du musst selbst entscheiden.",
+          "ipa": "ɛntˈʃaɪ̯dn̩",
+          "ipaSource": "wiktionary",
           "id": "entscheiden",
           "level": "A1",
           "unit": "a1-22"
@@ -9754,6 +11021,8 @@
           ],
           "en": "to change",
           "example": "Ich möchte den Termin ändern.",
+          "ipa": "ˈɛndɐn",
+          "ipaSource": "wiktionary",
           "id": "aendern",
           "level": "A1",
           "unit": "a1-22"
@@ -9774,6 +11043,8 @@
           ],
           "en": "to change, to switch",
           "example": "Ich wechsle die Sprache auf Deutsch.",
+          "ipa": "ˈvɛksl̩n",
+          "ipaSource": "wiktionary",
           "id": "wechseln",
           "level": "A1",
           "unit": "a1-22"
@@ -9795,6 +11066,8 @@
           ],
           "en": "to open",
           "example": "Mach bitte das Fenster auf.",
+          "ipa": "ˈaʊ̯fˌmaxn̩",
+          "ipaSource": "wiktionary",
           "id": "aufmachen",
           "level": "A1",
           "unit": "a1-22"
@@ -9816,6 +11089,8 @@
           ],
           "en": "to close",
           "example": "Mach bitte die Tür zu.",
+          "ipa": "ˈt͡suːˌmaxn̩",
+          "ipaSource": "wiktionary",
           "id": "zumachen",
           "level": "A1",
           "unit": "a1-22"
@@ -9837,6 +11112,8 @@
           ],
           "en": "to bring along",
           "example": "Bring bitte Brot mit.",
+          "ipa": "ˈmɪtˌbʁɪŋən",
+          "ipaSource": "wiktionary",
           "id": "mitbringen",
           "level": "A1",
           "unit": "a1-22"
@@ -9858,6 +11135,8 @@
           ],
           "en": "to pick up",
           "example": "Ich hole dich am Bahnhof ab.",
+          "ipa": "ˈapˌhoːlən",
+          "ipaSource": "wiktionary",
           "id": "abholen",
           "level": "A1",
           "unit": "a1-22"
@@ -9879,6 +11158,8 @@
           ],
           "en": "to switch on",
           "example": "Mach bitte das Licht an.",
+          "ipa": "ˈanˌmaxn̩",
+          "ipaSource": "wiktionary",
           "id": "anmachen",
           "level": "A1",
           "unit": "a1-22"
@@ -9900,6 +11181,8 @@
           ],
           "en": "to switch off",
           "example": "Mach den Fernseher aus.",
+          "ipa": "ˈaʊ̯sˌmaxn̩",
+          "ipaSource": "wiktionary",
           "id": "ausmachen",
           "level": "A1",
           "unit": "a1-22"
@@ -9921,6 +11204,8 @@
           ],
           "en": "to come back",
           "example": "Wann kommst du zurück?",
+          "ipa": "t͡suˈʁʏkˌkɔmən",
+          "ipaSource": "wiktionary",
           "id": "zurueckkommen",
           "level": "A1",
           "unit": "a1-22"
@@ -9942,6 +11227,8 @@
           ],
           "en": "to leave, to go away",
           "example": "Er ist ohne ein Wort weggegangen.",
+          "ipa": "ˈvɛkˌɡeːən",
+          "ipaSource": "wiktionary",
           "id": "weggehen",
           "level": "A1",
           "unit": "a1-22"
@@ -9962,6 +11249,8 @@
           ],
           "en": "to lose",
           "example": "Ich habe meinen Ausweis verloren.",
+          "ipa": "fɛɐ̯ˈliːʁən",
+          "ipaSource": "wiktionary",
           "id": "verlieren",
           "level": "A1",
           "unit": "a1-22"
@@ -9982,6 +11271,8 @@
           ],
           "en": "to win",
           "example": "Unsere Mannschaft hat gewonnen.",
+          "ipa": "ɡəˈvɪnən",
+          "ipaSource": "wiktionary",
           "id": "gewinnen",
           "level": "A1",
           "unit": "a1-22"
@@ -10028,6 +11319,8 @@
           "irregular": true,
           "en": "good",
           "example": "Das Essen war sehr gut.",
+          "ipa": "ɡuːt",
+          "ipaSource": "wiktionary",
           "id": "gut",
           "level": "A1",
           "unit": "a1-23"
@@ -10044,6 +11337,8 @@
           "superlative": "am schlechtesten",
           "en": "bad",
           "example": "Mir geht es heute schlecht.",
+          "ipa": "ʃlɛçt",
+          "ipaSource": "wiktionary",
           "id": "schlecht",
           "level": "A1",
           "unit": "a1-23"
@@ -10060,6 +11355,8 @@
           "superlative": "am neuesten",
           "en": "new",
           "example": "Ich habe ein neues Handy.",
+          "ipa": "nɔɪ̯",
+          "ipaSource": "wiktionary",
           "id": "neu",
           "level": "A1",
           "unit": "a1-23"
@@ -10076,6 +11373,8 @@
           "superlative": "am längsten",
           "en": "long",
           "example": "Der Weg ist sehr lang.",
+          "ipa": "laŋ",
+          "ipaSource": "wiktionary",
           "id": "lang",
           "level": "A1",
           "unit": "a1-23"
@@ -10092,6 +11391,8 @@
           "superlative": "am kürzesten",
           "en": "short",
           "example": "Mach es bitte kurz.",
+          "ipa": "kʊʁt͡s",
+          "ipaSource": "wiktionary",
           "id": "kurz",
           "level": "A1",
           "unit": "a1-23"
@@ -10108,6 +11409,8 @@
           "superlative": "am schwersten",
           "en": "heavy, difficult",
           "example": "Die Prüfung war schwer.",
+          "ipa": "ʃveːɐ̯",
+          "ipaSource": "wiktionary",
           "id": "schwer",
           "level": "A1",
           "unit": "a1-23"
@@ -10124,6 +11427,8 @@
           "superlative": "am leichtesten",
           "en": "light, easy",
           "example": "Diese Aufgabe ist leicht.",
+          "ipa": "laɪ̯çt",
+          "ipaSource": "wiktionary",
           "id": "leicht",
           "level": "A1",
           "unit": "a1-23"
@@ -10140,6 +11445,8 @@
           "superlative": "am schnellsten",
           "en": "fast",
           "example": "Du sprichst zu schnell.",
+          "ipa": "ʃnɛl",
+          "ipaSource": "wiktionary",
           "id": "schnell",
           "level": "A1",
           "unit": "a1-23"
@@ -10156,6 +11463,8 @@
           "superlative": "am langsamsten",
           "en": "slow",
           "example": "Bitte sprechen Sie langsam.",
+          "ipa": "ˈlaŋzaːm",
+          "ipaSource": "wiktionary",
           "id": "langsam",
           "level": "A1",
           "unit": "a1-23"
@@ -10172,6 +11481,11 @@
           "superlative": "am richtigsten",
           "en": "correct",
           "example": "Das ist die richtige Antwort.",
+          "ipa": "ˈʁɪçtɪç",
+          "ipaVariants": [
+            "ˈʁɪçtɪk"
+          ],
+          "ipaSource": "wiktionary",
           "id": "richtig",
           "level": "A1",
           "unit": "a1-23"
@@ -10188,6 +11502,8 @@
           "superlative": "am falschesten",
           "en": "wrong",
           "example": "Die Nummer war falsch.",
+          "ipa": "falʃ",
+          "ipaSource": "wiktionary",
           "id": "falsch",
           "level": "A1",
           "unit": "a1-23"
@@ -10204,6 +11520,8 @@
           "superlative": "am vollsten",
           "en": "full",
           "example": "Der Bus war ganz voll.",
+          "ipa": "fɔl",
+          "ipaSource": "wiktionary",
           "id": "voll",
           "level": "A1",
           "unit": "a1-23"
@@ -10220,6 +11538,8 @@
           "superlative": "am leersten",
           "en": "empty",
           "example": "Der Kühlschrank ist leer.",
+          "ipa": "leːɐ̯",
+          "ipaSource": "wiktionary",
           "id": "leer",
           "level": "A1",
           "unit": "a1-23"
@@ -10236,6 +11556,11 @@
           "superlative": "am offensten",
           "en": "open",
           "example": "Das Fenster ist noch offen.",
+          "ipa": "ˈɔfn̩",
+          "ipaVariants": [
+            "ˈɔfm̩"
+          ],
+          "ipaSource": "wiktionary",
           "id": "offen",
           "level": "A1",
           "unit": "a1-23"
@@ -10250,6 +11575,8 @@
           "pos": "adj",
           "en": "closed",
           "example": "Die Praxis ist heute geschlossen.",
+          "ipa": "ɡəˈʃlɔsn̩",
+          "ipaSource": "wiktionary",
           "id": "geschlossen",
           "level": "A1",
           "unit": "a1-23"
@@ -10266,6 +11593,8 @@
           "superlative": "am hellsten",
           "en": "bright, light",
           "example": "Das Zimmer ist sehr hell.",
+          "ipa": "hɛl",
+          "ipaSource": "wiktionary",
           "id": "hell",
           "level": "A1",
           "unit": "a1-23"
@@ -10282,6 +11611,8 @@
           "superlative": "am dunkelsten",
           "en": "dark",
           "example": "Im Winter wird es früh dunkel.",
+          "ipa": "ˈdʊŋkl̩",
+          "ipaSource": "wiktionary",
           "id": "dunkel",
           "level": "A1",
           "unit": "a1-23"
@@ -10298,6 +11629,8 @@
           "superlative": "am lautesten",
           "en": "loud",
           "example": "Die Musik ist zu laut.",
+          "ipa": "laʊ̯t",
+          "ipaSource": "wiktionary",
           "id": "laut",
           "level": "A1",
           "unit": "a1-23"
@@ -10314,6 +11647,8 @@
           "superlative": "am leisesten",
           "en": "quiet",
           "example": "Sprich bitte leise.",
+          "ipa": "ˈlaɪ̯zə",
+          "ipaSource": "wiktionary",
           "id": "leise",
           "level": "A1",
           "unit": "a1-23"
@@ -10330,6 +11665,8 @@
           "superlative": "am weitesten",
           "en": "far, wide",
           "example": "Ist es noch weit?",
+          "ipa": "vaɪ̯t",
+          "ipaSource": "wiktionary",
           "id": "weit",
           "level": "A1",
           "unit": "a1-23"
@@ -10346,6 +11683,8 @@
           "superlative": "am nächsten",
           "en": "near",
           "example": "Der Bahnhof ist ganz nah.",
+          "ipa": "naː",
+          "ipaSource": "wiktionary",
           "id": "nah",
           "level": "A1",
           "unit": "a1-23"
@@ -10363,6 +11702,8 @@
           "irregular": true,
           "en": "high, tall",
           "example": "Der Berg ist sehr hoch.",
+          "ipa": "hoːx",
+          "ipaSource": "wiktionary",
           "id": "hoch",
           "level": "A1",
           "unit": "a1-23"
@@ -10379,6 +11720,11 @@
           "superlative": "am niedrigsten",
           "en": "low",
           "example": "Die Miete ist hier niedrig.",
+          "ipa": "ˈniːdʁɪç",
+          "ipaVariants": [
+            "ˈniːdʁɪk"
+          ],
+          "ipaSource": "wiktionary",
           "id": "niedrig",
           "level": "A1",
           "unit": "a1-23"
@@ -10395,6 +11741,8 @@
           "superlative": "am dicksten",
           "en": "thick, fat",
           "example": "Zieh eine dicke Jacke an.",
+          "ipa": "dɪk",
+          "ipaSource": "wiktionary",
           "id": "dick",
           "level": "A1",
           "unit": "a1-23"
@@ -10411,6 +11759,8 @@
           "superlative": "am dünnsten",
           "en": "thin",
           "example": "Das Papier ist sehr dünn.",
+          "ipa": "dʏn",
+          "ipaSource": "wiktionary",
           "id": "duenn",
           "level": "A1",
           "unit": "a1-23"
@@ -10456,6 +11806,8 @@
           "case": "akk/dat",
           "en": "in, into",
           "example": "Ich bin in der Küche.",
+          "ipa": "ɪn",
+          "ipaSource": "wiktionary",
           "id": "in",
           "level": "A1",
           "unit": "a1-24"
@@ -10471,6 +11823,8 @@
           "case": "akk/dat",
           "en": "at, on (vertical)",
           "example": "Das Bild hängt an der Wand.",
+          "ipa": "an",
+          "ipaSource": "wiktionary",
           "id": "an",
           "level": "A1",
           "unit": "a1-24"
@@ -10486,6 +11840,8 @@
           "case": "akk/dat",
           "en": "on, onto",
           "example": "Das Buch liegt auf dem Tisch.",
+          "ipa": "aʊ̯f",
+          "ipaSource": "wiktionary",
           "id": "auf",
           "level": "A1",
           "unit": "a1-24"
@@ -10501,6 +11857,8 @@
           "case": "akk/dat",
           "en": "under",
           "example": "Die Katze schläft unter dem Bett.",
+          "ipa": "ˈʊntɐ",
+          "ipaSource": "wiktionary",
           "id": "unter",
           "level": "A1",
           "unit": "a1-24"
@@ -10516,6 +11874,8 @@
           "case": "akk/dat",
           "en": "over, above, about",
           "example": "Die Lampe hängt über dem Tisch.",
+          "ipa": "ˈyːbɐ",
+          "ipaSource": "wiktionary",
           "id": "ueber",
           "level": "A1",
           "unit": "a1-24"
@@ -10531,6 +11891,8 @@
           "case": "akk/dat",
           "en": "in front of, before",
           "example": "Wir treffen uns vor dem Kino.",
+          "ipa": "foːɐ̯",
+          "ipaSource": "wiktionary",
           "id": "vor",
           "level": "A1",
           "unit": "a1-24"
@@ -10546,6 +11908,8 @@
           "case": "akk/dat",
           "en": "behind",
           "example": "Der Garten ist hinter dem Haus.",
+          "ipa": "ˈhɪntɐ",
+          "ipaSource": "wiktionary",
           "id": "hinter",
           "level": "A1",
           "unit": "a1-24"
@@ -10561,6 +11925,11 @@
           "case": "akk/dat",
           "en": "next to",
           "example": "Setz dich neben mich.",
+          "ipa": "ˈneːbn̩",
+          "ipaVariants": [
+            "ˈneːbm̩"
+          ],
+          "ipaSource": "wiktionary",
           "id": "neben",
           "level": "A1",
           "unit": "a1-24"
@@ -10576,6 +11945,8 @@
           "case": "akk/dat",
           "en": "between",
           "example": "Die Apotheke ist zwischen Bank und Post.",
+          "ipa": "ˈt͡svɪʃn̩",
+          "ipaSource": "wiktionary",
           "id": "zwischen",
           "level": "A1",
           "unit": "a1-24"
@@ -10591,6 +11962,8 @@
           "case": "dat",
           "en": "at, near, with",
           "example": "Ich wohne bei meiner Tante.",
+          "ipa": "baɪ̯",
+          "ipaSource": "wiktionary",
           "id": "bei",
           "level": "A1",
           "unit": "a1-24"
@@ -10606,6 +11979,8 @@
           "case": "dat",
           "en": "with, by",
           "example": "Ich fahre mit dem Bus.",
+          "ipa": "mɪt",
+          "ipaSource": "wiktionary",
           "id": "mit",
           "level": "A1",
           "unit": "a1-24"
@@ -10621,6 +11996,8 @@
           "case": "dat",
           "en": "after, to (place)",
           "example": "Nach der Arbeit gehe ich einkaufen.",
+          "ipa": "naːx",
+          "ipaSource": "wiktionary",
           "id": "nach",
           "level": "A1",
           "unit": "a1-24"
@@ -10636,6 +12013,8 @@
           "case": "dat",
           "en": "to",
           "example": "Ich gehe zum Arzt.",
+          "ipa": "t͡suː",
+          "ipaSource": "wiktionary",
           "id": "zu",
           "level": "A1",
           "unit": "a1-24"
@@ -10651,6 +12030,8 @@
           "case": "dat",
           "en": "from, of",
           "example": "Das ist ein Brief von meiner Mutter.",
+          "ipa": "fɔn",
+          "ipaSource": "wiktionary",
           "id": "von",
           "level": "A1",
           "unit": "a1-24"
@@ -10666,6 +12047,8 @@
           "case": "dat",
           "en": "from, out of",
           "example": "Ich komme aus Syrien.",
+          "ipa": "aʊ̯s",
+          "ipaSource": "wiktionary",
           "id": "aus",
           "level": "A1",
           "unit": "a1-24"
@@ -10681,6 +12064,8 @@
           "case": "dat",
           "en": "since, for",
           "example": "Ich lerne seit einem Jahr Deutsch.",
+          "ipa": "zaɪ̯t",
+          "ipaSource": "wiktionary",
           "id": "seit",
           "level": "A1",
           "unit": "a1-24"
@@ -10696,6 +12081,8 @@
           "case": "akk",
           "en": "for",
           "example": "Das Geschenk ist für dich.",
+          "ipa": "fyːɐ̯",
+          "ipaSource": "wiktionary",
           "id": "fuer",
           "level": "A1",
           "unit": "a1-24"
@@ -10711,6 +12098,8 @@
           "case": "akk",
           "en": "without",
           "example": "Ich trinke Kaffee ohne Zucker.",
+          "ipa": "ˈoːnə",
+          "ipaSource": "wiktionary",
           "id": "ohne",
           "level": "A1",
           "unit": "a1-24"
@@ -10726,6 +12115,11 @@
           "case": "akk",
           "en": "against, around (time)",
           "example": "Ich nehme etwas gegen die Schmerzen.",
+          "ipa": "ˈɡeːɡn̩",
+          "ipaVariants": [
+            "ˈɡeːɡŋ̍"
+          ],
+          "ipaSource": "wiktionary",
           "id": "gegen",
           "level": "A1",
           "unit": "a1-24"
@@ -10741,6 +12135,8 @@
           "case": "akk",
           "en": "at (time), around",
           "example": "Der Kurs beginnt um neun Uhr.",
+          "ipa": "ʊm",
+          "ipaSource": "wiktionary",
           "id": "um",
           "level": "A1",
           "unit": "a1-24"
@@ -10756,6 +12152,8 @@
           "case": "akk",
           "en": "through",
           "example": "Wir gehen durch den Park.",
+          "ipa": "dʊʁç",
+          "ipaSource": "wiktionary",
           "id": "durch",
           "level": "A1",
           "unit": "a1-24"
@@ -10771,6 +12169,8 @@
           "case": "akk",
           "en": "until, to",
           "example": "Ich arbeite bis fünf Uhr.",
+          "ipa": "bɪs",
+          "ipaSource": "wiktionary",
           "id": "bis",
           "level": "A1",
           "unit": "a1-24"
@@ -10785,6 +12185,8 @@
           "pos": "adv",
           "en": "here",
           "example": "Hier ist meine Adresse.",
+          "ipa": "hiːɐ̯",
+          "ipaSource": "wiktionary",
           "id": "hier",
           "level": "A1",
           "unit": "a1-24"
@@ -10799,6 +12201,8 @@
           "pos": "adv",
           "en": "there",
           "example": "Dort hinten ist die Kasse.",
+          "ipa": "dɔʁt",
+          "ipaSource": "wiktionary",
           "id": "dort",
           "level": "A1",
           "unit": "a1-24"
@@ -10813,6 +12217,11 @@
           "pos": "adv",
           "en": "up, above, upstairs",
           "example": "Das Bad ist oben.",
+          "ipa": "ˈoːbn̩",
+          "ipaVariants": [
+            "ˈoːbm̩"
+          ],
+          "ipaSource": "wiktionary",
           "id": "oben",
           "level": "A1",
           "unit": "a1-24"
@@ -10858,6 +12267,8 @@
           "pos": "conj",
           "en": "and",
           "example": "Ich trinke Kaffee und esse ein Brötchen.",
+          "ipa": "ʊnt",
+          "ipaSource": "wiktionary",
           "id": "und",
           "level": "A1",
           "unit": "a1-25"
@@ -10872,6 +12283,8 @@
           "pos": "conj",
           "en": "or",
           "example": "Möchtest du Tee oder Kaffee?",
+          "ipa": "ˈoːdɐ",
+          "ipaSource": "wiktionary",
           "id": "oder",
           "level": "A1",
           "unit": "a1-25"
@@ -10886,6 +12299,8 @@
           "pos": "conj",
           "en": "but",
           "example": "Die Wohnung ist klein, aber schön.",
+          "ipa": "ˈaːbɐ",
+          "ipaSource": "wiktionary",
           "id": "aber",
           "level": "A1",
           "unit": "a1-25"
@@ -10900,6 +12315,8 @@
           "pos": "conj",
           "en": "because, for",
           "example": "Ich bleibe zu Hause, denn ich bin krank.",
+          "ipa": "dɛn",
+          "ipaSource": "wiktionary",
           "id": "denn",
           "level": "A1",
           "unit": "a1-25"
@@ -10914,6 +12331,8 @@
           "pos": "conj",
           "en": "because",
           "example": "Ich komme später, weil der Bus Verspätung hat.",
+          "ipa": "vaɪ̯l",
+          "ipaSource": "wiktionary",
           "id": "weil",
           "level": "A1",
           "unit": "a1-25"
@@ -10928,6 +12347,8 @@
           "pos": "conj",
           "en": "that",
           "example": "Ich glaube, dass er recht hat.",
+          "ipa": "das",
+          "ipaSource": "wiktionary",
           "id": "dass",
           "level": "A1",
           "unit": "a1-25"
@@ -10942,6 +12363,8 @@
           "pos": "conj",
           "en": "if, when",
           "example": "Wenn es regnet, bleiben wir zu Hause.",
+          "ipa": "vɛn",
+          "ipaSource": "wiktionary",
           "id": "wenn",
           "level": "A1",
           "unit": "a1-25"
@@ -10956,6 +12379,8 @@
           "pos": "conj",
           "en": "whether",
           "example": "Ich weiß nicht, ob er kommt.",
+          "ipa": "ɔp",
+          "ipaSource": "wiktionary",
           "id": "ob",
           "level": "A1",
           "unit": "a1-25"
@@ -10970,6 +12395,8 @@
           "pos": "conj",
           "en": "when (past), than",
           "example": "Als ich klein war, wohnten wir in Ankara.",
+          "ipa": "als",
+          "ipaSource": "wiktionary",
           "id": "als",
           "level": "A1",
           "unit": "a1-25"
@@ -10984,6 +12411,8 @@
           "pos": "conj",
           "en": "but rather",
           "example": "Er kommt nicht heute, sondern morgen.",
+          "ipa": "ˈzɔndɐn",
+          "ipaSource": "wiktionary",
           "id": "sondern",
           "level": "A1",
           "unit": "a1-25"
@@ -10998,6 +12427,8 @@
           "pos": "pron",
           "en": "one, you (impersonal)",
           "example": "Hier darf man nicht parken.",
+          "ipa": "man",
+          "ipaSource": "wiktionary",
           "id": "man",
           "level": "A1",
           "unit": "a1-25"
@@ -11012,6 +12443,8 @@
           "pos": "pron",
           "en": "who",
           "example": "Wer ist das?",
+          "ipa": "veːɐ̯",
+          "ipaSource": "wiktionary",
           "id": "wer",
           "level": "A1",
           "unit": "a1-25"
@@ -11026,6 +12459,8 @@
           "pos": "pron",
           "en": "what",
           "example": "Was machst du heute?",
+          "ipa": "vas",
+          "ipaSource": "wiktionary",
           "id": "was",
           "level": "A1",
           "unit": "a1-25"
@@ -11040,6 +12475,8 @@
           "pos": "pron",
           "en": "which",
           "example": "Welcher Bus fährt zum Zentrum?",
+          "ipa": "ˈvɛlçɐ",
+          "ipaSource": "wiktionary",
           "id": "welcher",
           "level": "A1",
           "unit": "a1-25"
@@ -11054,6 +12491,8 @@
           "pos": "adv",
           "en": "where",
           "example": "Wo wohnst du?",
+          "ipa": "voː",
+          "ipaSource": "wiktionary",
           "id": "wo",
           "level": "A1",
           "unit": "a1-25"
@@ -11068,6 +12507,8 @@
           "pos": "adv",
           "en": "how",
           "example": "Wie geht es dir?",
+          "ipa": "viː",
+          "ipaSource": "wiktionary",
           "id": "wie",
           "level": "A1",
           "unit": "a1-25"
@@ -11082,6 +12523,11 @@
           "pos": "adv",
           "en": "why",
           "example": "Warum lernst du Deutsch?",
+          "ipa": "vaˈʁʊm",
+          "ipaVariants": [
+            "ˈvaːʁʊm"
+          ],
+          "ipaSource": "wiktionary",
           "id": "warum",
           "level": "A1",
           "unit": "a1-25"
@@ -11096,6 +12542,8 @@
           "pos": "adv",
           "en": "when",
           "example": "Wann kommt der nächste Zug?",
+          "ipa": "van",
+          "ipaSource": "wiktionary",
           "id": "wann",
           "level": "A1",
           "unit": "a1-25"
@@ -11110,6 +12558,8 @@
           "pos": "adv",
           "en": "where to",
           "example": "Wohin gehst du?",
+          "ipa": "voˈhɪn",
+          "ipaSource": "wiktionary",
           "id": "wohin",
           "level": "A1",
           "unit": "a1-25"
@@ -11124,6 +12574,8 @@
           "pos": "adv",
           "en": "where from",
           "example": "Woher kommen Sie?",
+          "ipa": "voˈheːɐ̯",
+          "ipaSource": "wiktionary",
           "id": "woher",
           "level": "A1",
           "unit": "a1-25"
@@ -11138,6 +12590,8 @@
           "pos": "adv",
           "en": "also, too",
           "example": "Ich komme auch mit.",
+          "ipa": "aʊ̯x",
+          "ipaSource": "wiktionary",
           "id": "auch",
           "level": "A1",
           "unit": "a1-25"
@@ -11152,6 +12606,8 @@
           "pos": "adv",
           "en": "not",
           "example": "Das verstehe ich nicht.",
+          "ipa": "nɪçt",
+          "ipaSource": "wiktionary",
           "id": "nicht",
           "level": "A1",
           "unit": "a1-25"
@@ -11166,6 +12622,8 @@
           "pos": "adv",
           "en": "very",
           "example": "Das Essen ist sehr gut.",
+          "ipa": "zeːɐ̯",
+          "ipaSource": "wiktionary",
           "id": "sehr",
           "level": "A1",
           "unit": "a1-25"
@@ -11180,6 +12638,8 @@
           "pos": "adv",
           "en": "already",
           "example": "Bist du schon fertig?",
+          "ipa": "ʃoːn",
+          "ipaSource": "wiktionary",
           "id": "schon",
           "level": "A1",
           "unit": "a1-25"
@@ -11194,6 +12654,8 @@
           "pos": "adv",
           "en": "still, yet",
           "example": "Ich bin noch nicht fertig.",
+          "ipa": "nɔx",
+          "ipaSource": "wiktionary",
           "id": "noch",
           "level": "A1",
           "unit": "a1-25"
@@ -11240,6 +12702,8 @@
           "plural": "Ämter",
           "en": "public office, authority",
           "example": "Ich muss morgen zum Amt.",
+          "ipa": "amt",
+          "ipaSource": "wiktionary",
           "id": "amt",
           "level": "A1",
           "unit": "a1-26"
@@ -11256,6 +12720,11 @@
           "plural": "Behörden",
           "en": "authority, public agency",
           "example": "Die Behörde schickt einen Brief.",
+          "ipa": "bəˈhøːɐ̯də",
+          "ipaVariants": [
+            "bəˈhœʁdə"
+          ],
+          "ipaSource": "wiktionary",
           "id": "behoerde",
           "level": "A1",
           "unit": "a1-26"
@@ -11272,6 +12741,8 @@
           "plural": "Formulare",
           "en": "form",
           "example": "Füllen Sie bitte dieses Formular aus.",
+          "ipa": "fɔʁmuˈlaːɐ̯",
+          "ipaSource": "wiktionary",
           "id": "formular",
           "level": "A1",
           "unit": "a1-26"
@@ -11288,6 +12759,8 @@
           "plural": "Anträge",
           "en": "application",
           "example": "Ich stelle einen Antrag auf Kindergeld.",
+          "ipa": "ˈantʁaːk",
+          "ipaSource": "wiktionary",
           "id": "antrag",
           "level": "A1",
           "unit": "a1-26"
@@ -11304,6 +12777,8 @@
           "plural": "Unterschriften",
           "en": "signature",
           "example": "Hier fehlt noch Ihre Unterschrift.",
+          "ipa": "ˈʊntɐˌʃʁɪft",
+          "ipaSource": "wiktionary",
           "id": "unterschrift",
           "level": "A1",
           "unit": "a1-26"
@@ -11320,6 +12795,8 @@
           "plural": "Anmeldungen",
           "en": "registration",
           "example": "Die Anmeldung dauert zehn Minuten.",
+          "ipa": "ˈanˌmɛldʊŋ",
+          "ipaSource": "wiktionary",
           "id": "anmeldung",
           "level": "A1",
           "unit": "a1-26"
@@ -11352,6 +12829,8 @@
           "plural": "Ausländerbehörden",
           "en": "immigration office",
           "example": "Ich habe einen Termin bei der Ausländerbehörde.",
+          "ipa": "ˈaʊ̯slɛndɐbəˌhøːɐ̯də",
+          "ipaSource": "wiktionary",
           "id": "auslaenderbehoerde",
           "level": "A1",
           "unit": "a1-26"
@@ -11368,6 +12847,8 @@
           "plural": "Aufenthalte",
           "en": "stay, residence",
           "example": "Mein Aufenthalt ist bis 2027 gültig.",
+          "ipa": "ˈaʊ̯fʔɛnthalt",
+          "ipaSource": "wiktionary",
           "id": "aufenthalt",
           "level": "A1",
           "unit": "a1-26"
@@ -11384,6 +12865,8 @@
           "plural": "Visa",
           "en": "visa",
           "example": "Mein Visum läuft im Juni ab.",
+          "ipa": "ˈviːzʊm",
+          "ipaSource": "wiktionary",
           "id": "visum",
           "level": "A1",
           "unit": "a1-26"
@@ -11400,6 +12883,11 @@
           "plural": "Geburtsurkunden",
           "en": "birth certificate",
           "example": "Bringen Sie bitte Ihre Geburtsurkunde mit.",
+          "ipa": "ɡəˈbʊʁt͡sˌʔuːɐ̯kʊndə",
+          "ipaVariants": [
+            "ɡəˈbuːɐ̯t͡sˌʔuːɐ̯kʊndə"
+          ],
+          "ipaSource": "wiktionary",
           "id": "geburtsurkunde",
           "level": "A1",
           "unit": "a1-26"
@@ -11416,6 +12904,11 @@
           "plural": "Staatsangehörigkeiten",
           "en": "nationality",
           "example": "Welche Staatsangehörigkeit haben Sie?",
+          "ipa": "ˈʃtaːt͡sʔanɡəˌhøːʁɪçkaɪ̯t",
+          "ipaVariants": [
+            "ˈʃtaːt͡sʔanɡəˌhøːʁɪkkaɪ̯t"
+          ],
+          "ipaSource": "wiktionary",
           "id": "staatsangehoerigkeit",
           "level": "A1",
           "unit": "a1-26"
@@ -11431,6 +12924,8 @@
           "gender": "der",
           "en": "marital status",
           "example": "Familienstand: ledig oder verheiratet?",
+          "ipa": "faˈmiːliənʃtant",
+          "ipaSource": "wiktionary",
           "id": "familienstand",
           "level": "A1",
           "unit": "a1-26"
@@ -11447,6 +12942,8 @@
           "plural": "Geburtsorte",
           "en": "place of birth",
           "example": "Mein Geburtsort ist Aleppo.",
+          "ipa": "ɡəˈbuːɐ̯t͡sˌʔɔʁt",
+          "ipaSource": "wiktionary",
           "id": "geburtsort",
           "level": "A1",
           "unit": "a1-26"
@@ -11463,6 +12960,8 @@
           "plural": "Mitarbeiter",
           "en": "employee, staff member",
           "example": "Der Mitarbeiter am Schalter hilft Ihnen.",
+          "ipa": "ˈmɪtʔaʁˌbaɪ̯tɐ",
+          "ipaSource": "wiktionary",
           "id": "mitarbeiter",
           "level": "A1",
           "unit": "a1-26"
@@ -11479,6 +12978,8 @@
           "plural": "Nummern",
           "en": "number",
           "example": "Ziehen Sie bitte eine Nummer.",
+          "ipa": "ˈnʊmɐ",
+          "ipaSource": "wiktionary",
           "id": "nummer",
           "level": "A1",
           "unit": "a1-26"
@@ -11495,6 +12996,8 @@
           "plural": "Öffnungszeiten",
           "en": "opening hours",
           "example": "Die Öffnungszeiten stehen an der Tür.",
+          "ipa": "ˈœfnʊŋsˌt͡saɪ̯t",
+          "ipaSource": "wiktionary",
           "id": "oeffnungszeit",
           "level": "A1",
           "unit": "a1-26"
@@ -11511,6 +13014,8 @@
           "plural": "Dokumente",
           "en": "document",
           "example": "Haben Sie alle Dokumente dabei?",
+          "ipa": "ˌdokuˈmɛnt",
+          "ipaSource": "wiktionary",
           "id": "dokument",
           "level": "A1",
           "unit": "a1-26"
@@ -11527,6 +13032,11 @@
           "plural": "Kopien",
           "en": "copy",
           "example": "Ich brauche eine Kopie vom Pass.",
+          "ipa": "koˈpiː",
+          "ipaVariants": [
+            "ˈkoːpi̯ə"
+          ],
+          "ipaSource": "wiktionary",
           "id": "kopie",
           "level": "A1",
           "unit": "a1-26"
@@ -11543,6 +13053,8 @@
           "plural": "Gebühren",
           "en": "fee",
           "example": "Die Gebühr beträgt 30 Euro.",
+          "ipa": "ɡəˈbyːɐ̯",
+          "ipaSource": "wiktionary",
           "id": "gebuehr",
           "level": "A1",
           "unit": "a1-26"
@@ -11564,6 +13076,8 @@
           ],
           "en": "to fill in",
           "example": "Füllen Sie das Formular bitte in Druckschrift aus.",
+          "ipa": "ˈaʊ̯sˌfʏlən",
+          "ipaSource": "wiktionary",
           "id": "ausfuellen",
           "level": "A1",
           "unit": "a1-26"
@@ -11584,6 +13098,11 @@
           ],
           "en": "to sign",
           "example": "Bitte unterschreiben Sie hier unten.",
+          "ipa": "ˌʊntɐˈʃʁaɪ̯bn̩",
+          "ipaVariants": [
+            "ˌʊntɐˈʃʁaɪ̯bm̩"
+          ],
+          "ipaSource": "wiktionary",
           "id": "unterschreiben",
           "level": "A1",
           "unit": "a1-26"
@@ -11606,6 +13125,8 @@
           "reflexive": true,
           "en": "to register",
           "example": "Ich muss mich in der Stadt anmelden.",
+          "ipa": "ˈanˌmɛldn̩",
+          "ipaSource": "wiktionary",
           "id": "anmelden",
           "level": "A1",
           "unit": "a1-26"
@@ -11627,6 +13148,8 @@
           ],
           "en": "to hand in",
           "example": "Wo kann ich den Antrag abgeben?",
+          "ipa": "ˈapˌɡeːbn̩",
+          "ipaSource": "wiktionary",
           "id": "abgeben",
           "level": "A1",
           "unit": "a1-26"
@@ -11647,6 +13170,8 @@
           ],
           "en": "to apply for",
           "example": "Ich möchte einen neuen Ausweis beantragen.",
+          "ipa": "bəˈʔantʁaːɡn̩",
+          "ipaSource": "wiktionary",
           "id": "beantragen",
           "level": "A1",
           "unit": "a1-26"

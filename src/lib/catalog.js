@@ -28,17 +28,47 @@ const kulturQuizCount = kultur.topics.reduce((n, t) => n + t.quiz.length, 0);
 /* The Landeskunde menu's entries: the quiz first, because it is the one thing that
    spans every topic, then the topics in the hub's own order. No i18n keys — topic
    titles live in kultur.json and are not translated yet, so they render as written. */
-const kulturNavItems = [
-  { id: "kultur-quiz", href: "/uebungen/kultur/quiz", icon: "target",
-    title: "Quiz über alle Themen", count: `${kulturQuizCount} Fragen` },
-  ...kultur.topics.map((t) => ({
-    id: `kultur-${t.id}`,
-    href: `/uebungen/kultur/${t.id}`,
-    icon: t.icon,
-    title: t.title,
-    count: `${t.level} · ${t.quiz.length} Fragen`,
-  })),
+const kulturQuizItem = {
+  id: "kultur-quiz", href: "/uebungen/kultur/quiz", icon: "target",
+  title: "Quiz über alle Themen", count: `${kulturQuizCount} Fragen`,
+};
+
+const kulturItem = (t) => ({
+  id: `kultur-${t.id}`,
+  href: `/uebungen/kultur/${t.id}`,
+  icon: t.icon,
+  title: t.title,
+  count: `${t.level} · ${t.quiz.length} Fragen`,
+});
+
+/* Fifteen topics in one list is a wall: the menu needed a scrollbar in both directions and
+   nothing in it could be found by scanning. They divide cleanly into five things a learner
+   would go looking for, so `group` now lives on each topic in kultur.json and the order of
+   the sub-sections is set here.
+
+   Ordered by how soon a newcomer meets them, not alphabetically — registering with the
+   Amt comes before joining a Verein. */
+const KULTUR_GROUPS = [
+  { id: "wohnen", name: "Wohnen & Alltag", nameKey: "nav.kultur.wohnen" },
+  { id: "aemter", name: "Ämter & Versicherung", nameKey: "nav.kultur.aemter" },
+  { id: "umgang", name: "Umgang & Gewohnheiten", nameKey: "nav.kultur.umgang" },
+  { id: "bildung", name: "Schule & Ausbildung", nameKey: "nav.kultur.bildung" },
+  { id: "land", name: "Land & Kalender", nameKey: "nav.kultur.land" },
 ];
+
+const kulturNavGroups = KULTUR_GROUPS.map((g) => ({
+  ...g,
+  items: kultur.topics.filter((t) => t.group === g.id).map(kulturItem),
+}));
+
+// Loud rather than silent: a topic added to kultur.json without a `group` would otherwise
+// just quietly stop appearing in the menu.
+const ungrouped = kultur.topics.filter((t) => !KULTUR_GROUPS.some((g) => g.id === t.group));
+if (ungrouped.length) {
+  throw new Error(`kultur.json: kein bekanntes group-Feld für ${ungrouped.map((t) => t.id).join(", ")}`);
+}
+
+const kulturNavItems = [kulturQuizItem, ...kultur.topics.map(kulturItem)];
 
 export const lexiconCounts = counts();
 
@@ -115,28 +145,6 @@ export function itemsOf(groupId) {
 // its own section now. It keeps its group in `groups` above, which is what /uebungen
 // and the picker read.
 
-export const navSections = [
-  { id: "grammatik", icon: "book", href: "/uebungen/grammatik",
-    nameKey: "nav.subject.grammatik", name: "Grammatik",
-    blurbKey: "group.grammatik.blurb", blurb: "Artikel, Fälle, Zeiten",
-    items: itemsOf("grammatik") },
-  { id: "wortschatz", icon: "folder", href: "/uebungen/wortschatz",
-    nameKey: "nav.subject.wortschatz", name: "Wortschatz",
-    blurbKey: "group.woerter.blurb", blurb: "Vokabeln hören und behalten",
-    items: itemsOf("woerter") },
-  { id: "sprechen", icon: "mic", href: "/uebungen/sprechen",
-    nameKey: "nav.subject.sprechen", name: "Sprechen",
-    blurbKey: "nav.subject.sprechen.blurb", blurb: "Sprechen, Lesen, Schreiben",
-    items: itemsOf("fertigkeiten") },
-  { id: "landeskunde", icon: "map-pin", href: "/uebungen/kultur",
-    nameKey: "group.kultur.name", name: "Landeskunde",
-    blurbKey: "group.kultur.blurb", blurb: "Alltag und Kultur in Deutschland",
-    items: kulturNavItems },
-  { id: "pruefungen", icon: "graduation-cap", href: "/pruefungen",
-    nameKey: "nav.exams", name: "Prüfungen",
-    blurbKey: "group.pruefungen.blurb", blurb: "telc, Goethe, TestDaF, DTZ",
-    items: itemsOf("pruefungen") },
-];
 
 /* --- Niveaus --------------------------------------------------------------- */
 
@@ -199,3 +207,76 @@ export const levels = NAV_LEVELS.map((level) => {
     words,
   };
 });
+
+// ---------------------------------------------------------------------------
+// The nav's subject menus
+// ---------------------------------------------------------------------------
+// A section renders as a flat list unless it carries `groups`, in which case the panel and
+// the drawer show sub-headings instead. Long menus earned this: Landeskunde's fifteen topics
+// in one column ran off the bottom of a 900px screen, and the two-column scrolling patch that
+// replaced it scrolled in both directions and still could not be scanned.
+//
+// `items` stays the flat union either way — the drawer's row counts and anything else that
+// only wants "how many things are in here" read it and do not care about the grouping.
+//
+// No section lists a link to its own page: the panel footer already goes there. "Grammatik ›
+// Grammatik" was the same URL three times in one menu (the menu button, the row, and
+// "Übersicht"), which reads as a bug even when it works.
+
+const notSelf = (href, list) => list.filter((i) => i.href !== href);
+
+const grammarLevelItems = () =>
+  NAV_LEVELS.map((level) => {
+    const slug = level.toLowerCase();
+    const n = grammarTopics.filter((t) => t.level === level).length;
+    return {
+      id: `grammatik-${slug}`,
+      href: `/uebungen/grammatik#niveau-${slug}`,
+      icon: "book",
+      title: level,
+      countKey: "nav.level.topicCount",
+      countVars: { n },
+      count: `${n} Themen`,
+    };
+  });
+
+const grammatikTrainer = notSelf("/uebungen/grammatik", itemsOf("grammatik"));
+
+export const navSections = [
+  { id: "grammatik", icon: "book", href: "/uebungen/grammatik",
+    nameKey: "nav.subject.grammatik", name: "Grammatik",
+    blurbKey: "group.grammatik.blurb", blurb: "Artikel, Fälle, Zeiten",
+    groups: [
+      { id: "trainer", name: "Trainer", nameKey: "nav.group.trainer", items: grammatikTrainer },
+      // `inline`: the titles here are "A1", not "der/die/das-Trainer", so the count belongs
+      // beside them rather than on a second line.
+      { id: "themen", name: "Nach Niveau", nameKey: "nav.group.themen", inline: true, items: grammarLevelItems() },
+    ],
+    items: grammatikTrainer },
+
+  { id: "wortschatz", icon: "folder", href: "/uebungen/wortschatz",
+    nameKey: "nav.subject.wortschatz", name: "Wortschatz",
+    blurbKey: "group.woerter.blurb", blurb: "Vokabeln hören und behalten",
+    items: notSelf("/uebungen/wortschatz", itemsOf("woerter")) },
+
+  // Was "Sprechen", which was simply not true of the second entry in it: "Lesen & Schreiben"
+  // is a reading and writing trainer. "Fertigkeiten" is the word the Lehrwerke and the
+  // Integrationskurse use for exactly this set, and it still fits when Hören lands here.
+  { id: "fertigkeiten", icon: "mic", href: "/uebungen/sprechen",
+    nameKey: "nav.subject.fertigkeiten", name: "Fertigkeiten",
+    blurbKey: "nav.subject.fertigkeiten.blurb", blurb: "Sprechen, Lesen, Schreiben",
+    items: notSelf("/uebungen/sprechen", itemsOf("fertigkeiten")) },
+
+  { id: "landeskunde", icon: "map-pin", href: "/uebungen/kultur",
+    nameKey: "group.kultur.name", name: "Landeskunde",
+    blurbKey: "group.kultur.blurb", blurb: "Alltag und Kultur in Deutschland",
+    // The quiz spans every group, so it sits above them rather than inside one.
+    feature: kulturQuizItem,
+    groups: kulturNavGroups,
+    items: kulturNavItems },
+
+  { id: "pruefungen", icon: "graduation-cap", href: "/pruefungen",
+    nameKey: "nav.exams", name: "Prüfungen",
+    blurbKey: "group.pruefungen.blurb", blurb: "telc, Goethe, TestDaF, DTZ",
+    items: notSelf("/pruefungen", itemsOf("pruefungen")) },
+];

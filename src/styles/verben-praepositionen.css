@@ -54,6 +54,66 @@
 .vp-ex-head h3 { font-weight: var(--fw-regular); letter-spacing: -.02em; font-size: 1.0625rem; color: var(--ink); margin: 0; text-align: left; }
 .vp-ex-hint { font-size: .8125rem; color: var(--muted); margin: 0 0 18px; }
 
+/* Per-exercise rule — see the .vp-ex-rule block in grammatik/[id].astro.
+   Deliberately NOT a table: the endings are three short lists, and a 3-column table at
+   390px either scrolls sideways or crushes the examples. Chips wrap instead. */
+/* The control lives in .vp-ex-head, not on the panel: same pill as the column's
+   "Regel einblenden" so the two read as one mechanism at two heights. */
+.vp-ex-rule-btn { flex: none; margin-left: auto; }
+
+.vp-ex-rule {
+  margin: 0 0 18px; border: 1px solid var(--border); border-radius: var(--radius-sm);
+  background: var(--surface); overflow: hidden;
+}
+.vp-ex-rule[hidden] { display: none; }
+.vp-ex-rule-label {
+  margin: 0; padding: 11px 14px 0; font-size: .8125rem;
+  font-weight: var(--fw-bold); color: var(--brand-blue-dark);
+}
+.vp-ex-rule-body { padding: 2px 14px 14px; }
+
+.vp-ex-rule-group { display: flex; gap: 10px; align-items: flex-start; padding: 9px 0; }
+.vp-ex-rule-group + .vp-ex-rule-group { border-top: 1px solid var(--border); }
+.vp-ex-rule-artikel {
+  flex: none; min-width: 42px; text-align: center; padding: 3px 9px;
+  background: var(--surface-card); border: 1px solid var(--border-strong);
+  border-radius: var(--radius-pill); font-size: .8125rem; font-weight: var(--fw-bold);
+  color: var(--brand-blue-dark);
+}
+.vp-ex-rule-endungen { display: flex; flex-wrap: wrap; gap: 5px; }
+.vp-ex-rule-endungen code {
+  font-family: var(--font-body); font-size: .8125rem; color: var(--ink);
+  background: var(--surface-card); border: 1px solid var(--border);
+  border-radius: var(--radius-sm); padding: 2px 7px;
+}
+.vp-ex-rule-examples { margin: 6px 0 0; font-size: .75rem; line-height: 1.5; color: var(--muted); }
+
+.vp-ex-rule-warn {
+  margin-top: 12px; border-radius: var(--radius-sm);
+  background: var(--warning-soft); border: 1px solid var(--warning-border);
+  font-size: .8125rem; line-height: 1.65; color: var(--ink);
+}
+.vp-ex-rule-warn > summary {
+  padding: 10px 12px; cursor: pointer; list-style: none;
+  font-weight: var(--fw-bold); color: var(--ink);
+  display: flex; align-items: baseline; gap: 8px;
+}
+.vp-ex-rule-warn > summary::-webkit-details-marker { display: none; }
+.vp-ex-rule-warn > summary::after {
+  content: "▼"; font-size: .625rem; opacity: .6; margin-left: auto;
+  transition: transform .18s ease; align-self: center;
+}
+.vp-ex-rule-warn[open] > summary::after { transform: rotate(180deg); }
+.vp-ex-rule-warn > div { padding: 0 12px 12px; }
+.vp-ex-rule-warn p { margin: 0; }
+.vp-ex-rule-warn p + p { margin-top: 9px; }
+.vp-ex-rule-warn strong { color: var(--brand-blue-dark); }
+
+@media (min-width: 560px) {
+  .vp-ex-rule-group { align-items: center; }
+  .vp-ex-rule-artikel { min-width: 48px; }
+}
+
 /* Shared exercise controls */
 .vp-input {
   border: 1px solid var(--border-strong); border-radius: var(--radius-sm); padding: 10px 14px;
@@ -462,7 +522,9 @@
    what the page is, and the button says the rule exists — that is the whole job.
    The hero stays whole: it is the page's title, not part of the explanation. */
 @media (max-width: 1000px) {
-  .vp-rule-toggle { display: none; }
+  /* The column toggle goes — there is no column to slide. The per-exercise one stays:
+     below this width it is the only way to reach that exercise's rule. */
+  .vp-rule-toggle:not(.vp-ex-rule-btn) { display: none; }
 
   .vp-rule-card {
     overflow: hidden;

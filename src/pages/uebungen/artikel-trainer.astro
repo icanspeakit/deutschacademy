@@ -224,7 +224,14 @@ const total = Math.min(SESSION_SIZE, pool.length);
 
     // Changing level or starting a new round remounts the workspace — it builds all its
     // state from the question array it is given, so a fresh mount is the clean reset.
-    let level = "A1";
+    //
+    // The nav's Niveaus menu links straight here per level (?niveau=A2), so the opening
+    // level is read from the URL. Anything unrecognised falls back to A1 rather than
+    // starting an empty session.
+    const LEVEL_KEYS = ["A1", "A2", "all"];
+    const wanted = (new URLSearchParams(location.search).get("niveau") || "").trim();
+    const asKey = wanted.toLowerCase() === "all" ? "all" : wanted.toUpperCase();
+    let level = LEVEL_KEYS.includes(asKey) ? asKey : "A1";
     let mode = "fokus";
     let practice = null;
 
@@ -236,6 +243,10 @@ const total = Math.min(SESSION_SIZE, pool.length);
       });
       practice.setMode(mode);
     }
+    // The markup marks A1 active; move the mark if the URL asked for another level.
+    document.querySelectorAll(".akk-level-btn[data-level]").forEach((b) => {
+      b.classList.toggle("active", b.dataset.level === level);
+    });
     startSession();
 
     document.querySelectorAll(".akk-level-btn[data-level]").forEach((btn) => {

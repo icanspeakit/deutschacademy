@@ -7,12 +7,31 @@
   "nav.panel.allTools": "Alle Übungen ansehen",
   "nav.panel.allExams": "Alle Prüfungen ansehen",
   "nav.panel.all": "Übersicht",
+  "nav.subject.grammatik": "Grammatik",
+  "nav.subject.wortschatz": "Wortschatz",
+  "nav.subject.fertigkeiten": "Fertigkeiten",
+  "nav.subject.fertigkeiten.blurb": "Sprechen, Lesen, Schreiben",
+  "nav.subject.niveaus": "Niveaus",
+  "nav.subject.niveaus.blurb": "A1 bis B2, Schritt für Schritt",
+  "nav.group.trainer": "Trainer",
+  "nav.group.themen": "Nach Niveau",
+  "nav.kultur.wohnen": "Wohnen & Alltag",
+  "nav.kultur.aemter": "Ämter & Versicherung",
+  "nav.kultur.umgang": "Umgang & Gewohnheiten",
+  "nav.kultur.bildung": "Schule & Ausbildung",
+  "nav.kultur.land": "Land & Kalender",
+  "nav.subject.profil": "Profil",
+  "nav.subject.profil.blurb": "Dein Lernstand und deine Woche",
+  "nav.level.grammar": "Grammatik",
+  "nav.level.vocab": "Wortschatz",
+  "nav.level.vocabSoon": "Wortlisten für dieses Niveau folgen.",
+  "nav.level.allTopics": "Alle {n} Themen",
+  "nav.level.topicCount": "{n} Themen",
   "theme.toDark": "Dunkles Design einschalten",
   "theme.toLight": "Helles Design einschalten",
   "header.allExercises": "← Alle Übungen",
   "header.home": "Startseite",
   "header.back": "← Zurück zur Übersicht",
-
   "home.hero.eyebrow": "Kostenlos & ohne Anmeldung",
   "home.hero.title": "Deutsch lernen mit echtem Unterrichtsmaterial",
   "home.hero.subtitle": "Übungen und Prüfungsvorbereitung für telc, Goethe-Zertifikat, TestDaF, DTZ und Leben in Deutschland — kostenlos.",
@@ -21,7 +40,6 @@
   "home.tools.title": "Jedes Werkzeug einzeln",
   "home.exams.eyebrow": "Prüfungsvorbereitung",
   "home.exams.title": "Für jede Prüfung vorbereitet",
-
   "tool.artikel.title": "der/die/das-Trainer",
   "tool.artikel.desc": "Artikel gezielt üben, mit sofortigem Feedback.",
   "tool.grammatik.title": "Grammatik",
@@ -41,19 +59,20 @@
   "tool.comingSoon.title": "Weitere Übungen",
   "tool.comingSoon.desc": "Neue Übungstools sind in Arbeit.",
   "tool.comingSoon.count": "Bald verfügbar",
-
   "dash.tab.today": "Heute",
   "dash.tab.skills": "Fähigkeiten",
   "dash.tab.progress": "Fortschritt",
   "uebungen.hero.eyebrow": "Alle Übungen",
   "uebungen.hero.title": "Jedes Werkzeug einzeln",
-
   "grammatik.hero.eyebrow": "Grammatik üben",
   "grammatik.hero.title": "Themen nach Niveau",
   "grammatik.hero.subtitle": "Wähle ein Thema. Die meisten haben einen eigenen Übungsraum mit Erklärung und mehreren Aufgabentypen — die übrigen übst du im Lückentext-Quiz.",
   "grammatik.card.workspace": "Übungsraum",
   "grammatik.card.questions": "{n} Fragen",
-
+  "grammatik.mode.guided": "Führ mich",
+  "grammatik.mode.guidedSub": "{n} Aufgaben aus {t} Themen, in der Reihenfolge des Lehrplans — eine nach der anderen, du wählst nichts aus.",
+  "grammatik.mode.free": "Ich such mir was aus",
+  "grammatik.mode.freeSub": "Alle {n} Themen nach Niveau. Du weißt, was du üben willst.",
   "tool.artikel.count": "{n} Nomen",
   "tool.grammatik.count": "{n} Themen · {q} Fragen",
   "tool.praepositionen.count": "{n} Verben",
@@ -62,7 +81,6 @@
   "tool.sprechen.count": "{n} Bilder",
   "tool.lesen.count": "{n} Aufgaben",
   "tool.kultur.count": "{n} Themen",
-
   "home.hero1.eyebrow": "Dein Dashboard",
   "home.hero1.title": "Dein Fortschritt, immer im Blick",
   "home.hero1.lead": "Level, erledigte Lektionen und nächste Schritte an einem Ort — damit du bei jedem Login genau weißt, woran du weitermachst.",
@@ -70,7 +88,6 @@
   "home.cta.startFree": "Kostenlos starten",
   "home.hero1.login": "Bereits dabei? Log in",
   "home.hero.noteBadge": "Kostenloser Grundkurs A1–C1 · kein Abo nötig",
-
   "home.mock.dashboard": "Dashboard",
   "home.mock.grammatikShort": "Grammatik",
   "home.mock.wortschatzShort": "Wortschatz",
@@ -84,7 +101,6 @@
   "home.mock.b1Beruf": "B1 · Beruf",
   "home.mock.authenticClips": "Echte Videoclips",
   "home.mock.goetheB2Prep": "Goethe B2-Vorbereitung",
-
   "home.peek.eyebrow": "Ein Blick hinein",
   "home.peek.title": "So sieht es von innen aus",
   "home.peek.subtitle": "Keine Bilder — beide funktionieren. Tipp in der Seitenleiste auf ein Thema.",
@@ -96,17 +112,24 @@
   "fold.unsure": "Weiß ich nicht",
   "fold.unsureSub": "Wir fangen bei A1 an — du merkst in zwei Fragen, ob es zu leicht ist.",
   "fold.orExam": "Oder direkt zur Prüfung",
+  "fold.askSubNew": "Tipp auf dein Niveau — dann wählst du Grammatik oder Wortschatz.",
+  "fold.back": "Zurück",
+  "fold.panelTitle": "Womit fängst du an?",
+  "fold.panel.grammar": "Grammatik",
+  "fold.panel.words": "Wortschatz",
+  "fold.row.exercises": "{n} Übungen",
+  "fold.row.questions": "{n} Fragen",
+  "fold.row.words": "{n} Wörter",
+  "fold.allTopics": "Alle {n} Themen →",
   "home.hero2.eyebrow": "Deutsch von A1 bis C1",
   "home.hero2.title": "Deutsch lernen, wie es wirklich gesprochen wird",
   "home.hero2.lead": "Grammatik, Alltagsdeutsch und Sprechpraxis — aufgebaut aus echtem Unterrichtsmaterial, nicht kalt für eine Plattform geschrieben.",
   "home.hero2.cta1": "Kostenlos lernen",
   "home.hero2.cta2": "So funktioniert's",
-
   "home.trust.tools": "Übungstools, alle kostenlos",
   "home.trust.exams": "Prüfungen im Überblick",
   "home.trust.learners": "Lernende bisher",
   "home.trust.freeCourse": "für den A1–C1-Grundkurs",
-
   "home.value.eyebrow": "Warum DeutschAcademy",
   "home.value.title": "Aus echtem Unterricht entstanden, nicht aus Vorlagen",
   "home.value.subtitle": "Jede Lektion unten wurde bereits live vor echten Lernenden unterrichtet — nicht kalt für eine Kursplattform geschrieben.",
@@ -118,7 +141,6 @@
   "home.value.card3.desc": "Rollenspiele, Partnerübungen und Bildbeschreibungen — der Teil, den Lernende sonst nur im Präsenzunterricht bekommen.",
   "home.value.card4.title": "Prüfungsvorbereitung statt Rätselraten",
   "home.value.card4.desc": "Probeprüfungen und Schreibaufgaben, aufgebaut wie bei Goethe und telc, korrigiert von einer echten Lehrkraft.",
-
   "home.how.eyebrow": "So funktioniert's",
   "home.how.title": "Dein Weg zu fließendem Deutsch — in drei klaren Schritten",
   "home.how.step1.label": "Schritt 1",
@@ -130,10 +152,8 @@
   "home.how.step3.label": "Schritt 3",
   "home.how.step3.title": "Sprechpraxis",
   "home.how.step3.desc": "Rollenspiele, Partnerübungen und Bildbeschreibungen üben.",
-
   "home.tools.heading2": "Übungen und Prüfungsvorbereitung, an einem Ort",
   "home.tools.subtitle": "Kein Zusammensuchen zwischen Apps und Karteikarten — alles lebt im selben Dashboard.",
-
   "home.deepdive.eyebrow": "Was enthalten ist",
   "home.deepdive.title": "Alles, was du bekommst — Stufe für Stufe",
   "home.deepdive.core.title": "Grundkurs",
@@ -158,7 +178,6 @@
   "home.deepdive.community.item3": "Ein Ort für Fragen zwischen den Lektionen",
   "home.deepdive.community.item4": "Neues Übungsmaterial, während der Kurs wächst",
   "home.deepdive.community.cta": "Community beitreten",
-
   "home.pricing.eyebrow": "Preise",
   "home.pricing.title": "Ein kostenloser Kurs. Ein Upgrade, wenn du bereit für die Prüfung bist.",
   "home.pricing.subtitle": "Alles oben ist entweder kostenlos enthalten oder mit Premium freigeschaltet — keine versteckten Stufen.",
@@ -182,19 +201,16 @@
   "home.pricing.premium.item5": "Monatliches Live-Community-Q&A",
   "home.pricing.premium.cta": "Premium starten",
   "home.pricing.note": "Keine Vertragsbindung — jederzeit kündbar.",
-
   "home.finalcta.title": "Dein nächster Schritt zu fließendem Deutsch",
   "home.finalcta.subtitle": "Kostenlos starten, dein Niveau testen, in deinem Tempo weitermachen.",
   "home.finalcta.cta": "Kostenlos starten",
   "home.finalcta.loginQuestion": "Schon dabei?",
   "home.finalcta.loginAction": "Einloggen",
-
   "home.footer.tagline": "Da für Dich!",
   "home.footer.col.product": "Produkt",
   "home.footer.col.company": "Unternehmen",
   "home.footer.col.support": "Support",
   "home.footer.col.legal": "Rechtliches",
-
   "home.mock.questionsLabel": "Fragen",
   "home.mock.topicsLabel": "Themen",
   "home.mock.position": "Frage {i} von {n}",
@@ -215,7 +231,6 @@
   "home.mock.wasCorrect": "Leider falsch.",
   "home.mock.ausspracheShort": "Aussprache",
   "home.mock.costLabel": "Kosten",
-
   "dash.today.title": "Heute für dich",
   "dash.examCard.title": "Prüfungsvorbereitung",
   "dash.examCard.desc": "DTZ-Simulation und der Einbürgerungstest „Leben in Deutschland“, mit echtem Prüfungsformat.",
@@ -228,67 +243,52 @@
   "dash.skillsView.subtitle": "Ring = aktueller Stand je Fähigkeit",
   "dash.radar.title": "Dein Fähigkeitsprofil",
   "dash.thisWeek": "Diese Woche",
-
   "dash.skill.wortschatz": "Wortschatz",
   "dash.skill.grammatik": "Grammatik",
   "dash.skill.hoeren": "Hören",
   "dash.skill.sprechen": "Sprechen",
   "dash.skill.schreiben": "Schreiben",
-
   "dash.greeting.morning": "Guten Morgen",
   "dash.greeting.afternoon": "Guten Tag",
   "dash.greeting.evening": "Guten Abend",
-
   "dash.date.never": "Noch nie",
   "dash.date.today": "Heute",
   "dash.date.yesterday": "Gestern",
   "dash.date.daysAgo": "Vor {n} Tagen",
   "dash.date.longAgo": "Vor Längerem",
-
   "dash.dayNames": "So,Mo,Di,Mi,Do,Fr,Sa",
-
   "dash.weekSummary": "<strong>{n}</strong> Übungen{delta}",
   "dash.weekDelta": "{d} ggü. Vorwoche",
-
   "dash.taskCount": "{n} Aufgaben",
   "dash.sessionCount": "{n} Sitzungen",
   "dash.notPracticed": "Noch nicht geübt",
-
   "dash.radar.filled": "Die Fläche zeigt deinen aktuellen Stand über alle fünf Fähigkeiten — größer ist besser.",
   "dash.radar.empty": "Sobald du übst, füllt sich dein Profil hier.",
-
   "dash.callout.eyebrow": "Als Nächstes · {skill}",
   "dash.callout.title": "Hier bringt Üben aktuell am meisten.",
   "dash.callout.body": "{skill} steht bei {pct}% {metric} — deine niedrigste Fähigkeit gerade.",
   "dash.callout.startEyebrow": "Loslegen",
   "dash.callout.noDataTitle": "Noch keine Übungsdaten.",
   "dash.callout.noDataBody": "Starte mit einer Fähigkeit — dein Profil füllt sich, sobald du übst.",
-
   "dash.metric.accuracy": "Genauigkeit",
   "dash.metric.activity": "Aktivität",
-
   "dash.cta.practiceNow": "Jetzt üben →",
   "dash.cta.start": "Jetzt loslegen →",
   "dash.cta.continue": "Weiter mit {skill} →",
   "dash.cta.practiceSkill": "Jetzt {skill} üben →",
-
   "dash.streakBadge": "🔥 {n} Tage in Folge",
   "dash.startStreak": "Starte deine Serie",
   "dash.subtitle.zero": "Noch keine Übung diese Woche — starte jetzt mit ein paar Minuten.",
   "dash.subtitle.goalMet": "Wochenziel erreicht — {n} Übungen diese Woche. Stark!",
   "dash.subtitle.progress": "{n} von {goal} Übungen diese Woche geschafft.",
   "dash.stat.streakValue": "{n} Tage",
-
   "dash.today.done": "✓ heute geübt",
   "dash.today.start": "starten →",
-
   "dash.name.edit": "✏️ „{name}“ ändern",
   "dash.name.add": "Namen hinzufügen",
   "dash.name.placeholder": "Dein Name",
   "dash.save": "Speichern",
-
   "dash.goal.label": "Wochenziel: {goal} Übungen · anpassen",
-
   "dash.progress.skillLabel": "Fähigkeit",
   "dash.progress.mastery": "Beherrschung",
   "dash.progress.correctOf": "{correct}/{total} richtig",
@@ -302,19 +302,16 @@
   "dash.progress.totalNote": "Aufgaben & Sitzungen seit Start",
   "dash.progress.moreTitle": "Mehr Analysen folgen",
   "dash.progress.moreBody": "Genauigkeitsverlauf, Fehlerverteilung und ein Sitzungsprotokoll bräuchten mehr aufgezeichnete Daten pro Aufgabe, als aktuell gespeichert wird. Diese Ansicht wächst mit zukünftigen Updates — erfundene Zahlen zeigen wir hier nie.",
-
   "wortschatz.hero.title": "Redemittel & Alltagsvokabeln",
   "wortschatz.tab.cards": "Karteikarten",
   "wortschatz.tab.learn": "Lernen",
   "wortschatz.tab.test": "Testen",
   "wortschatz.tab.list": "Wortliste",
   "wortschatz.themeToggle": "Dunkles Design umschalten",
-
   "aussprache.hero.eyebrow": "Hören & nachsprechen",
   "aussprache.hero.title": "Aussprache trainieren",
   "aussprache.hero.subtitle": "Hör dir die Phrase an, sprich sie nach und nimm dich selbst auf. Im langsamen Tempo hörst du jede Silbe.",
   "aussprache.tab.artikel": "Artikel",
-
   "sprechen.hero.eyebrow": "DTZ Sprechen, Teil 2",
   "sprechen.hero.title": "Bildbeschreibung üben",
   "sprechen.hero.subtitle": "Echte Prüferfragen aus dem Unterricht. In der echten Prüfung hast du 90 Sekunden für die Beschreibung und 90 Sekunden für die Nachfragen — so wie hier.",
@@ -325,7 +322,6 @@
   "sprechen.prevImage": "← Vorheriges Bild",
   "sprechen.nextImage": "Nächstes Bild →",
   "sprechen.timeUp": "Zeit um!",
-
   "lesen.hero.eyebrow": "DTZ-Simulation",
   "lesen.hero.title": "Lesen & Schreiben üben",
   "lesen.hero.subtitle": "Eine vollständige Leseverstehen-Simulation (Thema: Online-Unterricht und Integration, Niveau B1) mit echtem Lösungsschlüssel, plus zwei Schreibaufgaben.",
@@ -334,13 +330,11 @@
   "lesen.writingPrompt.placeholder": "Schreib deine Antwort hier...",
   "lesen.wordCount": "{n} Wörter",
   "lesen.wordCount.goal": "Ziel: mindestens 60–80",
-
   "kultur.hero.eyebrow": "Landeskunde",
-  "kultur.hero.subtitle": "Kurze Themen aus echten Unterrichtsgesprächen bei DeutschAcademy — kein generisches KI-Trivia.",
+  "kultur.hero.subtitle": "Wie Deutschland im Alltag funktioniert — Regeln, Ämter, Beträge und Abläufe, mit Quiz zu jedem Thema.",
   "kultur.link.passiv": "Die Passiv-Sätze dazu üben →",
   "kultur.link.wortschatz": "Deine Meinung dazu äußern (Redemittel) →",
   "kultur.moreNote": "Weitere Themen (Feiertage, regionale Bräuche, Alltagsetikette) folgen, sobald echtes Quellmaterial dafür vorliegt — wir erfinden keine kulturellen Behauptungen.",
-
   "pruefungen.hero.eyebrow": "Prüfungsvorbereitung",
   "pruefungen.hero.title": "Welche Prüfung machst du?",
   "pruefungen.hero.subtitle": "Ein Überblick über die fünf wichtigsten deutschen Sprach- und Integrationsprüfungen — Niveau, Aufbau und wie du dich vorbereiten kannst.",
@@ -360,18 +354,15 @@
   "pruefungen.pricing.freeItem3": "60+ Grammatik-Themen",
   "pruefungen.pricing.premiumPrice": "€XX / Monat (TBD)",
   "pruefungen.viewAllPricing": "Alle Preise ansehen →",
-
   "vp.hero.subtitle": "Manche Verben brauchen eine feste Präposition. Lerne das Muster, dann übe es in fünf verschiedenen Aufgabentypen — wie auf einer Kursbuchseite.",
   "vp.howItWorks": "Wie funktioniert das?",
   "vp.toggleRef.show": "Referenzliste anzeigen ▼",
   "vp.toggleRef.hide": "Referenzliste ausblenden ▲",
-
   "quiz.hero.title": "Lückentext-Quiz nach Thema",
   "quiz.hero.subtitle": "Jede Frage stammt aus echten Beispielsätzen und Tabellen aus dem Unterricht — kein generischer Grammatik-Bot.",
   "quiz.crosslink.passiv": "Diese Passiv-Sätze stammen aus einer echten Unterrichtsdiskussion über Medien in Deutschland — mehr dazu im <a href=\"/uebungen/kultur\">Kulturwissen: Wer bezahlt ARD und ZDF?</a>",
   "quiz.crosslink.akkusativ": "Für Akkusativ gibt es einen eigenen Übungsraum mit Fokus- und Testmodus, Schwierigkeitsstufen und Deklinationstabelle: <a href=\"/uebungen/grammatik/akkusativ\">Akkusativ-Workspace öffnen</a>",
   "quiz.crosslink.praepositionen": "Für Verben mit Präpositionen gibt es einen eigenen Übungsraum mit fünf Aufgabentypen — Lückensatz, Zuordnen, Tabelle, Lückentext und Satzbau: <a href=\"/uebungen/grammatik/verben-praepositionen\">Workspace öffnen</a>",
-
   "akk.tab.uebung": "Übung",
   "akk.tab.regel": "Regel",
   "akk.mode.ariaLabel": "Übungsmodus",
@@ -386,7 +377,6 @@
   "akk.session.label": "Diese Sitzung",
   "akk.session.badge": "lokal · ohne Konto",
   "akk.session.stats": "{answered} von {total} beantwortet · {correct} richtig · {hints} Hinweise",
-
   "quiz.correctAnswered": "richtig beantwortet",
   "quiz.restart": "Nochmal üben",
   "quiz.inputPlaceholder": "Antwort eintippen…",
@@ -398,15 +388,12 @@
   "quiz.incorrect": "✗ Nicht ganz — richtig: {answer}",
   "quiz.next": "Weiter →",
   "quiz.showResult": "Ergebnis anzeigen →",
-
   "hub.hero.title": "Bereit zu üben?",
   "hub.hero.subtitle": "Wähle eine Übung oder starte direkt mit deiner nächsten Prüfungsvorbereitung.",
   "hub.pill.exercises": "{n} Übungen",
   "hub.pill.exams": "{n} Prüfungen",
-
   "grammatik.card.comingSoonTitle": "Weiteres Thema",
   "grammatik.card.comingSoonDesc": "Noch nicht verfügbar.",
-
   "hub.mode.grid": "Übungen & Prüfungen",
   "hub.mode.dashboard": "Mein Fortschritt",
   "hub.pill.words": "{n} Wörter A1–A2",
@@ -432,7 +419,6 @@
   "front.slogan.sub": "Kostenlos, ohne Konto — von Lehrkräften, die wirklich unterrichten.",
   "home.stats.tools": "Übungstools",
   "home.stats.price": "Kosten",
-
   "picker.title": "Was willst du üben?",
   "picker.total": "{n} Werkzeuge, in fünf Richtungen sortiert.",
   "picker.all.cta": "Lieber die ganze Liste sehen",
@@ -458,5 +444,9 @@
   "group.short.sprechen": "Sprechen",
   "group.short.lesen": "Lesen",
   "group.short.kultur": "Kultur",
-  "group.count.bundeslaender": "{n} Bundesländer"
+  "group.count.bundeslaender": "{n} Bundesländer",
+  "level.a1.blurb": "Erste Sätze",
+  "level.a2.blurb": "Alltag auf Deutsch",
+  "level.b1.blurb": "Selbstständig sprechen",
+  "level.b2.blurb": "Sicher argumentieren"
 }

@@ -1,79 +1,78 @@
 ---
 import Layout from "../../layouts/Layout.astro";
-import PracticeHeader from "../../components/PracticeHeader.astro";
+import ExamShell from "../../components/ExamShell.astro";
 import ExamPractice from "../../components/ExamPractice.astro";
-import "../../styles/practice.css";
-import "../../styles/pruefungen.css";
 ---
 <Layout
   title="DTZ – DeutschAcademy"
   description="Deutsch-Test für Zuwanderer (DTZ): Niveau, Prüfungsteile und ein kostenloser, sourcierter Mock-Test zum Leseverstehen."
 >
-  <PracticeHeader title="DTZ" />
-  <main class="practice-main">
-    <div class="practice-hero">
-      <p class="eyebrow">Prüfung</p>
-      <h1>Deutsch-Test für Zuwanderer (DTZ)</h1>
-      <p>Die Abschlussprüfung eines staatlich geförderten Integrationskurses — Ergebnis auf Niveau A2 oder B1.</p>
-    </div>
+  <ExamShell
+    header="DTZ"
+    title="Deutsch-Test für Zuwanderer (DTZ)"
+    lead="Die Abschlussprüfung eines staatlich geförderten Integrationskurses — Ergebnis auf Niveau A2 oder B1."
+    badges={["A2 / B1"]}
+    practiceHeading="Für den DTZ üben"
+  >
+    <Fragment slot="info">
+      <section class="exam-section">
+        <h2>Für wen ist der DTZ?</h2>
+        <div class="exam-meta-row">
+          <span class="exam-meta-badge">Ergebnis: A2 oder B1</span>
+          <span class="exam-meta-badge">Ende des Integrationskurses</span>
+        </div>
+        <p>
+          Der DTZ steht am Ende eines Integrationskurses und ist für viele Zuwanderer in Deutschland
+          relevant — unter anderem für den Nachweis von Deutschkenntnissen bei einem unbefristeten
+          Aufenthaltstitel. Je nach erreichter Punktzahl wird entweder das Sprachniveau A2 oder B1
+          bescheinigt.
+        </p>
+      </section>
 
-    <section class="exam-section">
-      <h2>Für wen ist der DTZ?</h2>
-      <div class="exam-meta-row">
-        <span class="exam-meta-badge">Ergebnis: A2 oder B1</span>
-        <span class="exam-meta-badge">Ende des Integrationskurses</span>
-      </div>
-      <p>
-        Der DTZ steht am Ende eines Integrationskurses und ist für viele Zuwanderer in Deutschland
-        relevant — unter anderem für den Nachweis von Deutschkenntnissen bei einem unbefristeten
-        Aufenthaltstitel. Je nach erreichter Punktzahl wird entweder das Sprachniveau A2 oder B1
-        bescheinigt.
-      </p>
-    </section>
+      <section class="exam-section">
+        <h2>Geprüfte Fertigkeiten</h2>
+        <div class="skill-grid">
+          <div class="skill-card"><div class="skill-card-icon">📖</div><h4>Lesen</h4><p>Leseverstehen</p></div>
+          <div class="skill-card"><div class="skill-card-icon">🎧</div><h4>Hören</h4><p>Hörverstehen</p></div>
+          <div class="skill-card"><div class="skill-card-icon">✍️</div><h4>Schreiben</h4><p>Zwei Schreibaufgaben</p></div>
+          <div class="skill-card"><div class="skill-card-icon">🗣️</div><h4>Sprechen</h4><p>Mündliche Prüfung, meist paarweise</p></div>
+        </div>
+      </section>
 
-    <section class="exam-section">
-      <h2>Geprüfte Fertigkeiten</h2>
-      <div class="skill-grid">
-        <div class="skill-card"><div class="skill-card-icon">📖</div><h4>Lesen</h4><p>Leseverstehen</p></div>
-        <div class="skill-card"><div class="skill-card-icon">🎧</div><h4>Hören</h4><p>Hörverstehen</p></div>
-        <div class="skill-card"><div class="skill-card-icon">✍️</div><h4>Schreiben</h4><p>Zwei Schreibaufgaben</p></div>
-        <div class="skill-card"><div class="skill-card-icon">🗣️</div><h4>Sprechen</h4><p>Mündliche Prüfung, meist paarweise</p></div>
-      </div>
-    </section>
+      <section class="exam-section">
+        <h2>Format</h2>
+        <div class="format-table-wrap">
+          <table class="format-table">
+            <thead><tr><th>Teil</th><th>Was wird geprüft</th><th>Quelle</th></tr></thead>
+            <tbody>
+              <tr><td>Lesen: Anzeigen zuordnen</td><td>Kurze Anzeigen passenden Personenbeschreibungen zuordnen</td><td>Eigenes Unterrichtsmaterial</td></tr>
+              <tr><td>Lesen: Richtig/Falsch</td><td>Zeitungsartikel verstehen und Aussagen bewerten</td><td>Eigenes Unterrichtsmaterial</td></tr>
+              <tr><td>Lesen: Forum &amp; Interview</td><td>Aussagen Personen zuordnen; Interview verstehen</td><td>Eigenes Unterrichtsmaterial</td></tr>
+              <tr><td>Lesen: Formular</td><td>Informationen aus einer E-Mail in ein Formular übertragen</td><td>Eigenes Unterrichtsmaterial</td></tr>
+              <tr><td>Schreiben</td><td>Persönliche Antwort-Mail + formeller Brief</td><td>Eigenes Unterrichtsmaterial</td></tr>
+              <tr><td>Sprechen, Teil 2: Bildbeschreibung</td><td>Ein Bild beschreiben, dann persönliche Nachfragen beantworten</td><td>Eigenes Unterrichtsmaterial — 90 Sek. Beschreibung + 90 Sek. Nachfragen</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="format-note">
+          Die Aufgabentypen oben stammen aus dem eigenen DTZ-Unterrichtsmaterial, das auch unsere
+          interaktive <a href="/uebungen/lesen-schreiben">Lesen &amp; Schreiben</a>- und
+          <a href="/uebungen/sprechen">Sprechen</a>-Übung speist. Für die offizielle Gesamtdauer der
+          Prüfung liegt uns keine eigene Quelle vor — dafür prüfe den Modellsatz des BAMF/telc.
+        </p>
 
-    <section class="exam-section">
-      <h2>Format</h2>
-      <div class="format-table-wrap">
-        <table class="format-table">
-          <thead><tr><th>Teil</th><th>Was wird geprüft</th><th>Quelle</th></tr></thead>
-          <tbody>
-            <tr><td>Lesen: Anzeigen zuordnen</td><td>Kurze Anzeigen passenden Personenbeschreibungen zuordnen</td><td>Eigenes Unterrichtsmaterial</td></tr>
-            <tr><td>Lesen: Richtig/Falsch</td><td>Zeitungsartikel verstehen und Aussagen bewerten</td><td>Eigenes Unterrichtsmaterial</td></tr>
-            <tr><td>Lesen: Forum &amp; Interview</td><td>Aussagen Personen zuordnen; Interview verstehen</td><td>Eigenes Unterrichtsmaterial</td></tr>
-            <tr><td>Lesen: Formular</td><td>Informationen aus einer E-Mail in ein Formular übertragen</td><td>Eigenes Unterrichtsmaterial</td></tr>
-            <tr><td>Schreiben</td><td>Persönliche Antwort-Mail + formeller Brief</td><td>Eigenes Unterrichtsmaterial</td></tr>
-            <tr><td>Sprechen, Teil 2: Bildbeschreibung</td><td>Ein Bild beschreiben, dann persönliche Nachfragen beantworten</td><td>Eigenes Unterrichtsmaterial — 90 Sek. Beschreibung + 90 Sek. Nachfragen</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <p class="format-note">
-        Die Aufgabentypen oben stammen aus dem eigenen DTZ-Unterrichtsmaterial, das auch unsere
-        interaktive <a href="/uebungen/lesen-schreiben">Lesen &amp; Schreiben</a>- und
-        <a href="/uebungen/sprechen">Sprechen</a>-Übung speist. Für die offizielle Gesamtdauer der
-        Prüfung liegt uns keine eigene Quelle vor — dafür prüfe den Modellsatz des BAMF/telc.
-      </p>
+        <h3>Wie der DTZ bewertet wird</h3>
+        <p>
+          Es gibt keine einzelne „Bestehensgrenze“ in Prozent. Hören und Lesen werden <strong>zusammen</strong>
+          ausgewertet: 20 Höraufgaben und 25 Leseaufgaben ergeben 45 Punkte. Ab <strong>33 Punkten</strong>
+          wird das Niveau B1 bescheinigt, ab <strong>20 Punkten</strong> A2. Schreiben und Sprechen werden
+          getrennt davon bewertet — auch dort wird jeweils A2 oder B1 ausgewiesen. Deshalb kann im Zeugnis
+          z. B. „Hören/Lesen B1, Schreiben A2“ stehen.
+        </p>
+      </section>
+    </Fragment>
 
-      <h3>Wie der DTZ bewertet wird</h3>
-      <p>
-        Es gibt keine einzelne „Bestehensgrenze“ in Prozent. Hören und Lesen werden <strong>zusammen</strong>
-        ausgewertet: 20 Höraufgaben und 25 Leseaufgaben ergeben 45 Punkte. Ab <strong>33 Punkten</strong>
-        wird das Niveau B1 bescheinigt, ab <strong>20 Punkten</strong> A2. Schreiben und Sprechen werden
-        getrennt davon bewertet — auch dort wird jeweils A2 oder B1 ausgewiesen. Deshalb kann im Zeugnis
-        z. B. „Hören/Lesen B1, Schreiben A2“ stehen.
-      </p>
-    </section>
-
-    <div class="mock-cta">
+    <div class="mock-cta mock-cta--lead">
       <h2>Kompletter Übungssatz im Prüfungsformat</h2>
       <p>
         Neun Prüfungsteile, 45 bewertete Aufgaben — Hören Teil 1–4 und Lesen Teil 1–5, dazu die
@@ -90,9 +89,9 @@ import "../../styles/pruefungen.css";
     </div>
 
     <ExamPractice
-      heading="Üben für den DTZ"
+      heading="Weiter üben"
       intro="Alle fünf Übungstools stammen aus echtem DTZ-Unterrichtsmaterial — die reichhaltigsten Übungen der ganzen Seite."
       tools={["artikel", "grammatik", "wortschatz", "sprechen", "lesen"]}
     />
-  </main>
+  </ExamShell>
 </Layout>

@@ -1,82 +1,21 @@
 ---
+// The curated deck: Redemittel and everyday phrases, hand-written rather than drawn from
+// the lexicon, and the only deck with all four translation languages filled in.
+// Lexicon decks — a whole level, or one Lernset — live at /uebungen/wortschatz/[deck].
+// This page keeps its own URL because it is the one every CTA on the site points at, and
+// because it is the only deck with ar/ru/tr filled in.
 import Layout from "../../layouts/Layout.astro";
-import PracticeHeader from "../../components/PracticeHeader.astro";
-import "../../styles/practice.css";
-import "../../styles/vokabeltrainer.css";
+import VokabelTrainer from "../../components/VokabelTrainer.astro";
 import wortschatz from "../../data/wortschatz.json";
-
-const languages = [
-  { code: "en", label: "English", deName: "Englisch", deInto: "Englische" },
-  { code: "ar", label: "العربية", deName: "Arabisch", deInto: "Arabische", rtl: true },
-  { code: "ru", label: "Русский", deName: "Russisch", deInto: "Russische" },
-  { code: "tr", label: "Türkçe", deName: "Türkisch", deInto: "Türkische" },
-];
 ---
 <Layout title="Wortschatz & Redemittel – DeutschAcademy">
-  <PracticeHeader title="Wortschatz & Redemittel" />
-
-  <main class="vt-shell" id="vt-page">
-    <div class="vt-inner">
-      <div class="vt-hero">
-        <p class="eyebrow" id="vt-eyebrow">Karteikarten</p>
-        <h1 data-i18n="wortschatz.hero.title">Redemittel & Alltagsvokabeln</h1>
-      </div>
-
-      <div class="vt-tool">
-        <div class="vt-tabs" id="vt-tabs">
-          <button class="vt-tab active" type="button" data-tab="cards" data-i18n="wortschatz.tab.cards">Karteikarten</button>
-          <button class="vt-tab" type="button" data-tab="learn" data-i18n="wortschatz.tab.learn">Lernen</button>
-          <button class="vt-tab" type="button" data-tab="test" data-i18n="wortschatz.tab.test">Testen</button>
-          <button class="vt-tab" type="button" data-tab="list" data-i18n="wortschatz.tab.list">Wortliste</button>
-        </div>
-
-        <div class="vt-toolbar">
-          <div class="vt-lang-tabs" id="vt-lang-tabs"></div>
-          <div class="vt-toolbar-right">
-            <label class="vt-direction">
-              <input type="checkbox" class="vt-switch" id="vt-dir-switch" checked />
-              <span id="vt-dir-label"></span>
-            </label>
-            <button class="vt-pill" id="vt-deck-chip" type="button"></button>
-            <span class="vt-position" id="vt-position"></span>
-          </div>
-        </div>
-
-        <div id="vt-content"></div>
-      </div>
-    </div>
-  </main>
-  <script type="application/json" id="fc-data" set:html={JSON.stringify(wortschatz)}></script>
-  <script type="application/json" id="fc-langs" set:html={JSON.stringify(languages)}></script>
-  <script type="module">
-    import { mountWortschatzApp } from "../../lib/wortschatz-app.js";
-    import { recordAttempt, recordSession } from "../../lib/progress.js";
-
-    const cards = JSON.parse(document.getElementById("fc-data").textContent);
-    const languages = JSON.parse(document.getElementById("fc-langs").textContent);
-
-    // Night mode used to be page-local here; it is now the site-wide toggle in the
-    // header, so .vt-shell just reads <html data-theme> from vokabeltrainer.css.
-
-    mountWortschatzApp(
-      {
-        tabsEl: document.getElementById("vt-tabs"),
-        langTabsEl: document.getElementById("vt-lang-tabs"),
-        dirSwitch: document.getElementById("vt-dir-switch"),
-        dirLabel: document.getElementById("vt-dir-label"),
-        deckChip: document.getElementById("vt-deck-chip"),
-        counterEl: document.getElementById("vt-position"),
-        contentEl: document.getElementById("vt-content"),
-        eyebrowEl: document.getElementById("vt-eyebrow"),
-      },
-      cards,
-      languages,
-      {
-        onAnswer: (ok, card) => {
-          recordAttempt({ skill: "wortschatz", correct: ok, id: card.front, trackVocab: true });
-        },
-        onSessionStart: () => recordSession("wortschatz"),
-      }
-    );
-  </script>
+  <VokabelTrainer
+    cards={wortschatz}
+    title="Wortschatz & Redemittel"
+    heading="Redemittel & Alltagsvokabeln"
+    headingKey="wortschatz.hero.title"
+    sub="Handgeschrieben, nicht aus dem Lexikon — und als einziges Deck in vier Sprachen."
+    deck="redemittel"
+    langs={["en", "ar", "ru", "tr"]}
+  />
 </Layout>

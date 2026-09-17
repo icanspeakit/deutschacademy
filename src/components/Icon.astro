@@ -22,6 +22,10 @@ const ICONS = {
   document: `<path d="M6 2h9l3 3v17H6V2Z"/><rect x="9" y="12" width="6" height="1.4" fill="#fff" opacity="0.9"/><rect x="9" y="16" width="6" height="1.4" fill="#fff" opacity="0.9"/>`,
   landmark: `<path d="M12 3 3 8h18L12 3Z"/><path d="M5 9h14v2H5V9Zm1 3h2v6H6v-6Zm4.5 0h2v6h-2v-6Zm4.5 0h2v6h-2v-6ZM4 19h16v2H4v-2Z"/>`,
   "graduation-cap": `<path d="M12 3 2 8l10 5 10-5-10-5Z"/><path d="M6 12.2v4.3c0 1.4 2.8 2.5 6 2.5s6-1.1 6-2.5v-4.3l-6 3-6-3Z" opacity="0.55"/>`,
+  // Added for the subject-focused nav: the Niveaus menu and the Profil entry, which
+  // are about the learner rather than about a kind of exercise.
+  layers: `<path d="M12 3 2 8l10 5 10-5-10-5Z"/><path d="m2 12 10 5 10-5-2.2-1.1L12 14.7 4.2 10.9 2 12Z" opacity="0.55"/><path d="m2 16 10 5 10-5-2.2-1.1L12 18.7 4.2 14.9 2 16Z" opacity="0.35"/>`,
+  user: `<circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0H4Z" opacity="0.55"/>`,
 };
 ---
 <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" set:html={ICONS[name]} />

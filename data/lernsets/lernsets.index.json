@@ -1,10 +1,10 @@
 {
-  "generated": "2026-09-14",
+  "generated": "2026-09-17",
   "note": "One row per Wortschatz-Lernset. A Lernset is one program unit (~25 words, one sitting). Counts are derived from the lexicon, never hand-typed. Words live in lernsets.<level>.json.",
   "totals": {
-    "built": 54,
+    "built": 120,
     "plannedModules": 55,
-    "words": 1350
+    "words": 3000
   },
   "lernsets": [
     {
@@ -1547,6 +1547,1919 @@
         "plural": 0,
         "verbformen": 0,
         "trennbare": 0,
+        "komparativ": 0,
+        "verbPraeposition": 0,
+        "aussprache": 0
+      }
+    },
+    {
+      "id": "b1-01",
+      "title": "Arbeitsrecht & Kündigung",
+      "level": "B1",
+      "moduleId": null,
+      "moduleTitle": null,
+      "topics": [
+        "arbeit"
+      ],
+      "status": "built",
+      "words": 25,
+      "ranked": 17,
+      "withExample": 25,
+      "pos": {
+        "noun": 17,
+        "verb": 4,
+        "adj": 4
+      },
+      "trainers": {
+        "karten": 25,
+        "artikel": 17,
+        "plural": 15,
+        "verbformen": 4,
+        "trennbare": 1,
+        "komparativ": 1,
+        "verbPraeposition": 0,
+        "aussprache": 0
+      }
+    },
+    {
+      "id": "b1-02",
+      "title": "Gesundheit & Versorgung",
+      "level": "B1",
+      "moduleId": null,
+      "moduleTitle": null,
+      "topics": [
+        "gesundheit"
+      ],
+      "status": "built",
+      "words": 25,
+      "ranked": 18,
+      "withExample": 25,
+      "pos": {
+        "noun": 18,
+        "verb": 5,
+        "adj": 2
+      },
+      "trainers": {
+        "karten": 25,
+        "artikel": 18,
+        "plural": 18,
+        "verbformen": 5,
+        "trennbare": 0,
+        "komparativ": 2,
+        "verbPraeposition": 0,
+        "aussprache": 0
+      }
+    },
+    {
+      "id": "b1-03",
+      "title": "Wohnen & Mietrecht",
+      "level": "B1",
+      "moduleId": null,
+      "moduleTitle": null,
+      "topics": [
+        "wohnen"
+      ],
+      "status": "built",
+      "words": 25,
+      "ranked": 10,
+      "withExample": 25,
+      "pos": {
+        "noun": 18,
+        "verb": 5,
+        "adj": 2
+      },
+      "trainers": {
+        "karten": 25,
+        "artikel": 17,
+        "plural": 17,
+        "verbformen": 5,
+        "trennbare": 0,
+        "komparativ": 1,
+        "verbPraeposition": 0,
+        "aussprache": 0
+      }
+    },
+    {
+      "id": "b1-04",
+      "title": "Behörden & Aufenthalt",
+      "level": "B1",
+      "moduleId": null,
+      "moduleTitle": null,
+      "topics": [
+        "aemter"
+      ],
+      "status": "built",
+      "words": 25,
+      "ranked": 12,
+      "withExample": 25,
+      "pos": {
+        "noun": 18,
+        "verb": 5,
+        "adj": 2
+      },
+      "trainers": {
+        "karten": 25,
+        "artikel": 18,
+        "plural": 17,
+        "verbformen": 5,
+        "trennbare": 0,
+        "komparativ": 0,
+        "verbPraeposition": 0,
+        "aussprache": 0
+      }
+    },
+    {
+      "id": "b1-05",
+      "title": "Bildung & Weiterbildung",
+      "level": "B1",
+      "moduleId": null,
+      "moduleTitle": null,
+      "topics": [
+        "bildung"
+      ],
+      "status": "built",
+      "words": 25,
+      "ranked": 10,
+      "withExample": 25,
+      "pos": {
+        "noun": 19,
+        "verb": 3,
+        "adj": 2,
+        "phrase": 1
+      },
+      "trainers": {
+        "karten": 25,
+        "artikel": 19,
+        "plural": 19,
+        "verbformen": 3,
+        "trennbare": 0,
+        "komparativ": 1,
+        "verbPraeposition": 0,
+        "aussprache": 0
+      }
+    },
+    {
+      "id": "b1-06",
+      "title": "Umwelt & Energie",
+      "level": "B1",
+      "moduleId": null,
+      "moduleTitle": null,
+      "topics": [
+        "umwelt"
+      ],
+      "status": "built",
+      "words": 25,
+      "ranked": 9,
+      "withExample": 25,
+      "pos": {
+        "noun": 18,
+        "verb": 5,
+        "adj": 2
+      },
+      "trainers": {
+        "karten": 25,
+        "artikel": 18,
+        "plural": 15,
+        "verbformen": 5,
+        "trennbare": 0,
+        "komparativ": 1,
+        "verbPraeposition": 0,
+        "aussprache": 0
+      }
+    },
+    {
+      "id": "b1-07",
+      "title": "Geld & Finanzen",
+      "level": "B1",
+      "moduleId": null,
+      "moduleTitle": null,
+      "topics": [
+        "geld"
+      ],
+      "status": "built",
+      "words": 25,
+      "ranked": 16,
+      "withExample": 25,
+      "pos": {
+        "noun": 22,
+        "adv": 2,
+        "verb": 1
+      },
+      "trainers": {
+        "karten": 25,
+        "artikel": 22,
+        "plural": 21,
+        "verbformen": 1,
+        "trennbare": 0,
+        "komparativ": 0,
+        "verbPraeposition": 0,
+        "aussprache": 0
+      }
+    },
+    {
+      "id": "b1-08",
+      "title": "Straße & Verkehr",
+      "level": "B1",
+      "moduleId": null,
+      "moduleTitle": null,
+      "topics": [
+        "verkehr"
+      ],
+      "status": "built",
+      "words": 25,
+      "ranked": 19,
+      "withExample": 25,
+      "pos": {
+        "noun": 21,
+        "verb": 4
+      },
+      "trainers": {
+        "karten": 25,
+        "artikel": 21,
+        "plural": 20,
+        "verbformen": 4,
+        "trennbare": 3,
+        "komparativ": 0,
+        "verbPraeposition": 0,
+        "aussprache": 0
+      }
+    },
+    {
+      "id": "b1-09",
+      "title": "Medien & Öffentlichkeit",
+      "level": "B1",
+      "moduleId": null,
+      "moduleTitle": null,
+      "topics": [
+        "medien"
+      ],
+      "status": "built",
+      "words": 25,
+      "ranked": 23,
+      "withExample": 25,
+      "pos": {
+        "noun": 21,
+        "verb": 4
+      },
+      "trainers": {
+        "karten": 25,
+        "artikel": 21,
+        "plural": 19,
+        "verbformen": 4,
+        "trennbare": 1,
+        "komparativ": 0,
+        "verbPraeposition": 0,
+        "aussprache": 0
+      }
+    },
+    {
+      "id": "b1-10",
+      "title": "Gespräch & Verständigung",
+      "level": "B1",
+      "moduleId": null,
+      "moduleTitle": null,
+      "topics": [
+        "kommunikation"
+      ],
+      "status": "built",
+      "words": 25,
+      "ranked": 25,
+      "withExample": 25,
+      "pos": {
+        "verb": 12,
+        "noun": 10,
+        "adj": 3
+      },
+      "trainers": {
+        "karten": 25,
+        "artikel": 10,
+        "plural": 10,
+        "verbformen": 12,
+        "trennbare": 4,
+        "komparativ": 3,
+        "verbPraeposition": 0,
+        "aussprache": 0
+      }
+    },
+    {
+      "id": "b1-11",
+      "title": "Gesellschaft & Zusammenleben",
+      "level": "B1",
+      "moduleId": null,
+      "moduleTitle": null,
+      "topics": [
+        "gesellschaft"
+      ],
+      "status": "built",
+      "words": 25,
+      "ranked": 24,
+      "withExample": 25,
+      "pos": {
+        "noun": 23,
+        "adj": 1,
+        "verb": 1
+      },
+      "trainers": {
+        "karten": 25,
+        "artikel": 23,
+        "plural": 20,
+        "verbformen": 1,
+        "trennbare": 0,
+        "komparativ": 1,
+        "verbPraeposition": 0,
+        "aussprache": 0
+      }
+    },
+    {
+      "id": "b1-12",
+      "title": "Recht & Verträge",
+      "level": "B1",
+      "moduleId": null,
+      "moduleTitle": null,
+      "topics": [
+        "recht"
+      ],
+      "status": "built",
+      "words": 25,
+      "ranked": 24,
+      "withExample": 25,
+      "pos": {
+        "noun": 16,
+        "verb": 5,
+        "adj": 4
+      },
+      "trainers": {
+        "karten": 25,
+        "artikel": 16,
+        "plural": 15,
+        "verbformen": 5,
+        "trennbare": 1,
+        "komparativ": 4,
+        "verbPraeposition": 0,
+        "aussprache": 0
+      }
+    },
+    {
+      "id": "b1-13",
+      "title": "Technik & Digitales",
+      "level": "B1",
+      "moduleId": null,
+      "moduleTitle": null,
+      "topics": [
+        "technik"
+      ],
+      "status": "built",
+      "words": 25,
+      "ranked": 24,
+      "withExample": 25,
+      "pos": {
+        "noun": 15,
+        "verb": 6,
+        "adj": 4
+      },
+      "trainers": {
+        "karten": 25,
+        "artikel": 15,
+        "plural": 15,
+        "verbformen": 6,
+        "trennbare": 3,
+        "komparativ": 1,
+        "verbPraeposition": 0,
+        "aussprache": 0
+      }
+    },
+    {
+      "id": "b1-14",
+      "title": "Freizeit & Verein",
+      "level": "B1",
+      "moduleId": null,
+      "moduleTitle": null,
+      "topics": [
+        "freizeit"
+      ],
+      "status": "built",
+      "words": 25,
+      "ranked": 22,
+      "withExample": 25,
+      "pos": {
+        "noun": 16,
+        "verb": 5,
+        "adj": 4
+      },
+      "trainers": {
+        "karten": 25,
+        "artikel": 16,
+        "plural": 15,
+        "verbformen": 5,
+        "trennbare": 2,
+        "komparativ": 4,
+        "verbPraeposition": 0,
+        "aussprache": 0
+      }
+    },
+    {
+      "id": "b1-15",
+      "title": "Reise & Unterwegs",
+      "level": "B1",
+      "moduleId": null,
+      "moduleTitle": null,
+      "topics": [
+        "reisen"
+      ],
+      "status": "built",
+      "words": 25,
+      "ranked": 20,
+      "withExample": 25,
+      "pos": {
+        "noun": 16,
+        "verb": 5,
+        "adj": 4
+      },
+      "trainers": {
+        "karten": 25,
+        "artikel": 16,
+        "plural": 15,
+        "verbformen": 5,
+        "trennbare": 2,
+        "komparativ": 3,
+        "verbPraeposition": 0,
+        "aussprache": 0
+      }
+    },
+    {
+      "id": "b1-16",
+      "title": "Ernährung & Einkauf",
+      "level": "B1",
+      "moduleId": null,
+      "moduleTitle": null,
+      "topics": [
+        "essen"
+      ],
+      "status": "built",
+      "words": 25,
+      "ranked": 12,
+      "withExample": 25,
+      "pos": {
+        "noun": 16,
+        "verb": 5,
+        "adj": 4
+      },
+      "trainers": {
+        "karten": 25,
+        "artikel": 16,
+        "plural": 15,
+        "verbformen": 5,
+        "trennbare": 2,
+        "komparativ": 3,
+        "verbPraeposition": 1,
+        "aussprache": 0
+      }
+    },
+    {
+      "id": "b1-17",
+      "title": "Ankommen & Integration",
+      "level": "B1",
+      "moduleId": null,
+      "moduleTitle": null,
+      "topics": [
+        "migration"
+      ],
+      "status": "built",
+      "words": 25,
+      "ranked": 13,
+      "withExample": 25,
+      "pos": {
+        "noun": 16,
+        "verb": 5,
+        "adj": 4
+      },
+      "trainers": {
+        "karten": 25,
+        "artikel": 16,
+        "plural": 14,
+        "verbformen": 5,
+        "trennbare": 4,
+        "komparativ": 1,
+        "verbPraeposition": 0,
+        "aussprache": 0
+      }
+    },
+    {
+      "id": "b1-18",
+      "title": "Politik & Staat",
+      "level": "B1",
+      "moduleId": null,
+      "moduleTitle": null,
+      "topics": [
+        "politik"
+      ],
+      "status": "built",
+      "words": 25,
+      "ranked": 23,
+      "withExample": 25,
+      "pos": {
+        "noun": 16,
+        "verb": 5,
+        "adj": 4
+      },
+      "trainers": {
+        "karten": 25,
+        "artikel": 16,
+        "plural": 16,
+        "verbformen": 5,
+        "trennbare": 1,
+        "komparativ": 4,
+        "verbPraeposition": 0,
+        "aussprache": 0
+      }
+    },
+    {
+      "id": "b1-19",
+      "title": "Wirtschaft & Arbeitsmarkt",
+      "level": "B1",
+      "moduleId": null,
+      "moduleTitle": null,
+      "topics": [
+        "wirtschaft"
+      ],
+      "status": "built",
+      "words": 25,
+      "ranked": 22,
+      "withExample": 25,
+      "pos": {
+        "noun": 16,
+        "verb": 5,
+        "adj": 4
+      },
+      "trainers": {
+        "karten": 25,
+        "artikel": 16,
+        "plural": 15,
+        "verbformen": 5,
+        "trennbare": 0,
+        "komparativ": 4,
+        "verbPraeposition": 0,
+        "aussprache": 0
+      }
+    },
+    {
+      "id": "b1-20",
+      "title": "Kultur & Traditionen",
+      "level": "B1",
+      "moduleId": null,
+      "moduleTitle": null,
+      "topics": [
+        "kultur"
+      ],
+      "status": "built",
+      "words": 25,
+      "ranked": 24,
+      "withExample": 25,
+      "pos": {
+        "noun": 16,
+        "verb": 5,
+        "adj": 4
+      },
+      "trainers": {
+        "karten": 25,
+        "artikel": 16,
+        "plural": 16,
+        "verbformen": 5,
+        "trennbare": 1,
+        "komparativ": 4,
+        "verbPraeposition": 0,
+        "aussprache": 0
+      }
+    },
+    {
+      "id": "b1-21",
+      "title": "Denken & Fühlen",
+      "level": "B1",
+      "moduleId": null,
+      "moduleTitle": null,
+      "topics": [
+        "psychologie"
+      ],
+      "status": "built",
+      "words": 25,
+      "ranked": 25,
+      "withExample": 25,
+      "pos": {
+        "noun": 16,
+        "verb": 5,
+        "adj": 4
+      },
+      "trainers": {
+        "karten": 25,
+        "artikel": 16,
+        "plural": 11,
+        "verbformen": 5,
+        "trennbare": 1,
+        "komparativ": 3,
+        "verbPraeposition": 0,
+        "aussprache": 0
+      }
+    },
+    {
+      "id": "b1-22",
+      "title": "Körper & Bewegung",
+      "level": "B1",
+      "moduleId": null,
+      "moduleTitle": null,
+      "topics": [
+        "koerper"
+      ],
+      "status": "built",
+      "words": 25,
+      "ranked": 25,
+      "withExample": 25,
+      "pos": {
+        "noun": 16,
+        "verb": 5,
+        "adj": 4
+      },
+      "trainers": {
+        "karten": 25,
+        "artikel": 16,
+        "plural": 15,
+        "verbformen": 5,
+        "trennbare": 0,
+        "komparativ": 4,
+        "verbPraeposition": 0,
+        "aussprache": 0
+      }
+    },
+    {
+      "id": "b1-23",
+      "title": "Familie & Erziehung",
+      "level": "B1",
+      "moduleId": null,
+      "moduleTitle": null,
+      "topics": [
+        "familie"
+      ],
+      "status": "built",
+      "words": 25,
+      "ranked": 23,
+      "withExample": 25,
+      "pos": {
+        "noun": 16,
+        "verb": 5,
+        "adj": 4
+      },
+      "trainers": {
+        "karten": 25,
+        "artikel": 16,
+        "plural": 14,
+        "verbformen": 5,
+        "trennbare": 1,
+        "komparativ": 1,
+        "verbPraeposition": 0,
+        "aussprache": 0
+      }
+    },
+    {
+      "id": "b1-24",
+      "title": "Konsum & Verbraucher",
+      "level": "B1",
+      "moduleId": null,
+      "moduleTitle": null,
+      "topics": [
+        "einkaufen"
+      ],
+      "status": "built",
+      "words": 25,
+      "ranked": 18,
+      "withExample": 25,
+      "pos": {
+        "noun": 16,
+        "verb": 5,
+        "adj": 4
+      },
+      "trainers": {
+        "karten": 25,
+        "artikel": 16,
+        "plural": 14,
+        "verbformen": 5,
+        "trennbare": 2,
+        "komparativ": 3,
+        "verbPraeposition": 0,
+        "aussprache": 0
+      }
+    },
+    {
+      "id": "b1-25",
+      "title": "Stadt & Wohnumfeld",
+      "level": "B1",
+      "moduleId": null,
+      "moduleTitle": null,
+      "topics": [
+        "stadt"
+      ],
+      "status": "built",
+      "words": 25,
+      "ranked": 19,
+      "withExample": 25,
+      "pos": {
+        "noun": 16,
+        "verb": 5,
+        "adj": 4
+      },
+      "trainers": {
+        "karten": 25,
+        "artikel": 16,
+        "plural": 16,
+        "verbformen": 5,
+        "trennbare": 2,
+        "komparativ": 3,
+        "verbPraeposition": 0,
+        "aussprache": 0
+      }
+    },
+    {
+      "id": "b1-26",
+      "title": "Natur & Landschaft",
+      "level": "B1",
+      "moduleId": null,
+      "moduleTitle": null,
+      "topics": [
+        "natur"
+      ],
+      "status": "built",
+      "words": 25,
+      "ranked": 25,
+      "withExample": 25,
+      "pos": {
+        "noun": 16,
+        "verb": 5,
+        "adj": 4
+      },
+      "trainers": {
+        "karten": 25,
+        "artikel": 16,
+        "plural": 16,
+        "verbformen": 5,
+        "trennbare": 0,
+        "komparativ": 4,
+        "verbPraeposition": 0,
+        "aussprache": 0
+      }
+    },
+    {
+      "id": "b1-27",
+      "title": "Wetter & Klima",
+      "level": "B1",
+      "moduleId": null,
+      "moduleTitle": null,
+      "topics": [
+        "wetter"
+      ],
+      "status": "built",
+      "words": 25,
+      "ranked": 20,
+      "withExample": 25,
+      "pos": {
+        "noun": 16,
+        "verb": 5,
+        "adj": 4
+      },
+      "trainers": {
+        "karten": 25,
+        "artikel": 16,
+        "plural": 12,
+        "verbformen": 5,
+        "trennbare": 2,
+        "komparativ": 4,
+        "verbPraeposition": 0,
+        "aussprache": 0
+      }
+    },
+    {
+      "id": "b1-28",
+      "title": "Sprache & Lernen",
+      "level": "B1",
+      "moduleId": null,
+      "moduleTitle": null,
+      "topics": [
+        "sprache"
+      ],
+      "status": "built",
+      "words": 25,
+      "ranked": 19,
+      "withExample": 25,
+      "pos": {
+        "noun": 16,
+        "verb": 5,
+        "adj": 4
+      },
+      "trainers": {
+        "karten": 25,
+        "artikel": 16,
+        "plural": 16,
+        "verbformen": 5,
+        "trennbare": 1,
+        "komparativ": 1,
+        "verbPraeposition": 0,
+        "aussprache": 0
+      }
+    },
+    {
+      "id": "b1-29",
+      "title": "Kleidung & Stil",
+      "level": "B1",
+      "moduleId": null,
+      "moduleTitle": null,
+      "topics": [
+        "kleidung"
+      ],
+      "status": "built",
+      "words": 25,
+      "ranked": 25,
+      "withExample": 25,
+      "pos": {
+        "noun": 16,
+        "verb": 5,
+        "adj": 4
+      },
+      "trainers": {
+        "karten": 25,
+        "artikel": 16,
+        "plural": 16,
+        "verbformen": 5,
+        "trennbare": 1,
+        "komparativ": 4,
+        "verbPraeposition": 0,
+        "aussprache": 0
+      }
+    },
+    {
+      "id": "b1-30",
+      "title": "Zeit & Planung",
+      "level": "B1",
+      "moduleId": null,
+      "moduleTitle": null,
+      "topics": [
+        "zeit"
+      ],
+      "status": "built",
+      "words": 25,
+      "ranked": 24,
+      "withExample": 25,
+      "pos": {
+        "noun": 16,
+        "verb": 5,
+        "adj": 4
+      },
+      "trainers": {
+        "karten": 25,
+        "artikel": 16,
+        "plural": 15,
+        "verbformen": 5,
+        "trennbare": 2,
+        "komparativ": 2,
+        "verbPraeposition": 0,
+        "aussprache": 0
+      }
+    },
+    {
+      "id": "b1-31",
+      "title": "Wissenschaft & Forschung",
+      "level": "B1",
+      "moduleId": null,
+      "moduleTitle": null,
+      "topics": [
+        "wissenschaft"
+      ],
+      "status": "built",
+      "words": 25,
+      "ranked": 25,
+      "withExample": 25,
+      "pos": {
+        "noun": 16,
+        "verb": 5,
+        "adj": 4
+      },
+      "trainers": {
+        "karten": 25,
+        "artikel": 16,
+        "plural": 16,
+        "verbformen": 5,
+        "trennbare": 0,
+        "komparativ": 4,
+        "verbPraeposition": 0,
+        "aussprache": 0
+      }
+    },
+    {
+      "id": "b1-32",
+      "title": "Berufsalltag & Karriere",
+      "level": "B1",
+      "moduleId": null,
+      "moduleTitle": null,
+      "topics": [
+        "arbeit"
+      ],
+      "status": "built",
+      "words": 25,
+      "ranked": 16,
+      "withExample": 25,
+      "pos": {
+        "noun": 16,
+        "verb": 5,
+        "adj": 4
+      },
+      "trainers": {
+        "karten": 25,
+        "artikel": 16,
+        "plural": 14,
+        "verbformen": 5,
+        "trennbare": 3,
+        "komparativ": 2,
+        "verbPraeposition": 0,
+        "aussprache": 0
+      }
+    },
+    {
+      "id": "b1-33",
+      "title": "Klinik & Pflege",
+      "level": "B1",
+      "moduleId": null,
+      "moduleTitle": null,
+      "topics": [
+        "gesundheit"
+      ],
+      "status": "built",
+      "words": 25,
+      "ranked": 20,
+      "withExample": 25,
+      "pos": {
+        "noun": 16,
+        "verb": 5,
+        "adj": 4
+      },
+      "trainers": {
+        "karten": 25,
+        "artikel": 16,
+        "plural": 14,
+        "verbformen": 5,
+        "trennbare": 1,
+        "komparativ": 2,
+        "verbPraeposition": 0,
+        "aussprache": 0
+      }
+    },
+    {
+      "id": "b1-34",
+      "title": "Einrichtung & Energie",
+      "level": "B1",
+      "moduleId": null,
+      "moduleTitle": null,
+      "topics": [
+        "wohnen"
+      ],
+      "status": "built",
+      "words": 25,
+      "ranked": 21,
+      "withExample": 25,
+      "pos": {
+        "noun": 16,
+        "verb": 5,
+        "adj": 4
+      },
+      "trainers": {
+        "karten": 25,
+        "artikel": 16,
+        "plural": 16,
+        "verbformen": 5,
+        "trennbare": 1,
+        "komparativ": 1,
+        "verbPraeposition": 0,
+        "aussprache": 0
+      }
+    },
+    {
+      "id": "b1-35",
+      "title": "Anträge & Sozialleistungen",
+      "level": "B1",
+      "moduleId": null,
+      "moduleTitle": null,
+      "topics": [
+        "aemter"
+      ],
+      "status": "built",
+      "words": 25,
+      "ranked": 14,
+      "withExample": 25,
+      "pos": {
+        "noun": 16,
+        "verb": 5,
+        "adj": 4
+      },
+      "trainers": {
+        "karten": 25,
+        "artikel": 16,
+        "plural": 15,
+        "verbformen": 5,
+        "trennbare": 3,
+        "komparativ": 4,
+        "verbPraeposition": 0,
+        "aussprache": 0
+      }
+    },
+    {
+      "id": "b1-36",
+      "title": "Schule & Abschlüsse",
+      "level": "B1",
+      "moduleId": null,
+      "moduleTitle": null,
+      "topics": [
+        "bildung"
+      ],
+      "status": "built",
+      "words": 25,
+      "ranked": 16,
+      "withExample": 25,
+      "pos": {
+        "noun": 16,
+        "verb": 5,
+        "adj": 4
+      },
+      "trainers": {
+        "karten": 25,
+        "artikel": 16,
+        "plural": 16,
+        "verbformen": 5,
+        "trennbare": 3,
+        "komparativ": 3,
+        "verbPraeposition": 0,
+        "aussprache": 0
+      }
+    },
+    {
+      "id": "b1-37",
+      "title": "Budget & Vorsorge",
+      "level": "B1",
+      "moduleId": null,
+      "moduleTitle": null,
+      "topics": [
+        "geld"
+      ],
+      "status": "built",
+      "words": 25,
+      "ranked": 15,
+      "withExample": 25,
+      "pos": {
+        "noun": 16,
+        "verb": 5,
+        "adj": 4
+      },
+      "trainers": {
+        "karten": 25,
+        "artikel": 15,
+        "plural": 15,
+        "verbformen": 5,
+        "trennbare": 3,
+        "komparativ": 1,
+        "verbPraeposition": 0,
+        "aussprache": 0
+      }
+    },
+    {
+      "id": "b1-38",
+      "title": "Sicherheit im Verkehr",
+      "level": "B1",
+      "moduleId": null,
+      "moduleTitle": null,
+      "topics": [
+        "verkehr"
+      ],
+      "status": "built",
+      "words": 25,
+      "ranked": 15,
+      "withExample": 25,
+      "pos": {
+        "noun": 16,
+        "verb": 5,
+        "adj": 4
+      },
+      "trainers": {
+        "karten": 25,
+        "artikel": 16,
+        "plural": 15,
+        "verbformen": 5,
+        "trennbare": 2,
+        "komparativ": 3,
+        "verbPraeposition": 0,
+        "aussprache": 0
+      }
+    },
+    {
+      "id": "b1-39",
+      "title": "Information & Glaubwürdigkeit",
+      "level": "B1",
+      "moduleId": null,
+      "moduleTitle": null,
+      "topics": [
+        "medien"
+      ],
+      "status": "built",
+      "words": 25,
+      "ranked": 22,
+      "withExample": 25,
+      "pos": {
+        "noun": 16,
+        "verb": 5,
+        "adj": 4
+      },
+      "trainers": {
+        "karten": 25,
+        "artikel": 16,
+        "plural": 15,
+        "verbformen": 5,
+        "trennbare": 0,
+        "komparativ": 4,
+        "verbPraeposition": 0,
+        "aussprache": 0
+      }
+    },
+    {
+      "id": "b1-40",
+      "title": "Konflikt & Verständigung",
+      "level": "B1",
+      "moduleId": null,
+      "moduleTitle": null,
+      "topics": [
+        "kommunikation"
+      ],
+      "status": "built",
+      "words": 25,
+      "ranked": 25,
+      "withExample": 25,
+      "pos": {
+        "noun": 16,
+        "verb": 5,
+        "adj": 4
+      },
+      "trainers": {
+        "karten": 25,
+        "artikel": 16,
+        "plural": 15,
+        "verbformen": 5,
+        "trennbare": 1,
+        "komparativ": 4,
+        "verbPraeposition": 0,
+        "aussprache": 0
+      }
+    },
+    {
+      "id": "b1-41",
+      "title": "Soziales & Zusammenhalt",
+      "level": "B1",
+      "moduleId": null,
+      "moduleTitle": null,
+      "topics": [
+        "gesellschaft"
+      ],
+      "status": "built",
+      "words": 25,
+      "ranked": 13,
+      "withExample": 25,
+      "pos": {
+        "noun": 16,
+        "verb": 5,
+        "adj": 4
+      },
+      "trainers": {
+        "karten": 25,
+        "artikel": 16,
+        "plural": 13,
+        "verbformen": 5,
+        "trennbare": 1,
+        "komparativ": 3,
+        "verbPraeposition": 0,
+        "aussprache": 0
+      }
+    },
+    {
+      "id": "b1-42",
+      "title": "Polizei & Strafrecht",
+      "level": "B1",
+      "moduleId": null,
+      "moduleTitle": null,
+      "topics": [
+        "recht"
+      ],
+      "status": "built",
+      "words": 25,
+      "ranked": 22,
+      "withExample": 25,
+      "pos": {
+        "noun": 16,
+        "verb": 5,
+        "adj": 4
+      },
+      "trainers": {
+        "karten": 25,
+        "artikel": 16,
+        "plural": 16,
+        "verbformen": 5,
+        "trennbare": 3,
+        "komparativ": 3,
+        "verbPraeposition": 0,
+        "aussprache": 0
+      }
+    },
+    {
+      "id": "b1-43",
+      "title": "Maschinen & Werkstatt",
+      "level": "B1",
+      "moduleId": null,
+      "moduleTitle": null,
+      "topics": [
+        "technik"
+      ],
+      "status": "built",
+      "words": 25,
+      "ranked": 24,
+      "withExample": 25,
+      "pos": {
+        "noun": 16,
+        "verb": 5,
+        "adj": 4
+      },
+      "trainers": {
+        "karten": 25,
+        "artikel": 16,
+        "plural": 16,
+        "verbformen": 5,
+        "trennbare": 1,
+        "komparativ": 2,
+        "verbPraeposition": 0,
+        "aussprache": 0
+      }
+    },
+    {
+      "id": "b1-44",
+      "title": "Sport & Draußen",
+      "level": "B1",
+      "moduleId": null,
+      "moduleTitle": null,
+      "topics": [
+        "freizeit"
+      ],
+      "status": "built",
+      "words": 25,
+      "ranked": 20,
+      "withExample": 25,
+      "pos": {
+        "noun": 16,
+        "verb": 5,
+        "adj": 4
+      },
+      "trainers": {
+        "karten": 25,
+        "artikel": 16,
+        "plural": 16,
+        "verbformen": 5,
+        "trennbare": 1,
+        "komparativ": 4,
+        "verbPraeposition": 0,
+        "aussprache": 0
+      }
+    },
+    {
+      "id": "b1-45",
+      "title": "Unterwegs & Orientierung",
+      "level": "B1",
+      "moduleId": null,
+      "moduleTitle": null,
+      "topics": [
+        "reisen"
+      ],
+      "status": "built",
+      "words": 25,
+      "ranked": 18,
+      "withExample": 25,
+      "pos": {
+        "noun": 16,
+        "verb": 5,
+        "adj": 4
+      },
+      "trainers": {
+        "karten": 25,
+        "artikel": 16,
+        "plural": 16,
+        "verbformen": 5,
+        "trennbare": 2,
+        "komparativ": 2,
+        "verbPraeposition": 0,
+        "aussprache": 0
+      }
+    },
+    {
+      "id": "b1-46",
+      "title": "Essen außer Haus",
+      "level": "B1",
+      "moduleId": null,
+      "moduleTitle": null,
+      "topics": [
+        "essen"
+      ],
+      "status": "built",
+      "words": 25,
+      "ranked": 12,
+      "withExample": 25,
+      "pos": {
+        "noun": 16,
+        "verb": 5,
+        "adj": 4
+      },
+      "trainers": {
+        "karten": 25,
+        "artikel": 16,
+        "plural": 16,
+        "verbformen": 5,
+        "trennbare": 3,
+        "komparativ": 0,
+        "verbPraeposition": 0,
+        "aussprache": 0
+      }
+    },
+    {
+      "id": "b2-01",
+      "title": "Führung & Organisation",
+      "level": "B2",
+      "moduleId": null,
+      "moduleTitle": null,
+      "topics": [
+        "arbeit"
+      ],
+      "status": "built",
+      "words": 25,
+      "ranked": 12,
+      "withExample": 25,
+      "pos": {
+        "noun": 16,
+        "verb": 5,
+        "adj": 4
+      },
+      "trainers": {
+        "karten": 25,
+        "artikel": 16,
+        "plural": 15,
+        "verbformen": 5,
+        "trennbare": 1,
+        "komparativ": 2,
+        "verbPraeposition": 0,
+        "aussprache": 0
+      }
+    },
+    {
+      "id": "b2-02",
+      "title": "Markt & Globalisierung",
+      "level": "B2",
+      "moduleId": null,
+      "moduleTitle": null,
+      "topics": [
+        "wirtschaft"
+      ],
+      "status": "built",
+      "words": 25,
+      "ranked": 11,
+      "withExample": 25,
+      "pos": {
+        "noun": 16,
+        "verb": 5,
+        "adj": 4
+      },
+      "trainers": {
+        "karten": 25,
+        "artikel": 16,
+        "plural": 15,
+        "verbformen": 5,
+        "trennbare": 0,
+        "komparativ": 1,
+        "verbPraeposition": 0,
+        "aussprache": 0
+      }
+    },
+    {
+      "id": "b2-03",
+      "title": "Vertrag & Haftung",
+      "level": "B2",
+      "moduleId": null,
+      "moduleTitle": null,
+      "topics": [
+        "recht"
+      ],
+      "status": "built",
+      "words": 25,
+      "ranked": 18,
+      "withExample": 25,
+      "pos": {
+        "noun": 15,
+        "verb": 5,
+        "adj": 5
+      },
+      "trainers": {
+        "karten": 25,
+        "artikel": 15,
+        "plural": 15,
+        "verbformen": 5,
+        "trennbare": 2,
+        "komparativ": 1,
+        "verbPraeposition": 0,
+        "aussprache": 0
+      }
+    },
+    {
+      "id": "b2-04",
+      "title": "Staat & Verwaltung",
+      "level": "B2",
+      "moduleId": null,
+      "moduleTitle": null,
+      "topics": [
+        "politik"
+      ],
+      "status": "built",
+      "words": 25,
+      "ranked": 12,
+      "withExample": 25,
+      "pos": {
+        "noun": 17,
+        "adj": 5,
+        "verb": 3
+      },
+      "trainers": {
+        "karten": 25,
+        "artikel": 17,
+        "plural": 14,
+        "verbformen": 3,
+        "trennbare": 0,
+        "komparativ": 1,
+        "verbPraeposition": 0,
+        "aussprache": 0
+      }
+    },
+    {
+      "id": "b2-05",
+      "title": "Wandel & Demografie",
+      "level": "B2",
+      "moduleId": null,
+      "moduleTitle": null,
+      "topics": [
+        "gesellschaft"
+      ],
+      "status": "built",
+      "words": 25,
+      "ranked": 12,
+      "withExample": 25,
+      "pos": {
+        "noun": 16,
+        "adj": 5,
+        "verb": 4
+      },
+      "trainers": {
+        "karten": 25,
+        "artikel": 16,
+        "plural": 15,
+        "verbformen": 4,
+        "trennbare": 1,
+        "komparativ": 3,
+        "verbPraeposition": 0,
+        "aussprache": 0
+      }
+    },
+    {
+      "id": "b2-06",
+      "title": "Klimapolitik & Ressourcen",
+      "level": "B2",
+      "moduleId": null,
+      "moduleTitle": null,
+      "topics": [
+        "umwelt"
+      ],
+      "status": "built",
+      "words": 25,
+      "ranked": 8,
+      "withExample": 25,
+      "pos": {
+        "noun": 15,
+        "verb": 5,
+        "adj": 5
+      },
+      "trainers": {
+        "karten": 25,
+        "artikel": 15,
+        "plural": 12,
+        "verbformen": 5,
+        "trennbare": 2,
+        "komparativ": 4,
+        "verbPraeposition": 0,
+        "aussprache": 0
+      }
+    },
+    {
+      "id": "b2-07",
+      "title": "Digitalisierung & Sicherheit",
+      "level": "B2",
+      "moduleId": null,
+      "moduleTitle": null,
+      "topics": [
+        "technik"
+      ],
+      "status": "built",
+      "words": 25,
+      "ranked": 11,
+      "withExample": 25,
+      "pos": {
+        "noun": 16,
+        "verb": 5,
+        "adj": 4
+      },
+      "trainers": {
+        "karten": 25,
+        "artikel": 16,
+        "plural": 15,
+        "verbformen": 5,
+        "trennbare": 1,
+        "komparativ": 2,
+        "verbPraeposition": 0,
+        "aussprache": 0
+      }
+    },
+    {
+      "id": "b2-08",
+      "title": "Methode & Erkenntnis",
+      "level": "B2",
+      "moduleId": null,
+      "moduleTitle": null,
+      "topics": [
+        "wissenschaft"
+      ],
+      "status": "built",
+      "words": 25,
+      "ranked": 16,
+      "withExample": 25,
+      "pos": {
+        "noun": 15,
+        "verb": 5,
+        "adj": 5
+      },
+      "trainers": {
+        "karten": 25,
+        "artikel": 15,
+        "plural": 15,
+        "verbformen": 5,
+        "trennbare": 0,
+        "komparativ": 4,
+        "verbPraeposition": 0,
+        "aussprache": 0
+      }
+    },
+    {
+      "id": "b2-09",
+      "title": "Öffentlichkeit & Debatte",
+      "level": "B2",
+      "moduleId": null,
+      "moduleTitle": null,
+      "topics": [
+        "medien"
+      ],
+      "status": "built",
+      "words": 25,
+      "ranked": 12,
+      "withExample": 25,
+      "pos": {
+        "noun": 16,
+        "verb": 5,
+        "adj": 4
+      },
+      "trainers": {
+        "karten": 25,
+        "artikel": 16,
+        "plural": 16,
+        "verbformen": 5,
+        "trennbare": 2,
+        "komparativ": 4,
+        "verbPraeposition": 0,
+        "aussprache": 0
+      }
+    },
+    {
+      "id": "b2-10",
+      "title": "Hochschule & Studium",
+      "level": "B2",
+      "moduleId": null,
+      "moduleTitle": null,
+      "topics": [
+        "bildung"
+      ],
+      "status": "built",
+      "words": 25,
+      "ranked": 12,
+      "withExample": 25,
+      "pos": {
+        "noun": 15,
+        "verb": 5,
+        "adj": 5
+      },
+      "trainers": {
+        "karten": 25,
+        "artikel": 15,
+        "plural": 15,
+        "verbformen": 5,
+        "trennbare": 1,
+        "komparativ": 2,
+        "verbPraeposition": 0,
+        "aussprache": 0
+      }
+    },
+    {
+      "id": "b2-11",
+      "title": "Prävention & Gesundheitssystem",
+      "level": "B2",
+      "moduleId": null,
+      "moduleTitle": null,
+      "topics": [
+        "gesundheit"
+      ],
+      "status": "built",
+      "words": 25,
+      "ranked": 14,
+      "withExample": 25,
+      "pos": {
+        "noun": 16,
+        "verb": 5,
+        "adj": 4
+      },
+      "trainers": {
+        "karten": 25,
+        "artikel": 16,
+        "plural": 13,
+        "verbformen": 5,
+        "trennbare": 2,
+        "komparativ": 2,
+        "verbPraeposition": 0,
+        "aussprache": 0
+      }
+    },
+    {
+      "id": "b2-12",
+      "title": "Verhalten & Therapie",
+      "level": "B2",
+      "moduleId": null,
+      "moduleTitle": null,
+      "topics": [
+        "psychologie"
+      ],
+      "status": "built",
+      "words": 25,
+      "ranked": 18,
+      "withExample": 25,
+      "pos": {
+        "noun": 15,
+        "verb": 5,
+        "adj": 5
+      },
+      "trainers": {
+        "karten": 25,
+        "artikel": 15,
+        "plural": 14,
+        "verbformen": 5,
+        "trennbare": 2,
+        "komparativ": 2,
+        "verbPraeposition": 0,
+        "aussprache": 0
+      }
+    },
+    {
+      "id": "b2-13",
+      "title": "Flucht & Teilhabe",
+      "level": "B2",
+      "moduleId": null,
+      "moduleTitle": null,
+      "topics": [
+        "migration"
+      ],
+      "status": "built",
+      "words": 25,
+      "ranked": 10,
+      "withExample": 25,
+      "pos": {
+        "noun": 15,
+        "verb": 5,
+        "adj": 5
+      },
+      "trainers": {
+        "karten": 25,
+        "artikel": 15,
+        "plural": 12,
+        "verbformen": 5,
+        "trennbare": 4,
+        "komparativ": 2,
+        "verbPraeposition": 0,
+        "aussprache": 0
+      }
+    },
+    {
+      "id": "b2-14",
+      "title": "Kunstbetrieb & Erbe",
+      "level": "B2",
+      "moduleId": null,
+      "moduleTitle": null,
+      "topics": [
+        "kultur"
+      ],
+      "status": "built",
+      "words": 25,
+      "ranked": 18,
+      "withExample": 25,
+      "pos": {
+        "noun": 16,
+        "verb": 5,
+        "adj": 4
+      },
+      "trainers": {
+        "karten": 25,
+        "artikel": 16,
+        "plural": 13,
+        "verbformen": 5,
+        "trennbare": 0,
+        "komparativ": 4,
+        "verbPraeposition": 0,
+        "aussprache": 0
+      }
+    },
+    {
+      "id": "b2-15",
+      "title": "Stil & Register",
+      "level": "B2",
+      "moduleId": null,
+      "moduleTitle": null,
+      "topics": [
+        "sprache"
+      ],
+      "status": "built",
+      "words": 25,
+      "ranked": 13,
+      "withExample": 25,
+      "pos": {
+        "noun": 16,
+        "verb": 5,
+        "adj": 4
+      },
+      "trainers": {
+        "karten": 25,
+        "artikel": 16,
+        "plural": 16,
+        "verbformen": 5,
+        "trennbare": 1,
+        "komparativ": 4,
+        "verbPraeposition": 0,
+        "aussprache": 0
+      }
+    },
+    {
+      "id": "b2-16",
+      "title": "Stadtentwicklung & Wohnraum",
+      "level": "B2",
+      "moduleId": null,
+      "moduleTitle": null,
+      "topics": [
+        "stadt"
+      ],
+      "status": "built",
+      "words": 25,
+      "ranked": 5,
+      "withExample": 25,
+      "pos": {
+        "noun": 16,
+        "verb": 5,
+        "adj": 4
+      },
+      "trainers": {
+        "karten": 25,
+        "artikel": 16,
+        "plural": 15,
+        "verbformen": 5,
+        "trennbare": 2,
+        "komparativ": 2,
+        "verbPraeposition": 0,
+        "aussprache": 0
+      }
+    },
+    {
+      "id": "b2-17",
+      "title": "Naturschutz & Landnutzung",
+      "level": "B2",
+      "moduleId": null,
+      "moduleTitle": null,
+      "topics": [
+        "natur"
+      ],
+      "status": "built",
+      "words": 25,
+      "ranked": 9,
+      "withExample": 25,
+      "pos": {
+        "noun": 16,
+        "verb": 5,
+        "adj": 4
+      },
+      "trainers": {
+        "karten": 25,
+        "artikel": 16,
+        "plural": 14,
+        "verbformen": 5,
+        "trennbare": 2,
+        "komparativ": 2,
+        "verbPraeposition": 0,
+        "aussprache": 0
+      }
+    },
+    {
+      "id": "b2-18",
+      "title": "Finanzmarkt & Vermögen",
+      "level": "B2",
+      "moduleId": null,
+      "moduleTitle": null,
+      "topics": [
+        "geld"
+      ],
+      "status": "built",
+      "words": 25,
+      "ranked": 8,
+      "withExample": 25,
+      "pos": {
+        "noun": 16,
+        "verb": 5,
+        "adj": 4
+      },
+      "trainers": {
+        "karten": 25,
+        "artikel": 16,
+        "plural": 15,
+        "verbformen": 5,
+        "trennbare": 3,
+        "komparativ": 3,
+        "verbPraeposition": 0,
+        "aussprache": 0
+      }
+    },
+    {
+      "id": "b2-19",
+      "title": "Mobilität & Infrastruktur",
+      "level": "B2",
+      "moduleId": null,
+      "moduleTitle": null,
+      "topics": [
+        "verkehr"
+      ],
+      "status": "built",
+      "words": 25,
+      "ranked": 3,
+      "withExample": 25,
+      "pos": {
+        "noun": 16,
+        "verb": 5,
+        "adj": 4
+      },
+      "trainers": {
+        "karten": 25,
+        "artikel": 16,
+        "plural": 13,
+        "verbformen": 4,
+        "trennbare": 2,
+        "komparativ": 2,
+        "verbPraeposition": 0,
+        "aussprache": 0
+      }
+    },
+    {
+      "id": "b2-20",
+      "title": "Verwaltungsverfahren",
+      "level": "B2",
+      "moduleId": null,
+      "moduleTitle": null,
+      "topics": [
+        "aemter"
+      ],
+      "status": "built",
+      "words": 25,
+      "ranked": 8,
+      "withExample": 25,
+      "pos": {
+        "noun": 16,
+        "verb": 5,
+        "adj": 4
+      },
+      "trainers": {
+        "karten": 25,
+        "artikel": 16,
+        "plural": 15,
+        "verbformen": 5,
+        "trennbare": 3,
         "komparativ": 0,
         "verbPraeposition": 0,
         "aussprache": 0

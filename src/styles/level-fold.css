@@ -68,3 +68,56 @@
 @media (prefers-reduced-motion: reduce) {
   .lf-tile { transition: none; }
 }
+
+/* ── The level panel ───────────────────────────────────────────────────────
+   Shown instead of the tiles on a first visit (src/lib/levelFold.js): "A1" on
+   its own does not say what an A1 session is, so the level opens into its own
+   named rows. A returning learner never sees this — their tap is a jump into an
+   exercise — so this is first-screen chrome and stays one screen tall. */
+
+/* .lf-levels and .lf-chips carry a display of their own, which beats the UA
+   rule for [hidden] — so swapping screens has to say so explicitly. */
+.lf [hidden] { display: none !important; }
+
+.lf-detail-head { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+.lf-back {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 38px; height: 38px; flex-shrink: 0;
+  border-radius: 50%; border: 1px solid var(--border);
+  background: var(--surface-card); color: var(--ink);
+  font-size: 16px; line-height: 1; cursor: pointer;
+}
+.lf-back:hover { border-color: var(--brand-blue); color: var(--brand-blue-dark); }
+.lf-detail-level { font-family: var(--font-display); font-weight: 800; font-size: 1.6rem; line-height: 1; color: var(--brand-blue-dark); }
+.lf-detail-title { font-size: 13.5px; font-weight: 700; color: var(--ink); }
+
+.lf-panel-label {
+  margin: 0 0 8px;
+  font-size: 11px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase;
+  color: var(--muted-soft);
+}
+.lf-panel-label + .lf-rows + .lf-panel-label,
+.lf-panel-all + .lf-panel-label { margin-top: 16px; }
+
+.lf-rows { display: flex; flex-direction: column; gap: 8px; }
+.lf-row {
+  display: flex; align-items: center; gap: 12px;
+  min-height: 52px; padding: 10px 14px;
+  border-radius: var(--radius-lg); border: 1px solid var(--border);
+  background: var(--surface-card);
+  transition: border-color .15s ease, transform .15s ease;
+}
+.lf-row:hover { border-color: var(--brand-blue); }
+.lf-row:active { transform: translateY(1px); }
+.lf-row-t { flex: 1; min-width: 0; font-size: 13.5px; font-weight: 700; line-height: 1.3; color: var(--ink); }
+.lf-row-n { flex-shrink: 0; font-size: 11px; color: var(--muted-soft); }
+
+.lf-panel-all {
+  display: inline-block; margin-top: 10px;
+  font-size: 12.5px; font-weight: 700; color: var(--brand-blue-dark);
+}
+.lf-panel-all:hover { text-decoration: underline; }
+
+@media (prefers-reduced-motion: reduce) {
+  .lf-row { transition: none; }
+}

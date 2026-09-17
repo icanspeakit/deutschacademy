@@ -357,6 +357,22 @@ textarea.writing-area {
   font-size: clamp(1.3rem, 2.4vw, 1.6rem);
   margin: 0 0 6px;
 }
+/* Hiding the eyebrow took the exam's name off the screen with it: on the TestDaF
+   trainer the head read "Leseverstehen und Schreiben" with nothing saying which exam
+   that was, and the same on Leben in Deutschland. The repetition was never the name —
+   it was the rest of the eyebrow. So the name moves into the heading as an inline
+   prefix: it costs no extra line, it is the first thing read on the page, and the
+   heading still says which part of the exam you are in. */
+.practice-hero h1 .hero-exam { color: var(--brand-blue-dark); }
+/* The separator is glued to the name with a no-break space so the dot can never
+   orphan onto the next line; the break opportunity is the ordinary space that follows
+   the span in the markup. Gluing both sides instead made "Deutschland·Übungstest" one
+   unbreakable word, which pushed the phone layout 31px wide. */
+.practice-hero h1 .hero-exam::after {
+  content: " ·";
+  color: var(--muted-soft);
+  font-weight: var(--fw-regular, 400);
+}
 .practice-main--trainer .practice-hero p {
   max-width: 78ch;
   margin: 0;

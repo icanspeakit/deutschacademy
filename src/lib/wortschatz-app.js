@@ -40,6 +40,14 @@ export function mountWortschatzApp(els, cards, languages, { onAnswer, onSessionS
   };
 
   let sessionStarted = false;
+  // Set by a finished swipe, cleared by the click it swallows — see attachSwipe(). The
+  // timer is the safety net: a browser only emits that click sometimes, and a flag left
+  // standing would eat a deliberate tap on the next card.
+  let suppressClick = false;
+  function swallowNextClick() {
+    suppressClick = true;
+    setTimeout(() => { suppressClick = false; }, 400);
+  }
 
   function deck() {
     return state.filter && state.filter.length ? state.filter : cards.map((_, i) => i);
@@ -278,13 +286,97 @@ export function mountWortschatzApp(els, cards, languages, { onAnswer, onSessionS
           <button type="button" class="vt-nav-flip" id="vt-flip-btn">Umdrehen</button>
           <button type="button" class="vt-nav-next" id="vt-next">Weiter →</button>
         </div>
-        <p class="vt-kbd-hint">Leertaste umdrehen · ← → blättern</p>
+        <p class="vt-kbd-hint">
+          <span class="vt-hint-touch">Tippen zum Umdrehen · wischen zum Blättern</span>
+          <span class="vt-hint-keys">Leertaste umdrehen · ← → blättern</span>
+        </p>
       </div>`;
 
-    contentEl.querySelector("#vt-flip").addEventListener("click", flip);
+    const flipEl = contentEl.querySelector("#vt-flip");
+    // Guarded rather than calling flip() straight: the click a finished swipe generates
+    // would otherwise flip the card the swipe just moved away from.
+    flipEl.addEventListener("click", () => {
+      if (suppressClick) { suppressClick = false; return; }
+      flip();
+    });
+    attachSwipe(flipEl);
     contentEl.querySelector("#vt-flip-btn").addEventListener("click", flip);
     contentEl.querySelector("#vt-prev").addEventListener("click", () => go(-1));
     contentEl.querySelector("#vt-next").addEventListener("click", () => go(1));
+  }
+
+  /* Swipe the card left/right to move through the deck.
+     On a phone the nav row is three small text links under a card that fills the screen —
+     reaching them means aiming, once per word, 25 times per set. A swipe is the gesture
+     every other flashcard app on that phone already uses, so it needs no hint.
+     The card follows the finger while dragging (a gesture with no feedback feels broken),
+     and the thumbnail rules are: past a third of the card's width, or fast enough to read
+     as a flick, counts as a turn; anything shorter springs back. Vertical intent wins
+     early — touch-action: pan-y means the page still scrolls normally. */
+  const SWIPE_DISTANCE = 0.33; // of the card's width
+  const SWIPE_VELOCITY = 0.5; // px per ms
+  const SWIPE_MIN = 24; // px — below this it is a twitch, however fast
+  function attachSwipe(el) {
+    let x0 = 0, y0 = 0, t0 = 0, dx = 0, axis = null, active = false;
+
+    const setDrag = (px) => {
+      el.style.transform = px ? `translateX(${px}px)` : "";
+      el.style.opacity = px ? String(Math.max(0.45, 1 - Math.abs(px) / (el.offsetWidth || 1))) : "";
+    };
+    const release = () => {
+      el.style.transition = "transform .22s ease, opacity .22s ease";
+      setDrag(0);
+      setTimeout(() => { el.style.transition = ""; }, 240);
+    };
+
+    el.addEventListener("touchstart", (e) => {
+      if (e.touches.length !== 1) return;
+      active = true; axis = null; dx = 0;
+      x0 = e.touches[0].clientX; y0 = e.touches[0].clientY; t0 = Date.now();
+      el.style.transition = "";
+    }, { passive: true });
+
+    el.addEventListener("touchmove", (e) => {
+      if (!active) return;
+      const mx = e.touches[0].clientX - x0;
+      const my = e.touches[0].clientY - y0;
+      // Decide once, on the first meaningful movement, and stick with it: a gesture that
+      // changes its mind halfway feels like the card is fighting the finger.
+      if (axis === null && Math.abs(mx) + Math.abs(my) > 8) axis = Math.abs(mx) > Math.abs(my) ? "x" : "y";
+      if (axis !== "x") return;
+      dx = mx;
+      setDrag(dx);
+    }, { passive: true });
+
+    el.addEventListener("touchend", () => {
+      if (!active) return;
+      active = false;
+      const width = el.offsetWidth || 1;
+      const velocity = Math.abs(dx) / Math.max(1, Date.now() - t0);
+      // Read once, here: the reset at the bottom of this handler runs before the deferred
+      // go() below, so anything that callback reads off `dx` is already zero by then.
+      const dir = dx > 0 ? -1 : 1;
+      const far = Math.abs(dx) > width * SWIPE_DISTANCE;
+      // A flick counts even when it is short, but only if it actually travelled: without
+      // the floor, a 5px twitch over 2ms reads as 2.5px/ms and turns the card.
+      const flick = Math.abs(dx) > SWIPE_MIN && velocity > SWIPE_VELOCITY;
+      const turn = axis === "x" && (far || flick);
+      if (turn) {
+        swallowNextClick();
+        el.style.transition = "transform .16s ease, opacity .16s ease";
+        setDrag(dir < 0 ? width : -width);
+        // render() replaces this node, so the reset below lands on a fresh, untransformed
+        // element — the slide-out is the whole animation, the new card fades in on its own.
+        setTimeout(() => go(dir), 140);
+      } else if (axis === "x" && dx) {
+        // Sprang back rather than turned — but a drag this long was still not a tap.
+        if (Math.abs(dx) > 10) swallowNextClick();
+        release();
+      }
+      dx = 0; axis = null;
+    });
+
+    el.addEventListener("touchcancel", () => { active = false; axis = null; dx = 0; release(); });
   }
 
   function renderLearn() {

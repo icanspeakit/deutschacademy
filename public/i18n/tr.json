@@ -7,12 +7,31 @@
   "nav.panel.allTools": "Tüm alıştırmaları gör",
   "nav.panel.allExams": "Tüm sınavları gör",
   "nav.panel.all": "Genel bakış",
+  "nav.subject.grammatik": "Dilbilgisi",
+  "nav.subject.wortschatz": "Kelime hazinesi",
+  "nav.subject.fertigkeiten": "Beceriler",
+  "nav.subject.fertigkeiten.blurb": "Konuşma, okuma, yazma",
+  "nav.subject.niveaus": "Seviyeler",
+  "nav.subject.niveaus.blurb": "A1'den B2'ye adım adım",
+  "nav.group.trainer": "Antrenörler",
+  "nav.group.themen": "Seviyeye göre",
+  "nav.kultur.wohnen": "Konut & günlük hayat",
+  "nav.kultur.aemter": "Resmî daireler & sigorta",
+  "nav.kultur.umgang": "Görgü & alışkanlıklar",
+  "nav.kultur.bildung": "Okul & meslek eğitimi",
+  "nav.kultur.land": "Ülke & takvim",
+  "nav.subject.profil": "Profil",
+  "nav.subject.profil.blurb": "İlerlemen ve haftan",
+  "nav.level.grammar": "Dilbilgisi",
+  "nav.level.vocab": "Kelime hazinesi",
+  "nav.level.vocabSoon": "Bu seviye için kelime listeleri yakında.",
+  "nav.level.allTopics": "Tüm {n} konu",
+  "nav.level.topicCount": "{n} konu",
   "theme.toDark": "Koyu temaya geç",
   "theme.toLight": "Açık temaya geç",
   "header.allExercises": "← Tüm alıştırmalar",
   "header.home": "Ana sayfa",
   "header.back": "← Genel bakışa dön",
-
   "home.hero.eyebrow": "Ücretsiz ve kayıt gerektirmez",
   "home.hero.title": "Gerçek ders materyalleriyle Almanca öğren",
   "home.hero.subtitle": "telc, Goethe-Zertifikat, TestDaF, DTZ ve Almanya'da Yaşam için alıştırmalar ve sınav hazırlığı — ücretsiz.",
@@ -21,7 +40,6 @@
   "home.tools.title": "Her araç ayrı ayrı",
   "home.exams.eyebrow": "Sınav hazırlığı",
   "home.exams.title": "Her sınava hazır",
-
   "tool.artikel.title": "der/die/das Antrenörü",
   "tool.artikel.desc": "Anında geri bildirimle artikelleri pratik et.",
   "tool.grammatik.title": "Dilbilgisi",
@@ -41,19 +59,20 @@
   "tool.comingSoon.title": "Daha fazla alıştırma",
   "tool.comingSoon.desc": "Yeni alıştırma araçları hazırlanıyor.",
   "tool.comingSoon.count": "Yakında",
-
   "dash.tab.today": "Bugün",
   "dash.tab.skills": "Yetenekler",
   "dash.tab.progress": "İlerleme",
   "uebungen.hero.eyebrow": "Tüm alıştırmalar",
   "uebungen.hero.title": "Her araç ayrı ayrı",
-
   "grammatik.hero.eyebrow": "Dilbilgisi pratiği",
   "grammatik.hero.title": "Seviyeye göre konular",
   "grammatik.hero.subtitle": "Bir konu seç. Çoğunun açıklama ve birden çok alıştırma türü içeren kendi pratik odası var — kalanları boşluk doldurma testinde çalışırsın.",
   "grammatik.card.workspace": "Pratik odası",
   "grammatik.card.questions": "{n} soru",
-
+  "grammatik.mode.guided": "Beni yönlendir",
+  "grammatik.mode.guidedSub": "{t} konudan {n} alıştırma, müfredat sırasıyla — birbiri ardına, hiçbir şey seçmezsin.",
+  "grammatik.mode.free": "Kendim seçeyim",
+  "grammatik.mode.freeSub": "Seviyeye göre {n} konunun tümü. Ne çalışmak istediğini biliyorsun.",
   "tool.artikel.count": "{n} isim",
   "tool.grammatik.count": "{n} konu · {q} soru",
   "tool.praepositionen.count": "{n} fiil",
@@ -62,7 +81,6 @@
   "tool.sprechen.count": "{n} resim",
   "tool.lesen.count": "{n} görev",
   "tool.kultur.count": "{n} konu",
-
   "home.hero1.eyebrow": "Kontrol Panelin",
   "home.hero1.title": "İlerlemen her zaman gözünün önünde",
   "home.hero1.lead": "Seviye, tamamlanan dersler ve sonraki adımlar tek bir yerde — böylece her girişte tam olarak nerede kaldığını bilirsin.",
@@ -70,7 +88,6 @@
   "home.cta.startFree": "Ücretsiz başla",
   "home.hero1.login": "Zaten üye misin? Giriş yap",
   "home.hero.noteBadge": "Ücretsiz A1–C1 temel kurs · abonelik gerekmez",
-
   "home.mock.dashboard": "Kontrol Paneli",
   "home.mock.grammatikShort": "Dilbilgisi",
   "home.mock.wortschatzShort": "Kelime Bilgisi",
@@ -84,7 +101,6 @@
   "home.mock.b1Beruf": "B1 · İş hayatı",
   "home.mock.authenticClips": "Gerçek video klipler",
   "home.mock.goetheB2Prep": "Goethe B2 hazırlığı",
-
   "home.peek.eyebrow": "İçeriden bir bakış",
   "home.peek.title": "İçeriden böyle görünüyor",
   "home.peek.subtitle": "Ekran görüntüsü değil — ikisi de çalışıyor. Kenar çubuğundan bir konuya dokun.",
@@ -96,17 +112,24 @@
   "fold.unsure": "Bilmiyorum",
   "fold.unsureSub": "A1 ile başlıyoruz — iki soruda çok kolay mı anlarsın.",
   "fold.orExam": "Ya da doğrudan sınava",
+  "fold.askSubNew": "Seviyene dokun — sonra dilbilgisi ya da kelime seç.",
+  "fold.back": "Geri",
+  "fold.panelTitle": "Nereden başlamak istersin?",
+  "fold.panel.grammar": "Dilbilgisi",
+  "fold.panel.words": "Kelime",
+  "fold.row.exercises": "{n} alıştırma",
+  "fold.row.questions": "{n} soru",
+  "fold.row.words": "{n} kelime",
+  "fold.allTopics": "{n} konunun tümü →",
   "home.hero2.eyebrow": "A1'den C1'e Almanca",
   "home.hero2.title": "Almancayı gerçekten konuşulduğu gibi öğren",
   "home.hero2.lead": "Dilbilgisi, günlük Almanca ve konuşma pratiği — bir platform için soğuk yazılmış değil, gerçek ders materyalinden oluşturulmuş.",
   "home.hero2.cta1": "Ücretsiz öğrenmeye başla",
   "home.hero2.cta2": "Nasıl çalıştığını gör",
-
   "home.trust.tools": "Alıştırma aracı, hepsi ücretsiz",
   "home.trust.exams": "Kapsanan sınavlar",
   "home.trust.learners": "Şimdiye kadar öğrenen",
   "home.trust.freeCourse": "A1–C1 temel kursu için",
-
   "home.value.eyebrow": "Neden DeutschAcademy",
   "home.value.title": "Şablonlardan değil, gerçek derslerden oluşturuldu",
   "home.value.subtitle": "Aşağıdaki her ders zaten gerçek öğrencilere canlı olarak öğretildi — bir kurs platformu için soğuk yazılmadı.",
@@ -118,7 +141,6 @@
   "home.value.card3.desc": "Rol yapma, eşli alıştırmalar ve resim tasviri (Bildbeschreibung) — öğrencilerin genelde sadece yüz yüze derste elde ettiği kısım.",
   "home.value.card4.title": "Tahmine dayalı değil, sınav formatında hazırlık",
   "home.value.card4.desc": "Goethe ve telc'in seni gerçekten nasıl sınadığına göre yapılandırılmış deneme sınavları ve yazma görevleri, gerçek bir eğitmen tarafından düzeltilir.",
-
   "home.how.eyebrow": "Nasıl çalışır",
   "home.how.title": "Akıcı Almancaya giden yolun — üç net adımda",
   "home.how.step1.label": "Adım 1",
@@ -130,10 +152,8 @@
   "home.how.step3.label": "Adım 3",
   "home.how.step3.title": "Konuşma pratiği",
   "home.how.step3.desc": "Rol yapma, eşli alıştırmalar ve resim tasvirini pratik et.",
-
   "home.tools.heading2": "Alıştırmalar ve sınav hazırlığı, tek bir yerde",
   "home.tools.subtitle": "Uygulamalar ve kartlar arasında koşuşturma yok — her şey aynı kontrol panelinde.",
-
   "home.deepdive.eyebrow": "Neler dahil",
   "home.deepdive.title": "Aldığın her şey, kademe kademe",
   "home.deepdive.core.title": "Temel Kurs",
@@ -158,7 +178,6 @@
   "home.deepdive.community.item3": "Dersler arasında soru sorabileceğin bir alan",
   "home.deepdive.community.item4": "Kurs büyüdükçe eklenen yeni pratik materyali",
   "home.deepdive.community.cta": "Topluluğa katıl",
-
   "home.pricing.eyebrow": "Fiyatlandırma",
   "home.pricing.title": "Bir ücretsiz kurs. Sınava girmeye hazır olduğunda bir yükseltme.",
   "home.pricing.subtitle": "Yukarıdakilerin hepsi ya ücretsiz dahil ya da Premium ile açılıyor — gizli kademe yok.",
@@ -182,19 +201,16 @@
   "home.pricing.premium.item5": "Aylık canlı topluluk soru-cevabı",
   "home.pricing.premium.cta": "Premium'a Başla",
   "home.pricing.note": "Sözleşme yok — istediğin zaman iptal et.",
-
   "home.finalcta.title": "Akıcı Almancaya bir sonraki adımın",
   "home.finalcta.subtitle": "Ücretsiz başla, seviyeni test et, kendi hızında devam et.",
   "home.finalcta.cta": "Ücretsiz başla",
   "home.finalcta.loginQuestion": "Zaten bir hesabın var mı?",
   "home.finalcta.loginAction": "Giriş yap",
-
   "home.footer.tagline": "Senin için buradayız!",
   "home.footer.col.product": "Ürün",
   "home.footer.col.company": "Şirket",
   "home.footer.col.support": "Destek",
   "home.footer.col.legal": "Yasal",
-
   "home.mock.questionsLabel": "Soru",
   "home.mock.topicsLabel": "Konu",
   "home.mock.position": "Soru {i} / {n}",
@@ -215,7 +231,6 @@
   "home.mock.wasCorrect": "Maalesef yanlış.",
   "home.mock.ausspracheShort": "Telaffuz",
   "home.mock.costLabel": "Ücret",
-
   "dash.today.title": "Bugün senin için",
   "dash.examCard.title": "Sınav hazırlığı",
   "dash.examCard.desc": "DTZ simülasyonu ve gerçek sınav formatında \"Almanya'da Yaşam\" vatandaşlık testi.",
@@ -228,67 +243,52 @@
   "dash.skillsView.subtitle": "Halka = her yetenekteki mevcut durum",
   "dash.radar.title": "Yetenek profilin",
   "dash.thisWeek": "Bu hafta",
-
   "dash.skill.wortschatz": "Kelime Bilgisi",
   "dash.skill.grammatik": "Dilbilgisi",
   "dash.skill.hoeren": "Dinleme",
   "dash.skill.sprechen": "Konuşma",
   "dash.skill.schreiben": "Yazma",
-
   "dash.greeting.morning": "Günaydın",
   "dash.greeting.afternoon": "İyi günler",
   "dash.greeting.evening": "İyi akşamlar",
-
   "dash.date.never": "Hiç",
   "dash.date.today": "Bugün",
   "dash.date.yesterday": "Dün",
   "dash.date.daysAgo": "{n} gün önce",
   "dash.date.longAgo": "Bir süre önce",
-
   "dash.dayNames": "Pz,Pt,Sa,Ça,Pe,Cu,Ct",
-
   "dash.weekSummary": "<strong>{n}</strong> alıştırma{delta}",
   "dash.weekDelta": "{d} geçen haftaya göre",
-
   "dash.taskCount": "{n} görev",
   "dash.sessionCount": "{n} seans",
   "dash.notPracticed": "Henüz çalışılmadı",
-
   "dash.radar.filled": "Şekil, beş yeteneğin tümündeki mevcut durumunu gösterir — ne kadar büyükse o kadar iyi.",
   "dash.radar.empty": "Çalışmaya başladığında profilin burada dolacak.",
-
   "dash.callout.eyebrow": "Sırada · {skill}",
   "dash.callout.title": "Şu anda çalışmanın en çok işe yarayacağı yer burası.",
   "dash.callout.body": "{skill} şu anda %{pct} {metric} seviyesinde — şu anki en düşük yeteneğin.",
   "dash.callout.startEyebrow": "Başla",
   "dash.callout.noDataTitle": "Henüz alıştırma verisi yok.",
   "dash.callout.noDataBody": "Bir yetenekle başla — çalıştıkça profilin dolacak.",
-
   "dash.metric.accuracy": "doğruluk",
   "dash.metric.activity": "aktivite",
-
   "dash.cta.practiceNow": "Şimdi pratik yap →",
   "dash.cta.start": "Şimdi başla →",
   "dash.cta.continue": "{skill} ile devam et →",
   "dash.cta.practiceSkill": "Şimdi {skill} pratiği yap →",
-
   "dash.streakBadge": "🔥 {n} günlük seri",
   "dash.startStreak": "Serine başla",
   "dash.subtitle.zero": "Bu hafta henüz alıştırma yok — birkaç dakikayla hemen başla.",
   "dash.subtitle.goalMet": "Haftalık hedefe ulaşıldı — bu hafta {n} alıştırma. Harika iş!",
   "dash.subtitle.progress": "Bu hafta {goal} alıştırmadan {n} tanesi tamamlandı.",
   "dash.stat.streakValue": "{n} gün",
-
   "dash.today.done": "✓ bugün çalışıldı",
   "dash.today.start": "başla →",
-
   "dash.name.edit": "✏️ \"{name}\" olarak değiştir",
   "dash.name.add": "Adını ekle",
   "dash.name.placeholder": "Adın",
   "dash.save": "Kaydet",
-
   "dash.goal.label": "Haftalık hedef: {goal} alıştırma · ayarla",
-
   "dash.progress.skillLabel": "Yetenek",
   "dash.progress.mastery": "Hakimiyet",
   "dash.progress.correctOf": "{total} görevden {correct} doğru",
@@ -302,19 +302,16 @@
   "dash.progress.totalNote": "Başlangıçtan bu yana görevler ve seanslar",
   "dash.progress.moreTitle": "Daha fazla analiz yakında",
   "dash.progress.moreBody": "Doğruluk geçmişi, hata dağılımı ve seans günlüğü, şu anda kaydedilenden daha fazla görev başına veri gerektirir. Bu görünüm gelecekteki güncellemelerle büyüyecek — burada asla uydurma sayılar göstermeyiz.",
-
   "wortschatz.hero.title": "Günlük İfadeler & Kelimeler",
   "wortschatz.tab.cards": "Kelime Kartları",
   "wortschatz.tab.learn": "Öğren",
   "wortschatz.tab.test": "Test Et",
   "wortschatz.tab.list": "Kelime Listesi",
   "wortschatz.themeToggle": "Karanlık temayı değiştir",
-
   "aussprache.hero.eyebrow": "Dinle ve tekrar et",
   "aussprache.hero.title": "Telaffuz pratiği yap",
   "aussprache.hero.subtitle": "İfadeyi dinle, tekrarla ve kendini kaydet. Yavaş tempoda her heceyi duyarsın.",
   "aussprache.tab.artikel": "Artikeller",
-
   "sprechen.hero.eyebrow": "DTZ Konuşma, Bölüm 2",
   "sprechen.hero.title": "Resim tasviri pratiği yap",
   "sprechen.hero.subtitle": "Dersten gerçek sınav sorumlusu soruları. Gerçek sınavda tasvir için 90 saniyen, ek sorular için 90 saniyen var — tıpkı burada olduğu gibi.",
@@ -325,7 +322,6 @@
   "sprechen.prevImage": "← Önceki resim",
   "sprechen.nextImage": "Sonraki resim →",
   "sprechen.timeUp": "Süre doldu!",
-
   "lesen.hero.eyebrow": "DTZ simülasyonu",
   "lesen.hero.title": "Okuma & yazma pratiği yap",
   "lesen.hero.subtitle": "Gerçek bir cevap anahtarına sahip tam bir okuduğunu anlama simülasyonu (konu: çevrimiçi eğitim ve uyum, seviye B1), artı iki yazma görevi.",
@@ -334,13 +330,11 @@
   "lesen.writingPrompt.placeholder": "Cevabını buraya yaz...",
   "lesen.wordCount": "{n} kelime",
   "lesen.wordCount.goal": "Hedef: en az 60–80",
-
   "kultur.hero.eyebrow": "Ülke bilgisi",
-  "kultur.hero.subtitle": "DeutschAcademy'deki gerçek ders tartışmalarından kısa konular — genel yapay zeka trivia'sı değil.",
+  "kultur.hero.subtitle": "Almanya'da günlük hayat nasıl işler — kurallar, daireler, tutarlar ve süreçler; her konu için sınavla.",
   "kultur.link.passiv": "Bununla ilgili edilgen çatı cümlelerini pratik et →",
   "kultur.link.wortschatz": "Bu konudaki fikrini ifade et (ifadeler) →",
   "kultur.moreNote": "Daha fazla konu (bayramlar, bölgesel gelenekler, günlük görgü kuralları) gerçek kaynak materyali oluştuğunda eklenecek — burada asla kültürel iddialar uydurmuyoruz.",
-
   "pruefungen.hero.eyebrow": "Sınav hazırlığı",
   "pruefungen.hero.title": "Hangi sınava giriyorsun?",
   "pruefungen.hero.subtitle": "Beş temel Almanca dil ve uyum sınavına genel bakış — seviye, format ve nasıl hazırlanacağın.",
@@ -360,18 +354,15 @@
   "pruefungen.pricing.freeItem3": "60'tan fazla dilbilgisi konusu",
   "pruefungen.pricing.premiumPrice": "XX € / ay (belirlenecek)",
   "pruefungen.viewAllPricing": "Tüm fiyatları gör →",
-
   "vp.hero.subtitle": "Bazı fiillerin sabit bir edata ihtiyacı vardır. Kalıbı öğren, sonra bir ders kitabı sayfasındaki gibi beş farklı alıştırma türünde pratik yap.",
   "vp.howItWorks": "Bu nasıl çalışır?",
   "vp.toggleRef.show": "Referans listesini göster ▼",
   "vp.toggleRef.hide": "Referans listesini gizle ▲",
-
   "quiz.hero.title": "Konuya göre boşluk doldurma testi",
   "quiz.hero.subtitle": "Her soru derslerden gerçek örnek cümleler ve tablolardan geliyor — genel bir dilbilgisi botu değil.",
   "quiz.crosslink.passiv": "Bu edilgen çatı cümleleri Almanya'daki medya hakkında gerçek bir sınıf tartışmasından geliyor — daha fazlası için <a href=\"/uebungen/kultur\">Kültür: ARD ve ZDF'yi kim finanse ediyor?</a>",
   "quiz.crosslink.akkusativ": "Akkusativ için odak ve test modları, zorluk seviyeleri ve çekim tablosu içeren özel bir pratik odası var: <a href=\"/uebungen/grammatik/akkusativ\">Akkusativ pratik odasını aç</a>",
   "quiz.crosslink.praepositionen": "Edatlı fiiller için beş alıştırma türü içeren özel bir pratik odası var — boşluk doldurma, eşleştirme, tablo, boşluklu metin ve cümle kurma: <a href=\"/uebungen/grammatik/verben-praepositionen\">Pratik odasını aç</a>",
-
   "akk.tab.uebung": "Alıştırma",
   "akk.tab.regel": "Kural",
   "akk.mode.ariaLabel": "Alıştırma modu",
@@ -386,7 +377,6 @@
   "akk.session.label": "Bu oturum",
   "akk.session.badge": "yerel · hesap gerektirmez",
   "akk.session.stats": "{total} sorudan {answered} cevaplandı · {correct} doğru · {hints} ipucu",
-
   "quiz.correctAnswered": "doğru cevaplandı",
   "quiz.restart": "Tekrar pratik yap",
   "quiz.inputPlaceholder": "Cevabını yaz…",
@@ -398,15 +388,12 @@
   "quiz.incorrect": "✗ Tam değil — doğru cevap: {answer}",
   "quiz.next": "İleri →",
   "quiz.showResult": "Sonucu göster →",
-
   "hub.hero.title": "Pratik yapmaya hazır mısın?",
   "hub.hero.subtitle": "Bir alıştırma seç veya doğrudan bir sonraki sınav hazırlığına başla.",
   "hub.pill.exercises": "{n} alıştırma",
   "hub.pill.exams": "{n} sınav",
-
   "grammatik.card.comingSoonTitle": "Daha fazla konu",
   "grammatik.card.comingSoonDesc": "Henüz mevcut değil.",
-
   "hub.mode.grid": "Alıştırmalar & Sınavlar",
   "hub.mode.dashboard": "İlerlemem",
   "hub.pill.words": "{n} kelime A1–A2",
@@ -432,7 +419,6 @@
   "front.slogan.sub": "Ücretsiz, hesap gerekmez — gerçekten ders veren öğretmenlerden.",
   "home.stats.tools": "Alıştırma araçları",
   "home.stats.price": "Ücret",
-
   "picker.title": "Ne çalışmak istersin?",
   "picker.total": "{n} araç, beş yönde sıralandı.",
   "picker.all.cta": "Bunun yerine tüm listeyi gör",
@@ -458,5 +444,9 @@
   "group.short.sprechen": "Konuşma",
   "group.short.lesen": "Okuma",
   "group.short.kultur": "Kültür",
-  "group.count.bundeslaender": "{n} eyalet"
+  "group.count.bundeslaender": "{n} eyalet",
+  "level.a1.blurb": "İlk cümleler",
+  "level.a2.blurb": "Günlük Almanca",
+  "level.b1.blurb": "Kendi başına konuşmak",
+  "level.b2.blurb": "Güvenle tartışmak"
 }

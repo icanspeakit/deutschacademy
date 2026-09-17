@@ -1,7 +1,11 @@
 ---
 import Layout from "../../../layouts/Layout.astro";
-import PracticeHeader from "../../../components/PracticeHeader.astro";
+import SiteNav from "../../../components/SiteNav.astro";
+import TopicBar from "../../../components/TopicBar.astro";
+import TopicRail from "../../../components/TopicRail.astro";
+import { taskCountOf, topicKeyOf } from "../../../lib/grammarTasks.js";
 import "../../../styles/practice.css";
+import "../../../styles/landing.css";
 import "../../../styles/verben-praepositionen.css";
 import "../../../styles/rule-intro.css";
 import grammatik from "../../../data/grammatik.json";
@@ -29,20 +33,36 @@ export function getStaticPaths() {
 }
 
 const { workspace, topic } = Astro.props;
+const data = workspace ?? topic;
 const name = workspace ? workspace.name : topic.name;
 const level = workspace ? workspace.level : topic.level;
 const intro = workspace ? workspace.subtitle : topic.intro;
 const concept = workspace?.concept;
 const reference = concept?.reference;
+
+// This page used to wear PracticeHeader — a bar with four text links and no sign that it
+// belonged to the same site as everything else. Reached from the homepage it was a dead end:
+// no menu, and nothing saying that answers were being kept. It now carries the real nav, and
+// TopicBar below it says where you are and how far you got.
+//
+// `topicKey` is the URL slug, which is the key /dashboard draws its per-topic bars from.
+const topicKey = topicKeyOf(data) ?? Astro.params.id;
+const tasks = taskCountOf(data);
 ---
 <Layout title={`${name} – DeutschAcademy`}>
-  <PracticeHeader title={name} />
+  <SiteNav active="grammatik" />
+  <TopicBar topic={topicKey} kind="Grammatik" title={name} level={level} tasks={tasks} />
+
+  <!-- The dashboard's rail, folded to a 64px strip. Opening it overlays the page rather
+       than pushing it, so the exercise column below keeps its full 880px. Above 1100px
+       only — see topic-rail.css. -->
+  <TopicRail current={topicKey} />
 
   <!-- Rendered collapsed, then opened by the script if this learner asked for it.
        Collapsed is the more common state — the side column slides away on desktop,
        the rule card crops to a preview on a phone — so starting here means no
        visible re-layout on load. -->
-  <main class="vp-page vp-page--split" id="vp-page" data-rule="hidden" data-anim="off">
+  <main class="vp-page vp-page--split" id="vp-page" data-rule="hidden" data-anim="off" data-topic-key={topicKey}>
     <a href="/uebungen/grammatik" class="vp-back-link" data-i18n="header.back">← Zurück zur Übersicht</a>
 
     <!-- Two columns on desktop: rule sticky on the right, exercises on the left.
@@ -174,8 +194,60 @@ const reference = concept?.reference;
           <div class="vp-ex-head">
             <span class="badge badge-neutral">{i + 1}</span>
             <h3>{ex.title}</h3>
+
+            {/* Same control as the column's "Regel einblenden", at this exercise's
+                height: the learner asks for the rule where they are, not at the top
+                of the page. Same pill, same show/hide, driven by the same
+                mountRefToggle as the reference panel. */}
+            {ex.rule && (
+              <button
+                type="button"
+                class="vp-rule-toggle vp-ex-rule-btn"
+                data-ex-rule={i}
+                data-show="Regel"
+                data-hide="Regel ausblenden"
+                aria-controls={`vp-ex-rule-${i}`}
+              >Regel</button>
+            )}
           </div>
           {ex.hint && <p class="vp-ex-hint">{ex.hint}</p>}
+
+          {/* Per-exercise rule. The topic's own rule card is one level up and covers the
+              whole page; an exercise that asks the learner to apply ONE narrow rule needs
+              that rule within reach of the thing they are doing, not behind a toggle in
+              another column. Nested rather than promoted: it is a detail of this exercise,
+              and putting it in the main card would bury the topic's actual point.
+              `open: true` for the case where the exercise is impossible without it. */}
+          {ex.rule && (
+            <div class="vp-ex-rule" id={`vp-ex-rule-${i}`} hidden>
+              {ex.rule.label && <p class="vp-ex-rule-label">{ex.rule.label}</p>}
+              <div class="vp-ex-rule-body">
+                {ex.rule.groups?.map((g) => (
+                  <div class="vp-ex-rule-group">
+                    <span class="vp-ex-rule-artikel">{g.artikel}</span>
+                    <div>
+                      <div class="vp-ex-rule-endungen">
+                        {g.endungen.map((e) => <code>{e}</code>)}
+                      </div>
+                      {g.examples && <p class="vp-ex-rule-examples">{g.examples}</p>}
+                    </div>
+                  </div>
+                ))}
+                {/* Nested one level deeper, and closed. The endings above have to be open —
+                    the exercise is impossible without them — but the caveat is four
+                    paragraphs, and open it pushes the first noun two screens down at 390px.
+                    The summary carries the point on its own, so a learner who never opens
+                    it has still been told not to trust the table. */}
+                {ex.rule.disclaimer && (
+                  <details class="vp-ex-rule-warn">
+                    <summary>{ex.rule.disclaimer.label}</summary>
+                    <div set:html={ex.rule.disclaimer.html} />
+                  </details>
+                )}
+              </div>
+            </div>
+          )}
+
           <div data-ex-index={i}></div>
         </div>
       ))
@@ -208,13 +280,21 @@ const reference = concept?.reference;
   <script type="application/json" id="topic-data" set:html={JSON.stringify(workspace ?? topic)}></script>
   <script type="module">
     import { mountGrammarWorkspace } from "../../../lib/grammarWorkspace.js";
-    import { createRuleIntro } from "../../../lib/ruleIntro.js";
-    import { createCardCollapse } from "../../../lib/cardCollapse.js";
+    import { mountRuleColumn, mountRefToggle } from "../../../lib/ruleColumn.js";
+    import { mountExerciseRules } from "../../../lib/exerciseRule.js";
     import { mountQuiz, withChoices } from "../../../lib/quiz.js";
     import { recordAttempt } from "../../../lib/progress.js";
 
     const data = JSON.parse(document.getElementById("topic-data").textContent);
-    const onAnswer = (ok) => recordAttempt({ skill: "grammatik", correct: ok });
+
+    // `topic` was missing here, which is why practising on this page never moved the row for
+    // this same topic on /dashboard: recordAttempt() only counts per topic when it is told
+    // which one. The key is the URL slug — the one /dashboard keys its rows on too.
+    const topicKey = document.getElementById("vp-page").dataset.topicKey;
+    const onAnswer = (ok) => {
+      try { recordAttempt({ skill: "grammatik", correct: ok, topic: topicKey }); } catch (e) {}
+      dispatchEvent(new CustomEvent("da:progress", { detail: { topic: topicKey, correct: ok } }));
+    };
 
     if (Array.isArray(data.exercises)) {
       mountGrammarWorkspace(document.getElementById("vp-page"), data, { onAnswer });
@@ -222,122 +302,17 @@ const reference = concept?.reference;
       mountQuiz(document.getElementById("quiz-root"), withChoices(data.questions), { mode: "choice", onAnswer });
     }
 
-    // The rule panel slides in and out of its own column rather than appearing.
-    // Its state is remembered, because whether you still need the rule visible is a
-    // per-learner thing, not a per-visit one — and a learner who has never chosen
-    // gets the panel demonstrated to them once (see the peek below).
-    const page = document.getElementById("vp-page");
-    const ruleEl = document.getElementById("vp-rule");
-    const ruleBtn = document.getElementById("vp-rule-toggle");
-    // On a phone the same preference crops the rule card to a preview instead of
-    // sliding a column away, so there is a second control for it down there.
-    const ruleCard = document.getElementById("vp-rule-card");
-    const peekBtn = document.getElementById("vp-rule-peek");
-    const RULE_KEY = "da-grammatik-rule";
-    const PEEK_KEY = "da-grammatik-rule-peek";
-    const wide = matchMedia("(min-width: 1001px)");
-    const calm = matchMedia("(prefers-reduced-motion: reduce)");
-
-    let ruleHidden = true;
-
-    // Collapsed means "out of play" on both layouts, but not the same box: the
-    // whole column on desktop, and on a phone only the cropped card — everything
-    // under the fade is unreadable, including the reference-list button, which
-    // would otherwise still be a tab stop. The hero and the toggle sit outside it.
-    function syncInert() {
-      if (ruleEl) ruleEl.inert = ruleHidden && wide.matches;
-      if (ruleCard) ruleCard.inert = ruleHidden && !wide.matches;
-    }
-    wide.addEventListener("change", syncInert);
-
-    // The phone crop: CSS owns the preview height, this owns the trip to and from it
-    // (and holds the toggle still while the page shrinks above it).
-    const crop = createCardCollapse({
-      card: ruleCard,
-      toggle: peekBtn,
-      active: matchMedia("(max-width: 1000px)"),
-      calm,
+    // The rule column's own behaviour — collapse state, what it means at each width,
+    // and the one-time tour — is shared with the exam pages; see src/lib/ruleColumn.js.
+    mountRuleColumn(document.getElementById("vp-page"), {
+      storageKey: "da-grammatik-rule",
+      seenKey: "da-grammatik-rule-peek",
     });
 
-    function applyRule(hidden, persist = true) {
-      crop.animate(hidden);
-      ruleHidden = hidden;
-      page.dataset.rule = hidden ? "hidden" : "";
-      if (ruleBtn) ruleBtn.textContent = hidden ? ruleBtn.dataset.show : ruleBtn.dataset.hide;
-      if (peekBtn) {
-        peekBtn.textContent = hidden ? peekBtn.dataset.show : peekBtn.dataset.hide;
-        peekBtn.setAttribute("aria-expanded", hidden ? "false" : "true");
-      }
-      syncInert();
-      if (persist) { try { localStorage.setItem(RULE_KEY, hidden ? "hidden" : "shown"); } catch {} }
-    }
+    mountRefToggle(document.getElementById("vp-toggle-ref"), document.getElementById("vp-ref-panel"));
 
-    let ruleSaved = null, peeked = true;
-    try {
-      ruleSaved = localStorage.getItem(RULE_KEY);
-      peeked = localStorage.getItem(PEEK_KEY) === "1";
-    } catch {}
-
-    // Restore without animating: the slide is feedback for an action, and nobody
-    // took one yet.
-    applyRule(ruleSaved === null ? true : ruleSaved === "hidden", false);
-    requestAnimationFrame(() => requestAnimationFrame(() => {
-      delete page.dataset.anim;
-      crop.arm();
-    }));
-
-    // The intro never persists a rule preference — it is a demo, not a choice the
-    // learner made — so it gets applyRule with persistence off. On a phone it points
-    // at the button instead of the side column: the collapsed card has no box left
-    // to spotlight — it is zero-height while hidden — so the button IS the rule as
-    // far as the first screen is concerned.
-    const compact = !wide.matches;
-    const intro = createRuleIntro({
-      ruleEl: compact ? (peekBtn ?? ruleEl) : ruleEl,
-      ruleBtn: compact ? peekBtn : ruleBtn,
-      setRule: (hidden) => applyRule(hidden, false),
-      compact,
-    });
-
-    // Once per browser on the learner's first grammar page. ?intro replays it on
-    // demand without spending that one time, which is how you show it to someone.
-    const forced = new URLSearchParams(location.search).has("intro");
-    if (!calm.matches && (forced || (ruleSaved === null && !peeked))) {
-      if (!forced) { try { localStorage.setItem(PEEK_KEY, "1"); } catch {} }
-      // The phone tour frames boxes near the top of the page; a restored scroll
-      // position would leave it framing nothing.
-      if (compact) requestAnimationFrame(() => intro.play());
-      else intro.play();
-    }
-
-    const onToggle = () => {
-      intro.cancel();
-      applyRule(page.dataset.rule !== "hidden");
-    };
-    ruleBtn?.addEventListener("click", onToggle);
-    peekBtn?.addEventListener("click", onToggle);
-
-    // Dev reset (see the button's note above). A full reload rather than just
-    // intro.play(), because the interesting part is everything that happens BEFORE
-    // the tour decides to run.
-    document.getElementById("vp-dev-reset")?.addEventListener("click", () => {
-      try {
-        localStorage.removeItem(RULE_KEY);
-        localStorage.removeItem(PEEK_KEY);
-      } catch {}
-      // A restored scroll position would put the compact tour's targets off screen,
-      // which is the one thing a fresh load never has.
-      history.scrollRestoration = "manual";
-      window.scrollTo(0, 0);
-      // Without the query string this is the plain first-visit path, not ?intro.
-      location.replace(location.pathname);
-    });
-
-    const toggleRefBtn = document.getElementById("vp-toggle-ref");
-    const refGrid = document.getElementById("vp-ref-panel");
-    toggleRefBtn?.addEventListener("click", () => {
-      refGrid.hidden = !refGrid.hidden;
-      toggleRefBtn.textContent = refGrid.hidden ? toggleRefBtn.dataset.show : toggleRefBtn.dataset.hide;
-    });
+    // Per-exercise rule buttons, plus the glow that waits until one is on screen so it
+    // does not compete with the column's tour. See src/lib/exerciseRule.js.
+    mountExerciseRules(document.getElementById("vp-page"), { seenKey: "da-grammatik-ex-rule-peek" });
   </script>
 </Layout>

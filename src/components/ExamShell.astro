@@ -1,0 +1,126 @@
+---
+// The split layout for a /pruefungen detail page.
+//
+// These pages used to be an essay with the exercises at the bottom: who the exam is
+// for, which skills it tests, a format table or three, then — four screens down on a
+// phone — the thing you actually came to do. That order is backwards for everyone who
+// already knows what the DTZ is, which is most of the people looking at the DTZ page.
+//
+// So it takes the shape the grammar topics already use (src/lib/ruleColumn.js): the
+// practice column is the page, and the explanation is a column beside it that is
+// collapsed until asked for. On desktop the explanation sits on the right and slides
+// out of a grid track that shrinks to zero; on a phone it contracts to nothing and
+// leaves one button, so the first screen is the hero and the exercises.
+//
+// Unlike a grammar topic, the explanation is NOT a prerequisite here — you do not need
+// the scoring rules to start an Übungssatz — so the collapsed default is the honest one
+// rather than a space-saving compromise, and the preference is remembered per browser.
+import PracticeHeader from "./PracticeHeader.astro";
+import "../styles/practice.css";
+import "../styles/pruefungen.css";
+import "../styles/verben-praepositionen.css";
+import "../styles/rule-intro.css";
+import "../styles/exam-shell.css";
+
+interface Props {
+  /** Shown in the sticky practice header. */
+  header: string;
+  /** Exam name, the page's <h1>. */
+  title: string;
+  /** One line under the title — what this exam is, in a sentence. */
+  lead: string;
+  /** The badges next to the eyebrow, e.g. "Niveau A1–C2". */
+  badges?: string[];
+  /** Heading over the practice column. */
+  practiceHeading?: string;
+}
+const { header, title, lead, badges = [], practiceHeading = "Üben" } = Astro.props;
+---
+<PracticeHeader title={header} />
+
+<!-- Rendered collapsed, then opened by the script if this learner asked for it.
+     Collapsed is the more common state, so starting here means no visible re-layout
+     on load. -->
+<main class="vp-page vp-page--split" id="vp-page" data-rule="hidden" data-anim="off">
+  <a href="/pruefungen" class="vp-back-link">← Alle Prüfungen</a>
+
+  <div class="vp-workspace">
+    <!-- First in the DOM so that on a phone — where scroll order is the only hierarchy
+         there is — the hero still introduces the page before anything else. The card
+         under it collapses to zero height, so "first" costs the exercises nothing. -->
+    <aside class="vp-col vp-col--rule" id="vp-rule">
+      <div class="vp-hero">
+        <div class="vp-hero-badges">
+          <span class="badge badge-brand">Prüfung</span>
+          {badges.map((b) => <span class="badge badge-info">{b}</span>)}
+        </div>
+        <h1>{title}</h1>
+        <p>{lead}</p>
+      </div>
+
+      <div class="vp-card vp-rule-card" id="vp-rule-card">
+        <div class="vp-card-label">Was ist das für eine Prüfung?</div>
+        <slot name="info" />
+      </div>
+
+      <!-- Phone counterpart of .vp-rule-toggle: there is no side column to slide
+           below 1001px, so the same preference contracts the card and this opens it. -->
+      <button
+        type="button"
+        class="vp-rule-peek"
+        id="vp-rule-peek"
+        data-show="Was ist das für eine Prüfung?"
+        data-hide="Erklärung einklappen"
+        aria-controls="vp-rule-card"
+      >Was ist das für eine Prüfung?</button>
+    </aside>
+
+    <section class="vp-col vp-col--ex">
+      <div class="vp-ex-toolbar">
+        <h2 class="vp-section-title">{practiceHeading}</h2>
+        <button
+          type="button"
+          class="vp-rule-toggle"
+          id="vp-rule-toggle"
+          data-show="Erklärung einblenden"
+          data-hide="Erklärung ausblenden"
+        >Erklärung einblenden</button>
+      </div>
+
+      <slot />
+    </section>
+  </div>
+
+  <!-- Dev only, same as the grammar pages: the tour is once per browser, so once you
+       have seen it you can no longer see it the way a learner does. This wipes both
+       stored flags and reloads clean. Stripped from the built site. -->
+  {import.meta.env.DEV && (
+    <button type="button" class="vp-dev-reset" id="vp-dev-reset" title="Tour-Flags löschen und neu laden">
+      ↻ Tour neu
+    </button>
+  )}
+</main>
+
+<script>
+  import { mountRuleColumn } from "../lib/ruleColumn.js";
+
+  // Its own keys, not the grammar ones: choosing to keep a grammar rule open says
+  // nothing about wanting an exam's scoring rules open, and the tour should introduce
+  // each surface once.
+  mountRuleColumn(document.getElementById("vp-page"), {
+    storageKey: "da-pruefung-info",
+    seenKey: "da-pruefung-info-seen",
+    coach: [
+      ["Was die Prüfung ist, steht hier",
+       "Aufbau, Bewertung und Quellen — neben den Übungen statt vor ihnen."],
+      ["Hier ein- und ausblenden",
+       "Über diesen Schalter. Deine Wahl wird gemerkt, auch für die nächste Prüfung."],
+    ],
+    coachCompact: [
+      ["Das ist die Erklärung",
+       "Aufbau, Bewertung und Quellen — eingeklappt, damit die Übungen sofort beginnen."],
+      ["Hier ein- und ausblenden",
+       "Ein Tippen zeigt sie ganz, ein zweites klappt sie wieder ein. Deine Wahl wird gemerkt."],
+    ],
+  });
+</script>

@@ -1,0 +1,263 @@
+---
+// The Lernset navigation that fills the side column on every Wortschatz page.
+//
+// It started as a dropdown over the trainer, which was the wrong shape: a menu you open,
+// use once and close is fine for a setting, but choosing what to study is the other half
+// of the page, and it belongs beside the cards rather than on top of them. So it now uses
+// the column the grammar topics already use (src/lib/ruleColumn.js): sticky on the right
+// on a desktop, collapsed behind one full-width button on a phone, remembered per browser.
+//
+// This component renders only the column's *contents*. The shell — the card, the two
+// toggles, the collapse behaviour — lives in VokabelTrainer.astro, the same way a grammar
+// topic owns its own .vp-rule-card.
+//
+// Every row and every count comes from src/lib/lernsets.js, i.e. from the lexicon at build
+// time. Nothing here is hand-typed, so a Lernset cannot appear unless its words exist
+// (docs/wortschatz-programm-v1.md §3).
+import { counts, modules, cohortBlocks, frequencyCounts } from "../lib/lernsets.js";
+import { LEVELS } from "../lib/lexicon.js";
+import "../styles/lernset-picker.css";
+
+interface Props {
+  /** Deck id of the page this sits on: "redemittel", a level ("a1") or a unit ("a1-04"). */
+  current: string;
+}
+const { current } = Astro.props;
+
+const c = counts();
+// A level is offered when it has Lernsets that can actually be opened. C1/C2 have modules
+// planned and no words, so they are named at the bottom instead of linked.
+const liveLevels = LEVELS.filter((l) => c[l].sets > 0);
+const planLevels = LEVELS.filter((l) => c[l].sets === 0 && c[l].plannedModules > 0);
+
+const groupsByLevel = Object.fromEntries(
+  liveLevels.map((level) => [
+    level,
+    // A module with no sets is a plan, not an offering. Once a level has real sets, its
+    // empty modules would be fifteen dead rows above the live ones — the summary line
+    // under the list says how many are still coming instead.
+    modules(level).filter((g) => g.sets.length > 0),
+  ])
+);
+
+const openLevel = liveLevels.find((l) => current.startsWith(l.toLowerCase())) ?? liveLevels[0];
+
+// The second way to cut the same lexicon: by corpus frequency rather than by topic. See
+// the long note in src/lib/lernsets.js for why it exists and what it does not claim.
+const freq = frequencyCounts();
+const blocks = cohortBlocks();
+const isFreq = current.startsWith("haeufigkeit-");
+const openBlock = isFreq
+  ? blocks.find((b) => b.cohorts.some((c) => c.id === current)) ?? blocks[0]
+  : blocks[0];
+---
+<div class="lp" data-current={current}>
+  <p class="lp-group-label">Schnellstart</p>
+  <div class="lp-quick">
+    <!-- Filled by the script from this browser's own history, removed when there is
+         none. Never server-rendered: there is no account, so the server cannot know. -->
+    <a class="lp-chip lp-chip--resume" id="lp-resume" href="/uebungen/wortschatz" hidden>
+      <span class="lp-chip-label">Weiterlernen</span>
+      <span class="lp-chip-name" id="lp-resume-name"></span>
+    </a>
+    <a class="lp-chip" href="/uebungen/wortschatz" aria-current={current === "redemittel" ? "page" : undefined}>
+      <span class="lp-chip-label">Redemittel</span>
+      <span class="lp-chip-name">Alltag · 4 Sprachen</span>
+    </a>
+    {liveLevels.map((level) => (
+      <a
+        class="lp-chip"
+        href={`/uebungen/wortschatz/${level.toLowerCase()}`}
+        aria-current={current === level.toLowerCase() ? "page" : undefined}
+      >
+        <span class="lp-chip-label">Alle {level}</span>
+        <span class="lp-chip-name">{c[level].words} Wörter</span>
+      </a>
+    ))}
+  </div>
+
+  <!-- Two orderings of the same words, so the switch between them is a switch, not two
+       lists stacked. Which one opens depends on where you already are. -->
+  <div class="lp-modes" role="tablist" aria-label="Sortierung wählen">
+    <button
+      type="button"
+      role="tab"
+      class={`lp-mode ${isFreq ? "" : "is-active"}`}
+      data-mode="niveau"
+      aria-selected={isFreq ? "false" : "true"}
+      aria-controls="lp-mode-niveau"
+    >Nach Niveau</button>
+    <button
+      type="button"
+      role="tab"
+      class={`lp-mode ${isFreq ? "is-active" : ""}`}
+      data-mode="haeufigkeit"
+      aria-selected={isFreq ? "true" : "false"}
+      aria-controls="lp-mode-haeufigkeit"
+    >Nach Häufigkeit</button>
+  </div>
+
+  <div class="lp-mode-panel" id="lp-mode-niveau" data-mode="niveau" hidden={isFreq}>
+  <div class="lp-levels" role="tablist" aria-label="Niveau wählen">
+    {liveLevels.map((level) => (
+      <button
+        type="button"
+        role="tab"
+        class={`lp-level ${level === openLevel ? "is-active" : ""}`}
+        data-level={level}
+        aria-selected={level === openLevel ? "true" : "false"}
+        aria-controls={`lp-sets-${level}`}
+      >
+        {level}<span class="lp-level-n">{c[level].sets}</span>
+      </button>
+    ))}
+  </div>
+
+  {liveLevels.map((level) => (
+    <div class="lp-sets" id={`lp-sets-${level}`} data-level={level} hidden={level !== openLevel}>
+      <p class="lp-level-lead">
+        {c[level].title} — {c[level].sets} Lernsets, {c[level].words} Wörter.
+        Ein Lernset ist eine Sitzung: rund 25 Wörter.
+      </p>
+      {groupsByLevel[level].map((group) => (
+        <section class="lp-module">
+          {group.title && (
+            <h3 class="lp-module-title">{group.title}<span class="lp-module-n">{group.words}</span></h3>
+          )}
+          <div class="lp-module-sets">
+            {group.sets.map((set) => (
+              <a
+                class="lp-set"
+                href={`/uebungen/wortschatz/${set.id}`}
+                aria-current={set.id === current ? "page" : undefined}
+              >
+                <span class="lp-set-id">{set.id.split("-")[1]}</span>
+                <span class="lp-set-title">{set.title}</span>
+                <span class="lp-set-n">{set.words}</span>
+              </a>
+            ))}
+          </div>
+        </section>
+      ))}
+      {c[level].plannedModules > 0 && (
+        <p class="lp-plan">
+          {c[level].plannedModules} weitere Module sind geplant ({c[level].plannedUnits} Lernsets) —
+          die Wörter dafür gibt es noch nicht.
+        </p>
+      )}
+    </div>
+  ))}
+
+  {planLevels.length > 0 && (
+    <p class="lp-plan lp-plan--levels">
+      {planLevels.join(" und ")}: {planLevels.reduce((n, l) => n + c[l].plannedModules, 0)} Module
+      geplant, noch keine Wörter. Die Einstufung ist an A1–C2 orientiert, nicht die
+      offizielle Goethe-/telc-Liste.
+    </p>
+  )}
+  </div>
+
+  <div class="lp-mode-panel" id="lp-mode-haeufigkeit" data-mode="haeufigkeit" hidden={!isFreq}>
+    <p class="lp-level-lead">
+      {freq.words} Wörter nach Korpushäufigkeit sortiert, in {freq.cohorts} Portionen zu
+      je {freq.size}. Gemischt — Verben, Nomen und Funktionswörter zusammen, so wie sie in
+      der Häufigkeitsliste stehen.
+    </p>
+
+    {blocks.map((block) => (
+      <section class="lp-module">
+        <h3 class="lp-module-title">
+          <button
+            type="button"
+            class={`lp-block-toggle ${block === openBlock ? "is-open" : ""}`}
+            data-block={block.id}
+            aria-expanded={block === openBlock ? "true" : "false"}
+            aria-controls={`lp-block-${block.id}`}
+          >{block.title}</button>
+          <span class="lp-module-n">{block.words}</span>
+        </h3>
+        <div class="lp-module-sets" id={`lp-block-${block.id}`} hidden={block !== openBlock}>
+          {block.cohorts.map((co) => (
+            <a class="lp-set" href={`/uebungen/wortschatz/${co.id}`} aria-current={co.id === current ? "page" : undefined}>
+              <span class="lp-set-id">{co.index}</span>
+              <span class="lp-set-title">{co.from}-{co.to}</span>
+              <span class="lp-set-levels">{co.levels.join("·")}</span>
+            </a>
+          ))}
+        </div>
+      </section>
+    ))}
+
+    <!-- Said out loud rather than quietly dropped. The frequency source is a wordform
+         list, so a compound like "Ausländerbehörde" comes back unmatched because of how
+         it is written, not because it is rare — calling those words "selten" would be a
+         claim the data does not support. -->
+    <p class="lp-plan lp-plan--levels">
+      {freq.unranked} Wörter stehen nicht in der Häufigkeitsliste — meist Komposita, die dort
+      als Wortform nicht vorkommen. Das heißt nicht, dass sie selten sind; sie stehen in
+      ihrem Lernset unter „Nach Niveau“.
+    </p>
+  </div>
+</div>
+
+<script>
+  import { getResume } from "../lib/progress.js";
+
+  const root = document.querySelector(".lp");
+
+  root.querySelectorAll(".lp-mode").forEach((tab) => {
+    tab.addEventListener("click", () => {
+      const mode = tab.dataset.mode;
+      root.querySelectorAll(".lp-mode").forEach((t) => {
+        const on = t === tab;
+        t.classList.toggle("is-active", on);
+        t.setAttribute("aria-selected", String(on));
+      });
+      root.querySelectorAll(".lp-mode-panel").forEach((pnl) => { pnl.hidden = pnl.dataset.mode !== mode; });
+    });
+  });
+
+  // One block open at a time: 123 cohorts listed flat is a scroll, not a menu.
+  root.querySelectorAll(".lp-block-toggle").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const panel = document.getElementById(`lp-block-${btn.dataset.block}`);
+      const open = panel.hidden;
+      root.querySelectorAll(".lp-block-toggle").forEach((b) => {
+        b.classList.remove("is-open");
+        b.setAttribute("aria-expanded", "false");
+        document.getElementById(`lp-block-${b.dataset.block}`).hidden = true;
+      });
+      if (open) {
+        btn.classList.add("is-open");
+        btn.setAttribute("aria-expanded", "true");
+        panel.hidden = false;
+      }
+    });
+  });
+
+  root.querySelectorAll(".lp-level").forEach((tab) => {
+    tab.addEventListener("click", () => {
+      const level = tab.dataset.level;
+      root.querySelectorAll(".lp-level").forEach((t) => {
+        const on = t === tab;
+        t.classList.toggle("is-active", on);
+        t.setAttribute("aria-selected", String(on));
+      });
+      root.querySelectorAll(".lp-sets").forEach((s) => { s.hidden = s.dataset.level !== level; });
+    });
+  });
+
+  // "Weiterlernen" is whatever Wortschatz deck this browser last opened — progress.js
+  // already records every /uebungen/* page it lands on, so this needs no new store. It
+  // stays hidden when there is nothing to resume, rather than guessing a deck.
+  const resume = getResume();
+  const last = (resume ? [resume.last, ...resume.recents] : []).find(
+    (r) => r && r.path.startsWith("/uebungen/wortschatz") && r.path !== location.pathname.replace(/\/+$/, "")
+  );
+  if (last) {
+    const link = document.getElementById("lp-resume");
+    document.getElementById("lp-resume-name").textContent = last.title;
+    link.href = last.path;
+    link.hidden = false;
+  }
+</script>

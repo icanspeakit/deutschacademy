@@ -6,16 +6,36 @@
   "source": "Ganze Lektion zu Artikeln.pdf · Artikelubung.pdf · Artikel.pdf (Auer Verlag, Grammatik 1/2)",
   "concept": {
     "flow": [
-      { "text": "Artikel", "variant": "verb" },
-      { "text": "+ Nomen", "variant": "prep" },
-      { "text": "= Genus sichtbar" }
+      {
+        "text": "Artikel",
+        "variant": "verb"
+      },
+      {
+        "text": "+ Nomen",
+        "variant": "prep"
+      },
+      {
+        "text": "= Genus sichtbar"
+      }
     ],
     "exampleHtml": "In <span class=\"vp-verb\">einem</span> Garten steht <span class=\"vp-verb\">ein</span> Baum. Auf <span class=\"vp-prep\">dem</span> Baum sitzt ein Vogel.",
     "qa": [
-      { "html": "<strong>der / die / das</strong> — bestimmter Artikel. Man weiß schon, <em>welcher</em>: <em>der Baum</em> (genau dieser).", "tag": "bestimmt" },
-      { "html": "<strong>ein / eine</strong> — unbestimmter Artikel. Neu im Gespräch, irgendeiner: <em>ein Baum</em>.", "tag": "unbestimmt" },
-      { "html": "Im <strong>Plural</strong> heißt der bestimmte Artikel immer <em>die</em> — <em>die Bäume, die Frauen, die Kinder</em>.", "tag": "Plural" },
-      { "html": "Einen unbestimmten Artikel im Plural gibt es nicht: <em>ein Baum → Bäume</em>, ganz ohne Artikel.", "tag": "kein ein-Plural" }
+      {
+        "html": "<strong>der / die / das</strong> — bestimmter Artikel. Man weiß schon, <em>welcher</em>: <em>der Baum</em> (genau dieser).",
+        "tag": "bestimmt"
+      },
+      {
+        "html": "<strong>ein / eine</strong> — unbestimmter Artikel. Neu im Gespräch, irgendeiner: <em>ein Baum</em>.",
+        "tag": "unbestimmt"
+      },
+      {
+        "html": "Im <strong>Plural</strong> heißt der bestimmte Artikel immer <em>die</em> — <em>die Bäume, die Frauen, die Kinder</em>.",
+        "tag": "Plural"
+      },
+      {
+        "html": "Einen unbestimmten Artikel im Plural gibt es nicht: <em>ein Baum → Bäume</em>, ganz ohne Artikel.",
+        "tag": "kein ein-Plural"
+      }
     ],
     "noteHtml": "Der Märchenanfang zeigt den Unterschied in zwei Sätzen: <em>„Es war einmal <strong>ein</strong> König, der hatte <strong>eine</strong> Tochter. <strong>Diese</strong> Tochter war …“</em> — erst unbestimmt einführen, dann bestimmt weiterreden. Merken Sie sich auch die Verschmelzungen: <em>in dem = im, an dem = am, bei dem = beim, zu dem = zum, in das = ins, an das = ans</em>.",
     "reference": {
@@ -24,24 +44,76 @@
       "tables": [
         {
           "caption": "Bestimmt, unbestimmt, negativ im Nominativ",
-          "head": ["", "maskulin", "feminin", "neutral", "Plural"],
+          "head": [
+            "",
+            "maskulin",
+            "feminin",
+            "neutral",
+            "Plural"
+          ],
           "rows": [
-            ["bestimmt", "der Mann", "die Frau", "das Kind", "die Kinder"],
-            ["unbestimmt", "ein Mann", "eine Frau", "ein Kind", "— Kinder"],
-            ["negativ", "kein Mann", "keine Frau", "kein Kind", "keine Kinder"]
+            [
+              "bestimmt",
+              "der Mann",
+              "die Frau",
+              "das Kind",
+              "die Kinder"
+            ],
+            [
+              "unbestimmt",
+              "ein Mann",
+              "eine Frau",
+              "ein Kind",
+              "— Kinder"
+            ],
+            [
+              "negativ",
+              "kein Mann",
+              "keine Frau",
+              "kein Kind",
+              "keine Kinder"
+            ]
           ]
         },
         {
           "caption": "Endungen, die das Genus verraten",
           "note": "Keine Regel ohne Ausnahme — aber diese Endungen stimmen fast immer.",
-          "head": ["Endung", "Artikel", "Beispiele"],
+          "head": [
+            "Endung",
+            "Artikel",
+            "Beispiele"
+          ],
           "rows": [
-            ["-ung, -heit, -keit, -schaft", "die", "die Zeitung, die Freiheit, die Möglichkeit, die Mannschaft"],
-            ["-ion, -tät, -ik, -ur", "die", "die Station, die Universität, die Musik, die Kultur"],
-            ["-e (sehr oft)", "die", "die Blume, die Sonne, die Schule"],
-            ["-er, -ling, -ismus", "der", "der Lehrer, der Frühling, der Tourismus"],
-            ["-chen, -lein", "das", "das Mädchen, das Häuschen, das Fräulein"],
-            ["-um, -ment, -ma", "das", "das Museum, das Dokument, das Thema"]
+            [
+              "-ung, -heit, -keit, -schaft",
+              "die",
+              "die Zeitung, die Freiheit, die Möglichkeit, die Mannschaft"
+            ],
+            [
+              "-ion, -tät, -ik, -ur",
+              "die",
+              "die Station, die Universität, die Musik, die Kultur"
+            ],
+            [
+              "-e (sehr oft)",
+              "die",
+              "die Blume, die Sonne, die Schule"
+            ],
+            [
+              "-er, -ling, -ismus",
+              "der",
+              "der Lehrer, der Frühling, der Tourismus"
+            ],
+            [
+              "-chen, -lein",
+              "das",
+              "das Mädchen, das Häuschen, das Fräulein"
+            ],
+            [
+              "-um, -ment, -ma",
+              "das",
+              "das Museum, das Dokument, das Thema"
+            ]
           ]
         }
       ],
@@ -76,67 +148,254 @@
       "type": "table",
       "title": "der, die oder das?",
       "hint": "Schulsachen — schreiben Sie den bestimmten Artikel.",
-      "columns": ["Nomen", "Artikel"],
+      "columns": [
+        "Nomen",
+        "Artikel"
+      ],
       "placeholder": "der / die / das",
       "rows": [
-        { "term": "Mappe", "answer": "die" },
-        { "term": "Stift", "answer": "der" },
-        { "term": "Blatt", "answer": "das" },
-        { "term": "Radiergummi", "answer": "der" },
-        { "term": "Bild", "answer": "das" },
-        { "term": "Füller", "answer": "der" },
-        { "term": "Schultasche", "answer": "die" },
-        { "term": "Tinte", "answer": "die" },
-        { "term": "Buch", "answer": "das" },
-        { "term": "Apfel", "answer": "der" }
+        {
+          "term": "Mappe",
+          "answer": "die"
+        },
+        {
+          "term": "Stift",
+          "answer": "der"
+        },
+        {
+          "term": "Blatt",
+          "answer": "das"
+        },
+        {
+          "term": "Radiergummi",
+          "answer": "der"
+        },
+        {
+          "term": "Bild",
+          "answer": "das"
+        },
+        {
+          "term": "Füller",
+          "answer": "der"
+        },
+        {
+          "term": "Schultasche",
+          "answer": "die"
+        },
+        {
+          "term": "Tinte",
+          "answer": "die"
+        },
+        {
+          "term": "Buch",
+          "answer": "das"
+        },
+        {
+          "term": "Apfel",
+          "answer": "der"
+        }
       ]
     },
     {
       "type": "table",
       "title": "Endung erkannt — Artikel gefunden.",
       "hint": "Diese Wörter kennen Sie vielleicht noch nicht. Entscheiden Sie nur nach der Endung.",
-      "columns": ["Nomen", "Artikel"],
+      "columns": [
+        "Nomen",
+        "Artikel"
+      ],
       "placeholder": "der / die / das",
       "rows": [
-        { "term": "Wohnung", "answer": "die" },
-        { "term": "Mädchen", "answer": "das" },
-        { "term": "Lehrer", "answer": "der" },
-        { "term": "Universität", "answer": "die" },
-        { "term": "Museum", "answer": "das" },
-        { "term": "Freiheit", "answer": "die" },
-        { "term": "Frühling", "answer": "der" },
-        { "term": "Dokument", "answer": "das" },
-        { "term": "Möglichkeit", "answer": "die" }
-      ]
+        {
+          "term": "Wohnung",
+          "answer": "die"
+        },
+        {
+          "term": "Mädchen",
+          "answer": "das"
+        },
+        {
+          "term": "Lehrer",
+          "answer": "der"
+        },
+        {
+          "term": "Universität",
+          "answer": "die"
+        },
+        {
+          "term": "Museum",
+          "answer": "das"
+        },
+        {
+          "term": "Freiheit",
+          "answer": "die"
+        },
+        {
+          "term": "Frühling",
+          "answer": "der"
+        },
+        {
+          "term": "Dokument",
+          "answer": "das"
+        },
+        {
+          "term": "Möglichkeit",
+          "answer": "die"
+        }
+      ],
+      "rule": {
+        "label": "Die Endungen, die hier gemeint sind",
+        "groups": [
+          {
+            "artikel": "die",
+            "endungen": [
+              "-ung",
+              "-heit",
+              "-keit",
+              "-schaft",
+              "-ion",
+              "-tät",
+              "-ik",
+              "-ur",
+              "-e"
+            ],
+            "examples": "die Wohnung, die Freiheit, die Möglichkeit, die Universität, die Blume"
+          },
+          {
+            "artikel": "der",
+            "endungen": [
+              "-er",
+              "-ling",
+              "-ismus",
+              "-or"
+            ],
+            "examples": "der Lehrer, der Frühling, der Tourismus, der Motor"
+          },
+          {
+            "artikel": "das",
+            "endungen": [
+              "-chen",
+              "-lein",
+              "-um",
+              "-ment",
+              "-ma"
+            ],
+            "examples": "das Mädchen, das Museum, das Dokument, das Thema"
+          }
+        ],
+        "disclaimer": {
+          "label": "Wichtiger als jede Endung: den Artikel mit dem Wort lernen",
+          "html": "<p>Die Liste oben deckt nur einen Teil der Nomen ab, und zu jeder Zeile gibt es Ausnahmen: <em>-er</em> ist meistens <em>der</em> — aber <em>das Fenster</em>, <em>das Wasser</em>, <em>die Mutter</em>. <em>-e</em> ist meistens <em>die</em> — aber <em>der Name</em>, <em>der Junge</em>, <em>das Auge</em>.</p><p>Diese Übung trainiert deshalb nur den Notfall: ein Wort, das Sie noch nie gesehen haben. Im Alltag bekommen Sie den Artikel nicht über Regeln, sondern über zwei Dinge.</p><p><strong>1. Jedes neue Wort von Anfang an mit seinem Artikel lernen.</strong> Nie <em>Tisch</em>, immer <em>der Tisch</em>. Der Artikel gehört zum Wort wie die Schreibweise: in jede Vokabelliste schreiben, bei jeder Wiederholung mitsprechen.</p><p><strong>2. Fehler machen und korrigieren.</strong> Ein Wort, bei dem Sie den Artikel einmal falsch hatten und es gemerkt haben, sitzt danach besser als zehn auswendig gelernte Endungen.</p>"
+        }
+      }
     },
     {
       "type": "story",
       "title": "Lückentext: Ein schöner Garten.",
       "hint": "Neu im Text = ein/eine, schon bekannt = der/die/das.",
       "segments": [
-        { "text": "In " },
-        { "blank": 0, "answer": ["einem"] },
-        { "text": " Garten steht " },
-        { "blank": 1, "answer": ["ein"] },
-        { "text": " Baum. Auf " },
-        { "blank": 2, "answer": ["dem"] },
-        { "text": " Baum sitzt " },
-        { "blank": 3, "answer": ["ein"] },
-        { "text": " Vogel. Er singt " },
-        { "blank": 4, "answer": ["ein"] },
-        { "text": " Lied. " },
-        { "blank": 5, "answer": ["Die"] },
-        { "text": " Sonne scheint am Himmel. " },
-        { "blank": 6, "answer": ["Das"] },
-        { "text": " Gras ist noch grün. Auf " },
-        { "blank": 7, "answer": ["der"] },
-        { "text": " Wiese sieht man " },
-        { "blank": 8, "answer": ["eine"] },
-        { "text": " Katze schleichen. Am Baum hängt " },
-        { "blank": 9, "answer": ["eine"] },
-        { "text": " Schaukel. Es ist " },
-        { "blank": 10, "answer": ["ein"] },
-        { "text": " wunderschöner Nachmittag." }
+        {
+          "text": "In "
+        },
+        {
+          "blank": 0,
+          "answer": [
+            "einem"
+          ]
+        },
+        {
+          "text": " Garten steht "
+        },
+        {
+          "blank": 1,
+          "answer": [
+            "ein"
+          ]
+        },
+        {
+          "text": " Baum. Auf "
+        },
+        {
+          "blank": 2,
+          "answer": [
+            "dem"
+          ]
+        },
+        {
+          "text": " Baum sitzt "
+        },
+        {
+          "blank": 3,
+          "answer": [
+            "ein"
+          ]
+        },
+        {
+          "text": " Vogel. Er singt "
+        },
+        {
+          "blank": 4,
+          "answer": [
+            "ein"
+          ]
+        },
+        {
+          "text": " Lied. "
+        },
+        {
+          "blank": 5,
+          "answer": [
+            "Die"
+          ]
+        },
+        {
+          "text": " Sonne scheint am Himmel. "
+        },
+        {
+          "blank": 6,
+          "answer": [
+            "Das"
+          ]
+        },
+        {
+          "text": " Gras ist noch grün. Auf "
+        },
+        {
+          "blank": 7,
+          "answer": [
+            "der"
+          ]
+        },
+        {
+          "text": " Wiese sieht man "
+        },
+        {
+          "blank": 8,
+          "answer": [
+            "eine"
+          ]
+        },
+        {
+          "text": " Katze schleichen. Am Baum hängt "
+        },
+        {
+          "blank": 9,
+          "answer": [
+            "eine"
+          ]
+        },
+        {
+          "text": " Schaukel. Es ist "
+        },
+        {
+          "blank": 10,
+          "answer": [
+            "ein"
+          ]
+        },
+        {
+          "text": " wunderschöner Nachmittag."
+        }
       ]
     },
     {
@@ -144,12 +403,30 @@
       "title": "Zusammengesetzte Nomen: Welcher Artikel gilt?",
       "hint": "Klicken Sie erst das Wortpaar, dann das fertige Nomen.",
       "pairs": [
-        { "q": "die Hand + der Schuh", "a": "der Handschuh" },
-        { "q": "der Apfel + der Kuchen", "a": "der Apfelkuchen" },
-        { "q": "der Garten + die Tür", "a": "die Gartentür" },
-        { "q": "das Buch + das Regal", "a": "das Bücherregal" },
-        { "q": "der Fuß + der Ball", "a": "der Fußball" },
-        { "q": "der Tee + die Tasse", "a": "die Teetasse" }
+        {
+          "q": "die Hand + der Schuh",
+          "a": "der Handschuh"
+        },
+        {
+          "q": "der Apfel + der Kuchen",
+          "a": "der Apfelkuchen"
+        },
+        {
+          "q": "der Garten + die Tür",
+          "a": "die Gartentür"
+        },
+        {
+          "q": "das Buch + das Regal",
+          "a": "das Bücherregal"
+        },
+        {
+          "q": "der Fuß + der Ball",
+          "a": "der Fußball"
+        },
+        {
+          "q": "der Tee + die Tasse",
+          "a": "die Teetasse"
+        }
       ]
     },
     {
@@ -158,12 +435,48 @@
       "hint": "Achten Sie auf Groß- und Kleinschreibung am Satzanfang.",
       "placeholder": "Artikel",
       "items": [
-        { "prompt": "Ich kaufe ___ Brot. Zu Hause liegt schon eins, aber es ist alt.", "hint": "Irgendein Brot, neu im Gespräch.", "answer": ["ein"] },
-        { "prompt": "Wo ist ___ Brot, das ich gestern gekauft habe?", "hint": "Ein ganz bestimmtes — wir kennen es schon.", "answer": ["das"] },
-        { "prompt": "___ Sonne scheint heute den ganzen Tag.", "hint": "Es gibt nur eine.", "answer": ["Die"] },
-        { "prompt": "Auf dem Tisch steht ___ Vase mit Blumen.", "hint": "feminin, neu im Gespräch", "answer": ["eine"] },
-        { "prompt": "Wir gehen in ___ Kino. (in + das)", "hint": "Verschmelzung.", "answer": ["ins"] },
-        { "prompt": "Meine Schwester wohnt ___ Berlin.", "hint": "Städtenamen brauchen keinen Artikel — nur die Präposition.", "answer": ["in"] }
+        {
+          "prompt": "Ich kaufe ___ Brot. Zu Hause liegt schon eins, aber es ist alt.",
+          "hint": "Irgendein Brot, neu im Gespräch.",
+          "answer": [
+            "ein"
+          ]
+        },
+        {
+          "prompt": "Wo ist ___ Brot, das ich gestern gekauft habe?",
+          "hint": "Ein ganz bestimmtes — wir kennen es schon.",
+          "answer": [
+            "das"
+          ]
+        },
+        {
+          "prompt": "___ Sonne scheint heute den ganzen Tag.",
+          "hint": "Es gibt nur eine.",
+          "answer": [
+            "Die"
+          ]
+        },
+        {
+          "prompt": "Auf dem Tisch steht ___ Vase mit Blumen.",
+          "hint": "feminin, neu im Gespräch",
+          "answer": [
+            "eine"
+          ]
+        },
+        {
+          "prompt": "Wir gehen in ___ Kino. (in + das)",
+          "hint": "Verschmelzung.",
+          "answer": [
+            "ins"
+          ]
+        },
+        {
+          "prompt": "Meine Schwester wohnt ___ Berlin.",
+          "hint": "Städtenamen brauchen keinen Artikel — nur die Präposition.",
+          "answer": [
+            "in"
+          ]
+        }
       ]
     }
   ]

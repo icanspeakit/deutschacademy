@@ -7,12 +7,31 @@
   "nav.panel.allTools": "عرض كل التمارين",
   "nav.panel.allExams": "عرض كل الامتحانات",
   "nav.panel.all": "نظرة عامة",
+  "nav.subject.grammatik": "القواعد",
+  "nav.subject.wortschatz": "المفردات",
+  "nav.subject.fertigkeiten": "المهارات",
+  "nav.subject.fertigkeiten.blurb": "التحدث والقراءة والكتابة",
+  "nav.subject.niveaus": "المستويات",
+  "nav.subject.niveaus.blurb": "من A1 إلى B2 خطوة بخطوة",
+  "nav.group.trainer": "تدريبات",
+  "nav.group.themen": "حسب المستوى",
+  "nav.kultur.wohnen": "السكن والحياة اليومية",
+  "nav.kultur.aemter": "الدوائر الرسمية والتأمين",
+  "nav.kultur.umgang": "التعامل والعادات",
+  "nav.kultur.bildung": "المدرسة والتدريب المهني",
+  "nav.kultur.land": "البلد والتقويم",
+  "nav.subject.profil": "الملف الشخصي",
+  "nav.subject.profil.blurb": "تقدّمك وأسبوعك",
+  "nav.level.grammar": "القواعد",
+  "nav.level.vocab": "المفردات",
+  "nav.level.vocabSoon": "قوائم الكلمات لهذا المستوى قادمة قريبًا.",
+  "nav.level.allTopics": "كل المواضيع ({n})",
+  "nav.level.topicCount": "{n} مواضيع",
   "theme.toDark": "التبديل إلى الوضع الداكن",
   "theme.toLight": "التبديل إلى الوضع الفاتح",
   "header.allExercises": "→ جميع التمارين",
   "header.home": "الصفحة الرئيسية",
   "header.back": "→ العودة إلى النظرة العامة",
-
   "home.hero.eyebrow": "مجانًا وبدون تسجيل",
   "home.hero.title": "تعلّم الألمانية بمواد تعليمية حقيقية",
   "home.hero.subtitle": "تمارين وتحضير للامتحانات لـ telc وGoethe-Zertifikat وTestDaF وDTZ واختبار العيش في ألمانيا — مجانًا.",
@@ -21,7 +40,6 @@
   "home.tools.title": "كل أداة على حدة",
   "home.exams.eyebrow": "التحضير للامتحانات",
   "home.exams.title": "جاهز لكل امتحان",
-
   "tool.artikel.title": "مدرّب der/die/das",
   "tool.artikel.desc": "تدرّب على أدوات التعريف مع تغذية راجعة فورية.",
   "tool.grammatik.title": "القواعد",
@@ -41,19 +59,20 @@
   "tool.comingSoon.title": "المزيد من التمارين",
   "tool.comingSoon.desc": "أدوات تدريب جديدة قيد الإعداد.",
   "tool.comingSoon.count": "قريبًا",
-
   "dash.tab.today": "اليوم",
   "dash.tab.skills": "المهارات",
   "dash.tab.progress": "التقدّم",
   "uebungen.hero.eyebrow": "جميع التمارين",
   "uebungen.hero.title": "كل أداة على حدة",
-
   "grammatik.hero.eyebrow": "تدرّب على القواعد",
   "grammatik.hero.title": "المواضيع حسب المستوى",
   "grammatik.hero.subtitle": "اختر موضوعًا. لمعظم المواضيع غرفة تدريب خاصة تتضمّن شرحًا وعدة أنواع من التمارين — أمّا الباقي فتتدرّب عليه في اختبار ملء الفراغات.",
   "grammatik.card.workspace": "غرفة تدريب",
   "grammatik.card.questions": "{n} أسئلة",
-
+  "grammatik.mode.guided": "قُدني خطوة بخطوة",
+  "grammatik.mode.guidedSub": "{n} تمرينًا من {t} موضوعًا بترتيب المنهج — واحدًا تلو الآخر، دون أن تختار شيئًا.",
+  "grammatik.mode.free": "سأختار بنفسي",
+  "grammatik.mode.freeSub": "كل المواضيع ({n}) حسب المستوى. أنت تعرف ما تريد التدرب عليه.",
   "tool.artikel.count": "{n} اسمًا",
   "tool.grammatik.count": "{n} مواضيع · {q} أسئلة",
   "tool.praepositionen.count": "{n} فعلاً",
@@ -62,7 +81,6 @@
   "tool.sprechen.count": "{n} صورة",
   "tool.lesen.count": "{n} مهمة",
   "tool.kultur.count": "{n} مواضيع",
-
   "home.hero1.eyebrow": "لوحتك الرئيسية",
   "home.hero1.title": "تقدّمك دائمًا أمام عينيك",
   "home.hero1.lead": "المستوى والدروس المكتملة والخطوات التالية في مكان واحد — لتعرف بالضبط ما عليك متابعته في كل مرة تسجّل فيها الدخول.",
@@ -70,7 +88,6 @@
   "home.cta.startFree": "ابدأ مجانًا",
   "home.hero1.login": "لديك حساب بالفعل؟ سجّل الدخول",
   "home.hero.noteBadge": "دورة أساسية مجانية A1–C1 · بدون اشتراك",
-
   "home.mock.dashboard": "لوحة التحكم",
   "home.mock.grammatikShort": "القواعد",
   "home.mock.wortschatzShort": "المفردات",
@@ -84,7 +101,6 @@
   "home.mock.b1Beruf": "B1 · العمل",
   "home.mock.authenticClips": "مقاطع فيديو حقيقية",
   "home.mock.goetheB2Prep": "التحضير لـ Goethe B2",
-
   "home.peek.eyebrow": "نظرة من الداخل",
   "home.peek.title": "هكذا يبدو من الداخل",
   "home.peek.subtitle": "ليست صورًا — كلاهما يعمل. اضغط على موضوع في الشريط الجانبي.",
@@ -96,17 +112,24 @@
   "fold.unsure": "لا أعرف",
   "fold.unsureSub": "نبدأ من A1 — بعد سؤالين ستعرف إن كان سهلاً جدًا.",
   "fold.orExam": "أو مباشرة إلى الامتحان",
+  "fold.askSubNew": "اختر مستواك — ثم اختر القواعد أو المفردات.",
+  "fold.back": "رجوع",
+  "fold.panelTitle": "من أين تبدأ؟",
+  "fold.panel.grammar": "القواعد",
+  "fold.panel.words": "المفردات",
+  "fold.row.exercises": "{n} تمارين",
+  "fold.row.questions": "{n} أسئلة",
+  "fold.row.words": "{n} كلمة",
+  "fold.allTopics": "كل المواضيع ({n}) ←",
   "home.hero2.eyebrow": "الألمانية من A1 إلى C1",
   "home.hero2.title": "تعلّم الألمانية كما تُنطق فعلًا",
   "home.hero2.lead": "القواعد والألمانية اليومية ومهارات التحدث — مبنية من مواد تعليمية حقيقية، وليست مكتوبة بشكل باهت من أجل منصة.",
   "home.hero2.cta1": "ابدأ التعلّم مجانًا",
   "home.hero2.cta2": "شاهد كيف يعمل",
-
   "home.trust.tools": "أدوات تدريب، كلها مجانية",
   "home.trust.exams": "امتحانات مشمولة",
   "home.trust.learners": "متعلمون حتى الآن",
   "home.trust.freeCourse": "للدورة الأساسية A1–C1",
-
   "home.value.eyebrow": "لماذا DeutschAcademy",
   "home.value.title": "مبنية من دروس حقيقية، لا من قوالب جاهزة",
   "home.value.subtitle": "كل درس أدناه تم تدريسه بالفعل، مباشرةً، لمتعلمين حقيقيين — ولم يُكتب بشكل باهت لمنصة دورات.",
@@ -118,7 +141,6 @@
   "home.value.card3.desc": "لعب الأدوار وتمارين ثنائية ووصف الصور — الجزء الذي عادةً ما يحصل عليه المتعلمون فقط في الصف الحضوري.",
   "home.value.card4.title": "تحضير بصيغة الامتحان، لا تخمين",
   "home.value.card4.desc": "امتحانات تجريبية ومهام كتابية بنفس بنية امتحانات Goethe وtelc، تصححها معلمة أو معلم حقيقي.",
-
   "home.how.eyebrow": "كيف يعمل الأمر",
   "home.how.title": "طريقك نحو الطلاقة بالألمانية — في ثلاث خطوات واضحة",
   "home.how.step1.label": "الخطوة 1",
@@ -130,10 +152,8 @@
   "home.how.step3.label": "الخطوة 3",
   "home.how.step3.title": "التحدث",
   "home.how.step3.desc": "تدرّب على لعب الأدوار والتمارين الثنائية ووصف الصور.",
-
   "home.tools.heading2": "التمارين والتحضير للامتحانات في مكان واحد",
   "home.tools.subtitle": "لا حاجة للتنقل بين تطبيقات وبطاقات مختلفة — كل شيء يعيش في نفس لوحة التحكم.",
-
   "home.deepdive.eyebrow": "ما الذي تحصل عليه",
   "home.deepdive.title": "كل ما تحصل عليه، مستوى تلو الآخر",
   "home.deepdive.core.title": "الدورة الأساسية",
@@ -158,7 +178,6 @@
   "home.deepdive.community.item3": "مساحة لطرح الأسئلة بين الدروس",
   "home.deepdive.community.item4": "مواد تدريب جديدة تُضاف مع نمو الدورة",
   "home.deepdive.community.cta": "انضم إلى المجتمع",
-
   "home.pricing.eyebrow": "الأسعار",
   "home.pricing.title": "دورة مجانية واحدة. ترقية واحدة، عندما تكون مستعدًا لخوض الامتحان.",
   "home.pricing.subtitle": "كل ما سبق إما مجاني بالكامل أو متاح مع بريميوم — بلا مستويات مخفية.",
@@ -182,19 +201,16 @@
   "home.pricing.premium.item5": "جلسة أسئلة وأجوبة شهرية مباشرة مع المجتمع",
   "home.pricing.premium.cta": "ابدأ بريميوم",
   "home.pricing.note": "بلا عقود — يمكنك الإلغاء في أي وقت.",
-
   "home.finalcta.title": "خطوتك التالية نحو الطلاقة بالألمانية",
   "home.finalcta.subtitle": "ابدأ مجانًا، اختبر مستواك، وواصل بالسرعة التي تناسبك.",
   "home.finalcta.cta": "ابدأ مجانًا",
   "home.finalcta.loginQuestion": "لديك حساب بالفعل؟",
   "home.finalcta.loginAction": "سجّل الدخول",
-
   "home.footer.tagline": "هنا من أجلك!",
   "home.footer.col.product": "المنتج",
   "home.footer.col.company": "الشركة",
   "home.footer.col.support": "الدعم",
   "home.footer.col.legal": "الشؤون القانونية",
-
   "home.mock.questionsLabel": "أسئلة",
   "home.mock.topicsLabel": "مواضيع",
   "home.mock.position": "السؤال {i} من {n}",
@@ -215,7 +231,6 @@
   "home.mock.wasCorrect": "للأسف خطأ.",
   "home.mock.ausspracheShort": "النطق",
   "home.mock.costLabel": "التكلفة",
-
   "dash.today.title": "لك اليوم",
   "dash.examCard.title": "التحضير للامتحانات",
   "dash.examCard.desc": "محاكاة DTZ واختبار التجنس \"العيش في ألمانيا\"، بصيغة الامتحان الحقيقية.",
@@ -228,67 +243,52 @@
   "dash.skillsView.subtitle": "الحلقة = وضعك الحالي في كل مهارة",
   "dash.radar.title": "ملفك الشخصي للمهارات",
   "dash.thisWeek": "هذا الأسبوع",
-
   "dash.skill.wortschatz": "المفردات",
   "dash.skill.grammatik": "القواعد",
   "dash.skill.hoeren": "الاستماع",
   "dash.skill.sprechen": "التحدث",
   "dash.skill.schreiben": "الكتابة",
-
   "dash.greeting.morning": "صباح الخير",
   "dash.greeting.afternoon": "طاب يومك",
   "dash.greeting.evening": "مساء الخير",
-
   "dash.date.never": "أبدًا",
   "dash.date.today": "اليوم",
   "dash.date.yesterday": "أمس",
   "dash.date.daysAgo": "قبل {n} أيام",
   "dash.date.longAgo": "منذ فترة",
-
   "dash.dayNames": "أحد,اثنين,ثلاثاء,أربعاء,خميس,جمعة,سبت",
-
   "dash.weekSummary": "<strong>{n}</strong> تمرينًا{delta}",
   "dash.weekDelta": "{d} مقارنة بالأسبوع الماضي",
-
   "dash.taskCount": "{n} مهمة",
   "dash.sessionCount": "{n} جلسة",
   "dash.notPracticed": "لم يُدرَّب بعد",
-
   "dash.radar.filled": "توضح المساحة وضعك الحالي في المهارات الخمس كلها — كلما كانت أكبر كان ذلك أفضل.",
   "dash.radar.empty": "بمجرد أن تبدأ التدريب، سيمتلئ ملفك الشخصي هنا.",
-
   "dash.callout.eyebrow": "التالي · {skill}",
   "dash.callout.title": "هنا يفيدك التدريب أكثر حاليًا.",
   "dash.callout.body": "{skill} عند {pct}% {metric} — أضعف مهارة لديك حاليًا.",
   "dash.callout.startEyebrow": "ابدأ الآن",
   "dash.callout.noDataTitle": "لا توجد بيانات تدريب بعد.",
   "dash.callout.noDataBody": "ابدأ بمهارة واحدة — سيمتلئ ملفك الشخصي بمجرد أن تتدرب.",
-
   "dash.metric.accuracy": "الدقة",
   "dash.metric.activity": "النشاط",
-
   "dash.cta.practiceNow": "تدرّب الآن ←",
   "dash.cta.start": "ابدأ الآن ←",
   "dash.cta.continue": "متابعة مع {skill} ←",
   "dash.cta.practiceSkill": "تدرّب على {skill} الآن ←",
-
   "dash.streakBadge": "🔥 {n} يومًا متتاليًا",
   "dash.startStreak": "ابدأ سلسلة أيامك",
   "dash.subtitle.zero": "لا تدريب بعد هذا الأسبوع — ابدأ الآن ببضع دقائق فقط.",
   "dash.subtitle.goalMet": "تم تحقيق الهدف الأسبوعي — {n} تمرينًا هذا الأسبوع. عمل رائع!",
   "dash.subtitle.progress": "أنجزت {n} من {goal} تمرينًا هذا الأسبوع.",
   "dash.stat.streakValue": "{n} يومًا",
-
   "dash.today.done": "✓ تدربت اليوم",
   "dash.today.start": "← ابدأ",
-
   "dash.name.edit": "✏️ تعديل \"{name}\"",
   "dash.name.add": "أضف اسمك",
   "dash.name.placeholder": "اسمك",
   "dash.save": "حفظ",
-
   "dash.goal.label": "الهدف الأسبوعي: {goal} تمرينًا · تعديل",
-
   "dash.progress.skillLabel": "المهارة",
   "dash.progress.mastery": "الإتقان",
   "dash.progress.correctOf": "{correct}/{total} صحيحة",
@@ -302,19 +302,16 @@
   "dash.progress.totalNote": "المهام والجلسات منذ البداية",
   "dash.progress.moreTitle": "المزيد من التحليلات قادم",
   "dash.progress.moreBody": "سجل تطور الدقة وتوزيع الأخطاء وسجل الجلسات يحتاج بيانات أكثر تفصيلًا لكل مهمة مما هو مخزَّن حاليًا. ستنمو هذه الشاشة مع التحديثات القادمة — ولن نعرض هنا أبدًا أرقامًا مختلَقة.",
-
   "wortschatz.hero.title": "عبارات ومفردات يومية",
   "wortschatz.tab.cards": "بطاقات تعليمية",
   "wortschatz.tab.learn": "تعلّم",
   "wortschatz.tab.test": "اختبار",
   "wortschatz.tab.list": "قائمة الكلمات",
   "wortschatz.themeToggle": "تبديل الوضع الداكن",
-
   "aussprache.hero.eyebrow": "استمع وكرّر",
   "aussprache.hero.title": "تدرّب على النطق",
   "aussprache.hero.subtitle": "استمع إلى العبارة، ثم كرّرها وسجّل نفسك. بالسرعة البطيئة تسمع كل مقطع بوضوح.",
   "aussprache.tab.artikel": "أدوات التعريف",
-
   "sprechen.hero.eyebrow": "امتحان DTZ التحدث، الجزء 2",
   "sprechen.hero.title": "تدرّب على وصف الصور",
   "sprechen.hero.subtitle": "أسئلة حقيقية من الممتحنين من الدروس. في الامتحان الحقيقي لديك 90 ثانية للوصف و90 ثانية للأسئلة الإضافية — تمامًا كما هنا.",
@@ -325,7 +322,6 @@
   "sprechen.prevImage": "→ الصورة السابقة",
   "sprechen.nextImage": "الصورة التالية ←",
   "sprechen.timeUp": "انتهى الوقت!",
-
   "lesen.hero.eyebrow": "محاكاة DTZ",
   "lesen.hero.title": "تدرّب على القراءة والكتابة",
   "lesen.hero.subtitle": "محاكاة كاملة لفهم القراءة (الموضوع: التعلّم عبر الإنترنت والاندماج، المستوى B1) مع مفتاح إجابات حقيقي، بالإضافة إلى مهمتي كتابة.",
@@ -334,13 +330,11 @@
   "lesen.writingPrompt.placeholder": "اكتب إجابتك هنا...",
   "lesen.wordCount": "{n} كلمة",
   "lesen.wordCount.goal": "الهدف: 60-80 كلمة على الأقل",
-
   "kultur.hero.eyebrow": "معرفة عن البلد",
-  "kultur.hero.subtitle": "مواضيع قصيرة من نقاشات صفية حقيقية في DeutschAcademy — لا معلومات عامة من ذكاء اصطناعي.",
+  "kultur.hero.subtitle": "كيف تسير الحياة اليومية في ألمانيا — القواعد والدوائر والمبالغ والإجراءات، مع اختبار لكل موضوع.",
   "kultur.link.passiv": "تدرّب على جمل المبني للمجهول ←",
   "kultur.link.wortschatz": "عبّر عن رأيك الخاص (عبارات) ←",
   "kultur.moreNote": "ستُضاف مواضيع أخرى (الأعياد، العادات الإقليمية، آداب الحياة اليومية) بمجرد توفر مصادر حقيقية لها — نحن لا نختلق ادعاءات ثقافية أبدًا.",
-
   "pruefungen.hero.eyebrow": "التحضير للامتحانات",
   "pruefungen.hero.title": "أي امتحان ستخوض؟",
   "pruefungen.hero.subtitle": "نظرة عامة على أهم خمسة امتحانات لغة واندماج ألمانية — المستوى والبنية وكيفية التحضير لها.",
@@ -360,18 +354,15 @@
   "pruefungen.pricing.freeItem3": "أكثر من 60 موضوع قواعد",
   "pruefungen.pricing.premiumPrice": "XX يورو / شهريًا (لم يُحدَّد بعد)",
   "pruefungen.viewAllPricing": "عرض جميع الأسعار ←",
-
   "vp.hero.subtitle": "بعض الأفعال تحتاج إلى حرف جر ثابت. تعلّم النمط، ثم تدرّب عليه في خمسة أنواع مختلفة من التمارين — كما في صفحة كتاب دراسي.",
   "vp.howItWorks": "كيف يعمل هذا؟",
   "vp.toggleRef.show": "عرض قائمة المرجع ▼",
   "vp.toggleRef.hide": "إخفاء قائمة المرجع ▲",
-
   "quiz.hero.title": "اختبار ملء الفراغات حسب الموضوع",
   "quiz.hero.subtitle": "كل سؤال مأخوذ من جمل وجداول حقيقية من الدروس — لا روبوت قواعد عام.",
   "quiz.crosslink.passiv": "هذه الجمل بصيغة المبني للمجهول مأخوذة من نقاش صفي حقيقي حول الإعلام في ألمانيا — المزيد في <a href=\"/uebungen/kultur\">المعرفة الثقافية: من يدفع تكاليف ARD وZDF؟</a>",
   "quiz.crosslink.akkusativ": "لحالة النصب (Akkusativ) توجد غرفة تدريب خاصة بوضعي التركيز والاختبار، ومستويات الصعوبة، وجدول تصريف: <a href=\"/uebungen/grammatik/akkusativ\">فتح غرفة تدريب Akkusativ</a>",
   "quiz.crosslink.praepositionen": "للأفعال المرتبطة بحروف الجر توجد غرفة تدريب خاصة بخمسة أنواع من التمارين — ملء الفراغ، المطابقة، الجدول، النص المتقطع وبناء الجملة: <a href=\"/uebungen/grammatik/verben-praepositionen\">فتح غرفة التدريب</a>",
-
   "akk.tab.uebung": "تمرين",
   "akk.tab.regel": "القاعدة",
   "akk.mode.ariaLabel": "وضع التدريب",
@@ -386,7 +377,6 @@
   "akk.session.label": "هذه الجلسة",
   "akk.session.badge": "محليًا · بدون حساب",
   "akk.session.stats": "تمت الإجابة عن {answered} من {total} · {correct} صحيحة · {hints} تلميحات",
-
   "quiz.correctAnswered": "تمت الإجابة عنها بشكل صحيح",
   "quiz.restart": "تدرّب مرة أخرى",
   "quiz.inputPlaceholder": "اكتب إجابتك...",
@@ -398,15 +388,12 @@
   "quiz.incorrect": "✗ ليس تمامًا — الإجابة الصحيحة: {answer}",
   "quiz.next": "→ التالي",
   "quiz.showResult": "→ عرض النتيجة",
-
   "hub.hero.title": "مستعد للتدرّب؟",
   "hub.hero.subtitle": "اختر تمرينًا أو ابدأ مباشرةً بالتحضير لامتحانك القادم.",
   "hub.pill.exercises": "{n} تمارين",
   "hub.pill.exams": "{n} امتحانات",
-
   "grammatik.card.comingSoonTitle": "المزيد من المواضيع",
   "grammatik.card.comingSoonDesc": "غير متاح بعد.",
-
   "hub.mode.grid": "التمارين والامتحانات",
   "hub.mode.dashboard": "تقدّمي",
   "hub.pill.words": "{n} كلمة A1–A2",
@@ -432,7 +419,6 @@
   "front.slogan.sub": "مجاني، بدون حساب — من معلّمين يدرّسون فعلاً.",
   "home.stats.tools": "أدوات التمرين",
   "home.stats.price": "التكلفة",
-
   "picker.title": "ماذا تريد أن تتدرّب؟",
   "picker.total": "{n} أدوات، مرتّبة في خمسة اتجاهات.",
   "picker.all.cta": "أفضّل رؤية القائمة كاملة",
@@ -458,5 +444,9 @@
   "group.short.sprechen": "التحدث",
   "group.short.lesen": "القراءة",
   "group.short.kultur": "الثقافة",
-  "group.count.bundeslaender": "{n} ولاية"
+  "group.count.bundeslaender": "{n} ولاية",
+  "level.a1.blurb": "الجمل الأولى",
+  "level.a2.blurb": "الألمانية اليومية",
+  "level.b1.blurb": "التحدث باستقلالية",
+  "level.b2.blurb": "النقاش بثقة"
 }

@@ -7,12 +7,31 @@
   "nav.panel.allTools": "Усі вправи",
   "nav.panel.allExams": "Усі іспити",
   "nav.panel.all": "Огляд",
+  "nav.subject.grammatik": "Граматика",
+  "nav.subject.wortschatz": "Лексика",
+  "nav.subject.fertigkeiten": "Навички",
+  "nav.subject.fertigkeiten.blurb": "Говоріння, читання, письмо",
+  "nav.subject.niveaus": "Рівні",
+  "nav.subject.niveaus.blurb": "Від A1 до B2, крок за кроком",
+  "nav.group.trainer": "Тренажери",
+  "nav.group.themen": "За рівнем",
+  "nav.kultur.wohnen": "Житло та побут",
+  "nav.kultur.aemter": "Установи та страхування",
+  "nav.kultur.umgang": "Манери та звички",
+  "nav.kultur.bildung": "Школа та навчання",
+  "nav.kultur.land": "Країна та календар",
+  "nav.subject.profil": "Профіль",
+  "nav.subject.profil.blurb": "Твій прогрес і твій тиждень",
+  "nav.level.grammar": "Граматика",
+  "nav.level.vocab": "Лексика",
+  "nav.level.vocabSoon": "Списки слів для цього рівня з'являться незабаром.",
+  "nav.level.allTopics": "Усі {n} тем",
+  "nav.level.topicCount": "{n} тем",
   "theme.toDark": "Увімкнути темну тему",
   "theme.toLight": "Увімкнути світлу тему",
   "header.allExercises": "← Усі вправи",
   "header.home": "Головна",
   "header.back": "← Назад до огляду",
-
   "home.hero.eyebrow": "Безкоштовно та без реєстрації",
   "home.hero.title": "Вивчайте німецьку на реальних навчальних матеріалах",
   "home.hero.subtitle": "Вправи та підготовка до іспитів telc, Goethe-Zertifikat, TestDaF, DTZ та Leben in Deutschland — безкоштовно.",
@@ -21,7 +40,6 @@
   "home.tools.title": "Кожен інструмент окремо",
   "home.exams.eyebrow": "Підготовка до іспитів",
   "home.exams.title": "Готові до кожного іспиту",
-
   "tool.artikel.title": "Тренажер der/die/das",
   "tool.artikel.desc": "Тренуйте артиклі з миттєвим зворотним зв'язком.",
   "tool.grammatik.title": "Граматика",
@@ -41,19 +59,20 @@
   "tool.comingSoon.title": "Більше вправ",
   "tool.comingSoon.desc": "Нові інструменти для тренування вже в розробці.",
   "tool.comingSoon.count": "Скоро",
-
   "dash.tab.today": "Сьогодні",
   "dash.tab.skills": "Навички",
   "dash.tab.progress": "Прогрес",
   "uebungen.hero.eyebrow": "Усі вправи",
   "uebungen.hero.title": "Кожен інструмент окремо",
-
   "grammatik.hero.eyebrow": "Тренуйте граматику",
   "grammatik.hero.title": "Теми за рівнем",
   "grammatik.hero.subtitle": "Оберіть тему. Більшість мають власну практичну кімнату з поясненням і кількома типами вправ — решту ви тренуєте в тесті на заповнення пропусків.",
   "grammatik.card.workspace": "Практична кімната",
   "grammatik.card.questions": "{n} питань",
-
+  "grammatik.mode.guided": "Веди мене",
+  "grammatik.mode.guidedSub": "{n} вправ із {t} тем у порядку програми — одна за одною, ви нічого не обираєте.",
+  "grammatik.mode.free": "Оберу сам",
+  "grammatik.mode.freeSub": "Усі {n} тем за рівнями. Ви знаєте, що хочете потренувати.",
   "tool.artikel.count": "{n} іменників",
   "tool.grammatik.count": "{n} тем · {q} питань",
   "tool.praepositionen.count": "{n} дієслів",
@@ -62,7 +81,6 @@
   "tool.sprechen.count": "{n} зображень",
   "tool.lesen.count": "{n} завдань",
   "tool.kultur.count": "{n} тем",
-
   "home.hero1.eyebrow": "Твоя панель керування",
   "home.hero1.title": "Твій прогрес завжди перед очима",
   "home.hero1.lead": "Рівень, завершені уроки та наступні кроки в одному місці — щоб при кожному вході ти точно знав, над чим працювати далі.",
@@ -70,7 +88,6 @@
   "home.cta.startFree": "Почати безкоштовно",
   "home.hero1.login": "Вже з нами? Увійти",
   "home.hero.noteBadge": "Безкоштовний базовий курс A1–C1 · без підписки",
-
   "home.mock.dashboard": "Панель керування",
   "home.mock.grammatikShort": "Граматика",
   "home.mock.wortschatzShort": "Лексика",
@@ -84,7 +101,6 @@
   "home.mock.b1Beruf": "B1 · Робота",
   "home.mock.authenticClips": "Справжні відео",
   "home.mock.goetheB2Prep": "Підготовка до Goethe B2",
-
   "home.peek.eyebrow": "Погляд усередину",
   "home.peek.title": "Ось як це виглядає зсередини",
   "home.peek.subtitle": "Не скриншоти — обидва працюють. Торкніться теми на бічній панелі.",
@@ -96,17 +112,24 @@
   "fold.unsure": "Не знаю",
   "fold.unsureSub": "Починаємо з A1 — за два питання ви зрозумієте, чи це надто легко.",
   "fold.orExam": "Або одразу до іспиту",
+  "fold.askSubNew": "Торкніться свого рівня — потім оберіть граматику або лексику.",
+  "fold.back": "Назад",
+  "fold.panelTitle": "З чого почнемо?",
+  "fold.panel.grammar": "Граматика",
+  "fold.panel.words": "Лексика",
+  "fold.row.exercises": "{n} вправ",
+  "fold.row.questions": "{n} запитань",
+  "fold.row.words": "{n} слів",
+  "fold.allTopics": "Усі теми ({n}) →",
   "home.hero2.eyebrow": "Німецька від A1 до C1",
   "home.hero2.title": "Вивчайте німецьку такою, якою нею справді розмовляють",
   "home.hero2.lead": "Граматика, побутова німецька та практика говоріння — створені на основі реальних навчальних матеріалів, а не написані холодно для платформи.",
   "home.hero2.cta1": "Почати навчання безкоштовно",
   "home.hero2.cta2": "Подивитися, як це працює",
-
   "home.trust.tools": "Інструментів для тренування, усі безкоштовні",
   "home.trust.exams": "Іспитів охоплено",
   "home.trust.learners": "Учнів наразі",
   "home.trust.freeCourse": "для базового курсу A1–C1",
-
   "home.value.eyebrow": "Чому DeutschAcademy",
   "home.value.title": "Створено на основі реальних занять, а не шаблонів",
   "home.value.subtitle": "Кожен урок нижче вже викладали наживо реальним учням — а не писали холодно для курсової платформи.",
@@ -118,7 +141,6 @@
   "home.value.card3.desc": "Рольові ігри, парні вправи та описи зображень (Bildbeschreibung) — те, що учні зазвичай отримують лише на очному занятті.",
   "home.value.card4.title": "Підготовка у форматі іспиту, а не здогадки",
   "home.value.card4.desc": "Пробні іспити та письмові завдання, структуровані так, як насправді перевіряють Goethe і telc, з перевіркою від реального викладача.",
-
   "home.how.eyebrow": "Як це працює",
   "home.how.title": "Твій шлях до вільної німецької — у трьох чітких кроках",
   "home.how.step1.label": "Крок 1",
@@ -130,10 +152,8 @@
   "home.how.step3.label": "Крок 3",
   "home.how.step3.title": "Практика говоріння",
   "home.how.step3.desc": "Тренуйте рольові ігри, парні вправи та описи зображень.",
-
   "home.tools.heading2": "Вправи та підготовка до іспитів в одному місці",
   "home.tools.subtitle": "Не потрібно шукати між додатками й картками — усе живе в одній панелі керування.",
-
   "home.deepdive.eyebrow": "Що входить",
   "home.deepdive.title": "Усе, що ви отримуєте, рівень за рівнем",
   "home.deepdive.core.title": "Базовий курс",
@@ -158,7 +178,6 @@
   "home.deepdive.community.item3": "Простір для запитань між уроками",
   "home.deepdive.community.item4": "Нові матеріали для практики в міру розвитку курсу",
   "home.deepdive.community.cta": "Приєднатися до спільноти",
-
   "home.pricing.eyebrow": "Ціни",
   "home.pricing.title": "Один безкоштовний курс. Одне оновлення, коли будете готові складати іспит.",
   "home.pricing.subtitle": "Усе вище або включено безкоштовно, або відкривається з преміумом — жодних прихованих рівнів.",
@@ -182,19 +201,16 @@
   "home.pricing.premium.item5": "Щомісячні прямі запитання й відповіді у спільноті",
   "home.pricing.premium.cta": "Почати преміум",
   "home.pricing.note": "Без контрактів — скасування в будь-який час.",
-
   "home.finalcta.title": "Твій наступний крок до вільної німецької",
   "home.finalcta.subtitle": "Почни безкоштовно, перевір свій рівень, продовжуй у своєму темпі.",
   "home.finalcta.cta": "Почати безкоштовно",
   "home.finalcta.loginQuestion": "Вже маєте акаунт?",
   "home.finalcta.loginAction": "Увійти",
-
   "home.footer.tagline": "Тут заради тебе!",
   "home.footer.col.product": "Продукт",
   "home.footer.col.company": "Компанія",
   "home.footer.col.support": "Підтримка",
   "home.footer.col.legal": "Юридична інформація",
-
   "home.mock.questionsLabel": "Питання",
   "home.mock.topicsLabel": "Теми",
   "home.mock.position": "Питання {i} з {n}",
@@ -215,7 +231,6 @@
   "home.mock.wasCorrect": "На жаль, ні.",
   "home.mock.ausspracheShort": "Вимова",
   "home.mock.costLabel": "Вартість",
-
   "dash.today.title": "Сьогодні для тебе",
   "dash.examCard.title": "Підготовка до іспитів",
   "dash.examCard.desc": "Симуляція DTZ та тест на натуралізацію «Leben in Deutschland» у реальному форматі іспиту.",
@@ -228,67 +243,52 @@
   "dash.skillsView.subtitle": "Кільце = поточний стан кожної навички",
   "dash.radar.title": "Твій профіль навичок",
   "dash.thisWeek": "Цього тижня",
-
   "dash.skill.wortschatz": "Лексика",
   "dash.skill.grammatik": "Граматика",
   "dash.skill.hoeren": "Аудіювання",
   "dash.skill.sprechen": "Говоріння",
   "dash.skill.schreiben": "Письмо",
-
   "dash.greeting.morning": "Доброго ранку",
   "dash.greeting.afternoon": "Доброго дня",
   "dash.greeting.evening": "Доброго вечора",
-
   "dash.date.never": "Ніколи",
   "dash.date.today": "Сьогодні",
   "dash.date.yesterday": "Вчора",
   "dash.date.daysAgo": "{n} днів тому",
   "dash.date.longAgo": "Давніше",
-
   "dash.dayNames": "Нд,Пн,Вт,Ср,Чт,Пт,Сб",
-
   "dash.weekSummary": "<strong>{n}</strong> вправ{delta}",
   "dash.weekDelta": "{d} порівняно з минулим тижнем",
-
   "dash.taskCount": "{n} завдань",
   "dash.sessionCount": "{n} сесій",
   "dash.notPracticed": "Ще не тренували",
-
   "dash.radar.filled": "Фігура показує твій поточний стан у всіх п'яти навичках — чим більша, тим краще.",
   "dash.radar.empty": "Щойно ти почнеш тренуватися, тут з'явиться твій профіль.",
-
   "dash.callout.eyebrow": "Далі · {skill}",
   "dash.callout.title": "Тут тренування принесе найбільше користі зараз.",
   "dash.callout.body": "{skill} зараз на рівні {pct}% {metric} — твоя найслабша навичка наразі.",
   "dash.callout.startEyebrow": "Почати",
   "dash.callout.noDataTitle": "Ще немає даних про тренування.",
   "dash.callout.noDataBody": "Почни з однієї навички — твій профіль заповниться, щойно ти потренуєшся.",
-
   "dash.metric.accuracy": "точність",
   "dash.metric.activity": "активність",
-
   "dash.cta.practiceNow": "Тренуватися зараз →",
   "dash.cta.start": "Почати зараз →",
   "dash.cta.continue": "Продовжити з {skill} →",
   "dash.cta.practiceSkill": "Тренувати {skill} зараз →",
-
   "dash.streakBadge": "🔥 {n} днів поспіль",
   "dash.startStreak": "Почни свою серію",
   "dash.subtitle.zero": "Цього тижня ще не було тренувань — почни зараз хоча б на кілька хвилин.",
   "dash.subtitle.goalMet": "Тижневу мету досягнуто — {n} вправ цього тижня. Чудова робота!",
   "dash.subtitle.progress": "Виконано {n} з {goal} вправ цього тижня.",
   "dash.stat.streakValue": "{n} днів",
-
   "dash.today.done": "✓ потреновано сьогодні",
   "dash.today.start": "почати →",
-
   "dash.name.edit": "✏️ Змінити «{name}»",
   "dash.name.add": "Додати ім'я",
   "dash.name.placeholder": "Твоє ім'я",
   "dash.save": "Зберегти",
-
   "dash.goal.label": "Тижнева мета: {goal} вправ · змінити",
-
   "dash.progress.skillLabel": "Навичка",
   "dash.progress.mastery": "Рівень володіння",
   "dash.progress.correctOf": "{correct}/{total} правильно",
@@ -302,19 +302,16 @@
   "dash.progress.totalNote": "Завдань і сесій від початку",
   "dash.progress.moreTitle": "Більше аналітики незабаром",
   "dash.progress.moreBody": "Історія точності, розподіл помилок і журнал сесій потребують детальніших даних по кожному завданню, ніж зараз зберігається. Цей розділ розвиватиметься з майбутніми оновленнями — вигаданих цифр тут не буде ніколи.",
-
   "wortschatz.hero.title": "Повсякденні фрази та лексика",
   "wortschatz.tab.cards": "Картки",
   "wortschatz.tab.learn": "Вчити",
   "wortschatz.tab.test": "Тестувати",
   "wortschatz.tab.list": "Список слів",
   "wortschatz.themeToggle": "Перемкнути темну тему",
-
   "aussprache.hero.eyebrow": "Слухай і повторюй",
   "aussprache.hero.title": "Тренуй вимову",
   "aussprache.hero.subtitle": "Послухай фразу, повтори її та запиши себе. У повільному темпі чути кожен склад.",
   "aussprache.tab.artikel": "Артиклі",
-
   "sprechen.hero.eyebrow": "Говоріння DTZ, частина 2",
   "sprechen.hero.title": "Тренуй опис зображення",
   "sprechen.hero.subtitle": "Реальні запитання екзаменаторів із занять. На реальному іспиті у тебе є 90 секунд на опис і 90 секунд на додаткові запитання — так само, як тут.",
@@ -325,7 +322,6 @@
   "sprechen.prevImage": "← Попереднє зображення",
   "sprechen.nextImage": "Наступне зображення →",
   "sprechen.timeUp": "Час вийшов!",
-
   "lesen.hero.eyebrow": "Симуляція DTZ",
   "lesen.hero.title": "Тренуй читання та письмо",
   "lesen.hero.subtitle": "Повна симуляція читання (тема: онлайн-навчання та інтеграція, рівень B1) із реальним ключем відповідей, а також два завдання з письма.",
@@ -334,13 +330,11 @@
   "lesen.writingPrompt.placeholder": "Напиши свою відповідь тут...",
   "lesen.wordCount": "{n} слів",
   "lesen.wordCount.goal": "Мета: щонайменше 60–80",
-
   "kultur.hero.eyebrow": "Країнознавство",
-  "kultur.hero.subtitle": "Короткі теми з реальних дискусій на заняттях у DeutschAcademy — жодних загальних фактів від ШІ.",
+  "kultur.hero.subtitle": "Як влаштоване повсякдення в Німеччині — правила, установи, суми й процедури, з тестом до кожної теми.",
   "kultur.link.passiv": "Потренувати ці речення в пасивному стані →",
   "kultur.link.wortschatz": "Висловити свою думку (фрази) →",
   "kultur.moreNote": "Більше тем (свята, регіональні звичаї, повсякденний етикет) з'являться, щойно для них знайдуться реальні джерела — ми ніколи не вигадуємо культурні твердження.",
-
   "pruefungen.hero.eyebrow": "Підготовка до іспитів",
   "pruefungen.hero.title": "Який іспит ти складаєш?",
   "pruefungen.hero.subtitle": "Огляд п'яти основних німецьких мовних та інтеграційних іспитів — рівень, структура і як підготуватися.",
@@ -360,18 +354,15 @@
   "pruefungen.pricing.freeItem3": "60+ граматичних тем",
   "pruefungen.pricing.premiumPrice": "XX € / місяць (уточнюється)",
   "pruefungen.viewAllPricing": "Переглянути всі ціни →",
-
   "vp.hero.subtitle": "Деякі дієслова потребують фіксованого прийменника. Вивчи схему, а потім потренуй її у п'яти різних типах вправ — як на сторінці підручника.",
   "vp.howItWorks": "Як це працює?",
   "vp.toggleRef.show": "Показати список довідки ▼",
   "vp.toggleRef.hide": "Сховати список довідки ▲",
-
   "quiz.hero.title": "Тест на заповнення пропусків за темою",
   "quiz.hero.subtitle": "Кожне питання походить із реальних прикладів речень і таблиць із занять — жодного загального граматичного бота.",
   "quiz.crosslink.passiv": "Ці речення в пасивному стані походять із реальної дискусії на занятті про медіа в Німеччині — більше в розділі <a href=\"/uebungen/kultur\">Культурні знання: хто платить за ARD і ZDF?</a>",
   "quiz.crosslink.akkusativ": "Для Akkusativ є окрема практична кімната з режимами фокусу й тестування, рівнями складності та таблицею відмінювання: <a href=\"/uebungen/grammatik/akkusativ\">Відкрити практичну кімнату Akkusativ</a>",
   "quiz.crosslink.praepositionen": "Для дієслів із прийменниками є окрема практична кімната з п'ятьма типами вправ — заповнення пропусків, зіставлення, таблиця, суцільний текст і побудова речень: <a href=\"/uebungen/grammatik/verben-praepositionen\">Відкрити практичну кімнату</a>",
-
   "akk.tab.uebung": "Вправа",
   "akk.tab.regel": "Правило",
   "akk.mode.ariaLabel": "Режим тренування",
@@ -386,7 +377,6 @@
   "akk.session.label": "Ця сесія",
   "akk.session.badge": "локально · без акаунта",
   "akk.session.stats": "Відповіли на {answered} з {total} · {correct} правильно · {hints} підказок",
-
   "quiz.correctAnswered": "відповідено правильно",
   "quiz.restart": "Тренуватися ще раз",
   "quiz.inputPlaceholder": "Введіть відповідь…",
@@ -398,15 +388,12 @@
   "quiz.incorrect": "✗ Не зовсім — правильна відповідь: {answer}",
   "quiz.next": "Далі →",
   "quiz.showResult": "Показати результат →",
-
   "hub.hero.title": "Готовий тренуватися?",
   "hub.hero.subtitle": "Обери вправу або одразу почни підготовку до наступного іспиту.",
   "hub.pill.exercises": "{n} вправ",
   "hub.pill.exams": "{n} іспитів",
-
   "grammatik.card.comingSoonTitle": "Більше тем",
   "grammatik.card.comingSoonDesc": "Ще не доступно.",
-
   "hub.mode.grid": "Вправи та іспити",
   "hub.mode.dashboard": "Мій прогрес",
   "hub.pill.words": "{n} слів A1–A2",
@@ -432,7 +419,6 @@
   "front.slogan.sub": "Безкоштовно, без акаунта — від викладачів, які справді навчають.",
   "home.stats.tools": "Інструменти вправ",
   "home.stats.price": "Вартість",
-
   "picker.title": "Що хочеш потренувати?",
   "picker.total": "{n} інструментів, розподілені за п'ятьма напрямами.",
   "picker.all.cta": "Краще показати весь список",
@@ -458,5 +444,9 @@
   "group.short.sprechen": "Говоріння",
   "group.short.lesen": "Читання",
   "group.short.kultur": "Культура",
-  "group.count.bundeslaender": "{n} федеральних земель"
+  "group.count.bundeslaender": "{n} федеральних земель",
+  "level.a1.blurb": "Перші речення",
+  "level.a2.blurb": "Німецька щодня",
+  "level.b1.blurb": "Говорити самостійно",
+  "level.b2.blurb": "Впевнено аргументувати"
 }

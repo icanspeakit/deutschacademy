@@ -1,0 +1,215 @@
+---
+// The dashboard's left rail, on a standalone topic page. Variant C from the /navnew study.
+//
+// Same markup and the same nav.css the dashboard uses — not a lookalike — with one
+// necessary difference: on /dashboard a row swaps a panel in place, here every row is an
+// <a>, because this is a real route and the next topic is a different page.
+//
+// It is FIXED and starts folded to its 64px icon strip. A grid column beside the page was
+// tried first and took 336px from the exercise column, dropping it from 880px to 645 — the
+// rail stealing room from the thing it is meant to sit beside. There is no free margin
+// either: with the rule panel open, .vp-page--split is already ~1400px wide. So opening it
+// floats the panel OVER the page, and the exercise column stays byte-identical to what a
+// topic page gives it at every width.
+//
+// Below 1100px the rail is not rendered at all — there it would overlap the content it is
+// supposed to help with, and the drawer in SiteNav already covers that width.
+import Icon from "./Icon.astro";
+import { grammarCatalog, grammarAt, grammarByKey } from "../lib/grammarCatalog.js";
+import { NAV_LEVELS } from "../lib/catalog.js";
+import "../styles/nav.css";
+import "../styles/topic-rail.css";
+
+interface Props {
+  /** Progress key of the topic this page is showing — the row that reads as current. */
+  current: string;
+}
+const { current } = Astro.props;
+
+// The rail's sections, in the dashboard's order and shape: the course first, the four
+// levels, the exams last.
+const railSections = [
+  {
+    id: "weg",
+    label: "Dein Weg",
+    badge: null,
+    icon: "sparkle",
+    overview: { label: "Kursübersicht öffnen →", href: "/uebungen" },
+    items: [
+      { key: null, label: "Start", icon: "sparkle", href: "/uebungen", meta: "Übersicht" },
+      { key: null, label: "Grammatik-Basis", icon: "book", href: "/uebungen/grammatik", meta: `${grammarCatalog.length} Themen` },
+      { key: null, label: "Wortschatz-Karten", icon: "folder", href: "/uebungen/wortschatz", meta: "Karten" },
+      { key: null, label: "Prüfungssimulation", icon: "document", href: "/pruefungen/dtz/uebungssatz", meta: "45 Aufgaben" },
+    ],
+  },
+  ...NAV_LEVELS.map((level) => ({
+    id: level.toLowerCase(),
+    label: `Stufe ${level}`,
+    badge: level,
+    icon: "book",
+    overview: { label: "Stufenübersicht öffnen →", href: `/uebungen/grammatik#niveau-${level.toLowerCase()}` },
+    items: grammarAt(level).map((t) => ({ key: t.key, label: t.name, icon: "book", href: t.href, tasks: t.tasks })),
+  })),
+  {
+    id: "pruefungen",
+    label: "Prüfungen",
+    badge: null,
+    icon: "landmark",
+    overview: { label: "Alle Prüfungen öffnen →", href: "/pruefungen" },
+    items: [
+      { key: null, label: "Start Deutsch 1", icon: "document", href: "/pruefungen/start-deutsch-1", meta: "A1" },
+      { key: null, label: "DTZ-Übungssatz", icon: "book-open", href: "/pruefungen/dtz/uebungssatz", meta: "A2/B1" },
+      { key: null, label: "TestDaF", icon: "graduation-cap", href: "/pruefungen/testdaf/uebungssatz", meta: "TDN" },
+      { key: null, label: "Leben in Deutschland", icon: "map-pin", href: "/pruefungen/leben-in-deutschland/test", meta: "Test" },
+    ],
+  },
+];
+
+// Opens on the level this topic belongs to, so the first thing in the panel is its own
+// row. A topic the catalogue does not know falls back to the course section.
+const openSection = grammarByKey(current)?.level?.toLowerCase() ?? "weg";
+---
+<div class="tr-scrim" data-rail-scrim hidden></div>
+
+<aside class="tr-wrap" data-rail>
+  <div class="nvb collapsed" data-nvb>
+    <div class="nvb-rail" role="tablist" aria-label="Bereich">
+      {railSections.map((sec) => (
+        <button
+          type="button"
+          class:list={["nvb-railbtn", sec.id === openSection && "active"]}
+          data-rail-sec={sec.id}
+          role="tab"
+          aria-label={sec.label}
+        >
+          {sec.badge ? <span class="nvb-railbadge">{sec.badge}</span> : <Icon name={sec.icon} size={20} />}
+          <span class="nvb-raildot" data-rail-secdot={sec.id}></span>
+          <span class="nvb-tip">{sec.label}</span>
+        </button>
+      ))}
+    </div>
+
+    <div class="nvb-panel">
+      {railSections.map((sec) => (
+        <div class="nvb-section" data-rail-secview={sec.id} hidden={sec.id !== openSection}>
+          <div class="nvb-panelhead">
+            <h3>{sec.label}</h3>
+            <button type="button" class="nvb-collapse" data-rail-collapse aria-label="Liste einklappen">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>
+            </button>
+          </div>
+
+          <div class="nvb-panelprogress" data-rail-secprog={sec.id} hidden={!sec.items.some((i) => i.tasks)}>
+            <span class="nvb-panelbar"><span data-rail-secbar={sec.id} style="width:0%"></span></span>
+            <span data-rail-secpct={sec.id}>0 %</span>
+          </div>
+
+          <a class="nvb-overview" href={sec.overview.href}>{sec.overview.label}</a>
+
+          {sec.items.map((item) => (
+            <a
+              class:list={["nvb-item", item.key === current && "active"]}
+              href={item.href}
+              aria-current={item.key === current ? "page" : undefined}
+              data-rail-topic={item.key ?? undefined}
+              data-rail-tasks={item.tasks ?? undefined}
+            >
+              <span class="nv-icon"><Icon name={item.icon} size={16} /></span>
+              <span>{item.label}</span>
+              <span class="nv-count" data-rail-count>{item.meta ?? `0/${item.tasks}`}</span>
+            </a>
+          ))}
+        </div>
+      ))}
+    </div>
+  </div>
+</aside>
+
+<script>
+  // Numbers come from the same store the dashboard reads, so the two surfaces cannot
+  // disagree about how far a topic got.
+  import { getTopicProgress } from "../lib/progress.js";
+
+  const rail = document.querySelector<HTMLElement>("[data-rail]");
+  const scrim = document.querySelector<HTMLElement>("[data-rail-scrim]");
+  const nvb = rail?.querySelector<HTMLElement>("[data-nvb]");
+
+  if (rail && nvb) {
+    const $$ = <T extends Element>(sel: string) => Array.from(rail.querySelectorAll<T>(sel));
+    const safeProgress = () => {
+      try { return getTopicProgress() ?? {}; } catch (e) { return {}; }
+    };
+
+    function paint() {
+      const prog = safeProgress();
+
+      for (const a of $$<HTMLElement>("[data-rail-topic]")) {
+        const tasks = Number(a.dataset.railTasks || 0);
+        if (!tasks) continue;
+        const done = Math.min(prog[a.dataset.railTopic!]?.done ?? 0, tasks);
+        const el = a.querySelector("[data-rail-count]");
+        if (el) el.textContent = `${done}/${tasks}`;
+      }
+
+      // Per-section bar and percentage, summed over the rows that carry a task count —
+      // the same arithmetic the dashboard's panel header does.
+      for (const view of $$<HTMLElement>("[data-rail-secview]")) {
+        const id = view.dataset.railSecview!;
+        const rows = Array.from(view.querySelectorAll<HTMLElement>("[data-rail-topic]"));
+        const total = rows.reduce((n, a) => n + Number(a.dataset.railTasks || 0), 0);
+        const done = rows.reduce(
+          (n, a) => n + Math.min(prog[a.dataset.railTopic!]?.done ?? 0, Number(a.dataset.railTasks || 0)),
+          0
+        );
+        const pct = total ? Math.round((done / total) * 100) : 0;
+        const bar = rail.querySelector<HTMLElement>(`[data-rail-secbar="${id}"]`);
+        const txt = rail.querySelector<HTMLElement>(`[data-rail-secpct="${id}"]`);
+        const dot = rail.querySelector<HTMLElement>(`[data-rail-secdot="${id}"]`);
+        if (bar) bar.style.width = pct + "%";
+        if (txt) txt.textContent = pct + " %";
+        // The same three states the dashboard rail's dot carries.
+        if (dot) dot.dataset.state = !total ? "" : pct >= 100 ? "done" : pct > 0 ? "current" : "";
+      }
+    }
+
+    const fold = () => { nvb.classList.add("collapsed"); syncScrim(); };
+    function syncScrim() {
+      if (scrim) scrim.hidden = nvb.classList.contains("collapsed");
+    }
+
+    for (const b of $$<HTMLElement>("[data-rail-sec]")) {
+      b.addEventListener("click", () => {
+        const id = b.dataset.railSec!;
+        const openBefore = rail.querySelector<HTMLElement>("[data-rail-secview]:not([hidden])")?.dataset.railSecview;
+        for (const x of $$<HTMLElement>("[data-rail-sec]")) x.classList.toggle("active", x === b);
+        for (const v of $$<HTMLElement>("[data-rail-secview]")) {
+          const on = v.dataset.railSecview === id;
+          v.hidden = !on;
+          // The dashboard staggers the rows in when a section changes; same class.
+          if (on) {
+            v.classList.remove("nvb-section--enter");
+            void v.offsetWidth;
+            v.classList.add("nvb-section--enter");
+          }
+        }
+        // The icon is a toggle: tapping the section already open folds the panel away, so
+        // the strip can be put back to 64px without hunting for the chevron inside the
+        // panel that is covering it.
+        const wasOpenHere = !nvb.classList.contains("collapsed") && id === openBefore;
+        nvb.classList.toggle("collapsed", wasOpenHere);
+        syncScrim();
+      });
+    }
+
+    for (const b of $$<HTMLElement>("[data-rail-collapse]")) b.addEventListener("click", fold);
+    scrim?.addEventListener("click", fold);
+    // It behaves like an overlay, so it closes like one.
+    document.addEventListener("keydown", (e) => { if (e.key === "Escape") fold(); });
+
+    // Answers land while the rail is open, so its own row has to move with them.
+    addEventListener("da:progress", () => paint());
+
+    paint();
+    syncScrim();
+  }
+</script>

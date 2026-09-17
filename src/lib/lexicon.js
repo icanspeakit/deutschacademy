@@ -43,6 +43,19 @@ function flatten(file) {
 
 const ENTRIES = LEVELS.flatMap((level) => flatten(FILES[level]));
 
+// The unit headers themselves. flatten() spreads a unit's topics onto each word and then
+// throws the unit away, but the unit's *title* has no word to live on — and the Lernset
+// picker (src/lib/lernsets.js) lists units, not words. So keep the headers alongside.
+const UNITS = LEVELS.flatMap((level) =>
+  (FILES[level].units ?? []).map((u) => ({
+    id: u.id,
+    title: u.title ?? null,
+    topics: u.topics ?? [],
+    level: FILES[level].level,
+    words: (u.words ?? []).length,
+  }))
+);
+
 // ---------------------------------------------------------------------------
 // Selectors
 // ---------------------------------------------------------------------------
@@ -87,6 +100,13 @@ export const byTopic = (level, topic) => select({ level, topic });
 export const byUnit = (unit) => select({ unit });
 export const byId = (id) => ENTRIES.find((e) => e.id === id) ?? null;
 
+/** Unit headers `{ id, title, topics, level, words }`, in file order. */
+export function units(opts = {}) {
+  const levels = toArray(opts.level);
+  return levels ? UNITS.filter((u) => levels.includes(u.level)) : UNITS;
+}
+export const unitById = (id) => UNITS.find((u) => u.id === id) ?? null;
+
 /** Per-level totals for the hub — derived, never hand-typed. */
 export function counts() {
   const out = {};
@@ -113,12 +133,17 @@ export const asArtikelRows = (opts = {}) =>
   nouns({ ...opts, has: "gender" }).map((n) => ({ word: n.lemma, gender: n.gender }));
 
 /** Shape of src/data/wortschatz.json: `{ front, note, translations }`. */
-export const asVokabelCards = (opts = {}) =>
-  select({ ...opts, has: "en" }).map((e) => ({
-    front: e.lemma,
-    note: e.note ?? e.example ?? "",
-    translations: { en: e.en },
-  }));
+const toCard = (e) => ({
+  front: e.lemma,
+  note: e.note ?? e.example ?? "",
+  translations: { en: e.en },
+});
+export const asVokabelCards = (opts = {}) => select({ ...opts, has: "en" }).map(toCard);
+
+/** The same shape for rows a caller has already selected some other way — the frequency
+ *  cohorts in lernsets.js pick their words by rank, which `select` has no filter for. One
+ *  mapping, so a deck built by query and a deck built by rank can never drift apart. */
+export const toVokabelCards = (rows) => rows.filter((e) => e.en != null).map(toCard);
 
 /** Shape consumed by src/lib/pronunciation.js via aussprache.astro. */
 export const asAudioItems = (opts = {}) =>

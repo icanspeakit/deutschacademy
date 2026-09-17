@@ -7,12 +7,31 @@
   "nav.panel.allTools": "See all exercises",
   "nav.panel.allExams": "See all exams",
   "nav.panel.all": "Overview",
+  "nav.subject.grammatik": "Grammar",
+  "nav.subject.wortschatz": "Vocabulary",
+  "nav.subject.fertigkeiten": "Skills",
+  "nav.subject.fertigkeiten.blurb": "Speaking, reading, writing",
+  "nav.subject.niveaus": "Levels",
+  "nav.subject.niveaus.blurb": "A1 to B2, step by step",
+  "nav.group.trainer": "Trainers",
+  "nav.group.themen": "By level",
+  "nav.kultur.wohnen": "Housing & everyday life",
+  "nav.kultur.aemter": "Authorities & insurance",
+  "nav.kultur.umgang": "Manners & habits",
+  "nav.kultur.bildung": "School & training",
+  "nav.kultur.land": "Country & calendar",
+  "nav.subject.profil": "Profile",
+  "nav.subject.profil.blurb": "Your progress and your week",
+  "nav.level.grammar": "Grammar",
+  "nav.level.vocab": "Vocabulary",
+  "nav.level.vocabSoon": "Word lists for this level are on the way.",
+  "nav.level.allTopics": "All {n} topics",
+  "nav.level.topicCount": "{n} topics",
   "theme.toDark": "Switch to dark mode",
   "theme.toLight": "Switch to light mode",
   "header.allExercises": "← All exercises",
   "header.home": "Home",
   "header.back": "← Back to overview",
-
   "home.hero.eyebrow": "Free & no sign-up",
   "home.hero.title": "Learn German with real classroom material",
   "home.hero.subtitle": "Exercises and exam prep for telc, Goethe-Zertifikat, TestDaF, DTZ, and Living in Germany — free.",
@@ -21,7 +40,6 @@
   "home.tools.title": "Every tool on its own",
   "home.exams.eyebrow": "Exam preparation",
   "home.exams.title": "Ready for every exam",
-
   "tool.artikel.title": "der/die/das Trainer",
   "tool.artikel.desc": "Practice articles with instant feedback.",
   "tool.grammatik.title": "Grammar",
@@ -41,19 +59,20 @@
   "tool.comingSoon.title": "More exercises",
   "tool.comingSoon.desc": "New practice tools are in the works.",
   "tool.comingSoon.count": "Coming soon",
-
   "dash.tab.today": "Today",
   "dash.tab.skills": "Skills",
   "dash.tab.progress": "Progress",
   "uebungen.hero.eyebrow": "All exercises",
   "uebungen.hero.title": "Every tool on its own",
-
   "grammatik.hero.eyebrow": "Practice grammar",
   "grammatik.hero.title": "Topics by level",
   "grammatik.hero.subtitle": "Choose a topic. Most have their own practice room with an explanation and several exercise types — the rest you practice in the fill-in-the-blank quiz.",
   "grammatik.card.workspace": "Practice room",
   "grammatik.card.questions": "{n} questions",
-
+  "grammatik.mode.guided": "Take me through it",
+  "grammatik.mode.guidedSub": "{n} exercises from {t} topics, in syllabus order — one after another, you choose nothing.",
+  "grammatik.mode.free": "I will pick myself",
+  "grammatik.mode.freeSub": "All {n} topics by level. You know what you want to practise.",
   "tool.artikel.count": "{n} nouns",
   "tool.grammatik.count": "{n} topics · {q} questions",
   "tool.praepositionen.count": "{n} verbs",
@@ -62,7 +81,6 @@
   "tool.sprechen.count": "{n} pictures",
   "tool.lesen.count": "{n} tasks",
   "tool.kultur.count": "{n} topics",
-
   "home.hero1.eyebrow": "Your Dashboard",
   "home.hero1.title": "Your progress, always in view",
   "home.hero1.lead": "Level, completed lessons and next steps in one place — so every time you log in, you know exactly what to work on.",
@@ -70,7 +88,6 @@
   "home.cta.startFree": "Start for free",
   "home.hero1.login": "Already on board? Log in",
   "home.hero.noteBadge": "Free A1–C1 core course · no subscription needed",
-
   "home.mock.dashboard": "Dashboard",
   "home.mock.grammatikShort": "Grammar",
   "home.mock.wortschatzShort": "Vocabulary",
@@ -84,7 +101,6 @@
   "home.mock.b1Beruf": "B1 · Work",
   "home.mock.authenticClips": "Authentic clips",
   "home.mock.goetheB2Prep": "Goethe B2 prep",
-
   "home.peek.eyebrow": "A look inside",
   "home.peek.title": "This is what it looks like from the inside",
   "home.peek.subtitle": "Not screenshots — both of these work. Tap a topic in the sidebar.",
@@ -96,17 +112,24 @@
   "fold.unsure": "Not sure",
   "fold.unsureSub": "We start at A1 — two questions in, you will know if it is too easy.",
   "fold.orExam": "Or straight to an exam",
+  "fold.askSubNew": "Tap your level — then pick grammar or vocabulary.",
+  "fold.back": "Back",
+  "fold.panelTitle": "Where do you want to start?",
+  "fold.panel.grammar": "Grammar",
+  "fold.panel.words": "Vocabulary",
+  "fold.row.exercises": "{n} exercises",
+  "fold.row.questions": "{n} questions",
+  "fold.row.words": "{n} words",
+  "fold.allTopics": "All {n} topics →",
   "home.hero2.eyebrow": "German from A1 to C1",
   "home.hero2.title": "Learn German the way it's really spoken",
   "home.hero2.lead": "Grammar, everyday German and speaking practice — built from real classroom material, not written cold for a platform.",
   "home.hero2.cta1": "Start learning free",
   "home.hero2.cta2": "See how it works",
-
   "home.trust.tools": "Practice tools, all free",
   "home.trust.exams": "Exams covered",
   "home.trust.learners": "Learners so far",
   "home.trust.freeCourse": "for the A1–C1 core course",
-
   "home.value.eyebrow": "Why DeutschAcademy",
   "home.value.title": "Built from real classes, not templates",
   "home.value.subtitle": "Every lesson below has already been taught, live, to real learners — not written cold for a course platform.",
@@ -118,7 +141,6 @@
   "home.value.card3.desc": "Role-play, partner exercises and picture descriptions (Bildbeschreibung) — the part learners usually only get in a live class.",
   "home.value.card4.title": "Exam-format prep, not guesswork",
   "home.value.card4.desc": "Mock sittings and writing tasks structured the way Goethe and telc actually test you, corrected by a real instructor.",
-
   "home.how.eyebrow": "How it works",
   "home.how.title": "Your path to fluent German — in three clear steps",
   "home.how.step1.label": "Step 1",
@@ -130,10 +152,8 @@
   "home.how.step3.label": "Step 3",
   "home.how.step3.title": "Speaking practice",
   "home.how.step3.desc": "Practice role-play, partner exercises and picture descriptions.",
-
   "home.tools.heading2": "Exercises and exam prep, all in one place",
   "home.tools.subtitle": "No juggling apps and flashcards — everything lives in the same dashboard.",
-
   "home.deepdive.eyebrow": "What's included",
   "home.deepdive.title": "Everything you get, tier by tier",
   "home.deepdive.core.title": "Core Course",
@@ -158,7 +178,6 @@
   "home.deepdive.community.item3": "A space to ask questions between lessons",
   "home.deepdive.community.item4": "New practice material added as the course grows",
   "home.deepdive.community.cta": "Join the community",
-
   "home.pricing.eyebrow": "Pricing",
   "home.pricing.title": "One free course. One upgrade, when you're ready to sit the exam.",
   "home.pricing.subtitle": "Everything above is either included free or unlocked with Premium — no hidden tiers.",
@@ -182,19 +201,16 @@
   "home.pricing.premium.item5": "Monthly live community Q&A",
   "home.pricing.premium.cta": "Start Premium",
   "home.pricing.note": "No contracts — cancel anytime.",
-
   "home.finalcta.title": "Your next step toward fluent German",
   "home.finalcta.subtitle": "Start for free, test your level, keep going at your own pace.",
   "home.finalcta.cta": "Start for free",
   "home.finalcta.loginQuestion": "Already have an account?",
   "home.finalcta.loginAction": "Log in",
-
   "home.footer.tagline": "Here for you!",
   "home.footer.col.product": "Product",
   "home.footer.col.company": "Company",
   "home.footer.col.support": "Support",
   "home.footer.col.legal": "Legal",
-
   "home.mock.questionsLabel": "Questions",
   "home.mock.topicsLabel": "Topics",
   "home.mock.position": "Question {i} of {n}",
@@ -215,7 +231,6 @@
   "home.mock.wasCorrect": "Not quite.",
   "home.mock.ausspracheShort": "Pronunciation",
   "home.mock.costLabel": "Cost",
-
   "dash.today.title": "For you today",
   "dash.examCard.title": "Exam preparation",
   "dash.examCard.desc": "DTZ simulation and the \"Living in Germany\" naturalization test, in real exam format.",
@@ -228,67 +243,52 @@
   "dash.skillsView.subtitle": "Ring = current standing per skill",
   "dash.radar.title": "Your skill profile",
   "dash.thisWeek": "This week",
-
   "dash.skill.wortschatz": "Vocabulary",
   "dash.skill.grammatik": "Grammar",
   "dash.skill.hoeren": "Listening",
   "dash.skill.sprechen": "Speaking",
   "dash.skill.schreiben": "Writing",
-
   "dash.greeting.morning": "Good morning",
   "dash.greeting.afternoon": "Good day",
   "dash.greeting.evening": "Good evening",
-
   "dash.date.never": "Never",
   "dash.date.today": "Today",
   "dash.date.yesterday": "Yesterday",
   "dash.date.daysAgo": "{n} days ago",
   "dash.date.longAgo": "A while ago",
-
   "dash.dayNames": "Su,Mo,Tu,We,Th,Fr,Sa",
-
   "dash.weekSummary": "<strong>{n}</strong> exercises{delta}",
   "dash.weekDelta": "{d} vs. last week",
-
   "dash.taskCount": "{n} tasks",
   "dash.sessionCount": "{n} sessions",
   "dash.notPracticed": "Not practiced yet",
-
   "dash.radar.filled": "The shape shows your current standing across all five skills — bigger is better.",
   "dash.radar.empty": "Once you practice, your profile fills in here.",
-
   "dash.callout.eyebrow": "Up next · {skill}",
   "dash.callout.title": "This is where practicing pays off most right now.",
   "dash.callout.body": "{skill} is at {pct}% {metric} — your lowest skill right now.",
   "dash.callout.startEyebrow": "Get started",
   "dash.callout.noDataTitle": "No practice data yet.",
   "dash.callout.noDataBody": "Start with one skill — your profile fills in as soon as you practice.",
-
   "dash.metric.accuracy": "accuracy",
   "dash.metric.activity": "activity",
-
   "dash.cta.practiceNow": "Practice now →",
   "dash.cta.start": "Get started →",
   "dash.cta.continue": "Continue with {skill} →",
   "dash.cta.practiceSkill": "Practice {skill} now →",
-
   "dash.streakBadge": "🔥 {n}-day streak",
   "dash.startStreak": "Start your streak",
   "dash.subtitle.zero": "No practice yet this week — start now with just a few minutes.",
   "dash.subtitle.goalMet": "Weekly goal reached — {n} exercises this week. Great work!",
   "dash.subtitle.progress": "{n} of {goal} exercises done this week.",
   "dash.stat.streakValue": "{n} days",
-
   "dash.today.done": "✓ practiced today",
   "dash.today.start": "start →",
-
   "dash.name.edit": "✏️ Edit \"{name}\"",
   "dash.name.add": "Add your name",
   "dash.name.placeholder": "Your name",
   "dash.save": "Save",
-
   "dash.goal.label": "Weekly goal: {goal} exercises · adjust",
-
   "dash.progress.skillLabel": "Skill",
   "dash.progress.mastery": "Mastery",
   "dash.progress.correctOf": "{correct}/{total} correct",
@@ -302,19 +302,16 @@
   "dash.progress.totalNote": "Tasks & sessions since the start",
   "dash.progress.moreTitle": "More analytics coming",
   "dash.progress.moreBody": "An accuracy history, error breakdown and session log would need more per-task data than is currently stored. This view will grow with future updates — we never show made-up numbers here.",
-
   "wortschatz.hero.title": "Everyday Phrases & Vocabulary",
   "wortschatz.tab.cards": "Flashcards",
   "wortschatz.tab.learn": "Learn",
   "wortschatz.tab.test": "Test",
   "wortschatz.tab.list": "Word list",
   "wortschatz.themeToggle": "Toggle dark theme",
-
   "aussprache.hero.eyebrow": "Listen & repeat",
   "aussprache.hero.title": "Practice pronunciation",
   "aussprache.hero.subtitle": "Listen to the phrase, repeat it, and record yourself. At slow speed you hear every syllable.",
   "aussprache.tab.artikel": "Articles",
-
   "sprechen.hero.eyebrow": "DTZ Speaking, Part 2",
   "sprechen.hero.title": "Practice picture description",
   "sprechen.hero.subtitle": "Real examiner questions from class. In the real exam you get 90 seconds for the description and 90 seconds for follow-up questions — just like here.",
@@ -325,7 +322,6 @@
   "sprechen.prevImage": "← Previous picture",
   "sprechen.nextImage": "Next picture →",
   "sprechen.timeUp": "Time's up!",
-
   "lesen.hero.eyebrow": "DTZ simulation",
   "lesen.hero.title": "Practice reading & writing",
   "lesen.hero.subtitle": "A full reading-comprehension simulation (topic: online learning and integration, level B1) with a real answer key, plus two writing tasks.",
@@ -334,13 +330,11 @@
   "lesen.writingPrompt.placeholder": "Write your answer here...",
   "lesen.wordCount": "{n} words",
   "lesen.wordCount.goal": "Goal: at least 60–80",
-
   "kultur.hero.eyebrow": "Culture & society",
-  "kultur.hero.subtitle": "Short topics from real classroom discussions at DeutschAcademy — no generic AI trivia.",
+  "kultur.hero.subtitle": "How everyday Germany works — rules, offices, amounts and procedures, with a quiz for every topic.",
   "kultur.link.passiv": "Practice the passive-voice sentences →",
   "kultur.link.wortschatz": "Express your own opinion (phrases) →",
   "kultur.moreNote": "More topics (holidays, regional customs, everyday etiquette) will follow once real source material exists for them — we never invent cultural claims.",
-
   "pruefungen.hero.eyebrow": "Exam preparation",
   "pruefungen.hero.title": "Which exam are you taking?",
   "pruefungen.hero.subtitle": "An overview of the five main German language and integration exams — level, format, and how to prepare.",
@@ -360,18 +354,15 @@
   "pruefungen.pricing.freeItem3": "60+ grammar topics",
   "pruefungen.pricing.premiumPrice": "€XX / month (TBD)",
   "pruefungen.viewAllPricing": "See all pricing →",
-
   "vp.hero.subtitle": "Some verbs need a fixed preposition. Learn the pattern, then practice it in five different exercise types — like on a textbook page.",
   "vp.howItWorks": "How does this work?",
   "vp.toggleRef.show": "Show reference list ▼",
   "vp.toggleRef.hide": "Hide reference list ▲",
-
   "quiz.hero.title": "Fill-in-the-blank quiz by topic",
   "quiz.hero.subtitle": "Every question comes from real example sentences and tables from class — no generic grammar bot.",
   "quiz.crosslink.passiv": "These passive-voice sentences come from a real classroom discussion about media in Germany — more in <a href=\"/uebungen/kultur\">Culture: Who pays for ARD and ZDF?</a>",
   "quiz.crosslink.akkusativ": "For Akkusativ there's a dedicated practice room with focus and test modes, difficulty levels, and a declension table: <a href=\"/uebungen/grammatik/akkusativ\">Open the Akkusativ workspace</a>",
   "quiz.crosslink.praepositionen": "For verbs with prepositions there's a dedicated practice room with five exercise types — fill-in, matching, table, cloze text and sentence building: <a href=\"/uebungen/grammatik/verben-praepositionen\">Open workspace</a>",
-
   "akk.tab.uebung": "Practice",
   "akk.tab.regel": "Rule",
   "akk.mode.ariaLabel": "Practice mode",
@@ -386,7 +377,6 @@
   "akk.session.label": "This session",
   "akk.session.badge": "local · no account",
   "akk.session.stats": "{answered} of {total} answered · {correct} correct · {hints} hints",
-
   "quiz.correctAnswered": "answered correctly",
   "quiz.restart": "Practice again",
   "quiz.inputPlaceholder": "Type your answer…",
@@ -398,15 +388,12 @@
   "quiz.incorrect": "✗ Not quite — correct answer: {answer}",
   "quiz.next": "Next →",
   "quiz.showResult": "Show result →",
-
   "hub.hero.title": "Ready to practice?",
   "hub.hero.subtitle": "Choose an exercise or jump straight into your next exam prep.",
   "hub.pill.exercises": "{n} exercises",
   "hub.pill.exams": "{n} exams",
-
   "grammatik.card.comingSoonTitle": "More topics",
   "grammatik.card.comingSoonDesc": "Not available yet.",
-
   "hub.mode.grid": "Exercises & Exams",
   "hub.mode.dashboard": "My Progress",
   "hub.pill.words": "{n} words A1–A2",
@@ -432,7 +419,6 @@
   "front.slogan.sub": "Free, no account — from teachers who actually teach.",
   "home.stats.tools": "Practice tools",
   "home.stats.price": "Cost",
-
   "picker.title": "What do you want to practise?",
   "picker.total": "{n} tools, sorted into five directions.",
   "picker.all.cta": "Show the whole list instead",
@@ -458,5 +444,9 @@
   "group.short.sprechen": "Speaking",
   "group.short.lesen": "Reading",
   "group.short.kultur": "Culture",
-  "group.count.bundeslaender": "{n} federal states"
+  "group.count.bundeslaender": "{n} federal states",
+  "level.a1.blurb": "First sentences",
+  "level.a2.blurb": "Everyday German",
+  "level.b1.blurb": "Speaking on your own",
+  "level.b2.blurb": "Arguing with confidence"
 }

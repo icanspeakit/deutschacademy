@@ -1,0 +1,197 @@
+---
+// The strip under the site nav on a single practice topic: where you are, how far you got,
+// and the fact that getting further is being kept.
+//
+// It exists because the two ways into a topic did not look like the same product. Opening
+// "Artikel: der, die, das" inside /dashboard put it under the course strip with a live
+// "0 / 42 Aufgaben" ring; opening the very same topic at /uebungen/grammatik/artikel gave a
+// bare page with no site nav and nothing to say whether any of it was being recorded. It was
+// — /dashboard just never saw it, because the page logged answers to the "grammatik" skill
+// bucket without naming the topic. That bug is fixed at the call site; this bar is the part
+// the learner can see.
+//
+// Deliberately the same shape as .nv-strip in nav.css (title · subtitle · track · count), so
+// moving between the dashboard and a standalone topic reads as one site rather than two.
+//
+// The numbers render at zero and are filled in on the client from getTopicProgress() — the
+// store is per-browser localStorage, so the server has nothing true to say about them.
+interface Props {
+  /** Progress key — the topic's URL slug. Must match what recordAttempt() writes. */
+  topic: string;
+  /** Section the topic belongs to, e.g. "Grammatik". */
+  kind: string;
+  /** The topic's own name. */
+  title: string;
+  /** CEFR level badge, when the data carries one. */
+  level?: string;
+  /** Gradeable answers in this topic; 0 hides the counter rather than showing "0 / 0". */
+  tasks?: number;
+}
+const { topic, kind, title, level, tasks = 0 } = Astro.props;
+---
+<div class="tb" data-topic-bar data-topic={topic} data-tasks={tasks}>
+  <div class="tb-inner">
+    <p class="tb-where">
+      <a href="/uebungen/grammatik">{kind}</a>
+      {level && <span class="tb-level">{level}</span>}
+      <span class="tb-sep" aria-hidden="true">·</span>
+      <span class="tb-title">{title}</span>
+    </p>
+
+    {tasks > 0 && (
+      <>
+        <span class="tb-track"><span class="tb-fill" data-topic-fill style="width:0%"></span></span>
+        <span class="tb-count" data-topic-count>0 / {tasks} Aufgaben</span>
+      </>
+    )}
+
+    <!-- Says where progress lives, not just that it exists. "Gespeichert" alone would imply
+         an account; there is none, and a learner who clears their browser should know that
+         before they lose six weeks of it. -->
+    <a class="tb-saved" href="/dashboard" data-topic-saved>
+      <svg viewBox="0 0 24 24" aria-hidden="true" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 12 10 18 20 6"></polyline></svg>
+      <span data-topic-saved-text>Fortschritt wird auf diesem Gerät gespeichert</span>
+    </a>
+  </div>
+</div>
+
+<style>
+  .tb {
+    background: var(--surface-card);
+    border-bottom: 1px solid var(--border);
+  }
+  .tb-inner {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 10px 24px;
+  }
+
+  .tb-where {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0;
+    min-width: 0;
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .tb-where a { color: var(--brand-blue); text-decoration: none; }
+  .tb-where a:hover { text-decoration: underline; }
+  .tb-level {
+    padding: 1px 7px;
+    border-radius: 999px;
+    background: var(--blue-50);
+    color: var(--brand-blue-dark);
+    font-size: 11px;
+    font-weight: 600;
+  }
+  .tb-sep { color: var(--muted-soft); }
+  .tb-title {
+    font-weight: 500;
+    color: var(--ink);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .tb-track {
+    flex: 1;
+    min-width: 120px;
+    height: 6px;
+    border-radius: 999px;
+    background: var(--blue-50);
+    overflow: hidden;
+  }
+  .tb-fill {
+    display: block;
+    height: 100%;
+    border-radius: 999px;
+    background: var(--gradient-brand);
+    transition: width .35s ease;
+  }
+  @media (prefers-reduced-motion: reduce) { .tb-fill { transition: none; } }
+
+  .tb-count {
+    font-size: 12.5px;
+    font-weight: 600;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+
+  .tb-saved {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: var(--muted-soft);
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  .tb-saved svg { color: var(--brand-blue); flex-shrink: 0; }
+  .tb-saved:hover { color: var(--brand-blue); }
+  /* Briefly after an answer lands, so the claim is tied to the thing that just happened
+     rather than being a permanent label nobody reads twice. */
+  .tb-saved.is-just-saved { color: var(--brand-blue); }
+
+  @media (max-width: 720px) {
+    .tb-inner { gap: 8px 12px; padding: 9px 16px; }
+    /* The track takes its own row at phone width: three items sharing one line left it
+       ~40px wide, which reads as decoration rather than as a measure. */
+    .tb-track { order: 4; flex-basis: 100%; height: 5px; }
+    .tb-count { margin-left: auto; font-size: 12px; }
+    .tb-saved { font-size: 11px; flex-basis: 100%; order: 5; }
+    .tb-where { font-size: 12.5px; }
+  }
+</style>
+
+<script>
+  // Hydrate from the store, then keep the bar in step with answers as they land. The page
+  // that owns the exercise tells us about each one via a `da:progress` event, so this file
+  // never has to know which of the five exercise widgets produced it.
+  import { getTopicProgress } from "../lib/progress.js";
+
+  const bar = document.querySelector<HTMLElement>("[data-topic-bar]");
+  if (bar) {
+    const topic = bar.dataset.topic!;
+    const tasks = Number(bar.dataset.tasks || 0);
+    const fill = bar.querySelector<HTMLElement>("[data-topic-fill]");
+    const count = bar.querySelector<HTMLElement>("[data-topic-count]");
+    const saved = bar.querySelector<HTMLElement>("[data-topic-saved]");
+    const savedText = bar.querySelector<HTMLElement>("[data-topic-saved-text]");
+    const savedLabel = savedText?.textContent ?? "";
+    let done = 0;
+    let savedTimer = 0;
+
+    function paint() {
+      if (!tasks) return;
+      const pct = Math.min(100, Math.round((done / tasks) * 100));
+      if (fill) fill.style.width = pct + "%";
+      if (count) count.textContent = `${done} / ${tasks} Aufgaben`;
+    }
+
+    try {
+      done = Math.min(getTopicProgress()[topic]?.done ?? 0, tasks || Infinity);
+    } catch (e) {}
+    paint();
+
+    // `correct` is what moves the bar; a wrong answer is still recorded (it counts toward
+    // accuracy and the streak) and still proves the saving is live, so it flashes too.
+    addEventListener("da:progress", (e) => {
+      const ok = (e as CustomEvent).detail?.correct;
+      if (ok && tasks) done = Math.min(done + 1, tasks);
+      paint();
+      if (!saved) return;
+      saved.classList.add("is-just-saved");
+      if (savedText) savedText.textContent = "Gespeichert";
+      window.clearTimeout(savedTimer);
+      savedTimer = window.setTimeout(() => {
+        saved.classList.remove("is-just-saved");
+        if (savedText) savedText.textContent = savedLabel;
+      }, 1600);
+    });
+  }
+</script>

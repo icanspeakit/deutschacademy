@@ -1,9 +1,7 @@
 ---
 import Layout from "../../layouts/Layout.astro";
-import PracticeHeader from "../../components/PracticeHeader.astro";
+import ExamShell from "../../components/ExamShell.astro";
 import ExamPractice from "../../components/ExamPractice.astro";
-import "../../styles/practice.css";
-import "../../styles/pruefungen.css";
 import lid from "../../data/leben-in-deutschland.json";
 
 const { meta, questions, bundeslaender } = lid;
@@ -12,68 +10,69 @@ const { meta, questions, bundeslaender } = lid;
   title="Leben in Deutschland – DeutschAcademy"
   description="Der Einbürgerungstest 'Leben in Deutschland': Format, Fragenkatalog und wie du dich vorbereiten kannst."
 >
-  <PracticeHeader title="Leben in Deutschland" />
-  <main class="practice-main">
-    <div class="practice-hero">
-      <p class="eyebrow">Prüfung</p>
-      <h1>Leben in Deutschland</h1>
-      <p>Der Einbürgerungstest: ein schriftlicher Multiple-Choice-Test zu Gesellschaft, Geschichte und Recht in Deutschland.</p>
-    </div>
+  <ExamShell
+    header="Leben in Deutschland"
+    title="Leben in Deutschland"
+    lead="Der Einbürgerungstest: ein schriftlicher Multiple-Choice-Test zu Gesellschaft, Geschichte und Recht in Deutschland."
+    badges={["Wissenstest"]}
+    practiceHeading="Für den Test üben"
+  >
+    <Fragment slot="info">
+      <section class="exam-section">
+        <h2>Für wen ist der Test "Leben in Deutschland"?</h2>
+        <div class="exam-meta-row">
+          <span class="exam-meta-badge">Kein CEFR-Sprachniveau — Wissenstest</span>
+          <span class="exam-meta-badge">Einbürgerung / Orientierungskurs</span>
+        </div>
+        <p>
+          Anders als telc, Goethe, TestDaF oder DTZ prüft "Leben in Deutschland" kein Deutschniveau,
+          sondern Wissen über Gesellschaft, Geschichte und Rechtsordnung — er ist Voraussetzung für die
+          Einbürgerung und schließt oft den Orientierungskurs eines Integrationskurses ab.
+        </p>
+      </section>
 
-    <section class="exam-section">
-      <h2>Für wen ist der Test "Leben in Deutschland"?</h2>
-      <div class="exam-meta-row">
-        <span class="exam-meta-badge">Kein CEFR-Sprachniveau — Wissenstest</span>
-        <span class="exam-meta-badge">Einbürgerung / Orientierungskurs</span>
-      </div>
-      <p>
-        Anders als telc, Goethe, TestDaF oder DTZ prüft "Leben in Deutschland" kein Deutschniveau,
-        sondern Wissen über Gesellschaft, Geschichte und Rechtsordnung — er ist Voraussetzung für die
-        Einbürgerung und schließt oft den Orientierungskurs eines Integrationskurses ab.
-      </p>
-    </section>
+      <section class="exam-section">
+        <h2>Geprüfte Fertigkeiten</h2>
+        <div class="skill-grid">
+          <div class="skill-card"><div class="skill-card-icon">📖</div><h4>Lesen</h4><p>Fragen lesen und verstehen</p></div>
+          <div class="skill-card skill-card--na"><div class="skill-card-icon">🎧</div><h4>Hören</h4><p>Kein Hörverstehen im Test</p></div>
+          <div class="skill-card skill-card--na"><div class="skill-card-icon">✍️</div><h4>Schreiben</h4><p>Kein Schreibteil — nur Ankreuzen</p></div>
+          <div class="skill-card skill-card--na"><div class="skill-card-icon">🗣️</div><h4>Sprechen</h4><p>Kein separater Sprechteil in diesem Test</p></div>
+        </div>
+      </section>
 
-    <section class="exam-section">
-      <h2>Geprüfte Fertigkeiten</h2>
-      <div class="skill-grid">
-        <div class="skill-card"><div class="skill-card-icon">📖</div><h4>Lesen</h4><p>Fragen lesen und verstehen</p></div>
-        <div class="skill-card skill-card--na"><div class="skill-card-icon">🎧</div><h4>Hören</h4><p>Kein Hörverstehen im Test</p></div>
-        <div class="skill-card skill-card--na"><div class="skill-card-icon">✍️</div><h4>Schreiben</h4><p>Kein Schreibteil — nur Ankreuzen</p></div>
-        <div class="skill-card skill-card--na"><div class="skill-card-icon">🗣️</div><h4>Sprechen</h4><p>Kein separater Sprechteil in diesem Test</p></div>
-      </div>
-    </section>
+      <section class="exam-section">
+        <h2>Format</h2>
+        <div class="format-table-wrap">
+          <table class="format-table">
+            <thead><tr><th>Teil</th><th>Was wird geprüft</th><th>Umfang</th></tr></thead>
+            <tbody>
+              <tr><td>Bundesweiter Teil</td><td>Fragen zu Demokratie, Geschichte, Grundrechten, Arbeit und Gesellschaft in Deutschland</td><td>{meta.federalQuestions} von insgesamt {meta.totalQuestions} Fragen</td></tr>
+              <tr><td>Landesspezifischer Teil</td><td>Fragen zum jeweiligen Bundesland</td><td>{meta.stateQuestions} von {meta.totalQuestions} Fragen</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="format-note">
+          Multiple-Choice, {meta.totalQuestions} Fragen aus dem offiziellen BAMF-Fragenkatalog, Zeitlimit {meta.minutes} Minuten, bestanden ab {meta.passScore} richtigen Antworten.
+          Unsere <a href="/pruefungen/leben-in-deutschland/fakten">Fakten-Seite</a> und unser <a href="/pruefungen/leben-in-deutschland/test">Übungstest</a> decken alle 16 Bundesländer ab: {questions.length} bundesweite Fragen aus echtem DeutschAcademy-Unterrichtsmaterial für Bayern, plus {meta.stateQuestions} Fragen zu deinem Bundesland — nicht identisch mit dem offiziellen Fragenkatalog selbst. {meta.sourceNote} {meta.stateFactsNote}
+        </p>
+      </section>
+    </Fragment>
 
-    <section class="exam-section">
-      <h2>Format</h2>
-      <div class="format-table-wrap">
-        <table class="format-table">
-          <thead><tr><th>Teil</th><th>Was wird geprüft</th><th>Umfang</th></tr></thead>
-          <tbody>
-            <tr><td>Bundesweiter Teil</td><td>Fragen zu Demokratie, Geschichte, Grundrechten, Arbeit und Gesellschaft in Deutschland</td><td>{meta.federalQuestions} von insgesamt {meta.totalQuestions} Fragen</td></tr>
-            <tr><td>Landesspezifischer Teil</td><td>Fragen zum jeweiligen Bundesland</td><td>{meta.stateQuestions} von {meta.totalQuestions} Fragen</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <p class="format-note">
-        Multiple-Choice, {meta.totalQuestions} Fragen aus dem offiziellen BAMF-Fragenkatalog, Zeitlimit {meta.minutes} Minuten, bestanden ab {meta.passScore} richtigen Antworten.
-        Unsere <a href="/pruefungen/leben-in-deutschland/fakten">Fakten-Seite</a> und unser <a href="/pruefungen/leben-in-deutschland/test">Übungstest</a> decken alle 16 Bundesländer ab: {questions.length} bundesweite Fragen aus echtem DeutschAcademy-Unterrichtsmaterial für Bayern, plus {meta.stateQuestions} Fragen zu deinem Bundesland — nicht identisch mit dem offiziellen Fragenkatalog selbst. {meta.sourceNote} {meta.stateFactsNote}
-      </p>
-    </section>
-
-    <div class="mock-cta">
+    <div class="mock-cta mock-cta--lead">
       <h2>{questions.length} bundesweite + {meta.stateQuestions} Bundesland-Fragen</h2>
       <p>Aus echtem Unterrichtsmaterial: Demokratie, Wahlen, Grundrechte, Geschichte, Arbeit und Familie — wähle dein Bundesland ({bundeslaender.length} zur Auswahl) auf der Testseite.</p>
       <div class="exam-meta-row">
-        <a class="quiz-btn quiz-btn--primary" href="/pruefungen/leben-in-deutschland/fakten">Fakten lernen →</a>
         <a class="quiz-btn quiz-btn--primary" href="/pruefungen/leben-in-deutschland/test">Zum Übungstest →</a>
+        <a class="quiz-btn quiz-btn--primary" href="/pruefungen/leben-in-deutschland/fakten">Fakten lernen →</a>
         <a class="quiz-btn" href="/downloads/leben-in-deutschland-fakten.pdf" download>Fakten als PDF herunterladen ↓</a>
       </div>
     </div>
 
     <ExamPractice
       heading='Sprachlich vorbereiten'
-      intro='"Leben in Deutschland" prüft Wissen, kein Sprachniveau — aber du musst die Fragen und Antwortoptionen verstehen können. Diese drei Tools helfen dabei sprachlich. Die Sprechen- und Lesen-&-Schreiben-Tools sind hier bewusst nicht verlinkt: sie stammen aus dem DTZ-Material (mündliche Bildbeschreibung, Schreibaufgaben) — "Leben in Deutschland" hat aber weder einen Sprech- noch einen Schreibteil, siehe oben.'
+      intro='"Leben in Deutschland" prüft Wissen, kein Sprachniveau — aber du musst die Fragen und Antwortoptionen verstehen können. Diese drei Tools helfen dabei sprachlich. Die Sprechen- und Lesen-&-Schreiben-Tools sind hier bewusst nicht verlinkt: sie stammen aus dem DTZ-Material (mündliche Bildbeschreibung, Schreibaufgaben) — "Leben in Deutschland" hat aber weder einen Sprech- noch einen Schreibteil, siehe die Erklärung.'
       tools={["artikel", "grammatik", "wortschatz"]}
     />
-  </main>
+  </ExamShell>
 </Layout>

@@ -1,0 +1,88 @@
+---
+// Every Wortschatz deck that comes out of the lexicon, at one URL shape.
+//
+// Two kinds share the segment, which is why this is `[deck]` and not `[level]`:
+//   /uebungen/wortschatz/a1                the whole level — what the nav's Niveaus menu
+//                                          means by "Wortliste A1"
+//   /uebungen/wortschatz/a1-04             one Lernset — ~25 words, one sitting, the unit
+//                                          the picker and program.json are built around
+//   /uebungen/wortschatz/haeufigkeit-001   one frequency cohort — the 20 most common words
+//                                          in the lexicon, then the next 20, and so on
+//
+// A route per deck rather than ?set= on one page: A1+A2+B1+B2 is 2750 cards between them,
+// and on the phones most of these learners use, shipping the other decks as dead JSON is
+// the difference between a fast page and a slow one. A Lernset page carries 25 cards.
+//
+// Only decks the lexicon has actually filled get a page. A unit that program.json plans
+// but has no words for gets no route at all — the picker names it as planned instead.
+import Layout from "../../../layouts/Layout.astro";
+import VokabelTrainer from "../../../components/VokabelTrainer.astro";
+import { LEVELS, asVokabelCards } from "../../../lib/lexicon.js";
+import { lernsets, lernset, lernsetCards, cohorts, cohort, cohortCards } from "../../../lib/lernsets.js";
+
+export function getStaticPaths() {
+  const levels = LEVELS.map((level) => ({
+    params: { deck: level.toLowerCase() },
+    props: { kind: "level", level },
+  }));
+
+  const sets = lernsets({ status: "built" }).map((set) => ({
+    params: { deck: set.id },
+    props: { kind: "set", setId: set.id },
+  }));
+
+  // A cohort is 20 words with a translation by construction, so there is nothing to
+  // filter out the way a half-written Lernset needs.
+  const freq = cohorts().map((c) => ({
+    params: { deck: c.id },
+    props: { kind: "cohort", cohortId: c.id },
+  }));
+
+  return [
+    ...levels.filter((p) => asVokabelCards({ level: p.props.level }).length > 0),
+    ...sets.filter((p) => lernsetCards(p.props.setId).length > 0),
+    ...freq,
+  ];
+}
+
+const { kind, level, setId, cohortId } = Astro.props;
+
+const set = kind === "set" ? lernset(setId) : null;
+const freq = kind === "cohort" ? cohort(cohortId) : null;
+const cards =
+  kind === "set" ? lernsetCards(setId)
+  : kind === "cohort" ? cohortCards(cohortId)
+  : asVokabelCards({ level });
+
+const heading =
+  set ? set.title
+  : freq ? `Die häufigsten Wörter ${freq.from}-${freq.to}`
+  : `Wortschatz ${level}`;
+const deckId = set ? set.id : freq ? freq.id : level.toLowerCase();
+
+// The line under the heading answers "what am I in". For a Lernset that is its module —
+// "Haus & Räume" means something different inside "Wohnen" than it would on its own. For a
+// cohort it is the level spread, because a frequency cut crosses levels by construction.
+const sub =
+  set ? [set.level, set.moduleTitle, `${set.words} Wörter`].filter(Boolean).join(" · ")
+  : freq ? `Nach Häufigkeit · ${freq.levels.join("–")} · ${freq.words} Wörter`
+  : `${level} · alle Lernsets · ${cards.length} Wörter`;
+
+const title =
+  set ? `${set.title} (${set.level}) – Wortschatz – DeutschAcademy`
+  : freq ? `Die häufigsten deutschen Wörter ${freq.from}-${freq.to} – DeutschAcademy`
+  : `Wortliste ${level} – DeutschAcademy`;
+const description =
+  set ? `Lernset ${set.id}: ${set.words} Wörter zum Thema „${set.title}" als Karteikarten — umdrehen, lernen, testen.`
+  : freq ? `Die Wörter ${freq.from} bis ${freq.to} der deutschen Häufigkeitsliste als Karteikarten — gemischt aus Verben, Nomen und Funktionswörtern, nach Korpushäufigkeit sortiert.`
+  : `Die ${cards.length} Wörter der Stufe ${level} als Karteikarten: umdrehen, lernen, testen.`;
+---
+<Layout title={title} description={description}>
+  <VokabelTrainer
+    cards={cards}
+    title={set ? `Lernset ${set.id.toUpperCase()}` : freq ? `Häufigkeit ${freq.from}-${freq.to}` : `Wortliste ${level}`}
+    heading={heading}
+    sub={sub}
+    deck={deckId}
+  />
+</Layout>

@@ -803,6 +803,7 @@ const defaultVariant = variants[0];
     const DATA = JSON.parse(document.getElementById("nv-data")!.textContent!);
     const ITEMS: Record<string, any> = DATA.items;
     const SECTIONS: Record<string, any> = DATA.sections;
+    const SECTION_IDS = new Set(Object.keys(SECTIONS));
     const TOPICS: Record<string, any> = DATA.topics;
     const RING = 2 * Math.PI * 42;
     const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -1053,6 +1054,11 @@ const defaultVariant = variants[0];
 
       paintItemRing(id, true);
       paintFocusHead(id);
+      // The list rows, the level bar and the course strip only repainted when a LEVEL was
+      // picked, so landing straight on a topic — now possible by link, ?thema=artikel — left
+      // the sidebar reading "0 / 42" next to a ring that said "4 von 42". Same numbers, same
+      // store, two answers on one screen.
+      repaint();
 
 
       $$("[data-section-view]").forEach((v) => (v.hidden = true));
@@ -1377,9 +1383,58 @@ const defaultVariant = variants[0];
       mountQuiz(root, withChoices(topic.questions), { mode: "choice", onAnswer: (ok: boolean) => creditAnswer(id, ok) });
     }
 
+    // ── The URL ───────────────────────────────────────────────────────
+    // What is open in this shell is real state — a level, and often one topic inside it —
+    // and until now it lived only in localStorage. Every view was /dashboard: you could not
+    // link a classmate to "Artikel: der, die, das", could not bookmark the topic you are
+    // working through, and the browser's back button walked out of the page instead of back
+    // to the level you came from.
+    //
+    // Query parameters rather than a route per topic: this shell is one client-rendered page
+    // over ~40 items, and /dashboard/a1/artikel would mean pre-rendering every combination of
+    // something that never reloads. `?stufe=a1&thema=artikel` is as linkable and costs nothing.
+    //
+    // Restoring from a URL must not push a new entry, or arriving at a link would leave a
+    // duplicate in history and the first Back would appear to do nothing — hence `applying`.
+    let applying = false;
+
+    function urlFor(section: string, item: string | null) {
+      const p = new URLSearchParams();
+      if (section && section !== "weg") p.set("stufe", section);
+      if (item) p.set("thema", item);
+      const q = p.toString();
+      return location.pathname + (q ? `?${q}` : "") + location.hash;
+    }
+
+    function syncUrl(replace = false) {
+      if (applying) return;
+      const next = urlFor(current.section, current.item);
+      if (next === location.pathname + location.search + location.hash) return;
+      try { history[replace ? "replaceState" : "pushState"]({ nv: true }, "", next); } catch (e) {}
+    }
+
+    /** Apply whatever the address bar currently says, without writing to it. */
+    function applyUrl(fallbackToSaved = false) {
+      const p = new URLSearchParams(location.search);
+      const wanted = p.get("thema");
+      const stufe = p.get("stufe");
+      applying = true;
+      try {
+        if (wanted && ITEMS[wanted]) selectItem(wanted);
+        else if (stufe && SECTION_IDS.has(stufe)) selectSection(stufe);
+        else if (fallbackToSaved) return false;
+        else selectSection("weg");
+      } finally {
+        applying = false;
+      }
+      return true;
+    }
+
+    addEventListener("popstate", () => applyUrl());
+
     // ── Wiring ────────────────────────────────────────────────────────
-    $$("[data-section-btn]").forEach((b) => b.addEventListener("click", () => selectSection(b.dataset.sectionBtn!)));
-    $$("[data-nav-item]").forEach((b) => b.addEventListener("click", () => selectItem(b.dataset.navItem!)));
+    $$("[data-section-btn]").forEach((b) => b.addEventListener("click", () => { selectSection(b.dataset.sectionBtn!); syncUrl(); }));
+    $$("[data-nav-item]").forEach((b) => b.addEventListener("click", () => { selectItem(b.dataset.navItem!); syncUrl(); }));
     $$("[data-reset-progress]").forEach((b) =>
       b.addEventListener("click", () => {
         if (!confirm("Deinen gesamten Fortschritt löschen? Das lässt sich nicht rückgängig machen.")) return;
@@ -1389,7 +1444,7 @@ const defaultVariant = variants[0];
         toast("Fortschritt zurückgesetzt");
       }));
     // Still live for the card's own "Zurück zur Stufe" button.
-    $$("[data-back]").forEach((b) => b.addEventListener("click", () => selectSection(current.section)));
+    $$("[data-back]").forEach((b) => b.addEventListener("click", () => { selectSection(current.section); syncUrl(); }));
     $$("[data-nvb-collapse]").forEach((b) =>
       b.addEventListener("click", (e) => { e.stopPropagation(); $("[data-nvb]")?.classList.toggle("collapsed"); }));
 
@@ -1402,8 +1457,20 @@ const defaultVariant = variants[0];
     } catch (e) {}
     showVariant(savedVariant);
 
+    // A link someone was sent beats what this browser happened to be looking at last.
     let saved: any = null;
     try { saved = JSON.parse(localStorage.getItem("nv-view") || "null"); } catch (e) {}
-    if (saved && saved.item && ITEMS[saved.item]) selectItem(saved.item);
-    else selectSection(saved && saved.section ? saved.section : "weg");
+
+    if (!applyUrl(true)) {
+      applying = true;
+      try {
+        if (saved && saved.item && ITEMS[saved.item]) selectItem(saved.item);
+        else selectSection(saved && saved.section ? saved.section : "weg");
+      } finally {
+        applying = false;
+      }
+      // replace, not push: the restored view is where this page load started, so Back
+      // belongs to whatever the learner was on before /dashboard.
+      syncUrl(true);
+    }
   </script>

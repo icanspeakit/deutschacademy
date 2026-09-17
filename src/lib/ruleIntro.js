@@ -13,16 +13,20 @@
  * Any real input cancels the tour, and it never writes the rule preference — a demo
  * is not a choice the learner made.
  *
- * `compact: true` is the phone telling of the same story. It cannot be the same one:
- * opening the rule there pushes its own button off the bottom of the screen, so a
- * demo that opens and closes it would spend half its run framing empty space — and a
- * simulated mouse cursor on a touch screen is a prop from the wrong device. So the
- * compact tour never touches the panel: it lights what is already on screen and says
- * what it is. Where the panel still shows a cropped preview it lights that first and
- * then moves down to the button, two beats; where the panel collapses to nothing —
- * the grammar pages — the button IS the rule as far as the first screen goes, and a
- * spotlight travelling from a target to itself is a beat nobody needs to sit through,
- * so that case plays once.
+ * `compact: true` is the phone telling of the same story, and it differs in one prop:
+ * there is no simulated mouse cursor, because that is a device the learner is not
+ * holding. Everything else is the same shape — the panel opens so the learner sees
+ * what is behind the button, holds long enough to be read as "this is the rule", then
+ * closes and the light moves to the button that brings it back.
+ *
+ * Framing an opened panel on a phone is the one hard part: it is routinely taller than
+ * the screen, and a cutout bigger than the viewport is just an undimmed page. So the
+ * lit region is clamped to the top of the panel — enough to show what kind of thing it
+ * is — which also leaves room under it for the coach mark.
+ *
+ * Where there is no panel to open (`ruleCard` absent) or only one beat of copy, the
+ * tour falls back to lighting the button alone: a spotlight travelling from a target
+ * to itself is a beat nobody needs to sit through.
  */
 
 const CURSOR_SVG =
@@ -39,15 +43,16 @@ const COACH = [
    "Über diesen Schalter. Deine Wahl wird gemerkt, auch für die nächste Übung."],
 ];
 
-// One beat: the button is the only thing standing in for the rule on a phone, so
-// the message has to carry all three things at once — where the rule went, how to
-// get it, and that the choice sticks.
+// Two beats, matching the two the panel itself plays: what this is, then where the
+// switch for it lives.
 const COACH_COMPACT = [
-  ["Die Regel liegt hier",
-   "Die Übungen beginnen sofort. Ein Tippen zeigt die ganze Erklärung, ein zweites klappt sie wieder ein — deine Wahl wird gemerkt."],
+  ["Das ist die Regel",
+   "Sie ist eingeklappt, damit die Übungen sofort beginnen — sie geht nicht verloren."],
+  ["Hier ein- und ausblenden",
+   "Ein Tippen zeigt sie ganz, ein zweites klappt sie wieder ein. Deine Wahl wird gemerkt."],
 ];
 
-export function createRuleIntro({ ruleEl, ruleBtn, setRule, compact = false, coach: copy }) {
+export function createRuleIntro({ ruleEl, ruleBtn, ruleCard, setRule, compact = false, coach: copy }) {
   // Two beats either way; `coach` lets a page that is collapsing something other
   // than a grammar rule say so in its own words.
   const script = copy ?? (compact ? COACH_COMPACT : COACH);
@@ -79,8 +84,16 @@ export function createRuleIntro({ ruleEl, ruleBtn, setRule, compact = false, coa
   // The "hole" is a zero-size box wearing a 9999px shadow, so moving it moves the
   // lit patch and everything else stays dimmed. Viewport coordinates, hence the
   // abort-on-scroll below.
-  function frame(el, pad, radius) {
-    const r = el.getBoundingClientRect();
+  // `maxH` clamps the lit region to that many pixels from the target's top. An opened
+  // rule panel on a phone is taller than the screen, and a cutout bigger than the
+  // viewport dims nothing at all; lighting its first screenful says what it is and
+  // leaves the coach mark somewhere to sit. The returned rect is the lit one, so
+  // everything positioned against it agrees with what is actually on screen.
+  function frame(el, pad, radius, maxH) {
+    const box = el.getBoundingClientRect();
+    const h = maxH ? Math.min(box.height, maxH) : box.height;
+    const r = { left: box.left, top: box.top, width: box.width, height: h,
+                right: box.right, bottom: box.top + h };
     hole.style.left = r.left - pad + "px";
     hole.style.top = r.top - pad + "px";
     hole.style.width = r.width + pad * 2 + "px";
@@ -226,22 +239,25 @@ export function createRuleIntro({ ruleEl, ruleBtn, setRule, compact = false, coa
     });
   }
 
-  // Two beats hang off the button either way: it sits directly under the cropped
-  // card, so one anchor keeps the coach mark in the same place while the spotlight
-  // travels to it. When the panel and its control are the same box there is nowhere
-  // for the light to travel to, and one beat is the whole tour.
+  // The phone telling. Same three moves as the desktop one — open it, name it, show
+  // the switch — minus the cursor, and with the lit region clamped to the top of the
+  // panel because an opened rule is taller than a phone.
+  //
+  // 900ms after each setRule is --vp-slide plus a breath; keep the two in step, or the
+  // spotlight measures a box that is still moving.
   function runCompact() {
     setRule(true);
     buildOverlay();
 
-    const single = ruleEl === ruleBtn || script.length < 2;
-    // A pill target gets a pill cutout; a card gets the card's corner radius.
-    frame(ruleEl, single ? 8 : 10, single ? 999 : 20);
+    // Nothing to open, or only one beat of copy: light the button and say the one
+    // thing. (`ruleEl` being the button itself is normal here — a collapsed card has
+    // no box to point at before the tour opens it — so it is not a reason to bail.)
+    const single = !ruleCard || script.length < 2;
+    frame(ruleBtn, 8, 999);
     requestAnimationFrame(() => overlay?.classList.add("is-on"));
 
-    at(500, () => showCoach(0, ruleBtn.getBoundingClientRect(), true));
-
     if (single) {
+      at(500, () => showCoach(0, ruleBtn.getBoundingClientRect(), true));
       at(4400, () => {
         coach?.classList.remove("is-on");
         overlay?.classList.remove("is-on");
@@ -255,16 +271,28 @@ export function createRuleIntro({ ruleEl, ruleBtn, setRule, compact = false, coa
       return;
     }
 
-    at(3200, () => coach?.classList.remove("is-on"));
-    at(3500, () => frame(ruleBtn, 8, 999));
-    at(3900, () => showCoach(1, ruleBtn.getBoundingClientRect(), true));
-    at(6600, () => {
+    // Beat 1 — the panel opens behind the light, and the light follows it.
+    at(500, () => setRule(false));
+    at(1400, () => {
+      const lit = frame(ruleCard, 10, 20, Math.round(window.innerHeight * 0.42));
+      showCoach(0, lit, true);
+    });
+
+    // Beat 2 — it closes again, and the light lands on the control that reopens it.
+    at(4600, () => {
+      coach?.classList.remove("is-on");
+      setRule(true);
+    });
+    at(5500, () => frame(ruleBtn, 8, 999));
+    at(5900, () => showCoach(1, ruleBtn.getBoundingClientRect(), true));
+
+    at(8600, () => {
       coach?.classList.remove("is-on");
       overlay?.classList.remove("is-on");
       ruleBtn?.setAttribute("data-peek", "");
     });
-    at(7200, removeOverlay);
-    at(9800, () => {
+    at(9200, removeOverlay);
+    at(11800, () => {
       ruleBtn?.removeAttribute("data-peek");
       finish();
     });

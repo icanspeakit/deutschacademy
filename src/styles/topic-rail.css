@@ -1,0 +1,51 @@
+/* Placement for the topic-page rail. Its look is nav.css (.nvb*) — the dashboard's own
+ * stylesheet, so the two surfaces cannot drift apart. Only the placement lives here, and
+ * the placement is the part that had to be worked out.
+ *
+ * The first attempt put the rail in a grid column beside the page. That took 336px from
+ * the exercise column, which dropped from the 880px a topic page gives it to 645 — the
+ * rail stealing room from the thing it is meant to sit next to.
+ *
+ * There is no free margin to move into either: with the rule panel open, .vp-page--split
+ * is already ~1400px wide, so on a 1440px screen the content runs edge to edge. Anything
+ * beside it has to overlay.
+ *
+ * So the rail is fixed and starts folded to its 64px icon strip — a state nav.css already
+ * supports. Folded it costs nothing and still answers "where am I"; opening it floats the
+ * panel over the page instead of pushing it, and the exercise column stays byte-identical
+ * to the page without a rail at every width.
+ */
+
+.tr-scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 35;
+  background: rgba(15, 23, 42, .3);
+  backdrop-filter: blur(1px);
+}
+.tr-scrim[hidden] { display: none; }
+
+.tr-wrap {
+  position: fixed;
+  left: 10px;
+  /* Clears the site nav and the topic bar above it. */
+  top: 96px;
+  z-index: 40;
+}
+.tr-wrap .nvb {
+  box-shadow: 0 18px 44px -20px rgba(15, 23, 42, .55);
+  transition: width .28s cubic-bezier(.22, 1, .36, 1);
+}
+/* Folded: only the icon strip. nav.css already hides .nvb-panel for .collapsed. */
+.tr-wrap .nvb.collapsed { width: 64px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .tr-wrap .nvb { transition: none; }
+}
+
+/* Below this width the rail would overlap the content it is supposed to help with, and
+   SiteNav's drawer already covers navigation at that size. Not rendered rather than
+   squeezed. */
+@media (max-width: 1100px) {
+  .tr-wrap, .tr-scrim { display: none !important; }
+}

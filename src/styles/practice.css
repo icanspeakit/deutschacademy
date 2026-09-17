@@ -334,11 +334,44 @@ textarea.writing-area {
 .prompt-hint { margin: 0 0 12px; font-size: .875rem; line-height: 1.6; color: var(--muted); }
 .prompt-topic { margin: 0 0 12px; font-size: 1rem; line-height: 1.6; }
 
-/* A page that mounts the exam shell is the trainer, not an article about it — so on a
-   phone its hero shrinks out of the way instead of filling the first screen. */
+/* A trainer page — one whose point is the exercise, not the words above it.
+   Marked with .practice-main--trainer rather than keyed off --wide, because only four
+   of the eight pages using --wide are trainers; the Kultur hub's eyebrow, for one,
+   says something the page does not repeat. The
+   centred hero pushed the card 371px down on a 1440x900 desktop and 445px down on a
+   phone — before you can answer anything, half the screen is a title you have already
+   read. So on these pages the whole head block goes compact and left-aligned, at every
+   width rather than only on phones: less top padding, a tighter back link, a smaller
+   heading, and a lead paragraph that reads as a subtitle instead of a paragraph. */
+.practice-main--trainer { padding-top: 20px; }
+.practice-main--trainer .vp-back-link,
+.practice-main--trainer .practice-back-link { margin-bottom: 10px; }
+
+.practice-main--trainer .practice-hero { text-align: left; margin-bottom: 18px; }
+/* The eyebrow says the same thing as the card's own brand line a few elements below
+   it — "Goethe A1 · telc A1" over "Start Deutsch 1 / Goethe A1 · telc A1", and the
+   same on the TestDaF and Leben-in-Deutschland trainers. It stays in the DOM for
+   crawlers; on screen the card says it. */
+.practice-main--trainer .practice-hero .eyebrow { display: none; }
+.practice-main--trainer .practice-hero h1 {
+  font-size: clamp(1.3rem, 2.4vw, 1.6rem);
+  margin: 0 0 6px;
+}
+.practice-main--trainer .practice-hero p {
+  max-width: 78ch;
+  margin: 0;
+  font-size: .9rem;
+  line-height: 1.6;
+}
+
 @media (max-width: 700px) {
-  .practice-main--wide .practice-hero { text-align: left; margin-bottom: 20px; }
-  .practice-main--wide .practice-hero .eyebrow { text-align: left; }
-  .practice-main--wide .practice-hero h1 { font-size: 1.45rem; margin-bottom: 8px; }
-  .practice-main--wide .practice-hero p { margin: 0; font-size: .9rem; line-height: 1.6; }
+  /* The lead still ran four lines at 390px, which is most of what was left between the
+     title and the trainer. Two lines is enough to say what the page is; the full text
+     stays in the DOM for crawlers and for anyone who widens the window. */
+  .practice-main--trainer .practice-hero p {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
 }

@@ -480,6 +480,23 @@
 .tdaf-swatch { width: 12px; height: 12px; border-radius: 3px; background: var(--series); flex-shrink: 0; }
 .tdaf-chart-unit { margin: 10px 0 0; font-size: .74rem; color: var(--muted); }
 
+/* The card's own chrome ran 228px on a phone before the first heading: a topbar that
+   wrapped onto two rows, a second line under the brand repeating the page title, and a
+   full-size select under it. On a screen where the trainer is the point, that is the
+   same problem as the hero, one level in. */
+@media (max-width: 700px) {
+  .exam-topbar { padding: 10px 14px; gap: 10px; flex-wrap: nowrap; }
+  /* Repeats the page's own subtitle two elements above it. */
+  .exam-brand small { display: none; }
+  .exam-brand { font-size: .85rem; white-space: nowrap; }
+  .topbar-progress { min-width: 0; gap: 8px; }
+  .topbar-count { font-size: .7rem; white-space: nowrap; }
+  .mobile-nav { padding: 10px 14px 0; }
+  .mobile-nav-select { padding: 9px 11px; }
+  .exam-main { padding: 14px; }
+  .section-title { margin-top: 2px; }
+}
+
 /* --- wider than a phone ------------------------------------------------------ */
 @media (min-width: 860px) {
   .exam-shell { grid-template-columns: 236px minmax(0, 1fr); gap: 0; }

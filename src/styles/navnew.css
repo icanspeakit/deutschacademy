@@ -1,0 +1,255 @@
+/* /navnew — the nav-variant sketch. Everything here is prefixed .nn so none of it can
+ * leak into the pages it is imitating, and so the whole sketch deletes in one go once a
+ * variant wins.
+ *
+ * `data-variant` on the root drives visibility: [data-nn-only] lists the variants an
+ * element belongs to, [data-nn-not] the ones it is hidden in.
+ */
+
+/* The hide rule has to out-specify each element's own display, so it is written as
+   [data-nn] [data-nn-only] rather than [data-nn-only] — .nn-rail's own `display: grid`
+   comes later in this file and would otherwise win at equal specificity. */
+[data-nn] [data-nn-only] { display: none !important; }
+[data-nn][data-variant="jetzt"] [data-nn-only~="jetzt"],
+[data-nn][data-variant="a"]     [data-nn-only~="a"],
+[data-nn][data-variant="b"]     [data-nn-only~="b"],
+[data-nn][data-variant="ab"]    [data-nn-only~="ab"] { display: block !important; }
+/* The rail is a grid, not a block. */
+[data-nn][data-variant="c"] .nn-rail[data-nn-only~="c"] { display: grid !important; }
+
+[data-nn][data-variant="b"]  [data-nn-not~="b"],
+[data-nn][data-variant="ab"] [data-nn-not~="ab"],
+[data-nn][data-variant="c"]  [data-nn-not~="c"] { display: none; }
+
+/* Room for the fixed switcher, so the last exercise is never under it. */
+.nn { padding-bottom: 132px; }
+
+/* --- B: the prev/next strip ------------------------------------------------- */
+
+.nn-pn {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+}
+.nn-pn-inner {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 8px 24px;
+}
+.nn-pn-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  padding: 6px 10px;
+  border-radius: 10px;
+  text-decoration: none;
+  color: var(--ink);
+}
+.nn-pn-link:hover { background: var(--surface-card); }
+.nn-pn-link i { display: block; font-size: 10.5px; font-style: normal; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.nn-pn-link b { display: block; font-size: 13px; font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.nn-pn-link span[aria-hidden] { color: var(--brand-blue); font-size: 15px; }
+.nn-pn-link.is-off { opacity: .45; pointer-events: none; }
+.nn-pn-link--next { margin-left: auto; text-align: right; }
+.nn-pn-all {
+  font-size: 12.5px;
+  color: var(--muted);
+  text-decoration: none;
+  white-space: nowrap;
+}
+.nn-pn-all:hover { color: var(--brand-blue); text-decoration: underline; }
+
+@media (max-width: 720px) {
+  /* The middle link is the one that can go: on a phone the two arrows are the point,
+     and the overview is one tap away in the bar above anyway. */
+  .nn-pn-inner { padding: 6px 16px; gap: 8px; }
+  .nn-pn-all { display: none; }
+  .nn-pn-link b { max-width: 34vw; }
+}
+
+/* --- C: the rail ------------------------------------------------------------ */
+
+.nn-body { display: block; }
+[data-nn][data-variant="c"] .nn-body {
+  display: grid;
+  grid-template-columns: 288px minmax(0, 1fr);
+  gap: 0;
+  align-items: start;
+  max-width: 1560px;
+  margin: 0 auto;
+}
+[data-nn][data-variant="c"] .nn-main { padding-left: 16px; }
+
+.nn-rail {
+  position: sticky;
+  top: 12px;
+  display: grid;
+  grid-template-columns: 56px minmax(0, 1fr);
+  margin: 16px 0 0 20px;
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  background: var(--surface-card);
+  overflow: hidden;
+}
+.nn-rail-levels {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 14px 0;
+  background: #101826;
+}
+.nn-rail-lv {
+  position: relative;
+  width: 40px;
+  padding: 9px 0;
+  border: none;
+  border-radius: 10px;
+  background: none;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, .62);
+  cursor: pointer;
+}
+.nn-rail-lv:hover { color: #fff; }
+.nn-rail-lv.is-on { background: var(--gradient-brand); color: #fff; }
+.nn-rail-dot {
+  position: absolute;
+  left: 50%;
+  bottom: 2px;
+  width: 4px;
+  height: 4px;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, .28);
+}
+.nn-rail-dot.is-on { background: var(--accent); }
+
+.nn-rail-list { padding: 14px 14px 12px; min-width: 0; }
+.nn-rail-head { margin: 0 0 10px 4px; font-size: 13px; color: var(--muted); }
+.nn-rail-head b { color: var(--ink); font-weight: 600; }
+.nn-rail-group[hidden] { display: none; }
+
+.nn-rail-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 10px;
+  border-radius: 10px;
+  border-left: 3px solid transparent;
+  text-decoration: none;
+  color: var(--ink);
+  font-size: 13.5px;
+}
+.nn-rail-item:hover { background: var(--surface); }
+.nn-rail-item.is-cur { background: var(--blue-50); border-left-color: var(--brand-blue); font-weight: 600; }
+.nn-rail-name { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.nn-rail-n {
+  flex-shrink: 0;
+  font-size: 11.5px;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+.nn-rail-item.is-part .nn-rail-n { color: var(--accent-dark); }
+.nn-rail-item.is-done .nn-rail-n { color: var(--brand-blue); font-weight: 600; }
+.nn-rail-overview {
+  display: block;
+  margin-top: 8px;
+  padding: 8px 10px;
+  border-top: 1px solid var(--border);
+  font-size: 12.5px;
+  color: var(--brand-blue);
+  text-decoration: none;
+}
+
+@media (max-width: 1100px) {
+  /* The honest part of variant C: below this width there is no room for a third column,
+     so the rail simply is not there — which is most of the argument against it, and the
+     sketch has to show that rather than hide it. Needs !important to beat the variant
+     rule above, which carries one so it can out-rank .nn-rail's own display. */
+  [data-nn][data-variant="c"] .nn-body { display: block; }
+  [data-nn][data-variant="c"] .nn-main { padding-left: 0; }
+  /* Same selector as the variant rule above, so it wins on source order rather than
+     losing on specificity — both carry !important, and (0,4,0) beat (0,2,0). */
+  [data-nn][data-variant="c"] .nn-rail[data-nn-only~="c"] { display: none !important; }
+}
+
+/* --- A: the number in a menu row -------------------------------------------- */
+
+/* Created by the script — grammar topics have no count element of their own. Muted
+   until there is something to report, so an untouched menu does not look like a
+   scoreboard of zeros. */
+.nn-menucount {
+  display: block;
+  font-size: 12px;
+  font-style: normal;
+  color: var(--muted);
+}
+.nn-menucount.is-started { color: var(--accent-dark); font-weight: 600; }
+.nn-menucount.is-done { color: var(--brand-blue); font-weight: 600; }
+
+/* --- the switcher ----------------------------------------------------------- */
+
+.nn-bar {
+  position: fixed;
+  left: 50%;
+  bottom: 16px;
+  z-index: 70;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+  max-width: min(94vw, 1000px);
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  background: var(--surface-card);
+  box-shadow: 0 18px 44px -18px rgba(15, 23, 42, .45);
+}
+.nn-bar-group { display: flex; gap: 2px; flex-wrap: wrap; }
+.nn-tab {
+  padding: 8px 13px;
+  border: none;
+  border-radius: 999px;
+  background: none;
+  font: inherit;
+  font-size: 12.5px;
+  color: var(--muted);
+  cursor: pointer;
+  white-space: nowrap;
+}
+.nn-tab:hover { background: var(--surface); color: var(--ink); }
+.nn-tab.is-on { background: var(--gradient-brand); color: #fff; font-weight: 600; }
+.nn-seed {
+  padding: 7px 12px;
+  border: 1px solid var(--border-strong);
+  border-radius: 999px;
+  background: none;
+  font: inherit;
+  font-size: 12px;
+  color: var(--muted);
+  cursor: pointer;
+  white-space: nowrap;
+}
+.nn-seed:hover { border-color: var(--brand-blue); color: var(--brand-blue); }
+.nn-hint {
+  flex-basis: 100%;
+  margin: 2px 6px 2px;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--muted);
+  text-align: center;
+}
+
+@media (max-width: 720px) {
+  .nn { padding-bottom: 172px; }
+  .nn-bar { left: 8px; right: 8px; transform: none; max-width: none; }
+  .nn-tab { font-size: 12px; padding: 7px 10px; }
+  .nn-hint { font-size: 11.5px; }
+}

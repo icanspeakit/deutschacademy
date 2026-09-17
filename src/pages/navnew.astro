@@ -1,0 +1,366 @@
+---
+// /navnew — a sketch page for one question: what, if anything, should a standalone grammar
+// topic page carry to place it among its siblings?
+//
+// It renders the REAL page — the real SiteNav, the real TopicBar, the real workspace for
+// ja-nein-fragen driven by grammarWorkspace.js — at full width, and swaps only the
+// navigation treatment. Judging a nav idea inside a 390px phone frame (the way /no3 did)
+// would not work here, because two of the four candidates are desktop-shaped by nature.
+//
+// The candidates:
+//   Jetzt  what the page ships today: nav + TopicBar, no per-topic progress, no way on
+//          to the next topic except "back to the overview".
+//   A      the numbers from the dashboard rail, moved into the nav menus that already
+//          list these topics. No new furniture on the page at all.
+//   B      prev/next inside the TopicBar that is already there.
+//   A+B    both, which are independent.
+//   C      the dashboard's left rail, ported onto this route — the thing Edgar asked
+//          about. Shown last so it can be compared rather than argued about.
+//
+// Nothing here edits SiteNav.astro or TopicBar.astro: the variants decorate them from
+// this page's own script, so the sketch cannot break the live pages while it exists.
+import Layout from "../layouts/Layout.astro";
+import SiteNav from "../components/SiteNav.astro";
+import TopicBar from "../components/TopicBar.astro";
+import Icon from "../components/Icon.astro";
+import { taskCountOf, topicKeyOf } from "../lib/grammarTasks.js";
+import { NAV_LEVELS } from "../lib/catalog.js";
+import grammatik from "../data/grammatik.json";
+import "../styles/practice.css";
+import "../styles/landing.css";
+import "../styles/verben-praepositionen.css";
+import "../styles/rule-intro.css";
+import "../styles/navnew.css";
+
+// Every grammar topic on the site, with the two things the variants need: the progress key
+// (the URL slug, same as recordAttempt writes) and how many gradeable answers it holds.
+const mods = import.meta.glob("../data/grammatik/*.json", { eager: true });
+const workspaces = Object.values(mods).map((m: any) => m.default ?? m);
+const covered = new Set(workspaces.map((w: any) => w.id));
+
+const allTopics = [
+  ...workspaces.map((w: any) => ({
+    key: topicKeyOf(w),
+    name: w.name,
+    level: w.level,
+    href: `/uebungen/grammatik/${w.slug ?? w.id}`,
+    tasks: taskCountOf(w),
+    kind: "workspace",
+  })),
+  ...grammatik
+    .filter((t: any) => t.id !== "akkusativ" && !covered.has(t.id))
+    .map((t: any) => ({
+      key: t.id,
+      name: t.name,
+      level: t.level,
+      href: `/uebungen/grammatik/${t.id}`,
+      tasks: taskCountOf(t),
+      kind: "quiz",
+    })),
+];
+
+// The demo topic. ja-nein-fragen is small enough to answer a few of on screen and it has a
+// concept card, so the rule column is in play too — which is what makes variant C crowded.
+const DEMO = "ja-nein-fragen";
+const demo: any = workspaces.find((w: any) => (w.slug ?? w.id) === DEMO)
+  ?? grammatik.find((t: any) => t.id === DEMO);
+const demoKey = topicKeyOf(demo) ?? DEMO;
+const demoTasks = taskCountOf(demo);
+const concept = demo?.concept;
+
+const byLevel = NAV_LEVELS.map((level: string) => ({
+  level,
+  items: allTopics.filter((t) => t.level === level),
+}));
+const siblings = allTopics.filter((t) => t.level === demo.level);
+const at = siblings.findIndex((t) => t.key === demoKey);
+const prev = siblings[at - 1] ?? null;
+const next = siblings[at + 1] ?? null;
+---
+<Layout title="Nav-Varianten – DeutschAcademy">
+  <div class="nn" data-nn data-variant="jetzt">
+    <SiteNav active="grammatik" />
+    <TopicBar topic={demoKey} kind="Grammatik" title={demo.name} level={demo.level} tasks={demoTasks} />
+
+    <!-- B: prev/next. Its own strip rather than injected into TopicBar's markup, so the
+         sketch never has to reach inside a shipped component. In the real thing it would
+         be one flex row inside .tb-inner. -->
+    <div class="nn-pn" data-nn-only="b ab">
+      <div class="nn-pn-inner">
+        {prev
+          ? <a class="nn-pn-link" href={prev.href}><span aria-hidden="true">←</span><span><i>Davor</i><b>{prev.name}</b></span></a>
+          : <span class="nn-pn-link is-off"><span aria-hidden="true">←</span><span><i>Davor</i><b>Anfang der Stufe</b></span></span>}
+        <a class="nn-pn-all" href="/uebungen/grammatik">Alle {siblings.length} Themen auf {demo.level}</a>
+        {next
+          ? <a class="nn-pn-link nn-pn-link--next" href={next.href}><span><i>Danach</i><b>{next.name}</b></span><span aria-hidden="true">→</span></a>
+          : <span class="nn-pn-link nn-pn-link--next is-off"><span><i>Danach</i><b>Ende der Stufe</b></span><span aria-hidden="true">→</span></span>}
+      </div>
+    </div>
+
+    <div class="nn-body">
+      <!-- C: the dashboard rail, ported. Level switcher on the left edge, the level's
+           topics beside it, each with its own progress. On this route its buttons have to
+           be links — on /dashboard they swap a panel in place, which is the whole reason
+           it cannot simply be lifted across. -->
+      <aside class="nn-rail" data-nn-only="c">
+        <div class="nn-rail-levels">
+          {byLevel.map((g) => (
+            <button type="button" class:list={["nn-rail-lv", g.level === demo.level && "is-on"]} data-nn-level={g.level}>
+              {g.level}
+              <span class="nn-rail-dot" data-nn-leveldot={g.level}></span>
+            </button>
+          ))}
+        </div>
+        <div class="nn-rail-list">
+          <p class="nn-rail-head">Stufe <b data-nn-railhead>{demo.level}</b></p>
+          {byLevel.map((g) => (
+            <div class="nn-rail-group" data-nn-levelview={g.level} hidden={g.level !== demo.level}>
+              {g.items.map((t) => (
+                <a
+                  class:list={["nn-rail-item", t.key === demoKey && "is-cur"]}
+                  href={t.href}
+                  data-nn-topic={t.key}
+                  data-nn-tasks={t.tasks}
+                >
+                  <span class="nn-rail-name">{t.name}</span>
+                  <span class="nn-rail-n" data-nn-count>0/{t.tasks}</span>
+                </a>
+              ))}
+              <a class="nn-rail-overview" href="/uebungen/grammatik">Stufenübersicht öffnen →</a>
+            </div>
+          ))}
+        </div>
+      </aside>
+
+      <!-- The real topic page, unchanged. Only the furniture around it is the variable. -->
+      <main class="vp-page vp-page--split nn-main" id="vp-page" data-rule="hidden" data-anim="off" data-topic-key={demoKey}>
+        <a href="/uebungen/grammatik" class="vp-back-link" data-nn-not="b ab c">← Zurück zur Übersicht</a>
+
+        <div class="vp-workspace">
+          <aside class="vp-col vp-col--rule" id="vp-rule">
+            <div class="vp-hero">
+              <div class="vp-hero-badges">
+                <span class="badge badge-brand">GRAMMATIK ÜBEN</span>
+                <span class="badge badge-info">{demo.level}</span>
+              </div>
+              <h1>{demo.name}</h1>
+              <p>{demo.subtitle ?? demo.intro}</p>
+            </div>
+
+            {concept && (
+              <div class="vp-card vp-rule-card" id="vp-rule-card">
+                <div class="vp-card-label">Wie funktioniert das?</div>
+                {concept.exampleHtml && <p class="vp-example" set:html={concept.exampleHtml} />}
+                {concept.qa && (
+                  <div class="vp-qa-grid">
+                    {concept.qa.map((item: any) => (
+                      <div class="vp-qa-item">
+                        <span set:html={item.html} />
+                        {item.tag && <span class="vp-qa-tag">{item.tag}</span>}
+                      </div>
+                    ))}
+                  </div>
+                )}
+                {concept.noteHtml && <p class="vp-note" set:html={concept.noteHtml} />}
+              </div>
+            )}
+            {concept && (
+              <button type="button" class="vp-rule-peek" id="vp-rule-peek" data-show="Regel anzeigen" data-hide="Regel einklappen" aria-controls="vp-rule-card">Regel anzeigen</button>
+            )}
+          </aside>
+
+          <section class="vp-col vp-col--ex">
+            <div class="vp-ex-toolbar">
+              <h2 class="vp-section-title">Übungen</h2>
+              <button type="button" class="vp-rule-toggle" id="vp-rule-toggle" data-show="Regel einblenden" data-hide="Regel ausblenden">Regel einblenden</button>
+            </div>
+            <div class="vp-ex-grid">
+              {demo.exercises ? demo.exercises.map((ex: any, i: number) => (
+                <div class="vp-card">
+                  <div class="vp-ex-head">
+                    <span class="badge badge-neutral">{i + 1}</span>
+                    <h3>{ex.title}</h3>
+                  </div>
+                  {ex.hint && <p class="vp-ex-hint">{ex.hint}</p>}
+                  <div data-ex-index={i}></div>
+                </div>
+              )) : (
+                <div class="vp-card">
+                  <div class="vp-ex-head"><span class="badge badge-neutral">1</span><h3>Lückentext: Ergänzen Sie.</h3></div>
+                  <div id="quiz-root"></div>
+                </div>
+              )}
+            </div>
+          </section>
+        </div>
+      </main>
+    </div>
+
+    <!-- The switcher. Fixed, because comparing means flipping back and forth while
+         scrolled to the same place — a control at the top of the document would mean
+         scrolling up for every comparison. -->
+    <div class="nn-bar">
+      <div class="nn-bar-group" role="tablist" aria-label="Variante">
+        <button type="button" class="nn-tab is-on" data-nn-set="jetzt" role="tab">Jetzt</button>
+        <button type="button" class="nn-tab" data-nn-set="a" role="tab">A · Zahlen im Menü</button>
+        <button type="button" class="nn-tab" data-nn-set="b" role="tab">B · Weiter-Leiste</button>
+        <button type="button" class="nn-tab" data-nn-set="ab" role="tab">A + B</button>
+        <button type="button" class="nn-tab" data-nn-set="c" role="tab">C · Rail</button>
+      </div>
+      <button type="button" class="nn-seed" data-nn-seed>Demo-Fortschritt</button>
+      <p class="nn-hint" data-nn-hint></p>
+    </div>
+  </div>
+
+  <script type="application/json" id="nn-topics" set:html={JSON.stringify(allTopics)}></script>
+  <script type="application/json" id="nn-demo" set:html={JSON.stringify(demo)}></script>
+  <script type="module">
+    import { mountGrammarWorkspace } from "../lib/grammarWorkspace.js";
+    import { mountRuleColumn } from "../lib/ruleColumn.js";
+    import { mountQuiz, withChoices } from "../lib/quiz.js";
+    import { getTopicProgress, recordAttempt } from "../lib/progress.js";
+
+    const root = document.querySelector("[data-nn]");
+    const topics = JSON.parse(document.getElementById("nn-topics").textContent);
+    const demo = JSON.parse(document.getElementById("nn-demo").textContent);
+    const topicKey = document.getElementById("vp-page").dataset.topicKey;
+
+    /* ---- the real exercises, so the variants are judged against a real page ---- */
+    const onAnswer = (ok) => {
+      try { recordAttempt({ skill: "grammatik", correct: ok, topic: topicKey }); } catch {}
+      dispatchEvent(new CustomEvent("da:progress", { detail: { topic: topicKey, correct: ok } }));
+      paintProgress();
+    };
+    if (Array.isArray(demo.exercises)) {
+      mountGrammarWorkspace(document.getElementById("vp-page"), demo, { onAnswer });
+    } else {
+      mountQuiz(document.getElementById("quiz-root"), withChoices(demo.questions), { mode: "choice", onAnswer });
+    }
+    mountRuleColumn(document.getElementById("vp-page"), {
+      storageKey: "da-navnew-rule",
+      seenKey: "da-navnew-rule-peek",
+    });
+
+    /* ---- variant switching -------------------------------------------------- */
+    const HINT = {
+      jetzt: "Wie die Seite heute aussieht. Vom Thema aus führt kein Weg zum nächsten Thema außer zurück zur Übersicht — und nirgends steht, wie weit die Nachbarthemen sind.",
+      a: "Die Menüs listen diese Themen längst. A hängt nur die Zahl dran, die das Dashboard-Rail trägt. Kein neues Element auf der Seite. Menü öffnen zum Ansehen.",
+      b: "Eine Zeile unter der Themenleiste: davor, danach, und wie viele Themen die Stufe hat. Funktioniert auf dem Handy genauso.",
+      ab: "Beide zusammen — sie hängen nicht voneinander ab.",
+      c: "Das Rail aus dem Dashboard, hier eingebaut. Auf dem Desktop wird die Seite dreispaltig (Rail · Übungen · Regel); auf dem Handy bleibt davon nichts übrig.",
+    };
+    const hint = root.querySelector("[data-nn-hint]");
+
+    function setVariant(v) {
+      root.dataset.variant = v;
+      for (const b of root.querySelectorAll("[data-nn-set]")) b.classList.toggle("is-on", b.dataset.nnSet === v);
+      hint.textContent = HINT[v] ?? "";
+      decorateMenus(v === "a" || v === "ab");
+      try { localStorage.setItem("da-navnew-variant", v); } catch {}
+    }
+    for (const b of root.querySelectorAll("[data-nn-set]")) {
+      b.addEventListener("click", () => setVariant(b.dataset.nnSet));
+    }
+
+    /* ---- A: hang the numbers on the menu entries that already exist ---------- */
+    // Done from here rather than in SiteNav.astro: this is a sketch, and the shipped nav
+    // must not grow a dependency on it. In the real thing the count would be filled by
+    // the nav's own script on open, from the same getTopicProgress().
+    const byHref = new Map(topics.map((t) => [t.href, t]));
+
+    // The finding that made this variant worth building: in the Niveaus menu the grammar
+    // topics are BARE links — name only, no count element — while the tools beside them
+    // carry "386 Nomen", "650 Wörter". So A does not fill an empty slot; it creates one.
+    // Two link shapes therefore have to be handled: with .lp-panel-txt (tools, drawer) and
+    // without (grammar topics).
+    function decorateMenus(on) {
+      const prog = safeProgress();
+      // Matched by href across the whole nav, not by a container class: the Niveaus
+      // panel's topic links sit in an unclassed wrapper, so .lp-panel-list never saw
+      // them — which is exactly the set this variant is about.
+      for (const a of document.querySelectorAll('[data-nav] a[href], .lp-drawer a[href]')) {
+        const t = byHref.get(a.getAttribute("href"));
+        if (!t || !t.tasks) continue;
+        let slot = a.querySelector("[data-nn-slot]");
+        if (!on) { slot?.remove(); continue; }
+        if (!slot) {
+          slot = document.createElement("i");
+          slot.dataset.nnSlot = "";
+          slot.className = "nn-menucount";
+          // Inside the text column when there is one, so it lands where a tool's count
+          // does; otherwise appended to the link itself.
+          (a.querySelector(".lp-panel-txt, .lp-drawer-txt") ?? a).appendChild(slot);
+        }
+        const done = Math.min(prog[t.key]?.done ?? 0, t.tasks);
+        slot.textContent = `${done} / ${t.tasks} Aufgaben`;
+        slot.classList.toggle("is-started", done > 0);
+        slot.classList.toggle("is-done", done >= t.tasks);
+      }
+    }
+
+    /* ---- C: the rail's own numbers + level switching ------------------------ */
+    function safeProgress() {
+      try { return getTopicProgress() ?? {}; } catch { return {}; }
+    }
+    function paintProgress() {
+      const prog = safeProgress();
+      for (const a of root.querySelectorAll("[data-nn-topic]")) {
+        const tasks = Number(a.dataset.nnTasks || 0);
+        const done = Math.min(prog[a.dataset.nnTopic]?.done ?? 0, tasks || Infinity);
+        const el = a.querySelector("[data-nn-count]");
+        if (el) el.textContent = `${done}/${tasks}`;
+        a.classList.toggle("is-done", tasks > 0 && done >= tasks);
+        a.classList.toggle("is-part", done > 0 && done < tasks);
+      }
+      // A dot per level: any progress anywhere in it.
+      for (const d of root.querySelectorAll("[data-nn-leveldot]")) {
+        const lv = d.dataset.nnLeveldot;
+        const any = topics.filter((t) => t.level === lv).some((t) => (prog[t.key]?.done ?? 0) > 0);
+        d.classList.toggle("is-on", any);
+      }
+      if (root.dataset.variant === "a" || root.dataset.variant === "ab") decorateMenus(true);
+    }
+    for (const b of root.querySelectorAll("[data-nn-level]")) {
+      b.addEventListener("click", () => {
+        const lv = b.dataset.nnLevel;
+        for (const x of root.querySelectorAll("[data-nn-level]")) x.classList.toggle("is-on", x === b);
+        for (const v of root.querySelectorAll("[data-nn-levelview]")) v.hidden = v.dataset.nnLevelview !== lv;
+        const head = root.querySelector("[data-nn-railhead]");
+        if (head) head.textContent = lv;
+      });
+    }
+
+    /* ---- demo data, so the variants can be judged with numbers on them ------- */
+    // An empty store shows 0/N everywhere, which tells you nothing about whether the
+    // numbers help. This writes plausible progress to the real store — same keys the
+    // site uses, so it also shows up on /dashboard. Pressing it again clears it.
+    root.querySelector("[data-nn-seed]").addEventListener("click", () => {
+      const prog = safeProgress();
+      const seeded = topics.some((t) => (prog[t.key]?.done ?? 0) > 0);
+      try {
+        const raw = localStorage.getItem("da_progress_v1");
+        const data = raw ? JSON.parse(raw) : {};
+        data.topics = data.topics ?? {};
+        topics.forEach((t, i) => {
+          if (seeded) { delete data.topics[t.key]; return; }
+          // A few finished, a few started, the rest untouched — the shape a real store
+          // has, and the one that shows whether the numbers are readable at a glance.
+          const share = [1, 0.33, 0, 0.75, 0.1, 1, 0, 0.5, 0.2, 0][i % 10];
+          const done = Math.round(t.tasks * share);
+          if (done > 0) data.topics[t.key] = { done, attempts: done };
+        });
+        localStorage.setItem("da_progress_v1", JSON.stringify(data));
+      } catch {}
+      // Reload rather than repaint: TopicBar hydrates from the store once on load and
+      // only ever increments from there, so after seeding it would say 0/21 while the
+      // rail beside it said 11/21 — and a sketch whose two surfaces disagree is worse
+      // than no sketch. The variant is remembered, so the page comes back as it was.
+      location.reload();
+    });
+
+    let saved = "jetzt";
+    try { saved = localStorage.getItem("da-navnew-variant") || "jetzt"; } catch {}
+    setVariant(HINT[saved] ? saved : "jetzt");
+    paintProgress();
+  </script>
+</Layout>

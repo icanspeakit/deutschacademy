@@ -1,49 +1,1445 @@
-[
-  {
-    "id": "oeffentlich-rechtlicher-rundfunk",
-    "title": "Wer bezahlt ARD und ZDF?",
-    "eyebrow": "Medien & Gesellschaft",
-    "intro": "In Deutschland gibt es öffentlich-rechtliche Sender wie ARD und ZDF (plus viele Regionalsender und Radiosender). Sie werden nicht durch Werbung finanziert, sondern durch den Rundfunkbeitrag — eine Gebühr, die fast jeder Haushalt in Deutschland zahlen muss, egal ob er die Sender nutzt oder nicht.",
-    "question": "Warum bezahlen wir das? Ist das gut oder schlecht?",
-    "pros": {
-      "label": "Vorteile",
-      "items": [
-        "unabhängig vom Staat und von Werbekunden",
-        "keine Manipulation durch einzelne Geldgeber",
-        "keine Zensur",
-        "keine Werbeunterbrechungen",
-        "freie Meinungsäußerung wird gestärkt"
+{
+  "sourcingNote": "Zwei Arten von Themen stehen hier nebeneinander, und jedes sagt selbst, welche Art es ist (Feld `sourcing`):\n  \"unterricht\" — aus einer echten Unterrichtsdiskussion bei DeutschAcademy.\n  \"sachwissen\" — öffentlich nachprüfbares Sachwissen über Regeln, Institutionen und Abläufe in Deutschland (Gesetze, Beträge, Zuständigkeiten). Von DeutschAcademy geschrieben, keine Unterrichtsquelle.\nWas hier bewusst NICHT steht: Behauptungen über „den deutschen Charakter“. Über Menschen wird nichts behauptet — über Regeln, Zahlen und Zuständigkeiten schon, und wo die Praxis je nach Bundesland, Ort oder Person verschieden ist, steht das dabei.\nBeträge und Fristen ändern sich. Jede Zahl trägt einen Stand; im Zweifel gilt die offizielle Stelle, nicht diese Seite.",
+  "topics": [
+    {
+      "id": "mieten",
+      "title": "Kaltmiete, Warmmiete, Kaution",
+      "eyebrow": "Alltag & Wohnen",
+      "icon": "folder",
+      "level": "B1",
+      "sourcing": "sachwissen",
+      "sourceNote": "Öffentlich nachprüfbares Sachwissen (BGB-Mietrecht). Was im Einzelfall gilt, steht in deinem Mietvertrag.",
+      "intro": "In Wohnungsanzeigen stehen mehrere Preise nebeneinander, und der größte davon ist selten der, den du monatlich überweist. Wer die drei Begriffe Kaltmiete, Nebenkosten und Warmmiete auseinanderhält, liest jede Anzeige richtig.",
+      "question": "Wie sucht man in deinem Herkunftsland eine Wohnung — über Anzeigen, über Bekannte, über Makler?",
+      "facts": [
+        "Kaltmiete ist die reine Miete für die Wohnung.",
+        "Nebenkosten decken Wasser, Müllabfuhr, Hausreinigung, oft Heizung. Sie werden geschätzt und einmal im Jahr abgerechnet — es kann eine Nachzahlung oder eine Rückzahlung geben.",
+        "Warmmiete ist Kaltmiete plus Nebenkosten: die Zahl, die monatlich abgeht. Strom und Internet sind meist trotzdem noch extra.",
+        "Die Kaution darf höchstens drei Kaltmieten betragen (§ 551 BGB) und muss getrennt angelegt werden. Du bekommst sie am Ende zurück, wenn die Wohnung in Ordnung ist.",
+        "Viele Wohnungen werden ohne Küche vermietet — „Einbauküche“ in der Anzeige ist ein echtes Argument.",
+        "Die Schufa-Auskunft und eine Mietschuldenfreiheitsbescheinigung verlangen Vermieter regelmäßig."
+      ],
+      "table": {
+        "label": "Eine Anzeige lesen",
+        "columns": [
+          "In der Anzeige",
+          "Bedeutet"
+        ],
+        "rows": [
+          [
+            "650 € kalt",
+            "Miete ohne Nebenkosten"
+          ],
+          [
+            "+ 150 € NK",
+            "geschätzte Nebenkosten pro Monat"
+          ],
+          [
+            "800 € warm",
+            "was monatlich abgeht"
+          ],
+          [
+            "3 MM Kaution",
+            "drei Kaltmieten als Kaution, hier 1.950 €"
+          ],
+          [
+            "2 ZKB",
+            "zwei Zimmer, Küche, Bad"
+          ],
+          [
+            "EBK",
+            "Einbauküche vorhanden"
+          ]
+        ]
+      },
+      "phrases": [
+        "Ist die Wohnung noch frei?",
+        "Sind die Nebenkosten in der Miete enthalten?",
+        "Wie hoch ist die Kaution?",
+        "Kann ich die Wohnung besichtigen?"
+      ],
+      "links": [
+        {
+          "label": "Wortschatz: Wohnen",
+          "href": "/uebungen/wortschatz"
+        }
+      ],
+      "quiz": [
+        {
+          "prompt": "Was ist die Warmmiete?",
+          "options": [
+            "Die Miete im Winter",
+            "Kaltmiete plus Nebenkosten",
+            "Nur die Heizkosten"
+          ],
+          "answer": "Kaltmiete plus Nebenkosten",
+          "explain": "Also das, was monatlich tatsächlich abgeht — Strom meist noch ohne."
+        },
+        {
+          "prompt": "Wie hoch darf die Kaution höchstens sein?",
+          "options": [
+            "Eine Kaltmiete",
+            "Drei Kaltmieten",
+            "Sechs Kaltmieten"
+          ],
+          "answer": "Drei Kaltmieten",
+          "explain": "So steht es in § 551 BGB."
+        },
+        {
+          "prompt": "Was passiert am Ende des Jahres mit den Nebenkosten?",
+          "options": [
+            "Nichts, sie sind pauschal",
+            "Sie werden abgerechnet — es kann eine Nach- oder Rückzahlung geben",
+            "Sie werden automatisch erhöht"
+          ],
+          "answer": "Sie werden abgerechnet — es kann eine Nach- oder Rückzahlung geben",
+          "explain": "Die monatliche Zahlung ist nur eine Vorauszahlung."
+        },
+        {
+          "prompt": "Was bedeutet „2 ZKB“?",
+          "options": [
+            "Zwei Zimmer, Küche, Bad",
+            "Zwei Zimmer, Keller, Balkon",
+            "Zweite Etage, Küche, Bad"
+          ],
+          "answer": "Zwei Zimmer, Küche, Bad",
+          "explain": "Das Wohnzimmer zählt als Zimmer mit."
+        }
       ]
     },
-    "cons": {
-      "label": "Nachteile",
-      "items": [
-        "alle müssen es bezahlen (Rundfunkbeitrag), auch wer die Sender nie schaut",
-        "manche schauen die Sender gar nicht"
+    {
+      "id": "muelltrennung",
+      "title": "Mülltrennung: welche Tonne?",
+      "eyebrow": "Alltag & Wohnen",
+      "icon": "map-pin",
+      "level": "A2",
+      "sourcing": "sachwissen",
+      "sourceNote": "Öffentlich nachprüfbares Sachwissen. Die Farben und Regeln unterscheiden sich je nach Stadt und Landkreis — verbindlich ist immer der Abfallkalender deiner Kommune.",
+      "intro": "Müll wird in Deutschland getrennt gesammelt: Papier, Verpackungen, Bioabfall, Restmüll und Glas gehen in verschiedene Behälter. Die Trennung ist keine Höflichkeit, sondern die Grundlage dafür, dass Material wiederverwendet werden kann.",
+      "question": "Wie wird der Müll in deinem Herkunftsland getrennt — mehr, weniger oder anders?",
+      "facts": [
+        "Die Farben sind nicht bundesweit einheitlich. In vielen Orten: blau = Papier, gelb = Verpackungen, braun = Bio, grau oder schwarz = Restmüll.",
+        "Glas kommt meist nicht in die Tonne, sondern zum Container an der Straße — dort nach Weiß, Grün und Braun getrennt.",
+        "Altglas-Container haben fast überall Einwurfzeiten: nachts und sonntags ist Einwerfen wegen des Lärms verboten.",
+        "Batterien, Elektrogeräte und Farben gehören nicht in den Hausmüll, sondern zum Wertstoffhof oder zurück in den Laden."
+      ],
+      "table": {
+        "label": "Was gehört wohin?",
+        "columns": [
+          "Abfall",
+          "Wohin"
+        ],
+        "rows": [
+          [
+            "Zeitung, Karton",
+            "Papiertonne (oft blau)"
+          ],
+          [
+            "Joghurtbecher, Plastikfolie, Konservendose",
+            "Verpackungen (gelbe Tonne / gelber Sack)"
+          ],
+          [
+            "Obstreste, Kaffeesatz, Gartenabfall",
+            "Biotonne (oft braun)"
+          ],
+          [
+            "Windeln, Staubsaugerbeutel, Zigaretten",
+            "Restmüll (grau oder schwarz)"
+          ],
+          [
+            "Flaschen und Gläser ohne Pfand",
+            "Altglas-Container, nach Farbe"
+          ],
+          [
+            "Batterien, Handys, Lampen",
+            "Wertstoffhof oder Rücknahme im Laden"
+          ],
+          [
+            "Alte Möbel, Matratzen",
+            "Sperrmüll — meist mit Termin bei der Stadt"
+          ]
+        ]
+      },
+      "phrases": [
+        "Wo kommt das hin?",
+        "Das gehört in die gelbe Tonne.",
+        "Wann wird der Müll abgeholt?",
+        "Ich muss das zum Wertstoffhof bringen."
+      ],
+      "links": [
+        {
+          "label": "Wortschatz zum Thema Wohnen",
+          "href": "/uebungen/wortschatz"
+        }
+      ],
+      "quiz": [
+        {
+          "prompt": "Wohin kommt ein leerer Joghurtbecher?",
+          "options": [
+            "Biotonne",
+            "Gelbe Tonne / gelber Sack",
+            "Restmüll"
+          ],
+          "answer": "Gelbe Tonne / gelber Sack",
+          "explain": "Er ist eine Verpackung. Ausgespült muss er nicht sein, nur löffelrein."
+        },
+        {
+          "prompt": "Wohin kommt Kaffeesatz?",
+          "options": [
+            "Biotonne",
+            "Restmüll",
+            "Papiertonne"
+          ],
+          "answer": "Biotonne",
+          "explain": "Kaffeesatz und Filtertüte sind beide Bioabfall."
+        },
+        {
+          "prompt": "Warum darf man nachts kein Altglas einwerfen?",
+          "options": [
+            "Die Container sind abgeschlossen",
+            "Wegen der Ruhezeiten — es ist zu laut",
+            "Das Glas zerbricht bei Kälte"
+          ],
+          "answer": "Wegen der Ruhezeiten — es ist zu laut",
+          "explain": "Aus demselben Grund ist es sonntags meist ebenfalls untersagt."
+        },
+        {
+          "prompt": "Wohin gehören alte Batterien?",
+          "options": [
+            "In den Restmüll",
+            "In die gelbe Tonne",
+            "Zum Wertstoffhof oder zurück in den Laden"
+          ],
+          "answer": "Zum Wertstoffhof oder zurück in den Laden",
+          "explain": "Läden, die Batterien verkaufen, müssen sie auch zurücknehmen."
+        }
       ]
     },
-    "context": "Ein unabhängiger Rundfunk gilt als wichtiger Teil einer funktionierenden Demokratie: freie Presse kann kontrollieren, informieren und unterschiedliche Meinungen zeigen, ohne von einer einzelnen Regierung oder einem einzelnen Geldgeber abhängig zu sein.",
-    "broadcasterTable": {
-      "label": "Öffentlich-rechtlicher Rundfunk in anderen Ländern",
-      "rows": [
-        { "country": "Österreich", "broadcaster": "ORF" },
-        { "country": "Schweiz", "broadcaster": "SRG SSR (SRF, RTS, RSI, RTR)" },
-        { "country": "Vereinigtes Königreich", "broadcaster": "BBC" },
-        { "country": "Frankreich", "broadcaster": "France Télévisions, Radio France" },
-        { "country": "Italien", "broadcaster": "RAI" },
-        { "country": "Spanien", "broadcaster": "RTVE" },
-        { "country": "Niederlande", "broadcaster": "NPO" },
-        { "country": "Belgien", "broadcaster": "VRT, RTBF, BRF" },
-        { "country": "Schweden", "broadcaster": "SVT, Sveriges Radio" },
-        { "country": "Norwegen", "broadcaster": "NRK" },
-        { "country": "Dänemark", "broadcaster": "DR" },
-        { "country": "Finnland", "broadcaster": "Yle" },
-        { "country": "Polen", "broadcaster": "TVP" },
-        { "country": "Tschechien", "broadcaster": "Česká televize" },
-        { "country": "Ungarn", "broadcaster": "MTVA" },
-        { "country": "Portugal", "broadcaster": "RTP" }
+    {
+      "id": "pfand",
+      "title": "Pfand: Flaschen zurückbringen",
+      "eyebrow": "Alltag & Wohnen",
+      "icon": "target",
+      "level": "A2",
+      "sourcing": "sachwissen",
+      "sourceNote": "Öffentlich nachprüfbares Sachwissen (Verpackungsgesetz). Beträge: Stand 2025.",
+      "intro": "Auf viele Flaschen und Dosen wird beim Kauf ein Betrag aufgeschlagen — das Pfand. Bringst du die Flasche zurück, bekommst du das Geld wieder. Der Preis im Regal ist also nicht der Preis, den du am Ende bezahlst.",
+      "question": "Gibt es in deinem Land ein Pfandsystem? Was passiert dort mit leeren Flaschen?",
+      "facts": [
+        "Einwegpfand (Plastikflaschen, Dosen): 0,25 € — für fast alle Getränke, seit 2022 auch für Saft und Milchgetränke in Plastik.",
+        "Mehrwegpfand (Glasflaschen, wiederbefüllbare Plastikflaschen): meist 0,08 € oder 0,15 €; Bierflaschen 0,08 €, der Kasten kommt extra dazu.",
+        "Einweg erkennst du am Logo „Einwegpfand“ und daran, dass die Flasche im Automat zerdrückt wird. Mehrweg wird gespült und neu befüllt.",
+        "Kein Pfand: Wein, Spirituosen, Milch im Karton, Saft im Karton.",
+        "Zurückgeben kannst du überall dort, wo ähnliche Verpackungen verkauft werden — nicht nur im Laden des Kaufs."
+      ],
+      "table": {
+        "label": "Wie viel Pfand?",
+        "columns": [
+          "Verpackung",
+          "Pfand"
+        ],
+        "rows": [
+          [
+            "Plastikflasche (Einweg)",
+            "0,25 €"
+          ],
+          [
+            "Dose",
+            "0,25 €"
+          ],
+          [
+            "Bierflasche (Mehrweg)",
+            "0,08 €"
+          ],
+          [
+            "Wasserflasche aus Glas (Mehrweg)",
+            "0,15 €"
+          ],
+          [
+            "Bierkasten",
+            "1,50 € (zusätzlich zu den Flaschen)"
+          ],
+          [
+            "Weinflasche",
+            "kein Pfand"
+          ],
+          [
+            "Saft im Karton",
+            "kein Pfand"
+          ]
+        ]
+      },
+      "phrases": [
+        "Ist da Pfand drauf?",
+        "Wo kann ich die Flaschen zurückgeben?",
+        "Der Automat nimmt die Flasche nicht.",
+        "Ich möchte den Bon einlösen."
+      ],
+      "links": [
+        {
+          "label": "Einkaufen: Wortschatz",
+          "href": "/uebungen/wortschatz"
+        }
+      ],
+      "quiz": [
+        {
+          "prompt": "Wie viel Pfand ist auf einer Einweg-Plastikflasche?",
+          "options": [
+            "0,08 €",
+            "0,15 €",
+            "0,25 €"
+          ],
+          "answer": "0,25 €",
+          "explain": "Derselbe Betrag gilt für Dosen."
+        },
+        {
+          "prompt": "Was passiert mit einer Mehrwegflasche?",
+          "options": [
+            "Sie wird zerdrückt und eingeschmolzen",
+            "Sie wird gespült und neu befüllt",
+            "Sie wird verbrannt"
+          ],
+          "answer": "Sie wird gespült und neu befüllt",
+          "explain": "Darum ist das Pfand niedriger: Die Flasche selbst bleibt im Umlauf."
+        },
+        {
+          "prompt": "Auf welcher Flasche ist KEIN Pfand?",
+          "options": [
+            "Weinflasche",
+            "Bierflasche",
+            "Cola-Dose"
+          ],
+          "answer": "Weinflasche",
+          "explain": "Wein und Spirituosen sind vom Pfand ausgenommen."
+        },
+        {
+          "prompt": "Wo kannst du Pfandflaschen zurückgeben?",
+          "options": [
+            "Nur im Laden, wo du sie gekauft hast",
+            "In jedem Laden, der ähnliche Verpackungen verkauft",
+            "Nur beim Getränkemarkt"
+          ],
+          "answer": "In jedem Laden, der ähnliche Verpackungen verkauft",
+          "explain": "Kleine Läden dürfen die Rücknahme aber auf ihr eigenes Sortiment beschränken."
+        }
       ]
     },
-    "sourceNote": "Aus einer echten Unterrichtsdiskussion bei DeutschAcademy."
-  }
-]
+    {
+      "id": "sonntagsruhe",
+      "title": "Sonntags ist zu",
+      "eyebrow": "Alltag & Wohnen",
+      "icon": "book",
+      "level": "A2",
+      "sourcing": "sachwissen",
+      "sourceNote": "Öffentlich nachprüfbares Sachwissen. Ladenöffnung und Ruhezeiten regeln die Bundesländer und Kommunen — im Detail also örtlich verschieden.",
+      "intro": "An Sonntagen sind Supermärkte und die meisten Geschäfte in Deutschland geschlossen. Dazu kommen Ruhezeiten: Zeiten, in denen lauter Lärm im Haus nicht erlaubt ist. Beides überrascht viele, die neu herkommen — und beides hat Ausnahmen.",
+      "question": "Wann sind die Geschäfte in deinem Herkunftsland geöffnet? Was ist praktischer?",
+      "facts": [
+        "Offen bleiben dürfen unter anderem Bäckereien für einige Stunden, Tankstellen, Apotheken im Notdienst und Läden in Bahnhöfen und an Flughäfen.",
+        "Wer sonntags einkaufen muss, fährt deshalb oft zum Hauptbahnhof.",
+        "Ein paar Mal im Jahr gibt es verkaufsoffene Sonntage — die Kommune legt sie fest.",
+        "Ruhezeiten gelten üblicherweise nachts ab 22 Uhr, oft auch mittags, und den ganzen Sonntag. Bohren, Rasenmähen und laute Musik sind dann tabu.",
+        "Die genauen Zeiten stehen in der Hausordnung und in kommunalen Verordnungen.",
+        "Waschmaschine und Duschen sind trotz mancher Gerüchte nicht generell verboten."
+      ],
+      "phrases": [
+        "Sonntags haben die Geschäfte zu.",
+        "Ich muss noch schnell einkaufen, bevor alles schließt.",
+        "Bitte denk an die Ruhezeiten.",
+        "Am Bahnhof ist ein Supermarkt offen."
+      ],
+      "links": [
+        {
+          "label": "Wortschatz: Einkaufen und Alltag",
+          "href": "/uebungen/wortschatz"
+        }
+      ],
+      "quiz": [
+        {
+          "prompt": "Welcher Laden darf sonntags meist öffnen?",
+          "options": [
+            "Der Supermarkt in der Innenstadt",
+            "Der Laden im Hauptbahnhof",
+            "Das Möbelhaus"
+          ],
+          "answer": "Der Laden im Hauptbahnhof",
+          "explain": "Bahnhöfe und Flughäfen sind vom Ladenschluss ausgenommen."
+        },
+        {
+          "prompt": "Was ist ein verkaufsoffener Sonntag?",
+          "options": [
+            "Ein Sonntag, an dem ausnahmsweise Geschäfte öffnen dürfen",
+            "Ein Sonntag mit Rabatten",
+            "Ein Feiertag im Handel"
+          ],
+          "answer": "Ein Sonntag, an dem ausnahmsweise Geschäfte öffnen dürfen",
+          "explain": "Die Kommune legt diese wenigen Termine im Jahr fest."
+        },
+        {
+          "prompt": "Was ist während der Ruhezeiten nicht erlaubt?",
+          "options": [
+            "Duschen",
+            "Bohren und Rasenmähen",
+            "Wäsche waschen"
+          ],
+          "answer": "Bohren und Rasenmähen",
+          "explain": "Es geht um vermeidbaren Lärm, nicht um normale Haushaltsgeräusche."
+        }
+      ]
+    },
+    {
+      "id": "anmeldung",
+      "title": "Anmeldung: der erste Behördengang",
+      "eyebrow": "Behörden & Gesundheit",
+      "icon": "document",
+      "level": "B1",
+      "sourcing": "sachwissen",
+      "sourceNote": "Öffentlich nachprüfbares Sachwissen (Bundesmeldegesetz). Fristen und Termine regelt jede Stadt selbst — verbindlich ist deine Meldebehörde.",
+      "intro": "Wer in Deutschland eine Wohnung bezieht, muss sich anmelden: beim Einwohnermeldeamt oder Bürgeramt der Stadt. Aus dieser Anmeldung folgt fast alles andere — Steuer-ID, Bankkonto, Kindergeld, Führerschein-Umschreibung.",
+      "question": "Muss man sich in deinem Herkunftsland auch anmelden? Wenn ja, wo und wie schnell?",
+      "facts": [
+        "Die Frist beträgt nach dem Bundesmeldegesetz zwei Wochen nach dem Einzug. Manche Städte handhaben das großzügiger, verlassen sollte man sich darauf nicht.",
+        "Du brauchst eine Wohnungsgeberbestätigung — ein unterschriebenes Formular deiner Vermieterin oder deines Vermieters. Ein Mietvertrag allein reicht nicht.",
+        "Dazu: Ausweis oder Pass, das ausgefüllte Anmeldeformular, bei Familien die Geburts- oder Heiratsurkunde.",
+        "Die Anmeldung selbst ist kostenlos.",
+        "Wenige Wochen später kommt die Steuer-Identifikationsnummer per Post — ohne sie zahlt der Arbeitgeber zu viel Lohnsteuer ein.",
+        "In großen Städten sind Termine oft Wochen im Voraus ausgebucht: Termin buchen, bevor du umziehst."
+      ],
+      "table": {
+        "label": "Was du mitbringst",
+        "columns": [
+          "Dokument",
+          "Woher"
+        ],
+        "rows": [
+          [
+            "Anmeldeformular",
+            "Website der Stadt oder vor Ort"
+          ],
+          [
+            "Wohnungsgeberbestätigung",
+            "von der Vermieterin / dem Vermieter"
+          ],
+          [
+            "Personalausweis oder Reisepass",
+            "hast du schon"
+          ],
+          [
+            "Heirats- oder Geburtsurkunde",
+            "nur bei Familien, oft mit Übersetzung"
+          ]
+        ]
+      },
+      "phrases": [
+        "Ich möchte mich anmelden.",
+        "Ich habe einen Termin um 10 Uhr.",
+        "Können Sie mir bitte eine Meldebescheinigung ausstellen?",
+        "Brauche ich dafür einen Termin?"
+      ],
+      "links": [
+        {
+          "label": "Leben in Deutschland: Test",
+          "href": "/pruefungen/leben-in-deutschland/test"
+        }
+      ],
+      "quiz": [
+        {
+          "prompt": "Wie schnell muss man sich nach dem Einzug anmelden?",
+          "options": [
+            "Innerhalb von zwei Wochen",
+            "Innerhalb von drei Monaten",
+            "Es gibt keine Frist"
+          ],
+          "answer": "Innerhalb von zwei Wochen",
+          "explain": "So steht es im Bundesmeldegesetz."
+        },
+        {
+          "prompt": "Welches Dokument bekommst du von deiner Vermieterin?",
+          "options": [
+            "Die Steuer-ID",
+            "Die Wohnungsgeberbestätigung",
+            "Die Meldebescheinigung"
+          ],
+          "answer": "Die Wohnungsgeberbestätigung",
+          "explain": "Ohne sie nimmt das Amt die Anmeldung nicht an."
+        },
+        {
+          "prompt": "Was kostet die Anmeldung?",
+          "options": [
+            "Nichts",
+            "Etwa 15 €",
+            "Etwa 50 €"
+          ],
+          "answer": "Nichts",
+          "explain": "Kosten entstehen erst für zusätzliche Bescheinigungen."
+        },
+        {
+          "prompt": "Wofür brauchst du die Steuer-Identifikationsnummer?",
+          "options": [
+            "Für den Führerschein",
+            "Damit der Arbeitgeber die richtige Lohnsteuer abführt",
+            "Für den Mietvertrag"
+          ],
+          "answer": "Damit der Arbeitgeber die richtige Lohnsteuer abführt",
+          "explain": "Sie kommt nach der Anmeldung automatisch per Post."
+        }
+      ]
+    },
+    {
+      "id": "krankenversicherung",
+      "title": "Krankenversicherung: gesetzlich oder privat",
+      "eyebrow": "Behörden & Gesundheit",
+      "icon": "landmark",
+      "level": "B1",
+      "sourcing": "sachwissen",
+      "sourceNote": "Öffentlich nachprüfbares Sachwissen. Beiträge und Grenzwerte ändern sich jährlich — Stand 2025.",
+      "intro": "In Deutschland ist eine Krankenversicherung Pflicht: Seit 2009 muss jede Person versichert sein. Es gibt zwei Systeme nebeneinander — die gesetzliche Krankenversicherung, in der die große Mehrheit ist, und die private.",
+      "question": "Wie ist Gesundheitsversorgung in deinem Herkunftsland organisiert — über Steuern, über Beiträge oder privat?",
+      "facts": [
+        "Rund neun von zehn Menschen sind gesetzlich versichert.",
+        "Der Beitrag richtet sich nach dem Einkommen, nicht nach Alter oder Gesundheit. Arbeitgeber und Beschäftigte teilen ihn sich.",
+        "Kinder und nicht erwerbstätige Ehepartner sind in der gesetzlichen Versicherung oft beitragsfrei mitversichert — in der privaten kostet jede Person extra.",
+        "Privat versichern dürfen sich nur bestimmte Gruppen: Beamte, Selbstständige und Angestellte über der Versicherungspflichtgrenze.",
+        "Der Weg zurück von privat in die gesetzliche Versicherung ist schwierig — das ist eine Entscheidung auf lange Sicht.",
+        "Zum Facharzt brauchst du in der Regel keine Überweisung, aber oft Geduld: Termine dauern."
+      ],
+      "table": {
+        "label": "Zwei Systeme im Vergleich",
+        "columns": [
+          "",
+          "Gesetzlich",
+          "Privat"
+        ],
+        "rows": [
+          [
+            "Beitrag richtet sich nach",
+            "Einkommen",
+            "Alter und Gesundheit"
+          ],
+          [
+            "Familie mitversichert",
+            "oft beitragsfrei",
+            "jede Person kostet extra"
+          ],
+          [
+            "Wer darf hinein",
+            "alle",
+            "Beamte, Selbstständige, höhere Einkommen"
+          ],
+          [
+            "Rechnung beim Arzt",
+            "läuft über die Karte",
+            "erst selbst zahlen, dann einreichen"
+          ]
+        ]
+      },
+      "phrases": [
+        "Ich bin gesetzlich versichert.",
+        "Hier ist meine Versichertenkarte.",
+        "Übernimmt das die Krankenkasse?",
+        "Ich brauche eine Krankschreibung."
+      ],
+      "links": [
+        {
+          "label": "Wortschatz: Gesundheit",
+          "href": "/uebungen/wortschatz"
+        }
+      ],
+      "quiz": [
+        {
+          "prompt": "Seit wann ist eine Krankenversicherung in Deutschland Pflicht?",
+          "options": [
+            "Seit 2009",
+            "Seit 1990",
+            "Sie ist freiwillig"
+          ],
+          "answer": "Seit 2009",
+          "explain": "Seitdem gilt die allgemeine Versicherungspflicht."
+        },
+        {
+          "prompt": "Wonach richtet sich der Beitrag in der gesetzlichen Krankenversicherung?",
+          "options": [
+            "Nach dem Alter",
+            "Nach dem Einkommen",
+            "Nach dem Gesundheitszustand"
+          ],
+          "answer": "Nach dem Einkommen",
+          "explain": "Wer mehr verdient, zahlt mehr — bei gleicher Leistung."
+        },
+        {
+          "prompt": "Wie sind Kinder in der gesetzlichen Versicherung meist versichert?",
+          "options": [
+            "Beitragsfrei mitversichert",
+            "Zum halben Beitrag",
+            "Jedes Kind zahlt vollen Beitrag"
+          ],
+          "answer": "Beitragsfrei mitversichert",
+          "explain": "In der privaten Versicherung kostet dagegen jede Person einen eigenen Beitrag."
+        },
+        {
+          "prompt": "Wer darf sich privat versichern?",
+          "options": [
+            "Alle",
+            "Nur Beamte",
+            "Beamte, Selbstständige und Angestellte über einer Einkommensgrenze"
+          ],
+          "answer": "Beamte, Selbstständige und Angestellte über einer Einkommensgrenze",
+          "explain": "Für alle anderen gilt die Versicherungspflicht in der gesetzlichen Kasse."
+        }
+      ]
+    },
+    {
+      "id": "duzen-siezen",
+      "title": "Du oder Sie?",
+      "eyebrow": "Sprache & Umgang",
+      "icon": "mic",
+      "level": "A2",
+      "sourcing": "sachwissen",
+      "sourceNote": "Öffentlich nachprüfbares Sachwissen über Sprachgebrauch. Wo es Gewohnheit statt Regel ist, steht das dabei — Menschen und Branchen sind verschieden.",
+      "intro": "Deutsch hat zwei Wörter für „du“: das vertraute du und das förmliche Sie. Welches richtig ist, hängt von der Situation ab, nicht von Höflichkeit an sich — mit Sie liegt man selten falsch, aber nicht immer richtig.",
+      "question": "Gibt es in deiner Sprache auch zwei Formen? Wann benutzt man welche?",
+      "facts": [
+        "Sie ist die Voreinstellung bei Fremden, im Amt, im Laden, bei Ärztinnen und in den meisten Firmen.",
+        "Du gilt in der Familie, unter Freunden, unter Studierenden, in Vereinen, in Kirchengemeinden und gegenüber Kindern.",
+        "Das Du wird angeboten, meist von der älteren oder ranghöheren Person: „Wir können uns gerne duzen.“ Danach zurückzuwechseln ist unüblich.",
+        "Viele junge Firmen, Sportvereine und Läden wie IKEA duzen grundsätzlich alle.",
+        "Zum Sie gehört der Nachname: „Guten Tag, Frau Weber.“ Vorname plus Sie kommt vor, ist aber eine Ausnahme.",
+        "Falsches Duzen gilt schnell als respektlos; falsches Siezen wirkt höchstens distanziert. Im Zweifel also Sie."
+      ],
+      "table": {
+        "label": "Welche Form?",
+        "columns": [
+          "Situation",
+          "Üblich"
+        ],
+        "rows": [
+          [
+            "Behörde, Bank, Arztpraxis",
+            "Sie"
+          ],
+          [
+            "Neue Kolleginnen im Büro",
+            "Sie, bis das Du angeboten wird"
+          ],
+          [
+            "Universität, unter Studierenden",
+            "du"
+          ],
+          [
+            "Sportverein",
+            "du"
+          ],
+          [
+            "Ältere Nachbarn",
+            "Sie"
+          ],
+          [
+            "Kinder und Jugendliche",
+            "du"
+          ]
+        ]
+      },
+      "phrases": [
+        "Wollen wir uns duzen?",
+        "Gerne, ich bin Lena.",
+        "Entschuldigung, darf ich Sie etwas fragen?",
+        "Sagen wir ruhig du."
+      ],
+      "links": [
+        {
+          "label": "Sprechen üben",
+          "href": "/uebungen/sprechen"
+        }
+      ],
+      "quiz": [
+        {
+          "prompt": "Wie sprichst du eine unbekannte Person im Amt an?",
+          "options": [
+            "Mit du",
+            "Mit Sie",
+            "Mit dem Vornamen"
+          ],
+          "answer": "Mit Sie",
+          "explain": "Sie plus Nachname ist hier die sichere Wahl."
+        },
+        {
+          "prompt": "Wer bietet normalerweise das Du an?",
+          "options": [
+            "Die jüngere Person",
+            "Die ältere oder ranghöhere Person",
+            "Egal"
+          ],
+          "answer": "Die ältere oder ranghöhere Person",
+          "explain": "Als Angebot, nicht als Anweisung — ablehnen ist erlaubt."
+        },
+        {
+          "prompt": "Wo wird fast immer geduzt?",
+          "options": [
+            "Im Sportverein",
+            "In der Bank",
+            "Beim Notar"
+          ],
+          "answer": "Im Sportverein",
+          "explain": "Vereine, Unis und viele junge Firmen duzen grundsätzlich."
+        },
+        {
+          "prompt": "Was gehört zum Sie?",
+          "options": [
+            "Der Vorname",
+            "Der Nachname",
+            "Gar kein Name"
+          ],
+          "answer": "Der Nachname",
+          "explain": "„Guten Tag, Frau Weber.“"
+        }
+      ]
+    },
+    {
+      "id": "termine",
+      "title": "Ohne Termin geht wenig",
+      "eyebrow": "Sprache & Umgang",
+      "icon": "target",
+      "level": "A2",
+      "sourcing": "sachwissen",
+      "sourceNote": "Öffentlich nachprüfbares Sachwissen über Abläufe. Wie streng es zugeht, ist von Ort zu Ort verschieden.",
+      "intro": "Für sehr vieles in Deutschland macht man vorher einen Termin: beim Amt, beim Arzt, beim Friseur, teilweise sogar beim Handyladen. Spontan vorbeizugehen führt oft dazu, dass man wieder nach Hause geschickt wird.",
+      "question": "Wie läuft das in deinem Herkunftsland — geht man einfach hin oder meldet man sich an?",
+      "facts": [
+        "Bürgerämter in großen Städten vergeben Termine oft Wochen im Voraus, online über die Website der Stadt.",
+        "Beim Arzt gilt: anrufen, Termin machen, Versichertenkarte mitbringen. Notfälle gehen ohne Termin.",
+        "Pünktlich heißt zur vereinbarten Zeit, nicht später — bei privaten Einladungen sind fünf bis fünfzehn Minuten dagegen normal.",
+        "Absagen sollte man rechtzeitig: Nicht erscheinen kann beim Arzt oder Friseur eine Rechnung nach sich ziehen.",
+        "Auch Behördenpost hat Fristen. Ein Brief mit „innerhalb von 14 Tagen“ meint genau das."
+      ],
+      "phrases": [
+        "Ich hätte gern einen Termin.",
+        "Haben Sie etwas am Vormittag frei?",
+        "Ich muss meinen Termin leider absagen.",
+        "Kann ich auch ohne Termin kommen?"
+      ],
+      "links": [
+        {
+          "label": "Sprechen: Alltagssituationen",
+          "href": "/uebungen/sprechen"
+        }
+      ],
+      "quiz": [
+        {
+          "prompt": "Wie bekommst du meist einen Termin beim Bürgeramt?",
+          "options": [
+            "Man geht einfach hin",
+            "Online über die Website der Stadt",
+            "Per Brief"
+          ],
+          "answer": "Online über die Website der Stadt",
+          "explain": "In großen Städten oft Wochen im Voraus."
+        },
+        {
+          "prompt": "Was solltest du tun, wenn du einen Arzttermin nicht wahrnehmen kannst?",
+          "options": [
+            "Nichts, das ist normal",
+            "Rechtzeitig absagen",
+            "Einfach später kommen"
+          ],
+          "answer": "Rechtzeitig absagen",
+          "explain": "Sonst kann eine Ausfallrechnung kommen."
+        },
+        {
+          "prompt": "Was heißt Pünktlichkeit bei einem offiziellen Termin?",
+          "options": [
+            "Zur vereinbarten Zeit da sein",
+            "Etwa 15 Minuten später",
+            "Irgendwann am selben Tag"
+          ],
+          "answer": "Zur vereinbarten Zeit da sein",
+          "explain": "Bei privaten Einladungen ist man dagegen oft etwas später."
+        }
+      ]
+    },
+    {
+      "id": "trinkgeld",
+      "title": "Trinkgeld: wie viel, und wie?",
+      "eyebrow": "Sprache & Umgang",
+      "icon": "volume",
+      "level": "A2",
+      "sourcing": "sachwissen",
+      "sourceNote": "Öffentlich nachprüfbares Sachwissen über verbreitete Praxis. Trinkgeld ist freiwillig; die Höhe ist Gewohnheit, keine Regel.",
+      "intro": "Trinkgeld ist in Deutschland üblich, aber freiwillig und deutlich niedriger als etwa in den USA. Wichtiger als die Höhe ist, wie man es gibt: Man sagt den Gesamtbetrag beim Bezahlen, statt Geld auf dem Tisch liegen zu lassen.",
+      "question": "Wie ist das in deinem Herkunftsland — gibt man Trinkgeld, und wie viel?",
+      "facts": [
+        "Üblich sind etwa 5 bis 10 Prozent, häufig einfach aufgerundet.",
+        "Man nennt den Betrag, den man insgesamt zahlen will: Bei 18,50 € sagt man „Machen Sie 20.“",
+        "Bei Kartenzahlung wird der Gesamtbetrag vorher angesagt — der Automat fragt nicht immer danach.",
+        "Bedienungen sind fest angestellt und bekommen einen Lohn; Trinkgeld ist eine Zugabe, keine Notwendigkeit.",
+        "Auch bei Taxi, Friseur und Lieferdiensten ist Aufrunden verbreitet.",
+        "In der Bäckerei oder beim Bezahlen an der Kasse ist Trinkgeld unüblich."
+      ],
+      "phrases": [
+        "Zusammen oder getrennt?",
+        "Machen Sie bitte 20.",
+        "Stimmt so.",
+        "Kann ich mit Karte zahlen?"
+      ],
+      "links": [
+        {
+          "label": "Sprechen: im Restaurant",
+          "href": "/uebungen/sprechen"
+        }
+      ],
+      "quiz": [
+        {
+          "prompt": "Wie viel Trinkgeld ist im Restaurant üblich?",
+          "options": [
+            "Etwa 5 bis 10 Prozent",
+            "Etwa 20 Prozent",
+            "Gar keins"
+          ],
+          "answer": "Etwa 5 bis 10 Prozent",
+          "explain": "Oft schlicht auf einen runden Betrag aufgerundet."
+        },
+        {
+          "prompt": "Die Rechnung ist 18,50 €. Wie gibst du Trinkgeld?",
+          "options": [
+            "Du legst Geld auf den Tisch und gehst",
+            "Du sagst beim Zahlen „Machen Sie 20“",
+            "Du gibst es an der Tür ab"
+          ],
+          "answer": "Du sagst beim Zahlen „Machen Sie 20“",
+          "explain": "Der genannte Betrag ist der Gesamtbetrag inklusive Trinkgeld."
+        },
+        {
+          "prompt": "Was bedeutet „Stimmt so“?",
+          "options": [
+            "Die Rechnung ist falsch",
+            "Der Rest ist Trinkgeld",
+            "Ich zahle später"
+          ],
+          "answer": "Der Rest ist Trinkgeld",
+          "explain": "Eine sehr verbreitete kurze Formel."
+        }
+      ]
+    },
+    {
+      "id": "ausbildung",
+      "title": "Die duale Ausbildung",
+      "eyebrow": "Bildung & Arbeit",
+      "icon": "graduation-cap",
+      "level": "B1",
+      "sourcing": "sachwissen",
+      "sourceNote": "Öffentlich nachprüfbares Sachwissen. Dauer und Vergütung hängen vom Beruf und vom Tarifvertrag ab.",
+      "intro": "Neben dem Studium gibt es in Deutschland einen zweiten anerkannten Weg in einen Beruf: die duale Ausbildung. „Dual“ heißt, dass sie an zwei Orten gleichzeitig stattfindet — im Betrieb und in der Berufsschule.",
+      "question": "Gibt es in deinem Herkunftsland etwas Ähnliches, oder führt der Weg dort über die Hochschule?",
+      "facts": [
+        "Eine Ausbildung dauert je nach Beruf zwei bis dreieinhalb Jahre.",
+        "Auszubildende bekommen vom ersten Tag an eine Vergütung — es ist bezahlte Arbeit, kein Praktikum.",
+        "Etwa 320 Ausbildungsberufe sind staatlich anerkannt, vom Elektroniker bis zur Kauffrau für Büromanagement.",
+        "Die Prüfung nimmt nicht der Betrieb ab, sondern die Industrie- und Handelskammer oder die Handwerkskammer.",
+        "Der Abschluss ist bundesweit anerkannt und gilt als Berufsqualifikation, nicht als Schulabschluss.",
+        "Danach stehen Meister, Techniker oder Fachwirt offen — und mit dem Meister auch ein Studium ohne Abitur."
+      ],
+      "phrases": [
+        "Ich mache eine Ausbildung als Pflegefachkraft.",
+        "Ich bin im zweiten Lehrjahr.",
+        "Die Berufsschule ist zweimal pro Woche.",
+        "Nach der Ausbildung will ich den Meister machen."
+      ],
+      "links": [
+        {
+          "label": "Wortschatz: Beruf",
+          "href": "/uebungen/wortschatz"
+        }
+      ],
+      "quiz": [
+        {
+          "prompt": "Was bedeutet „dual“ in „duale Ausbildung“?",
+          "options": [
+            "Zwei Abschlüsse",
+            "Betrieb und Berufsschule gleichzeitig",
+            "Zwei Jahre Dauer"
+          ],
+          "answer": "Betrieb und Berufsschule gleichzeitig",
+          "explain": "Praxis und Theorie laufen parallel, nicht nacheinander."
+        },
+        {
+          "prompt": "Bekommen Auszubildende Geld?",
+          "options": [
+            "Nein, sie zahlen Gebühren",
+            "Ja, eine Ausbildungsvergütung",
+            "Erst im letzten Jahr"
+          ],
+          "answer": "Ja, eine Ausbildungsvergütung",
+          "explain": "Vom ersten Monat an."
+        },
+        {
+          "prompt": "Wer nimmt die Abschlussprüfung ab?",
+          "options": [
+            "Der Ausbildungsbetrieb",
+            "Die Kammer (IHK oder Handwerkskammer)",
+            "Die Universität"
+          ],
+          "answer": "Die Kammer (IHK oder Handwerkskammer)",
+          "explain": "Darum ist der Abschluss bundesweit vergleichbar."
+        },
+        {
+          "prompt": "Wie lange dauert eine Ausbildung meist?",
+          "options": [
+            "Ein Jahr",
+            "Zwei bis dreieinhalb Jahre",
+            "Fünf Jahre"
+          ],
+          "answer": "Zwei bis dreieinhalb Jahre",
+          "explain": "Je nach Beruf, und mit Abitur oft verkürzbar."
+        }
+      ]
+    },
+    {
+      "id": "schulsystem",
+      "title": "Das Schulsystem",
+      "eyebrow": "Bildung & Arbeit",
+      "icon": "book-open",
+      "level": "B1",
+      "sourcing": "sachwissen",
+      "sourceNote": "Öffentlich nachprüfbares Sachwissen. Schule ist Ländersache: Namen, Übergänge und Schulformen unterscheiden sich je Bundesland erheblich.",
+      "intro": "Bildung ist in Deutschland Sache der Bundesländer. Es gibt deshalb kein einheitliches Schulsystem, sondern sechzehn verwandte. Gemeinsam ist der frühe Zeitpunkt, an dem sich die Wege trennen — meist nach der vierten Klasse.",
+      "question": "Wann trennen sich in deinem Herkunftsland die Schulwege — und ist das später oder früher?",
+      "facts": [
+        "Die Grundschule dauert vier Jahre, in Berlin und Brandenburg sechs.",
+        "Danach folgen je nach Land Hauptschule, Realschule, Gymnasium oder Gesamtschule — manche Länder haben nur noch zwei Wege.",
+        "Das Abitur am Gymnasium berechtigt zum Studium. Es dauert je nach Land acht oder neun Jahre („G8“ / „G9“).",
+        "Die Wege sind nicht endgültig: Über Berufsschule, Fachoberschule oder das Abendgymnasium kann man den Abschluss später nachholen.",
+        "Staatliche Schulen kosten kein Schulgeld. Es gibt Schulpflicht, keine Pflicht zum Hausunterricht — Homeschooling ist in Deutschland nicht erlaubt.",
+        "Schulnoten gehen von 1 (sehr gut) bis 6 (ungenügend) — anders als in vielen Ländern ist die niedrige Zahl die bessere."
+      ],
+      "table": {
+        "label": "Der übliche Weg",
+        "columns": [
+          "Stufe",
+          "Alter (etwa)",
+          "Abschluss"
+        ],
+        "rows": [
+          [
+            "Kindergarten / Kita",
+            "1–6",
+            "—"
+          ],
+          [
+            "Grundschule",
+            "6–10",
+            "—"
+          ],
+          [
+            "Hauptschule",
+            "10–15",
+            "Hauptschulabschluss"
+          ],
+          [
+            "Realschule",
+            "10–16",
+            "Mittlere Reife"
+          ],
+          [
+            "Gymnasium",
+            "10–18",
+            "Abitur"
+          ],
+          [
+            "Berufsschule + Betrieb",
+            "ab 15/16",
+            "Ausbildungsabschluss"
+          ]
+        ]
+      },
+      "phrases": [
+        "Mein Kind kommt nächstes Jahr in die Schule.",
+        "Welche Schule empfehlen Sie?",
+        "Er macht gerade sein Abitur.",
+        "Sie hat die Mittlere Reife."
+      ],
+      "links": [
+        {
+          "label": "Leben in Deutschland: Fakten",
+          "href": "/pruefungen/leben-in-deutschland/fakten"
+        }
+      ],
+      "quiz": [
+        {
+          "prompt": "Wer ist für die Schulen zuständig?",
+          "options": [
+            "Der Bund",
+            "Die Bundesländer",
+            "Die Städte"
+          ],
+          "answer": "Die Bundesländer",
+          "explain": "Darum unterscheiden sich Schulformen und Abläufe von Land zu Land."
+        },
+        {
+          "prompt": "Welcher Abschluss berechtigt zum Studium an einer Universität?",
+          "options": [
+            "Der Hauptschulabschluss",
+            "Die Mittlere Reife",
+            "Das Abitur"
+          ],
+          "answer": "Das Abitur",
+          "explain": "Es lässt sich auch später nachholen, etwa am Abendgymnasium."
+        },
+        {
+          "prompt": "Welche Schulnote ist die beste?",
+          "options": [
+            "1",
+            "6",
+            "10"
+          ],
+          "answer": "1",
+          "explain": "1 ist sehr gut, 6 ist ungenügend."
+        },
+        {
+          "prompt": "Wie lange dauert die Grundschule in den meisten Bundesländern?",
+          "options": [
+            "Vier Jahre",
+            "Sechs Jahre",
+            "Acht Jahre"
+          ],
+          "answer": "Vier Jahre",
+          "explain": "In Berlin und Brandenburg sind es sechs."
+        }
+      ]
+    },
+    {
+      "id": "bundeslaender",
+      "title": "Sechzehn Bundesländer",
+      "eyebrow": "Staat & Gesellschaft",
+      "icon": "landmark",
+      "level": "A2",
+      "sourcing": "sachwissen",
+      "sourceNote": "Öffentlich nachprüfbares Sachwissen (Grundgesetz, Statistisches Bundesamt).",
+      "intro": "Deutschland ist ein Bundesstaat: Es besteht aus sechzehn Ländern, die eigene Regierungen, eigene Parlamente und eigene Zuständigkeiten haben. Vieles, was im Alltag auffällt — Schule, Polizei, Feiertage, Ladenöffnung — wird nicht in Berlin entschieden, sondern im jeweiligen Land.",
+      "question": "Ist dein Herkunftsland zentral organisiert oder föderal? Was sind die Vorteile?",
+      "facts": [
+        "Drei Länder sind Stadtstaaten: Berlin, Hamburg und Bremen. Stadt und Land fallen dort zusammen.",
+        "Das größte Land nach Fläche ist Bayern, nach Einwohnerzahl Nordrhein-Westfalen.",
+        "Fünf Länder werden „neue Bundesländer“ genannt: Sie gehörten bis 1990 zur DDR.",
+        "Jedes Land hat einen Landtag; in den Stadtstaaten heißt er Abgeordnetenhaus beziehungsweise Bürgerschaft.",
+        "Über den Bundesrat wirken die Länder an der Gesetzgebung des Bundes mit.",
+        "Die Regierungschefin oder der Regierungschef heißt in den Flächenländern Ministerpräsident/in, in Hamburg und Bremen Bürgermeister/in."
+      ],
+      "table": {
+        "label": "Ein paar Eckdaten",
+        "columns": [
+          "",
+          "Land"
+        ],
+        "rows": [
+          [
+            "Größte Fläche",
+            "Bayern"
+          ],
+          [
+            "Meiste Einwohner",
+            "Nordrhein-Westfalen"
+          ],
+          [
+            "Kleinste Fläche",
+            "Bremen"
+          ],
+          [
+            "Stadtstaaten",
+            "Berlin, Hamburg, Bremen"
+          ],
+          [
+            "Hauptstadt",
+            "Berlin"
+          ]
+        ]
+      },
+      "phrases": [
+        "In welchem Bundesland wohnst du?",
+        "Das ist von Land zu Land verschieden.",
+        "Das ist Ländersache.",
+        "Ich komme aus Nordrhein-Westfalen."
+      ],
+      "links": [
+        {
+          "label": "Leben in Deutschland: dein Bundesland",
+          "href": "/pruefungen/leben-in-deutschland/test"
+        }
+      ],
+      "quiz": [
+        {
+          "prompt": "Wie viele Bundesländer hat Deutschland?",
+          "options": [
+            "Zwölf",
+            "Sechzehn",
+            "Zwanzig"
+          ],
+          "answer": "Sechzehn",
+          "explain": "Seit der Wiedervereinigung 1990."
+        },
+        {
+          "prompt": "Welches Land ist ein Stadtstaat?",
+          "options": [
+            "Hessen",
+            "Hamburg",
+            "Sachsen"
+          ],
+          "answer": "Hamburg",
+          "explain": "Neben Berlin und Bremen."
+        },
+        {
+          "prompt": "Welches Bundesland hat die meisten Einwohner?",
+          "options": [
+            "Bayern",
+            "Nordrhein-Westfalen",
+            "Berlin"
+          ],
+          "answer": "Nordrhein-Westfalen",
+          "explain": "Bayern ist dafür das größte nach Fläche."
+        },
+        {
+          "prompt": "Was bedeutet „Das ist Ländersache“?",
+          "options": [
+            "Das entscheidet der Bund",
+            "Das entscheiden die Bundesländer selbst",
+            "Das entscheidet die EU"
+          ],
+          "answer": "Das entscheiden die Bundesländer selbst",
+          "explain": "Schule und Polizei sind die bekanntesten Beispiele."
+        }
+      ]
+    },
+    {
+      "id": "feiertage",
+      "title": "Feiertage: warum nicht überall gleich?",
+      "eyebrow": "Staat & Gesellschaft",
+      "icon": "map-pin",
+      "level": "A2",
+      "sourcing": "sachwissen",
+      "sourceNote": "Öffentlich nachprüfbares Sachwissen. Feiertage regeln die Bundesländer; verbindlich ist die Liste deines Landes.",
+      "intro": "Feiertage sind in Deutschland größtenteils Ländersache. Nur wenige gelten überall — der Rest hängt davon ab, in welchem Bundesland du wohnst. Wer über eine Landesgrenze pendelt, arbeitet deshalb manchmal an einem Tag, an dem nebenan alles geschlossen ist.",
+      "question": "Welcher Feiertag aus deinem Herkunftsland fehlt dir hier am meisten?",
+      "facts": [
+        "Neun Feiertage gelten bundesweit, darunter Neujahr, der 1. Mai, der 3. Oktober und der erste und zweite Weihnachtstag.",
+        "Bayern hat die meisten Feiertage, Berlin, Hamburg, Niedersachsen, Schleswig-Holstein und Bremen die wenigsten.",
+        "Manche Feiertage gelten nur in Teilen eines Bundeslandes: Fronleichnam etwa nur in überwiegend katholischen Gemeinden Sachsens und Thüringens.",
+        "Der 3. Oktober ist der Tag der Deutschen Einheit — der einzige staatliche Feiertag, der an ein politisches Ereignis erinnert.",
+        "An Feiertagen sind Geschäfte geschlossen wie an einem Sonntag; Bahnhöfe, Tankstellen und Restaurants bleiben offen.",
+        "„Brückentag“ heißt der Arbeitstag zwischen Feiertag und Wochenende — ein Urlaubstag, der vier freie Tage ergibt."
+      ],
+      "table": {
+        "label": "Bundesweite Feiertage",
+        "columns": [
+          "Datum",
+          "Feiertag"
+        ],
+        "rows": [
+          [
+            "1. Januar",
+            "Neujahr"
+          ],
+          [
+            "beweglich (Frühjahr)",
+            "Karfreitag"
+          ],
+          [
+            "beweglich (Frühjahr)",
+            "Ostermontag"
+          ],
+          [
+            "1. Mai",
+            "Tag der Arbeit"
+          ],
+          [
+            "beweglich",
+            "Christi Himmelfahrt"
+          ],
+          [
+            "beweglich",
+            "Pfingstmontag"
+          ],
+          [
+            "3. Oktober",
+            "Tag der Deutschen Einheit"
+          ],
+          [
+            "25. Dezember",
+            "1. Weihnachtstag"
+          ],
+          [
+            "26. Dezember",
+            "2. Weihnachtstag"
+          ]
+        ]
+      },
+      "phrases": [
+        "Ist am Montag frei?",
+        "Das ist bei uns kein Feiertag.",
+        "Ich nehme einen Brückentag.",
+        "Die Geschäfte haben zu."
+      ],
+      "links": [
+        {
+          "label": "Leben in Deutschland: Fakten",
+          "href": "/pruefungen/leben-in-deutschland/fakten"
+        }
+      ],
+      "quiz": [
+        {
+          "prompt": "Wer legt die meisten Feiertage fest?",
+          "options": [
+            "Der Bund",
+            "Die Bundesländer",
+            "Die Städte"
+          ],
+          "answer": "Die Bundesländer",
+          "explain": "Nur neun Feiertage gelten bundesweit."
+        },
+        {
+          "prompt": "Woran erinnert der 3. Oktober?",
+          "options": [
+            "An das Ende des Zweiten Weltkriegs",
+            "An die deutsche Einheit",
+            "An das Grundgesetz"
+          ],
+          "answer": "An die deutsche Einheit",
+          "explain": "Tag der Deutschen Einheit — seit 1990."
+        },
+        {
+          "prompt": "Was ist ein Brückentag?",
+          "options": [
+            "Ein zusätzlicher Feiertag",
+            "Ein Arbeitstag zwischen Feiertag und Wochenende",
+            "Ein Tag, an dem Brücken gesperrt sind"
+          ],
+          "answer": "Ein Arbeitstag zwischen Feiertag und Wochenende",
+          "explain": "Ein Urlaubstag dort ergibt oft vier freie Tage am Stück."
+        },
+        {
+          "prompt": "Welcher Tag ist ein bundesweiter Feiertag?",
+          "options": [
+            "Fronleichnam",
+            "1. Mai",
+            "Reformationstag"
+          ],
+          "answer": "1. Mai",
+          "explain": "Fronleichnam und der Reformationstag gelten nur in bestimmten Ländern."
+        }
+      ]
+    },
+    {
+      "id": "oeffentlich-rechtlicher-rundfunk",
+      "title": "Wer bezahlt ARD und ZDF?",
+      "eyebrow": "Staat & Gesellschaft",
+      "icon": "landmark",
+      "level": "B1",
+      "sourcing": "unterricht",
+      "sourceNote": "Aus einer echten Unterrichtsdiskussion bei DeutschAcademy.",
+      "intro": "In Deutschland gibt es öffentlich-rechtliche Sender wie ARD und ZDF (plus viele Regional- und Radiosender). Sie werden nicht durch Werbung finanziert, sondern durch den Rundfunkbeitrag — eine Gebühr, die fast jeder Haushalt zahlen muss, egal ob er die Sender nutzt oder nicht.",
+      "question": "Warum bezahlen wir das? Ist das gut oder schlecht?",
+      "facts": [
+        "Der Beitrag wird pro Wohnung gezahlt, nicht pro Person: In einer WG zahlt der Haushalt einmal.",
+        "Er liegt bei 18,36 € im Monat (Stand 2025). Den aktuellen Betrag nennt der Beitragsservice.",
+        "Wer BAföG oder Bürgergeld bekommt, kann sich befreien lassen — das muss man beantragen, es passiert nicht automatisch."
+      ],
+      "prosCons": {
+        "prosLabel": "Vorteile",
+        "pros": [
+          "unabhängig vom Staat und von Werbekunden",
+          "keine Manipulation durch einzelne Geldgeber",
+          "keine Zensur",
+          "keine Werbeunterbrechungen",
+          "freie Meinungsäußerung wird gestärkt"
+        ],
+        "consLabel": "Nachteile",
+        "cons": [
+          "alle müssen es bezahlen, auch wer die Sender nie schaut",
+          "manche schauen die Sender gar nicht"
+        ]
+      },
+      "context": "Ein unabhängiger Rundfunk gilt als wichtiger Teil einer funktionierenden Demokratie: freie Presse kann kontrollieren, informieren und unterschiedliche Meinungen zeigen, ohne von einer einzelnen Regierung oder einem einzelnen Geldgeber abhängig zu sein.",
+      "table": {
+        "label": "Öffentlich-rechtlicher Rundfunk in anderen Ländern",
+        "columns": [
+          "Land",
+          "Sender"
+        ],
+        "rows": [
+          [
+            "Österreich",
+            "ORF"
+          ],
+          [
+            "Schweiz",
+            "SRG SSR (SRF, RTS, RSI, RTR)"
+          ],
+          [
+            "Vereinigtes Königreich",
+            "BBC"
+          ],
+          [
+            "Frankreich",
+            "France Télévisions / Radio France"
+          ],
+          [
+            "Italien",
+            "RAI"
+          ],
+          [
+            "Spanien",
+            "RTVE"
+          ],
+          [
+            "Niederlande",
+            "NPO"
+          ],
+          [
+            "Belgien",
+            "VRT / RTBF"
+          ],
+          [
+            "Dänemark",
+            "DR"
+          ],
+          [
+            "Schweden",
+            "SVT / SR"
+          ],
+          [
+            "Norwegen",
+            "NRK"
+          ],
+          [
+            "Finnland",
+            "Yle"
+          ],
+          [
+            "Polen",
+            "TVP"
+          ],
+          [
+            "Tschechien",
+            "ČT"
+          ],
+          [
+            "Japan",
+            "NHK"
+          ],
+          [
+            "Kanada",
+            "CBC / Radio-Canada"
+          ]
+        ]
+      },
+      "phrases": [
+        "Ich finde es richtig, dass …",
+        "Ich halte das für problematisch, weil …",
+        "Auf der einen Seite … auf der anderen Seite …",
+        "Da bin ich anderer Meinung."
+      ],
+      "links": [
+        {
+          "label": "Die Passiv-Sätze dazu üben",
+          "href": "/uebungen/grammatik/passiv"
+        },
+        {
+          "label": "Deine Meinung äußern (Redemittel)",
+          "href": "/uebungen/wortschatz"
+        }
+      ],
+      "quiz": [
+        {
+          "prompt": "Wofür wird der Rundfunkbeitrag gezahlt?",
+          "options": [
+            "Pro Person",
+            "Pro Wohnung",
+            "Pro Fernsehgerät"
+          ],
+          "answer": "Pro Wohnung",
+          "explain": "Seit 2013 zählt die Wohnung, nicht das Gerät und nicht die Person."
+        },
+        {
+          "prompt": "Wie finanzieren sich ARD und ZDF hauptsächlich?",
+          "options": [
+            "Durch Werbung",
+            "Aus Steuern",
+            "Durch den Rundfunkbeitrag"
+          ],
+          "answer": "Durch den Rundfunkbeitrag",
+          "explain": "Der Beitrag ist keine Steuer: Er geht nicht an den Staatshaushalt, sondern direkt an die Sender."
+        },
+        {
+          "prompt": "Wer kann sich vom Beitrag befreien lassen?",
+          "options": [
+            "Wer die Sender nicht schaut",
+            "Wer zum Beispiel BAföG oder Bürgergeld bekommt",
+            "Studierende automatisch"
+          ],
+          "answer": "Wer zum Beispiel BAföG oder Bürgergeld bekommt",
+          "explain": "Und auch dann nur auf Antrag — automatisch passiert es nicht."
+        }
+      ]
+    },
+    {
+      "id": "vereine",
+      "title": "Das Vereinsleben",
+      "eyebrow": "Staat & Gesellschaft",
+      "icon": "sparkle",
+      "level": "B1",
+      "sourcing": "sachwissen",
+      "sourceNote": "Öffentlich nachprüfbares Sachwissen. Die Zahl der Vereine stammt aus dem Vereinsregister; Beiträge und Angebote sind örtlich verschieden.",
+      "intro": "Ein großer Teil des Freizeitlebens in Deutschland ist organisiert: in Vereinen. Sport, Musik, Feuerwehr, Schrebergarten, Karneval — für fast alles gibt es einen eingetragenen Verein mit Satzung, Vorstand und Mitgliedsbeitrag.",
+      "question": "Wie organisiert man Freizeit und Nachbarschaft in deinem Herkunftsland?",
+      "facts": [
+        "Es gibt rund 600.000 eingetragene Vereine; etwa jede zweite Person ist Mitglied in mindestens einem.",
+        "„e. V.“ hinter dem Namen heißt „eingetragener Verein“ — eine Rechtsform, kein Titel.",
+        "Vereine leben von Ehrenamt: Die meisten Ämter sind unbezahlt.",
+        "Sportvereine sind meist deutlich günstiger als kommerzielle Fitnessstudios, oft unter 20 € im Monat.",
+        "Für Neuankömmlinge sind Vereine einer der einfachsten Wege, Deutsch außerhalb des Kurses zu sprechen: Man redet dort über eine gemeinsame Sache, nicht über Grammatik.",
+        "Die Freiwillige Feuerwehr ist ebenfalls ein Verein — in vielen kleinen Orten gibt es keine Berufsfeuerwehr."
+      ],
+      "phrases": [
+        "Ich bin im Sportverein.",
+        "Kann man da einfach mal zum Probetraining kommen?",
+        "Was kostet der Mitgliedsbeitrag?",
+        "Ich mache das ehrenamtlich."
+      ],
+      "links": [
+        {
+          "label": "Sprechen üben",
+          "href": "/uebungen/sprechen"
+        }
+      ],
+      "quiz": [
+        {
+          "prompt": "Wofür steht „e. V.“?",
+          "options": [
+            "Ehrenamtliche Vereinigung",
+            "Eingetragener Verein",
+            "Erweiterte Verwaltung"
+          ],
+          "answer": "Eingetragener Verein",
+          "explain": "Eine Rechtsform — der Verein steht im Vereinsregister."
+        },
+        {
+          "prompt": "Wie viele eingetragene Vereine gibt es etwa in Deutschland?",
+          "options": [
+            "Rund 60.000",
+            "Rund 600.000",
+            "Rund 6 Millionen"
+          ],
+          "answer": "Rund 600.000",
+          "explain": "Etwa jede zweite Person ist in mindestens einem Mitglied."
+        },
+        {
+          "prompt": "Wie werden Vereinsämter meistens ausgeübt?",
+          "options": [
+            "Ehrenamtlich, also unbezahlt",
+            "Als Vollzeitstelle",
+            "Vom Staat bezahlt"
+          ],
+          "answer": "Ehrenamtlich, also unbezahlt",
+          "explain": "Darauf beruht das ganze System."
+        }
+      ]
+    }
+  ]
+}

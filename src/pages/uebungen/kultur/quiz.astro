@@ -1,0 +1,95 @@
+---
+// The mixed Landeskunde quiz: every topic's questions in one pool, with a picker to
+// narrow it to a single topic.
+//
+// The filter is a set of chips rather than a dropdown because there are fifteen topics
+// and the thing you most often want is "all of them" — a chip row shows that as the
+// selected state instead of hiding it behind a menu.
+import Layout from "../../../layouts/Layout.astro";
+import PracticeHeader from "../../../components/PracticeHeader.astro";
+import kultur from "../../../data/kultur.json";
+import "../../../styles/practice.css";
+import "../../../styles/kultur.css";
+
+const { topics } = kultur;
+const total = topics.reduce((n, t) => n + t.quiz.length, 0);
+
+// Each question carries the topic it came from, so a wrong answer can say where to
+// read up on it — the quiz engine renders `explain` as HTML.
+const pool = topics.flatMap((t) =>
+  t.quiz.map((q) => ({
+    ...q,
+    topic: t.id,
+    explain: `${q.explain ?? ""} <a class="ku-quiz-src" href="/uebungen/kultur/${t.id}">Mehr zu „${t.title}“ →</a>`,
+  }))
+);
+---
+<Layout
+  title="Landeskunde-Quiz – DeutschAcademy"
+  description="Quiz über Alltag und Regeln in Deutschland: Mülltrennung, Pfand, Anmeldung, Krankenversicherung, Feiertage, Schule, Vereine und mehr."
+>
+  <PracticeHeader title="Landeskunde-Quiz" />
+  <main class="practice-main">
+    <a href="/uebungen/kultur" class="vp-back-link">← Alle Themen</a>
+
+    <div class="practice-hero">
+      <p class="eyebrow">Landeskunde</p>
+      <h1>Quiz</h1>
+      <p>{total} Fragen aus {topics.length} Themen. Wähle ein Thema oder nimm alle gemischt.</p>
+    </div>
+
+    <div class="ku-chips" data-ku-chips>
+      <button class="ku-chip is-on" type="button" data-topic="alle">Alle Themen <span>{total}</span></button>
+      {topics.map((t) => (
+        <button class="ku-chip" type="button" data-topic={t.id}>{t.title} <span>{t.quiz.length}</span></button>
+      ))}
+    </div>
+
+    <div class="quiz-card" id="ku-quiz"></div>
+  </main>
+
+  <script type="application/json" id="ku-pool" set:html={JSON.stringify(pool)}></script>
+  <script type="module">
+    import { mountQuiz } from "../../../lib/quiz.js";
+    import { recordAttempt } from "../../../lib/progress.js";
+
+    const pool = JSON.parse(document.getElementById("ku-pool").textContent);
+    const root = document.getElementById("ku-quiz");
+    const chips = document.querySelector("[data-ku-chips]");
+
+    function start(topicId) {
+      const questions = topicId === "alle" ? pool : pool.filter((q) => q.topic === topicId);
+      // mountQuiz owns the element's contents, so switching topic is a fresh mount
+      // rather than a filter applied to a running quiz — the score starts over, which
+      // is what picking a different topic means.
+      root.innerHTML = "";
+      mountQuiz(root, questions, {
+        mode: "choice",
+        showWrongCount: true,
+        onAnswer: (ok) => recordAttempt({ skill: "kultur", correct: ok }),
+      });
+    }
+
+    chips.addEventListener("click", (e) => {
+      const btn = e.target.closest("[data-topic]");
+      if (!btn) return;
+      for (const b of chips.querySelectorAll("[data-topic]")) b.classList.toggle("is-on", b === btn);
+      const u = new URL(location.href);
+      if (btn.dataset.topic === "alle") u.searchParams.delete("thema");
+      else u.searchParams.set("thema", btn.dataset.topic);
+      history.replaceState(null, "", u);
+      start(btn.dataset.topic);
+    });
+
+    // A ?thema= in the URL opens that topic straight away — so a narrowed quiz can be
+    // linked to or shared, and picking a chip leaves a URL that reproduces it.
+    const wanted = new URLSearchParams(location.search).get("thema");
+    const chip = wanted && chips.querySelector(`[data-topic="${CSS.escape(wanted)}"]`);
+    if (chip) {
+      for (const b of chips.querySelectorAll("[data-topic]")) b.classList.toggle("is-on", b === chip);
+      start(wanted);
+    } else {
+      start("alle");
+    }
+  </script>
+</Layout>

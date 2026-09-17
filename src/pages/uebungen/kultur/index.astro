@@ -1,0 +1,83 @@
+---
+// /uebungen/kultur — the Landeskunde hub.
+//
+// Was one page rendering one topic, with the topic's own shape (a broadcaster table)
+// hardcoded into the markup. It is now a hub over src/data/kultur.json: cards here,
+// one route per topic, and a quiz that can run over one topic or all of them.
+//
+// Two kinds of topic sit side by side and each says which it is. "unterricht" came out
+// of a real DeutschAcademy lesson; "sachwissen" is publicly checkable fact about rules,
+// institutions and amounts, written by us. Nothing here claims anything about what
+// German people are like — only about what the rules say and where practice varies.
+import Layout from "../../../layouts/Layout.astro";
+import PracticeHeader from "../../../components/PracticeHeader.astro";
+import Icon from "../../../components/Icon.astro";
+import kultur from "../../../data/kultur.json";
+import "../../../styles/practice.css";
+import "../../../styles/kultur.css";
+
+const { topics } = kultur;
+const quizCount = topics.reduce((n, t) => n + t.quiz.length, 0);
+
+// Grouped by the eyebrow the topics already carry, so the hub has sections without a
+// second taxonomy to keep in step with the data.
+const groups = [];
+for (const t of topics) {
+  const g = groups.find((x) => x.name === t.eyebrow) ?? (groups.push({ name: t.eyebrow, items: [] }), groups.at(-1));
+  g.items.push(t);
+}
+---
+<Layout
+  title="Landeskunde – DeutschAcademy"
+  description="Wie Deutschland im Alltag funktioniert: Mülltrennung, Pfand, Anmeldung, Krankenversicherung, Feiertage, Schule, Vereine — mit Quiz zu jedem Thema."
+>
+  <PracticeHeader title="Landeskunde" />
+  <main class="practice-main practice-main--wide">
+    <div class="practice-hero">
+      <p class="eyebrow" data-i18n="kultur.hero.eyebrow">Landeskunde</p>
+      <h1 data-i18n="tool.kultur.title">Kulturwissen</h1>
+      <!-- A new key, not the old kultur.hero.subtitle: that one still says "aus echten
+           Unterrichtsgesprächen", which was true when this was one topic and is not true
+           of the fourteen written from public sources. A key with no translation yet
+           falls back to the German below, which is the behaviour we want until the five
+           locale files carry it. -->
+      <p data-i18n="kultur.hero.lead">
+        Wie Deutschland im Alltag funktioniert — Regeln, Ämter, Beträge und Abläufe, mit Quiz zu jedem Thema.
+      </p>
+    </div>
+
+    <a class="ku-quiz-cta" href="/uebungen/kultur/quiz">
+      <span class="ku-quiz-cta-txt">
+        <b>Quiz über alle Themen</b>
+        <i>{quizCount} Fragen aus {topics.length} Themen, gemischt. Du kannst auch ein einzelnes Thema wählen.</i>
+      </span>
+      <span class="ku-quiz-cta-go" aria-hidden="true">→</span>
+    </a>
+
+    {groups.map((g) => (
+      <section class="ku-group">
+        <h2 class="ku-group-title">{g.name}</h2>
+        <div class="ku-grid">
+          {g.items.map((t) => (
+            <a class="ku-card" href={`/uebungen/kultur/${t.id}`}>
+              <span class="ku-card-ic"><Icon name={t.icon} size={20} /></span>
+              <span class="ku-card-txt">
+                <b>{t.title}</b>
+                <i>{t.intro.split(". ")[0]}.</i>
+              </span>
+              <span class="ku-card-meta">
+                <span class="ku-badge">{t.level}</span>
+                <span class="ku-card-q">{t.quiz.length} Fragen</span>
+              </span>
+            </a>
+          ))}
+        </div>
+      </section>
+    ))}
+
+    <section class="ku-sourcing">
+      <h2>Woher die Themen kommen</h2>
+      <p set:html={kultur.sourcingNote.replace(/\n/g, "<br>")} />
+    </section>
+  </main>
+</Layout>

@@ -4,8 +4,7 @@
 
 .vp-page { max-width: 880px; margin: 0 auto; padding: clamp(20px, 5vw, 40px) clamp(14px, 4vw, 24px) 96px; }
 
-.vp-back-link { display: inline-block; margin-bottom: 20px; font-weight: var(--fw-light); font-size: .875rem; color: var(--brand-blue-dark); text-decoration: none; }
-.vp-back-link:hover { color: var(--accent-dark); }
+/* .vp-back-link moved to practice.css — the DTZ and exam pages use it too. */
 
 .vp-hero { text-align: center; margin-bottom: 32px; }
 .vp-hero-badges { display: flex; justify-content: center; gap: 8px; margin-bottom: 14px; }

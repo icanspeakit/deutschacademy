@@ -260,6 +260,116 @@
 .exam-breakdown td:last-child, .exam-breakdown th:last-child { text-align: right; font-variant-numeric: tabular-nums; }
 .exam-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
 
+/* --- exam material: texts to read, signs, forms, free writing ----------------- */
+/* Used by the Start Deutsch 1 Übungssatz (Lesen Teil 1–3, Schreiben Teil 1–2). Kept
+   here rather than on the page so the next exam that needs a reading text or a form
+   gets the same one. */
+
+.lese-text,
+.lese-sign {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  padding: 16px 18px;
+  margin-bottom: 14px;
+}
+/* A sign is a sign: centred, a little wider-set, so it reads as something on a wall
+   rather than as more of the page's prose. */
+.lese-sign {
+  text-align: center;
+  letter-spacing: .01em;
+  line-height: 1.7;
+  font-size: .92rem;
+}
+.lese-text-label {
+  margin: 0 0 8px;
+  font-size: .72rem;
+  font-weight: var(--fw-semibold);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.lese-text-body { margin: 0; font-size: .95rem; line-height: 1.75; color: var(--ink); }
+
+.hoer-item { margin-bottom: 6px; }
+.hoer-text { margin: -6px 0 18px; }
+.hoer-transcript {
+  margin: 10px 0 0;
+  padding: 12px 14px;
+  border-left: 3px solid var(--border-strong);
+  background: var(--surface);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  font-size: .9rem;
+  line-height: 1.7;
+  color: var(--muted);
+}
+
+.sub-title {
+  /* Explicit, like .tool-card h3 and friends in practice.css: several ancestors on
+     these pages centre their text, and a part heading belongs over its left edge. */
+  text-align: left;
+  margin: 28px 0 10px;
+  font-family: var(--font-body);
+  font-size: 1.1rem;
+  font-weight: var(--fw-regular);
+  color: var(--ink);
+}
+.sub-title:first-of-type { margin-top: 6px; }
+
+.form-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 14px 0;
+  font-size: .9rem;
+}
+.form-table caption {
+  caption-side: top;
+  text-align: left;
+  padding-bottom: 8px;
+  font-weight: var(--fw-semibold);
+  color: var(--ink);
+}
+.form-table th,
+.form-table td { padding: 9px 8px; border-bottom: 1px solid var(--border); text-align: left; }
+.form-table th { width: 42%; font-weight: var(--fw-regular); color: var(--muted); }
+.form-input {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius);
+  background: var(--surface-card);
+  color: var(--ink);
+  font: inherit;
+  font-size: .9rem;
+}
+/* The expected answer sits in the DOM from the start so "Lösung zeigen" is a class
+   toggle, not a re-render that would wipe what the learner typed. */
+.form-answer { display: none; margin-left: 10px; font-size: .85rem; color: var(--brand-blue); }
+.form-table.show-answers .form-answer { display: inline; }
+
+.task-points { margin: 10px 0 14px; padding-left: 20px; display: grid; gap: 6px; font-size: .92rem; }
+.write-box {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius);
+  background: var(--surface-card);
+  color: var(--ink);
+  font: inherit;
+  font-size: .95rem;
+  line-height: 1.7;
+  resize: vertical;
+}
+.word-count { margin: 8px 0 0; font-size: .82rem; color: var(--muted); }
+.model-answer {
+  margin-top: 14px;
+  padding: 16px 18px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+}
+.model-answer[hidden] { display: none; }
+
 /* --- wider than a phone ------------------------------------------------------ */
 @media (min-width: 860px) {
   .exam-shell { grid-template-columns: 236px minmax(0, 1fr); gap: 0; }
@@ -275,4 +385,13 @@
   .mobile-nav { display: none; }
   .exam-main { padding: 22px 24px 28px; }
   .options.grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 560px) {
+  /* 42% of 358px leaves the value column too narrow for "44135 Dortmund" plus its
+     revealed answer, so below this width each row becomes two lines. */
+  .form-table th, .form-table td { display: block; width: auto; border-bottom: none; padding: 4px 0; }
+  .form-table tr { display: block; padding: 8px 0; border-bottom: 1px solid var(--border); }
+  .form-answer { display: none; margin-left: 0; }
+  .form-table.show-answers .form-answer { display: block; margin-top: 6px; }
 }

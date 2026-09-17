@@ -1,0 +1,270 @@
+{
+  "setId": "sd1-01",
+  "exam": "Start Deutsch 1",
+  "level": "A1",
+  "sourcing": "Struktur, Aufgabenzahlen, Aufgabentypen und Punkte sind aus src/data/pruefungen/goethe-formate.json und telc-formate.json übernommen — beide dort aus den offiziellen Übungssätzen abgelesen. Die Aufgaben in dieser Datei sind ALLE von DeutschAcademy selbst geschrieben. Es ist kein Text aus einem Goethe- oder telc-Prüfungssatz übernommen: die echten Aufgaben sind urheberrechtlich geschützt (© Goethe-Institut / © telc gGmbH). Das ist dasselbe Vorgehen wie beim DTZ-Übungssatz (src/data/pruefungen/dtz/uebungssatz-1.json).",
+  "passNote": "Die Bänder 54–60 / 48–53,5 / 42–47,5 / 36–41,5 stammen aus dem telc-Übungstest („Ergebnispunkte und Prädikat“, telc-formate.json). Bestanden ist die Prüfung ab 36 von 60 Punkten. Hören und Lesen sind hier je 15 Punkte, also 30 der 60; Schreiben (15) und Sprechen (15) kommen in der echten Prüfung dazu.",
+
+  "hoeren": {
+    "teil1": {
+      "instruction": "Du hörst jeden Text zweimal. Kreuze an: a, b oder c.",
+      "items": [
+        {
+          "id": "h1-1",
+          "prompt": "Wann fährt der Bus zum Bahnhof?",
+          "transcript": "„Entschuldigung, wann fährt der Bus zum Bahnhof?“ — „Der nächste fährt um Viertel nach acht. Aber der ist oft voll. Nehmen Sie lieber den um halb neun.“",
+          "options": ["um 8.15 Uhr", "um 8.30 Uhr", "um 9.00 Uhr"],
+          "answer": "um 8.30 Uhr"
+        },
+        {
+          "id": "h1-2",
+          "prompt": "Was kauft die Frau?",
+          "transcript": "„Guten Tag, ich möchte bitte ein Kilo Äpfel.“ — „Tut mir leid, Äpfel haben wir heute nicht mehr. Wir haben aber Birnen und Bananen.“ — „Dann nehme ich ein Kilo Birnen, bitte.“",
+          "options": ["Äpfel", "Birnen", "Bananen"],
+          "answer": "Birnen"
+        },
+        {
+          "id": "h1-3",
+          "prompt": "Wo arbeitet Herr Demir jetzt?",
+          "transcript": "„Und, Herr Demir, arbeiten Sie noch im Restaurant?“ — „Nein, seit März nicht mehr. Ich arbeite jetzt im Krankenhaus. Meine Frau arbeitet noch im Hotel.“",
+          "options": ["im Restaurant", "im Krankenhaus", "im Hotel"],
+          "answer": "im Krankenhaus"
+        },
+        {
+          "id": "h1-4",
+          "prompt": "Wie ist das Wetter am Samstag?",
+          "transcript": "„Das Wetter am Wochenende: Am Samstag regnet es den ganzen Tag. Am Sonntag scheint dann wieder die Sonne, es wird warm.“",
+          "options": ["Es regnet.", "Es schneit.", "Die Sonne scheint."],
+          "answer": "Es regnet."
+        },
+        {
+          "id": "h1-5",
+          "prompt": "Was kostet das Ticket?",
+          "transcript": "„Einmal nach Köln, bitte.“ — „Einfach oder hin und zurück?“ — „Hin und zurück.“ — „Das macht dann 38 Euro.“",
+          "options": ["18 Euro", "38 Euro", "83 Euro"],
+          "answer": "38 Euro"
+        },
+        {
+          "id": "h1-6",
+          "prompt": "Was soll Lena mitbringen?",
+          "transcript": "„Hallo Lena, hier ist Papa. Wir haben Brot und Milch schon gekauft. Kannst du bitte noch Butter mitbringen? Danke!“",
+          "options": ["Brot", "Milch", "Butter"],
+          "answer": "Butter"
+        }
+      ]
+    },
+    "teil2": {
+      "instruction": "Du hörst vier Durchsagen. Jede Durchsage hörst du einmal. Sind die Sätze richtig oder falsch?",
+      "items": [
+        {
+          "id": "h2-1",
+          "prompt": "Der Zug nach Hamburg fährt heute von Gleis 7.",
+          "transcript": "„Achtung auf Gleis 3: Der ICE nach Hamburg, Abfahrt 14 Uhr 20, fährt heute ausnahmsweise von Gleis 7 ab. Wir bitten um Entschuldigung.“",
+          "answer": true
+        },
+        {
+          "id": "h2-2",
+          "prompt": "Der Supermarkt schließt in einer Stunde.",
+          "transcript": "„Liebe Kundinnen und Kunden, wir schließen in zehn Minuten. Bitte kommen Sie jetzt zur Kasse. Vielen Dank für Ihren Einkauf.“",
+          "answer": false
+        },
+        {
+          "id": "h2-3",
+          "prompt": "Der Deutschkurs beginnt heute später.",
+          "transcript": "„Information für die Teilnehmerinnen und Teilnehmer vom Deutschkurs A1: Der Kurs beginnt heute erst um 10 Uhr, nicht um 9 Uhr. Der Raum bleibt gleich.“",
+          "answer": true
+        },
+        {
+          "id": "h2-4",
+          "prompt": "Die Praxis ist am Freitagnachmittag geöffnet.",
+          "transcript": "„Praxis Dr. Weber, guten Tag. Unsere Sprechzeiten: Montag bis Donnerstag von 8 bis 18 Uhr, Freitag nur von 8 bis 12 Uhr. In Notfällen rufen Sie bitte die 116117.“",
+          "answer": false
+        }
+      ]
+    },
+    "teil3": {
+      "instruction": "Du hörst fünf kurze Ansagen. Du hörst jeden Text zweimal. Kreuze an: a, b oder c.",
+      "items": [
+        {
+          "id": "h3-1",
+          "prompt": "Wo treffen sich die beiden?",
+          "transcript": "„Hi Sofia, hier ist Marek. Wir treffen uns heute nicht im Café, das hat zu. Komm bitte direkt zum Kino. Bis später!“",
+          "options": ["im Café", "im Kino", "im Park"],
+          "answer": "im Kino"
+        },
+        {
+          "id": "h3-2",
+          "prompt": "Wann hat Frau Ahmadi einen Termin?",
+          "transcript": "„Guten Tag, Frau Ahmadi, hier ist die Praxis Weber. Ihr Termin am Dienstag geht leider nicht. Können Sie am Donnerstag um 15 Uhr kommen? Bitte rufen Sie zurück.“",
+          "options": ["am Dienstag", "am Mittwoch", "am Donnerstag"],
+          "answer": "am Donnerstag"
+        },
+        {
+          "id": "h3-3",
+          "prompt": "Was ist das Problem?",
+          "transcript": "„Hallo Herr Nowak, hier ist Ihre Nachbarin, Frau Klein. In Ihrer Wohnung läuft Wasser aus. Bitte rufen Sie mich schnell an: 0151 22 33 44.“",
+          "options": ["Das Licht ist kaputt.", "Es läuft Wasser aus.", "Die Tür ist offen."],
+          "answer": "Es läuft Wasser aus."
+        },
+        {
+          "id": "h3-4",
+          "prompt": "Was soll der Kunde tun?",
+          "transcript": "„Guten Tag, hier ist die Post. Ihr Paket ist da. Sie können es bis Samstag in der Filiale in der Bahnhofstraße abholen. Bitte bringen Sie Ihren Ausweis mit.“",
+          "options": ["das Paket abholen", "noch einmal anrufen", "zu Hause warten"],
+          "answer": "das Paket abholen"
+        },
+        {
+          "id": "h3-5",
+          "prompt": "Wie viel kostet der Kurs?",
+          "transcript": "„Volkshochschule, guten Tag. Der Deutschkurs A1 kostet 120 Euro. Für Kinder und Studenten kostet er 80 Euro. Anmeldung bis zum 30. September.“",
+          "options": ["30 Euro", "80 Euro", "120 Euro"],
+          "answer": "120 Euro"
+        }
+      ]
+    }
+  },
+
+  "lesen": {
+    "teil1": {
+      "instruction": "Lies die zwei Texte. Sind die Sätze 1–5 richtig oder falsch?",
+      "texts": [
+        {
+          "label": "Text 1 — E-Mail",
+          "body": "Liebe Amina,\n\nwie geht es dir? Ich bin jetzt in München. Ich wohne in einem kleinen Zimmer, aber es ist schön und nicht teuer: 350 Euro im Monat. Mein Deutschkurs beginnt am Montag, immer von 9 bis 12 Uhr. Am Nachmittag arbeite ich in einem Café.\n\nKommst du im Sommer nach München? Wir können zusammen an den See fahren.\n\nViele Grüße\nYusuf"
+        },
+        {
+          "label": "Text 2 — SMS",
+          "body": "Hallo Max, ich bin noch im Büro, die Besprechung dauert länger. Kannst du bitte die Kinder vom Kindergarten abholen? Ich bin um 18 Uhr zu Hause. Im Kühlschrank ist Suppe. Danke! Lena"
+        }
+      ],
+      "items": [
+        { "id": "l1-1", "textRef": 0, "prompt": "Yusuf wohnt in München.", "answer": true },
+        { "id": "l1-2", "textRef": 0, "prompt": "Das Zimmer kostet 350 Euro pro Woche.", "answer": false },
+        { "id": "l1-3", "textRef": 0, "prompt": "Yusuf arbeitet am Vormittag im Café.", "answer": false },
+        { "id": "l1-4", "textRef": 1, "prompt": "Lena kommt später nach Hause.", "answer": true },
+        { "id": "l1-5", "textRef": 1, "prompt": "Max soll für die Kinder kochen.", "answer": false }
+      ]
+    },
+    "teil2": {
+      "instruction": "Lies die Situationen 6–10 und die Anzeigen a und b. Welche Anzeige passt? Kreuze an.",
+      "items": [
+        {
+          "id": "l2-6",
+          "situation": "Sie suchen einen Deutschkurs am Abend, weil Sie tagsüber arbeiten.",
+          "options": [
+            { "key": "a", "label": "Sprachschule Lingua — Deutschkurse A1–B2, Montag bis Freitag 9–12 Uhr. Kleine Gruppen." },
+            { "key": "b", "label": "Volkshochschule — Deutsch am Abend, Dienstag und Donnerstag 18–20.30 Uhr. Auch für Berufstätige." }
+          ],
+          "answer": "b"
+        },
+        {
+          "id": "l2-7",
+          "situation": "Sie brauchen am Sonntag Medikamente.",
+          "options": [
+            { "key": "a", "label": "Apotheke am Markt — Mo–Fr 8–18.30 Uhr, Sa 9–13 Uhr. Sonntag geschlossen." },
+            { "key": "b", "label": "Notdienst-Apotheke — jeden Sonntag und an Feiertagen von 9 bis 20 Uhr geöffnet." }
+          ],
+          "answer": "b"
+        },
+        {
+          "id": "l2-8",
+          "situation": "Sie möchten mit Ihrem Hund in eine Wohnung ziehen.",
+          "options": [
+            { "key": "a", "label": "2-Zimmer-Wohnung, 58 m², Balkon, 690 € warm. Haustiere nach Absprache erlaubt." },
+            { "key": "b", "label": "2-Zimmer-Wohnung, 60 m², ruhig, 640 € warm. Keine Haustiere, Nichtraucher." }
+          ],
+          "answer": "a"
+        },
+        {
+          "id": "l2-9",
+          "situation": "Ihr Fahrrad ist kaputt und Sie möchten es heute noch reparieren lassen.",
+          "options": [
+            { "key": "a", "label": "Fahrrad Meier — Reparaturen in 24 Stunden. Bringen Sie Ihr Rad bis 10 Uhr, Abholung am selben Tag." },
+            { "key": "b", "label": "Radsport Klein — Wir verkaufen neue und gebrauchte Fahrräder. Keine Reparaturen." }
+          ],
+          "answer": "a"
+        },
+        {
+          "id": "l2-10",
+          "situation": "Sie suchen einen Babysitter für Samstagabend.",
+          "options": [
+            { "key": "a", "label": "Kinderbetreuung Sonnenschein — Mo–Fr 7–17 Uhr, ab 1 Jahr. Anmeldung im Büro." },
+            { "key": "b", "label": "Studentin (22) passt am Wochenende auf Ihre Kinder auf. Abends und nachts möglich. Tel. 0170 …" }
+          ],
+          "answer": "b"
+        }
+      ]
+    },
+    "teil3": {
+      "instruction": "Lies die Schilder und Hinweise 11–15. Sind die Sätze richtig oder falsch?",
+      "items": [
+        {
+          "id": "l3-11",
+          "sign": "Am Bahnhof:\n\nAUFZUG AUSSER BETRIEB\nBitte benutzen Sie die Treppe oder den Aufzug an Gleis 5.",
+          "prompt": "Man kann keinen Aufzug benutzen.",
+          "answer": false
+        },
+        {
+          "id": "l3-12",
+          "sign": "An der Tür einer Bäckerei:\n\nWegen Urlaub vom 1. bis 14. August geschlossen.\nAb Montag, 15. August, sind wir wieder für Sie da.",
+          "prompt": "Die Bäckerei ist am 10. August geschlossen.",
+          "answer": true
+        },
+        {
+          "id": "l3-13",
+          "sign": "Im Schwimmbad:\n\nKinder unter 6 Jahren nur mit einem Erwachsenen.",
+          "prompt": "Kinder unter 6 Jahren dürfen allein schwimmen.",
+          "answer": false
+        },
+        {
+          "id": "l3-14",
+          "sign": "Im Bus:\n\nBitte Fahrkarte beim Einsteigen vorne beim Fahrer entwerten.",
+          "prompt": "Man entwertet die Fahrkarte beim Fahrer.",
+          "answer": true
+        },
+        {
+          "id": "l3-15",
+          "sign": "Im Hausflur:\n\nMüll bitte trennen!\nPapier: blaue Tonne · Plastik: gelbe Tonne · Restmüll: graue Tonne\nGlas gehört NICHT in die Tonnen — bitte zum Container an der Ecke bringen.",
+          "prompt": "Glas kommt in die graue Tonne.",
+          "answer": false
+        }
+      ]
+    }
+  },
+
+  "schreiben": {
+    "teil1": {
+      "instruction": "Ihre Freundin Maria Sanchez möchte einen Deutschkurs machen. Sie hilft ihr beim Formular. Ergänze die fünf fehlenden Angaben.",
+      "context": "Maria Sanchez ist am 4. Juli 1996 in Sevilla geboren. Sie ist Spanierin und wohnt seit einem Jahr in der Lindenstraße 12, 44135 Dortmund. Sie ist Krankenschwester und arbeitet im Krankenhaus. Sie möchte den Kurs A1 am Abend besuchen.",
+      "form": {
+        "title": "Anmeldung — Deutschkurs",
+        "rows": [
+          { "label": "Familienname", "value": "Sanchez", "gap": false },
+          { "label": "Vorname", "value": "Maria", "gap": false },
+          { "label": "Geburtsdatum", "gap": true, "expected": "04.07.1996", "hint": "Tag.Monat.Jahr" },
+          { "label": "Geburtsort", "gap": true, "expected": "Sevilla" },
+          { "label": "Staatsangehörigkeit", "gap": true, "expected": "spanisch", "hint": "spanisch / Spanien" },
+          { "label": "Straße und Hausnummer", "value": "Lindenstraße 12", "gap": false },
+          { "label": "PLZ und Wohnort", "gap": true, "expected": "44135 Dortmund" },
+          { "label": "Beruf", "gap": true, "expected": "Krankenschwester" },
+          { "label": "Kurs", "value": "A1 (abends)", "gap": false }
+        ]
+      }
+    },
+    "teil2": {
+      "instruction": "Schreibe eine kurze Nachricht (circa 30 Wörter). Bearbeite alle drei Punkte.",
+      "task": "Ihr Deutschkurs beginnt morgen, aber Sie sind krank. Schreiben Sie eine E-Mail an Ihre Kursleiterin, Frau Berger.",
+      "points": [
+        "Sagen Sie, warum Sie nicht kommen.",
+        "Fragen Sie nach den Hausaufgaben.",
+        "Schreiben Sie, wann Sie wieder kommen."
+      ],
+      "model": "Sehr geehrte Frau Berger,\n\nleider kann ich morgen nicht zum Kurs kommen. Ich bin krank und habe Fieber. Können Sie mir bitte schreiben, was die Hausaufgaben sind? Am Montag bin ich wieder da.\n\nViele Grüße\nAmina Yilmaz",
+      "checklist": [
+        "Anrede und Gruß sind da (Sehr geehrte … / Viele Grüße).",
+        "Alle drei Punkte kommen vor.",
+        "Der Text hat circa 30 Wörter."
+      ]
+    }
+  }
+}

@@ -1,0 +1,389 @@
+---
+// Start Deutsch 1 as a full sitting on the exam shell (src/lib/examApp.js).
+//
+// One page for two exams: Start Deutsch 1 IS the A1 exam of both the Goethe-Institut and
+// telc — same structure, same oral part (see the `intro` note in goethe-formate.json) —
+// so /pruefungen/telc and /pruefungen/goethe both point here rather than each getting a
+// near-identical copy.
+//
+// Everything a learner answers here was written by DeutschAcademy. The real Goethe and
+// telc items are copyrighted and are not reproduced; only the published *structure* —
+// how many tasks of which type, in which order — comes from the official Übungssätze,
+// via src/data/pruefungen/{goethe,telc}-formate.json. Same precedent as the DTZ
+// Übungssatz. The sourcing note is in the data file and repeated on the Start section.
+import Layout from "../../layouts/Layout.astro";
+import PracticeHeader from "../../components/PracticeHeader.astro";
+import ExamApp from "../../components/ExamApp.astro";
+import "../../styles/practice.css";
+import "../../styles/pruefungen.css";
+import satz from "../../data/pruefungen/start-deutsch-1/uebungssatz-1.json";
+---
+<Layout
+  title="Start Deutsch 1 (Goethe A1 / telc A1): Übungssatz – DeutschAcademy"
+  description="Kompletter Übungssatz für Start Deutsch 1 — die A1-Prüfung von Goethe-Institut und telc: Hören, Lesen und Schreiben im Prüfungsformat, mit Fortschritt je Prüfungsteil und Auswertung."
+>
+  <PracticeHeader title="Start Deutsch 1" />
+  <main class="practice-main practice-main--wide">
+    <a href="/pruefungen" class="vp-back-link">← Zurück zur Übersicht</a>
+
+    <div class="practice-hero">
+      <p class="eyebrow">Goethe A1 · telc A1</p>
+      <h1>Übungssatz Start Deutsch 1</h1>
+      <p>
+        Goethe A1 und telc A1 sind dieselbe Prüfung — wer hier übt, übt für beide. Hören, Lesen und
+        Schreiben im Prüfungsformat. Die Einzelheiten stehen im Teil „Start“.
+      </p>
+    </div>
+
+    <ExamApp brand="Start Deutsch 1" sub="Goethe A1 · telc A1" unit="Aufgaben" />
+  </main>
+
+  <script type="application/json" id="sd1-data" set:html={JSON.stringify(satz)}></script>
+  <script type="module">
+    import { mountExamApp } from "../../lib/examApp.js";
+    import { choiceCard, el, sectionHeader, escapeHtml, practiceToggle } from "../../lib/exam/renderHelpers.js";
+    import { countAnswered, countCorrect, percent } from "../../lib/exam/scoring.js";
+    import { recordAttempt } from "../../lib/progress.js";
+
+    const data = JSON.parse(document.getElementById("sd1-data").textContent);
+    const { hoeren, lesen, schreiben } = data;
+
+    const LETTERS = "abcdefgh";
+    const RF = [{ key: "r", label: "Richtig" }, { key: "f", label: "Falsch" }];
+
+    const idsOf = (part) => part.items.map((i) => i.id);
+
+    /* A richtig/falsch item: the same choiceCard as everywhere else, with the two
+       fixed options and the boolean answer mapped onto them. */
+    function trueFalseCard(main, item, ctx, { qLabel, context }) {
+      main.appendChild(
+        choiceCard({
+          qLabel,
+          context,
+          questionText: item.prompt,
+          options: RF,
+          correctKey: item.answer ? "r" : "f",
+          layout: "wrap",
+          existing: ctx.state.answers[item.id],
+          onAnswer: (given, correct) => ctx.record(item.id, given, correct),
+        })
+      );
+    }
+
+    function abcCard(main, item, ctx, { qLabel, context }) {
+      main.appendChild(
+        choiceCard({
+          qLabel,
+          context,
+          questionText: item.prompt,
+          options: item.options.map((o, n) => ({ key: LETTERS[n], label: o })),
+          correctKey: LETTERS[item.options.indexOf(item.answer)],
+          existing: ctx.state.answers[item.id],
+          onAnswer: (given, correct) => ctx.record(item.id, given, correct),
+        })
+      );
+    }
+
+    /* Hören without recordings: the audio for this set is not generated yet
+       (scripts/generate-audio.mjs covers the Aussprache words only), so each item
+       carries its transcript behind a "Text anzeigen" toggle. Reading the transcript
+       is not listening — the section says so plainly rather than pretending. */
+    function hoerText(item) {
+      const wrap = el("div", "hoer-text");
+      const btn = el("button", "quiz-btn quiz-btn--ghost", "Text anzeigen");
+      btn.type = "button";
+      const body = el("p", "hoer-transcript", escapeHtml(item.transcript));
+      body.hidden = true;
+      btn.addEventListener("click", () => {
+        body.hidden = !body.hidden;
+        btn.textContent = body.hidden ? "Text anzeigen" : "Text verbergen";
+      });
+      wrap.appendChild(btn);
+      wrap.appendChild(body);
+      return wrap;
+    }
+
+    function hoerSection({ key, label, eyebrow, title, part, kind, offset }) {
+      return {
+        key,
+        label,
+        ids: idsOf(part),
+        render(main, ctx) {
+          sectionHeader(main, { eyebrow, title, instruction: escapeHtml(part.instruction) });
+          main.appendChild(
+            el("p", "format-note",
+              "Für diesen Übungssatz gibt es noch keine Tonaufnahmen. Bis dahin steht der Text zu jeder Aufgabe darunter — lies ihn erst, wenn du geantwortet hast.")
+          );
+          part.items.forEach((item, i) => {
+            const card = el("div", "hoer-item");
+            (kind === "rf" ? trueFalseCard : abcCard)(card, item, ctx, { qLabel: "Aufgabe " + (offset + i + 1) });
+            card.appendChild(hoerText(item));
+            main.appendChild(card);
+          });
+        },
+      };
+    }
+
+    const sections = [
+      {
+        key: "start",
+        label: "Start",
+        ids: null,
+        render(main, ctx) {
+          sectionHeader(main, {
+            eyebrow: "Übungssatz",
+            title: "Start Deutsch 1 — Goethe A1 und telc A1",
+            instruction:
+              "Die Prüfung hat vier Teile: Hören, Lesen, Schreiben und Sprechen. Hier übst du die ersten drei; Sprechen geht nur mündlich mit einer Prüferin oder einem Prüfer.",
+          });
+
+          const facts = el("table", "exam-breakdown");
+          facts.innerHTML =
+            "<thead><tr><th>Teil</th><th>Umfang</th></tr></thead><tbody>" +
+            "<tr><td>Hören</td><td>15 Aufgaben · ca. 20 Min.</td></tr>" +
+            "<tr><td>Lesen</td><td>15 Aufgaben · ca. 25 Min.</td></tr>" +
+            "<tr><td>Schreiben</td><td>Formular + Nachricht · ca. 20 Min.</td></tr>" +
+            "<tr><td>Bestanden ab</td><td>36 von 60 Punkten</td></tr>" +
+            "</tbody>";
+          main.appendChild(el("div", "exam-result")).appendChild(facts);
+
+          main.appendChild(el("p", "format-note", escapeHtml(data.sourcing)));
+
+          const go = el("button", "quiz-btn quiz-btn--primary", "Übungssatz starten →");
+          go.type = "button";
+          go.addEventListener("click", () => ctx.goTo("hoeren1"));
+          main.appendChild(el("div", "exam-actions")).appendChild(go);
+        },
+      },
+
+      hoerSection({ key: "hoeren1", label: "Hören 1", eyebrow: "Hören · Teil 1", title: "Kurze Gespräche", part: hoeren.teil1, kind: "abc", offset: 0 }),
+      hoerSection({ key: "hoeren2", label: "Hören 2", eyebrow: "Hören · Teil 2", title: "Durchsagen", part: hoeren.teil2, kind: "rf", offset: 6 }),
+      hoerSection({ key: "hoeren3", label: "Hören 3", eyebrow: "Hören · Teil 3", title: "Ansagen am Telefon", part: hoeren.teil3, kind: "abc", offset: 10 }),
+
+      {
+        key: "lesen1",
+        label: "Lesen 1",
+        ids: idsOf(lesen.teil1),
+        render(main, ctx) {
+          sectionHeader(main, { eyebrow: "Lesen · Teil 1", title: "Zwei kurze Texte", instruction: escapeHtml(lesen.teil1.instruction) });
+          // Both texts up top, then the five items — the way the real answer sheet
+          // works, where you read once and answer five questions against it.
+          for (const t of lesen.teil1.texts) {
+            const box = el("div", "lese-text");
+            box.appendChild(el("p", "lese-text-label", escapeHtml(t.label)));
+            box.appendChild(el("p", "lese-text-body", escapeHtml(t.body).replace(/\n/g, "<br>")));
+            main.appendChild(box);
+          }
+          lesen.teil1.items.forEach((item, i) => {
+            trueFalseCard(main, item, ctx, {
+              qLabel: "Aufgabe " + (i + 1),
+              context: lesen.teil1.texts[item.textRef]?.label,
+            });
+          });
+        },
+      },
+      {
+        key: "lesen2",
+        label: "Lesen 2",
+        ids: idsOf(lesen.teil2),
+        render(main, ctx) {
+          sectionHeader(main, { eyebrow: "Lesen · Teil 2", title: "Anzeigen", instruction: escapeHtml(lesen.teil2.instruction) });
+          lesen.teil2.items.forEach((item, i) => {
+            main.appendChild(
+              choiceCard({
+                qLabel: "Aufgabe " + (i + 6),
+                questionText: item.situation,
+                options: item.options,
+                correctKey: item.answer,
+                existing: ctx.state.answers[item.id],
+                onAnswer: (given, correct) => ctx.record(item.id, given, correct),
+              })
+            );
+          });
+        },
+      },
+      {
+        key: "lesen3",
+        label: "Lesen 3",
+        ids: idsOf(lesen.teil3),
+        render(main, ctx) {
+          sectionHeader(main, { eyebrow: "Lesen · Teil 3", title: "Schilder und Hinweise", instruction: escapeHtml(lesen.teil3.instruction) });
+          lesen.teil3.items.forEach((item, i) => {
+            const box = el("div", "lese-sign", escapeHtml(item.sign).replace(/\n/g, "<br>"));
+            main.appendChild(box);
+            trueFalseCard(main, item, ctx, { qLabel: "Aufgabe " + (i + 11) });
+          });
+        },
+      },
+
+      {
+        key: "schreiben",
+        label: "Schreiben",
+        // Not scored: a form and a free text cannot be graded here, so they carry a
+        // "geübt" mark instead and stay out of the Hören/Lesen point count.
+        ids: ["s-formular", "s-nachricht"],
+        render(main, ctx) {
+          sectionHeader(main, {
+            eyebrow: "Schreiben",
+            title: "Formular und Nachricht",
+            instruction: "Diese beiden Aufgaben bewertet in der echten Prüfung ein Mensch. Hier vergleichst du selbst — mit der Lösung und der Checkliste darunter.",
+          });
+
+          /* Teil 1 — the form. The filled rows are given; the five gaps are the task. */
+          const t1 = schreiben.teil1;
+          main.appendChild(el("h3", "sub-title", "Teil 1 — Formular"));
+          main.appendChild(el("p", "instruction", escapeHtml(t1.instruction)));
+          main.appendChild(el("p", "lese-text-body", escapeHtml(t1.context)));
+
+          const table = el("table", "form-table");
+          table.appendChild(el("caption", null, escapeHtml(t1.form.title)));
+          const tb = el("tbody");
+          for (const row of t1.form.rows) {
+            const tr = el("tr", row.gap ? "is-gap" : "");
+            tr.appendChild(el("th", null, escapeHtml(row.label)));
+            const td = el("td");
+            if (row.gap) {
+              const input = el("input", "form-input");
+              input.type = "text";
+              input.placeholder = row.hint ? row.hint : "…";
+              input.setAttribute("aria-label", row.label);
+              td.appendChild(input);
+              td.appendChild(el("span", "form-answer", escapeHtml(row.expected)));
+            } else {
+              td.textContent = row.value;
+            }
+            tr.appendChild(td);
+            table.appendChild(tb).appendChild(tr);
+          }
+          main.appendChild(table);
+
+          const reveal = el("button", "quiz-btn quiz-btn--ghost", "Lösung zeigen");
+          reveal.type = "button";
+          reveal.addEventListener("click", () => {
+            const on = table.classList.toggle("show-answers");
+            reveal.textContent = on ? "Lösung verbergen" : "Lösung zeigen";
+          });
+          main.appendChild(el("div", "exam-actions")).appendChild(reveal);
+          main.appendChild(
+            practiceToggle({
+              existing: ctx.state.answers["s-formular"],
+              onToggle: (marked) => ctx.record("s-formular", marked ? "done" : "", marked),
+            })
+          );
+
+          /* Teil 2 — the short message. */
+          const t2 = schreiben.teil2;
+          main.appendChild(el("h3", "sub-title", "Teil 2 — Kurze Nachricht"));
+          main.appendChild(el("p", "instruction", escapeHtml(t2.instruction)));
+          main.appendChild(el("p", "lese-text-body", escapeHtml(t2.task)));
+
+          const pts = el("ul", "task-points");
+          for (const p of t2.points) pts.appendChild(el("li", null, escapeHtml(p)));
+          main.appendChild(pts);
+
+          const box = el("textarea", "write-box");
+          box.rows = 7;
+          box.placeholder = "Schreibe deine Nachricht hier …";
+          box.setAttribute("aria-label", "Deine Nachricht");
+          // Kept in this browser only, and only so a half-written message survives a
+          // tab switch — the exam state itself stores nothing but the "geübt" mark.
+          try {
+            box.value = localStorage.getItem("da-sd1-schreiben") ?? "";
+            box.addEventListener("input", () => localStorage.setItem("da-sd1-schreiben", box.value));
+          } catch {}
+          main.appendChild(box);
+
+          const words = el("p", "word-count");
+          const countWords = () => (box.value.trim() ? box.value.trim().split(/\s+/).length : 0);
+          const paintWords = () => { words.textContent = countWords() + " Wörter (circa 30 sind gefragt)"; };
+          paintWords();
+          box.addEventListener("input", paintWords);
+          main.appendChild(words);
+
+          const modelBtn = el("button", "quiz-btn quiz-btn--ghost", "Beispiellösung zeigen");
+          modelBtn.type = "button";
+          const model = el("div", "model-answer");
+          model.hidden = true;
+          model.appendChild(el("p", "lese-text-body", escapeHtml(t2.model).replace(/\n/g, "<br>")));
+          const check = el("ul", "task-points");
+          for (const c of t2.checklist) check.appendChild(el("li", null, escapeHtml(c)));
+          model.appendChild(el("p", "lese-text-label", "Checkliste"));
+          model.appendChild(check);
+          modelBtn.addEventListener("click", () => {
+            model.hidden = !model.hidden;
+            modelBtn.textContent = model.hidden ? "Beispiellösung zeigen" : "Beispiellösung verbergen";
+          });
+          main.appendChild(el("div", "exam-actions")).appendChild(modelBtn);
+          main.appendChild(model);
+          main.appendChild(
+            practiceToggle({
+              existing: ctx.state.answers["s-nachricht"],
+              onToggle: (marked) => ctx.record("s-nachricht", marked ? "done" : "", marked),
+            })
+          );
+        },
+      },
+
+      {
+        key: "ergebnis",
+        label: "Ergebnis",
+        ids: null,
+        render(main, ctx) {
+          // Only the auto-graded parts count: Hören and Lesen, 15 points each. Schreiben
+          // is self-marked and Sprechen does not exist outside a real exam room, so
+          // neither is folded into a number that would look like a grade.
+          const hoerIds = [...idsOf(hoeren.teil1), ...idsOf(hoeren.teil2), ...idsOf(hoeren.teil3)];
+          const leseIds = [...idsOf(lesen.teil1), ...idsOf(lesen.teil2), ...idsOf(lesen.teil3)];
+          const ids = [...hoerIds, ...leseIds];
+          const answered = countAnswered(ids, ctx.state);
+          const correct = countCorrect(ids, ctx.state);
+          const pct = percent(correct, ids.length);
+
+          sectionHeader(main, { eyebrow: "Auswertung", title: "Dein Ergebnis" });
+
+          const card = el("div", "exam-result");
+          if (!answered) {
+            card.appendChild(el("p", "instruction", "Noch keine Aufgabe beantwortet — fang bei „Hören 1“ an, dein Ergebnis erscheint hier automatisch."));
+          } else {
+            card.appendChild(el("div", "exam-score", correct + " <small>von " + ids.length + " richtig</small>"));
+            // 36 of 60 is the pass line for the whole exam; Hören and Lesen are 30 of
+            // those 60, so the comparison is made on the share and the rule is printed.
+            const band = pct >= 60 ? ["", "Über der Bestehensgrenze"] : pct >= 48 ? ["mid", "Knapp darunter"] : ["low", "Noch zu wenig"];
+            card.appendChild(el("span", "exam-band " + band[0], band[1]));
+            card.appendChild(el("p", "instruction", pct + "% richtig in Hören und Lesen. Bestanden ist die ganze Prüfung ab 36 von 60 Punkten, also 60%."));
+
+            const table = el("table", "exam-breakdown");
+            table.innerHTML =
+              "<thead><tr><th>Teil</th><th>Richtig</th></tr></thead><tbody>" +
+              "<tr><td>Hören</td><td>" + countCorrect(hoerIds, ctx.state) + " / " + hoerIds.length + "</td></tr>" +
+              "<tr><td>Lesen</td><td>" + countCorrect(leseIds, ctx.state) + " / " + leseIds.length + "</td></tr>" +
+              "</tbody>";
+            card.appendChild(table);
+
+            if (answered < ids.length) {
+              card.appendChild(el("p", "instruction", "Noch offen: " + (ids.length - answered) + " Aufgaben."));
+            }
+          }
+          main.appendChild(card);
+          main.appendChild(el("p", "format-note", escapeHtml(data.passNote)));
+
+          const actions = el("div", "exam-actions");
+          const telc = el("a", "quiz-btn", "Zur telc-Übersicht");
+          telc.href = "/pruefungen/telc";
+          const goethe = el("a", "quiz-btn", "Zur Goethe-Übersicht");
+          goethe.href = "/pruefungen/goethe";
+          actions.appendChild(telc);
+          actions.appendChild(goethe);
+          main.appendChild(actions);
+        },
+      },
+    ];
+
+    mountExamApp(document.querySelector("[data-exam-root]"), {
+      examId: "start-deutsch-1",
+      unit: "Aufgaben",
+      sections,
+      onAnswer: (ok) => recordAttempt({ skill: "pruefungen", correct: ok }),
+    });
+  </script>
+</Layout>

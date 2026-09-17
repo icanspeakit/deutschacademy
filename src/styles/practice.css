@@ -46,6 +46,12 @@
 .practice-back-link { display: inline-block; margin-bottom: 20px; font-weight: var(--fw-light); font-size: .875rem; color: var(--brand-blue-dark); text-decoration: none; }
 .practice-back-link:hover { color: var(--accent-dark); }
 
+/* The "back to the overview" link above a trainer. Lived in verben-praepositionen.css
+   until the DTZ Übungssatz and the exam trainers started using it without importing
+   that file, which left it rendering as a default blue browser link. */
+.vp-back-link { display: inline-block; margin-bottom: 20px; font-weight: var(--fw-light); font-size: .875rem; color: var(--brand-blue-dark); text-decoration: none; }
+.vp-back-link:hover { color: var(--accent-dark); }
+
 .practice-hero { text-align: center; margin-bottom: 40px; }
 .practice-hero .eyebrow { text-align: center; }
 .practice-hero h1 {
@@ -327,3 +333,12 @@ textarea.writing-area {
 .prompt-stages { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin: 0 0 16px; }
 .prompt-hint { margin: 0 0 12px; font-size: .875rem; line-height: 1.6; color: var(--muted); }
 .prompt-topic { margin: 0 0 12px; font-size: 1rem; line-height: 1.6; }
+
+/* A page that mounts the exam shell is the trainer, not an article about it — so on a
+   phone its hero shrinks out of the way instead of filling the first screen. */
+@media (max-width: 700px) {
+  .practice-main--wide .practice-hero { text-align: left; margin-bottom: 20px; }
+  .practice-main--wide .practice-hero .eyebrow { text-align: left; }
+  .practice-main--wide .practice-hero h1 { font-size: 1.45rem; margin-bottom: 8px; }
+  .practice-main--wide .practice-hero p { margin: 0; font-size: .9rem; line-height: 1.6; }
+}

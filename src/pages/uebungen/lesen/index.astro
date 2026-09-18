@@ -1,0 +1,66 @@
+---
+// /uebungen/lesen — the Leseverstehen hub.
+//
+// Grouped by level, like /uebungen/hoeren and the Landeskunde hub, so the three agree on
+// what "A2" contains. Each card names the TEXT SORT (Anzeigen, Zeitungsartikel, Forum …)
+// rather than the topic, because that is what a DTZ or telc Leseteil actually varies — a
+// learner who handles an article can still be lost in front of six Kleinanzeigen.
+import Layout from "../../../layouts/Layout.astro";
+import PracticeHeader from "../../../components/PracticeHeader.astro";
+import Icon from "../../../components/Icon.astro";
+import { lesen, byLevel, LESEN_ICON } from "../../../lib/fertigkeiten.js";
+import { levels as siteLevels } from "../../../lib/catalog.js";
+import "../../../styles/practice.css";
+import "../../../styles/skills.css";
+
+const { texts, types } = lesen;
+const questionCount = texts.reduce((n, t) => n + (t.questions?.length ?? 0), 0);
+const blurbOf = Object.fromEntries(siteLevels.map((lv) => [lv.level, lv]));
+const groups = byLevel(texts);
+---
+<Layout
+  title="Leseverstehen – DeutschAcademy"
+  description="Leseverstehen von A1 bis B2: Schilder, Anzeigen, E-Mails, Zeitungsartikel und Forumsbeiträge — in den Aufgabenformen aus DTZ und telc, mit Fragen und Erklärungen."
+>
+  <PracticeHeader title="Lesen" />
+  <main class="practice-main practice-main--wide">
+    <div class="practice-hero">
+      <p class="eyebrow">Leseverstehen</p>
+      <h1>Lesen üben</h1>
+      <p>
+        {texts.length} Lesetexte von A1 bis B2 — Schilder, Anzeigen, E-Mails, Artikel und
+        Forumsbeiträge in den Aufgabenformen aus DTZ und telc. Mit Fragen und Erklärungen.
+      </p>
+    </div>
+
+    {groups.map((g) => (
+      <section class="sk-group" id={`niveau-${g.level.toLowerCase()}`}>
+        <h2 class="sk-group-title">
+          <span class="sk-badge">{g.level}</span>
+          <span data-i18n={blurbOf[g.level]?.blurbKey}>{blurbOf[g.level]?.blurb}</span>
+        </h2>
+        <div class="sk-grid">
+          {g.items.map((t) => (
+            <a class="sk-card" href={`/uebungen/lesen/${t.id}`}>
+              <span class="sk-card-ic"><Icon name={LESEN_ICON[t.type] ?? "book-open"} size={20} /></span>
+              <span class="sk-card-txt">
+                <b>{t.title}</b>
+                <i>{t.blurb}</i>
+                <span class="sk-card-meta">
+                  {types[t.type]} · ca. {t.minutes} Min. · {t.questions?.length ?? 0} Fragen
+                </span>
+              </span>
+              <span class="sk-card-go" aria-hidden="true">→</span>
+            </a>
+          ))}
+        </div>
+      </section>
+    ))}
+
+    <p class="sk-foot">
+      {texts.length} Lesetexte · {questionCount} Fragen · alle Texte für diese Seite geschrieben.
+      Die fünf B1-Aufgaben lassen sich unter <a href="/uebungen/lesen-schreiben">DTZ-Simulation</a>
+      auch am Stück durchlaufen — so, wie sie in der Prüfung nacheinander kommen.
+    </p>
+  </main>
+</Layout>

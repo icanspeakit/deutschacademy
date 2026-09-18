@@ -4,7 +4,7 @@
 // file or this script:
 //   node scripts/generate-fakten-pdf.mjs
 import PDFDocument from "pdfkit";
-import { createWriteStream, mkdirSync } from "node:fs";
+import { createWriteStream, mkdirSync, existsSync, readFileSync, writeFileSync, statSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import path from "node:path";
 import lid from "../src/data/leben-in-deutschland.json" with { type: "json" };
@@ -332,6 +332,20 @@ function buildPdf(mode) {
     doc.page.margins.bottom = bottomMargin;
   }
 
+  // Record pages and size for the Wissensdatenbank, the same way the newer generators do
+  // (see scripts/lib/pdf-brand.mjs) — otherwise these five are the only downloads on /wissen
+  // that cannot say how long they are.
+  const pages = doc.bufferedPageRange().count;
+  const stream = doc.pipes?.[0];
   doc.end();
-  console.log(`PDF written to ${outPath}`);
+  const record = () => {
+    const file = path.join(outDir, "manifest.json");
+    const all = existsSync(file) ? JSON.parse(readFileSync(file, "utf8")) : {};
+    all[mode.fileName] = { pages, bytes: statSync(outPath).size };
+    const sorted = Object.fromEntries(Object.keys(all).sort().map((k) => [k, all[k]]));
+    writeFileSync(file, JSON.stringify(sorted, null, 2) + "\n", "utf8");
+    console.log(`PDF written to ${outPath} (${pages} Seiten)`);
+  };
+  if (stream) stream.on("finish", record);
+  else record();
 }

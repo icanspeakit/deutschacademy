@@ -33,14 +33,50 @@
   z-index: 40;
 }
 .tr-wrap .nvb {
+  position: relative;
   box-shadow: 0 18px 44px -20px rgba(15, 23, 42, .55);
-  transition: width .28s cubic-bezier(.22, 1, .36, 1);
+  /* Height is in here too, but only ever between two pixel values the script pins for
+     the length of the transition — see setFolded() in TopicRail.astro. */
+  transition: width .28s cubic-bezier(.22, 1, .36, 1), height .28s cubic-bezier(.22, 1, .36, 1);
 }
-/* Folded: only the icon strip. nav.css already hides .nvb-panel for .collapsed. */
+/* Folded: only the icon strip.
+ *
+ * Closing used to be the one direction with nothing to watch. Opening had two things
+ * going for it — the width transition below and the staggered row entrance nav.css
+ * gives .nvb-section--enter — while closing just deleted the panel: nav.css sets
+ * `display: none` for .collapsed, and a width that is `auto` when open has no second
+ * number to animate back to anyway. Both halves of that are one fix. The open width is
+ * pinned so the transition has two numbers, and the panel fades instead of vanishing.
+ *
+ * 64px strip + 242px panel + the 1px borders on either side.
+ */
+.tr-wrap .nvb { width: 308px; }
 .tr-wrap .nvb.collapsed { width: 64px; }
 
+/* nav.css removes the panel outright when folded; here it stays and fades, clipped by
+   .nvb's own overflow:hidden, so the edge slides across it rather than cutting to it.
+   Out of flow while folded, though: in flow it would go on deciding the box's height,
+   and the folded strip would stand 412px tall next to 318px of icons — taller for a
+   B1 panel than an A1 one, which is the strip reporting on a panel nobody can see. */
+.tr-wrap .nvb.collapsed .nvb-panel {
+  display: flex;
+  position: absolute;
+  left: 64px;
+  top: 0;
+  opacity: 0;
+  pointer-events: none;
+  /* Gone before the edge reaches it, rather than being wiped letter by letter — and
+     visibility waits out the width transition so keyboard focus cannot land in a panel
+     that is on its way out. */
+  visibility: hidden;
+  transition: opacity .12s ease-in, visibility 0s linear .28s;
+}
+.tr-wrap .nvb-panel { transition: opacity .16s ease-out .06s; }
+
 @media (prefers-reduced-motion: reduce) {
-  .tr-wrap .nvb { transition: none; }
+  .tr-wrap .nvb,
+  .tr-wrap .nvb-panel,
+  .tr-wrap .nvb.collapsed .nvb-panel { transition: none; }
 }
 
 /* Below this width the rail would overlap the content it is supposed to help with, and

@@ -1,0 +1,64 @@
+---
+// /uebungen/schreiben — the Schreiben hub.
+//
+// Same shape as the Hören and Lesen hubs. The card names the Textsorte, because that is
+// what a writing task is: nobody practises "schreiben", they practise a Formular, eine
+// Absage, einen Beschwerdebrief.
+import Layout from "../../../layouts/Layout.astro";
+import PracticeHeader from "../../../components/PracticeHeader.astro";
+import Icon from "../../../components/Icon.astro";
+import { schreiben, byLevel, SCHREIBEN_ICON } from "../../../lib/fertigkeiten.js";
+import { levels as siteLevels } from "../../../lib/catalog.js";
+import "../../../styles/practice.css";
+import "../../../styles/skills.css";
+
+const { tasks, types } = schreiben;
+const blurbOf = Object.fromEntries(siteLevels.map((lv) => [lv.level, lv]));
+const groups = byLevel(tasks);
+const minutes = tasks.reduce((n, t) => n + t.minutes, 0);
+---
+<Layout
+  title="Schreiben – DeutschAcademy"
+  description="Schreiben von A1 bis B2: Formulare ausfüllen, Nachrichten und E-Mails schreiben, Briefe für DTZ und telc — jede Aufgabe mit Leitpunkten, Redemitteln und Modelltext."
+>
+  <PracticeHeader title="Schreiben" />
+  <main class="practice-main practice-main--wide">
+    <div class="practice-hero">
+      <p class="eyebrow">Schreiben</p>
+      <h1>Schreiben üben</h1>
+      <p>
+        {tasks.length} Schreibaufgaben von A1 bis B2 — Formulare, Nachrichten, E-Mails und
+        Briefe in den Formaten aus DTZ und telc. Mit Leitpunkten, Redemitteln und einem
+        Modelltext zum Vergleichen.
+      </p>
+    </div>
+
+    {groups.map((g) => (
+      <section class="sk-group" id={`niveau-${g.level.toLowerCase()}`}>
+        <h2 class="sk-group-title">
+          <span class="sk-badge">{g.level}</span>
+          <span data-i18n={blurbOf[g.level]?.blurbKey}>{blurbOf[g.level]?.blurb}</span>
+        </h2>
+        <div class="sk-grid">
+          {g.items.map((t) => (
+            <a class="sk-card" href={`/uebungen/schreiben/${t.id}`}>
+              <span class="sk-card-ic"><Icon name={SCHREIBEN_ICON[t.type] ?? "pencil"} size={20} /></span>
+              <span class="sk-card-txt">
+                <b>{t.title}</b>
+                <i>{t.blurb}</i>
+                <span class="sk-card-meta">{types[t.type]} · ca. {t.minutes} Min.</span>
+              </span>
+              <span class="sk-card-go" aria-hidden="true">→</span>
+            </a>
+          ))}
+        </div>
+      </section>
+    ))}
+
+    <p class="sk-foot">
+      {tasks.length} Aufgaben · zusammen rund {minutes} Minuten Schreibzeit. Schreiben lässt
+      sich nicht automatisch bewerten — deshalb endet hier keine Aufgabe mit einer Punktzahl,
+      sondern mit einem Modelltext und der Liste, die eine Prüferin abhakt.
+    </p>
+  </main>
+</Layout>

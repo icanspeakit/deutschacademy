@@ -1,0 +1,1108 @@
+{
+  "note": "Hörverstehen, A1–B2. Every script here is written for this site and voiced with ElevenLabs (scripts/generate-audio.mjs --hoeren) — nothing is lifted from a Lehrwerk-CD, which is why the task shapes follow DTZ and telc but the texts do not. Speakers map to a voice in `voices` below; the generator renders one clip per turn and joins them, so a dialogue really has two people in it.",
+  "voices": {
+    "ansage": {
+      "label": "Durchsage",
+      "id": "21m00Tcm4TlvDq8ikWAM",
+      "note": "Rachel — even and unhurried, which is what a Bahnhofs- or Amtsdurchsage sounds like."
+    },
+    "frau": {
+      "label": "Sprecherin",
+      "id": "EXAVITQu4vr4xnSDxMaL",
+      "note": "Bella — the voice the Aussprache-Training already uses, so the two trainers sound like one site."
+    },
+    "frau2": {
+      "label": "Zweite Sprecherin",
+      "id": "MF3mGyEYCl7XYWbV9V6O",
+      "note": "Elli — younger and lighter, so a two-woman dialogue is still two people."
+    },
+    "mann": {
+      "label": "Sprecher",
+      "id": "ErXwobaYiN019PkySvjV",
+      "note": "Antoni."
+    },
+    "mann2": {
+      "label": "Zweiter Sprecher",
+      "id": "VR6AewLTigWG4xSOukaG",
+      "note": "Arnold — darker, for the second male role."
+    }
+  },
+  "types": {
+    "ansage": "Durchsage",
+    "anrufbeantworter": "Anrufbeantworter",
+    "telefonat": "Telefonat",
+    "gespraech": "Gespräch",
+    "radio": "Radio",
+    "diskussion": "Diskussion",
+    "vortrag": "Vortrag"
+  },
+  "texts": [
+    {
+      "id": "a1-ansage-bahnhof",
+      "level": "A1",
+      "type": "ansage",
+      "title": "Ansage am Bahnhof",
+      "blurb": "Gleis, Verspätung, Minuten — die drei Wörter, die man am Bahnhof wirklich hört.",
+      "seconds": 35,
+      "script": [
+        {
+          "speaker": "ansage",
+          "text": "Achtung an Gleis vier. Der Regionalzug nach Stuttgart, Abfahrt zwölf Uhr zwanzig, hat heute etwa zehn Minuten Verspätung."
+        },
+        {
+          "speaker": "ansage",
+          "text": "Der Zug fährt heute nicht von Gleis vier, sondern von Gleis sieben. Ich wiederhole: Gleis sieben. Wir bitten um Entschuldigung."
+        }
+      ],
+      "questions": [
+        {
+          "prompt": "Wohin fährt der Zug?",
+          "options": ["Nach Stuttgart", "Nach Hamburg", "Nach München"],
+          "answer": "Nach Stuttgart"
+        },
+        {
+          "prompt": "Von welchem Gleis fährt der Zug heute?",
+          "options": ["Von Gleis vier", "Von Gleis sieben", "Von Gleis zwölf"],
+          "answer": "Von Gleis sieben",
+          "explain": "„nicht von Gleis vier, sondern von Gleis sieben\" — „sondern\" korrigiert immer das Wort davor."
+        },
+        {
+          "prompt": "Wie viel Verspätung hat der Zug?",
+          "options": ["Zehn Minuten", "Zwanzig Minuten", "Vier Minuten"],
+          "answer": "Zehn Minuten",
+          "explain": "„zwölf Uhr zwanzig\" ist die Abfahrtszeit, nicht die Verspätung."
+        }
+      ]
+    },
+    {
+      "id": "a1-anruf-arzt",
+      "level": "A1",
+      "type": "anrufbeantworter",
+      "title": "Anrufbeantworter: Termin beim Arzt",
+      "blurb": "Eine Praxis sagt einen Termin ab und bietet einen neuen an. Wochentag und Uhrzeit mitschreiben.",
+      "seconds": 40,
+      "script": [
+        {
+          "speaker": "frau",
+          "text": "Guten Tag, Frau Nowak. Hier ist die Praxis Doktor Berger, mein Name ist Hoffmann."
+        },
+        {
+          "speaker": "frau",
+          "text": "Sie haben einen Termin am Mittwoch um vierzehn Uhr. Leider ist Doktor Berger am Mittwoch krank."
+        },
+        {
+          "speaker": "frau",
+          "text": "Können Sie am Freitag um neun Uhr kommen? Bitte rufen Sie uns kurz an. Unsere Nummer: null sieben eins eins, drei drei zwei vier. Vielen Dank und auf Wiederhören."
+        }
+      ],
+      "questions": [
+        {
+          "prompt": "Wer ruft an?",
+          "options": ["Die Arztpraxis", "Die Apotheke", "Die Krankenkasse"],
+          "answer": "Die Arztpraxis"
+        },
+        {
+          "prompt": "Warum gibt es einen neuen Termin?",
+          "options": ["Der Arzt ist krank", "Die Praxis hat zu", "Frau Nowak hat abgesagt"],
+          "answer": "Der Arzt ist krank"
+        },
+        {
+          "prompt": "Wann ist der neue Termin?",
+          "options": ["Am Freitag um neun Uhr", "Am Mittwoch um vierzehn Uhr", "Am Freitag um vierzehn Uhr"],
+          "answer": "Am Freitag um neun Uhr",
+          "explain": "Mittwoch um vierzehn Uhr war der alte Termin — der fällt aus."
+        },
+        {
+          "prompt": "Was soll Frau Nowak machen?",
+          "options": ["Zurückrufen", "Eine E-Mail schreiben", "Einfach kommen"],
+          "answer": "Zurückrufen"
+        }
+      ]
+    },
+    {
+      "id": "a1-supermarkt",
+      "level": "A1",
+      "type": "gespraech",
+      "title": "Im Supermarkt: Wo finde ich …?",
+      "blurb": "Nach dem Weg im Laden fragen. Links, rechts, hinten — und was es gerade nicht gibt.",
+      "seconds": 40,
+      "script": [
+        { "speaker": "mann", "text": "Entschuldigung, wo finde ich Milch?" },
+        {
+          "speaker": "frau",
+          "text": "Die Milch ist hinten rechts, neben dem Käse. Gehen Sie einfach geradeaus bis zum Ende."
+        },
+        { "speaker": "mann", "text": "Danke. Und haben Sie auch frisches Brot?" },
+        {
+          "speaker": "frau",
+          "text": "Brot ist gleich hier vorne links. Aber Brötchen haben wir heute leider keine mehr."
+        },
+        { "speaker": "mann", "text": "Kein Problem. Vielen Dank!" }
+      ],
+      "questions": [
+        {
+          "prompt": "Wo ist die Milch?",
+          "options": ["Hinten rechts", "Vorne links", "Hinten links"],
+          "answer": "Hinten rechts"
+        },
+        {
+          "prompt": "Was gibt es heute nicht mehr?",
+          "options": ["Brötchen", "Brot", "Käse"],
+          "answer": "Brötchen",
+          "explain": "Brot gibt es — nur die Brötchen sind aus."
+        },
+        {
+          "prompt": "Wo ist das Brot?",
+          "options": ["Vorne links", "Hinten rechts", "Neben der Milch"],
+          "answer": "Vorne links"
+        }
+      ]
+    },
+    {
+      "id": "a1-verabredung",
+      "level": "A1",
+      "type": "telefonat",
+      "title": "Telefonat: Wann treffen wir uns?",
+      "blurb": "Zwei Freundinnen verabreden sich. Uhrzeit, Ort und ein kleiner Wechsel in letzter Minute.",
+      "seconds": 45,
+      "script": [
+        { "speaker": "frau", "text": "Hallo Maria, hier ist Lena. Hast du kurz Zeit?" },
+        { "speaker": "frau2", "text": "Hallo Lena! Ja, klar. Was gibt's?" },
+        {
+          "speaker": "frau",
+          "text": "Treffen wir uns morgen im Café? Um sechzehn Uhr?"
+        },
+        {
+          "speaker": "frau2",
+          "text": "Um sechzehn Uhr kann ich leider nicht, ich arbeite bis fünf. Geht es auch um achtzehn Uhr?"
+        },
+        {
+          "speaker": "frau",
+          "text": "Ja, das passt. Dann um achtzehn Uhr. Aber nicht im Café — komm doch zu mir nach Hause."
+        },
+        { "speaker": "frau2", "text": "Super, bis morgen!" }
+      ],
+      "questions": [
+        {
+          "prompt": "Wann treffen sich Lena und Maria?",
+          "options": ["Um achtzehn Uhr", "Um sechzehn Uhr", "Um siebzehn Uhr"],
+          "answer": "Um achtzehn Uhr",
+          "explain": "Sechzehn Uhr war der erste Vorschlag — Maria arbeitet da noch."
+        },
+        {
+          "prompt": "Wo treffen sie sich?",
+          "options": ["Bei Lena zu Hause", "Im Café", "Bei Maria zu Hause"],
+          "answer": "Bei Lena zu Hause"
+        },
+        {
+          "prompt": "Warum kann Maria nicht früher?",
+          "options": ["Sie arbeitet bis fünf", "Sie ist krank", "Sie hat einen Termin"],
+          "answer": "Sie arbeitet bis fünf"
+        }
+      ]
+    },
+
+    {
+      "id": "a2-amt-termin",
+      "level": "A2",
+      "type": "telefonat",
+      "title": "Beim Amt: Termin verschieben",
+      "blurb": "Ein Termin bei der Ausländerbehörde passt nicht mehr. Was man am Telefon sagen muss — und was man mitbringt.",
+      "seconds": 55,
+      "script": [
+        {
+          "speaker": "mann",
+          "text": "Ausländerbehörde, Sachgebiet drei, Weber. Was kann ich für Sie tun?"
+        },
+        {
+          "speaker": "frau",
+          "text": "Guten Tag, Herr Weber. Mein Name ist Amina Khalil. Ich habe am Donnerstag einen Termin, aber ich muss ihn leider verschieben."
+        },
+        { "speaker": "mann", "text": "Kein Problem. Haben Sie Ihre Kundennummer?" },
+        { "speaker": "frau", "text": "Ja, Moment — vier acht neun zwei." },
+        {
+          "speaker": "mann",
+          "text": "Danke. Ich sehe den Termin. Der nächste freie ist am achtzehnten März um zehn Uhr dreißig. Passt das?"
+        },
+        {
+          "speaker": "frau",
+          "text": "Ja, das passt gut. Muss ich etwas mitbringen?"
+        },
+        {
+          "speaker": "mann",
+          "text": "Ihren Pass, die Meldebescheinigung und den Mietvertrag. Ohne Meldebescheinigung können wir den Antrag nicht bearbeiten."
+        },
+        { "speaker": "frau", "text": "Alles klar. Vielen Dank!" }
+      ],
+      "questions": [
+        {
+          "prompt": "Warum ruft Frau Khalil an?",
+          "options": [
+            "Sie möchte den Termin verschieben",
+            "Sie möchte einen Antrag stellen",
+            "Sie hat den Termin vergessen"
+          ],
+          "answer": "Sie möchte den Termin verschieben"
+        },
+        {
+          "prompt": "Wann ist der neue Termin?",
+          "options": [
+            "Am achtzehnten März um zehn Uhr dreißig",
+            "Am Donnerstag um zehn Uhr",
+            "Am achtzehnten Mai um zehn Uhr dreißig"
+          ],
+          "answer": "Am achtzehnten März um zehn Uhr dreißig"
+        },
+        {
+          "prompt": "Welches Dokument ist unbedingt nötig?",
+          "options": ["Die Meldebescheinigung", "Ein Foto", "Die Steuernummer"],
+          "answer": "Die Meldebescheinigung",
+          "explain": "„Ohne Meldebescheinigung können wir den Antrag nicht bearbeiten\" — das ist die Bedingung."
+        },
+        {
+          "prompt": "Was nennt Frau Khalil am Telefon?",
+          "options": ["Ihre Kundennummer", "Ihre Telefonnummer", "Ihre Adresse"],
+          "answer": "Ihre Kundennummer"
+        }
+      ]
+    },
+    {
+      "id": "a2-wohnungsbesichtigung",
+      "level": "A2",
+      "type": "gespraech",
+      "title": "Wohnungsbesichtigung",
+      "blurb": "Kaltmiete, Nebenkosten, Kaution — die Zahlen, über die man in dieser Viertelstunde entscheidet.",
+      "seconds": 60,
+      "script": [
+        {
+          "speaker": "mann",
+          "text": "Also, das ist das Wohnzimmer, und da hinten die Küche. Die Wohnung hat zweiundsechzig Quadratmeter."
+        },
+        { "speaker": "frau", "text": "Schön hell. Wie hoch ist die Miete?" },
+        {
+          "speaker": "mann",
+          "text": "Die Kaltmiete sind sechshundertfünfzig Euro. Dazu kommen hundertachtzig Euro Nebenkosten."
+        },
+        { "speaker": "frau", "text": "Ist der Strom da schon dabei?" },
+        {
+          "speaker": "mann",
+          "text": "Nein, Strom müssen Sie selbst anmelden. In den Nebenkosten sind Heizung, Wasser und Müll."
+        },
+        { "speaker": "frau", "text": "Und die Kaution?" },
+        {
+          "speaker": "mann",
+          "text": "Drei Kaltmieten, also tausendneunhundertfünfzig Euro. Die bekommen Sie zurück, wenn Sie ausziehen."
+        },
+        {
+          "speaker": "frau",
+          "text": "Gut. Und ab wann ist die Wohnung frei?"
+        },
+        { "speaker": "mann", "text": "Ab dem ersten Juni." }
+      ],
+      "questions": [
+        {
+          "prompt": "Wie hoch ist die Warmmiete?",
+          "options": ["830 Euro", "650 Euro", "180 Euro"],
+          "answer": "830 Euro",
+          "explain": "Warmmiete = Kaltmiete + Nebenkosten, also 650 + 180."
+        },
+        {
+          "prompt": "Was ist NICHT in den Nebenkosten?",
+          "options": ["Der Strom", "Die Heizung", "Das Wasser"],
+          "answer": "Der Strom",
+          "explain": "„Strom müssen Sie selbst anmelden.\""
+        },
+        {
+          "prompt": "Wie viel Kaution muss die Mieterin zahlen?",
+          "options": ["1950 Euro", "650 Euro", "830 Euro"],
+          "answer": "1950 Euro",
+          "explain": "Drei Kaltmieten — mehr als drei darf der Vermieter in Deutschland nicht verlangen."
+        },
+        {
+          "prompt": "Ab wann ist die Wohnung frei?",
+          "options": ["Ab dem ersten Juni", "Ab dem ersten Juli", "Sofort"],
+          "answer": "Ab dem ersten Juni"
+        }
+      ]
+    },
+    {
+      "id": "a2-radio-wetter-verkehr",
+      "level": "A2",
+      "type": "radio",
+      "title": "Radio: Wetter und Verkehr",
+      "blurb": "Zwei kurze Meldungen hintereinander. Zahlen, Richtungen und eine Warnung.",
+      "seconds": 50,
+      "script": [
+        {
+          "speaker": "frau",
+          "text": "Und jetzt das Wetter für Baden-Württemberg. Heute Vormittag noch Regen, am Nachmittag wird es trockener. Höchstwerte zwischen elf und vierzehn Grad."
+        },
+        {
+          "speaker": "frau",
+          "text": "In der Nacht kühlt es auf drei Grad ab. Achtung: In den frühen Morgenstunden kann es glatt werden."
+        },
+        {
+          "speaker": "mann",
+          "text": "Zum Verkehr: Auf der A acht Richtung München staut sich der Verkehr zwischen Stuttgart und Esslingen auf fünf Kilometern. Grund ist ein liegengebliebener Lastwagen."
+        },
+        {
+          "speaker": "mann",
+          "text": "In der Gegenrichtung ist die Strecke frei. Bitte fahren Sie vorsichtig."
+        }
+      ],
+      "questions": [
+        {
+          "prompt": "Wie wird das Wetter am Nachmittag?",
+          "options": ["Trockener", "Regnerisch", "Es schneit"],
+          "answer": "Trockener"
+        },
+        {
+          "prompt": "Wovor wird gewarnt?",
+          "options": ["Vor Glätte am Morgen", "Vor Sturm", "Vor Hitze"],
+          "answer": "Vor Glätte am Morgen",
+          "explain": "„In den frühen Morgenstunden kann es glatt werden.\""
+        },
+        {
+          "prompt": "Wo ist der Stau?",
+          "options": [
+            "Auf der A 8 Richtung München",
+            "Auf der A 8 Richtung Stuttgart",
+            "In Esslingen in der Stadt"
+          ],
+          "answer": "Auf der A 8 Richtung München",
+          "explain": "In der Gegenrichtung ist die Strecke ausdrücklich frei."
+        },
+        {
+          "prompt": "Warum staut es sich?",
+          "options": ["Ein Lastwagen ist liegengeblieben", "Es gab einen Unfall", "Eine Baustelle"],
+          "answer": "Ein Lastwagen ist liegengeblieben"
+        }
+      ]
+    },
+    {
+      "id": "a2-paketdienst",
+      "level": "A2",
+      "type": "anrufbeantworter",
+      "title": "Anrufbeantworter: Paket und Handwerker",
+      "blurb": "Zwei Nachrichten auf der Mailbox. Wer war da, was soll man tun, bis wann?",
+      "seconds": 55,
+      "script": [
+        {
+          "speaker": "mann",
+          "text": "Erste Nachricht. Guten Tag, hier ist der Paketdienst. Wir waren heute um elf Uhr bei Ihnen, aber Sie waren nicht zu Hause."
+        },
+        {
+          "speaker": "mann",
+          "text": "Ihr Paket liegt jetzt im Paketshop in der Bahnhofstraße zwölf. Sie können es bis Samstag abholen. Bitte bringen Sie einen Ausweis mit."
+        },
+        {
+          "speaker": "frau2",
+          "text": "Zweite Nachricht. Hallo Herr Ilić, hier ist Firma Krause, Sanitär. Wegen der Heizung: Unser Kollege kann am Dienstag zwischen acht und zwölf Uhr kommen."
+        },
+        {
+          "speaker": "frau2",
+          "text": "Wenn der Termin nicht passt, schreiben Sie uns bitte eine kurze Nachricht. Sonst kommen wir am Dienstag. Auf Wiederhören."
+        }
+      ],
+      "questions": [
+        {
+          "prompt": "Wo liegt das Paket jetzt?",
+          "options": [
+            "Im Paketshop in der Bahnhofstraße",
+            "Beim Nachbarn",
+            "Es kommt morgen noch einmal"
+          ],
+          "answer": "Im Paketshop in der Bahnhofstraße"
+        },
+        {
+          "prompt": "Was muss man zum Abholen mitbringen?",
+          "options": ["Einen Ausweis", "Geld", "Den Schlüssel"],
+          "answer": "Einen Ausweis"
+        },
+        {
+          "prompt": "Was soll Herr Ilić tun, wenn der Dienstag passt?",
+          "options": [
+            "Nichts — die Firma kommt einfach",
+            "Zurückrufen",
+            "Eine Nachricht schreiben"
+          ],
+          "answer": "Nichts — die Firma kommt einfach",
+          "explain": "Schreiben soll er nur, wenn der Termin NICHT passt."
+        },
+        {
+          "prompt": "Wann kommt der Handwerker?",
+          "options": [
+            "Am Dienstag zwischen acht und zwölf",
+            "Am Samstag zwischen acht und zwölf",
+            "Am Dienstag um zwölf"
+          ],
+          "answer": "Am Dienstag zwischen acht und zwölf"
+        }
+      ]
+    },
+
+    {
+      "id": "b1-krankmeldung",
+      "level": "B1",
+      "type": "telefonat",
+      "title": "Krankmeldung beim Arbeitgeber",
+      "blurb": "Sich krankmelden, ohne sich zu entschuldigen — und wissen, ab wann der Schein fällig ist.",
+      "seconds": 70,
+      "script": [
+        { "speaker": "frau2", "text": "Personalbüro Lindner, guten Morgen." },
+        {
+          "speaker": "mann",
+          "text": "Guten Morgen, Frau Lindner, hier ist Tarek Mansour aus der Logistik. Ich muss mich leider krankmelden."
+        },
+        {
+          "speaker": "frau2",
+          "text": "Das tut mir leid. Wissen Sie schon, wie lange Sie ausfallen?"
+        },
+        {
+          "speaker": "mann",
+          "text": "Der Arzt hat mich erst mal bis Freitag krankgeschrieben. Wenn es nicht besser wird, verlängert er."
+        },
+        {
+          "speaker": "frau2",
+          "text": "In Ordnung. Denken Sie bitte daran: Die Arbeitsunfähigkeitsbescheinigung brauchen wir spätestens am vierten Tag. Am besten schicken Sie sie gleich."
+        },
+        {
+          "speaker": "mann",
+          "text": "Die Praxis meldet das inzwischen elektronisch an die Krankenkasse. Reicht das nicht?"
+        },
+        {
+          "speaker": "frau2",
+          "text": "Für die Kasse ja, für uns nicht ganz — wir holen die Meldung zwar selbst ab, aber Sie müssen uns trotzdem sofort informieren, dass Sie krank sind. Das haben Sie jetzt ja gemacht."
+        },
+        {
+          "speaker": "mann",
+          "text": "Gut. Und meine Schicht am Donnerstag?"
+        },
+        {
+          "speaker": "frau2",
+          "text": "Darum kümmere ich mich. Gute Besserung, Herr Mansour."
+        }
+      ],
+      "questions": [
+        {
+          "prompt": "Bis wann ist Herr Mansour krankgeschrieben?",
+          "options": ["Bis Freitag", "Bis Donnerstag", "Bis zum vierten Tag"],
+          "answer": "Bis Freitag"
+        },
+        {
+          "prompt": "Was sagt Frau Lindner über die Krankmeldung?",
+          "options": [
+            "Er muss den Betrieb sofort informieren",
+            "Die Krankenkasse informiert den Betrieb, er muss nichts tun",
+            "Er muss die Bescheinigung am ersten Tag persönlich vorbeibringen"
+          ],
+          "answer": "Er muss den Betrieb sofort informieren",
+          "explain": "Der Schein läuft elektronisch, die Meldung beim Arbeitgeber nicht — anrufen muss man trotzdem, und zwar am ersten Tag."
+        },
+        {
+          "prompt": "Wer kümmert sich um die Schicht am Donnerstag?",
+          "options": ["Frau Lindner", "Herr Mansour selbst", "Ein Kollege aus der Logistik"],
+          "answer": "Frau Lindner"
+        },
+        {
+          "prompt": "Was passiert, wenn es Herrn Mansour nicht besser geht?",
+          "options": [
+            "Der Arzt verlängert die Krankschreibung",
+            "Er muss unbezahlten Urlaub nehmen",
+            "Er muss zur Krankenkasse gehen"
+          ],
+          "answer": "Der Arzt verlängert die Krankschreibung"
+        }
+      ]
+    },
+    {
+      "id": "b1-elterngespraech",
+      "level": "B1",
+      "type": "gespraech",
+      "title": "Elterngespräch in der Schule",
+      "blurb": "Eine Lehrerin und ein Vater sprechen über Noten, Hausaufgaben und eine Empfehlung.",
+      "seconds": 75,
+      "script": [
+        {
+          "speaker": "frau",
+          "text": "Schön, dass Sie da sind, Herr Petrov. Ich wollte mit Ihnen über Dimitris Entwicklung sprechen."
+        },
+        {
+          "speaker": "mann2",
+          "text": "Gerne. Zu Hause sagt er immer, es läuft gut."
+        },
+        {
+          "speaker": "frau",
+          "text": "In Mathematik läuft es auch wirklich gut, da ist er einer der Besten. Schwierig ist im Moment Deutsch — vor allem das Schreiben."
+        },
+        {
+          "speaker": "mann2",
+          "text": "Sprechen kann er eigentlich gut. Woran liegt das?"
+        },
+        {
+          "speaker": "frau",
+          "text": "Genau das ist das Muster: mündlich sicher, schriftlich unsicher. Ihm fehlen die festen Formulierungen, die man in einem Text braucht. Das lernt man nicht nebenbei, das muss man üben."
+        },
+        {
+          "speaker": "mann2",
+          "text": "Und die Hausaufgaben? Er sitzt jeden Tag zwei Stunden."
+        },
+        {
+          "speaker": "frau",
+          "text": "Zwei Stunden sind viel. Ich würde lieber kürzer, aber regelmäßig sagen — und ich empfehle die Förderstunde am Mittwoch. Die ist kostenlos, in kleinen Gruppen."
+        },
+        {
+          "speaker": "mann2",
+          "text": "Das machen wir. Muss ich das anmelden?"
+        },
+        {
+          "speaker": "frau",
+          "text": "Ich melde ihn an, Sie unterschreiben nur kurz das Formular."
+        }
+      ],
+      "questions": [
+        {
+          "prompt": "In welchem Fach ist Dimitri stark?",
+          "options": ["Mathematik", "Deutsch", "In keinem"],
+          "answer": "Mathematik"
+        },
+        {
+          "prompt": "Wo liegt das eigentliche Problem?",
+          "options": [
+            "Beim Schreiben",
+            "Beim Sprechen",
+            "Bei den Noten insgesamt"
+          ],
+          "answer": "Beim Schreiben",
+          "explain": "„mündlich sicher, schriftlich unsicher\" — die Lehrerin nennt es selbst ein Muster."
+        },
+        {
+          "prompt": "Was empfiehlt die Lehrerin zu den Hausaufgaben?",
+          "options": [
+            "Kürzer, aber regelmäßig",
+            "Länger als zwei Stunden",
+            "Gar keine mehr"
+          ],
+          "answer": "Kürzer, aber regelmäßig"
+        },
+        {
+          "prompt": "Was kostet die Förderstunde am Mittwoch?",
+          "options": ["Nichts", "Einen kleinen Beitrag", "Das sagt die Lehrerin nicht"],
+          "answer": "Nichts"
+        },
+        {
+          "prompt": "Was muss der Vater tun?",
+          "options": [
+            "Ein Formular unterschreiben",
+            "Dimitri selbst anmelden",
+            "Mit dem Direktor sprechen"
+          ],
+          "answer": "Ein Formular unterschreiben"
+        }
+      ]
+    },
+    {
+      "id": "b1-radio-muelltrennung",
+      "level": "B1",
+      "type": "radio",
+      "title": "Radiobeitrag: Mülltrennung und Pfand",
+      "blurb": "Welche Tonne für was — und warum die gelbe Tonne der häufigste Fehler ist.",
+      "seconds": 80,
+      "script": [
+        {
+          "speaker": "frau",
+          "text": "Deutschland trennt seinen Müll seit über dreißig Jahren, und trotzdem landet jedes Jahr rund ein Drittel der Verpackungen in der falschen Tonne. Wir haben nachgefragt, woran das liegt."
+        },
+        {
+          "speaker": "mann",
+          "text": "Der häufigste Irrtum betrifft die gelbe Tonne. Viele Leute denken, dort gehört alles aus Plastik hinein. Richtig ist: nur Verpackungen. Ein kaputtes Plastikspielzeug ist keine Verpackung, das gehört in den Restmüll."
+        },
+        {
+          "speaker": "frau",
+          "text": "Und der Joghurtbecher? Muss man den ausspülen?"
+        },
+        {
+          "speaker": "mann",
+          "text": "Nein, ausspülen muss man nicht — das kostet nur Wasser. Löffelrein reicht. Wichtiger ist, Deckel und Becher zu trennen, weil die aus unterschiedlichem Material sind."
+        },
+        {
+          "speaker": "frau",
+          "text": "Ein zweites Thema ist das Pfand. Auf fast alle Einwegflaschen und Dosen kommen fünfundzwanzig Cent, auf Mehrwegflaschen acht oder fünfzehn."
+        },
+        {
+          "speaker": "mann",
+          "text": "Und man kann Einwegflaschen überall zurückgeben, wo es dieselbe Verpackungsart gibt — nicht nur in dem Laden, in dem man gekauft hat. Das wissen erstaunlich wenige."
+        }
+      ],
+      "questions": [
+        {
+          "prompt": "Was gehört in die gelbe Tonne?",
+          "options": [
+            "Nur Verpackungen",
+            "Alles aus Plastik",
+            "Plastik und Glas"
+          ],
+          "answer": "Nur Verpackungen",
+          "explain": "Deshalb ist kaputtes Plastikspielzeug Restmüll — es ist keine Verpackung."
+        },
+        {
+          "prompt": "Muss man den Joghurtbecher ausspülen?",
+          "options": [
+            "Nein, löffelrein reicht",
+            "Ja, mit heißem Wasser",
+            "Ja, sonst wird er nicht recycelt"
+          ],
+          "answer": "Nein, löffelrein reicht"
+        },
+        {
+          "prompt": "Warum soll man Deckel und Becher trennen?",
+          "options": [
+            "Sie sind aus unterschiedlichem Material",
+            "Sonst passt der Becher nicht in die Tonne",
+            "Wegen des Geruchs"
+          ],
+          "answer": "Sie sind aus unterschiedlichem Material"
+        },
+        {
+          "prompt": "Wo kann man eine Einwegflasche zurückgeben?",
+          "options": [
+            "In jedem Laden, der dieselbe Verpackungsart verkauft",
+            "Nur im Laden, wo man sie gekauft hat",
+            "Nur im Getränkemarkt"
+          ],
+          "answer": "In jedem Laden, der dieselbe Verpackungsart verkauft"
+        },
+        {
+          "prompt": "Wie viel Pfand ist auf einer Einwegflasche?",
+          "options": ["25 Cent", "15 Cent", "8 Cent"],
+          "answer": "25 Cent",
+          "explain": "Acht und fünfzehn Cent sind Mehrweg."
+        }
+      ]
+    },
+    {
+      "id": "b1-durchsage-ersatzverkehr",
+      "level": "B1",
+      "type": "ansage",
+      "title": "Durchsage: Störung und Ersatzverkehr",
+      "blurb": "Die S-Bahn fällt aus. Wer wohin muss, muss jetzt genau zuhören.",
+      "seconds": 60,
+      "script": [
+        {
+          "speaker": "ansage",
+          "text": "Sehr geehrte Fahrgäste, wegen einer Stellwerksstörung kommt es auf der Linie S drei zu erheblichen Einschränkungen."
+        },
+        {
+          "speaker": "ansage",
+          "text": "Zwischen Hauptbahnhof und Vaihingen fahren derzeit keine Züge. Wir richten einen Ersatzverkehr mit Bussen ein. Die Busse fahren ab dem Busbahnhof, Ausgang Nord, im Zehn-Minuten-Takt."
+        },
+        {
+          "speaker": "ansage",
+          "text": "Fahrgäste in Richtung Flughafen nutzen bitte die Linie S zwei bis Rohr und steigen dort um. Fahrkarten der S drei gelten selbstverständlich auch im Ersatzverkehr."
+        },
+        {
+          "speaker": "ansage",
+          "text": "Wir rechnen damit, dass die Störung bis etwa achtzehn Uhr behoben ist. Bitte planen Sie mindestens dreißig Minuten mehr Fahrzeit ein."
+        }
+      ],
+      "questions": [
+        {
+          "prompt": "Warum fallen die Züge aus?",
+          "options": [
+            "Wegen einer Stellwerksstörung",
+            "Wegen eines Unfalls",
+            "Wegen eines Streiks"
+          ],
+          "answer": "Wegen einer Stellwerksstörung"
+        },
+        {
+          "prompt": "Wo fahren die Ersatzbusse ab?",
+          "options": [
+            "Am Busbahnhof, Ausgang Nord",
+            "Vor dem Hauptbahnhof, Ausgang Süd",
+            "In Vaihingen"
+          ],
+          "answer": "Am Busbahnhof, Ausgang Nord"
+        },
+        {
+          "prompt": "Was sollen Fahrgäste Richtung Flughafen tun?",
+          "options": [
+            "Mit der S 2 bis Rohr fahren und umsteigen",
+            "Den Ersatzbus nehmen",
+            "Warten, bis die Störung behoben ist"
+          ],
+          "answer": "Mit der S 2 bis Rohr fahren und umsteigen"
+        },
+        {
+          "prompt": "Braucht man eine neue Fahrkarte für den Bus?",
+          "options": [
+            "Nein, die Fahrkarte der S 3 gilt",
+            "Ja, im Bus",
+            "Ja, am Automaten"
+          ],
+          "answer": "Nein, die Fahrkarte der S 3 gilt"
+        },
+        {
+          "prompt": "Wie viel mehr Zeit soll man einplanen?",
+          "options": ["Mindestens 30 Minuten", "Etwa 10 Minuten", "Bis 18 Uhr"],
+          "answer": "Mindestens 30 Minuten",
+          "explain": "Achtzehn Uhr ist das Ende der Störung, nicht die zusätzliche Fahrzeit."
+        }
+      ]
+    },
+
+    {
+      "id": "b2-diskussion-homeoffice",
+      "level": "B2",
+      "type": "diskussion",
+      "title": "Teambesprechung: Homeoffice",
+      "blurb": "Drei Positionen, ein Kompromiss. Argumente erkennen — und wer am Ende worauf eingeht.",
+      "seconds": 95,
+      "script": [
+        {
+          "speaker": "frau",
+          "text": "Wir müssen die Homeoffice-Regelung bis Ende des Monats neu festlegen. Momentan macht das jede Abteilung anders, und das führt regelmäßig zu Konflikten."
+        },
+        {
+          "speaker": "mann2",
+          "text": "Aus meiner Sicht spricht vieles dafür, es dabei zu belassen. Die Teams sind unterschiedlich — der Support muss erreichbar sein, die Entwicklung braucht eher Ruhe. Eine einheitliche Regel würde beiden nicht gerecht."
+        },
+        {
+          "speaker": "frau2",
+          "text": "Das Argument verstehe ich, aber es übersieht etwas: Wenn jede Abteilung selbst entscheidet, entscheidet in Wirklichkeit die Führungskraft. Und dann hängt es davon ab, welchen Chef man hat. Das ist genau die Ungleichheit, über die sich die Leute beschweren."
+        },
+        {
+          "speaker": "mann2",
+          "text": "Da haben Sie recht. Mir ging es weniger um die Freiheit der Abteilung als um die Sache."
+        },
+        {
+          "speaker": "frau",
+          "text": "Dann schlage ich einen Rahmen vor, keine feste Zahl: Alle dürfen bis zu drei Tage von zu Hause arbeiten, aber jedes Team legt einen gemeinsamen Bürotag fest. Damit ist der Support abgedeckt und die Entwicklung hat ihre Ruhetage."
+        },
+        {
+          "speaker": "frau2",
+          "text": "Damit könnte ich leben. Wichtig wäre mir nur, dass der Bürotag schriftlich festgehalten wird und nicht jede Woche neu verhandelt wird."
+        },
+        {
+          "speaker": "mann2",
+          "text": "Einverstanden. Ich würde nur ergänzen, dass wir nach sechs Monaten prüfen, ob es funktioniert."
+        },
+        {
+          "speaker": "frau",
+          "text": "Gut. Dann halte ich fest: Rahmen mit drei Tagen, ein fester Bürotag pro Team, schriftlich, Überprüfung nach einem halben Jahr."
+        }
+      ],
+      "questions": [
+        {
+          "prompt": "Was ist das Problem an der aktuellen Regelung?",
+          "options": [
+            "Jede Abteilung macht es anders",
+            "Niemand darf ins Homeoffice",
+            "Der Support ist nicht erreichbar"
+          ],
+          "answer": "Jede Abteilung macht es anders"
+        },
+        {
+          "prompt": "Welches Gegenargument bringt die zweite Sprecherin?",
+          "options": [
+            "In Wirklichkeit entscheidet die Führungskraft, nicht das Team",
+            "Homeoffice ist weniger produktiv",
+            "Die Entwicklung braucht keine Ruhe"
+          ],
+          "answer": "In Wirklichkeit entscheidet die Führungskraft, nicht das Team",
+          "explain": "Sie widerspricht nicht der Vielfalt, sondern zeigt, was aus ihr in der Praxis folgt."
+        },
+        {
+          "prompt": "Wie reagiert der männliche Sprecher darauf?",
+          "options": [
+            "Er gibt ihr recht",
+            "Er bleibt bei seiner Position",
+            "Er wechselt das Thema"
+          ],
+          "answer": "Er gibt ihr recht",
+          "explain": "„Da haben Sie recht\" — und er erklärt, worum es ihm eigentlich ging."
+        },
+        {
+          "prompt": "Worauf einigt sich das Team?",
+          "options": [
+            "Bis zu drei Tage Homeoffice und ein fester Bürotag pro Team",
+            "Drei feste Bürotage für alle",
+            "Jede Abteilung entscheidet weiterhin selbst"
+          ],
+          "answer": "Bis zu drei Tage Homeoffice und ein fester Bürotag pro Team"
+        },
+        {
+          "prompt": "Was ergänzt der männliche Sprecher zum Schluss?",
+          "options": [
+            "Eine Überprüfung nach sechs Monaten",
+            "Eine Abstimmung im ganzen Haus",
+            "Eine Ausnahme für den Support"
+          ],
+          "answer": "Eine Überprüfung nach sechs Monaten"
+        }
+      ]
+    },
+    {
+      "id": "b2-interview-anerkennung",
+      "level": "B2",
+      "type": "radio",
+      "title": "Interview: Anerkennung ausländischer Abschlüsse",
+      "blurb": "Ein Beratungsexperte erklärt, was „Gleichwertigkeit\" heißt — und was der häufigste Fehler im Verfahren ist.",
+      "seconds": 100,
+      "script": [
+        {
+          "speaker": "frau",
+          "text": "Herr Doktor Ahrens, viele Zugewanderte bringen eine abgeschlossene Ausbildung mit und arbeiten trotzdem unter ihrem Niveau. Woran scheitert es?"
+        },
+        {
+          "speaker": "mann",
+          "text": "Nicht an der Qualifikation, sondern am Verfahren. Wer in einem reglementierten Beruf arbeiten will — Pflege, Medizin, Lehramt — braucht zwingend die Anerkennung. In allen anderen Berufen darf man sofort arbeiten, die Anerkennung ist dann freiwillig."
+        },
+        {
+          "speaker": "frau",
+          "text": "Und was wird dabei eigentlich geprüft?"
+        },
+        {
+          "speaker": "mann",
+          "text": "Geprüft wird die Gleichwertigkeit, nicht die Gleichheit. Die Frage ist also nicht, ob die Ausbildung identisch war, sondern ob die wesentlichen Unterschiede so groß sind, dass sie relevant werden. Kleine Abweichungen im Lehrplan sind völlig normal."
+        },
+        {
+          "speaker": "frau",
+          "text": "Was ist der häufigste Fehler?"
+        },
+        {
+          "speaker": "mann",
+          "text": "Dass Leute zu spät anfangen. Das Verfahren dauert im Schnitt drei bis vier Monate, und die Frist beginnt erst, wenn die Unterlagen vollständig sind. Wer erst nach der Einreise mit dem Übersetzen und Beglaubigen anfängt, verliert leicht ein halbes Jahr."
+        },
+        {
+          "speaker": "frau",
+          "text": "Und wenn das Ergebnis nur eine teilweise Anerkennung ist?"
+        },
+        {
+          "speaker": "mann",
+          "text": "Dann steht im Bescheid genau, welche Unterschiede ausgeglichen werden müssen. Das ist keine Ablehnung, sondern eine Wegbeschreibung — meist über eine Anpassungsqualifizierung oder eine Prüfung. Viele lesen das leider als Nein und hören auf."
+        }
+      ],
+      "questions": [
+        {
+          "prompt": "In welchen Berufen ist die Anerkennung zwingend?",
+          "options": [
+            "In reglementierten Berufen wie der Pflege",
+            "In allen Berufen",
+            "Nur im Handwerk"
+          ],
+          "answer": "In reglementierten Berufen wie der Pflege"
+        },
+        {
+          "prompt": "Was bedeutet „Gleichwertigkeit\"?",
+          "options": [
+            "Die Ausbildung muss nicht identisch, aber vergleichbar sein",
+            "Die Ausbildung muss identisch sein",
+            "Die Ausbildung muss in Deutschland wiederholt werden"
+          ],
+          "answer": "Die Ausbildung muss nicht identisch, aber vergleichbar sein",
+          "explain": "„Gleichwertigkeit, nicht Gleichheit\" — geprüft werden nur wesentliche Unterschiede."
+        },
+        {
+          "prompt": "Wann beginnt die Bearbeitungsfrist?",
+          "options": [
+            "Wenn die Unterlagen vollständig sind",
+            "Bei der Einreise",
+            "Mit dem ersten Beratungstermin"
+          ],
+          "answer": "Wenn die Unterlagen vollständig sind"
+        },
+        {
+          "prompt": "Was ist laut Herrn Ahrens der häufigste Fehler?",
+          "options": [
+            "Zu spät anzufangen",
+            "Die falsche Stelle anzuschreiben",
+            "Zu wenig Deutsch zu können"
+          ],
+          "answer": "Zu spät anzufangen"
+        },
+        {
+          "prompt": "Wie soll man eine teilweise Anerkennung verstehen?",
+          "options": [
+            "Als Wegbeschreibung, nicht als Ablehnung",
+            "Als endgültige Ablehnung",
+            "Als Aufforderung, den Beruf zu wechseln"
+          ],
+          "answer": "Als Wegbeschreibung, nicht als Ablehnung"
+        }
+      ]
+    },
+    {
+      "id": "b2-beschwerde-versicherung",
+      "level": "B2",
+      "type": "telefonat",
+      "title": "Beschwerde bei der Versicherung",
+      "blurb": "Ein Schaden wurde abgelehnt. Wie man höflich bleibt und trotzdem nicht nachgibt.",
+      "seconds": 90,
+      "script": [
+        {
+          "speaker": "mann2",
+          "text": "Kundenservice, Sie sprechen mit Herrn Falk. Was kann ich für Sie tun?"
+        },
+        {
+          "speaker": "frau2",
+          "text": "Guten Tag. Es geht um meinen Wasserschaden, Schadennummer vier sieben zwei eins. Ich habe gestern die Ablehnung bekommen und verstehe die Begründung ehrlich gesagt nicht."
+        },
+        {
+          "speaker": "mann2",
+          "text": "Einen Moment … Hier steht, der Schaden sei durch Rückstau entstanden, und Rückstau ist in Ihrem Tarif nicht mitversichert."
+        },
+        {
+          "speaker": "frau2",
+          "text": "Das ist genau der Punkt. Der Gutachter war nie in der Wohnung. Es war kein Rückstau, sondern ein geplatzter Schlauch an der Waschmaschine — das steht so auch im Bericht des Handwerkers, den ich Ihnen am zwölften geschickt habe."
+        },
+        {
+          "speaker": "mann2",
+          "text": "Der Bericht ist hier leider nicht vermerkt."
+        },
+        {
+          "speaker": "frau2",
+          "text": "Dann würde ich Sie bitten, den Vorgang noch einmal zu öffnen. Ich schicke Ihnen den Bericht heute erneut, und ich hätte gern eine schriftliche Bestätigung, dass er eingegangen ist."
+        },
+        {
+          "speaker": "mann2",
+          "text": "Das kann ich Ihnen zusagen. Ich setze den Vorgang auf Wiedervorlage und Sie bekommen die Eingangsbestätigung per E-Mail."
+        },
+        {
+          "speaker": "frau2",
+          "text": "Und falls die Ablehnung bleibt: Wie lange habe ich Zeit zu widersprechen?"
+        },
+        {
+          "speaker": "mann2",
+          "text": "Einen Monat ab Zugang des Bescheids. Aber so weit kommt es hoffentlich nicht."
+        }
+      ],
+      "questions": [
+        {
+          "prompt": "Womit hat die Versicherung die Ablehnung begründet?",
+          "options": [
+            "Der Schaden sei durch Rückstau entstanden",
+            "Die Kundin habe zu spät gemeldet",
+            "Der Tarif sei gekündigt"
+          ],
+          "answer": "Der Schaden sei durch Rückstau entstanden"
+        },
+        {
+          "prompt": "Was war laut der Kundin die wirkliche Ursache?",
+          "options": [
+            "Ein geplatzter Schlauch an der Waschmaschine",
+            "Ein Rohrbruch in der Wand",
+            "Regenwasser im Keller"
+          ],
+          "answer": "Ein geplatzter Schlauch an der Waschmaschine"
+        },
+        {
+          "prompt": "Was fordert die Kundin konkret?",
+          "options": [
+            "Den Vorgang neu öffnen und eine schriftliche Eingangsbestätigung",
+            "Sofortige Auszahlung",
+            "Einen neuen Gutachter"
+          ],
+          "answer": "Den Vorgang neu öffnen und eine schriftliche Eingangsbestätigung",
+          "explain": "Zwei Forderungen in einem Satz — die zweite ist die, die sie später absichert."
+        },
+        {
+          "prompt": "Wie lange kann man widersprechen?",
+          "options": [
+            "Einen Monat ab Zugang des Bescheids",
+            "Zwei Wochen",
+            "Drei Monate"
+          ],
+          "answer": "Einen Monat ab Zugang des Bescheids"
+        },
+        {
+          "prompt": "Warum war der Handwerkerbericht nicht berücksichtigt?",
+          "options": [
+            "Er ist im Vorgang nicht vermerkt",
+            "Er war unvollständig",
+            "Er kam zu spät"
+          ],
+          "answer": "Er ist im Vorgang nicht vermerkt"
+        }
+      ]
+    },
+    {
+      "id": "b2-vortrag-ehrenamt",
+      "level": "B2",
+      "type": "vortrag",
+      "title": "Kurzvortrag: Ehrenamt in Deutschland",
+      "blurb": "Zahlen, ein Trend und eine These. Hauptaussage von Beispiel unterscheiden.",
+      "seconds": 95,
+      "script": [
+        {
+          "speaker": "mann",
+          "text": "Etwa achtundzwanzig Millionen Menschen in Deutschland engagieren sich ehrenamtlich — im Sportverein, in der Freiwilligen Feuerwehr, in der Nachbarschaftshilfe. Das ist mehr als ein Drittel der Bevölkerung, und die Zahl ist über die Jahre bemerkenswert stabil geblieben."
+        },
+        {
+          "speaker": "mann",
+          "text": "Was sich verändert hat, ist die Form. Früher trat man in einen Verein ein und blieb dreißig Jahre. Heute engagieren sich Menschen projektbezogen: ein halbes Jahr für ein bestimmtes Vorhaben, dann wieder etwas anderes."
+        },
+        {
+          "speaker": "mann",
+          "text": "Für die Vereine ist das eine echte Schwierigkeit. Wer ein Amt besetzen muss — Kassenwart, Vorsitz — findet kaum noch jemanden, denn das sind Ämter auf Jahre. Die Mitmach-Bereitschaft ist also nicht gesunken, sie hat nur ihre Verbindlichkeit verloren."
+        },
+        {
+          "speaker": "mann",
+          "text": "Dazu kommt ein zweiter Punkt, der oft übersehen wird: Ehrenamt ist ungleich verteilt. Wer gut verdient und gut ausgebildet ist, engagiert sich deutlich häufiger. Das liegt nicht an der Haltung, sondern an der Zeit — wer zwei Jobs hat, hat abends keine Sitzung mehr übrig."
+        },
+        {
+          "speaker": "mann",
+          "text": "Wenn wir also mehr Engagement wollen, hilft es wenig, an die Moral zu appellieren. Es hilft mehr, die Hürden zu senken: kurze Formate, klare Aufgaben, und Vereine, die auch mit Leuten arbeiten können, die nur drei Monate bleiben."
+        }
+      ],
+      "questions": [
+        {
+          "prompt": "Wie hat sich die Zahl der Ehrenamtlichen entwickelt?",
+          "options": [
+            "Sie ist stabil geblieben",
+            "Sie ist stark gesunken",
+            "Sie hat sich verdoppelt"
+          ],
+          "answer": "Sie ist stabil geblieben"
+        },
+        {
+          "prompt": "Was hat sich stattdessen verändert?",
+          "options": [
+            "Die Form: projektbezogen statt langfristig",
+            "Die Altersstruktur",
+            "Die Zahl der Vereine"
+          ],
+          "answer": "Die Form: projektbezogen statt langfristig"
+        },
+        {
+          "prompt": "Warum ist das für Vereine ein Problem?",
+          "options": [
+            "Ämter müssen über Jahre besetzt werden",
+            "Es kommen zu wenige Mitglieder",
+            "Projekte kosten mehr Geld"
+          ],
+          "answer": "Ämter müssen über Jahre besetzt werden"
+        },
+        {
+          "prompt": "Womit erklärt der Redner die ungleiche Verteilung?",
+          "options": [
+            "Mit der verfügbaren Zeit",
+            "Mit der Haltung der Menschen",
+            "Mit dem Wohnort"
+          ],
+          "answer": "Mit der verfügbaren Zeit",
+          "explain": "Er sagt es ausdrücklich: „nicht an der Haltung, sondern an der Zeit\"."
+        },
+        {
+          "prompt": "Was ist die Schlussfolgerung des Vortrags?",
+          "options": [
+            "Hürden senken statt an die Moral appellieren",
+            "Mehr Werbung für Vereine machen",
+            "Das Ehrenamt bezahlen"
+          ],
+          "answer": "Hürden senken statt an die Moral appellieren"
+        }
+      ]
+    }
+  ]
+}

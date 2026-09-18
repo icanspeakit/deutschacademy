@@ -137,18 +137,82 @@ export function modules(level) {
     .filter((u) => !PLACEMENT.has(u.id))
     .map((u) => rowFor(u.id));
   if (loose.length) {
-    groups.push({
-      id: `${level.toLowerCase()}-ungeordnet`,
-      // A heading is only worth its line when it distinguishes this group from another.
-      // At B1 today every set is unplaced, so "Weitere Lernsets" would be the sole heading
-      // over the whole level and would say nothing.
-      title: groups.some((g) => g.sets.length) ? "Weitere Lernsets" : null,
-      plannedUnits: null,
-      sets: loose,
-      words: loose.reduce((n, s) => n + s.words, 0),
-    });
+    // A handful of unplaced sets alongside placed ones is a remainder, and "Weitere
+    // Lernsets" is the honest name for it. A whole level of them is not a remainder, it
+    // is the level — B1 is 46 unplaced sets — and one unnamed heading over all 46 says
+    // nothing while the list underneath it runs for two thousand pixels. So when the
+    // program has placed nothing here, the words group themselves (see BEREICHE).
+    if (groups.some((g) => g.sets.length)) {
+      groups.push({
+        id: `${level.toLowerCase()}-ungeordnet`,
+        title: "Weitere Lernsets",
+        plannedUnits: null,
+        sets: loose,
+        words: loose.reduce((n, s) => n + s.words, 0),
+      });
+    } else {
+      groups.push(...bereiche(level, loose));
+    }
   }
   return groups;
+}
+
+// ---------------------------------------------------------------------------
+// Bereiche — the grouping a level gets when the program has not placed it
+// ---------------------------------------------------------------------------
+//
+// A1 and A2 are placed into modules by src/content/program.json, and those modules are
+// what the picker lists as subcategories. B1 and B2 are not, and nothing says when they
+// will be — so the choice was between one flat list of 46 and inventing a placement.
+//
+// Neither, as it turns out: every unit already carries a topic slug from the §4 taxonomy
+// (`arbeit`, `gesundheit`, `aemter` …), which is 31 distinct values at B1. Thirty-one
+// headings over forty-six rows is not a grouping. So the slugs are rolled up into nine
+// Lebensbereiche — the same grain A1's modules use, and the grain a learner scanning for
+// "the work one" is actually scanning at.
+//
+// This is a presentation grouping, deliberately: it does not claim to be the course
+// structure program.json will eventually declare, and it disappears the moment that file
+// places a level. Anything whose topic is not listed here — or that has no topic at all —
+// lands in a trailing "Weitere Lernsets" rather than being dropped, which is the same
+// convention §3 applies to words.
+const BEREICHE = [
+  { id: "arbeit-wirtschaft", title: "Arbeit & Wirtschaft", topics: ["arbeit", "wirtschaft", "geld"] },
+  { id: "recht-behoerden", title: "Recht & Behörden", topics: ["recht", "aemter", "politik"] },
+  { id: "gesundheit-koerper", title: "Gesundheit & Körper", topics: ["gesundheit", "koerper", "psychologie"] },
+  { id: "wohnen-stadt", title: "Wohnen & Stadt", topics: ["wohnen", "stadt"] },
+  { id: "bildung-sprache", title: "Bildung & Sprache", topics: ["bildung", "sprache", "wissenschaft"] },
+  { id: "gesellschaft-leben", title: "Gesellschaft & Leben", topics: ["gesellschaft", "familie", "migration", "kultur"] },
+  { id: "unterwegs-umwelt", title: "Unterwegs & Umwelt", topics: ["verkehr", "reisen", "umwelt", "natur", "wetter"] },
+  { id: "alltag-freizeit", title: "Alltag & Freizeit", topics: ["essen", "einkaufen", "freizeit", "kleidung", "zeit"] },
+  { id: "medien-technik", title: "Medien & Technik", topics: ["medien", "technik", "kommunikation"] },
+];
+
+const BEREICH_OF = new Map();
+for (const b of BEREICHE) for (const t of b.topics) BEREICH_OF.set(t, b.id);
+
+function bereiche(level, rows) {
+  const bins = new Map();
+  for (const row of rows) {
+    const id = row.topics.map((t) => BEREICH_OF.get(t)).find(Boolean) ?? "rest";
+    if (!bins.has(id)) bins.set(id, []);
+    bins.get(id).push(row);
+  }
+  // BEREICHE order, then the leftovers — never Map insertion order, which would make the
+  // headings depend on which unit happened to be written first.
+  const out = [];
+  for (const b of [...BEREICHE, { id: "rest", title: "Weitere Lernsets" }]) {
+    const sets = bins.get(b.id);
+    if (!sets?.length) continue;
+    out.push({
+      id: `${level.toLowerCase()}-${b.id}`,
+      title: b.title,
+      plannedUnits: null,
+      sets,
+      words: sets.reduce((n, r) => n + r.words, 0),
+    });
+  }
+  return out;
 }
 
 /** Per-level totals for the hub and the picker — derived, never hand-typed. */
@@ -289,4 +353,98 @@ export function frequencyCounts() {
     unranked: missing.length,
     unrankedByLevel: tally(missing, "level"),
   };
+}
+
+
+// ---------------------------------------------------------------------------
+// Portionen — the level deck, cut into sittings of 20
+// ---------------------------------------------------------------------------
+//
+// "Alle A1" is 650 cards behind one link, and B1 is 1150. On a phone that is not a deck,
+// it is a wall: there is no way to say where you stopped, no way to come back to the same
+// twenty tomorrow, and the progress bar moves by a fifteenth of a percent per card.
+//
+// A Lernset already solves this thematically, but only for someone who wants to study
+// "Haus & Räume". Someone who has simply chosen a level and wants to work through it in
+// order has, until now, had nothing between one card and the whole level. A Portion is
+// that middle rung: the level's own list, in the level's own order, cut every 20 words.
+//
+// Why 20 and not 25 (the Lernset size): a Portion is a cut across the level, not a topic,
+// so it is not competing with a Lernset for the same job — and 20 is the size the
+// frequency cohorts already use for exactly the same "one sitting, no theme" role. One
+// number for both keeps "eine Portion" meaning one thing on this site.
+//
+// Boundaries are deliberately *not* snapped to unit edges. Snapping would just reproduce
+// the Lernsets with a different name; the point of the Portion is that it is a ruler laid
+// over the level, so Portion 2 spanning the end of one topic and the start of the next is
+// the feature. Each row says which topics it crosses so that is visible rather than
+// surprising.
+//
+// Only words with a translation are counted, the same filter asVokabelCards() applies, so
+// a Portion's word count and the cards it actually opens with can never disagree.
+const PORTION_SIZE = 20;
+
+// Two digits, not the cohorts' three: the longest level is 58 Portionen, and "a1-teil-004"
+// would promise a thousand of them.
+const pad2 = (n) => String(n).padStart(2, "0");
+
+const PORTIONS = [];
+for (const level of LEVELS) {
+  const rows = select({ level, has: "en" });
+  const total = Math.ceil(rows.length / PORTION_SIZE);
+  for (let i = 0; i < rows.length; i += PORTION_SIZE) {
+    const items = rows.slice(i, i + PORTION_SIZE);
+    const index = PORTIONS.filter((p) => p.level === level).length + 1;
+    const titles = [...new Set(items.map((w) => unitById(w.unit)?.title).filter(Boolean))];
+    PORTIONS.push({
+      id: `${level.toLowerCase()}-teil-${pad2(index)}`,
+      level,
+      index,
+      of: total,
+      from: i + 1,
+      to: i + items.length,
+      title: `${level} Teil ${index}`,
+      words: items.length,
+      // The topics this cut lands in — "Familie & Beziehungen · Gefühle" when it straddles
+      // two. This is what a Portion has instead of a name of its own.
+      topics: titles,
+      pos: tally(items, "pos"),
+      trainers: pools(items),
+      items,
+    });
+  }
+}
+
+/**
+ * Portions of one level, or of every level when `level` is omitted.
+ * @param {string} [level] "A1"
+ */
+export function portions(level) {
+  const rows = PORTIONS.filter((p) => level == null || p.level === level);
+  return rows.map(({ items, ...row }) => row);
+}
+
+/** One Portion plus its words, or null. */
+export function portion(id) {
+  return PORTIONS.find((p) => p.id === id) ?? null;
+}
+
+/** The deck the flashcard trainer consumes, for one Portion. */
+export const portionCards = (id) => toVokabelCards(portion(id)?.items ?? []);
+
+/** Portions in blocks, the way the picker lists them — same collapse the cohorts use, so
+ *  58 B1 rows arrive as five headings rather than one scroll. */
+export function portionBlocks(level, { per = 10 } = {}) {
+  const rows = portions(level);
+  const blocks = [];
+  for (let i = 0; i < rows.length; i += per) {
+    const slice = rows.slice(i, i + per);
+    blocks.push({
+      id: `${level.toLowerCase()}-teile-${pad2(blocks.length + 1)}`,
+      title: `Wörter ${slice[0].from}-${slice[slice.length - 1].to}`,
+      portions: slice,
+      words: slice.reduce((n, p) => n + p.words, 0),
+    });
+  }
+  return blocks;
 }

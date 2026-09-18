@@ -1,0 +1,219 @@
+/* Wissensdatenbank — the download cards, the external-links list and the rights note.
+ *
+ * Every card is a download, so every card ends the same way: what you get (PDF, pages, size)
+ * on the left and an arrow on the right. A learner deciding between "Wortliste B1" at 58
+ * pages and "Grammatik B1" at 25 should not have to click to find that out. */
+
+.wi-featured {
+  display: grid;
+  gap: 14px;
+  margin-bottom: 40px;
+}
+
+.wi-feature {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 22px 24px;
+  border-radius: var(--radius);
+  background: var(--gradient-brand);
+  color: #fff;
+  text-decoration: none;
+  box-shadow: 0 10px 26px -14px rgba(13, 148, 136, .7);
+  transition: transform .15s ease;
+}
+.wi-feature:hover { transform: translateY(-2px); }
+.wi-feature-txt { min-width: 0; }
+.wi-feature-txt b { display: block; margin: 8px 0 4px; font-size: 1.25rem; font-weight: var(--fw-regular); }
+.wi-feature-txt i { display: block; font-style: normal; font-size: .92rem; line-height: 1.5; opacity: .92; }
+.wi-feature .wi-badge { background: rgba(255, 255, 255, .22); color: #fff; }
+.wi-feature-go {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+}
+.wi-feature .wi-meta { color: rgba(255, 255, 255, .85); }
+.wi-feature .wi-dl { background: rgba(255, 255, 255, .2); color: #fff; }
+
+.wi-group { margin-top: 44px; }
+.wi-group-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 6px;
+  font-family: var(--font-body);
+  font-size: 1.2rem;
+  font-weight: var(--fw-regular);
+  text-align: left;
+}
+.wi-group-ic {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  background: var(--blue-100);
+  color: var(--brand-blue-dark);
+}
+.wi-group-n {
+  min-width: 22px;
+  padding: 2px 8px;
+  border-radius: var(--radius-pill);
+  background: var(--surface-sunken, rgba(0, 0, 0, .05));
+  font-size: .78rem;
+  color: var(--muted);
+  text-align: center;
+}
+.wi-group-blurb {
+  margin: 0 0 18px;
+  max-width: 68ch;
+  color: var(--muted);
+  font-size: .92rem;
+  line-height: 1.6;
+}
+
+.wi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px;
+}
+
+.wi-card {
+  display: flex;
+  flex-direction: column;
+  padding: 18px 20px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface-card);
+  color: var(--ink);
+  text-decoration: none;
+  transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+}
+.wi-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--brand-blue);
+  box-shadow: var(--shadow-hover);
+}
+.wi-card b { margin: 10px 0 5px; font-size: 1.02rem; font-weight: var(--fw-regular); }
+.wi-card i {
+  display: block;
+  font-style: normal;
+  font-size: .89rem;
+  line-height: 1.5;
+  color: var(--muted);
+}
+/* margin-top:auto pins the meta row to the bottom, so cards in one row line their
+   "PDF · 25 Seiten" up however long the description above it runs. */
+.wi-card-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: auto;
+  padding-top: 16px;
+}
+
+.wi-badge {
+  align-self: flex-start;
+  padding: 3px 10px;
+  border-radius: var(--radius-pill);
+  background: var(--blue-100);
+  color: var(--brand-blue-dark);
+  font-size: .76rem;
+  font-weight: 700;
+  letter-spacing: .02em;
+}
+
+.wi-meta {
+  font-size: .78rem;
+  letter-spacing: .02em;
+  color: var(--muted-soft, var(--muted));
+}
+
+.wi-dl {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  /* 36px: this is the thing people tap, and on a phone the whole card is the target
+     anyway — the circle is there to say "download", not to be the only hit area. */
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+  border-radius: 999px;
+  background: var(--blue-100);
+  color: var(--brand-blue-dark);
+  font-size: 1.05rem;
+}
+
+/* --- Official links --------------------------------------------------------- */
+
+.wi-links { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.wi-links a {
+  display: block;
+  padding: 16px 18px;
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--brand-blue);
+  border-radius: var(--radius);
+  background: var(--surface-card);
+  color: var(--ink);
+  text-decoration: none;
+  transition: border-color .15s ease, background-color .15s ease;
+}
+.wi-links a:hover { background: var(--surface); }
+.wi-links b { display: block; font-weight: var(--fw-regular); margin-bottom: 4px; }
+.wi-links i {
+  display: block;
+  font-style: normal;
+  font-size: .89rem;
+  line-height: 1.5;
+  color: var(--muted);
+}
+.wi-source {
+  display: block;
+  margin-top: 8px;
+  font-size: .78rem;
+  color: var(--brand-blue-dark);
+}
+
+/* --- Rights ----------------------------------------------------------------- */
+
+.wi-rights {
+  margin-top: 52px;
+  padding: 24px 26px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+.wi-rights h2 {
+  margin: 0 0 12px;
+  font-family: var(--font-body);
+  font-size: 1.05rem;
+  font-weight: var(--fw-regular);
+  text-align: left;
+}
+.wi-rights p {
+  margin: 0 0 12px;
+  max-width: 72ch;
+  color: var(--muted);
+  font-size: .9rem;
+  line-height: 1.65;
+}
+.wi-rights-meta { font-size: .82rem !important; }
+.wi-rights code {
+  padding: 1px 6px;
+  border-radius: 6px;
+  background: var(--surface-sunken, rgba(0, 0, 0, .06));
+  font-size: .95em;
+}
+
+@media (max-width: 600px) {
+  /* The featured card's meta column stacks under the text rather than squeezing the
+     title into three words per line. */
+  .wi-feature { flex-direction: column; align-items: stretch; gap: 14px; }
+  .wi-feature-go { flex-direction: row; align-items: center; justify-content: space-between; }
+  .wi-rights { padding: 18px 16px; }
+}

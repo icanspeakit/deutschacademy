@@ -1,0 +1,289 @@
+/* The Lesen, Schreiben and Sprechen libraries (src/pages/uebungen/{lesen,schreiben,sprechen}/).
+ *
+ * One stylesheet for three skills because they are one thing: an index grouped by level and
+ * a detail page per exercise, exactly the shape /uebungen/hoeren already has. It does not
+ * reuse hoeren.css — a `.ho-card` on a Leseverstehen page reads as a copy-paste rather than
+ * a decision — but it deliberately matches its measurements, so the four skills feel like
+ * four doors into one building.
+ *
+ * Layout comes from practice.css (.practice-main); everything here is the content. */
+
+/* --- Hub ------------------------------------------------------------------- */
+
+.sk-group { margin-bottom: 40px; }
+.sk-group-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0 0 16px;
+  font-family: var(--font-body);
+  font-size: 1.05rem;
+  font-weight: var(--fw-regular);
+  color: var(--muted);
+}
+.sk-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 38px;
+  padding: 4px 10px;
+  border-radius: var(--radius-pill);
+  background: var(--blue-50);
+  color: var(--brand-blue-dark);
+  font-family: var(--font-label);
+  font-size: .8125rem;
+  font-weight: var(--fw-bold);
+  letter-spacing: .02em;
+}
+
+.sk-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 14px;
+}
+.sk-card {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: start;
+  gap: 14px;
+  padding: 18px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--surface-card);
+  text-decoration: none;
+  transition: border-color .15s ease, transform .15s ease;
+}
+.sk-card:hover { border-color: var(--brand-blue); transform: translateY(-1px); }
+.sk-card-ic {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: var(--radius-sm);
+  background: var(--blue-50);
+  color: var(--brand-blue-dark);
+}
+.sk-card-txt { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.sk-card-txt b { font-weight: var(--fw-semibold); color: var(--ink); }
+.sk-card-txt i { font-style: normal; font-size: .875rem; line-height: 1.5; color: var(--muted); }
+.sk-card-meta {
+  margin-top: 2px;
+  font-family: var(--font-label);
+  font-size: .6875rem;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  color: var(--muted-soft);
+}
+.sk-card-go { color: var(--muted-soft); }
+.sk-card:hover .sk-card-go { color: var(--brand-blue-dark); }
+
+.sk-foot {
+  margin-top: 8px;
+  padding-top: 18px;
+  border-top: 1px solid var(--border);
+  font-size: .8125rem;
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+/* --- One exercise ---------------------------------------------------------- */
+
+.sk-head {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 18px;
+}
+/* global.css centres .eyebrow for the hero it was written for; in a head that sits beside
+   an icon it has to line up with the title under it. */
+.sk-head .eyebrow { text-align: left; margin-bottom: 2px; }
+.sk-head h1 {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: clamp(1.3rem, 3vw, 1.7rem);
+  font-weight: var(--fw-regular);
+  color: var(--ink);
+}
+.sk-blurb { margin: 0 0 26px; color: var(--muted); line-height: 1.7; }
+
+.sk-block { margin: 0 0 30px; }
+.sk-block h2 {
+  margin: 0 0 12px;
+  font-family: var(--font-label);
+  font-size: .8125rem;
+  font-weight: var(--fw-bold);
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--brand-blue-dark);
+}
+
+/* The reading text. `white-space: pre-wrap` so the JSON's own line breaks survive without
+   a Markdown pass, and a measure narrow enough to actually read — a Zeitungsartikel set
+   across 880px is the one thing worse than no Zeitungsartikel. */
+.sk-text {
+  padding: 22px 24px;
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--brand-blue);
+  border-radius: var(--radius);
+  background: var(--surface-card);
+  font-size: 1rem;
+  line-height: 1.85;
+  white-space: pre-wrap;
+  max-width: 62ch;
+}
+.sk-text b { font-weight: var(--fw-bold); color: var(--ink); }
+
+/* --- Schreiben: the editor ------------------------------------------------- */
+
+.sk-points { margin: 0; padding-left: 20px; }
+.sk-points li { margin-bottom: 8px; line-height: 1.6; }
+
+.sk-phrases { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+.sk-phrase {
+  padding: 6px 12px;
+  border: 1px dashed var(--border-strong);
+  border-radius: var(--radius-pill);
+  font-size: .8125rem;
+  color: var(--muted);
+}
+
+.sk-write {
+  width: 100%;
+  min-height: 220px;
+  padding: 16px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius);
+  background: var(--surface-card);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.7;
+  resize: vertical;
+}
+.sk-write:focus-visible { outline: 2px solid var(--brand-blue); outline-offset: 1px; }
+.sk-write-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 10px;
+  font-size: .8125rem;
+  color: var(--muted);
+}
+
+/* The form task: a label and an input per field, with the answer revealed together at the
+   end rather than per row — checking one field at a time turns a transfer task into a
+   guessing game. */
+.sk-fields { display: flex; flex-direction: column; gap: 10px; }
+.sk-field { display: grid; grid-template-columns: minmax(140px, 0.8fr) minmax(0, 1.2fr); gap: 12px; align-items: center; }
+.sk-field label { font-size: .875rem; color: var(--muted); }
+.sk-field input {
+  padding: 9px 12px;
+  border: 1px solid var(--border-strong);
+  border-radius: 8px;
+  background: var(--surface-card);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: .9375rem;
+}
+.sk-field input:focus-visible { outline: 2px solid var(--brand-blue); outline-offset: 1px; }
+.sk-field-answer {
+  grid-column: 2;
+  margin: -4px 0 4px;
+  font-size: .8125rem;
+  color: var(--brand-blue-dark);
+}
+
+.sk-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 20px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-pill);
+  background: var(--surface-card);
+  color: var(--brand-blue-dark);
+  font-family: var(--font-body);
+  font-size: .875rem;
+  font-weight: var(--fw-semibold);
+  text-decoration: none;
+  cursor: pointer;
+}
+.sk-btn:hover { border-color: var(--brand-blue); text-decoration: none; }
+
+/* The model answer and the checklist stay shut until the learner has written something.
+   Opening them first turns every writing task into a reading task. */
+.sk-reveal { margin-top: 18px; border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface-card); }
+.sk-reveal > summary {
+  padding: 14px 18px;
+  cursor: pointer;
+  font-weight: var(--fw-semibold);
+  color: var(--brand-blue-dark);
+  list-style: none;
+}
+.sk-reveal > summary::-webkit-details-marker { display: none; }
+.sk-reveal > summary::before { content: "▸ "; }
+.sk-reveal[open] > summary::before { content: "▾ "; }
+.sk-reveal-body { padding: 0 18px 18px; }
+.sk-model { white-space: pre-wrap; line-height: 1.8; max-width: 62ch; }
+.sk-check { margin: 0; padding-left: 20px; }
+.sk-check li { margin-bottom: 8px; line-height: 1.6; color: var(--muted); }
+
+/* --- Sprechen -------------------------------------------------------------- */
+
+.sk-photo { width: 100%; border-radius: var(--radius-lg); border: 1px solid var(--border); display: block; }
+/* What a picture task looks like before its photo exists. It is not a placeholder box —
+   the described scene is enough to speak about, and saying so is more useful than a grey
+   rectangle with a camera icon in it. */
+.sk-photo-pending {
+  padding: 18px 20px;
+  border: 1px dashed var(--border-strong);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  color: var(--muted);
+  font-size: .9375rem;
+  line-height: 1.7;
+}
+.sk-photo-pending b { color: var(--ink); }
+
+.sk-timer {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 18px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface-card);
+}
+.sk-timer-clock {
+  font-family: var(--font-label);
+  font-size: 1.75rem;
+  font-weight: var(--fw-bold);
+  font-variant-numeric: tabular-nums;
+  color: var(--ink);
+}
+.sk-timer-clock.is-out { color: var(--danger); }
+
+/* --- Prev / next ----------------------------------------------------------- */
+
+.sk-prevnext {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 36px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+  font-size: .875rem;
+}
+.sk-prevnext a { color: var(--brand-blue-dark); text-decoration: none; }
+.sk-prevnext a:hover { text-decoration: underline; }
+
+@media (max-width: 600px) {
+  .sk-head { grid-template-columns: auto minmax(0, 1fr); }
+  .sk-head .sk-badge { grid-column: 2; justify-self: start; }
+  .sk-text { padding: 16px 16px; }
+  .sk-field { grid-template-columns: minmax(0, 1fr); gap: 5px; }
+  .sk-field-answer { grid-column: 1; }
+}

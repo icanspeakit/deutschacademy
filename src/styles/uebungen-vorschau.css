@@ -36,6 +36,9 @@
   letter-spacing: .08em; font-weight: 700; font-size: var(--text-xs); margin: 0 0 16px;
 }
 .uv-eyebrow:not(:first-child) { margin-top: var(--space-10); }
+/* The Prüfungen grid moved into a container of its own when the Werkstatt was slotted
+   between the two, so its eyebrow is now a :first-child and lost that margin. */
+.uv-catalogue--exams { margin-top: var(--space-10); }
 
 .uv-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px; }
 .uv-grid--exams { grid-template-columns: repeat(5, minmax(0, 1fr)); }
@@ -74,6 +77,82 @@
 @media (max-width: 1024px) {
   .uv-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .uv-grid--exams { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+/* --- Grammatik-Werkstatt ----------------------------------------------------
+ *
+ * The 21 grammar workspaces, listed on the hub instead of hiding behind the one
+ * Grammatik tile, whose count did not even include them. Rows rather than cards: these
+ * are one subject cut 21 ways, not 21 different tools, and a row says that while
+ * fitting eight of them on a screen the tiles would spend on three.
+ *
+ * Unlike the two grids above, this survives the 640px swap. The picker answers "what do
+ * you want to practise?" with five buckets; it cannot answer "where are the
+ * Wechselpräpositionen?", which is the question this section exists for, and a phone
+ * learner asks it just as often. Level tabs keep it to at most eight rows.
+ */
+.uv-werkstatt { margin-top: var(--space-10); }
+.uv-werkstatt .uv-eyebrow { margin-bottom: 6px; }
+.uv-werkstatt-sub { margin: 0 0 16px; color: var(--muted); font-size: var(--text-sm); }
+
+.uv-lvl-tabs { margin-bottom: 16px; }
+.uv-lvl-n {
+  display: inline-block;
+  margin-left: 6px;
+  font-size: var(--text-xs);
+  font-weight: 700;
+  opacity: .65;
+}
+
+.uv-wk-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.uv-wk-grid[hidden] { display: none; }
+
+.uv-wk-card {
+  display: flex;
+  align-items: center;
+  /* A grid item defaults to min-width:auto, which is the min-content width of the
+     nowrap subtitle below — the row then sets the page 1372px wide on a 390px phone
+     instead of ellipsing. The track has to be able to shrink, and so does the card. */
+  min-width: 0;
+  gap: 14px;
+  padding: 14px 16px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface-card);
+  text-decoration: none;
+  color: var(--ink);
+  transition: box-shadow .2s ease, transform .2s ease, border-color .2s ease;
+}
+.uv-wk-card:hover {
+  box-shadow: var(--shadow-hover);
+  transform: translateY(-2px);
+  border-color: var(--brand-blue);
+}
+.uv-wk-ic { font-size: 1.35rem; line-height: 1; flex: none; }
+.uv-wk-txt { display: flex; flex-direction: column; gap: 2px; min-width: 0; flex: 1; }
+.uv-wk-txt b { font-size: var(--text-base, 1rem); font-weight: var(--fw-regular); }
+/* The subtitles are full sentences written for the topic page; on a row they are a hint,
+   so they get one line and an ellipsis rather than setting the row's height. */
+.uv-wk-txt i {
+  font-style: normal;
+  font-size: var(--text-sm);
+  color: var(--muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.uv-wk-n {
+  flex: none;
+  background: var(--blue-100);
+  color: var(--brand-blue-dark);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: var(--radius-pill);
+}
+
+@media (max-width: 900px) {
+  .uv-wk-grid { grid-template-columns: minmax(0, 1fr); }
 }
 
 /* Phone: the hub is a menu, not a showcase.
@@ -118,4 +197,9 @@
 @media (max-width: 640px) {
   .uv-catalogue { display: none; }
   .uv-ask { display: block; }
+  /* The picker is the answer to "what shall I practise?", so it stays first; the
+     Werkstatt is the answer to "where is this one topic?" and follows it. */
+  #view-grid-mode { display: flex; flex-direction: column; }
+  .uv-ask { order: 1; }
+  .uv-werkstatt { order: 2; margin-top: var(--space-8, 32px); }
 }

@@ -1,0 +1,91 @@
+---
+// The hub for the Sprechen library, at /uebungen/sprechen/.
+//
+// Bildbeschreibungen come in Sätze of four, the way the Wortschatz Lernsets do: a set is
+// one sitting on one subject. Sixteen pictures listed flat would be a scroll; four under a
+// heading you picked is something you finish. The tasks that are not pictures are listed
+// separately, because they are one-offs rather than a series.
+//
+// The two older trainers keep their own URLs (/uebungen/sprechen/dtz-bildbeschreibung and
+// /uebungen/sprechen-b1b2) and their pictures appear here as the entries they are, so the
+// skill has one index across all four levels.
+import Layout from "../../../layouts/Layout.astro";
+import PracticeHeader from "../../../components/PracticeHeader.astro";
+import Icon from "../../../components/Icon.astro";
+import { sprechen, sprechenSets, sprechenLoose, SPRECHEN_ICON } from "../../../lib/fertigkeiten.js";
+import { levels as siteLevels } from "../../../lib/catalog.js";
+import "../../../styles/practice.css";
+import "../../../styles/skills.css";
+
+const { tasks, types } = sprechen;
+const blurbOf = Object.fromEntries(siteLevels.map((lv) => [lv.level, lv]));
+const sets = sprechenSets().filter((s) => s.items.length);
+const loose = sprechenLoose();
+const pictures = tasks.filter((t) => t.type === "bild").length;
+const pending = tasks.filter((t) => t.imageNeeded && !t.image).length;
+---
+<Layout
+  title="Sprechen – DeutschAcademy"
+  description="Sprechen von A1 bis B2: Bildbeschreibungen in Serien zu vier, dazu sich vorstellen, gemeinsam planen, Kurzvortrag und Diskussion — mit Timer, Redemitteln und Modellantwort."
+>
+  <PracticeHeader title="Sprechen" />
+  <main class="practice-main practice-main--wide">
+    <div class="practice-hero">
+      <p class="eyebrow">Sprechen</p>
+      <h1>Sprechen üben</h1>
+      <p>
+        {pictures} Bildbeschreibungen in Serien zu vier, dazu sich vorstellen, gemeinsam planen,
+        Kurzvortrag und Diskussion. Jede Aufgabe mit Timer, Redemitteln und einer Modellantwort
+        zum Vergleichen.
+      </p>
+    </div>
+
+    <section class="sk-group">
+      <h2 class="sk-group-title"><span>Bildbeschreibung · {sets.length} Serien zu vier</span></h2>
+      <div class="sk-grid">
+        {sets.map((set) => (
+          <a class="sk-card" href={`/uebungen/sprechen/set/${set.id}`}>
+            <span class="sk-card-ic"><Icon name="map-pin" size={20} /></span>
+            <span class="sk-card-txt">
+              <b>{set.title}</b>
+              <i>{set.blurb}</i>
+              <span class="sk-card-meta">{set.level} · {set.items.length} Bilder</span>
+            </span>
+            <span class="sk-card-go" aria-hidden="true">→</span>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <h2 class="sk-group-title" style="margin-top:44px">
+      <span>Weitere Sprechaufgaben</span>
+    </h2>
+    {loose.map((g) => (
+      <section class="sk-group" id={`niveau-${g.level.toLowerCase()}`}>
+        <h2 class="sk-group-title">
+          <span class="sk-badge">{g.level}</span>
+          <span data-i18n={blurbOf[g.level]?.blurbKey}>{blurbOf[g.level]?.blurb}</span>
+        </h2>
+        <div class="sk-grid">
+          {g.items.map((t) => (
+            <a class="sk-card" href={`/uebungen/sprechen/${t.id}`}>
+              <span class="sk-card-ic"><Icon name={SPRECHEN_ICON[t.type] ?? "mic"} size={20} /></span>
+              <span class="sk-card-txt">
+                <b>{t.title}</b>
+                <i>{t.blurb}</i>
+                <span class="sk-card-meta">{types[t.type]} · {t.seconds} Sek. Redezeit</span>
+              </span>
+              <span class="sk-card-go" aria-hidden="true">→</span>
+            </a>
+          ))}
+        </div>
+      </section>
+    ))}
+
+    <p class="sk-foot">
+      {tasks.length} Aufgaben. Sprechen ist die Fertigkeit, die man allein am schwersten übt —
+      deshalb steht bei jeder Aufgabe, was eine Prüferin hören will, und eine Modellantwort daneben.
+      {pending > 0 && ` Zu ${pending} Aufgaben fehlt noch das Foto; solange steht die beschriebene Szene an seiner Stelle und die Aufgabe funktioniert trotzdem.`}
+    </p>
+  </main>
+</Layout>

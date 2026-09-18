@@ -1,0 +1,389 @@
+{
+  "_note": [
+    "Leseverstehen A1–B2, in the shape src/data/hoeren.json already proved: one entry per",
+    "exercise, each with its own level, so the skill can be offered level by level instead",
+    "of as one B1 page. Every text is written for this site — no Lehrwerk scans.",
+    "",
+    "`type` names the TEXT SORT, not the topic, because that is what DTZ and telc actually",
+    "vary between items: a learner who can read a Zeitungsartikel may still be lost in front",
+    "of six Kleinanzeigen. The hub and the nav show it for the same reason.",
+    "",
+    "The five B1 entries below are the DTZ simulation from src/data/lesen.json, moved here so",
+    "each part is reachable on its own. That file and /uebungen/lesen-schreiben stay: running",
+    "the five parts back to back under time is a different exercise from practising one."
+  ],
+  "types": {
+    "schild": "Schilder & Aushänge",
+    "nachricht": "Nachricht",
+    "anzeige": "Anzeigen",
+    "brief": "Brief & E-Mail",
+    "artikel": "Zeitungsartikel",
+    "forum": "Forum",
+    "interview": "Interview"
+  },
+  "texts": [
+    {
+      "id": "a1-schilder-im-haus",
+      "level": "A1",
+      "type": "schild",
+      "title": "Schilder im Haus",
+      "blurb": "Sechs Aushänge im Treppenhaus — wo darf man was?",
+      "minutes": 4,
+      "text": "**Aushang 1 — Haustür**\nBitte die Tür immer schließen. Danke!\n\n**Aushang 2 — Waschküche**\nWaschmaschine: Montag bis Samstag, 7–20 Uhr. Sonntag ist Ruhetag.\n\n**Aushang 3 — Keller**\nFahrräder bitte nur in den Fahrradkeller. Im Flur ist kein Platz.\n\n**Aushang 4 — Briefkästen**\nDie Post kommt täglich zwischen 9 und 11 Uhr.\n\n**Aushang 5 — Hof**\nMülltonnen: gelb = Plastik, blau = Papier, braun = Bio.\n\n**Aushang 6 — Treppenhaus**\nAm Freitag, 14 Uhr: Der Hausmeister repariert das Licht. Bitte nicht stören.",
+      "questions": [
+        {
+          "prompt": "Sie wollen am Sonntag um 10 Uhr waschen. Geht das?",
+          "options": [
+            "Ja, jeden Tag von 7 bis 20 Uhr",
+            "Nein, am Sonntag nicht",
+            "Ja, aber nur bis 11 Uhr"
+          ],
+          "answer": "Nein, am Sonntag nicht",
+          "explain": "„Sonntag ist Ruhetag“ — Ruhetag heißt: an diesem Tag nicht."
+        },
+        {
+          "prompt": "Wo soll Ihr Fahrrad stehen?",
+          "options": [
+            "Im Flur",
+            "Im Fahrradkeller",
+            "Im Hof"
+          ],
+          "answer": "Im Fahrradkeller"
+        },
+        {
+          "prompt": "Ihr Altpapier kommt in welche Tonne?",
+          "options": [
+            "In die gelbe",
+            "In die blaue",
+            "In die braune"
+          ],
+          "answer": "In die blaue"
+        },
+        {
+          "prompt": "Wann kommt die Post?",
+          "options": [
+            "Am Freitag um 14 Uhr",
+            "Zwischen 9 und 11 Uhr",
+            "Von 7 bis 20 Uhr"
+          ],
+          "answer": "Zwischen 9 und 11 Uhr",
+          "explain": "Freitag 14 Uhr ist der Hausmeister, nicht die Post — die Zahl allein reicht nicht, man muss das Schild dazu lesen."
+        }
+      ]
+    },
+    {
+      "id": "a1-nachricht-einladung",
+      "level": "A1",
+      "type": "nachricht",
+      "title": "Eine Einladung per Nachricht",
+      "blurb": "Wer, wann, wo — und was soll man mitbringen?",
+      "minutes": 3,
+      "text": "**Mira, 18:42**\nHallo Sam! Am Samstag habe ich Geburtstag. Ich mache eine kleine Party bei mir zu Hause. Kommst du?\n\n**Mira, 18:43**\nWir fangen um 19 Uhr an. Meine Adresse: Lindenstraße 8, dritter Stock. Die Klingel ist kaputt, ruf bitte an, dann komme ich runter.\n\n**Mira, 18:44**\nEssen und Trinken habe ich genug. Bring bitte nichts mit — aber vielleicht Musik? Du hast doch immer gute Musik. 🙂",
+      "questions": [
+        {
+          "prompt": "Warum macht Mira eine Party?",
+          "options": [
+            "Sie hat eine neue Wohnung",
+            "Sie hat Geburtstag",
+            "Sie hat eine neue Arbeit"
+          ],
+          "answer": "Sie hat Geburtstag"
+        },
+        {
+          "prompt": "Wann beginnt die Party?",
+          "options": [
+            "Um 18:42",
+            "Um 19 Uhr",
+            "Am dritten Samstag"
+          ],
+          "answer": "Um 19 Uhr",
+          "explain": "18:42 ist die Uhrzeit der Nachricht, nicht der Party. Bei Nachrichten steht die Uhrzeit immer daneben — die gehört nicht zum Text."
+        },
+        {
+          "prompt": "Was soll Sam tun, wenn er ankommt?",
+          "options": [
+            "Klingeln",
+            "Anrufen",
+            "In den dritten Stock gehen"
+          ],
+          "answer": "Anrufen",
+          "explain": "„Die Klingel ist kaputt, ruf bitte an.“"
+        },
+        {
+          "prompt": "Was soll Sam mitbringen?",
+          "options": [
+            "Essen",
+            "Getränke",
+            "Musik"
+          ],
+          "answer": "Musik"
+        }
+      ]
+    },
+    {
+      "id": "a2-wohnungsanzeigen",
+      "level": "A2",
+      "type": "anzeige",
+      "title": "Wohnungsanzeigen lesen",
+      "blurb": "Vier Anzeigen, vier Suchende — wer passt zu wem?",
+      "minutes": 6,
+      "text": "**Anzeige A**\n2-Zimmer-Wohnung, 48 m², 3. Stock ohne Aufzug. 620 € warm. Ab sofort frei. Keine Haustiere.\n\n**Anzeige B**\nZimmer in 4er-WG, 18 m². 330 € warm. Küche und Bad gemeinsam. Wir sind Studierende und suchen jemanden, der gern kocht.\n\n**Anzeige C**\n3-Zimmer-Wohnung mit kleinem Garten, Erdgeschoss. 980 € warm. Hunde und Katzen willkommen. Ab 1. Oktober.\n\n**Anzeige D**\n1-Zimmer-Apartment, möbliert, 30 m². 550 € warm, Internet inklusive. Nur für 6 Monate (Zwischenmiete).",
+      "questions": [
+        {
+          "prompt": "Herr Adem kommt für ein halbes Jahr zum Praktikum und hat keine Möbel.",
+          "options": [
+            "Anzeige A",
+            "Anzeige B",
+            "Anzeige C",
+            "Anzeige D"
+          ],
+          "answer": "Anzeige D",
+          "explain": "Zwei Bedingungen müssen stimmen: möbliert UND 6 Monate. Nur D hat beides."
+        },
+        {
+          "prompt": "Familie Nowak hat einen Hund und zwei Kinder.",
+          "options": [
+            "Anzeige A",
+            "Anzeige B",
+            "Anzeige C",
+            "Anzeige D"
+          ],
+          "answer": "Anzeige C"
+        },
+        {
+          "prompt": "Lena studiert, hat wenig Geld und kocht gern für andere.",
+          "options": [
+            "Anzeige A",
+            "Anzeige B",
+            "Anzeige C",
+            "Anzeige D"
+          ],
+          "answer": "Anzeige B"
+        },
+        {
+          "prompt": "Herr Fischer ist 71 und kann keine Treppen steigen.",
+          "options": [
+            "Anzeige A",
+            "Anzeige C",
+            "Anzeige D"
+          ],
+          "answer": "Anzeige C",
+          "explain": "„Erdgeschoss“ — A ist 3. Stock ohne Aufzug, und bei D steht nichts vom Stockwerk, also ist C die sichere Antwort."
+        }
+      ]
+    },
+    {
+      "id": "a2-email-kurs-absage",
+      "level": "A2",
+      "type": "brief",
+      "title": "E-Mail von der Sprachschule",
+      "blurb": "Der Kurs fällt aus. Was heißt das jetzt genau?",
+      "minutes": 5,
+      "text": "Betreff: Änderung Deutschkurs A2 — bitte lesen\n\nLiebe Kursteilnehmerinnen und Kursteilnehmer,\n\nunsere Lehrerin Frau Berger ist krank. Deshalb fällt der Unterricht am Dienstag und am Donnerstag dieser Woche leider aus.\n\nAb der nächsten Woche unterrichtet Herr Aydın. Der Kurs findet dann wie immer statt, aber in Raum 2.14 statt in Raum 1.03 — das große Zimmer im ersten Stock ist im Moment zu kalt.\n\nDie beiden Stunden holen wir nach: am Samstag, den 18., von 10 bis 13 Uhr. Wer an diesem Samstag nicht kann, schreibt uns bitte bis Freitag eine kurze E-Mail. Der Test bleibt am Ende des Monats.\n\nViele Grüße\nIhr Kursbüro",
+      "questions": [
+        {
+          "prompt": "Warum fällt der Unterricht aus?",
+          "options": [
+            "Der Raum ist zu kalt",
+            "Die Lehrerin ist krank",
+            "Es ist Samstag"
+          ],
+          "answer": "Die Lehrerin ist krank"
+        },
+        {
+          "prompt": "In welchem Raum ist der Kurs ab nächster Woche?",
+          "options": [
+            "Raum 1.03",
+            "Raum 2.14",
+            "Im großen Zimmer im ersten Stock"
+          ],
+          "answer": "Raum 2.14",
+          "explain": "„in Raum 2.14 statt in Raum 1.03“ — „statt“ zeigt immer auf das Alte, nicht auf das Neue."
+        },
+        {
+          "prompt": "Was müssen Sie tun, wenn Sie am Samstag keine Zeit haben?",
+          "options": [
+            "Nichts",
+            "Bis Freitag eine E-Mail schreiben",
+            "Herrn Aydın anrufen"
+          ],
+          "answer": "Bis Freitag eine E-Mail schreiben"
+        },
+        {
+          "prompt": "Wann ist der Test?",
+          "options": [
+            "Am Samstag, den 18.",
+            "Am Ende des Monats",
+            "Am Dienstag"
+          ],
+          "answer": "Am Ende des Monats",
+          "explain": "„Der Test bleibt“ — bleiben heißt hier: der Termin ändert sich nicht."
+        }
+      ]
+    },
+    {
+      "id": "b1-digitales-buero",
+      "level": "B1",
+      "type": "brief",
+      "title": "Kurztext: Das digitale Büro",
+      "blurb": "Ein Rundschreiben der Geschäftsleitung — drei Aussagen, richtig oder falsch?",
+      "minutes": 5,
+      "from": "dtz-simulation"
+    },
+    {
+      "id": "b1-anzeigen",
+      "level": "B1",
+      "type": "anzeige",
+      "title": "DTZ Aufgabe 1: Anzeigen zuordnen",
+      "blurb": "Fünf Situationen, sechs Anzeigen — eine bleibt übrig.",
+      "minutes": 8,
+      "from": "dtz-simulation"
+    },
+    {
+      "id": "b1-zeitungsartikel",
+      "level": "B1",
+      "type": "artikel",
+      "title": "DTZ Aufgabe 2: Zeitungsartikel",
+      "blurb": "Ein Artikel, fünf Aussagen — richtig oder falsch?",
+      "minutes": 8,
+      "from": "dtz-simulation"
+    },
+    {
+      "id": "b1-forumsbeitraege",
+      "level": "B1",
+      "type": "forum",
+      "title": "DTZ Aufgabe 3: Forumsbeiträge",
+      "blurb": "Vier Meinungen — wer sagt was?",
+      "minutes": 7,
+      "from": "dtz-simulation"
+    },
+    {
+      "id": "b1-interview",
+      "level": "B1",
+      "type": "interview",
+      "title": "DTZ Aufgabe 4: Interview",
+      "blurb": "Ein Interview mit Lücken — welche Antwort passt?",
+      "minutes": 7,
+      "from": "dtz-simulation"
+    },
+    {
+      "id": "b2-artikel-homeoffice",
+      "level": "B2",
+      "type": "artikel",
+      "title": "Zeitungsartikel: Streit ums Homeoffice",
+      "blurb": "Zwei Studien, zwei Ergebnisse — und was der Text dazu wirklich behauptet.",
+      "minutes": 9,
+      "text": "**Zu Hause produktiver — oder nur einsamer?**\n\nDrei Jahre nach dem großen Umbruch in der Arbeitswelt ist der Streit über das Homeoffice keineswegs entschieden. Eine im Frühjahr veröffentlichte Untersuchung der Universität Konstanz kommt zu dem Ergebnis, dass Beschäftigte im Homeoffice im Durchschnitt rund acht Prozent mehr Aufgaben abschließen als im Büro. Die Autorinnen führen das vor allem auf die weggefallenen Unterbrechungen zurück: Wer nicht alle zwanzig Minuten angesprochen wird, arbeitet konzentrierter.\n\nEine Erhebung des Münchner ifo-Instituts relativiert dieses Bild allerdings. Zwar bestätigt auch sie den Produktivitätsgewinn bei klar abgegrenzten Einzelaufgaben, stellt jedoch fest, dass kreative Teamarbeit unter der Distanz leidet. Besonders neue Mitarbeitende, so die Studie, kämen deutlich langsamer in ihre Rolle hinein, weil ihnen das beiläufige Lernen von erfahrenen Kolleginnen fehle.\n\nDie Unternehmen reagieren unterschiedlich. Während einige Konzerne ihre Belegschaft inzwischen wieder an vier Tagen pro Woche ins Büro beordern, setzen andere auf feste Präsenztage für das ganze Team und lassen den Rest der Woche frei wählbar. Arbeitsrechtlich ist die Lage eindeutig: Einen gesetzlichen Anspruch auf Homeoffice gibt es in Deutschland bis heute nicht. Was gilt, steht im Arbeitsvertrag oder in einer Betriebsvereinbarung.\n\nEinig sind sich die Fachleute nur in einem Punkt: Die Frage „Büro oder zu Hause?“ ist falsch gestellt. Entscheidend sei nicht der Ort, sondern ob eine Aufgabe Austausch braucht oder Ruhe.",
+      "questions": [
+        {
+          "prompt": "Die Konstanzer Untersuchung erklärt den Produktivitätsgewinn vor allem damit, dass …",
+          "options": [
+            "… die Beschäftigten zu Hause länger arbeiten.",
+            "… die ständigen Unterbrechungen wegfallen.",
+            "… die Aufgaben im Homeoffice leichter sind."
+          ],
+          "answer": "… die ständigen Unterbrechungen wegfallen.",
+          "explain": "„führen das vor allem auf die weggefallenen Unterbrechungen zurück“ — von längerer Arbeitszeit steht nichts im Text."
+        },
+        {
+          "prompt": "Was sagt die ifo-Studie über neue Mitarbeitende?",
+          "options": [
+            "Sie arbeiten im Homeoffice produktiver als erfahrene Kollegen.",
+            "Sie brauchen länger, um in ihre Rolle zu finden.",
+            "Sie lehnen das Homeoffice mehrheitlich ab."
+          ],
+          "answer": "Sie brauchen länger, um in ihre Rolle zu finden."
+        },
+        {
+          "prompt": "Wie stehen die beiden Studien zueinander?",
+          "options": [
+            "Die zweite widerlegt die erste vollständig.",
+            "Die zweite bestätigt einen Teil und schränkt einen anderen ein.",
+            "Beide kommen zum selben Ergebnis."
+          ],
+          "answer": "Die zweite bestätigt einen Teil und schränkt einen anderen ein.",
+          "explain": "„relativiert“ + „Zwar …, stellt jedoch fest“ — das ist die Einschränkung, nicht der Widerspruch. „Zwar … jedoch“ ist auf B2 fast immer das Signal dafür."
+        },
+        {
+          "prompt": "Was gilt in Deutschland rechtlich?",
+          "options": [
+            "Jede und jeder hat einen Anspruch auf Homeoffice.",
+            "Homeoffice ist an vier Tagen pro Woche erlaubt.",
+            "Es gibt keinen gesetzlichen Anspruch; es zählt der Vertrag."
+          ],
+          "answer": "Es gibt keinen gesetzlichen Anspruch; es zählt der Vertrag."
+        },
+        {
+          "prompt": "Worin sind sich die Fachleute laut Text einig?",
+          "options": [
+            "Dass das Büro auf Dauer die bessere Lösung ist.",
+            "Dass nicht der Ort entscheidet, sondern die Art der Aufgabe.",
+            "Dass feste Präsenztage die einzige sinnvolle Regel sind."
+          ],
+          "answer": "Dass nicht der Ort entscheidet, sondern die Art der Aufgabe."
+        }
+      ]
+    },
+    {
+      "id": "b2-kommentare-innenstadt",
+      "level": "B2",
+      "type": "forum",
+      "title": "Leserkommentare: Autofreie Innenstadt",
+      "blurb": "Fünf Kommentare, fünf Haltungen — wer argumentiert womit?",
+      "minutes": 8,
+      "text": "**Thema: Soll die Innenstadt autofrei werden?**\n\n**Kommentar A — Dario_87**\nIch fahre die Strecke seit zwölf Jahren mit dem Rad und habe mich an das tägliche Risiko gewöhnt. Gewöhnen sollte man sich daran aber nicht müssen. Wer Kinder hat, weiß, wovon ich rede.\n\n**Kommentar B — M. Krüger**\nNiemand bestreitet, dass weniger Autos angenehmer wären. Nur: Solange die Bahn zweimal pro Woche ausfällt und der letzte Bus um halb neun fährt, ist das keine ehrliche Wahl, sondern eine Umverteilung von oben nach unten.\n\n**Kommentar C — Ilse W.**\nMein Geschäft lebt von Kundschaft, die kurz hält, etwas abholt und weiterfährt. Dreißig Jahre hat das funktioniert. Man nimmt uns nicht die Autos weg, man nimmt uns die Kundschaft weg.\n\n**Kommentar D — fahrrad_fee**\nIn Gent, Pontevedra, Groningen — überall dasselbe Muster: Im ersten Jahr Proteste der Geschäftsleute, im dritten Jahr höhere Umsätze als vorher. Wir diskutieren hier etwas, das anderswo längst beantwortet ist.\n\n**Kommentar E — Henning R.**\nMich stört weniger die Sache als das Verfahren. Der Beschluss stand fest, bevor die Bürgerbefragung überhaupt begonnen hatte. Über das Ergebnis kann man streiten, über diesen Ablauf nicht.",
+      "questions": [
+        {
+          "prompt": "Wer ist im Grundsatz einverstanden, hält die Umsetzung aber für sozial ungerecht?",
+          "options": [
+            "Kommentar A",
+            "Kommentar B",
+            "Kommentar C",
+            "Kommentar D",
+            "Kommentar E"
+          ],
+          "answer": "Kommentar B",
+          "explain": "„Niemand bestreitet, dass …“ ist Zustimmung; „Nur:“ leitet den Einwand ein. Der Einwand ist die Verkehrsanbindung, nicht die Idee."
+        },
+        {
+          "prompt": "Wer kritisiert nicht den Inhalt, sondern wie entschieden wurde?",
+          "options": [
+            "Kommentar A",
+            "Kommentar B",
+            "Kommentar D",
+            "Kommentar E"
+          ],
+          "answer": "Kommentar E"
+        },
+        {
+          "prompt": "Wer argumentiert mit Erfahrungen aus anderen Städten?",
+          "options": [
+            "Kommentar B",
+            "Kommentar C",
+            "Kommentar D",
+            "Kommentar E"
+          ],
+          "answer": "Kommentar D"
+        },
+        {
+          "prompt": "Wer fürchtet wirtschaftliche Nachteile für sich selbst?",
+          "options": [
+            "Kommentar A",
+            "Kommentar C",
+            "Kommentar D"
+          ],
+          "answer": "Kommentar C"
+        },
+        {
+          "prompt": "Wer begründet seine Haltung mit dem eigenen Sicherheitsgefühl?",
+          "options": [
+            "Kommentar A",
+            "Kommentar B",
+            "Kommentar E"
+          ],
+          "answer": "Kommentar A"
+        }
+      ]
+    }
+  ]
+}

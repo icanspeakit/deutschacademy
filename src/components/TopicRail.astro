@@ -172,7 +172,38 @@ const openSection = grammarByKey(current)?.level?.toLowerCase() ?? "weg";
       }
     }
 
-    const fold = () => { nvb.classList.add("collapsed"); syncScrim(); };
+    // Folding, both ways, with something to watch in each.
+    //
+    // Width is a plain CSS transition between two pinned numbers (topic-rail.css). Height
+    // cannot be: the panel's content decides it, `auto` has nothing to animate from, and
+    // the two states genuinely differ — 318px of icon strip folded against 412px or more
+    // of open panel. So the height is measured before and after the class flips, pinned
+    // in pixels for the length of the transition, and released afterwards so the box goes
+    // back to sizing itself.
+    let releaseHeight = 0;
+    const calm = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    /** Transition the box from a height already measured to whatever it is now. */
+    function animateHeight(from: number) {
+      nvb.style.height = "";
+      const to = nvb.getBoundingClientRect().height;
+      window.clearTimeout(releaseHeight);
+      if (Math.round(from) === Math.round(to) || calm()) return;
+      nvb.style.height = from + "px";
+      void nvb.offsetHeight;
+      nvb.style.height = to + "px";
+      releaseHeight = window.setTimeout(() => { nvb.style.height = ""; }, 320);
+    }
+
+    function setFolded(on: boolean, from = nvb.getBoundingClientRect().height) {
+      if (nvb.classList.contains("collapsed") === on) { syncScrim(); return; }
+      nvb.classList.toggle("collapsed", on);
+      // Measured after the flip: the folded panel is out of flow, so this is the strip.
+      animateHeight(from);
+      syncScrim();
+    }
+
+    const fold = () => setFolded(true);
     function syncScrim() {
       if (scrim) scrim.hidden = nvb.classList.contains("collapsed");
     }
@@ -180,6 +211,9 @@ const openSection = grammarByKey(current)?.level?.toLowerCase() ?? "weg";
     for (const b of $$<HTMLElement>("[data-rail-sec]")) {
       b.addEventListener("click", () => {
         const id = b.dataset.railSec!;
+        // Before the swap: a three-row level and an eleven-row one are 300px apart, and
+        // the box has to travel that whether it is also folding or just changing content.
+        const from = nvb.getBoundingClientRect().height;
         const openBefore = rail.querySelector<HTMLElement>("[data-rail-secview]:not([hidden])")?.dataset.railSecview;
         for (const x of $$<HTMLElement>("[data-rail-sec]")) x.classList.toggle("active", x === b);
         for (const v of $$<HTMLElement>("[data-rail-secview]")) {
@@ -196,8 +230,8 @@ const openSection = grammarByKey(current)?.level?.toLowerCase() ?? "weg";
         // the strip can be put back to 64px without hunting for the chevron inside the
         // panel that is covering it.
         const wasOpenHere = !nvb.classList.contains("collapsed") && id === openBefore;
-        nvb.classList.toggle("collapsed", wasOpenHere);
-        syncScrim();
+        if (nvb.classList.contains("collapsed") === wasOpenHere) animateHeight(from);
+        else setFolded(wasOpenHere, from);
       });
     }
 

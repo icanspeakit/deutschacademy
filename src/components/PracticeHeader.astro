@@ -1,26 +1,87 @@
 ---
+// The bar above every practice page — and, since it carries NavMenubar and NavDrawer, the
+// site nav as well. There is one bar here, not two: stacking SiteNav on top of a trainer
+// would cost a phone a second row of chrome before any German appears.
+//
+// It used to open with "← Alle Übungen", which pointed at /uebungen whether or not the
+// learner had ever been there — from a Wortschatz deck reached off the dashboard the
+// arrow promised "back" and delivered a folder they had not opened. The left slot is the
+// logo alone, and it goes to the front page. Always: it briefly wore a back arrow and ran
+// history.back() when the referrer was on this site, which made the one fixed landmark on
+// the page mean something different on every visit — the same click landed somewhere else
+// depending on how you got here. Going back is what the browser's own button is for, and
+// the pages that have a hub above them say so in their own words ("← Alle Themen").
+//
+// What fills the middle depends on the width, because the two menus do:
+//   >900px  the menu bar. The page's own <h1> is two lines below and says what this page
+//           is, so the title here would only be repeating it at half the size.
+//   ≤900px  the title, and the burger opens the drawer. Language and theme come out of
+//           the bar entirely — the drawer pins them at the bottom, in the thumb's reach —
+//           which is how the row fits at 390px with a menu in it. A page that names itself
+//           in its own head passes no title and keeps the middle empty here too: the bar
+//           does not stick, so the name would be read once and then scrolled past.
+// Dashboard keeps its word on desktop and collapses to its icon on a phone. "Startseite"
+// is gone: the logo is the way home.
+import Icon from "./Icon.astro";
 import LanguageSwitcher from "./LanguageSwitcher.astro";
 import ThemeToggle from "./ThemeToggle.astro";
+import NavMenubar from "./NavMenubar.astro";
+import NavDrawer from "./NavDrawer.astro";
 
 interface Props {
-  title: string;
+  /** Optional. A page whose own head names it a few elements below passes nothing: the bar
+      does not stick, so a title in it is read once on the way past and then gone. */
+  title?: string;
   titleKey?: string;
+  /** Marks the current section in the menu bar, as on SiteNav. */
+  active?: string;
 }
-const { title, titleKey } = Astro.props;
+const { title, titleKey, active } = Astro.props;
 ---
 <header class="practice-header">
   <div class="practice-header-inner">
-    <a href="/uebungen" class="practice-back" data-i18n="header.allExercises">← Alle Übungen</a>
-    <span class="practice-header-title" data-i18n={titleKey}>{title}</span>
+    <a
+      href="/"
+      class="practice-home"
+      aria-label="Startseite"
+      data-i18n-attr="aria-label:header.home"
+    >
+      <img src="/assets/logo.png" alt="DeutschAcademy" />
+    </a>
+
+    <NavMenubar active={active} />
+
+    {title && <span class="practice-header-title" data-i18n={titleKey}>{title}</span>}
+
     <div class="practice-header-right">
-      <a href="/dashboard" class="practice-back">Dashboard</a>
-      <a href="/" class="practice-back" data-i18n="header.home">Startseite</a>
-      <LanguageSwitcher />
-      <ThemeToggle />
+      <a
+        href="/dashboard"
+        class="practice-back practice-dash"
+        aria-label="Dashboard"
+        data-i18n-attr="aria-label:header.dashboard"
+      >
+        <span class="practice-dash-icon" aria-hidden="true"><Icon name="grid" size={20} /></span>
+        <span class="practice-dash-label" data-i18n="header.dashboard">Dashboard</span>
+      </a>
+      <div class="practice-header-utils"><LanguageSwitcher /><ThemeToggle /></div>
+      <button
+        class="lp-nav-toggle"
+        type="button"
+        aria-expanded="false"
+        aria-controls="lp-drawer"
+        aria-label="Menü öffnen"
+        data-drawer-open
+        data-i18n-attr="aria-label:nav.menuOpen"
+      >
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+      </button>
     </div>
   </div>
 </header>
 
-<style>
-  .practice-header-right { display: flex; align-items: center; gap: 16px; }
-</style>
+<NavDrawer />
+

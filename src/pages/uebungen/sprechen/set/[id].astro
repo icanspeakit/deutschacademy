@@ -1,0 +1,89 @@
+---
+// One Bildserie: four Bildbeschreibungen on one subject, at one level.
+//
+// The unit exists for the same reason a Wortschatz-Lernset does — a list you can finish in
+// one sitting beats a list you scroll. Four pictures at 90 to 150 seconds each, plus the
+// thinking time in between, is about twenty minutes: a session, not a library.
+//
+// "Serie starten" goes to the first picture; from there prev/next stay inside this set
+// (see neighbours() in src/lib/fertigkeiten.js), so nobody wanders out of a subject
+// halfway through.
+import Layout from "../../../../layouts/Layout.astro";
+import PracticeHeader from "../../../../components/PracticeHeader.astro";
+import Icon from "../../../../components/Icon.astro";
+import { sprechenSets, sprechen } from "../../../../lib/fertigkeiten.js";
+import "../../../../styles/practice.css";
+import "../../../../styles/skills.css";
+
+export function getStaticPaths() {
+  const sets = sprechenSets();
+  return sets
+    .filter((set) => set.items.length)
+    .map((set, i) => ({
+      params: { id: set.id },
+      props: { set, prev: sets[i - 1] ?? null, next: sets[i + 1] ?? null },
+    }));
+}
+
+const { set, prev, next } = Astro.props;
+const { types } = sprechen;
+const seconds = set.items.reduce((n, t) => n + t.seconds, 0);
+const pending = set.items.filter((t) => t.imageNeeded && !t.image).length;
+---
+<Layout
+  title={`${set.title} – Bildserie ${set.level} – DeutschAcademy`}
+  description={set.blurb}
+>
+  <PracticeHeader title="Sprechen" />
+  <main class="practice-main">
+    <a href="/uebungen/sprechen/" class="vp-back-link">← Alle Sprechaufgaben</a>
+
+    <article>
+      <header class="sk-head">
+        <span class="sk-card-ic"><Icon name="map-pin" size={22} /></span>
+        <div>
+          <p class="eyebrow">Bildserie</p>
+          <h1>{set.title}</h1>
+        </div>
+        <span class="sk-badge">{set.level}</span>
+      </header>
+
+      <p class="sk-blurb">
+        {set.blurb} · {set.items.length} Bilder · zusammen {Math.round(seconds / 60)} Minuten reine Redezeit
+      </p>
+
+      <p style="margin:0 0 30px">
+        <a class="sk-btn" href={`/uebungen/sprechen/${set.items[0].id}`}>Serie starten →</a>
+      </p>
+
+      <section class="sk-block">
+        <h2>Die {set.items.length} Bilder</h2>
+        <div class="sk-grid">
+          {set.items.map((t, i) => (
+            <a class="sk-card" href={`/uebungen/sprechen/${t.id}`}>
+              <span class="sk-card-ic"><Icon name="map-pin" size={20} /></span>
+              <span class="sk-card-txt">
+                <b>{i + 1}. {t.title}</b>
+                <i>{t.blurb}</i>
+                <span class="sk-card-meta">{types[t.type]} · {t.seconds} Sek. Redezeit</span>
+              </span>
+              <span class="sk-card-go" aria-hidden="true">→</span>
+            </a>
+          ))}
+        </div>
+      </section>
+
+      {pending > 0 && (
+        <p class="sk-foot">
+          Zu {pending} von {set.items.length} Bildern fehlt noch das Foto. Solange steht die
+          beschriebene Szene an seiner Stelle — Aufgabe, Redemittel und Timer sind dieselben.
+        </p>
+      )}
+
+      <nav class="sk-prevnext">
+        {prev ? <a href={`/uebungen/sprechen/set/${prev.id}`}>← {prev.title}</a> : <span />}
+        {next ? <a href={`/uebungen/sprechen/set/${next.id}`}>{next.title} →</a> : <span />}
+      </nav>
+    </article>
+  </main>
+</Layout>

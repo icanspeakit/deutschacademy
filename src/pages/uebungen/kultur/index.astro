@@ -13,19 +13,25 @@ import Layout from "../../../layouts/Layout.astro";
 import PracticeHeader from "../../../components/PracticeHeader.astro";
 import Icon from "../../../components/Icon.astro";
 import kultur from "../../../data/kultur.json";
+import { kulturLevels } from "../../../lib/catalog.js";
 import "../../../styles/practice.css";
 import "../../../styles/kultur.css";
 
 const { topics } = kultur;
 const quizCount = topics.reduce((n, t) => n + t.quiz.length, 0);
 
-// Grouped by the eyebrow the topics already carry, so the hub has sections without a
-// second taxonomy to keep in step with the data.
-const groups = [];
-for (const t of topics) {
-  const g = groups.find((x) => x.name === t.eyebrow) ?? (groups.push({ name: t.eyebrow, items: [] }), groups.at(-1));
-  g.items.push(t);
-}
+// Grouped by level, not by subject. The eyebrows ("Alltag & Wohnen", "Behörden &
+// Gesundheit") sorted the catalogue but answered a question nobody arrives with: a learner
+// knows their Niveau, not whether Pfand counts as a housing topic or a shopping one. The
+// eyebrow still heads each topic's own page — it just no longer decides the order here.
+//
+// The levels come from the catalogue's Landeskunde list, which runs A1–C2. The site-wide
+// `levels` export stops at B2 because that is as far as the trainers reach, and using it
+// here would silently swallow every C1 and C2 topic.
+const groups = kulturLevels.map((lv) => ({
+  ...lv,
+  items: topics.filter((t) => t.level === lv.level),
+}));
 ---
 <Layout
   title="Landeskunde – DeutschAcademy"
@@ -55,8 +61,11 @@ for (const t of topics) {
     </a>
 
     {groups.map((g) => (
-      <section class="ku-group">
-        <h2 class="ku-group-title">{g.name}</h2>
+      <section class="ku-group" id={`niveau-${g.slug}`}>
+        <h2 class="ku-group-title">
+          <span class="ku-badge">{g.level}</span>
+          <span data-i18n={g.blurbKey}>{g.blurb}</span>
+        </h2>
         <div class="ku-grid">
           {g.items.map((t) => (
             <a class="ku-card" href={`/uebungen/kultur/${t.id}`}>
@@ -65,8 +74,8 @@ for (const t of topics) {
                 <b>{t.title}</b>
                 <i>{t.intro.split(". ")[0]}.</i>
               </span>
+              <!-- No level badge: the section heading above the grid already says it. -->
               <span class="ku-card-meta">
-                <span class="ku-badge">{t.level}</span>
                 <span class="ku-card-q">{t.quiz.length} Fragen</span>
               </span>
             </a>

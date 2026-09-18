@@ -1,0 +1,596 @@
+{
+  "_note": [
+    "Sprechen A1–B2, one entry per task, same shape as its two neighbours in this folder.",
+    "",
+    "The Bildbeschreibungen are grouped into `sets` of four — Bildserien — the way the",
+    "Wortschatz Lernsets are: one sitting, one subject area, not a level's whole inventory.",
+    "Sixteen pictures listed flat is a scroll; four under a heading you chose is an exercise",
+    "you finish. Tasks that are not pictures (sich vorstellen, Kurzvortrag, Diskussion,",
+    "gemeinsam planen) stay outside the sets — they are one-offs, not a series.",
+    "",
+    "No exam name in a title. A picture description is a thing you practise whether or not",
+    "you ever sit a DTZ, and 'Bildbeschreibung (DTZ): Im Bus' told a learner who is preparing",
+    "for nothing in particular that this page was not for them. Where the exam relevance is",
+    "real it lives in `exam`, one quiet line at the foot of the task page.",
+    "",
+    "Picture tasks name the photo they still need in `imageNeeded`. Until the file is there",
+    "the exercise runs on the description alone, the same way a Hörtext runs on its transcript",
+    "before `pnpm generate:hoeren` has rendered the mp3 — the task is the prompt, the bullets",
+    "and the timer, and the photo makes it better rather than possible. Do not point these at",
+    "a stock URL: the site's images are its own.",
+    "",
+    "Entries marked `from` borrow an existing picture and its questions from the older",
+    "trainers at /uebungen/sprechen/dtz-bildbeschreibung and /uebungen/sprechen-b1b2."
+  ],
+  "types": {
+    "vorstellen": "Sich vorstellen",
+    "bild": "Bildbeschreibung",
+    "planen": "Gemeinsam planen",
+    "vortrag": "Kurzvortrag",
+    "diskussion": "Diskussion"
+  },
+  "sets": [
+    {
+      "id": "a1-zuhause",
+      "level": "A1",
+      "title": "Zu Hause und im Viertel",
+      "blurb": "Vier Bilder aus dem nächsten Umkreis: Küche, Laden, Bahnhof, Spielplatz."
+    },
+    {
+      "id": "a2-unterwegs",
+      "level": "A2",
+      "title": "Unterwegs und miteinander",
+      "blurb": "Vier Bilder, auf denen mehrere Menschen etwas zusammen tun."
+    },
+    {
+      "id": "b1-arbeit",
+      "level": "B1",
+      "title": "Arbeit und Ämter",
+      "blurb": "Vier Situationen, in denen es um Arbeit, Bewerbung und Behörden geht."
+    },
+    {
+      "id": "b2-gesellschaft",
+      "level": "B2",
+      "title": "Stadt, Umwelt, Arbeitswelt",
+      "blurb": "Vier Bilder, zu denen man nicht nur beschreiben, sondern Stellung nehmen muss."
+    }
+  ],
+  "tasks": [
+    {
+      "id": "a1-sich-vorstellen",
+      "level": "A1",
+      "type": "vorstellen",
+      "title": "Sich vorstellen",
+      "blurb": "Die erste Sprechaufgabe überhaupt — und die, die man im Alltag am häufigsten braucht.",
+      "seconds": 60,
+      "imageNeeded": "Eine kleine Gruppe von Erwachsenen im Kursraum, eine Person steht und spricht. Freundlich, alltäglich, keine Bühne.",
+      "prompt": "Stellen Sie sich vor. Sprechen Sie eine Minute über sich.",
+      "bullets": ["Name", "Alter", "Land / Heimatstadt", "Wohnort", "Sprachen", "Beruf", "Familie", "Hobby"],
+      "phrases": [
+        "Ich heiße … / Mein Name ist …",
+        "Ich bin … Jahre alt.",
+        "Ich komme aus … und wohne jetzt in …",
+        "Ich spreche … und ein bisschen Deutsch.",
+        "Ich bin … von Beruf.",
+        "Ich habe … Kinder. / Ich bin ledig.",
+        "In meiner Freizeit …"
+      ],
+      "model": "Hallo, ich heiße Amir Sadat. Ich bin 29 Jahre alt und komme aus Herat, das ist in Afghanistan. Jetzt wohne ich in Dortmund. Ich spreche Dari, Englisch und ein bisschen Deutsch. Ich bin Elektriker von Beruf. Ich bin verheiratet und habe eine Tochter. In meiner Freizeit spiele ich gern Fußball.",
+      "check": [
+        "Alle acht Stichwörter kommen vor.",
+        "Ganze Sätze, kein Steckbrief: „Ich bin 29 Jahre alt.“ statt „29“.",
+        "Am Ende ein Hobby — daran hängt die Prüferin fast immer ihre Nachfrage auf."
+      ],
+      "exam": "Erster Teil im Sprechen bei Start Deutsch 1, telc A1 und DTZ."
+    },
+
+    {
+      "id": "a1-bild-bahnhof",
+      "level": "A1",
+      "set": "a1-zuhause",
+      "type": "bild",
+      "title": "Am Bahnhof",
+      "blurb": "Wer? Wo? Was macht die Person? Drei Fragen, drei Sätze.",
+      "seconds": 60,
+      "imageNeeded": "Bahnsteig, eine Frau mit Koffer schaut auf die Anzeigetafel. Tageslicht, wenige Menschen.",
+      "prompt": "Was sehen Sie auf dem Bild? Sagen Sie drei bis fünf Sätze.",
+      "bullets": [
+        "Wer ist auf dem Bild?",
+        "Wo ist die Person?",
+        "Was macht sie?",
+        "Wie ist das Wetter / die Tageszeit?",
+        "Waren Sie schon einmal an einem Bahnhof? Wohin sind Sie gefahren?"
+      ],
+      "phrases": [
+        "Ich sehe eine Frau / einen Mann.",
+        "Die Frau ist am Bahnhof.",
+        "Sie hat einen Koffer.",
+        "Sie wartet auf den Zug.",
+        "Ich glaube, sie fährt in den Urlaub."
+      ],
+      "model": "Auf dem Bild sehe ich eine Frau. Sie ist am Bahnhof. Sie hat einen großen Koffer und schaut auf die Tafel. Ich glaube, sie wartet auf ihren Zug. Vielleicht fährt sie in den Urlaub. Ich fahre auch manchmal mit dem Zug, zum Beispiel nach Köln.",
+      "check": [
+        "„Ich sehe …“ ist der einfachste Anfang und immer richtig.",
+        "„Ich glaube“ / „vielleicht“ erlauben eine Vermutung, ohne sich festzulegen.",
+        "Der letzte Satz bezieht das Bild auf einen selbst — genau das fragt die Prüferin als Nächstes."
+      ]
+    },
+    {
+      "id": "a1-bild-kueche",
+      "level": "A1",
+      "set": "a1-zuhause",
+      "type": "bild",
+      "title": "In der Küche",
+      "blurb": "Zwei Personen, ein Abendessen — und die Wörter, die dabei jeden Tag vorkommen.",
+      "seconds": 60,
+      "imageNeeded": "Kleine Wohnküche, ein Mann schneidet Gemüse, ein Kind deckt den Tisch. Warmes Abendlicht.",
+      "prompt": "Was sehen Sie auf dem Bild? Sagen Sie drei bis fünf Sätze.",
+      "bullets": [
+        "Wie viele Personen sind auf dem Bild?",
+        "Wo sind sie?",
+        "Was machen sie?",
+        "Welche Tageszeit ist es?",
+        "Wer kocht bei Ihnen zu Hause? Was kochen Sie gern?"
+      ],
+      "phrases": [
+        "Auf dem Bild sind zwei Personen.",
+        "Sie sind in der Küche.",
+        "Der Mann schneidet Gemüse.",
+        "Das Kind deckt den Tisch.",
+        "Bei mir zu Hause koche ich …"
+      ],
+      "model": "Auf dem Bild sind zwei Personen: ein Mann und ein Kind. Sie sind in der Küche. Der Mann schneidet Gemüse und das Kind deckt den Tisch. Ich glaube, es ist Abend. Bei mir zu Hause koche ich meistens selbst. Ich koche gern Reis mit Gemüse.",
+      "check": [
+        "Zuerst zählen („zwei Personen“), dann der Ort, dann die Handlung. In dieser Reihenfolge geht es immer.",
+        "Die Verben stehen im Präsens: schneidet, deckt.",
+        "Der Schluss geht zu Ihnen selbst."
+      ]
+    },
+    {
+      "id": "a1-bild-supermarkt",
+      "level": "A1",
+      "set": "a1-zuhause",
+      "type": "bild",
+      "title": "Im Supermarkt",
+      "blurb": "Einkaufen — Zahlen, Lebensmittel und das Wort „bezahlen“.",
+      "seconds": 60,
+      "imageNeeded": "Kasse im Supermarkt, eine Frau legt Obst aufs Band, die Kassiererin scannt. Alltäglich, keine Werbung erkennbar.",
+      "prompt": "Was sehen Sie auf dem Bild? Sagen Sie drei bis fünf Sätze.",
+      "bullets": [
+        "Wo sind die Personen?",
+        "Was kauft die Frau?",
+        "Was macht die Kassiererin?",
+        "Wie bezahlt man in Deutschland — bar oder mit Karte?",
+        "Wo kaufen Sie ein? Wie oft in der Woche?"
+      ],
+      "phrases": [
+        "Die Frau ist im Supermarkt.",
+        "Sie kauft Obst und Gemüse.",
+        "Die Kassiererin scannt die Waren.",
+        "Ich bezahle mit Karte / bar.",
+        "Ich kaufe einmal pro Woche ein."
+      ],
+      "model": "Auf dem Bild sehe ich einen Supermarkt. Eine Frau steht an der Kasse. Sie kauft Obst und Gemüse. Die Kassiererin scannt die Waren. Ich glaube, die Frau bezahlt gleich mit Karte. Ich kaufe auch im Supermarkt ein, meistens am Samstag.",
+      "check": [
+        "Lebensmittel im Plural: Waren, Äpfel, Bananen.",
+        "„an der Kasse“ — die Präposition gehört zum Wort, lernen Sie beides zusammen.",
+        "Eine Zeitangabe am Schluss („am Samstag“) klingt sofort geübter."
+      ]
+    },
+    {
+      "id": "a1-bild-spielplatz",
+      "level": "A1",
+      "set": "a1-zuhause",
+      "type": "bild",
+      "title": "Auf dem Spielplatz",
+      "blurb": "Kinder, Eltern, Wetter — und die erste Gelegenheit, „weil“ zu benutzen.",
+      "seconds": 60,
+      "imageNeeded": "Spielplatz im Wohnviertel, zwei Kinder auf der Schaukel, Erwachsene sitzen auf einer Bank. Sonniger Nachmittag.",
+      "prompt": "Was sehen Sie auf dem Bild? Sagen Sie drei bis fünf Sätze.",
+      "bullets": [
+        "Wer ist auf dem Bild?",
+        "Wo sind sie?",
+        "Was machen die Kinder? Was machen die Erwachsenen?",
+        "Wie ist das Wetter?",
+        "Gehen Sie gern in den Park? Was machen Sie dort?"
+      ],
+      "phrases": [
+        "Ich sehe zwei Kinder.",
+        "Sie spielen auf dem Spielplatz.",
+        "Die Erwachsenen sitzen auf einer Bank.",
+        "Das Wetter ist schön.",
+        "Ich gehe gern in den Park, weil …"
+      ],
+      "model": "Auf dem Bild sehe ich zwei Kinder und ein paar Erwachsene. Die Kinder spielen auf dem Spielplatz, sie schaukeln. Die Erwachsenen sitzen auf einer Bank und reden. Das Wetter ist schön, die Sonne scheint. Ich gehe auch gern in den Park, weil es dort ruhig ist.",
+      "check": [
+        "Zwei Gruppen, zwei Sätze: erst die Kinder, dann die Erwachsenen.",
+        "Ein Satz zum Wetter — er wird fast immer gefragt.",
+        "„weil“ schickt das Verb ans Ende: weil es dort ruhig ist."
+      ]
+    },
+
+    {
+      "id": "a2-bild-gartenarbeit",
+      "level": "A2",
+      "set": "a2-unterwegs",
+      "type": "bild",
+      "title": "Gartenarbeit in der Gruppe",
+      "blurb": "Beschreiben, deuten und dann über die eigene Erfahrung sprechen.",
+      "seconds": 90,
+      "from": "sprechen-dtz",
+      "index": 0,
+      "exam": "Aufgabenform aus dem Sprechteil des DTZ."
+    },
+    {
+      "id": "a2-bild-bus",
+      "level": "A2",
+      "set": "a2-unterwegs",
+      "type": "bild",
+      "title": "Menschen im Bus",
+      "blurb": "Stimmung beschreiben — und sagen, wie man selbst zur Arbeit kommt.",
+      "seconds": 90,
+      "from": "sprechen-dtz",
+      "index": 1,
+      "exam": "Aufgabenform aus dem Sprechteil des DTZ."
+    },
+    {
+      "id": "a2-bild-nachbarschaftsfest",
+      "level": "A2",
+      "set": "a2-unterwegs",
+      "type": "bild",
+      "title": "Nachbarschaftsfest im Hof",
+      "blurb": "Viele Menschen auf einem Bild — und die Frage, warum sie da sind.",
+      "seconds": 90,
+      "imageNeeded": "Hinterhof eines Mietshauses, lange Tischreihe, Menschen verschiedenen Alters essen und reden. Sommerabend, Lichterkette.",
+      "prompt": "Beschreiben Sie das Bild. Sagen Sie dann, was Sie über die Situation denken.",
+      "bullets": [
+        "Wie viele Menschen sehen Sie ungefähr? Wer könnte das sein?",
+        "Wo findet das statt und zu welcher Tageszeit?",
+        "Was machen die Menschen gerade?",
+        "Warum treffen sich Nachbarn zu so einem Fest?",
+        "Kennen Sie Ihre Nachbarn? Wie ist das bei Ihnen?",
+        "Gibt es so etwas auch in Ihrem Heimatland?"
+      ],
+      "phrases": [
+        "Im Vordergrund sieht man …, im Hintergrund …",
+        "Die Menschen scheinen sich gut zu kennen.",
+        "Ich denke, das ist ein Hoffest.",
+        "Bei uns im Haus …",
+        "In meiner Heimat ist das anders: …"
+      ],
+      "model": "Auf dem Bild sehe ich ungefähr zwanzig Menschen in einem Hinterhof. Es ist Abend, über den Tischen hängt eine Lichterkette. Die Leute sitzen an einer langen Tafel, essen und unterhalten sich. Ich denke, das ist ein Nachbarschaftsfest. Die Menschen wohnen wahrscheinlich im selben Haus und kennen sich schon länger. Ich finde so ein Fest gut, weil man die Nachbarn dann nicht nur im Treppenhaus trifft. Bei uns im Haus gibt es das leider nicht. In meiner Heimat feiert man öfter zusammen, aber meistens mit der Familie.",
+      "check": [
+        "Vordergrund und Hintergrund trennen — das ist der Schritt von A1 auf A2.",
+        "Eine Vermutung mit Begründung: „Ich denke, das ist …, weil …“",
+        "Am Ende ein Vergleich mit dem eigenen Leben oder Heimatland. Danach wird auf A2 immer gefragt."
+      ]
+    },
+    {
+      "id": "a2-bild-wartezimmer",
+      "level": "A2",
+      "set": "a2-unterwegs",
+      "type": "bild",
+      "title": "Im Wartezimmer",
+      "blurb": "Warten, Termine, Ungeduld — und das Wort „Krankenkasse“.",
+      "seconds": 90,
+      "imageNeeded": "Wartezimmer einer Hausarztpraxis, sechs Menschen auf Stühlen, eine Person am Empfangstresen. Neutral, kein Praxisname erkennbar.",
+      "prompt": "Beschreiben Sie das Bild. Sagen Sie dann, was Sie über die Situation denken.",
+      "bullets": [
+        "Wo sind die Menschen?",
+        "Wie sehen sie aus? Was machen sie?",
+        "Was macht die Person am Tresen?",
+        "Wie lange wartet man bei Ihnen auf einen Arzttermin?",
+        "Was braucht man in Deutschland, wenn man zum Arzt geht?"
+      ],
+      "phrases": [
+        "Die Personen sitzen im Wartezimmer.",
+        "Einige schauen auf ihr Handy, andere …",
+        "Sie wirken etwas ungeduldig.",
+        "Man braucht die Versichertenkarte.",
+        "Bei mir dauert es meistens …"
+      ],
+      "model": "Das Bild zeigt ein Wartezimmer beim Arzt. Sechs Personen sitzen auf Stühlen und warten. Einige schauen auf ihr Handy, eine ältere Frau liest eine Zeitschrift. Am Tresen spricht eine Frau mit der Sprechstundenhilfe, wahrscheinlich meldet sie sich an. Die Leute wirken ein bisschen ungeduldig. In Deutschland braucht man beim Arzt die Versichertenkarte. Ich warte oft zwei oder drei Wochen auf einen Termin, das finde ich ziemlich lang.",
+      "check": [
+        "„einige … andere …“ ist das Mittel, um eine Gruppe zu beschreiben, ohne jede Person einzeln aufzuzählen.",
+        "Ein Gefühlswort („ungeduldig“, „müde“, „entspannt“) — danach wird bei Bildern mit Menschen fast immer gefragt.",
+        "Eine konkrete Angabe aus dem eigenen Leben („zwei oder drei Wochen“) ist mehr wert als ein allgemeiner Satz."
+      ]
+    },
+
+    {
+      "id": "b1-bild-rolltreppe",
+      "level": "B1",
+      "set": "b1-arbeit",
+      "type": "bild",
+      "title": "Hilfe an der Rolltreppe",
+      "blurb": "Eine Situation deuten, nicht nur aufzählen.",
+      "seconds": 90,
+      "from": "sprechen-dtz",
+      "index": 2,
+      "exam": "Aufgabenform aus dem Sprechteil des DTZ."
+    },
+    {
+      "id": "b1-bild-bewerbungsgespraech",
+      "level": "B1",
+      "set": "b1-arbeit",
+      "type": "bild",
+      "title": "Das Bewerbungsgespräch",
+      "blurb": "Zwei Seiten eines Tisches — und die Frage, wer hier eigentlich nervös ist.",
+      "seconds": 120,
+      "imageNeeded": "Besprechungsraum, eine Bewerberin sitzt einem Paar aus Personalerin und Abteilungsleiter gegenüber. Mappe und Laptop auf dem Tisch.",
+      "prompt": "Beschreiben Sie das Bild und sprechen Sie dann über das Thema.",
+      "bullets": [
+        "Wer sitzt wo, und woran erkennt man die Rollen?",
+        "Welche Stimmung geht von dem Bild aus?",
+        "Wie bereitet man sich auf ein Bewerbungsgespräch vor?",
+        "Welche Fragen werden fast immer gestellt?",
+        "Haben Sie schon einmal ein Bewerbungsgespräch geführt — auf Deutsch?",
+        "Was ist bei einer Bewerbung in Ihrem Heimatland anders?"
+      ],
+      "phrases": [
+        "Rechts im Bild sitzt …, ihr gegenüber …",
+        "Man erkennt an …, dass sie die Bewerberin ist.",
+        "Ich vermute, dass …",
+        "Wichtig ist meiner Meinung nach, dass man …",
+        "Als ich mich beworben habe, …"
+      ],
+      "model": "Auf dem Bild sieht man einen Besprechungsraum. Links sitzt eine junge Frau mit einer Mappe, ihr gegenüber sitzen eine Frau und ein Mann mit einem Laptop. Ich vermute, die junge Frau ist die Bewerberin und die beiden anderen führen das Gespräch. Sie wirkt konzentriert, aber auch ein bisschen angespannt. Auf ein Bewerbungsgespräch sollte man sich gut vorbereiten: Man informiert sich über die Firma, überlegt sich Antworten auf die üblichen Fragen und legt die Unterlagen bereit. Gefragt wird fast immer nach den eigenen Stärken und danach, warum man gerade diese Stelle möchte. Als ich mich das erste Mal auf Deutsch beworben habe, war ich sehr nervös, weil ich Angst vor Fehlern hatte. Heute weiß ich: Die meisten Arbeitgeber achten mehr darauf, ob man den Beruf kann.",
+      "check": [
+        "Ortsangaben zur Gliederung: links, rechts, im Vordergrund, gegenüber.",
+        "Die Vermutung ist als Vermutung markiert („Ich vermute, dass …“) und begründet.",
+        "Der Perfekt- oder Präteritumteil („Als ich mich beworben habe …“) ist auf B1 erwartet, nicht optional.",
+        "Ein Satz mit „meiner Meinung nach“ — die Meinungsäußerung ist der eigentliche B1-Teil."
+      ]
+    },
+    {
+      "id": "b1-bild-werkstatt",
+      "level": "B1",
+      "set": "b1-arbeit",
+      "type": "bild",
+      "title": "In der Werkstatt",
+      "blurb": "Ausbildung, Handwerk und die Frage, warum zu wenige Leute diesen Weg gehen.",
+      "seconds": 120,
+      "imageNeeded": "Kfz- oder Metallwerkstatt, eine erfahrene Handwerkerin erklärt einem jungen Auszubildenden etwas an einer Maschine. Arbeitskleidung, echte Werkstatt.",
+      "prompt": "Beschreiben Sie das Bild und sprechen Sie dann über das Thema.",
+      "bullets": [
+        "Was für ein Ort ist das?",
+        "Was machen die beiden Personen gerade?",
+        "Was ist eine Ausbildung in Deutschland, und wie lange dauert sie?",
+        "Warum wollen heute weniger junge Leute einen handwerklichen Beruf lernen?",
+        "Welchen Beruf haben Sie gelernt? Wie war Ihre Ausbildung?"
+      ],
+      "phrases": [
+        "Das Bild zeigt offenbar eine Werkstatt.",
+        "Die Frau erklärt dem jungen Mann, wie …",
+        "In Deutschland dauert eine Ausbildung meistens drei Jahre.",
+        "Ein Grund dafür könnte sein, dass …",
+        "Ich selbst habe … gelernt."
+      ],
+      "model": "Das Bild zeigt offenbar eine Werkstatt. Zwei Personen stehen an einer Maschine: eine Frau in Arbeitskleidung und ein junger Mann. Ich nehme an, sie ist die Meisterin und er ist ihr Auszubildender, denn sie erklärt ihm gerade etwas und er hört aufmerksam zu. In Deutschland dauert eine Ausbildung meistens drei Jahre; man arbeitet im Betrieb und geht gleichzeitig in die Berufsschule. Trotzdem entscheiden sich heute weniger junge Leute dafür. Ein Grund könnte sein, dass viele lieber studieren, weil sie sich davon ein höheres Gehalt versprechen. Ich habe selbst Elektriker gelernt und finde, dass man im Handwerk sehr schnell sieht, was man geschafft hat.",
+      "check": [
+        "„Ich nehme an …, denn …“ verbindet Vermutung und Begründung in einem Satz.",
+        "Einen Fachbegriff erklären (Ausbildung, Berufsschule) statt ihn nur zu nennen.",
+        "Auf die Warum-Frage kommt eine echte Antwort mit „weil“ oder „Ein Grund könnte sein, dass …“."
+      ]
+    },
+    {
+      "id": "b1-bild-buergeramt",
+      "level": "B1",
+      "set": "b1-arbeit",
+      "type": "bild",
+      "title": "Im Bürgeramt",
+      "blurb": "Nummer ziehen, warten, Formular — und wie man darüber spricht, ohne zu schimpfen.",
+      "seconds": 120,
+      "imageNeeded": "Wartebereich eines Bürgeramts, Anzeigetafel mit Wartenummer, Menschen mit Unterlagen, im Hintergrund Schalter.",
+      "prompt": "Beschreiben Sie das Bild und sprechen Sie dann über das Thema.",
+      "bullets": [
+        "Wo sind die Menschen, und woran erkennt man das?",
+        "Was machen sie gerade?",
+        "Wofür braucht man in Deutschland einen Termin beim Amt?",
+        "Was ist schwierig an Behördengängen, wenn Deutsch nicht die Muttersprache ist?",
+        "Wie war Ihr erster Behördengang in Deutschland?"
+      ],
+      "phrases": [
+        "Man erkennt an der Anzeigetafel, dass …",
+        "Die meisten Leute haben Unterlagen dabei.",
+        "Für die Anmeldung braucht man einen Termin.",
+        "Schwierig ist vor allem, dass …",
+        "Mir ist es am Anfang so gegangen, dass …"
+      ],
+      "model": "Auf dem Bild sieht man den Wartebereich eines Bürgeramts. Man erkennt es an der Anzeigetafel mit den Wartenummern und an den Schaltern im Hintergrund. Etwa acht Personen sitzen und warten, die meisten haben Unterlagen oder eine Mappe dabei. In Deutschland braucht man für fast alles einen Termin: für die Anmeldung, für den Personalausweis, für die Ummeldung nach einem Umzug. Schwierig ist vor allem die Sprache auf den Formularen, weil dort viele Wörter stehen, die man im Alltag nie hört. Mir ist es am Anfang so gegangen, dass ich ein Formular dreimal zurückbekommen habe. Inzwischen frage ich einfach am Schalter nach, wenn ich etwas nicht verstehe.",
+      "check": [
+        "Die Beschreibung belegt, woher man etwas weiß („Man erkennt an …“).",
+        "Ein konkretes Beispiel aus dem eigenen Leben statt einer allgemeinen Klage.",
+        "„Inzwischen …“ zeigt eine Entwicklung — genau das hört eine Prüferin auf B1 gern."
+      ]
+    },
+
+    {
+      "id": "b2-vortrag-ehrenamt",
+      "level": "B2",
+      "type": "vortrag",
+      "title": "Kurzvortrag: Zusammenarbeit und Ehrenamt",
+      "blurb": "Bild, Kurzvortrag, Diskussion — die drei Stufen an einem Thema.",
+      "seconds": 180,
+      "from": "sprechen-telc",
+      "index": 0,
+      "exam": "Aufgabenform aus dem Sprechteil von telc B1/B2."
+    },
+    {
+      "id": "b2-diskussion-ehrenamt-schule",
+      "level": "B2",
+      "type": "diskussion",
+      "title": "Diskussion: Ehrenamt in der Schule",
+      "blurb": "Position beziehen, Gegenargument aufnehmen, dabei bleiben.",
+      "seconds": 240,
+      "from": "sprechen-telc",
+      "index": 0,
+      "stage": "diskussion",
+      "exam": "Aufgabenform aus dem Sprechteil von telc B2."
+    },
+    {
+      "id": "b2-planen-abschiedsfeier",
+      "level": "B2",
+      "type": "planen",
+      "title": "Gemeinsam planen: Abschiedsfeier im Betrieb",
+      "blurb": "Vorschlagen, ablehnen, sich einigen — die Aufgabe, in der man reagieren muss, statt vorzutragen.",
+      "seconds": 240,
+      "prompt": "Eine Kollegin geht nach elf Jahren in den Ruhestand. Sie sollen mit einer zweiten Person die Abschiedsfeier planen. Sprechen Sie über alle Punkte, machen Sie Vorschläge, reagieren Sie auf die Vorschläge der anderen Person und einigen Sie sich am Ende.",
+      "bullets": [
+        "Wann und wo soll die Feier stattfinden?",
+        "Wer wird eingeladen — nur die Abteilung oder der ganze Betrieb?",
+        "Essen und Getränke: selbst organisieren oder bestellen?",
+        "Geschenk: Was, und wer sammelt das Geld ein?",
+        "Wer hält die Rede?"
+      ],
+      "phrases": [
+        "Ich würde vorschlagen, dass wir …",
+        "Wie wäre es, wenn …?",
+        "Da bin ich ganz bei Ihnen, allerdings …",
+        "Das sehe ich etwas anders, weil …",
+        "Können wir uns darauf einigen, dass …?",
+        "Gut, dann halten wir fest: …"
+      ],
+      "model": "— Ich würde vorschlagen, dass wir die Feier am letzten Freitag im Monat machen, gleich nach Dienstschluss. Dann muss niemand extra kommen.\n— Da bin ich ganz bei Ihnen, allerdings ist freitags immer die Hälfte der Abteilung schon im Wochenende. Wie wäre es mit Donnerstag?\n— Einverstanden, Donnerstag ist besser. Und der Ort — die Kantine oder lieber ein Lokal?\n— Ich wäre für die Kantine. Das kostet nichts, und wir können selbst dekorieren. Beim Essen würde ich allerdings bestellen, sonst steht am Ende wieder einer allein in der Küche.\n— Gut, dann halten wir fest: Donnerstag, Kantine, Essen bestellt. Bleibt das Geschenk.\n— Sie kennt sich mit Pflanzen aus. Ich sammle im Team, wenn Sie das Geschenk besorgen?\n— Abgemacht. Und die Rede hält am besten Herr Demir, er arbeitet am längsten mit ihr zusammen.",
+      "check": [
+        "Sie reagieren auf die andere Person, statt Ihre Liste abzuarbeiten.",
+        "Mindestens einmal höflich widersprechen — darauf wird die Aufgabe geprüft.",
+        "Am Ende steht eine ausgesprochene Einigung zu jedem Punkt.",
+        "Konjunktiv II als Höflichkeitsform: ich würde, wäre, könnten wir."
+      ],
+      "exam": "Aufgabenform aus dem gemeinsamen Sprechteil von telc B1 und B2."
+    },
+    {
+      "id": "b2-bild-wochenmarkt",
+      "level": "B2",
+      "set": "b2-gesellschaft",
+      "type": "bild",
+      "title": "Wochenmarkt gegen Supermarkt",
+      "blurb": "Ein sympathisches Bild — und die Frage, wer sich das leisten kann.",
+      "seconds": 150,
+      "imageNeeded": "Wochenmarkt in einer Innenstadt, Gemüsestand, Kundin im Gespräch mit dem Händler. Vormittagslicht.",
+      "prompt": "Beschreiben Sie das Bild kurz und nehmen Sie dann Stellung.",
+      "bullets": [
+        "Was ist auf dem Bild zu sehen?",
+        "Welchen Eindruck vermittelt die Szene?",
+        "Welche Vorteile hat der Einkauf auf dem Markt gegenüber dem Supermarkt?",
+        "Welche Gründe sprechen dagegen?",
+        "Ist regionales Einkaufen eine Frage der Überzeugung oder des Geldbeutels?",
+        "Wie kaufen Sie selbst ein und warum?"
+      ],
+      "phrases": [
+        "Im Vordergrund ist … zu sehen, dahinter …",
+        "Die Szene wirkt auf mich …",
+        "Für den Markt spricht zweifellos, dass …",
+        "Dem steht allerdings entgegen, dass …",
+        "Man darf dabei nicht übersehen, dass …",
+        "Letztlich hängt es davon ab, ob …"
+      ],
+      "model": "Im Vordergrund des Bildes ist ein Gemüsestand zu sehen, dahinter weitere Marktstände in einer Fußgängerzone. Eine Kundin unterhält sich mit dem Händler, der ihr offenbar etwas erklärt. Die Szene wirkt ruhig und persönlich — man kauft hier nicht nur ein, man spricht auch miteinander. Für den Markt spricht zweifellos, dass die Waren kürzere Wege hinter sich haben und man erfährt, woher sie kommen. Dem steht allerdings entgegen, dass die Öffnungszeiten für Berufstätige oft unmöglich sind: Wer bis sechs arbeitet, steht vor leeren Ständen. Man darf außerdem nicht übersehen, dass die Preise in der Regel höher liegen. Regional einzukaufen ist deshalb nicht nur eine Frage der Überzeugung, sondern auch eine des Einkommens und der Arbeitszeit. Ich selbst kaufe im Supermarkt ein und gehe samstags auf den Markt, wenn ich es schaffe — ehrlich gesagt aus Bequemlichkeit, nicht aus Prinzip.",
+      "check": [
+        "Die Beschreibung ist kurz. Auf B2 ist sie der Einstieg, nicht die Aufgabe.",
+        "Pro und Contra stehen beide da, mit den Konnektoren dafür: zweifellos, allerdings, dem steht entgegen.",
+        "Ein Einwand gegen die eigene Position („nicht nur …, sondern auch …“) zeigt, dass Sie die Frage wirklich durchdacht haben.",
+        "Der persönliche Schluss ist ehrlich statt vorbildlich — das ist sprachlich anspruchsvoller und wirkt erwachsener."
+      ]
+    },
+    {
+      "id": "b2-bild-videokonferenz",
+      "level": "B2",
+      "set": "b2-gesellschaft",
+      "type": "bild",
+      "title": "Besprechung mit halbem Team",
+      "blurb": "Vier im Raum, vier auf dem Bildschirm — und wer dabei untergeht.",
+      "seconds": 150,
+      "imageNeeded": "Besprechungsraum, vier Personen am Tisch, auf dem Bildschirm an der Wand vier zugeschaltete Gesichter. Eine Person am Tisch spricht.",
+      "prompt": "Beschreiben Sie das Bild kurz und nehmen Sie dann Stellung.",
+      "bullets": [
+        "Was für eine Situation zeigt das Bild?",
+        "Wer ist im Raum, wer ist zugeschaltet?",
+        "Welche Vorteile hat hybrides Arbeiten?",
+        "Welche Nachteile entstehen für die, die zugeschaltet sind?",
+        "Sollten Unternehmen feste Bürotage vorschreiben?",
+        "Wie würden Sie am liebsten arbeiten?"
+      ],
+      "phrases": [
+        "Das Bild zeigt offensichtlich …",
+        "Auffällig ist, dass …",
+        "Ein klarer Vorteil besteht darin, dass …",
+        "Problematisch daran ist meines Erachtens, dass …",
+        "Man könnte einwenden, dass …",
+        "Ich persönlich würde …"
+      ],
+      "model": "Das Bild zeigt offensichtlich eine Besprechung, an der ein Teil des Teams im Raum und ein Teil über Video teilnimmt. Vier Personen sitzen am Tisch, vier weitere sind auf dem Bildschirm an der Wand zu sehen. Auffällig ist, dass die Person im Raum spricht und die Zugeschalteten eher zuhören. Ein klarer Vorteil des hybriden Arbeitens besteht darin, dass Wegezeiten wegfallen und sich Arbeit und Familie leichter vereinbaren lassen. Problematisch daran ist meines Erachtens allerdings, dass die Zugeschalteten im Nachteil sind: Sie bekommen die Nebengespräche nicht mit, und wer sich melden will, muss erst warten, bis eine Lücke entsteht. Man könnte einwenden, dass sich das mit guter Moderation lösen ließe — nur passiert das in der Praxis selten von allein. Feste Bürotage für das ganze Team halte ich deshalb für sinnvoller als eine Pflicht für jeden Einzelnen. Ich persönlich würde gern zwei Tage im Büro und drei zu Hause arbeiten.",
+      "check": [
+        "Eine Beobachtung aus dem Bild trägt das Argument („Auffällig ist, dass …“) — nicht nur allgemeines Wissen.",
+        "Der Einwand gegen die eigene These steht drin („Man könnte einwenden …“) und wird beantwortet.",
+        "Der Unterschied zwischen „feste Bürotage fürs Team“ und „Pflicht für jeden“ ist eine Differenzierung. Genau die trennt B2 von B1."
+      ]
+    },
+    {
+      "id": "b2-bild-baustelle-innenstadt",
+      "level": "B2",
+      "set": "b2-gesellschaft",
+      "type": "bild",
+      "title": "Baustelle in der Innenstadt",
+      "blurb": "Umbau, Umleitung, Ärger — und die Frage, wem eine Stadt gehört.",
+      "seconds": 150,
+      "imageNeeded": "Innenstadtstraße, Bauzaun, Bagger, daneben ein Geschäft mit Schild „Wir haben geöffnet“. Fußgänger gehen auf einem schmalen Weg vorbei.",
+      "prompt": "Beschreiben Sie das Bild kurz und nehmen Sie dann Stellung.",
+      "bullets": [
+        "Was ist auf dem Bild zu sehen?",
+        "Welche Folgen hat so eine Baustelle für die Anwohner und die Geschäfte?",
+        "Warum bauen Städte ihre Innenstädte um?",
+        "Wie sollte eine Stadt die Betroffenen beteiligen?",
+        "Gibt es in Ihrer Stadt ein ähnliches Projekt? Wie wird darüber gesprochen?"
+      ],
+      "phrases": [
+        "Im Zentrum des Bildes steht …",
+        "Besonders ins Auge fällt …",
+        "Für die Geschäfte bedeutet das konkret, dass …",
+        "Auf der anderen Seite lässt sich argumentieren, dass …",
+        "Entscheidend ist dabei weniger …, als vielmehr …",
+        "In meiner Stadt wird derzeit …"
+      ],
+      "model": "Im Zentrum des Bildes steht eine Baustelle in einer Innenstadtstraße: ein Bagger hinter einem Bauzaun, daneben ein schmaler Fußweg für Passanten. Besonders ins Auge fällt das Schild „Wir haben geöffnet“ an einem Geschäft — offenbar fürchtet der Inhaber, dass die Kundschaft ausbleibt. Für die Geschäfte bedeutet eine solche Baustelle konkret Umsatzverluste über Monate, für die Anwohner Lärm und Umwege. Auf der anderen Seite lässt sich argumentieren, dass Innenstädte umgebaut werden müssen: Kanäle sind alt, Straßen sind für heutige Verkehrsmengen nicht gemacht, und ohne Bauzeit gibt es keine Verbesserung. Entscheidend ist dabei meines Erachtens weniger, ob gebaut wird, als vielmehr wie: ob die Anwohner früh informiert werden, ob es Entschädigungen für Geschäfte gibt und ob der Zeitplan eingehalten wird. In meiner Stadt wird derzeit der Marktplatz umgebaut, und genau darüber wird gestritten — nicht über das Ziel, sondern über die Dauer.",
+      "check": [
+        "Ein Detail aus dem Bild wird zum Argument gemacht (das Schild), statt es nur zu erwähnen.",
+        "„weniger …, als vielmehr …“ verschiebt die Frage — ein starkes B2-Mittel.",
+        "Die Stellungnahme endet mit Bedingungen, nicht mit einem Urteil. Das ist differenzierter und leichter zu verteidigen."
+      ]
+    },
+    {
+      "id": "b2-bild-wertstoffhof",
+      "level": "B2",
+      "set": "b2-gesellschaft",
+      "type": "bild",
+      "title": "Am Wertstoffhof",
+      "blurb": "Trennen, sammeln, entsorgen — und ob das überhaupt etwas bringt.",
+      "seconds": 150,
+      "imageNeeded": "Wertstoffhof, mehrere große Container mit Beschriftung, Menschen laden Kartons und Altgeräte aus dem Kofferraum aus.",
+      "prompt": "Beschreiben Sie das Bild kurz und nehmen Sie dann Stellung.",
+      "bullets": [
+        "Was ist auf dem Bild zu sehen?",
+        "Wie funktioniert Mülltrennung in Deutschland?",
+        "Warum halten sich manche Menschen nicht daran?",
+        "Bringt individuelles Trennen etwas, oder ist das Problem woanders zu lösen?",
+        "Wie wird in Ihrem Heimatland mit Müll umgegangen?"
+      ],
+      "phrases": [
+        "Auf dem Bild ist … zu erkennen.",
+        "Das deutsche System sieht vor, dass …",
+        "Ein häufiges Gegenargument lautet, dass …",
+        "Dem lässt sich entgegenhalten, dass …",
+        "Wirklich entscheidend wäre wohl, …",
+        "Im Vergleich dazu ist es in … so, dass …"
+      ],
+      "model": "Auf dem Bild ist ein Wertstoffhof zu erkennen: mehrere große, beschriftete Container, davor Autos, aus denen Menschen Kartons und alte Geräte ausladen. Das deutsche System sieht vor, dass Abfall schon zu Hause getrennt wird — Papier, Verpackungen, Biomüll, Restmüll — und dass alles, was nicht in diese Tonnen passt, zum Wertstoffhof gebracht wird. Ein häufiges Gegenargument lautet, dass sich der Aufwand nicht lohne, weil am Ende ohnehin vieles verbrannt werde. Dem lässt sich entgegenhalten, dass die Recyclingquoten bei Papier und Glas nachweislich hoch sind. Wirklich entscheidend wäre allerdings, weniger Verpackung überhaupt zu produzieren; Trennen ist Schadensbegrenzung, keine Lösung. Im Vergleich dazu ist es in meinem Heimatland so, dass es kaum getrennt wird — dafür wird sehr viel weniger weggeworfen, weil Dinge repariert werden.",
+      "check": [
+        "Ein System wird erklärt, nicht nur bewertet.",
+        "Gegenargument und Antwort darauf stehen beide da.",
+        "„Trennen ist Schadensbegrenzung, keine Lösung“ — ein zugespitzter Satz am Ende bleibt hängen und zeigt Sprachgefühl.",
+        "Der Vergleich mit dem Heimatland urteilt nicht, sondern beschreibt einen Unterschied."
+      ]
+    }
+  ]
+}

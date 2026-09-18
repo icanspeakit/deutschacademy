@@ -18,14 +18,35 @@
  *   .vp-rule-card     the card that contracts on a phone
  *   .vp-rule-toggle   the desktop pill (hidden below 1001px)
  *   .vp-rule-peek     its phone counterpart (hidden above 1000px)
- * Both buttons carry data-show / data-hide labels; the page decides the words, since
- * "Regel einblenden" and "Erklärung einblenden" are not the same promise.
+ *   .vp-rule-pivot    the edge tab the collapsed column leaves behind on desktop
+ *   .vp-rule-min      a control inside the column that puts it away
+ * The first three buttons carry data-show / data-hide labels; the page decides the words,
+ * since "Regel einblenden" and "Erklärung einblenden" are not the same promise.
  *
- * Two knobs exist for surfaces where the column is navigation rather than an aside
- * (the Wortschatz Lernset list): `defaultHidden` may be a function, so the first-visit
- * state can depend on the width — a nav column earns its place on a desktop but not on a
- * phone — and `intro: false` turns off the pop-out tour, which exists to advertise a panel
- * that starts collapsed and has nothing to say about one that does not.
+ * The pivot is the answer to a column that vanishes completely. Where the aside is an
+ * aside — a rule you consult — vanishing is right: the pill in the toolbar is enough of a
+ * trace. Where it is *navigation*, as the Wortschatz Lernset list is, a column that leaves
+ * nothing behind reads as a feature that went away, and the control that brings it back is
+ * a pill at the other end of the toolbar with nothing to connect it to the space that just
+ * closed. So a page may render a tab at the screen edge where the column was; it must sit
+ * OUTSIDE .vp-col--rule, because that column goes inert when it collapses and a control
+ * inside it would go with it.
+ *
+ * Three knobs exist for surfaces where the column is navigation rather than an aside:
+ * `defaultHidden` may be a function, so the first-visit state can depend on the width — a
+ * nav column earns its place on a desktop but not on a phone — `intro: false` turns
+ * off the pop-out tour where a page does not want one, and `sheet: true` changes what
+ * "open" means on a phone.
+ *
+ * The sheet is the answer to an accordion that is too tall to be one. Expanding the
+ * Wortschatz picker in place added two screens of list ABOVE the trainer: the control
+ * that closed it rode down with the content, so the way out was a scroll away, and
+ * choosing a set meant navigating anyway — every row in that list is a link to another
+ * page. So with `sheet: true` the card becomes a bottom sheet below 1001px: it slides
+ * over the work instead of pushing it, it brings its own close button and scrim (CSS owns
+ * both; this owns the body-scroll lock and Escape), and the page underneath never moves,
+ * so dismissing it puts the learner back exactly where they were. Desktop is untouched —
+ * there the column really does sit beside the work, which is the whole point of it.
  */
 import { createRuleIntro } from "./ruleIntro.js";
 import { createCardCollapse } from "./cardCollapse.js";
@@ -40,16 +61,27 @@ export function mountRuleColumn(page, {
   devResetId = "vp-dev-reset",
   defaultHidden = true,
   intro: withIntro = true,
+  sheet = false,
 } = {}) {
   if (!page) return null;
   const ruleEl = page.querySelector(".vp-col--rule");
   const ruleCard = page.querySelector(".vp-rule-card");
   const ruleBtn = page.querySelector(".vp-rule-toggle");
   const peekBtn = page.querySelector(".vp-rule-peek");
+  const pivotBtn = page.querySelector(".vp-rule-pivot");
+  // A control INSIDE the column that puts it away — the counterpart to the pivot, which
+  // is outside it and brings it back. It only ever collapses, so it has no labels to
+  // swap; it goes inert with the column it closed, which is right, because once the
+  // column is away this button is off screen with it.
+  const minBtn = page.querySelector(".vp-rule-min");
   if (!ruleEl) return null;
 
   const wide = matchMedia(WIDE);
   const calm = matchMedia("(prefers-reduced-motion: reduce)");
+  const compactMq = matchMedia("(max-width: 1000px)");
+  // Note that the presentation switch itself is not made here: the page carries
+  // `.vp-page--sheet` from the server, because CSS has to know which shape the card is
+  // before the first paint or a sheet flashes as a full-height accordion on the way in.
 
   let hidden = true;
 
@@ -65,12 +97,23 @@ export function mountRuleColumn(page, {
 
   // CSS owns the collapsed height; this owns the trip to and from it (and holds the
   // button still while the page shrinks above it).
+  // A sheet slides; it does not grow. Handing it to the height animator would have it
+  // measuring a fixed, off-screen box and pinning an inline max-height over the one the
+  // sheet needs, so on those pages the compact animator is simply never active.
   const crop = createCardCollapse({
     card: ruleCard,
     toggle: peekBtn,
-    active: matchMedia("(max-width: 1000px)"),
+    active: sheet ? matchMedia("not all") : compactMq,
     calm,
   });
+
+  // Scroll lock. A sheet over a scrollable page that still scrolls underneath is the
+  // oldest bug in the pattern; it is released on every close, including the one that a
+  // resize past the breakpoint amounts to.
+  function lockScroll(on) {
+    if (!sheet) return;
+    document.body.style.overflow = on && compactMq.matches ? "hidden" : "";
+  }
 
   function apply(next, persist = true) {
     crop.animate(next);
@@ -78,10 +121,21 @@ export function mountRuleColumn(page, {
     page.dataset.rule = next ? "hidden" : "";
     if (ruleBtn) ruleBtn.textContent = next ? ruleBtn.dataset.show : ruleBtn.dataset.hide;
     if (peekBtn) {
-      peekBtn.textContent = next ? peekBtn.dataset.show : peekBtn.dataset.hide;
+      // The sheet's opener keeps its word: while the sheet is up the button is behind the
+      // scrim, and the control the learner reaches for is the sheet's own ✕.
+      if (!sheet) peekBtn.textContent = next ? peekBtn.dataset.show : peekBtn.dataset.hide;
       peekBtn.setAttribute("aria-expanded", next ? "false" : "true");
     }
+    // The pivot's label never changes — it only exists while the column is away, and
+    // what it says is what it will bring back. CSS hides it in the other state; aria
+    // says so too, for the reader that ignores CSS.
+    if (pivotBtn) {
+      pivotBtn.setAttribute("aria-expanded", next ? "false" : "true");
+      pivotBtn.inert = !next;
+    }
+    if (minBtn) minBtn.setAttribute("aria-expanded", next ? "false" : "true");
     syncInert();
+    lockScroll(!next);
     if (persist && storageKey) { try { localStorage.setItem(storageKey, next ? "hidden" : "shown"); } catch {} }
   }
 
@@ -95,7 +149,10 @@ export function mountRuleColumn(page, {
   // one yet.
   const firstVisit =
     typeof defaultHidden === "function" ? !!defaultHidden({ wide: wide.matches }) : !!defaultHidden;
-  apply(saved === null ? firstVisit : saved === "hidden", false);
+  // The state this learner has when nothing has happened yet — their saved preference, or
+  // the default where they have none. The tour borrows it and gives it back.
+  const resting = saved === null ? firstVisit : saved === "hidden";
+  apply(resting, false);
   requestAnimationFrame(() => requestAnimationFrame(() => {
     delete page.dataset.anim;
     crop.arm();
@@ -109,9 +166,24 @@ export function mountRuleColumn(page, {
   const intro = createRuleIntro({
     ruleEl: compact ? (peekBtn ?? ruleEl) : ruleEl,
     ruleBtn: compact ? peekBtn : ruleBtn,
-    ruleCard,
+    // A sheet is not a panel the tour can open and frame: it covers the screen it would
+    // be framed against, and it brings its own scrim, which the tour's own scrim then
+    // sits on top of. There is also nothing left to explain — a labelled button opens a
+    // labelled sheet with a ✕ in it. So on a phone the sheet's tour lights the button and
+    // stops, which is the one-beat fallback ruleIntro.js already has.
+    ruleCard: sheet && compact ? null : ruleCard,
     setRule: (next) => apply(next, false),
     compact,
+    // Where to leave the page. A tour is a demo, and a demo that ends somewhere other
+    // than where it started has changed a setting nobody touched — so it returns to the
+    // state this learner would have had if it had never run. For a rule that is
+    // collapsed; for a desktop Lernset column it is open, and the tour's two beats are
+    // the other way round because of it.
+    restHidden: resting,
+    // Lighting the toolbar pill is right when that pill is the only trace the column
+    // leaves. Where there is a pivot, the pivot IS the trace, and the tour should end
+    // pointing at the thing the learner will actually reach for.
+    pivot: pivotBtn,
     // The two tellings are different stories, not one string at two sizes: the desktop
     // tour opens the column and then points at its switch (two beats), the phone tour
     // only ever has the button to light (one). A page that overrides one should be able
@@ -136,6 +208,22 @@ export function mountRuleColumn(page, {
   };
   ruleBtn?.addEventListener("click", onToggle);
   peekBtn?.addEventListener("click", onToggle);
+  pivotBtn?.addEventListener("click", onToggle);
+  minBtn?.addEventListener("click", onToggle);
+
+  // The sheet's own ways out: its ✕, its scrim, Escape. All of them close, none of them
+  // open, so they are not the toggle.
+  if (sheet) {
+    for (const el of page.querySelectorAll("[data-sheet-close]")) {
+      el.addEventListener("click", () => { intro.cancel(); apply(true); });
+    }
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && compactMq.matches && page.dataset.rule !== "hidden") apply(true);
+    });
+    // Crossing the breakpoint with the sheet up leaves a locked body behind an ordinary
+    // column, so the lock is re-derived rather than remembered.
+    compactMq.addEventListener("change", () => lockScroll(page.dataset.rule !== "hidden"));
+  }
 
   // Dev reset. A full reload rather than just intro.play(), because the interesting
   // part is everything that happens BEFORE the tour decides to run.

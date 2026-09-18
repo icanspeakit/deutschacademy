@@ -204,6 +204,12 @@ every entry, because it is uniform across a level.
 3. **Translations — English only for now.** `tr.ru` in the legacy `wortschatz.json` is a
    known inconsistency with the `uk` in `src/lib/i18n.js`; the lexicon sidesteps it by
    shipping a single `en` field, with ar/tr/uk added per level later.
+
+   *Superseded 2026-09-18.* Arabic, Russian and Turkish now exist for all 3,375 words, in
+   `src/content/lexicon/i18n/{ar,ru,tr}.json` rather than inline — see that folder's
+   README for why they live beside the lexicon instead of in it. `langsIn()` /
+   `langsOf()` in `src/lib/lexicon.js` decide which tabs a deck earns, and only name a
+   language when every card in that deck has it.
 4. **Audio — out of scope this phase.** `audio` stays `null` across the new pool; the
    existing 43 MP3s and `scripts/generate-audio.mjs` are untouched.
 
@@ -322,10 +328,11 @@ Separable verbs, reflexives and fixed prepositions with their case are marked.
 
 - **`/uebungen/aussprache`** — every new entry has `audio: null` (§7 decision 4), so
   switching it would empty the page. Stays on `artikel.json` + `wortschatz.json`.
-- **`/uebungen/wortschatz`** — its cards carry en/ar/ru/tr; the lexicon ships `en` only
-  (§7 decision 3). Switching now would drop three languages from the 15 existing
-  Redemittel cards. The 25 A2 Redemittel in unit `a2-28` are in the lexicon and ready
-  for it whenever the other languages land.
+- **`/uebungen/wortschatz`** — the curated Redemittel deck. The blocker named here (the
+  lexicon shipped `en` only, so switching would have dropped three languages from the 15
+  Redemittel cards) is gone as of 2026-09-18: every lexicon word now has ar/ru/tr. What
+  keeps this page on `wortschatz.json` is no longer the data but the content — these are
+  hand-written Redemittel with their own teaching notes, not lemmas.
 - `src/data/artikel.json` is therefore still live (aussprache + `generate-audio.mjs`) and
   is not yet deleted.
 

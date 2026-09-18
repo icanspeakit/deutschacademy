@@ -36,6 +36,7 @@ export function mountWortschatzApp(els, cards, languages, { onAnswer, onSessionS
     results: {},
     selected: {},
     filter: null,
+    part: 0,
     tick: 0,
   };
 
@@ -49,9 +50,69 @@ export function mountWortschatzApp(els, cards, languages, { onAnswer, onSessionS
     setTimeout(() => { suppressClick = false; }, 400);
   }
 
-  function deck() {
-    return state.filter && state.filter.length ? state.filter : cards.map((_, i) => i);
+  /* A level deck is 650 cards, and a counter reading "01 / 650" is a wall, not a target:
+     the learner has done one card and the number tells them about the 649 waiting. So a
+     deck bigger than one sitting runs in parts of PART_SIZE — the counter says "01 / 25",
+     the chip says which Runde — and the parts join end to end, so going past the last card
+     of a part opens the next one rather than looping. "Runde", not "Teil": a Teil is a
+     Portion route (a1-teil-03), a different 20-word cut of the same level, and Runde is
+     what the Artikel-Trainer already calls a sitting. It is the same 650 words; it is just
+     handed over in pieces someone can finish. PART_SIZE matches the Lernset (25 words) and
+     the Artikel-Runde, so "one sitting" means the same thing everywhere on the site.
+
+     A selection made in the Wortliste tab is already a hand-picked deck, so it is never
+     cut further. */
+  const PART_SIZE = 25;
+  const partCount = Math.max(1, Math.ceil(cards.length / PART_SIZE));
+  const chunked = partCount > 1;
+
+  function filtered() {
+    return !!(state.filter && state.filter.length);
   }
+
+  function deck() {
+    if (filtered()) return state.filter;
+    if (!chunked) return cards.map((_, i) => i);
+    const from = state.part * PART_SIZE;
+    return cards.slice(from, from + PART_SIZE).map((_, i) => from + i);
+  }
+
+  /** Jump to a part, landing on its first card — or its last, when we arrived backwards. */
+  function setPart(n, edge) {
+    const part = (n + partCount) % partCount;
+    const from = part * PART_SIZE;
+    const size = Math.min(PART_SIZE, cards.length - from);
+    reset({ part, idx: edge === "last" ? from + size - 1 : from });
+    noteActivity();
+    render();
+  }
+
+  /* Coaching hint ("Umdrehen für Englisch", "Tippen zum Umdrehen · wischen zum Blättern").
+     It teaches the card in the first two seconds and then repeats itself once per word,
+     25 times a set. So it shows once on arrival, fades out the moment the learner touches
+     anything, and stays gone for every card after that — a flashcard only needs explaining
+     once. The idle timer is the rescue for the learner it did not reach: a card left
+     untouched on its front face for COACH_IDLE_MS means the gesture never landed, so the
+     line fades back in until the next interaction. Armed only on the unflipped front —
+     sitting on an answer for eight seconds is reading, not confusion. */
+  const COACH_IDLE_MS = 8000;
+  let coachOn = true;
+  let idleTimer = null;
+
+  function setCoach(on) {
+    coachOn = on;
+    contentEl.classList.toggle("vt-coach-on", on);
+  }
+  function armIdleCoach() {
+    clearTimeout(idleTimer);
+    if (state.mode !== "cards" || state.flipped) return;
+    idleTimer = setTimeout(() => setCoach(true), COACH_IDLE_MS);
+  }
+  function noteActivity() {
+    if (coachOn) setCoach(false);
+    armIdleCoach();
+  }
+
 
   function langMeta() {
     return languages.find((l) => l.code === state.lang) || languages[0] || {};
@@ -81,13 +142,19 @@ export function mountWortschatzApp(els, cards, languages, { onAnswer, onSessionS
   function go(d) {
     const dk = deck();
     const p = dk.indexOf(state.idx);
-    const at = p < 0 ? 0 : (p + d + dk.length) % dk.length;
-    reset({ idx: dk[at] });
+    const at = (p < 0 ? 0 : p) + d;
+    if (chunked && !filtered() && (at < 0 || at >= dk.length)) {
+      setPart(state.part + (d > 0 ? 1 : -1), d > 0 ? "first" : "last");
+      return;
+    }
+    reset({ idx: dk[(at + dk.length) % dk.length] });
+    noteActivity();
     render();
   }
 
   function flip() {
     state.flipped = !state.flipped;
+    noteActivity();
     // Toggle the class on the existing element rather than re-rendering: a fresh
     // .vt-flip-inner created via innerHTML already starts in its target rotation, so the
     // CSS transition never has a "from" state to animate — the flip just snaps instantly.
@@ -98,6 +165,7 @@ export function mountWortschatzApp(els, cards, languages, { onAnswer, onSessionS
 
   function setMode(mode) {
     reset({ mode });
+    if (mode !== "cards") clearTimeout(idleTimer);
     if (mode !== "list") state.lastMode = mode;
     render();
   }
@@ -168,8 +236,12 @@ export function mountWortschatzApp(els, cards, languages, { onAnswer, onSessionS
     render();
   }
 
-  function resetFilter() {
-    if (state.filter && state.filter.length) { reset({ filter: null }); render(); }
+  // The chip is the deck's label and its one control: it drops a selection when there is
+  // one, and otherwise steps to the next part — the same thing running off the end of a
+  // part does, for a learner who would rather skip ahead than page through.
+  function deckChipClick() {
+    if (filtered()) { reset({ filter: null, part: 0, idx: 0 }); render(); return; }
+    if (chunked) setPart(state.part + 1);
   }
 
   function startSelection() {
@@ -241,9 +313,11 @@ export function mountWortschatzApp(els, cards, languages, { onAnswer, onSessionS
     dirSwitch.checked = state.dir === "toDe";
     dirLabel.textContent = state.dir === "toDe" ? `${deName} → Deutsch` : `Deutsch → ${deName}`;
 
-    const filtered = !!(state.filter && state.filter.length);
-    deckChip.textContent = filtered ? `Auswahl: ${state.filter.length} · alle zeigen` : `Alle ${cards.length} Wörter`;
-    deckChip.classList.toggle("is-filtered", filtered);
+    const isFiltered = filtered();
+    deckChip.textContent = isFiltered ? `Auswahl: ${state.filter.length} · alle zeigen`
+      : chunked ? `Runde ${state.part + 1} von ${partCount} ›`
+      : `Alle ${cards.length} Wörter`;
+    deckChip.classList.toggle("is-filtered", isFiltered);
 
     const dk = deck();
     const pos = Math.max(0, dk.indexOf(state.idx));
@@ -291,6 +365,12 @@ export function mountWortschatzApp(els, cards, languages, { onAnswer, onSessionS
           <span class="vt-hint-keys">Leertaste umdrehen · ← → blättern</span>
         </p>
       </div>`;
+
+    // The class carries the hint's opacity (see vokabeltrainer.css). Re-adding it a frame
+    // after the fresh nodes land lets it fade in rather than snap on the first card.
+    contentEl.classList.remove("vt-coach-on");
+    if (coachOn) requestAnimationFrame(() => contentEl.classList.add("vt-coach-on"));
+    armIdleCoach();
 
     const flipEl = contentEl.querySelector("#vt-flip");
     // Guarded rather than calling flip() straight: the click a finished swipe generates
@@ -554,11 +634,14 @@ export function mountWortschatzApp(els, cards, languages, { onAnswer, onSessionS
     btn.addEventListener("click", () => setMode(btn.dataset.tab));
   });
   dirSwitch.addEventListener("change", toggleDir);
-  deckChip.addEventListener("click", resetFilter);
+  deckChip.addEventListener("click", deckChipClick);
+
+  contentEl.addEventListener("pointerdown", noteActivity);
 
   document.addEventListener("keydown", (e) => {
     const tag = document.activeElement?.tagName;
     if (tag === "INPUT" || tag === "TEXTAREA") return;
+    noteActivity();
     if (e.code === "Space") { e.preventDefault(); if (state.mode === "cards") flip(); }
     else if (e.key === "ArrowLeft") go(-1);
     else if (e.key === "ArrowRight") go(1);

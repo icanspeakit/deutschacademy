@@ -1,0 +1,163 @@
+---
+// One Sprechaufgabe: the picture (or the scene it still needs), the questions in the order
+// an examiner asks them, a timer, Redemittel, and a model answer behind a fold.
+//
+// The timer counts DOWN and is the point of the page. Every speaking part of every exam is
+// timed, and the thing that catches learners out is not vocabulary — it is that 90 seconds
+// is much longer than it sounds when you are the one filling it. Practising without a clock
+// practises the wrong thing.
+//
+// Nothing is recorded and nothing is uploaded. There is no scoring here for the same reason
+// as on the Schreiben pages: it cannot be done honestly in a browser.
+import Layout from "../../../layouts/Layout.astro";
+import PracticeHeader from "../../../components/PracticeHeader.astro";
+import Icon from "../../../components/Icon.astro";
+import { sprechen, neighbours, sprechenSets, SPRECHEN_ICON } from "../../../lib/fertigkeiten.js";
+import "../../../styles/practice.css";
+import "../../../styles/skills.css";
+
+export function getStaticPaths() {
+  const sets = Object.fromEntries(sprechenSets().map((s) => [s.id, { id: s.id, title: s.title }]));
+  return sprechen.tasks.map((task) => ({
+    params: { id: task.id },
+    props: { task, set: sets[task.set] ?? null, ...neighbours(sprechen.tasks, task) },
+  }));
+}
+
+const { task, set, prev, next } = Astro.props;
+const { types } = sprechen;
+// Inside a set the way back is to the set, not to the whole library: that is where the
+// learner came from and where the other three pictures are.
+const back = set
+  ? { href: `/uebungen/sprechen/set/${set.id}`, label: `← ${set.title}` }
+  : { href: "/uebungen/sprechen/", label: "← Alle Sprechaufgaben" };
+---
+<Layout
+  title={`${task.title} – Sprechen ${task.level} – DeutschAcademy`}
+  description={task.blurb}
+>
+  <PracticeHeader title="Sprechen" />
+  <main class="practice-main">
+    <a href={back.href} class="vp-back-link">{back.label}</a>
+
+    <article>
+      <header class="sk-head">
+        <span class="sk-card-ic"><Icon name={SPRECHEN_ICON[task.type] ?? "mic"} size={22} /></span>
+        <div>
+          <p class="eyebrow">{set ? set.title : types[task.type]}</p>
+          <h1>{task.title}</h1>
+        </div>
+        <span class="sk-badge">{task.level}</span>
+      </header>
+
+      <p class="sk-blurb">{task.blurb}</p>
+
+      {task.image ? (
+        <section class="sk-block">
+          <img class="sk-photo" src={task.image} alt={task.title} loading="lazy" />
+        </section>
+      ) : task.imageNeeded ? (
+        <section class="sk-block">
+          <p class="sk-photo-pending">
+            <b>Das Bild:</b> {task.imageNeeded}<br />
+            Das Foto zu dieser Aufgabe fehlt noch. Beschreibe die Szene so, wie sie hier steht —
+            die Aufgabe, der Timer und die Redemittel sind dieselben.
+          </p>
+        </section>
+      ) : null}
+
+      <section class="sk-block">
+        <h2>Aufgabe</h2>
+        <p>{task.prompt}</p>
+      </section>
+
+      <section class="sk-block">
+        <h2>Redezeit</h2>
+        <div class="sk-timer">
+          <span class="sk-timer-clock" id="sk-clock" data-seconds={task.seconds}></span>
+          <button class="sk-btn" type="button" id="sk-start">Start</button>
+          <button class="sk-btn" type="button" id="sk-reset">Zurücksetzen</button>
+        </div>
+      </section>
+
+      <section class="sk-block">
+        <h2>Darüber sollst du sprechen</h2>
+        <ul class="sk-points">{task.bullets.map((b) => <li>{b}</li>)}</ul>
+      </section>
+
+      {task.phrases?.length > 0 && (
+        <section class="sk-block">
+          <h2>Redemittel</h2>
+          <div class="sk-phrases">{task.phrases.map((p) => <span class="sk-phrase">{p}</span>)}</div>
+        </section>
+      )}
+
+      {task.model && (
+        <details class="sk-reveal">
+          <summary>Modellantwort — erst öffnen, wenn du gesprochen hast</summary>
+          <div class="sk-reveal-body"><div class="sk-model">{task.model}</div></div>
+        </details>
+      )}
+
+      {task.check?.length > 0 && (
+        <details class="sk-reveal">
+          <summary>Worauf eine Prüferin hört</summary>
+          <div class="sk-reveal-body">
+            <ul class="sk-check">{task.check.map((c) => <li>{c}</li>)}</ul>
+          </div>
+        </details>
+      )}
+
+      {(task.exam || task.href) && (
+        <p class="sk-foot">
+          {task.exam}
+          {task.exam && task.href && " "}
+          {task.href && (
+            <>Dieses Bild liegt auch <a href={task.href}>{task.hrefLabel}</a>, dort mit allen
+            anderen hintereinander.</>
+          )}
+        </p>
+      )}
+
+      <nav class="sk-prevnext">
+        {prev ? <a href={`/uebungen/sprechen/${prev.id}`}>← {prev.title}</a> : <span />}
+        {next ? <a href={`/uebungen/sprechen/${next.id}`}>{next.title} →</a> : <span />}
+      </nav>
+    </article>
+  </main>
+
+  <script>
+    import { recordSession } from "../../../lib/progress.js";
+
+    const clock = document.getElementById("sk-clock");
+    const start = document.getElementById("sk-start");
+    const reset = document.getElementById("sk-reset");
+    const total = Number(clock.dataset.seconds) || 60;
+    let left = total;
+    let timer = 0;
+
+    const show = () => {
+      const m = Math.floor(left / 60);
+      const s = String(left % 60).padStart(2, "0");
+      clock.textContent = `${m}:${s}`;
+      clock.classList.toggle("is-out", left === 0);
+    };
+    show();
+
+    const stop = () => { window.clearInterval(timer); timer = 0; start.textContent = "Start"; };
+
+    start.addEventListener("click", () => {
+      if (timer) { stop(); return; }
+      if (left === 0) left = total;
+      recordSession("sprechen");
+      start.textContent = "Pause";
+      timer = window.setInterval(() => {
+        left = Math.max(0, left - 1);
+        show();
+        if (left === 0) stop();
+      }, 1000);
+    });
+
+    reset.addEventListener("click", () => { stop(); left = total; show(); });
+  </script>
+</Layout>

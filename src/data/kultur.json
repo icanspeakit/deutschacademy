@@ -2,218 +2,109 @@
   "sourcingNote": "Zwei Arten von Themen stehen hier nebeneinander, und jedes sagt selbst, welche Art es ist (Feld `sourcing`):\n  \"unterricht\" — aus einer echten Unterrichtsdiskussion bei DeutschAcademy.\n  \"sachwissen\" — öffentlich nachprüfbares Sachwissen über Regeln, Institutionen und Abläufe in Deutschland (Gesetze, Beträge, Zuständigkeiten). Von DeutschAcademy geschrieben, keine Unterrichtsquelle.\nWas hier bewusst NICHT steht: Behauptungen über „den deutschen Charakter“. Über Menschen wird nichts behauptet — über Regeln, Zahlen und Zuständigkeiten schon, und wo die Praxis je nach Bundesland, Ort oder Person verschieden ist, steht das dabei.\nBeträge und Fristen ändern sich. Jede Zahl trägt einen Stand; im Zweifel gilt die offizielle Stelle, nicht diese Seite.",
   "topics": [
     {
-      "id": "mieten",
-      "title": "Kaltmiete, Warmmiete, Kaution",
-      "eyebrow": "Alltag & Wohnen",
-      "icon": "folder",
-      "level": "B1",
-      "group": "wohnen",
+      "id": "duzen-siezen",
+      "title": "Du oder Sie?",
+      "eyebrow": "Sprache & Umgang",
+      "icon": "mic",
+      "level": "A1",
+      "group": "umgang",
       "sourcing": "sachwissen",
-      "sourceNote": "Öffentlich nachprüfbares Sachwissen (BGB-Mietrecht). Was im Einzelfall gilt, steht in deinem Mietvertrag.",
-      "intro": "In Wohnungsanzeigen stehen mehrere Preise nebeneinander, und der größte davon ist selten der, den du monatlich überweist. Wer die drei Begriffe Kaltmiete, Nebenkosten und Warmmiete auseinanderhält, liest jede Anzeige richtig.",
-      "question": "Wie sucht man in deinem Herkunftsland eine Wohnung — über Anzeigen, über Bekannte, über Makler?",
+      "sourceNote": "Öffentlich nachprüfbares Sachwissen über Sprachgebrauch. Wo es Gewohnheit statt Regel ist, steht das dabei — Menschen und Branchen sind verschieden.",
+      "intro": "Deutsch hat zwei Wörter für „du“: du und Sie. Du sagst du zu Freunden und zur Familie. Du sagst Sie zu Menschen, die du nicht kennst.",
+      "question": "Hat deine Sprache auch zwei Formen? Wann sagt man welche?",
       "facts": [
-        "Kaltmiete ist die reine Miete für die Wohnung.",
-        "Nebenkosten decken Wasser, Müllabfuhr, Hausreinigung, oft Heizung. Sie werden geschätzt und einmal im Jahr abgerechnet — es kann eine Nachzahlung oder eine Rückzahlung geben.",
-        "Warmmiete ist Kaltmiete plus Nebenkosten: die Zahl, die monatlich abgeht. Strom und Internet sind meist trotzdem noch extra.",
-        "Die Kaution darf höchstens drei Kaltmieten betragen (§ 551 BGB) und muss getrennt angelegt werden. Du bekommst sie am Ende zurück, wenn die Wohnung in Ordnung ist.",
-        "Viele Wohnungen werden ohne Küche vermietet — „Einbauküche“ in der Anzeige ist ein echtes Argument.",
-        "Die Schufa-Auskunft und eine Mietschuldenfreiheitsbescheinigung verlangen Vermieter regelmäßig."
+        "Sie: bei fremden Menschen, im Amt, im Laden, beim Arzt, im Büro.",
+        "Du: in der Familie, bei Freunden, im Sportverein, an der Uni, zu Kindern.",
+        "Zu Sie gehört der Nachname: „Guten Tag, Frau Weber.“",
+        "Zu du gehört der Vorname: „Hallo Lena.“",
+        "Die ältere Person sagt: „Wir können du sagen.“ Dann sagst du auch du.",
+        "Du weißt es nicht? Dann sag Sie. Sie ist nie falsch."
       ],
       "table": {
-        "label": "Eine Anzeige lesen",
+        "label": "du oder Sie?",
         "columns": [
-          "In der Anzeige",
-          "Bedeutet"
+          "Wo?",
+          "Was sagst du?"
         ],
         "rows": [
           [
-            "650 € kalt",
-            "Miete ohne Nebenkosten"
+            "Amt, Bank, Arzt",
+            "Sie"
           ],
           [
-            "+ 150 € NK",
-            "geschätzte Nebenkosten pro Monat"
+            "Neue Kollegen im Büro",
+            "Sie"
           ],
           [
-            "800 € warm",
-            "was monatlich abgeht"
+            "Uni, Studenten",
+            "du"
           ],
           [
-            "3 MM Kaution",
-            "drei Kaltmieten als Kaution, hier 1.950 €"
+            "Sportverein",
+            "du"
           ],
           [
-            "2 ZKB",
-            "zwei Zimmer, Küche, Bad"
+            "Alte Nachbarn",
+            "Sie"
           ],
           [
-            "EBK",
-            "Einbauküche vorhanden"
+            "Kinder",
+            "du"
           ]
         ]
       },
       "phrases": [
-        "Ist die Wohnung noch frei?",
-        "Sind die Nebenkosten in der Miete enthalten?",
-        "Wie hoch ist die Kaution?",
-        "Kann ich die Wohnung besichtigen?"
+        "Wollen wir du sagen?",
+        "Gerne, ich bin Lena.",
+        "Entschuldigung, darf ich fragen?",
+        "Sagen wir du."
       ],
       "links": [
         {
-          "label": "Wortschatz: Wohnen",
-          "href": "/uebungen/wortschatz"
+          "label": "Sprechen üben",
+          "href": "/uebungen/sprechen"
         }
       ],
       "quiz": [
         {
-          "prompt": "Was ist die Warmmiete?",
+          "prompt": "Du bist im Amt. Was sagst du?",
           "options": [
-            "Die Miete im Winter",
-            "Kaltmiete plus Nebenkosten",
-            "Nur die Heizkosten"
+            "Sie",
+            "du",
+            "den Vornamen"
           ],
-          "answer": "Kaltmiete plus Nebenkosten",
-          "explain": "Also das, was monatlich tatsächlich abgeht — Strom meist noch ohne."
+          "answer": "Sie",
+          "explain": "Sie und der Nachname."
         },
         {
-          "prompt": "Wie hoch darf die Kaution höchstens sein?",
+          "prompt": "Wer sagt zuerst „Wir können du sagen“?",
           "options": [
-            "Eine Kaltmiete",
-            "Drei Kaltmieten",
-            "Sechs Kaltmieten"
+            "Die ältere Person",
+            "Die jüngere Person",
+            "Das ist egal"
           ],
-          "answer": "Drei Kaltmieten",
-          "explain": "So steht es in § 551 BGB."
+          "answer": "Die ältere Person",
+          "explain": "Es ist ein Angebot. Du darfst auch Nein sagen."
         },
         {
-          "prompt": "Was passiert am Ende des Jahres mit den Nebenkosten?",
+          "prompt": "Wo sagen fast alle du?",
           "options": [
-            "Nichts, sie sind pauschal",
-            "Sie werden abgerechnet — es kann eine Nach- oder Rückzahlung geben",
-            "Sie werden automatisch erhöht"
+            "Im Sportverein",
+            "In der Bank",
+            "Beim Arzt"
           ],
-          "answer": "Sie werden abgerechnet — es kann eine Nach- oder Rückzahlung geben",
-          "explain": "Die monatliche Zahlung ist nur eine Vorauszahlung."
+          "answer": "Im Sportverein",
+          "explain": "Im Verein und an der Uni sagt man du."
         },
         {
-          "prompt": "Was bedeutet „2 ZKB“?",
+          "prompt": "Was gehört zu Sie?",
           "options": [
-            "Zwei Zimmer, Küche, Bad",
-            "Zwei Zimmer, Keller, Balkon",
-            "Zweite Etage, Küche, Bad"
+            "Der Nachname",
+            "Der Vorname",
+            "Kein Name"
           ],
-          "answer": "Zwei Zimmer, Küche, Bad",
-          "explain": "Das Wohnzimmer zählt als Zimmer mit."
-        }
-      ]
-    },
-    {
-      "id": "muelltrennung",
-      "title": "Mülltrennung: welche Tonne?",
-      "eyebrow": "Alltag & Wohnen",
-      "icon": "map-pin",
-      "level": "A2",
-      "group": "wohnen",
-      "sourcing": "sachwissen",
-      "sourceNote": "Öffentlich nachprüfbares Sachwissen. Die Farben und Regeln unterscheiden sich je nach Stadt und Landkreis — verbindlich ist immer der Abfallkalender deiner Kommune.",
-      "intro": "Müll wird in Deutschland getrennt gesammelt: Papier, Verpackungen, Bioabfall, Restmüll und Glas gehen in verschiedene Behälter. Die Trennung ist keine Höflichkeit, sondern die Grundlage dafür, dass Material wiederverwendet werden kann.",
-      "question": "Wie wird der Müll in deinem Herkunftsland getrennt — mehr, weniger oder anders?",
-      "facts": [
-        "Die Farben sind nicht bundesweit einheitlich. In vielen Orten: blau = Papier, gelb = Verpackungen, braun = Bio, grau oder schwarz = Restmüll.",
-        "Glas kommt meist nicht in die Tonne, sondern zum Container an der Straße — dort nach Weiß, Grün und Braun getrennt.",
-        "Altglas-Container haben fast überall Einwurfzeiten: nachts und sonntags ist Einwerfen wegen des Lärms verboten.",
-        "Batterien, Elektrogeräte und Farben gehören nicht in den Hausmüll, sondern zum Wertstoffhof oder zurück in den Laden."
-      ],
-      "table": {
-        "label": "Was gehört wohin?",
-        "columns": [
-          "Abfall",
-          "Wohin"
-        ],
-        "rows": [
-          [
-            "Zeitung, Karton",
-            "Papiertonne (oft blau)"
-          ],
-          [
-            "Joghurtbecher, Plastikfolie, Konservendose",
-            "Verpackungen (gelbe Tonne / gelber Sack)"
-          ],
-          [
-            "Obstreste, Kaffeesatz, Gartenabfall",
-            "Biotonne (oft braun)"
-          ],
-          [
-            "Windeln, Staubsaugerbeutel, Zigaretten",
-            "Restmüll (grau oder schwarz)"
-          ],
-          [
-            "Flaschen und Gläser ohne Pfand",
-            "Altglas-Container, nach Farbe"
-          ],
-          [
-            "Batterien, Handys, Lampen",
-            "Wertstoffhof oder Rücknahme im Laden"
-          ],
-          [
-            "Alte Möbel, Matratzen",
-            "Sperrmüll — meist mit Termin bei der Stadt"
-          ]
-        ]
-      },
-      "phrases": [
-        "Wo kommt das hin?",
-        "Das gehört in die gelbe Tonne.",
-        "Wann wird der Müll abgeholt?",
-        "Ich muss das zum Wertstoffhof bringen."
-      ],
-      "links": [
-        {
-          "label": "Wortschatz zum Thema Wohnen",
-          "href": "/uebungen/wortschatz"
-        }
-      ],
-      "quiz": [
-        {
-          "prompt": "Wohin kommt ein leerer Joghurtbecher?",
-          "options": [
-            "Biotonne",
-            "Gelbe Tonne / gelber Sack",
-            "Restmüll"
-          ],
-          "answer": "Gelbe Tonne / gelber Sack",
-          "explain": "Er ist eine Verpackung. Ausgespült muss er nicht sein, nur löffelrein."
-        },
-        {
-          "prompt": "Wohin kommt Kaffeesatz?",
-          "options": [
-            "Biotonne",
-            "Restmüll",
-            "Papiertonne"
-          ],
-          "answer": "Biotonne",
-          "explain": "Kaffeesatz und Filtertüte sind beide Bioabfall."
-        },
-        {
-          "prompt": "Warum darf man nachts kein Altglas einwerfen?",
-          "options": [
-            "Die Container sind abgeschlossen",
-            "Wegen der Ruhezeiten — es ist zu laut",
-            "Das Glas zerbricht bei Kälte"
-          ],
-          "answer": "Wegen der Ruhezeiten — es ist zu laut",
-          "explain": "Aus demselben Grund ist es sonntags meist ebenfalls untersagt."
-        },
-        {
-          "prompt": "Wohin gehören alte Batterien?",
-          "options": [
-            "In den Restmüll",
-            "In die gelbe Tonne",
-            "Zum Wertstoffhof oder zurück in den Laden"
-          ],
-          "answer": "Zum Wertstoffhof oder zurück in den Laden",
-          "explain": "Läden, die Batterien verkaufen, müssen sie auch zurücknehmen."
+          "answer": "Der Nachname",
+          "explain": "„Guten Tag, Frau Weber.“"
         }
       ]
     },
@@ -222,18 +113,19 @@
       "title": "Pfand: Flaschen zurückbringen",
       "eyebrow": "Alltag & Wohnen",
       "icon": "target",
-      "level": "A2",
+      "level": "A1",
       "group": "wohnen",
       "sourcing": "sachwissen",
       "sourceNote": "Öffentlich nachprüfbares Sachwissen (Verpackungsgesetz). Beträge: Stand 2025.",
-      "intro": "Auf viele Flaschen und Dosen wird beim Kauf ein Betrag aufgeschlagen — das Pfand. Bringst du die Flasche zurück, bekommst du das Geld wieder. Der Preis im Regal ist also nicht der Preis, den du am Ende bezahlst.",
-      "question": "Gibt es in deinem Land ein Pfandsystem? Was passiert dort mit leeren Flaschen?",
+      "intro": "Du kaufst eine Flasche Wasser. An der Kasse ist der Preis höher als im Regal. Warum? Das ist das Pfand. Du bringst die Flasche zurück und bekommst das Geld wieder.",
+      "question": "Gibt es Pfand in deinem Land? Was machst du mit leeren Flaschen?",
       "facts": [
-        "Einwegpfand (Plastikflaschen, Dosen): 0,25 € — für fast alle Getränke, seit 2022 auch für Saft und Milchgetränke in Plastik.",
-        "Mehrwegpfand (Glasflaschen, wiederbefüllbare Plastikflaschen): meist 0,08 € oder 0,15 €; Bierflaschen 0,08 €, der Kasten kommt extra dazu.",
-        "Einweg erkennst du am Logo „Einwegpfand“ und daran, dass die Flasche im Automat zerdrückt wird. Mehrweg wird gespült und neu befüllt.",
-        "Kein Pfand: Wein, Spirituosen, Milch im Karton, Saft im Karton.",
-        "Zurückgeben kannst du überall dort, wo ähnliche Verpackungen verkauft werden — nicht nur im Laden des Kaufs."
+        "Plastikflasche und Dose: 25 Cent Pfand.",
+        "Bierflasche aus Glas: 8 Cent. Wasserflasche aus Glas: 15 Cent.",
+        "Kein Pfand: Wein, Milch im Karton, Saft im Karton.",
+        "Du gibst die Flaschen in den Automaten. Der Automat druckt einen Bon.",
+        "Den Bon gibst du an der Kasse ab. Du bekommst dein Geld.",
+        "Jeder Laden nimmt die Flaschen zurück, wenn er solche Flaschen auch verkauft."
       ],
       "table": {
         "label": "Wie viel Pfand?",
@@ -274,7 +166,7 @@
       },
       "phrases": [
         "Ist da Pfand drauf?",
-        "Wo kann ich die Flaschen zurückgeben?",
+        "Wo ist der Automat?",
         "Der Automat nimmt die Flasche nicht.",
         "Ich möchte den Bon einlösen."
       ],
@@ -286,44 +178,44 @@
       ],
       "quiz": [
         {
-          "prompt": "Wie viel Pfand ist auf einer Einweg-Plastikflasche?",
+          "prompt": "Wie viel Pfand ist auf einer Plastikflasche?",
           "options": [
-            "0,08 €",
-            "0,15 €",
-            "0,25 €"
+            "8 Cent",
+            "15 Cent",
+            "25 Cent"
           ],
-          "answer": "0,25 €",
-          "explain": "Derselbe Betrag gilt für Dosen."
+          "answer": "25 Cent",
+          "explain": "Auf der Dose auch."
         },
         {
-          "prompt": "Was passiert mit einer Mehrwegflasche?",
-          "options": [
-            "Sie wird zerdrückt und eingeschmolzen",
-            "Sie wird gespült und neu befüllt",
-            "Sie wird verbrannt"
-          ],
-          "answer": "Sie wird gespült und neu befüllt",
-          "explain": "Darum ist das Pfand niedriger: Die Flasche selbst bleibt im Umlauf."
-        },
-        {
-          "prompt": "Auf welcher Flasche ist KEIN Pfand?",
+          "prompt": "Auf welcher Flasche ist kein Pfand?",
           "options": [
             "Weinflasche",
             "Bierflasche",
             "Cola-Dose"
           ],
           "answer": "Weinflasche",
-          "explain": "Wein und Spirituosen sind vom Pfand ausgenommen."
+          "explain": "Auf Wein gibt es kein Pfand."
         },
         {
-          "prompt": "Wo kannst du Pfandflaschen zurückgeben?",
+          "prompt": "Was machst du mit dem Bon?",
           "options": [
-            "Nur im Laden, wo du sie gekauft hast",
-            "In jedem Laden, der ähnliche Verpackungen verkauft",
-            "Nur beim Getränkemarkt"
+            "Du gibst ihn an der Kasse ab",
+            "Du wirfst ihn weg",
+            "Du gibst ihn dem Automaten"
           ],
-          "answer": "In jedem Laden, der ähnliche Verpackungen verkauft",
-          "explain": "Kleine Läden dürfen die Rücknahme aber auf ihr eigenes Sortiment beschränken."
+          "answer": "Du gibst ihn an der Kasse ab",
+          "explain": "Dann bekommst du das Geld."
+        },
+        {
+          "prompt": "Wo kannst du die Flaschen zurückgeben?",
+          "options": [
+            "In jedem Laden mit solchen Flaschen",
+            "Nur in deinem Supermarkt",
+            "Nur im Getränkemarkt"
+          ],
+          "answer": "In jedem Laden mit solchen Flaschen",
+          "explain": "Kleine Läden nehmen aber nur ihre eigenen Flaschen."
         }
       ]
     },
@@ -332,25 +224,25 @@
       "title": "Sonntags ist zu",
       "eyebrow": "Alltag & Wohnen",
       "icon": "book",
-      "level": "A2",
+      "level": "A1",
       "group": "wohnen",
       "sourcing": "sachwissen",
       "sourceNote": "Öffentlich nachprüfbares Sachwissen. Ladenöffnung und Ruhezeiten regeln die Bundesländer und Kommunen — im Detail also örtlich verschieden.",
-      "intro": "An Sonntagen sind Supermärkte und die meisten Geschäfte in Deutschland geschlossen. Dazu kommen Ruhezeiten: Zeiten, in denen lauter Lärm im Haus nicht erlaubt ist. Beides überrascht viele, die neu herkommen — und beides hat Ausnahmen.",
-      "question": "Wann sind die Geschäfte in deinem Herkunftsland geöffnet? Was ist praktischer?",
+      "intro": "Am Sonntag sind die Geschäfte in Deutschland zu. Supermarkt, Kleidergeschäft, Möbelhaus — alles geschlossen. Und am Sonntag darf man nicht laut sein. Das ist für viele Menschen neu.",
+      "question": "Wann sind die Geschäfte in deinem Land offen?",
       "facts": [
-        "Offen bleiben dürfen unter anderem Bäckereien für einige Stunden, Tankstellen, Apotheken im Notdienst und Läden in Bahnhöfen und an Flughäfen.",
-        "Wer sonntags einkaufen muss, fährt deshalb oft zum Hauptbahnhof.",
-        "Ein paar Mal im Jahr gibt es verkaufsoffene Sonntage — die Kommune legt sie fest.",
-        "Ruhezeiten gelten üblicherweise nachts ab 22 Uhr, oft auch mittags, und den ganzen Sonntag. Bohren, Rasenmähen und laute Musik sind dann tabu.",
-        "Die genauen Zeiten stehen in der Hausordnung und in kommunalen Verordnungen.",
-        "Waschmaschine und Duschen sind trotz mancher Gerüchte nicht generell verboten."
+        "Am Sonntag sind fast alle Geschäfte zu.",
+        "Offen sind: die Bäckerei (nur ein paar Stunden), die Tankstelle, die Apotheke im Notdienst.",
+        "Im Bahnhof und am Flughafen sind die Läden auch am Sonntag offen.",
+        "Ein paar Sonntage im Jahr sind „verkaufsoffen“. Dann kannst du einkaufen. Die Stadt bestimmt die Termine.",
+        "Ruhezeit heißt: nicht laut sein. Meistens ab 22 Uhr, oft auch mittags — und den ganzen Sonntag.",
+        "In der Ruhezeit nicht: bohren, Rasen mähen, laute Musik. Duschen und Wäsche waschen sind okay."
       ],
       "phrases": [
-        "Sonntags haben die Geschäfte zu.",
-        "Ich muss noch schnell einkaufen, bevor alles schließt.",
-        "Bitte denk an die Ruhezeiten.",
-        "Am Bahnhof ist ein Supermarkt offen."
+        "Am Sonntag ist alles zu.",
+        "Wo kann ich heute einkaufen?",
+        "Bitte nicht so laut.",
+        "Im Bahnhof ist ein Supermarkt offen."
       ],
       "links": [
         {
@@ -360,407 +252,34 @@
       ],
       "quiz": [
         {
-          "prompt": "Welcher Laden darf sonntags meist öffnen?",
+          "prompt": "Welcher Laden ist am Sonntag oft offen?",
           "options": [
-            "Der Supermarkt in der Innenstadt",
-            "Der Laden im Hauptbahnhof",
+            "Der Laden im Bahnhof",
+            "Der Supermarkt in der Stadt",
             "Das Möbelhaus"
           ],
-          "answer": "Der Laden im Hauptbahnhof",
-          "explain": "Bahnhöfe und Flughäfen sind vom Ladenschluss ausgenommen."
+          "answer": "Der Laden im Bahnhof",
+          "explain": "Bahnhof und Flughafen sind eine Ausnahme."
         },
         {
           "prompt": "Was ist ein verkaufsoffener Sonntag?",
           "options": [
-            "Ein Sonntag, an dem ausnahmsweise Geschäfte öffnen dürfen",
-            "Ein Sonntag mit Rabatten",
-            "Ein Feiertag im Handel"
+            "Ein Sonntag, an dem die Geschäfte offen sind",
+            "Ein Sonntag mit billigen Preisen",
+            "Ein Feiertag"
           ],
-          "answer": "Ein Sonntag, an dem ausnahmsweise Geschäfte öffnen dürfen",
-          "explain": "Die Kommune legt diese wenigen Termine im Jahr fest."
+          "answer": "Ein Sonntag, an dem die Geschäfte offen sind",
+          "explain": "Nur ein paar Mal im Jahr."
         },
         {
-          "prompt": "Was ist während der Ruhezeiten nicht erlaubt?",
+          "prompt": "Was darfst du in der Ruhezeit nicht machen?",
           "options": [
+            "Bohren und Rasen mähen",
             "Duschen",
-            "Bohren und Rasenmähen",
             "Wäsche waschen"
           ],
-          "answer": "Bohren und Rasenmähen",
-          "explain": "Es geht um vermeidbaren Lärm, nicht um normale Haushaltsgeräusche."
-        }
-      ]
-    },
-    {
-      "id": "anmeldung",
-      "title": "Anmeldung: der erste Behördengang",
-      "eyebrow": "Behörden & Gesundheit",
-      "icon": "document",
-      "level": "B1",
-      "group": "aemter",
-      "sourcing": "sachwissen",
-      "sourceNote": "Öffentlich nachprüfbares Sachwissen (Bundesmeldegesetz). Fristen und Termine regelt jede Stadt selbst — verbindlich ist deine Meldebehörde.",
-      "intro": "Wer in Deutschland eine Wohnung bezieht, muss sich anmelden: beim Einwohnermeldeamt oder Bürgeramt der Stadt. Aus dieser Anmeldung folgt fast alles andere — Steuer-ID, Bankkonto, Kindergeld, Führerschein-Umschreibung.",
-      "question": "Muss man sich in deinem Herkunftsland auch anmelden? Wenn ja, wo und wie schnell?",
-      "facts": [
-        "Die Frist beträgt nach dem Bundesmeldegesetz zwei Wochen nach dem Einzug. Manche Städte handhaben das großzügiger, verlassen sollte man sich darauf nicht.",
-        "Du brauchst eine Wohnungsgeberbestätigung — ein unterschriebenes Formular deiner Vermieterin oder deines Vermieters. Ein Mietvertrag allein reicht nicht.",
-        "Dazu: Ausweis oder Pass, das ausgefüllte Anmeldeformular, bei Familien die Geburts- oder Heiratsurkunde.",
-        "Die Anmeldung selbst ist kostenlos.",
-        "Wenige Wochen später kommt die Steuer-Identifikationsnummer per Post — ohne sie zahlt der Arbeitgeber zu viel Lohnsteuer ein.",
-        "In großen Städten sind Termine oft Wochen im Voraus ausgebucht: Termin buchen, bevor du umziehst."
-      ],
-      "table": {
-        "label": "Was du mitbringst",
-        "columns": [
-          "Dokument",
-          "Woher"
-        ],
-        "rows": [
-          [
-            "Anmeldeformular",
-            "Website der Stadt oder vor Ort"
-          ],
-          [
-            "Wohnungsgeberbestätigung",
-            "von der Vermieterin / dem Vermieter"
-          ],
-          [
-            "Personalausweis oder Reisepass",
-            "hast du schon"
-          ],
-          [
-            "Heirats- oder Geburtsurkunde",
-            "nur bei Familien, oft mit Übersetzung"
-          ]
-        ]
-      },
-      "phrases": [
-        "Ich möchte mich anmelden.",
-        "Ich habe einen Termin um 10 Uhr.",
-        "Können Sie mir bitte eine Meldebescheinigung ausstellen?",
-        "Brauche ich dafür einen Termin?"
-      ],
-      "links": [
-        {
-          "label": "Leben in Deutschland: Test",
-          "href": "/pruefungen/leben-in-deutschland/test"
-        }
-      ],
-      "quiz": [
-        {
-          "prompt": "Wie schnell muss man sich nach dem Einzug anmelden?",
-          "options": [
-            "Innerhalb von zwei Wochen",
-            "Innerhalb von drei Monaten",
-            "Es gibt keine Frist"
-          ],
-          "answer": "Innerhalb von zwei Wochen",
-          "explain": "So steht es im Bundesmeldegesetz."
-        },
-        {
-          "prompt": "Welches Dokument bekommst du von deiner Vermieterin?",
-          "options": [
-            "Die Steuer-ID",
-            "Die Wohnungsgeberbestätigung",
-            "Die Meldebescheinigung"
-          ],
-          "answer": "Die Wohnungsgeberbestätigung",
-          "explain": "Ohne sie nimmt das Amt die Anmeldung nicht an."
-        },
-        {
-          "prompt": "Was kostet die Anmeldung?",
-          "options": [
-            "Nichts",
-            "Etwa 15 €",
-            "Etwa 50 €"
-          ],
-          "answer": "Nichts",
-          "explain": "Kosten entstehen erst für zusätzliche Bescheinigungen."
-        },
-        {
-          "prompt": "Wofür brauchst du die Steuer-Identifikationsnummer?",
-          "options": [
-            "Für den Führerschein",
-            "Damit der Arbeitgeber die richtige Lohnsteuer abführt",
-            "Für den Mietvertrag"
-          ],
-          "answer": "Damit der Arbeitgeber die richtige Lohnsteuer abführt",
-          "explain": "Sie kommt nach der Anmeldung automatisch per Post."
-        }
-      ]
-    },
-    {
-      "id": "krankenversicherung",
-      "title": "Krankenversicherung: gesetzlich oder privat",
-      "eyebrow": "Behörden & Gesundheit",
-      "icon": "landmark",
-      "level": "B1",
-      "group": "aemter",
-      "sourcing": "sachwissen",
-      "sourceNote": "Öffentlich nachprüfbares Sachwissen. Beiträge und Grenzwerte ändern sich jährlich — Stand 2025.",
-      "intro": "In Deutschland ist eine Krankenversicherung Pflicht: Seit 2009 muss jede Person versichert sein. Es gibt zwei Systeme nebeneinander — die gesetzliche Krankenversicherung, in der die große Mehrheit ist, und die private.",
-      "question": "Wie ist Gesundheitsversorgung in deinem Herkunftsland organisiert — über Steuern, über Beiträge oder privat?",
-      "facts": [
-        "Rund neun von zehn Menschen sind gesetzlich versichert.",
-        "Der Beitrag richtet sich nach dem Einkommen, nicht nach Alter oder Gesundheit. Arbeitgeber und Beschäftigte teilen ihn sich.",
-        "Kinder und nicht erwerbstätige Ehepartner sind in der gesetzlichen Versicherung oft beitragsfrei mitversichert — in der privaten kostet jede Person extra.",
-        "Privat versichern dürfen sich nur bestimmte Gruppen: Beamte, Selbstständige und Angestellte über der Versicherungspflichtgrenze.",
-        "Der Weg zurück von privat in die gesetzliche Versicherung ist schwierig — das ist eine Entscheidung auf lange Sicht.",
-        "Zum Facharzt brauchst du in der Regel keine Überweisung, aber oft Geduld: Termine dauern."
-      ],
-      "table": {
-        "label": "Zwei Systeme im Vergleich",
-        "columns": [
-          "",
-          "Gesetzlich",
-          "Privat"
-        ],
-        "rows": [
-          [
-            "Beitrag richtet sich nach",
-            "Einkommen",
-            "Alter und Gesundheit"
-          ],
-          [
-            "Familie mitversichert",
-            "oft beitragsfrei",
-            "jede Person kostet extra"
-          ],
-          [
-            "Wer darf hinein",
-            "alle",
-            "Beamte, Selbstständige, höhere Einkommen"
-          ],
-          [
-            "Rechnung beim Arzt",
-            "läuft über die Karte",
-            "erst selbst zahlen, dann einreichen"
-          ]
-        ]
-      },
-      "phrases": [
-        "Ich bin gesetzlich versichert.",
-        "Hier ist meine Versichertenkarte.",
-        "Übernimmt das die Krankenkasse?",
-        "Ich brauche eine Krankschreibung."
-      ],
-      "links": [
-        {
-          "label": "Wortschatz: Gesundheit",
-          "href": "/uebungen/wortschatz"
-        }
-      ],
-      "quiz": [
-        {
-          "prompt": "Seit wann ist eine Krankenversicherung in Deutschland Pflicht?",
-          "options": [
-            "Seit 2009",
-            "Seit 1990",
-            "Sie ist freiwillig"
-          ],
-          "answer": "Seit 2009",
-          "explain": "Seitdem gilt die allgemeine Versicherungspflicht."
-        },
-        {
-          "prompt": "Wonach richtet sich der Beitrag in der gesetzlichen Krankenversicherung?",
-          "options": [
-            "Nach dem Alter",
-            "Nach dem Einkommen",
-            "Nach dem Gesundheitszustand"
-          ],
-          "answer": "Nach dem Einkommen",
-          "explain": "Wer mehr verdient, zahlt mehr — bei gleicher Leistung."
-        },
-        {
-          "prompt": "Wie sind Kinder in der gesetzlichen Versicherung meist versichert?",
-          "options": [
-            "Beitragsfrei mitversichert",
-            "Zum halben Beitrag",
-            "Jedes Kind zahlt vollen Beitrag"
-          ],
-          "answer": "Beitragsfrei mitversichert",
-          "explain": "In der privaten Versicherung kostet dagegen jede Person einen eigenen Beitrag."
-        },
-        {
-          "prompt": "Wer darf sich privat versichern?",
-          "options": [
-            "Alle",
-            "Nur Beamte",
-            "Beamte, Selbstständige und Angestellte über einer Einkommensgrenze"
-          ],
-          "answer": "Beamte, Selbstständige und Angestellte über einer Einkommensgrenze",
-          "explain": "Für alle anderen gilt die Versicherungspflicht in der gesetzlichen Kasse."
-        }
-      ]
-    },
-    {
-      "id": "duzen-siezen",
-      "title": "Du oder Sie?",
-      "eyebrow": "Sprache & Umgang",
-      "icon": "mic",
-      "level": "A2",
-      "group": "umgang",
-      "sourcing": "sachwissen",
-      "sourceNote": "Öffentlich nachprüfbares Sachwissen über Sprachgebrauch. Wo es Gewohnheit statt Regel ist, steht das dabei — Menschen und Branchen sind verschieden.",
-      "intro": "Deutsch hat zwei Wörter für „du“: das vertraute du und das förmliche Sie. Welches richtig ist, hängt von der Situation ab, nicht von Höflichkeit an sich — mit Sie liegt man selten falsch, aber nicht immer richtig.",
-      "question": "Gibt es in deiner Sprache auch zwei Formen? Wann benutzt man welche?",
-      "facts": [
-        "Sie ist die Voreinstellung bei Fremden, im Amt, im Laden, bei Ärztinnen und in den meisten Firmen.",
-        "Du gilt in der Familie, unter Freunden, unter Studierenden, in Vereinen, in Kirchengemeinden und gegenüber Kindern.",
-        "Das Du wird angeboten, meist von der älteren oder ranghöheren Person: „Wir können uns gerne duzen.“ Danach zurückzuwechseln ist unüblich.",
-        "Viele junge Firmen, Sportvereine und Läden wie IKEA duzen grundsätzlich alle.",
-        "Zum Sie gehört der Nachname: „Guten Tag, Frau Weber.“ Vorname plus Sie kommt vor, ist aber eine Ausnahme.",
-        "Falsches Duzen gilt schnell als respektlos; falsches Siezen wirkt höchstens distanziert. Im Zweifel also Sie."
-      ],
-      "table": {
-        "label": "Welche Form?",
-        "columns": [
-          "Situation",
-          "Üblich"
-        ],
-        "rows": [
-          [
-            "Behörde, Bank, Arztpraxis",
-            "Sie"
-          ],
-          [
-            "Neue Kolleginnen im Büro",
-            "Sie, bis das Du angeboten wird"
-          ],
-          [
-            "Universität, unter Studierenden",
-            "du"
-          ],
-          [
-            "Sportverein",
-            "du"
-          ],
-          [
-            "Ältere Nachbarn",
-            "Sie"
-          ],
-          [
-            "Kinder und Jugendliche",
-            "du"
-          ]
-        ]
-      },
-      "phrases": [
-        "Wollen wir uns duzen?",
-        "Gerne, ich bin Lena.",
-        "Entschuldigung, darf ich Sie etwas fragen?",
-        "Sagen wir ruhig du."
-      ],
-      "links": [
-        {
-          "label": "Sprechen üben",
-          "href": "/uebungen/sprechen"
-        }
-      ],
-      "quiz": [
-        {
-          "prompt": "Wie sprichst du eine unbekannte Person im Amt an?",
-          "options": [
-            "Mit du",
-            "Mit Sie",
-            "Mit dem Vornamen"
-          ],
-          "answer": "Mit Sie",
-          "explain": "Sie plus Nachname ist hier die sichere Wahl."
-        },
-        {
-          "prompt": "Wer bietet normalerweise das Du an?",
-          "options": [
-            "Die jüngere Person",
-            "Die ältere oder ranghöhere Person",
-            "Egal"
-          ],
-          "answer": "Die ältere oder ranghöhere Person",
-          "explain": "Als Angebot, nicht als Anweisung — ablehnen ist erlaubt."
-        },
-        {
-          "prompt": "Wo wird fast immer geduzt?",
-          "options": [
-            "Im Sportverein",
-            "In der Bank",
-            "Beim Notar"
-          ],
-          "answer": "Im Sportverein",
-          "explain": "Vereine, Unis und viele junge Firmen duzen grundsätzlich."
-        },
-        {
-          "prompt": "Was gehört zum Sie?",
-          "options": [
-            "Der Vorname",
-            "Der Nachname",
-            "Gar kein Name"
-          ],
-          "answer": "Der Nachname",
-          "explain": "„Guten Tag, Frau Weber.“"
-        }
-      ]
-    },
-    {
-      "id": "termine",
-      "title": "Ohne Termin geht wenig",
-      "eyebrow": "Sprache & Umgang",
-      "icon": "target",
-      "level": "A2",
-      "group": "aemter",
-      "sourcing": "sachwissen",
-      "sourceNote": "Öffentlich nachprüfbares Sachwissen über Abläufe. Wie streng es zugeht, ist von Ort zu Ort verschieden.",
-      "intro": "Für sehr vieles in Deutschland macht man vorher einen Termin: beim Amt, beim Arzt, beim Friseur, teilweise sogar beim Handyladen. Spontan vorbeizugehen führt oft dazu, dass man wieder nach Hause geschickt wird.",
-      "question": "Wie läuft das in deinem Herkunftsland — geht man einfach hin oder meldet man sich an?",
-      "facts": [
-        "Bürgerämter in großen Städten vergeben Termine oft Wochen im Voraus, online über die Website der Stadt.",
-        "Beim Arzt gilt: anrufen, Termin machen, Versichertenkarte mitbringen. Notfälle gehen ohne Termin.",
-        "Pünktlich heißt zur vereinbarten Zeit, nicht später — bei privaten Einladungen sind fünf bis fünfzehn Minuten dagegen normal.",
-        "Absagen sollte man rechtzeitig: Nicht erscheinen kann beim Arzt oder Friseur eine Rechnung nach sich ziehen.",
-        "Auch Behördenpost hat Fristen. Ein Brief mit „innerhalb von 14 Tagen“ meint genau das."
-      ],
-      "phrases": [
-        "Ich hätte gern einen Termin.",
-        "Haben Sie etwas am Vormittag frei?",
-        "Ich muss meinen Termin leider absagen.",
-        "Kann ich auch ohne Termin kommen?"
-      ],
-      "links": [
-        {
-          "label": "Sprechen: Alltagssituationen",
-          "href": "/uebungen/sprechen"
-        }
-      ],
-      "quiz": [
-        {
-          "prompt": "Wie bekommst du meist einen Termin beim Bürgeramt?",
-          "options": [
-            "Man geht einfach hin",
-            "Online über die Website der Stadt",
-            "Per Brief"
-          ],
-          "answer": "Online über die Website der Stadt",
-          "explain": "In großen Städten oft Wochen im Voraus."
-        },
-        {
-          "prompt": "Was solltest du tun, wenn du einen Arzttermin nicht wahrnehmen kannst?",
-          "options": [
-            "Nichts, das ist normal",
-            "Rechtzeitig absagen",
-            "Einfach später kommen"
-          ],
-          "answer": "Rechtzeitig absagen",
-          "explain": "Sonst kann eine Ausfallrechnung kommen."
-        },
-        {
-          "prompt": "Was heißt Pünktlichkeit bei einem offiziellen Termin?",
-          "options": [
-            "Zur vereinbarten Zeit da sein",
-            "Etwa 15 Minuten später",
-            "Irgendwann am selben Tag"
-          ],
-          "answer": "Zur vereinbarten Zeit da sein",
-          "explain": "Bei privaten Einladungen ist man dagegen oft etwas später."
+          "answer": "Bohren und Rasen mähen",
+          "explain": "Es geht um lauten Lärm."
         }
       ]
     },
@@ -769,19 +288,19 @@
       "title": "Trinkgeld: wie viel, und wie?",
       "eyebrow": "Sprache & Umgang",
       "icon": "volume",
-      "level": "A2",
+      "level": "A1",
       "group": "umgang",
       "sourcing": "sachwissen",
       "sourceNote": "Öffentlich nachprüfbares Sachwissen über verbreitete Praxis. Trinkgeld ist freiwillig; die Höhe ist Gewohnheit, keine Regel.",
-      "intro": "Trinkgeld ist in Deutschland üblich, aber freiwillig und deutlich niedriger als etwa in den USA. Wichtiger als die Höhe ist, wie man es gibt: Man sagt den Gesamtbetrag beim Bezahlen, statt Geld auf dem Tisch liegen zu lassen.",
-      "question": "Wie ist das in deinem Herkunftsland — gibt man Trinkgeld, und wie viel?",
+      "intro": "Im Restaurant gibst du in Deutschland ein kleines Trinkgeld. Es ist nicht viel: ungefähr 5 bis 10 Prozent. Du musst nicht — aber die meisten Menschen machen es.",
+      "question": "Gibt man in deinem Land Trinkgeld? Wie viel?",
       "facts": [
-        "Üblich sind etwa 5 bis 10 Prozent, häufig einfach aufgerundet.",
-        "Man nennt den Betrag, den man insgesamt zahlen will: Bei 18,50 € sagt man „Machen Sie 20.“",
-        "Bei Kartenzahlung wird der Gesamtbetrag vorher angesagt — der Automat fragt nicht immer danach.",
-        "Bedienungen sind fest angestellt und bekommen einen Lohn; Trinkgeld ist eine Zugabe, keine Notwendigkeit.",
-        "Auch bei Taxi, Friseur und Lieferdiensten ist Aufrunden verbreitet.",
-        "In der Bäckerei oder beim Bezahlen an der Kasse ist Trinkgeld unüblich."
+        "Im Restaurant: ungefähr 5 bis 10 Prozent.",
+        "Oft rundest du einfach auf: aus 18,50 € werden 20 €.",
+        "Du sagst beim Bezahlen: „Machen Sie 20.“ Das ist alles zusammen.",
+        "Oder du sagst: „Stimmt so.“ Dann ist der Rest Trinkgeld.",
+        "Auch beim Taxi, beim Friseur und beim Lieferdienst rundest du auf.",
+        "In der Bäckerei gibst du kein Trinkgeld."
       ],
       "phrases": [
         "Zusammen oder getrennt?",
@@ -797,222 +316,34 @@
       ],
       "quiz": [
         {
-          "prompt": "Wie viel Trinkgeld ist im Restaurant üblich?",
+          "prompt": "Wie viel Trinkgeld gibst du im Restaurant?",
           "options": [
-            "Etwa 5 bis 10 Prozent",
-            "Etwa 20 Prozent",
-            "Gar keins"
+            "5 bis 10 Prozent",
+            "20 Prozent",
+            "Gar nichts"
           ],
-          "answer": "Etwa 5 bis 10 Prozent",
-          "explain": "Oft schlicht auf einen runden Betrag aufgerundet."
+          "answer": "5 bis 10 Prozent",
+          "explain": "Meistens rundet man einfach auf."
         },
         {
-          "prompt": "Die Rechnung ist 18,50 €. Wie gibst du Trinkgeld?",
+          "prompt": "Die Rechnung ist 18,50 €. Was sagst du?",
           "options": [
-            "Du legst Geld auf den Tisch und gehst",
-            "Du sagst beim Zahlen „Machen Sie 20“",
-            "Du gibst es an der Tür ab"
+            "Machen Sie 20.",
+            "Ich gebe 20 Trinkgeld.",
+            "Nichts — du legst Geld auf den Tisch."
           ],
-          "answer": "Du sagst beim Zahlen „Machen Sie 20“",
-          "explain": "Der genannte Betrag ist der Gesamtbetrag inklusive Trinkgeld."
+          "answer": "Machen Sie 20.",
+          "explain": "20 € sind alles zusammen: Essen und Trinkgeld."
         },
         {
           "prompt": "Was bedeutet „Stimmt so“?",
           "options": [
-            "Die Rechnung ist falsch",
             "Der Rest ist Trinkgeld",
+            "Die Rechnung ist falsch",
             "Ich zahle später"
           ],
           "answer": "Der Rest ist Trinkgeld",
-          "explain": "Eine sehr verbreitete kurze Formel."
-        }
-      ]
-    },
-    {
-      "id": "ausbildung",
-      "title": "Die duale Ausbildung",
-      "eyebrow": "Bildung & Arbeit",
-      "icon": "graduation-cap",
-      "level": "B1",
-      "group": "bildung",
-      "sourcing": "sachwissen",
-      "sourceNote": "Öffentlich nachprüfbares Sachwissen. Dauer und Vergütung hängen vom Beruf und vom Tarifvertrag ab.",
-      "intro": "Neben dem Studium gibt es in Deutschland einen zweiten anerkannten Weg in einen Beruf: die duale Ausbildung. „Dual“ heißt, dass sie an zwei Orten gleichzeitig stattfindet — im Betrieb und in der Berufsschule.",
-      "question": "Gibt es in deinem Herkunftsland etwas Ähnliches, oder führt der Weg dort über die Hochschule?",
-      "facts": [
-        "Eine Ausbildung dauert je nach Beruf zwei bis dreieinhalb Jahre.",
-        "Auszubildende bekommen vom ersten Tag an eine Vergütung — es ist bezahlte Arbeit, kein Praktikum.",
-        "Etwa 320 Ausbildungsberufe sind staatlich anerkannt, vom Elektroniker bis zur Kauffrau für Büromanagement.",
-        "Die Prüfung nimmt nicht der Betrieb ab, sondern die Industrie- und Handelskammer oder die Handwerkskammer.",
-        "Der Abschluss ist bundesweit anerkannt und gilt als Berufsqualifikation, nicht als Schulabschluss.",
-        "Danach stehen Meister, Techniker oder Fachwirt offen — und mit dem Meister auch ein Studium ohne Abitur."
-      ],
-      "phrases": [
-        "Ich mache eine Ausbildung als Pflegefachkraft.",
-        "Ich bin im zweiten Lehrjahr.",
-        "Die Berufsschule ist zweimal pro Woche.",
-        "Nach der Ausbildung will ich den Meister machen."
-      ],
-      "links": [
-        {
-          "label": "Wortschatz: Beruf",
-          "href": "/uebungen/wortschatz"
-        }
-      ],
-      "quiz": [
-        {
-          "prompt": "Was bedeutet „dual“ in „duale Ausbildung“?",
-          "options": [
-            "Zwei Abschlüsse",
-            "Betrieb und Berufsschule gleichzeitig",
-            "Zwei Jahre Dauer"
-          ],
-          "answer": "Betrieb und Berufsschule gleichzeitig",
-          "explain": "Praxis und Theorie laufen parallel, nicht nacheinander."
-        },
-        {
-          "prompt": "Bekommen Auszubildende Geld?",
-          "options": [
-            "Nein, sie zahlen Gebühren",
-            "Ja, eine Ausbildungsvergütung",
-            "Erst im letzten Jahr"
-          ],
-          "answer": "Ja, eine Ausbildungsvergütung",
-          "explain": "Vom ersten Monat an."
-        },
-        {
-          "prompt": "Wer nimmt die Abschlussprüfung ab?",
-          "options": [
-            "Der Ausbildungsbetrieb",
-            "Die Kammer (IHK oder Handwerkskammer)",
-            "Die Universität"
-          ],
-          "answer": "Die Kammer (IHK oder Handwerkskammer)",
-          "explain": "Darum ist der Abschluss bundesweit vergleichbar."
-        },
-        {
-          "prompt": "Wie lange dauert eine Ausbildung meist?",
-          "options": [
-            "Ein Jahr",
-            "Zwei bis dreieinhalb Jahre",
-            "Fünf Jahre"
-          ],
-          "answer": "Zwei bis dreieinhalb Jahre",
-          "explain": "Je nach Beruf, und mit Abitur oft verkürzbar."
-        }
-      ]
-    },
-    {
-      "id": "schulsystem",
-      "title": "Das Schulsystem",
-      "eyebrow": "Bildung & Arbeit",
-      "icon": "book-open",
-      "level": "B1",
-      "group": "bildung",
-      "sourcing": "sachwissen",
-      "sourceNote": "Öffentlich nachprüfbares Sachwissen. Schule ist Ländersache: Namen, Übergänge und Schulformen unterscheiden sich je Bundesland erheblich.",
-      "intro": "Bildung ist in Deutschland Sache der Bundesländer. Es gibt deshalb kein einheitliches Schulsystem, sondern sechzehn verwandte. Gemeinsam ist der frühe Zeitpunkt, an dem sich die Wege trennen — meist nach der vierten Klasse.",
-      "question": "Wann trennen sich in deinem Herkunftsland die Schulwege — und ist das später oder früher?",
-      "facts": [
-        "Die Grundschule dauert vier Jahre, in Berlin und Brandenburg sechs.",
-        "Danach folgen je nach Land Hauptschule, Realschule, Gymnasium oder Gesamtschule — manche Länder haben nur noch zwei Wege.",
-        "Das Abitur am Gymnasium berechtigt zum Studium. Es dauert je nach Land acht oder neun Jahre („G8“ / „G9“).",
-        "Die Wege sind nicht endgültig: Über Berufsschule, Fachoberschule oder das Abendgymnasium kann man den Abschluss später nachholen.",
-        "Staatliche Schulen kosten kein Schulgeld. Es gibt Schulpflicht, keine Pflicht zum Hausunterricht — Homeschooling ist in Deutschland nicht erlaubt.",
-        "Schulnoten gehen von 1 (sehr gut) bis 6 (ungenügend) — anders als in vielen Ländern ist die niedrige Zahl die bessere."
-      ],
-      "table": {
-        "label": "Der übliche Weg",
-        "columns": [
-          "Stufe",
-          "Alter (etwa)",
-          "Abschluss"
-        ],
-        "rows": [
-          [
-            "Kindergarten / Kita",
-            "1–6",
-            "—"
-          ],
-          [
-            "Grundschule",
-            "6–10",
-            "—"
-          ],
-          [
-            "Hauptschule",
-            "10–15",
-            "Hauptschulabschluss"
-          ],
-          [
-            "Realschule",
-            "10–16",
-            "Mittlere Reife"
-          ],
-          [
-            "Gymnasium",
-            "10–18",
-            "Abitur"
-          ],
-          [
-            "Berufsschule + Betrieb",
-            "ab 15/16",
-            "Ausbildungsabschluss"
-          ]
-        ]
-      },
-      "phrases": [
-        "Mein Kind kommt nächstes Jahr in die Schule.",
-        "Welche Schule empfehlen Sie?",
-        "Er macht gerade sein Abitur.",
-        "Sie hat die Mittlere Reife."
-      ],
-      "links": [
-        {
-          "label": "Leben in Deutschland: Fakten",
-          "href": "/pruefungen/leben-in-deutschland/fakten"
-        }
-      ],
-      "quiz": [
-        {
-          "prompt": "Wer ist für die Schulen zuständig?",
-          "options": [
-            "Der Bund",
-            "Die Bundesländer",
-            "Die Städte"
-          ],
-          "answer": "Die Bundesländer",
-          "explain": "Darum unterscheiden sich Schulformen und Abläufe von Land zu Land."
-        },
-        {
-          "prompt": "Welcher Abschluss berechtigt zum Studium an einer Universität?",
-          "options": [
-            "Der Hauptschulabschluss",
-            "Die Mittlere Reife",
-            "Das Abitur"
-          ],
-          "answer": "Das Abitur",
-          "explain": "Es lässt sich auch später nachholen, etwa am Abendgymnasium."
-        },
-        {
-          "prompt": "Welche Schulnote ist die beste?",
-          "options": [
-            "1",
-            "6",
-            "10"
-          ],
-          "answer": "1",
-          "explain": "1 ist sehr gut, 6 ist ungenügend."
-        },
-        {
-          "prompt": "Wie lange dauert die Grundschule in den meisten Bundesländern?",
-          "options": [
-            "Vier Jahre",
-            "Sechs Jahre",
-            "Acht Jahre"
-          ],
-          "answer": "Vier Jahre",
-          "explain": "In Berlin und Brandenburg sind es sechs."
+          "explain": "Ein kurzer Satz, den alle benutzen."
         }
       ]
     },
@@ -1239,20 +570,806 @@
       ]
     },
     {
+      "id": "muelltrennung",
+      "title": "Mülltrennung: welche Tonne?",
+      "eyebrow": "Alltag & Wohnen",
+      "icon": "map-pin",
+      "level": "A2",
+      "group": "wohnen",
+      "sourcing": "sachwissen",
+      "sourceNote": "Öffentlich nachprüfbares Sachwissen. Die Farben und Regeln unterscheiden sich je nach Stadt und Landkreis — verbindlich ist immer der Abfallkalender deiner Kommune.",
+      "intro": "Müll wird in Deutschland getrennt gesammelt: Papier, Verpackungen, Bioabfall, Restmüll und Glas gehen in verschiedene Behälter. Die Trennung ist keine Höflichkeit, sondern die Grundlage dafür, dass Material wiederverwendet werden kann.",
+      "question": "Wie wird der Müll in deinem Herkunftsland getrennt — mehr, weniger oder anders?",
+      "facts": [
+        "Die Farben sind nicht bundesweit einheitlich. In vielen Orten: blau = Papier, gelb = Verpackungen, braun = Bio, grau oder schwarz = Restmüll.",
+        "Glas kommt meist nicht in die Tonne, sondern zum Container an der Straße — dort nach Weiß, Grün und Braun getrennt.",
+        "Altglas-Container haben fast überall Einwurfzeiten: nachts und sonntags ist Einwerfen wegen des Lärms verboten.",
+        "Batterien, Elektrogeräte und Farben gehören nicht in den Hausmüll, sondern zum Wertstoffhof oder zurück in den Laden."
+      ],
+      "table": {
+        "label": "Was gehört wohin?",
+        "columns": [
+          "Abfall",
+          "Wohin"
+        ],
+        "rows": [
+          [
+            "Zeitung, Karton",
+            "Papiertonne (oft blau)"
+          ],
+          [
+            "Joghurtbecher, Plastikfolie, Konservendose",
+            "Verpackungen (gelbe Tonne / gelber Sack)"
+          ],
+          [
+            "Obstreste, Kaffeesatz, Gartenabfall",
+            "Biotonne (oft braun)"
+          ],
+          [
+            "Windeln, Staubsaugerbeutel, Zigaretten",
+            "Restmüll (grau oder schwarz)"
+          ],
+          [
+            "Flaschen und Gläser ohne Pfand",
+            "Altglas-Container, nach Farbe"
+          ],
+          [
+            "Batterien, Handys, Lampen",
+            "Wertstoffhof oder Rücknahme im Laden"
+          ],
+          [
+            "Alte Möbel, Matratzen",
+            "Sperrmüll — meist mit Termin bei der Stadt"
+          ]
+        ]
+      },
+      "phrases": [
+        "Wo kommt das hin?",
+        "Das gehört in die gelbe Tonne.",
+        "Wann wird der Müll abgeholt?",
+        "Ich muss das zum Wertstoffhof bringen."
+      ],
+      "links": [
+        {
+          "label": "Wortschatz zum Thema Wohnen",
+          "href": "/uebungen/wortschatz"
+        }
+      ],
+      "quiz": [
+        {
+          "prompt": "Wohin kommt ein leerer Joghurtbecher?",
+          "options": [
+            "Biotonne",
+            "Gelbe Tonne / gelber Sack",
+            "Restmüll"
+          ],
+          "answer": "Gelbe Tonne / gelber Sack",
+          "explain": "Er ist eine Verpackung. Ausgespült muss er nicht sein, nur löffelrein."
+        },
+        {
+          "prompt": "Wohin kommt Kaffeesatz?",
+          "options": [
+            "Biotonne",
+            "Restmüll",
+            "Papiertonne"
+          ],
+          "answer": "Biotonne",
+          "explain": "Kaffeesatz und Filtertüte sind beide Bioabfall."
+        },
+        {
+          "prompt": "Warum darf man nachts kein Altglas einwerfen?",
+          "options": [
+            "Die Container sind abgeschlossen",
+            "Wegen der Ruhezeiten — es ist zu laut",
+            "Das Glas zerbricht bei Kälte"
+          ],
+          "answer": "Wegen der Ruhezeiten — es ist zu laut",
+          "explain": "Aus demselben Grund ist es sonntags meist ebenfalls untersagt."
+        },
+        {
+          "prompt": "Wohin gehören alte Batterien?",
+          "options": [
+            "In den Restmüll",
+            "In die gelbe Tonne",
+            "Zum Wertstoffhof oder zurück in den Laden"
+          ],
+          "answer": "Zum Wertstoffhof oder zurück in den Laden",
+          "explain": "Läden, die Batterien verkaufen, müssen sie auch zurücknehmen."
+        }
+      ]
+    },
+    {
+      "id": "termine",
+      "title": "Ohne Termin geht wenig",
+      "eyebrow": "Sprache & Umgang",
+      "icon": "target",
+      "level": "A2",
+      "group": "aemter",
+      "sourcing": "sachwissen",
+      "sourceNote": "Öffentlich nachprüfbares Sachwissen über Abläufe. Wie streng es zugeht, ist von Ort zu Ort verschieden.",
+      "intro": "Für sehr vieles in Deutschland macht man vorher einen Termin: beim Amt, beim Arzt, beim Friseur, teilweise sogar beim Handyladen. Spontan vorbeizugehen führt oft dazu, dass man wieder nach Hause geschickt wird.",
+      "question": "Wie läuft das in deinem Herkunftsland — geht man einfach hin oder meldet man sich an?",
+      "facts": [
+        "Bürgerämter in großen Städten vergeben Termine oft Wochen im Voraus, online über die Website der Stadt.",
+        "Beim Arzt gilt: anrufen, Termin machen, Versichertenkarte mitbringen. Notfälle gehen ohne Termin.",
+        "Pünktlich heißt zur vereinbarten Zeit, nicht später — bei privaten Einladungen sind fünf bis fünfzehn Minuten dagegen normal.",
+        "Absagen sollte man rechtzeitig: Nicht erscheinen kann beim Arzt oder Friseur eine Rechnung nach sich ziehen.",
+        "Auch Behördenpost hat Fristen. Ein Brief mit „innerhalb von 14 Tagen“ meint genau das."
+      ],
+      "phrases": [
+        "Ich hätte gern einen Termin.",
+        "Haben Sie etwas am Vormittag frei?",
+        "Ich muss meinen Termin leider absagen.",
+        "Kann ich auch ohne Termin kommen?"
+      ],
+      "links": [
+        {
+          "label": "Sprechen: Alltagssituationen",
+          "href": "/uebungen/sprechen"
+        }
+      ],
+      "quiz": [
+        {
+          "prompt": "Wie bekommst du meist einen Termin beim Bürgeramt?",
+          "options": [
+            "Man geht einfach hin",
+            "Online über die Website der Stadt",
+            "Per Brief"
+          ],
+          "answer": "Online über die Website der Stadt",
+          "explain": "In großen Städten oft Wochen im Voraus."
+        },
+        {
+          "prompt": "Was solltest du tun, wenn du einen Arzttermin nicht wahrnehmen kannst?",
+          "options": [
+            "Nichts, das ist normal",
+            "Rechtzeitig absagen",
+            "Einfach später kommen"
+          ],
+          "answer": "Rechtzeitig absagen",
+          "explain": "Sonst kann eine Ausfallrechnung kommen."
+        },
+        {
+          "prompt": "Was heißt Pünktlichkeit bei einem offiziellen Termin?",
+          "options": [
+            "Zur vereinbarten Zeit da sein",
+            "Etwa 15 Minuten später",
+            "Irgendwann am selben Tag"
+          ],
+          "answer": "Zur vereinbarten Zeit da sein",
+          "explain": "Bei privaten Einladungen ist man dagegen oft etwas später."
+        }
+      ]
+    },
+    {
+      "id": "anmeldung",
+      "title": "Anmeldung: der erste Behördengang",
+      "eyebrow": "Behörden & Gesundheit",
+      "icon": "document",
+      "level": "B1",
+      "group": "aemter",
+      "sourcing": "sachwissen",
+      "sourceNote": "Öffentlich nachprüfbares Sachwissen (Bundesmeldegesetz). Fristen und Termine regelt jede Stadt selbst — verbindlich ist deine Meldebehörde.",
+      "intro": "Wer in Deutschland eine Wohnung bezieht, muss sich anmelden: beim Einwohnermeldeamt oder Bürgeramt der Stadt. Aus dieser Anmeldung folgt fast alles andere — Steuer-ID, Bankkonto, Kindergeld, Führerschein-Umschreibung.",
+      "question": "Muss man sich in deinem Herkunftsland auch anmelden? Wenn ja, wo und wie schnell?",
+      "facts": [
+        "Die Frist beträgt nach dem Bundesmeldegesetz zwei Wochen nach dem Einzug. Manche Städte handhaben das großzügiger, verlassen sollte man sich darauf nicht.",
+        "Du brauchst eine Wohnungsgeberbestätigung — ein unterschriebenes Formular deiner Vermieterin oder deines Vermieters. Ein Mietvertrag allein reicht nicht.",
+        "Dazu: Ausweis oder Pass, das ausgefüllte Anmeldeformular, bei Familien die Geburts- oder Heiratsurkunde.",
+        "Die Anmeldung selbst ist kostenlos.",
+        "Wenige Wochen später kommt die Steuer-Identifikationsnummer per Post — ohne sie zahlt der Arbeitgeber zu viel Lohnsteuer ein.",
+        "In großen Städten sind Termine oft Wochen im Voraus ausgebucht: Termin buchen, bevor du umziehst."
+      ],
+      "table": {
+        "label": "Was du mitbringst",
+        "columns": [
+          "Dokument",
+          "Woher"
+        ],
+        "rows": [
+          [
+            "Anmeldeformular",
+            "Website der Stadt oder vor Ort"
+          ],
+          [
+            "Wohnungsgeberbestätigung",
+            "von der Vermieterin / dem Vermieter"
+          ],
+          [
+            "Personalausweis oder Reisepass",
+            "hast du schon"
+          ],
+          [
+            "Heirats- oder Geburtsurkunde",
+            "nur bei Familien, oft mit Übersetzung"
+          ]
+        ]
+      },
+      "phrases": [
+        "Ich möchte mich anmelden.",
+        "Ich habe einen Termin um 10 Uhr.",
+        "Können Sie mir bitte eine Meldebescheinigung ausstellen?",
+        "Brauche ich dafür einen Termin?"
+      ],
+      "links": [
+        {
+          "label": "Leben in Deutschland: Test",
+          "href": "/pruefungen/leben-in-deutschland/test"
+        }
+      ],
+      "quiz": [
+        {
+          "prompt": "Wie schnell muss man sich nach dem Einzug anmelden?",
+          "options": [
+            "Innerhalb von zwei Wochen",
+            "Innerhalb von drei Monaten",
+            "Es gibt keine Frist"
+          ],
+          "answer": "Innerhalb von zwei Wochen",
+          "explain": "So steht es im Bundesmeldegesetz."
+        },
+        {
+          "prompt": "Welches Dokument bekommst du von deiner Vermieterin?",
+          "options": [
+            "Die Steuer-ID",
+            "Die Wohnungsgeberbestätigung",
+            "Die Meldebescheinigung"
+          ],
+          "answer": "Die Wohnungsgeberbestätigung",
+          "explain": "Ohne sie nimmt das Amt die Anmeldung nicht an."
+        },
+        {
+          "prompt": "Was kostet die Anmeldung?",
+          "options": [
+            "Nichts",
+            "Etwa 15 €",
+            "Etwa 50 €"
+          ],
+          "answer": "Nichts",
+          "explain": "Kosten entstehen erst für zusätzliche Bescheinigungen."
+        },
+        {
+          "prompt": "Wofür brauchst du die Steuer-Identifikationsnummer?",
+          "options": [
+            "Für den Führerschein",
+            "Damit der Arbeitgeber die richtige Lohnsteuer abführt",
+            "Für den Mietvertrag"
+          ],
+          "answer": "Damit der Arbeitgeber die richtige Lohnsteuer abführt",
+          "explain": "Sie kommt nach der Anmeldung automatisch per Post."
+        }
+      ]
+    },
+    {
+      "id": "krankenversicherung",
+      "title": "Krankenversicherung: gesetzlich oder privat",
+      "eyebrow": "Behörden & Gesundheit",
+      "icon": "landmark",
+      "level": "B1",
+      "group": "aemter",
+      "sourcing": "sachwissen",
+      "sourceNote": "Öffentlich nachprüfbares Sachwissen. Beiträge und Grenzwerte ändern sich jährlich — Stand 2025.",
+      "intro": "In Deutschland ist eine Krankenversicherung Pflicht: Seit 2009 muss jede Person versichert sein. Es gibt zwei Systeme nebeneinander — die gesetzliche Krankenversicherung, in der die große Mehrheit ist, und die private.",
+      "question": "Wie ist Gesundheitsversorgung in deinem Herkunftsland organisiert — über Steuern, über Beiträge oder privat?",
+      "facts": [
+        "Rund neun von zehn Menschen sind gesetzlich versichert.",
+        "Der Beitrag richtet sich nach dem Einkommen, nicht nach Alter oder Gesundheit. Arbeitgeber und Beschäftigte teilen ihn sich.",
+        "Kinder und nicht erwerbstätige Ehepartner sind in der gesetzlichen Versicherung oft beitragsfrei mitversichert — in der privaten kostet jede Person extra.",
+        "Privat versichern dürfen sich nur bestimmte Gruppen: Beamte, Selbstständige und Angestellte über der Versicherungspflichtgrenze.",
+        "Der Weg zurück von privat in die gesetzliche Versicherung ist schwierig — das ist eine Entscheidung auf lange Sicht.",
+        "Zum Facharzt brauchst du in der Regel keine Überweisung, aber oft Geduld: Termine dauern."
+      ],
+      "table": {
+        "label": "Zwei Systeme im Vergleich",
+        "columns": [
+          "",
+          "Gesetzlich",
+          "Privat"
+        ],
+        "rows": [
+          [
+            "Beitrag richtet sich nach",
+            "Einkommen",
+            "Alter und Gesundheit"
+          ],
+          [
+            "Familie mitversichert",
+            "oft beitragsfrei",
+            "jede Person kostet extra"
+          ],
+          [
+            "Wer darf hinein",
+            "alle",
+            "Beamte, Selbstständige, höhere Einkommen"
+          ],
+          [
+            "Rechnung beim Arzt",
+            "läuft über die Karte",
+            "erst selbst zahlen, dann einreichen"
+          ]
+        ]
+      },
+      "phrases": [
+        "Ich bin gesetzlich versichert.",
+        "Hier ist meine Versichertenkarte.",
+        "Übernimmt das die Krankenkasse?",
+        "Ich brauche eine Krankschreibung."
+      ],
+      "links": [
+        {
+          "label": "Wortschatz: Gesundheit",
+          "href": "/uebungen/wortschatz"
+        }
+      ],
+      "quiz": [
+        {
+          "prompt": "Seit wann ist eine Krankenversicherung in Deutschland Pflicht?",
+          "options": [
+            "Seit 2009",
+            "Seit 1990",
+            "Sie ist freiwillig"
+          ],
+          "answer": "Seit 2009",
+          "explain": "Seitdem gilt die allgemeine Versicherungspflicht."
+        },
+        {
+          "prompt": "Wonach richtet sich der Beitrag in der gesetzlichen Krankenversicherung?",
+          "options": [
+            "Nach dem Alter",
+            "Nach dem Einkommen",
+            "Nach dem Gesundheitszustand"
+          ],
+          "answer": "Nach dem Einkommen",
+          "explain": "Wer mehr verdient, zahlt mehr — bei gleicher Leistung."
+        },
+        {
+          "prompt": "Wie sind Kinder in der gesetzlichen Versicherung meist versichert?",
+          "options": [
+            "Beitragsfrei mitversichert",
+            "Zum halben Beitrag",
+            "Jedes Kind zahlt vollen Beitrag"
+          ],
+          "answer": "Beitragsfrei mitversichert",
+          "explain": "In der privaten Versicherung kostet dagegen jede Person einen eigenen Beitrag."
+        },
+        {
+          "prompt": "Wer darf sich privat versichern?",
+          "options": [
+            "Alle",
+            "Nur Beamte",
+            "Beamte, Selbstständige und Angestellte über einer Einkommensgrenze"
+          ],
+          "answer": "Beamte, Selbstständige und Angestellte über einer Einkommensgrenze",
+          "explain": "Für alle anderen gilt die Versicherungspflicht in der gesetzlichen Kasse."
+        }
+      ]
+    },
+    {
+      "id": "mieten",
+      "title": "Kaltmiete, Warmmiete, Kaution",
+      "eyebrow": "Alltag & Wohnen",
+      "icon": "folder",
+      "level": "B1",
+      "group": "wohnen",
+      "sourcing": "sachwissen",
+      "sourceNote": "Öffentlich nachprüfbares Sachwissen (BGB-Mietrecht). Was im Einzelfall gilt, steht in deinem Mietvertrag.",
+      "intro": "In Wohnungsanzeigen stehen mehrere Preise nebeneinander, und der größte davon ist selten der, den du monatlich überweist. Wer die drei Begriffe Kaltmiete, Nebenkosten und Warmmiete auseinanderhält, liest jede Anzeige richtig.",
+      "question": "Wie sucht man in deinem Herkunftsland eine Wohnung — über Anzeigen, über Bekannte, über Makler?",
+      "facts": [
+        "Kaltmiete ist die reine Miete für die Wohnung.",
+        "Nebenkosten decken Wasser, Müllabfuhr, Hausreinigung, oft Heizung. Sie werden geschätzt und einmal im Jahr abgerechnet — es kann eine Nachzahlung oder eine Rückzahlung geben.",
+        "Warmmiete ist Kaltmiete plus Nebenkosten: die Zahl, die monatlich abgeht. Strom und Internet sind meist trotzdem noch extra.",
+        "Die Kaution darf höchstens drei Kaltmieten betragen (§ 551 BGB) und muss getrennt angelegt werden. Du bekommst sie am Ende zurück, wenn die Wohnung in Ordnung ist.",
+        "Viele Wohnungen werden ohne Küche vermietet — „Einbauküche“ in der Anzeige ist ein echtes Argument.",
+        "Die Schufa-Auskunft und eine Mietschuldenfreiheitsbescheinigung verlangen Vermieter regelmäßig."
+      ],
+      "table": {
+        "label": "Eine Anzeige lesen",
+        "columns": [
+          "In der Anzeige",
+          "Bedeutet"
+        ],
+        "rows": [
+          [
+            "650 € kalt",
+            "Miete ohne Nebenkosten"
+          ],
+          [
+            "+ 150 € NK",
+            "geschätzte Nebenkosten pro Monat"
+          ],
+          [
+            "800 € warm",
+            "was monatlich abgeht"
+          ],
+          [
+            "3 MM Kaution",
+            "drei Kaltmieten als Kaution, hier 1.950 €"
+          ],
+          [
+            "2 ZKB",
+            "zwei Zimmer, Küche, Bad"
+          ],
+          [
+            "EBK",
+            "Einbauküche vorhanden"
+          ]
+        ]
+      },
+      "phrases": [
+        "Ist die Wohnung noch frei?",
+        "Sind die Nebenkosten in der Miete enthalten?",
+        "Wie hoch ist die Kaution?",
+        "Kann ich die Wohnung besichtigen?"
+      ],
+      "links": [
+        {
+          "label": "Wortschatz: Wohnen",
+          "href": "/uebungen/wortschatz"
+        }
+      ],
+      "quiz": [
+        {
+          "prompt": "Was ist die Warmmiete?",
+          "options": [
+            "Die Miete im Winter",
+            "Kaltmiete plus Nebenkosten",
+            "Nur die Heizkosten"
+          ],
+          "answer": "Kaltmiete plus Nebenkosten",
+          "explain": "Also das, was monatlich tatsächlich abgeht — Strom meist noch ohne."
+        },
+        {
+          "prompt": "Wie hoch darf die Kaution höchstens sein?",
+          "options": [
+            "Eine Kaltmiete",
+            "Drei Kaltmieten",
+            "Sechs Kaltmieten"
+          ],
+          "answer": "Drei Kaltmieten",
+          "explain": "So steht es in § 551 BGB."
+        },
+        {
+          "prompt": "Was passiert am Ende des Jahres mit den Nebenkosten?",
+          "options": [
+            "Nichts, sie sind pauschal",
+            "Sie werden abgerechnet — es kann eine Nach- oder Rückzahlung geben",
+            "Sie werden automatisch erhöht"
+          ],
+          "answer": "Sie werden abgerechnet — es kann eine Nach- oder Rückzahlung geben",
+          "explain": "Die monatliche Zahlung ist nur eine Vorauszahlung."
+        },
+        {
+          "prompt": "Was bedeutet „2 ZKB“?",
+          "options": [
+            "Zwei Zimmer, Küche, Bad",
+            "Zwei Zimmer, Keller, Balkon",
+            "Zweite Etage, Küche, Bad"
+          ],
+          "answer": "Zwei Zimmer, Küche, Bad",
+          "explain": "Das Wohnzimmer zählt als Zimmer mit."
+        }
+      ]
+    },
+    {
+      "id": "schulsystem",
+      "title": "Das Schulsystem",
+      "eyebrow": "Bildung & Arbeit",
+      "icon": "book-open",
+      "level": "B1",
+      "group": "bildung",
+      "sourcing": "sachwissen",
+      "sourceNote": "Öffentlich nachprüfbares Sachwissen. Schule ist Ländersache: Namen, Übergänge und Schulformen unterscheiden sich je Bundesland erheblich.",
+      "intro": "Bildung ist in Deutschland Sache der Bundesländer. Es gibt deshalb kein einheitliches Schulsystem, sondern sechzehn verwandte. Gemeinsam ist der frühe Zeitpunkt, an dem sich die Wege trennen — meist nach der vierten Klasse.",
+      "question": "Wann trennen sich in deinem Herkunftsland die Schulwege — und ist das später oder früher?",
+      "facts": [
+        "Die Grundschule dauert vier Jahre, in Berlin und Brandenburg sechs.",
+        "Danach folgen je nach Land Hauptschule, Realschule, Gymnasium oder Gesamtschule — manche Länder haben nur noch zwei Wege.",
+        "Das Abitur am Gymnasium berechtigt zum Studium. Es dauert je nach Land acht oder neun Jahre („G8“ / „G9“).",
+        "Die Wege sind nicht endgültig: Über Berufsschule, Fachoberschule oder das Abendgymnasium kann man den Abschluss später nachholen.",
+        "Staatliche Schulen kosten kein Schulgeld. Es gibt Schulpflicht, keine Pflicht zum Hausunterricht — Homeschooling ist in Deutschland nicht erlaubt.",
+        "Schulnoten gehen von 1 (sehr gut) bis 6 (ungenügend) — anders als in vielen Ländern ist die niedrige Zahl die bessere."
+      ],
+      "table": {
+        "label": "Der übliche Weg",
+        "columns": [
+          "Stufe",
+          "Alter (etwa)",
+          "Abschluss"
+        ],
+        "rows": [
+          [
+            "Kindergarten / Kita",
+            "1–6",
+            "—"
+          ],
+          [
+            "Grundschule",
+            "6–10",
+            "—"
+          ],
+          [
+            "Hauptschule",
+            "10–15",
+            "Hauptschulabschluss"
+          ],
+          [
+            "Realschule",
+            "10–16",
+            "Mittlere Reife"
+          ],
+          [
+            "Gymnasium",
+            "10–18",
+            "Abitur"
+          ],
+          [
+            "Berufsschule + Betrieb",
+            "ab 15/16",
+            "Ausbildungsabschluss"
+          ]
+        ]
+      },
+      "phrases": [
+        "Mein Kind kommt nächstes Jahr in die Schule.",
+        "Welche Schule empfehlen Sie?",
+        "Er macht gerade sein Abitur.",
+        "Sie hat die Mittlere Reife."
+      ],
+      "links": [
+        {
+          "label": "Leben in Deutschland: Fakten",
+          "href": "/pruefungen/leben-in-deutschland/fakten"
+        }
+      ],
+      "quiz": [
+        {
+          "prompt": "Wer ist für die Schulen zuständig?",
+          "options": [
+            "Der Bund",
+            "Die Bundesländer",
+            "Die Städte"
+          ],
+          "answer": "Die Bundesländer",
+          "explain": "Darum unterscheiden sich Schulformen und Abläufe von Land zu Land."
+        },
+        {
+          "prompt": "Welcher Abschluss berechtigt zum Studium an einer Universität?",
+          "options": [
+            "Der Hauptschulabschluss",
+            "Die Mittlere Reife",
+            "Das Abitur"
+          ],
+          "answer": "Das Abitur",
+          "explain": "Es lässt sich auch später nachholen, etwa am Abendgymnasium."
+        },
+        {
+          "prompt": "Welche Schulnote ist die beste?",
+          "options": [
+            "1",
+            "6",
+            "10"
+          ],
+          "answer": "1",
+          "explain": "1 ist sehr gut, 6 ist ungenügend."
+        },
+        {
+          "prompt": "Wie lange dauert die Grundschule in den meisten Bundesländern?",
+          "options": [
+            "Vier Jahre",
+            "Sechs Jahre",
+            "Acht Jahre"
+          ],
+          "answer": "Vier Jahre",
+          "explain": "In Berlin und Brandenburg sind es sechs."
+        }
+      ]
+    },
+    {
+      "id": "ausbildung",
+      "title": "Die duale Ausbildung",
+      "eyebrow": "Bildung & Arbeit",
+      "icon": "graduation-cap",
+      "level": "B2",
+      "group": "bildung",
+      "sourcing": "sachwissen",
+      "sourceNote": "Öffentlich nachprüfbares Sachwissen. Dauer und Vergütung hängen vom Beruf und vom Tarifvertrag ab.",
+      "intro": "Neben dem Studium gibt es in Deutschland einen zweiten anerkannten Weg in einen Beruf: die duale Ausbildung. „Dual“ heißt, dass sie an zwei Orten gleichzeitig stattfindet — im Betrieb und in der Berufsschule.",
+      "question": "Gibt es in deinem Herkunftsland etwas Ähnliches, oder führt der Weg dort über die Hochschule?",
+      "facts": [
+        "Eine Ausbildung dauert je nach Beruf zwei bis dreieinhalb Jahre.",
+        "Auszubildende bekommen vom ersten Tag an eine Vergütung — es ist bezahlte Arbeit, kein Praktikum.",
+        "Etwa 320 Ausbildungsberufe sind staatlich anerkannt, vom Elektroniker bis zur Kauffrau für Büromanagement.",
+        "Die Prüfung nimmt nicht der Betrieb ab, sondern die Industrie- und Handelskammer oder die Handwerkskammer.",
+        "Der Abschluss ist bundesweit anerkannt und gilt als Berufsqualifikation, nicht als Schulabschluss.",
+        "Danach stehen Meister, Techniker oder Fachwirt offen — und mit dem Meister auch ein Studium ohne Abitur.",
+        "Was vermittelt werden muss, legt die Ausbildungsordnung bundesweit fest — deshalb bedeutet derselbe Abschluss in Flensburg dasselbe wie in Passau.",
+        "Im Deutschen Qualifikationsrahmen steht der Meister auf Stufe 6, derselben wie der Bachelor. Gleichwertig heißt dort ausdrücklich nicht gleichartig: Der Zugang zu reglementierten akademischen Berufen folgt weiterhin eigenen Regeln."
+      ],
+      "phrases": [
+        "Ich mache eine Ausbildung als Pflegefachkraft.",
+        "Ich bin im zweiten Lehrjahr.",
+        "Die Berufsschule ist zweimal pro Woche.",
+        "Nach der Ausbildung will ich den Meister machen."
+      ],
+      "links": [
+        {
+          "label": "Wortschatz: Beruf",
+          "href": "/uebungen/wortschatz"
+        }
+      ],
+      "quiz": [
+        {
+          "prompt": "Was bedeutet „dual“ in „duale Ausbildung“?",
+          "options": [
+            "Zwei Abschlüsse",
+            "Betrieb und Berufsschule gleichzeitig",
+            "Zwei Jahre Dauer"
+          ],
+          "answer": "Betrieb und Berufsschule gleichzeitig",
+          "explain": "Praxis und Theorie laufen parallel, nicht nacheinander."
+        },
+        {
+          "prompt": "Bekommen Auszubildende Geld?",
+          "options": [
+            "Nein, sie zahlen Gebühren",
+            "Ja, eine Ausbildungsvergütung",
+            "Erst im letzten Jahr"
+          ],
+          "answer": "Ja, eine Ausbildungsvergütung",
+          "explain": "Vom ersten Monat an."
+        },
+        {
+          "prompt": "Wer nimmt die Abschlussprüfung ab?",
+          "options": [
+            "Der Ausbildungsbetrieb",
+            "Die Kammer (IHK oder Handwerkskammer)",
+            "Die Universität"
+          ],
+          "answer": "Die Kammer (IHK oder Handwerkskammer)",
+          "explain": "Darum ist der Abschluss bundesweit vergleichbar."
+        },
+        {
+          "prompt": "Wie lange dauert eine Ausbildung meist?",
+          "options": [
+            "Ein Jahr",
+            "Zwei bis dreieinhalb Jahre",
+            "Fünf Jahre"
+          ],
+          "answer": "Zwei bis dreieinhalb Jahre",
+          "explain": "Je nach Beruf, und mit Abitur oft verkürzbar."
+        },
+        {
+          "prompt": "Warum gilt ein Ausbildungsabschluss bundesweit gleich viel?",
+          "options": [
+            "Weil die Ausbildungsordnung bundesweit festlegt, was vermittelt wird",
+            "Weil jedes Bundesland dieselbe Prüfung schreibt",
+            "Weil die Betriebe sich untereinander abstimmen"
+          ],
+          "answer": "Weil die Ausbildungsordnung bundesweit festlegt, was vermittelt wird",
+          "explain": "Geprüft wird von der Kammer, geregelt ist der Inhalt bundeseinheitlich."
+        }
+      ]
+    },
+    {
+      "id": "kuendigung",
+      "title": "Kündigung, Fristen, Zeugnis",
+      "eyebrow": "Bildung & Arbeit",
+      "icon": "document",
+      "level": "B2",
+      "group": "bildung",
+      "sourcing": "sachwissen",
+      "sourceNote": "Öffentlich nachprüfbares Sachwissen (BGB, Kündigungsschutzgesetz, Gewerbeordnung). Was im Einzelfall gilt, hängt von Vertrag und Tarifvertrag ab — im Zweifel Gewerkschaft oder Fachanwalt.",
+      "intro": "Ein Arbeitsverhältnis endet in Deutschland selten formlos. Wer kündigt oder gekündigt wird, hat es mit Fristen, mit der Schriftform und mit einem Papier zu tun, das später über die nächste Bewerbung mitentscheidet: dem Arbeitszeugnis.",
+      "question": "Wie endet ein Arbeitsverhältnis in deinem Herkunftsland — mit welcher Frist, und in welcher Form?",
+      "facts": [
+        "Eine Kündigung muss schriftlich und eigenhändig unterschrieben sein. Per E-Mail, WhatsApp oder mündlich ist sie unwirksam — auch dann, wenn beide Seiten einverstanden waren.",
+        "Die gesetzliche Grundfrist beträgt vier Wochen zum 15. oder zum Monatsende. Für den Arbeitgeber verlängert sie sich mit der Betriebszugehörigkeit, für Beschäftigte nicht.",
+        "In der Probezeit — höchstens sechs Monate — gilt beidseitig eine Frist von zwei Wochen, ohne Angabe von Gründen.",
+        "Kündigungsschutz greift erst nach sechs Monaten und nur in Betrieben mit mehr als zehn Beschäftigten. Dann braucht die Kündigung einen von drei Gründen: personen-, verhaltens- oder betriebsbedingt.",
+        "Gegen eine Kündigung klagt man beim Arbeitsgericht, und zwar innerhalb von drei Wochen. Die Frist ist scharf: Wer sie versäumt, gilt die Kündigung als wirksam gegen sich.",
+        "Auf ein qualifiziertes Zeugnis besteht ein Anspruch. Es muss wahr und zugleich wohlwollend sein — aus diesem Widerspruch ist die bekannte Zeugnissprache entstanden, in der „stets zu unserer vollsten Zufriedenheit“ die beste und „bemüht“ eine schlechte Bewertung ist."
+      ],
+      "table": {
+        "label": "Zeugnissprache lesen",
+        "columns": [
+          "Formulierung",
+          "Bedeutet"
+        ],
+        "rows": [
+          [
+            "stets zu unserer vollsten Zufriedenheit",
+            "sehr gut"
+          ],
+          [
+            "stets zu unserer vollen Zufriedenheit",
+            "gut"
+          ],
+          [
+            "zu unserer vollen Zufriedenheit",
+            "befriedigend"
+          ],
+          [
+            "zu unserer Zufriedenheit",
+            "ausreichend"
+          ],
+          [
+            "hat sich stets bemüht",
+            "mangelhaft"
+          ]
+        ]
+      },
+      "phrases": [
+        "Ich möchte zum Monatsende kündigen.",
+        "Wie lange ist meine Kündigungsfrist?",
+        "Ich bitte um ein qualifiziertes Arbeitszeugnis.",
+        "Können wir das schriftlich festhalten?"
+      ],
+      "links": [
+        {
+          "label": "Wortschatz: Arbeit & Beruf",
+          "href": "/uebungen/wortschatz"
+        }
+      ],
+      "quiz": [
+        {
+          "prompt": "In welcher Form muss eine Kündigung erfolgen?",
+          "options": [
+            "Schriftlich und unterschrieben",
+            "Per E-Mail genügt",
+            "Mündlich genügt"
+          ],
+          "answer": "Schriftlich und unterschrieben",
+          "explain": "Eine Kündigung per E-Mail ist unwirksam, auch wenn beide Seiten einverstanden sind."
+        },
+        {
+          "prompt": "Wie lange hat man Zeit, gegen eine Kündigung zu klagen?",
+          "options": [
+            "Drei Wochen",
+            "Drei Monate",
+            "Ein Jahr"
+          ],
+          "answer": "Drei Wochen",
+          "explain": "Nach Ablauf gilt die Kündigung als wirksam — unabhängig davon, ob sie es war."
+        },
+        {
+          "prompt": "Ab wann greift der allgemeine Kündigungsschutz?",
+          "options": [
+            "Nach sechs Monaten, in Betrieben mit mehr als zehn Beschäftigten",
+            "Ab dem ersten Arbeitstag",
+            "Nach zwei Jahren, unabhängig von der Betriebsgröße"
+          ],
+          "answer": "Nach sechs Monaten, in Betrieben mit mehr als zehn Beschäftigten"
+        },
+        {
+          "prompt": "Was bedeutet „hat sich stets bemüht“ im Zeugnis?",
+          "options": [
+            "Eine schlechte Bewertung",
+            "Eine gute Bewertung",
+            "Eine neutrale Feststellung"
+          ],
+          "answer": "Eine schlechte Bewertung",
+          "explain": "Das Zeugnis muss wohlwollend formuliert sein — negative Aussagen stehen deshalb verklausuliert da."
+        }
+      ]
+    },
+    {
       "id": "oeffentlich-rechtlicher-rundfunk",
       "title": "Wer bezahlt ARD und ZDF?",
       "eyebrow": "Staat & Gesellschaft",
       "icon": "landmark",
-      "level": "B1",
+      "level": "B2",
       "group": "aemter",
       "sourcing": "unterricht",
-      "sourceNote": "Aus einer echten Unterrichtsdiskussion bei DeutschAcademy.",
+      "sourceNote": "Aus einer echten Unterrichtsdiskussion bei DeutschAcademy. Die institutionellen Angaben (KEF, Rundfunkräte, Urteil von 2014) sind öffentlich nachprüfbares Sachwissen und ergänzen das Unterrichtsgespräch.",
       "intro": "In Deutschland gibt es öffentlich-rechtliche Sender wie ARD und ZDF (plus viele Regional- und Radiosender). Sie werden nicht durch Werbung finanziert, sondern durch den Rundfunkbeitrag — eine Gebühr, die fast jeder Haushalt zahlen muss, egal ob er die Sender nutzt oder nicht.",
       "question": "Warum bezahlen wir das? Ist das gut oder schlecht?",
       "facts": [
         "Der Beitrag wird pro Wohnung gezahlt, nicht pro Person: In einer WG zahlt der Haushalt einmal.",
         "Er liegt bei 18,36 € im Monat (Stand 2025). Den aktuellen Betrag nennt der Beitragsservice.",
-        "Wer BAföG oder Bürgergeld bekommt, kann sich befreien lassen — das muss man beantragen, es passiert nicht automatisch."
+        "Wer BAföG oder Bürgergeld bekommt, kann sich befreien lassen — das muss man beantragen, es passiert nicht automatisch.",
+        "Tragender Gedanke ist die Staatsferne: Über die Höhe des Beitrags entscheidet nicht die Politik allein. Die KEF ermittelt den Bedarf, und die Länder dürfen davon nur aus benannten Gründen abweichen.",
+        "Kontrolliert werden die Anstalten von Rundfunk- und Fernsehräten, in denen gesellschaftliche Gruppen sitzen — Kirchen, Gewerkschaften, Verbände. Den Anteil staatsnaher Mitglieder hat das Bundesverfassungsgericht 2014 auf ein Drittel begrenzt."
       ],
       "prosCons": {
         "prosLabel": "Vorteile",
@@ -1389,6 +1506,16 @@
           ],
           "answer": "Wer zum Beispiel BAföG oder Bürgergeld bekommt",
           "explain": "Und auch dann nur auf Antrag — automatisch passiert es nicht."
+        },
+        {
+          "prompt": "Wer ermittelt, wie hoch der Rundfunkbeitrag sein muss?",
+          "options": [
+            "Die KEF",
+            "Der Bundestag",
+            "Die Sender selbst"
+          ],
+          "answer": "Die KEF",
+          "explain": "Die Länder dürfen von ihrer Empfehlung nur aus benannten Gründen abweichen — das ist die Staatsferne."
         }
       ]
     },
@@ -1397,7 +1524,7 @@
       "title": "Das Vereinsleben",
       "eyebrow": "Staat & Gesellschaft",
       "icon": "sparkle",
-      "level": "B1",
+      "level": "B2",
       "group": "umgang",
       "sourcing": "sachwissen",
       "sourceNote": "Öffentlich nachprüfbares Sachwissen. Die Zahl der Vereine stammt aus dem Vereinsregister; Beiträge und Angebote sind örtlich verschieden.",
@@ -1409,7 +1536,9 @@
         "Vereine leben von Ehrenamt: Die meisten Ämter sind unbezahlt.",
         "Sportvereine sind meist deutlich günstiger als kommerzielle Fitnessstudios, oft unter 20 € im Monat.",
         "Für Neuankömmlinge sind Vereine einer der einfachsten Wege, Deutsch außerhalb des Kurses zu sprechen: Man redet dort über eine gemeinsame Sache, nicht über Grammatik.",
-        "Die Freiwillige Feuerwehr ist ebenfalls ein Verein — in vielen kleinen Orten gibt es keine Berufsfeuerwehr."
+        "Die Freiwillige Feuerwehr ist ebenfalls ein Verein — in vielen kleinen Orten gibt es keine Berufsfeuerwehr.",
+        "Gemeinnützigkeit ist kein Ehrentitel, sondern ein Steuerstatus: Das Finanzamt erkennt ihn zu und kann ihn wieder entziehen. Er erlaubt Spendenquittungen und bindet den Verein zugleich an seinen Satzungszweck.",
+        "Höchstes Organ ist die Mitgliederversammlung — sie wählt den Vorstand, beschließt den Beitrag und ändert die Satzung. Ein Vorstand, der an ihr vorbei entscheidet, kann persönlich haften."
       ],
       "phrases": [
         "Ich bin im Sportverein.",
@@ -1453,6 +1582,552 @@
           ],
           "answer": "Ehrenamtlich, also unbezahlt",
           "explain": "Darauf beruht das ganze System."
+        },
+        {
+          "prompt": "Was ist die Gemeinnützigkeit eines Vereins?",
+          "options": [
+            "Ein Steuerstatus, den das Finanzamt zuerkennt",
+            "Eine Auszeichnung der Gemeinde",
+            "Eine Pflicht für jeden e. V."
+          ],
+          "answer": "Ein Steuerstatus, den das Finanzamt zuerkennt",
+          "explain": "Und wieder entziehen kann, wenn der Verein seinen Satzungszweck verlässt."
+        }
+      ]
+    },
+    {
+      "id": "foederalismus",
+      "title": "Wer entscheidet was: Bund, Länder, Kommunen",
+      "eyebrow": "Staat & Gesellschaft",
+      "icon": "map-pin",
+      "level": "C1",
+      "group": "land",
+      "sourcing": "sachwissen",
+      "sourceNote": "Öffentlich nachprüfbares Sachwissen (Grundgesetz, Art. 30, 70–74, 104a ff.). Die Zuordnung einzelner Materien ändert sich mit Föderalismusreformen.",
+      "intro": "Wer in Deutschland eine Frage nach „der Regierung“ stellt, bekommt oft eine Gegenfrage: welche? Der Bundesstaat verteilt Zuständigkeiten auf drei Ebenen, und zwar nicht nach Größe der Aufgabe, sondern nach einer im Grundgesetz vorgezeichneten Ordnung. Das erklärt vieles, was von außen wie Umständlichkeit aussieht.",
+      "question": "Ist dein Herkunftsland zentral oder föderal organisiert? Wer entscheidet dort über Schulen?",
+      "facts": [
+        "Die Grundregel steht in Artikel 30: Zuständig sind die Länder, soweit das Grundgesetz nichts anderes bestimmt. Der Bund ist damit die begründungspflichtige Ausnahme, nicht der Normalfall.",
+        "Ausschließlich beim Bund liegen unter anderem Außenpolitik, Verteidigung, Staatsangehörigkeit und Währung. Bei der konkurrierenden Gesetzgebung dürfen die Länder handeln, solange der Bund es nicht tut.",
+        "Bildung und Kultur sind Ländersache. Deshalb unterscheiden sich Schulsysteme, Ferientermine und Lehrpläne von Bundesland zu Bundesland, und deshalb koordiniert eine Kultusministerkonferenz statt eines Bundesministeriums.",
+        "Die Länder wirken über den Bundesrat an der Bundesgesetzgebung mit. Zustimmungsbedürftige Gesetze scheitern dort, wenn die Länder nicht mitgehen — eine der wirksamsten Bremsen im System.",
+        "Kommunen sind verfassungsrechtlich Teil der Länder, besitzen aber ein eigenes Selbstverwaltungsrecht (Art. 28). Was vor Ort sichtbar ist — Kita, Müllabfuhr, Bebauungsplan, Bibliothek — wird meist hier entschieden.",
+        "Für Zugewanderte hat das eine praktische Folge: Aufenthaltsrecht ist Bundesrecht, aber vollzogen wird es von einer Landesbehörde vor Ort, mit örtlich unterschiedlicher Praxis. Dieselbe Rechtslage kann in zwei Städten verschieden aussehen."
+      ],
+      "table": {
+        "label": "Welche Ebene entscheidet?",
+        "columns": [
+          "Thema",
+          "Ebene"
+        ],
+        "rows": [
+          [
+            "Staatsangehörigkeit, Währung, Verteidigung",
+            "Bund"
+          ],
+          [
+            "Schule, Hochschule, Polizei",
+            "Land"
+          ],
+          [
+            "Kita-Plätze, Bebauungsplan, Müllabfuhr",
+            "Kommune"
+          ],
+          [
+            "Aufenthaltsrecht: Gesetz",
+            "Bund"
+          ],
+          [
+            "Aufenthaltsrecht: Vollzug",
+            "Land / Kommune"
+          ]
+        ]
+      },
+      "phrases": [
+        "Dafür ist nicht der Bund zuständig, sondern das Land.",
+        "Das entscheidet die Kommune.",
+        "An welche Stelle muss ich mich wenden?",
+        "Gilt diese Regelung bundesweit?"
+      ],
+      "quiz": [
+        {
+          "prompt": "Was besagt die Grundregel des Artikels 30 GG?",
+          "options": [
+            "Zuständig sind die Länder, wenn das Grundgesetz nichts anderes bestimmt",
+            "Zuständig ist der Bund, wenn das Grundgesetz nichts anderes bestimmt",
+            "Bund und Länder sind immer gemeinsam zuständig"
+          ],
+          "answer": "Zuständig sind die Länder, wenn das Grundgesetz nichts anderes bestimmt"
+        },
+        {
+          "prompt": "Warum unterscheiden sich die Schulsysteme zwischen den Bundesländern?",
+          "options": [
+            "Bildung ist Ländersache",
+            "Der Bund gibt nur Empfehlungen, die Länder folgen ihnen freiwillig",
+            "Die Kommunen entscheiden über die Lehrpläne"
+          ],
+          "answer": "Bildung ist Ländersache",
+          "explain": "Koordiniert wird über die Kultusministerkonferenz, nicht über ein Bundesministerium."
+        },
+        {
+          "prompt": "Wie wirken die Länder an der Bundesgesetzgebung mit?",
+          "options": [
+            "Über den Bundesrat",
+            "Über den Bundestag",
+            "Über das Bundesverfassungsgericht"
+          ],
+          "answer": "Über den Bundesrat"
+        },
+        {
+          "prompt": "Aufenthaltsrecht ist Bundesrecht. Wer vollzieht es?",
+          "options": [
+            "Landes- und kommunale Behörden",
+            "Das Bundesinnenministerium",
+            "Die Bundespolizei"
+          ],
+          "answer": "Landes- und kommunale Behörden",
+          "explain": "Darum kann dieselbe Rechtslage in zwei Städten verschieden gehandhabt werden."
+        }
+      ]
+    },
+    {
+      "id": "sozialversicherung",
+      "title": "Die fünf Säulen der Sozialversicherung",
+      "eyebrow": "Staat & Gesellschaft",
+      "icon": "layers",
+      "level": "C1",
+      "group": "aemter",
+      "sourcing": "sachwissen",
+      "sourceNote": "Öffentlich nachprüfbares Sachwissen (Sozialgesetzbuch). Beitragssätze: Stand 2025; sie werden jährlich angepasst, maßgeblich sind die Angaben der Träger.",
+      "intro": "Auf jeder deutschen Lohnabrechnung steht eine Reihe von Abzügen, die zusammen weit mehr ausmachen als die Lohnsteuer. Dahinter steht ein System aus fünf Pflichtversicherungen, das seine Grundstruktur seit den 1880er Jahren behalten hat: Nicht der Staat zahlt aus dem Haushalt, sondern die Versicherten finanzieren sich gegenseitig.",
+      "question": "Wie ist die soziale Absicherung in deinem Herkunftsland organisiert — über Steuern, über Beiträge, über die Familie?",
+      "facts": [
+        "Die fünf Säulen sind Kranken-, Pflege-, Renten-, Arbeitslosen- und Unfallversicherung. Bis auf die Unfallversicherung, die allein der Arbeitgeber trägt, teilen sich Arbeitgeber und Beschäftigte die Beiträge grundsätzlich hälftig.",
+        "Finanziert wird im Umlageverfahren: Was heute eingezahlt wird, wird heute ausgezahlt. Ein Kapitalstock, aus dem später geschöpft würde, existiert nicht — weshalb die demografische Entwicklung unmittelbar auf die Beitragssätze durchschlägt.",
+        "Beiträge werden nur bis zur Beitragsbemessungsgrenze erhoben. Oberhalb davon steigt der Beitrag nicht weiter, was das System nach oben hin abflacht.",
+        "Die Träger sind Körperschaften des öffentlichen Rechts mit Selbstverwaltung, nicht Behörden des Bundes. Krankenkassen und Rentenversicherung verwalten sich über gewählte Vertreterversammlungen selbst.",
+        "Rentenansprüche entstehen aus Entgeltpunkten: Wer ein Jahr genau das Durchschnittsentgelt verdient, erhält einen Punkt. Die spätere Rente ist das Produkt aus Punkten und aktuellem Rentenwert — also beitragsbezogen, nicht bedarfsbezogen.",
+        "Wer aus einem EU-Staat oder einem Land mit Sozialversicherungsabkommen zuzieht, kann dort erworbene Zeiten anrechnen lassen. Das geschieht nicht automatisch, sondern auf Antrag beim zuständigen Träger."
+      ],
+      "table": {
+        "label": "Beitragssätze 2025 (Arbeitnehmeranteil in Klammern)",
+        "columns": [
+          "Versicherung",
+          "Satz"
+        ],
+        "rows": [
+          [
+            "Krankenversicherung",
+            "14,6 % + Zusatzbeitrag (hälftig)"
+          ],
+          [
+            "Pflegeversicherung",
+            "3,6 % (hälftig, Kinderlose zahlen einen Zuschlag)"
+          ],
+          [
+            "Rentenversicherung",
+            "18,6 % (hälftig)"
+          ],
+          [
+            "Arbeitslosenversicherung",
+            "2,6 % (hälftig)"
+          ],
+          [
+            "Unfallversicherung",
+            "allein der Arbeitgeber"
+          ]
+        ]
+      },
+      "phrases": [
+        "Welcher Träger ist für mich zuständig?",
+        "Können meine Beitragszeiten aus dem Ausland angerechnet werden?",
+        "Ich möchte eine Renteninformation beantragen.",
+        "Ist das vom Arbeitgeber schon abgeführt worden?"
+      ],
+      "quiz": [
+        {
+          "prompt": "Was bedeutet Umlageverfahren?",
+          "options": [
+            "Heutige Beiträge finanzieren heutige Leistungen",
+            "Beiträge werden angelegt und später ausgezahlt",
+            "Der Bundeshaushalt zahlt die Leistungen"
+          ],
+          "answer": "Heutige Beiträge finanzieren heutige Leistungen",
+          "explain": "Deshalb wirkt die Altersstruktur unmittelbar auf die Beitragssätze."
+        },
+        {
+          "prompt": "Welche der fünf Säulen zahlt der Arbeitgeber allein?",
+          "options": [
+            "Die Unfallversicherung",
+            "Die Pflegeversicherung",
+            "Die Arbeitslosenversicherung"
+          ],
+          "answer": "Die Unfallversicherung"
+        },
+        {
+          "prompt": "Was geschieht mit Beiträgen oberhalb der Beitragsbemessungsgrenze?",
+          "options": [
+            "Sie werden nicht mehr erhoben",
+            "Sie steigen überproportional",
+            "Sie fließen in einen Kapitalstock"
+          ],
+          "answer": "Sie werden nicht mehr erhoben"
+        },
+        {
+          "prompt": "Wie entsteht ein Entgeltpunkt in der Rentenversicherung?",
+          "options": [
+            "Durch ein Jahr Verdienst in Höhe des Durchschnittsentgelts",
+            "Durch ein Jahr Beschäftigung, unabhängig vom Verdienst",
+            "Durch Antrag beim Rentenversicherungsträger"
+          ],
+          "answer": "Durch ein Jahr Verdienst in Höhe des Durchschnittsentgelts",
+          "explain": "Die Rente ist damit beitragsbezogen — wer mehr eingezahlt hat, bekommt mehr."
+        }
+      ]
+    },
+    {
+      "id": "wahlen",
+      "title": "Erststimme, Zweitstimme, Fünfprozenthürde",
+      "eyebrow": "Staat & Gesellschaft",
+      "icon": "target",
+      "level": "C1",
+      "group": "land",
+      "sourcing": "sachwissen",
+      "sourceNote": "Öffentlich nachprüfbares Sachwissen (Bundeswahlgesetz). Die Sitzzuteilung wurde zuletzt 2023 reformiert; maßgeblich ist der Bundeswahlleiter.",
+      "intro": "Der deutsche Wahlzettel hat zwei Spalten, und die meisten Missverständnisse über deutsche Wahlen beginnen damit, dass die linke wichtiger aussieht als die rechte. Tatsächlich entscheidet die Zweitstimme über die Stärke der Fraktionen — die Erststimme nur darüber, wer den Wahlkreis vertritt.",
+      "question": "Wie wird in deinem Herkunftsland gewählt — nach Mehrheit, nach Verhältnis, oder gemischt?",
+      "facts": [
+        "Die Zweitstimme gilt einer Partei und bestimmt, wie viele Sitze diese Partei im Bundestag erhält. Sie ist die eigentliche Machtfrage des Wahlzettels.",
+        "Die Erststimme gilt einer Person im Wahlkreis. Gewählt ist, wer dort die meisten Stimmen hat — eine relative Mehrheit genügt, eine Stichwahl gibt es nicht.",
+        "Das System heißt personalisierte Verhältniswahl: Es verteilt die Sitze proportional, lässt die Wählenden aber zugleich über Personen entscheiden.",
+        "In den Bundestag zieht nur ein, wer bundesweit mindestens fünf Prozent der Zweitstimmen erreicht oder mindestens drei Wahlkreise direkt gewinnt. Die Hürde soll Zersplitterung verhindern und schließt regelmäßig mehrere Prozent der abgegebenen Stimmen aus der Vertretung aus.",
+        "Die Bundeskanzlerin oder der Bundeskanzler wird nicht direkt gewählt, sondern vom Bundestag. Auf dem Wahlzettel steht dieser Name nirgends.",
+        "Wahlberechtigt bei Bundestagswahlen ist nur, wer die deutsche Staatsangehörigkeit besitzt. Unionsbürgerinnen und Unionsbürger dürfen dagegen kommunal und bei Europawahlen mitwählen — ein Unterschied, der im Alltag oft nicht bekannt ist."
+      ],
+      "table": {
+        "label": "Zwei Stimmen, zwei Fragen",
+        "columns": [
+          "Stimme",
+          "Entscheidet über"
+        ],
+        "rows": [
+          [
+            "Erststimme",
+            "Wer den Wahlkreis vertritt"
+          ],
+          [
+            "Zweitstimme",
+            "Wie stark eine Partei im Bundestag wird"
+          ],
+          [
+            "Fünfprozenthürde",
+            "Ob eine Partei überhaupt einzieht"
+          ],
+          [
+            "Kanzlerwahl",
+            "Der Bundestag, nicht die Wählenden"
+          ]
+        ]
+      },
+      "phrases": [
+        "Welche Stimme entscheidet über die Sitzverteilung?",
+        "Ich bin bei dieser Wahl nicht wahlberechtigt.",
+        "Die Partei ist an der Fünfprozenthürde gescheitert.",
+        "Ich möchte Briefwahl beantragen."
+      ],
+      "quiz": [
+        {
+          "prompt": "Welche Stimme bestimmt die Stärke einer Partei im Bundestag?",
+          "options": [
+            "Die Zweitstimme",
+            "Die Erststimme",
+            "Beide zu gleichen Teilen"
+          ],
+          "answer": "Die Zweitstimme"
+        },
+        {
+          "prompt": "Wie wird ein Wahlkreis gewonnen?",
+          "options": [
+            "Mit der relativen Mehrheit der Erststimmen",
+            "Mit über 50 Prozent der Erststimmen",
+            "In einer Stichwahl"
+          ],
+          "answer": "Mit der relativen Mehrheit der Erststimmen"
+        },
+        {
+          "prompt": "Wer wählt die Bundeskanzlerin oder den Bundeskanzler?",
+          "options": [
+            "Der Bundestag",
+            "Die Wählenden direkt",
+            "Der Bundesrat"
+          ],
+          "answer": "Der Bundestag"
+        },
+        {
+          "prompt": "Wer darf bei Kommunalwahlen mitwählen, aber nicht bei der Bundestagswahl?",
+          "options": [
+            "Unionsbürgerinnen und Unionsbürger ohne deutschen Pass",
+            "Alle gemeldeten Personen",
+            "Alle mit unbefristetem Aufenthaltstitel"
+          ],
+          "answer": "Unionsbürgerinnen und Unionsbürger ohne deutschen Pass"
+        }
+      ]
+    },
+    {
+      "id": "erinnerungskultur",
+      "title": "Erinnerungskultur: Orte, Institutionen, Recht",
+      "eyebrow": "Staat & Gesellschaft",
+      "icon": "book",
+      "level": "C2",
+      "group": "umgang",
+      "sourcing": "sachwissen",
+      "sourceNote": "Öffentlich nachprüfbares Sachwissen über Institutionen, Gedenkstätten, Schulcurricula und Strafrecht (§ 130 StGB). Beschrieben wird der Umgang des Staates mit der Vergangenheit — nicht die Haltung einzelner Menschen.",
+      "intro": "Kaum ein Feld ist für Zugewanderte so schwer einzuordnen wie der deutsche Umgang mit der NS-Zeit, weil er in Recht, Schule, Stadtbild und Sprachgebrauch zugleich verankert ist. Was von außen als Dauerthema erscheint, ist institutionell verfasst: durch Lehrpläne, staatlich getragene Gedenkstätten und Strafnormen — nicht durch eine vorgeschriebene Gefühlslage.",
+      "question": "Wie geht dein Herkunftsland mit schwierigen Kapiteln seiner Geschichte um — im Unterricht, im öffentlichen Raum, im Recht?",
+      "facts": [
+        "Der Nationalsozialismus ist in allen Bundesländern verbindlicher Bestandteil der Lehrpläne, meist mehrfach im Schulverlauf. Da Bildung Ländersache ist, unterscheiden sich Umfang und Jahrgangsstufe, der Gegenstand selbst steht jedoch nicht zur Disposition.",
+        "Gedenkstätten an historischen Orten — Dachau, Buchenwald, Bergen-Belsen und andere — werden von Stiftungen unter Beteiligung von Bund und Ländern getragen. Sie sind Bildungseinrichtungen mit Forschungsauftrag, nicht nur Erinnerungsorte.",
+        "Volksverhetzung ist strafbar (§ 130 StGB), einschließlich des Leugnens oder Verharmlosens des Holocausts. Die Meinungsfreiheit des Artikels 5 endet hier ausdrücklich — eine Grenzziehung, die in Ländern mit angelsächsischer Rechtstradition häufig als erklärungsbedürftig empfunden wird.",
+        "Das Zeigen verfassungswidriger Kennzeichen ist verboten (§ 86a StGB), mit Ausnahmen für Kunst, Wissenschaft, Unterricht und Berichterstattung. Der Paragraf erfasst die Symbole, nicht die Beschäftigung mit ihnen.",
+        "Sichtbar wird das Thema auch im Alltag: Die Stolpersteine im Gehweg — über 100.000 in mehreren Ländern — nennen Namen und Schicksal der letzten frei gewählten Bewohner eines Hauses. Sie sind ein privates Kunstprojekt, das Kommunen genehmigen, kein staatliches Programm.",
+        "Die Erinnerungskultur ist selbst Gegenstand der Auseinandersetzung: Über Formen, Schwerpunkte und die Frage, wie die Verbrechen des Kolonialismus und die DDR-Vergangenheit einbezogen werden, wird öffentlich und kontrovers gestritten. Dass erinnert wird, ist Konsens; wie, ist es nicht."
+      ],
+      "phrases": [
+        "Der Gegenstand ist im Lehrplan verbindlich verankert.",
+        "Die Gedenkstätte hat auch einen Forschungsauftrag.",
+        "Hier stößt die Meinungsfreiheit an eine Strafnorm.",
+        "Darüber wird durchaus kontrovers diskutiert."
+      ],
+      "quiz": [
+        {
+          "prompt": "Warum unterscheidet sich die Behandlung des Themas zwischen den Bundesländern?",
+          "options": [
+            "Weil Bildung Ländersache ist",
+            "Weil es keine verbindliche Vorgabe gibt",
+            "Weil die Schulen frei entscheiden"
+          ],
+          "answer": "Weil Bildung Ländersache ist",
+          "explain": "Umfang und Jahrgangsstufe variieren; der Gegenstand selbst ist überall verbindlich."
+        },
+        {
+          "prompt": "Was regelt § 130 StGB?",
+          "options": [
+            "Volksverhetzung, einschließlich der Holocaustleugnung",
+            "Das Zeigen verfassungswidriger Kennzeichen",
+            "Den Schutz von Gedenkstätten"
+          ],
+          "answer": "Volksverhetzung, einschließlich der Holocaustleugnung"
+        },
+        {
+          "prompt": "Wer trägt das Stolperstein-Projekt?",
+          "options": [
+            "Ein privates Kunstprojekt, von Kommunen genehmigt",
+            "Der Bund",
+            "Die Gedenkstättenstiftungen"
+          ],
+          "answer": "Ein privates Kunstprojekt, von Kommunen genehmigt"
+        },
+        {
+          "prompt": "Worüber wird in der Erinnerungskultur öffentlich gestritten?",
+          "options": [
+            "Über die Formen und Schwerpunkte des Erinnerns",
+            "Darüber, ob überhaupt erinnert werden soll",
+            "Über die Zuständigkeit der Gerichte"
+          ],
+          "answer": "Über die Formen und Schwerpunkte des Erinnerns",
+          "explain": "Dass erinnert wird, ist Konsens; wie, ist Gegenstand der Auseinandersetzung."
+        }
+      ]
+    },
+    {
+      "id": "grundgesetz",
+      "title": "Grundgesetz und Verfassungsgericht",
+      "eyebrow": "Staat & Gesellschaft",
+      "icon": "landmark",
+      "level": "C2",
+      "group": "land",
+      "sourcing": "sachwissen",
+      "sourceNote": "Öffentlich nachprüfbares Sachwissen (Grundgesetz; Rechtsprechung des Bundesverfassungsgerichts). Zusammenfassend dargestellt, nicht rechtsberatend.",
+      "intro": "Dass Deutschlands Verfassung „Grundgesetz“ heißt und nicht „Verfassung“, war 1949 als Provisorium gemeint und ist als Name geblieben. Provisorisch ist an ihrer Konstruktion allerdings nichts: Sie ist erkennbar gegen die Erfahrung ihrer Vorgängerin gebaut und enthält Vorkehrungen, die eine Verfassung nur trifft, wenn sie schon einmal gescheitert ist.",
+      "question": "Gibt es in deinem Herkunftsland ein Gericht, das Gesetze für ungültig erklären kann? Wer beruft es?",
+      "facts": [
+        "Die Grundrechte stehen am Anfang, nicht am Ende, und binden unmittelbar alle Staatsgewalt (Art. 1 Abs. 3). Sie sind damit einklagbares Recht und nicht bloß Programmsatz — der wesentliche Unterschied zur Weimarer Verfassung.",
+        "Die Ewigkeitsklausel (Art. 79 Abs. 3) entzieht die Menschenwürde, die Grundzüge der Grundrechte, die Demokratie, den Bundesstaat und die Rechtsstaatlichkeit jeder Änderung — auch einer einstimmigen. Eine Mehrheit kann diese Ordnung nicht legal abschaffen.",
+        "Das Bundesverfassungsgericht kann Gesetze für nichtig erklären. Anrufen kann es unter anderem jede Person mit einer Verfassungsbeschwerde, nachdem der übrige Rechtsweg erschöpft ist — ein Zugang, den nicht jede Verfassungsordnung kennt.",
+        "Seine Richterinnen und Richter werden je zur Hälfte von Bundestag und Bundesrat mit Zweidrittelmehrheit gewählt, für zwölf Jahre und ohne Wiederwahl. Das Verfahren zwingt zur Verständigung über Lagergrenzen hinweg und nimmt den Anreiz, sich für eine zweite Amtszeit zu empfehlen.",
+        "Die wehrhafte Demokratie ist der zweite Bruch mit Weimar: Parteien können verboten, Grundrechte verwirkt werden. Beides liegt ausschließlich beim Gericht, nicht bei der Regierung — die Abwehr von Feinden der Verfassung ist selbst an das Verfahren gebunden.",
+        "Der Bundespräsident vertritt den Staat, regiert aber nicht. Er prüft Gesetze vor der Ausfertigung und hat die Unterschrift in Einzelfällen verweigert; politische Macht im eigentlichen Sinne liegt beim Bundestag und bei der Regierung."
+      ],
+      "table": {
+        "label": "Gegen Weimar gebaut",
+        "columns": [
+          "Weimar",
+          "Grundgesetz"
+        ],
+        "rows": [
+          [
+            "Grundrechte als Programmsätze",
+            "Grundrechte binden unmittelbar"
+          ],
+          [
+            "Verfassung in Gänze änderbar",
+            "Ewigkeitsklausel, Art. 79 Abs. 3"
+          ],
+          [
+            "Direkt gewählter Reichspräsident",
+            "Bundespräsident ohne Regierungsmacht"
+          ],
+          [
+            "Kanzlersturz ohne Nachfolger",
+            "Konstruktives Misstrauensvotum"
+          ],
+          [
+            "Kein Verfassungsgericht mit Normenkontrolle",
+            "Bundesverfassungsgericht"
+          ]
+        ]
+      },
+      "phrases": [
+        "Das wäre mit Artikel 1 nicht vereinbar.",
+        "Dagegen stünde der Weg der Verfassungsbeschwerde offen.",
+        "Das Gericht hat die Norm für nichtig erklärt.",
+        "Diese Änderung wäre von der Ewigkeitsklausel erfasst."
+      ],
+      "quiz": [
+        {
+          "prompt": "Was regelt die Ewigkeitsklausel?",
+          "options": [
+            "Bestimmte Verfassungsgrundsätze sind jeder Änderung entzogen",
+            "Das Grundgesetz gilt unbefristet",
+            "Verfassungsrichter werden auf Lebenszeit berufen"
+          ],
+          "answer": "Bestimmte Verfassungsgrundsätze sind jeder Änderung entzogen",
+          "explain": "Auch eine einstimmige Mehrheit könnte Menschenwürde oder Demokratie nicht legal abschaffen."
+        },
+        {
+          "prompt": "Wer wählt die Verfassungsrichterinnen und -richter?",
+          "options": [
+            "Bundestag und Bundesrat, je zur Hälfte, mit Zweidrittelmehrheit",
+            "Der Bundespräsident auf Vorschlag der Regierung",
+            "Das Gericht ergänzt sich selbst"
+          ],
+          "answer": "Bundestag und Bundesrat, je zur Hälfte, mit Zweidrittelmehrheit"
+        },
+        {
+          "prompt": "Wer kann eine Partei verbieten?",
+          "options": [
+            "Nur das Bundesverfassungsgericht",
+            "Das Bundesinnenministerium",
+            "Der Bundestag mit Zweidrittelmehrheit"
+          ],
+          "answer": "Nur das Bundesverfassungsgericht",
+          "explain": "Auch die Abwehr von Verfassungsfeinden bleibt an ein Verfahren gebunden."
+        },
+        {
+          "prompt": "Worin unterscheiden sich die Grundrechte des Grundgesetzes von denen der Weimarer Verfassung?",
+          "options": [
+            "Sie binden unmittelbar alle Staatsgewalt und sind einklagbar",
+            "Sie sind ausführlicher formuliert",
+            "Sie stehen am Ende des Textes"
+          ],
+          "answer": "Sie binden unmittelbar alle Staatsgewalt und sind einklagbar"
+        }
+      ]
+    },
+    {
+      "id": "mitbestimmung",
+      "title": "Tarifautonomie und Mitbestimmung",
+      "eyebrow": "Bildung & Arbeit",
+      "icon": "user",
+      "level": "C2",
+      "group": "bildung",
+      "sourcing": "sachwissen",
+      "sourceNote": "Öffentlich nachprüfbares Sachwissen (Art. 9 Abs. 3 GG, Betriebsverfassungsgesetz, Mitbestimmungsgesetz). Tarifbindungsquoten: Stand 2024, IAB-Betriebspanel.",
+      "intro": "Löhne werden in Deutschland zu einem erheblichen Teil nicht vom Gesetzgeber und nicht im Einzelvertrag festgelegt, sondern zwischen Verbänden ausgehandelt, in die der Staat bewusst nicht hineinregiert. Dieses Arrangement — Tarifautonomie plus betriebliche und unternehmerische Mitbestimmung — erklärt, warum Arbeitskonflikte hier anders verlaufen als in vielen anderen Ländern.",
+      "question": "Wer verhandelt in deinem Herkunftsland über Löhne — der Staat, einzelne Betriebe, oder Verbände?",
+      "facts": [
+        "Artikel 9 Absatz 3 garantiert die Koalitionsfreiheit und damit die Tarifautonomie: Gewerkschaften und Arbeitgeberverbände schließen Tarifverträge ohne staatliche Mitwirkung. Der Staat setzt nur Mindeststandards, etwa den gesetzlichen Mindestlohn.",
+        "Tarifverträge gelten unmittelbar nur für Mitglieder der tarifschließenden Verbände, werden in der Praxis aber häufig auf alle Beschäftigten eines Betriebs angewendet. Die Tarifbindung ist rückläufig: Sie liegt bei etwa der Hälfte der Beschäftigten, mit deutlichem Ost-West-Unterschied.",
+        "Zu unterscheiden sind zwei Ebenen: Der Betriebsrat vertritt die Belegschaft im Betrieb und darf nicht zum Streik aufrufen; die Gewerkschaft verhandelt Tarife und führt Arbeitskämpfe. Die Friedenspflicht während der Laufzeit eines Tarifvertrags gehört zum System.",
+        "Der Betriebsrat hat bei sozialen Angelegenheiten — Arbeitszeit, Urlaubsgrundsätze, Überwachungstechnik — ein echtes Mitbestimmungsrecht: Ohne seine Zustimmung ist die Maßnahme unwirksam, nicht bloß rechtswidrig.",
+        "In Kapitalgesellschaften mit mehr als 2.000 Beschäftigten ist der Aufsichtsrat paritätisch besetzt; bei Pattsituationen gibt die Stimme des Vorsitzenden der Anteilseignerseite den Ausschlag. Die Parität ist damit eine hälftige Besetzung, keine hälftige Entscheidungsmacht.",
+        "Streiks sind an den Tarifvertrag gebunden: Zulässig sind sie nur um tariflich regelbare Ziele und nur außerhalb der Friedenspflicht. Politische Streiks gelten nach herrschender Auffassung als unzulässig — ein wesentlicher Unterschied etwa zu Frankreich."
+      ],
+      "table": {
+        "label": "Zwei Ebenen, zwei Rollen",
+        "columns": [
+          "",
+          "Betriebsrat",
+          "Gewerkschaft"
+        ],
+        "rows": [
+          [
+            "Gewählt von",
+            "der Belegschaft",
+            "den Mitgliedern"
+          ],
+          [
+            "Verhandelt",
+            "Betriebsvereinbarungen",
+            "Tarifverträge"
+          ],
+          [
+            "Darf streiken",
+            "nein",
+            "ja"
+          ],
+          [
+            "Rechtsgrundlage",
+            "Betriebsverfassungsgesetz",
+            "Art. 9 Abs. 3 GG"
+          ]
+        ]
+      },
+      "phrases": [
+        "Der Betrieb ist nicht tarifgebunden.",
+        "Dazu bräuchte es die Zustimmung des Betriebsrats.",
+        "Während der Laufzeit gilt die Friedenspflicht.",
+        "Das wäre ein mitbestimmungspflichtiger Tatbestand."
+      ],
+      "quiz": [
+        {
+          "prompt": "Was bedeutet Tarifautonomie?",
+          "options": [
+            "Verbände handeln Tarife ohne staatliche Mitwirkung aus",
+            "Jeder Betrieb verhandelt eigenständig",
+            "Der Gesetzgeber legt die Löhne fest"
+          ],
+          "answer": "Verbände handeln Tarife ohne staatliche Mitwirkung aus",
+          "explain": "Der Staat setzt nur Mindeststandards, etwa den Mindestlohn."
+        },
+        {
+          "prompt": "Wer darf zum Streik aufrufen?",
+          "options": [
+            "Die Gewerkschaft",
+            "Der Betriebsrat",
+            "Beide"
+          ],
+          "answer": "Die Gewerkschaft",
+          "explain": "Der Betriebsrat ist zur vertrauensvollen Zusammenarbeit verpflichtet und darf nicht zum Arbeitskampf aufrufen."
+        },
+        {
+          "prompt": "Was folgt aus einem echten Mitbestimmungsrecht des Betriebsrats?",
+          "options": [
+            "Ohne seine Zustimmung ist die Maßnahme unwirksam",
+            "Er muss vorher angehört werden",
+            "Er kann die Maßnahme nachträglich rügen"
+          ],
+          "answer": "Ohne seine Zustimmung ist die Maßnahme unwirksam"
+        },
+        {
+          "prompt": "Was heißt paritätische Besetzung des Aufsichtsrats?",
+          "options": [
+            "Hälftige Besetzung, aber Stichentscheid bei den Anteilseignern",
+            "Hälftige Entscheidungsmacht beider Seiten",
+            "Mehrheit für die Arbeitnehmerseite"
+          ],
+          "answer": "Hälftige Besetzung, aber Stichentscheid bei den Anteilseignern"
         }
       ]
     }

@@ -1,0 +1,196 @@
+{
+  "_note": [
+    "Schreiben A1–B2, one entry per task, same shape as src/data/fertigkeiten/lesen.json.",
+    "",
+    "Writing cannot be auto-graded, so every task ends in a Modelltext rather than a right",
+    "answer. That is not a cop-out — it is what the DTZ and telc Schreibteile are actually",
+    "marked against, and a learner who compares their own text to a model sees more than a",
+    "score would tell them. The `check` list is what the examiner ticks off; it is shown",
+    "AFTER the learner has written, never before.",
+    "",
+    "`kind` decides which editor the page renders:",
+    "  form    a source text plus fields to transfer  (DTZ Aufgabe 5)",
+    "  prompt  a situation plus points to cover        (DTZ Brief, telc)",
+    "  errors  a text with mistakes to find",
+    "",
+    "The three B1 entries are the DTZ simulation from src/data/lesen.json, pulled in at build",
+    "time via `from` so there is exactly one copy of that text on the site."
+  ],
+  "types": {
+    "formular": "Formular",
+    "nachricht": "Kurznachricht",
+    "email": "E-Mail",
+    "brief": "Brief",
+    "fehlerjagd": "Fehlersuche"
+  },
+  "tasks": [
+    {
+      "id": "a1-formular-anmeldung",
+      "level": "A1",
+      "type": "formular",
+      "kind": "form",
+      "title": "Anmeldung im Sportverein",
+      "blurb": "Zehn Felder, ein kurzer Text — die häufigste Schreibaufgabe im Alltag.",
+      "minutes": 6,
+      "source": "Hallo! Ich heiße Amina Yusuf und bin am 4. März 1996 in Hargeisa geboren. Ich wohne jetzt in der Gartenstraße 12 in 34117 Kassel. Meine Handynummer ist 0176 5544 332, meine E-Mail amina.yusuf@mail.de. Ich möchte gern zweimal pro Woche schwimmen, am liebsten abends. Ich bin Anfängerin.",
+      "fields": [
+        { "label": "Familienname", "answer": "Yusuf" },
+        { "label": "Vorname", "answer": "Amina" },
+        { "label": "Geburtsdatum", "answer": "04.03.1996" },
+        { "label": "Geburtsort", "answer": "Hargeisa" },
+        { "label": "Straße und Hausnummer", "answer": "Gartenstraße 12" },
+        { "label": "Postleitzahl", "answer": "34117" },
+        { "label": "Ort", "answer": "Kassel" },
+        { "label": "Telefon", "answer": "0176 5544 332" },
+        { "label": "E-Mail", "answer": "amina.yusuf@mail.de" },
+        { "label": "Sportart", "answer": "Schwimmen" }
+      ],
+      "check": [
+        "Familienname und Vorname nicht vertauscht.",
+        "Das Datum im deutschen Format: 04.03.1996, nicht 1996-03-04.",
+        "Postleitzahl und Ort stehen in getrennten Feldern, auch wenn sie im Text zusammenstehen."
+      ]
+    },
+    {
+      "id": "a1-nachricht-absage",
+      "level": "A1",
+      "type": "nachricht",
+      "kind": "prompt",
+      "title": "Du kannst nicht kommen",
+      "blurb": "Absagen in drei Sätzen: Grund, Bedauern, neuer Vorschlag.",
+      "minutes": 8,
+      "situation": "Deine Freundin Mira hat dich zu ihrer Geburtstagsparty am Samstag eingeladen. Du kannst nicht kommen, weil du arbeiten musst. Schreib ihr eine kurze Nachricht (30–40 Wörter).",
+      "points": [
+        "Sag, dass du nicht kommen kannst.",
+        "Schreib den Grund.",
+        "Gratuliere ihr zum Geburtstag.",
+        "Mach einen Vorschlag für einen anderen Tag."
+      ],
+      "phrases": [
+        "Leider kann ich nicht kommen.",
+        "Ich muss am Samstag arbeiten.",
+        "Alles Gute zum Geburtstag!",
+        "Können wir uns am Sonntag treffen?"
+      ],
+      "model": "Liebe Mira,\n\nvielen Dank für die Einladung! Leider kann ich am Samstag nicht kommen. Ich muss arbeiten.\n\nAlles Gute zum Geburtstag! Können wir uns vielleicht am Sonntag treffen?\n\nLiebe Grüße\nSam",
+      "check": [
+        "Alle vier Punkte kommen vor — das ist beim DTZ die halbe Note.",
+        "Anrede und Gruß stehen da (Liebe Mira / Liebe Grüße).",
+        "Die Sätze sind kurz. Auf A1 ist „Ich muss arbeiten.“ besser als ein langer Nebensatz mit Fehler."
+      ]
+    },
+    {
+      "id": "a2-email-nachbarn",
+      "level": "A2",
+      "type": "email",
+      "kind": "prompt",
+      "title": "E-Mail an die Nachbarin",
+      "blurb": "Höflich um etwas bitten — mit „könnten Sie“ statt „Sie müssen“.",
+      "minutes": 10,
+      "situation": "Sie fahren für zwei Wochen in den Urlaub. Ihre Nachbarin, Frau Lehmann, hat angeboten, sich um Ihre Wohnung zu kümmern. Schreiben Sie ihr eine E-Mail (50–60 Wörter). Sie kennen Frau Lehmann nur wenig — schreiben Sie „Sie“.",
+      "points": [
+        "Sagen Sie, wann Sie weg sind.",
+        "Bitten Sie darum, die Blumen zu gießen.",
+        "Bitten Sie darum, den Briefkasten zu leeren.",
+        "Sagen Sie, wo der Schlüssel ist, und bedanken Sie sich."
+      ],
+      "phrases": [
+        "Ich bin vom … bis zum … nicht da.",
+        "Könnten Sie bitte …?",
+        "Es wäre sehr nett, wenn Sie …",
+        "Vielen Dank im Voraus!"
+      ],
+      "model": "Sehr geehrte Frau Lehmann,\n\nich fahre vom 3. bis zum 17. Juli in den Urlaub. Könnten Sie in dieser Zeit bitte die Blumen gießen? Zweimal pro Woche reicht.\n\nUnd wäre es möglich, dass Sie ab und zu den Briefkasten leeren? Er ist sonst schnell voll.\n\nDen Schlüssel bringe ich Ihnen am Dienstagabend vorbei. Vielen Dank im Voraus!\n\nMit freundlichen Grüßen\nNoor Haddad",
+      "check": [
+        "Durchgehend „Sie“, auch in den Possessivpronomen (Ihnen, Ihre).",
+        "Die Bitten stehen als Frage („Könnten Sie …?“), nicht als Befehl („Gießen Sie …“).",
+        "Sehr geehrte Frau Lehmann → Mit freundlichen Grüßen. Anrede und Gruß müssen zusammenpassen."
+      ]
+    },
+    {
+      "id": "a2-formular-arztpraxis",
+      "level": "A2",
+      "type": "formular",
+      "kind": "form",
+      "title": "Aufnahmebogen in der Arztpraxis",
+      "blurb": "Ein Anruf, ein Formular — und zwei Angaben, die im Text nicht wörtlich stehen.",
+      "minutes": 7,
+      "source": "„Praxis Dr. Vogel, guten Tag.“ — „Guten Tag, hier ist Pjotr Kowalczyk. Ich hätte gern einen Termin.“ — „Gern. Waren Sie schon einmal bei uns?“ — „Nein, ich bin neu in Leipzig, ich bin letzten Monat aus Danzig hergezogen.“ — „Ihr Geburtsdatum bitte?“ — „Der zwanzigste November neunzehnhundertachtundachtzig.“ — „Und wie sind Sie versichert?“ — „Bei der AOK, gesetzlich.“ — „Worum geht es denn?“ — „Ich habe seit zehn Tagen starke Rückenschmerzen.“ — „Dann schlage ich Donnerstag, den 14., um 15:30 Uhr vor.“ — „Das passt.“",
+      "fields": [
+        { "label": "Name, Vorname", "answer": "Kowalczyk, Pjotr" },
+        { "label": "Geburtsdatum", "answer": "20.11.1988" },
+        { "label": "Krankenkasse", "answer": "AOK" },
+        { "label": "Versichertenstatus", "answer": "gesetzlich" },
+        { "label": "Neue Patientin / neuer Patient?", "answer": "ja" },
+        { "label": "Beschwerden", "answer": "Rückenschmerzen (seit 10 Tagen)" },
+        { "label": "Termin (Datum)", "answer": "14. (Donnerstag)" },
+        { "label": "Termin (Uhrzeit)", "answer": "15:30" }
+      ],
+      "check": [
+        "Das Geburtsdatum wird gesprochen, nicht geschrieben: „der zwanzigste November neunzehnhundertachtundachtzig“ → 20.11.1988.",
+        "„Neue Patientin / neuer Patient?“ steht nirgends als Wort — das muss man aus „Nein, ich bin neu in Leipzig“ schließen.",
+        "„Das passt.“ heißt: der Termin gilt. Also beide Terminfelder ausfüllen."
+      ]
+    },
+    {
+      "id": "b1-formular-vhs",
+      "level": "B1",
+      "type": "formular",
+      "kind": "form",
+      "title": "DTZ Aufgabe 5: Formular ausfüllen",
+      "blurb": "Eine Bestätigungs-E-Mail, acht Felder.",
+      "minutes": 8,
+      "from": "dtz-formTask"
+    },
+    {
+      "id": "b1-brief-david",
+      "level": "B1",
+      "type": "brief",
+      "kind": "prompt",
+      "title": "DTZ Schreiben: Antwort an David",
+      "blurb": "Vier Leitpunkte, ein halbformeller Brief.",
+      "minutes": 25,
+      "from": "dtz-writingPrompt"
+    },
+    {
+      "id": "b1-fehlerjagd",
+      "level": "B1",
+      "type": "fehlerjagd",
+      "kind": "errors",
+      "title": "Fehlersuche im Modelltext",
+      "blurb": "Erst die Fehler im fremden Text finden — dann sieht man sie im eigenen.",
+      "minutes": 10,
+      "from": "dtz-errorHunt"
+    },
+    {
+      "id": "b2-beschwerde-reiseveranstalter",
+      "level": "B2",
+      "type": "brief",
+      "kind": "prompt",
+      "title": "Beschwerde an den Reiseveranstalter",
+      "blurb": "Sachlich bleiben und trotzdem eine Forderung stellen — der schwierigste Ton auf B2.",
+      "minutes": 30,
+      "situation": "Sie haben eine einwöchige Reise gebucht. Vor Ort war vieles anders als im Katalog: Das Hotel lag nicht am Strand, sondern 3 km entfernt, der Pool war wegen Renovierung geschlossen, und die zugesagten Ausflüge fanden nicht statt. Schreiben Sie eine Beschwerde an den Veranstalter (180–200 Wörter).",
+      "points": [
+        "Nennen Sie Buchung, Reisezeitraum und Reiseziel.",
+        "Beschreiben Sie die Mängel sachlich und konkret.",
+        "Begründen Sie, warum das für Sie erheblich war.",
+        "Formulieren Sie eine klare Forderung und eine Frist."
+      ],
+      "phrases": [
+        "Bezug nehmend auf meine Buchung Nr. …",
+        "Im Katalog wurde ausdrücklich zugesichert, dass …",
+        "Tatsächlich war jedoch …",
+        "Ich fordere Sie daher auf, … bis zum …",
+        "Andernfalls behalte ich mir vor, …"
+      ],
+      "model": "Sehr geehrte Damen und Herren,\n\nbezug nehmend auf meine Buchung Nr. 884-2210 für die Reise nach Antalya vom 12. bis 19. September muss ich Ihnen leider erhebliche Mängel anzeigen.\n\nIm Katalog wurde die Anlage ausdrücklich als „direkt am Strand gelegen“ beworben. Tatsächlich beträgt die Entfernung rund drei Kilometer, die nur mit einem kostenpflichtigen Shuttle zu überbrücken sind. Der ebenfalls beworbene Pool war während des gesamten Aufenthalts wegen Renovierungsarbeiten geschlossen, ohne dass wir darüber vorab informiert worden wären. Die beiden im Reisepreis enthaltenen Ausflüge wurden ersatzlos gestrichen.\n\nDa ich die Reise gerade wegen der Strandlage und des Sportangebots gebucht hatte, war der Erholungswert für mich deutlich eingeschränkt. Es handelt sich hier nicht um Kleinigkeiten, sondern um Leistungen, die den Charakter der Reise ausmachen.\n\nIch fordere Sie daher auf, mir bis zum 15. Oktober eine angemessene Minderung des Reisepreises anzubieten. Andernfalls behalte ich mir weitere Schritte vor.\n\nMit freundlichen Grüßen\nClara Menéndez",
+      "check": [
+        "Kein Wort Ärger: „muss ich Ihnen leider … anzeigen“ statt „das war eine Frechheit“. Sachlichkeit ist auf B2 die Bewertung, nicht die Höflichkeit.",
+        "Jeder Mangel ist gegen eine Zusage gestellt („Im Katalog … Tatsächlich jedoch …“). Eine Beschwerde ohne den Vergleich ist nur eine Meinung.",
+        "Es steht eine konkrete Forderung UND eine Frist da. Ohne Datum ist kein Beschwerdebrief vollständig.",
+        "Konnektoren auf B2-Niveau: da, ohne dass, andernfalls, daher."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+/* The pill button, .lp-btn.
+ *
+ * Lived in landing.css until the nav drawer moved onto the practice pages, which do not
+ * load that stylesheet — the drawer's "Kostenlos üben" CTA rendered as a bare blue link
+ * there. It is its own file now, imported by landing.css and by site-nav.css, so any page
+ * that mounts a nav gets the button its nav uses. Vite dedupes the double import.
+ */
+
+.lp-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 13px 26px;
+  border-radius: var(--radius-pill);
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.2;
+  white-space: nowrap;
+  border: none;
+  text-decoration: none;
+  cursor: pointer;
+  font-family: var(--font-body);
+}
+.lp-btn--primary {
+  background: var(--gradient-brand);
+  color: #fff;
+  box-shadow: var(--shadow-cta);
+  transition: transform .2s ease;
+}
+.lp-btn--primary:hover { transform: translateY(-1px); }
+.lp-btn--outline {
+  background: var(--surface-card);
+  /* 1px less padding than the base so the border does not make it taller
+     than the primary sitting next to it. */
+  padding: 12px 25px;
+  border: 1px solid var(--border-strong);
+  color: var(--brand-blue-dark);
+  transition: border-color .2s ease;
+}
+.lp-btn--outline:hover { border-color: var(--brand-blue); }

@@ -1,3 +1,4 @@
+@import "./button.css";
 /* Concept 9 · Infographic/Roadmap homepage layout — reuses brand tokens from global.css */
 
 .lp {
@@ -75,38 +76,7 @@
 /* Base size lives here so an .lp-btn works anywhere it is dropped. Every
    context that wants a different size (nav, hero, showcase, m1) overrides
    padding/font-size with a two-class selector and still wins. */
-.lp-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 13px 26px;
-  border-radius: var(--radius-pill);
-  font-size: 15px;
-  font-weight: 700;
-  line-height: 1.2;
-  white-space: nowrap;
-  border: none;
-  text-decoration: none;
-  cursor: pointer;
-  font-family: var(--font-body);
-}
-.lp-btn--primary {
-  background: var(--gradient-brand);
-  color: #fff;
-  box-shadow: var(--shadow-cta);
-  transition: transform .2s ease;
-}
-.lp-btn--primary:hover { transform: translateY(-1px); }
-.lp-btn--outline {
-  background: var(--surface-card);
-  /* 1px less padding than the base so the border does not make it taller
-     than the primary sitting next to it. */
-  padding: 12px 25px;
-  border: 1px solid var(--border-strong);
-  color: var(--brand-blue-dark);
-  transition: border-color .2s ease;
-}
-.lp-btn--outline:hover { border-color: var(--brand-blue); }
+/* .lp-btn lives in src/styles/button.css — see the note there. */
 
 /* Nav lives in src/styles/site-nav.css, next to the SiteNav component that owns it. */
 

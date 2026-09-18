@@ -1,0 +1,84 @@
+---
+// One Lesetext: the text, then the questions.
+//
+// The text stays on screen while the quiz runs — unlike a Hörtext, where hiding the
+// transcript is the whole exercise. Reading comprehension is not a memory test: in the DTZ
+// the sheet lies in front of you, and an exercise that takes it away is testing something
+// the exam never asks for.
+import Layout from "../../../layouts/Layout.astro";
+import PracticeHeader from "../../../components/PracticeHeader.astro";
+import Icon from "../../../components/Icon.astro";
+import { lesen, neighbours, LESEN_ICON } from "../../../lib/fertigkeiten.js";
+import "../../../styles/practice.css";
+import "../../../styles/skills.css";
+
+export function getStaticPaths() {
+  return lesen.texts.map((text) => ({
+    params: { id: text.id },
+    props: { text, ...neighbours(lesen.texts, text) },
+  }));
+}
+
+const { text, prev, next } = Astro.props;
+const { types } = lesen;
+
+// The JSON marks headings with **…** so a Kleinanzeige can have a label without the file
+// carrying HTML. One split, no Markdown dependency: odd pieces were inside the asterisks.
+const parts = (text.text ?? "").split(/\*\*(.+?)\*\*/g);
+---
+<Layout
+  title={`${text.title} – Leseverstehen ${text.level} – DeutschAcademy`}
+  description={text.blurb}
+>
+  <PracticeHeader title="Lesen" />
+  <main class="practice-main">
+    <a href="/uebungen/lesen" class="vp-back-link">← Alle Lesetexte</a>
+
+    <article>
+      <header class="sk-head">
+        <span class="sk-card-ic"><Icon name={LESEN_ICON[text.type] ?? "book-open"} size={22} /></span>
+        <div>
+          <p class="eyebrow">{types[text.type]}</p>
+          <h1>{text.title}</h1>
+        </div>
+        <span class="sk-badge">{text.level}</span>
+      </header>
+
+      <p class="sk-blurb">{text.blurb} · ca. {text.minutes} Minuten</p>
+
+      <section class="sk-block">
+        <h2>Text</h2>
+        <div class="sk-text">{parts.map((p, i) => (i % 2 ? <b>{p}</b> : p))}</div>
+      </section>
+
+      <section class="sk-block">
+        <h2>Fragen zum Text</h2>
+        <p class="sk-blurb">
+          {text.questions?.length ?? 0} Fragen. Antworte per Klick — die Erklärung steht danach dabei.
+        </p>
+        <div class="quiz-card" id="sk-quiz"></div>
+      </section>
+
+      <nav class="sk-prevnext">
+        {prev ? <a href={`/uebungen/lesen/${prev.id}`}>← {prev.title}</a> : <span />}
+        {next ? <a href={`/uebungen/lesen/${next.id}`}>{next.title} →</a> : <span />}
+      </nav>
+    </article>
+  </main>
+
+  <script type="application/json" id="sk-quiz-data" set:html={JSON.stringify(text.questions ?? [])}></script>
+  <script>
+    import { mountQuiz } from "../../../lib/quiz.js";
+    import { recordAttempt } from "../../../lib/progress.js";
+
+    const questions = JSON.parse(document.getElementById("sk-quiz-data").textContent);
+    mountQuiz(document.getElementById("sk-quiz"), questions, {
+      mode: "choice",
+      // Not shuffled: the questions follow the text from top to bottom, and a learner who
+      // is asked about paragraph four first has to read the whole thing twice.
+      shuffle: false,
+      showWrongCount: true,
+      onAnswer: (ok) => recordAttempt({ skill: "lesen", correct: ok }),
+    });
+  </script>
+</Layout>

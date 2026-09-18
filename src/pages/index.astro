@@ -10,7 +10,7 @@ import LevelFold from "../components/LevelFold.astro";
 import PracticePicker from "../components/PracticePicker.astro";
 import Icon from "../components/Icon.astro";
 // One catalogue for / and /uebungen — see src/lib/catalog.js.
-import { tools, exams } from "../lib/catalog.js";
+import { tools, landingTools, exams } from "../lib/catalog.js";
 import "../styles/landing.css";
 import "../styles/m1.css";
 import "../styles/front.css";
@@ -210,7 +210,7 @@ const userCount = 412; // actual signups so far
           <div class="lp-tools-group">
             <div class="lp-tools-label" data-i18n="nav.exercises">Übungen</div>
             <div class="lp-tools-grid lp-tools-grid--tools">
-              {tools.map((t) => (
+              {landingTools.map((t) => (
                 <a href={t.href} class="lp-tool-card">
                   <div class="lp-tool-tile"><Icon name={t.icon} /></div>
                   <h4 data-i18n={t.titleKey}>{t.title}</h4>

@@ -1,0 +1,111 @@
+---
+// /wissen — the Wissensdatenbank: everything on this site that is worth having on paper.
+//
+// Two halves, and the split between them is a rights decision, not a design one. Above:
+// files we wrote and therefore may give away, generated from the same data the trainers
+// load. Below: links to the official Modellsätze at telc, Goethe and BAMF, which are free
+// to use but not ours to host — so they are linked where they are published, where they
+// also stay current.
+//
+// Publisher material (Hueber, Klett, Cornelsen) appears in neither list. See `rightsNote`
+// in src/data/downloads.json.
+import Layout from "../layouts/Layout.astro";
+import PracticeHeader from "../components/PracticeHeader.astro";
+import Icon from "../components/Icon.astro";
+import { categories, links, rightsNote, totals } from "../lib/downloads.js";
+import "../styles/practice.css";
+import "../styles/wissen.css";
+
+const featured = categories.flatMap((c) => c.items.filter((f) => f.featured));
+const mb = (totals.bytes / 1024 / 1024).toFixed(1).replace(".", ",");
+---
+<Layout
+  title="Wissensdatenbank – DeutschAcademy"
+  description="Grammatikbücher, Wortlisten und Prüfungsmaterial als PDF — kostenlos herunterladen, ausdrucken und im Unterricht weitergeben. Ohne Konto."
+>
+  <PracticeHeader title="Wissen" />
+  <main class="practice-main practice-main--wide">
+    <div class="practice-hero">
+      <p class="eyebrow">Wissensdatenbank</p>
+      <h1>Bücher und Listen zum Herunterladen</h1>
+      <p>
+        {totals.files} PDFs, {totals.pages} Seiten, alles kostenlos und ohne Konto. Zum Ausdrucken,
+        Mitnehmen und im Unterricht Weitergeben.
+      </p>
+    </div>
+
+    {featured.length > 0 && (
+      <div class="wi-featured">
+        {featured.map((f) => (
+          <a class="wi-feature" href={f.href} download>
+            <span class="wi-feature-txt">
+              <span class="wi-badge">{f.level}</span>
+              <b>{f.title}</b>
+              <i>{f.desc}</i>
+            </span>
+            <span class="wi-feature-go">
+              <span class="wi-meta">PDF{f.pages ? ` · ${f.pages} Seiten` : ""} · {f.size}</span>
+              <span class="wi-dl" aria-hidden="true">↓</span>
+            </span>
+          </a>
+        ))}
+      </div>
+    )}
+
+    {categories.map((cat) => (
+      <section class="wi-group" id={cat.id}>
+        <h2 class="wi-group-title">
+          <span class="wi-group-ic"><Icon name={cat.icon} size={20} /></span>
+          <span>{cat.name}</span>
+          <span class="wi-group-n">{cat.items.length}</span>
+        </h2>
+        <p class="wi-group-blurb">{cat.blurb}</p>
+        <div class="wi-grid">
+          {cat.items.map((f) => (
+            <a class="wi-card" href={f.href} download>
+              <span class="wi-badge">{f.level}</span>
+              <b>{f.title}</b>
+              <i>{f.desc}</i>
+              <span class="wi-card-foot">
+                <span class="wi-meta">PDF{f.pages ? ` · ${f.pages} Seiten` : ""} · {f.size}</span>
+                <span class="wi-dl" aria-hidden="true">↓</span>
+              </span>
+            </a>
+          ))}
+        </div>
+      </section>
+    ))}
+
+    <section class="wi-group" id="offiziell">
+      <h2 class="wi-group-title">
+        <span class="wi-group-ic"><Icon name="landmark" size={20} /></span>
+        <span>Offizielle Materialien</span>
+        <span class="wi-group-n">{links.length}</span>
+      </h2>
+      <p class="wi-group-blurb">
+        Modellsätze und Fragenkataloge der Prüfungsstellen. Die sind kostenlos, aber nicht unsere —
+        deshalb verlinken wir sie dort, wo sie herausgegeben werden. Dort sind sie auch immer aktuell.
+      </p>
+      <ul class="wi-links">
+        {links.map((l) => (
+          <li>
+            <a href={l.href} target="_blank" rel="noopener noreferrer">
+              <b>{l.title}</b>
+              <i>{l.note}</i>
+              <span class="wi-source">{l.source} ↗</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <section class="wi-rights">
+      <h2>Woher das alles kommt</h2>
+      {rightsNote.split("\n\n").map((p) => <p>{p}</p>)}
+      <p class="wi-rights-meta">
+        Zusammen {totals.files} Dateien, {mb} MB. Erzeugt aus den Daten dieser Seite mit
+        <code>pnpm generate:pdfs</code>.
+      </p>
+    </section>
+  </main>
+</Layout>

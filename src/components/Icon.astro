@@ -26,6 +26,13 @@ const ICONS = {
   // are about the learner rather than about a kind of exercise.
   layers: `<path d="M12 3 2 8l10 5 10-5-10-5Z"/><path d="m2 12 10 5 10-5-2.2-1.1L12 14.7 4.2 10.9 2 12Z" opacity="0.55"/><path d="m2 16 10 5 10-5-2.2-1.1L12 18.7 4.2 14.9 2 16Z" opacity="0.35"/>`,
   user: `<circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0H4Z" opacity="0.55"/>`,
+  // Practice-page header: the dashboard shortcut collapses to this tile on a phone,
+  // and the logo grows a back arrow when the learner arrived from somewhere on the site.
+  grid: `<rect x="3" y="3" width="8" height="8" rx="1.6"/><rect x="13" y="3" width="8" height="5" rx="1.6" opacity="0.55"/><rect x="13" y="10" width="8" height="11" rx="1.6"/><rect x="3" y="13" width="8" height="8" rx="1.6" opacity="0.55"/>`,
+  "arrow-left": `<path d="M11 4.6 3.6 12 11 19.4l1.5-1.5-4.9-4.9H20.4v-2H7.6l4.9-4.9L11 4.6Z"/>`,
+  // The Lernset rail: the frequency cut, which is the only one of its entries that is
+  // neither a level badge nor the Redemittel deck.
+  bars: `<rect x="3.8" y="13" width="3.6" height="7" rx="1"/><rect x="10.2" y="8" width="3.6" height="12" rx="1" opacity="0.7"/><rect x="16.6" y="4" width="3.6" height="16" rx="1" opacity="0.45"/>`,
 };
 ---
 <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" set:html={ICONS[name]} />

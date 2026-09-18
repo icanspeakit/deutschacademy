@@ -43,7 +43,14 @@
 .ku-quiz-cta-go { flex-shrink: 0; font-size: 1.3rem; }
 
 .ku-group { margin-bottom: 28px; }
+/* The heading is a level now, so it leads with the same pill the level sections on the
+   Grammatik hub use, and the blurb beside it keeps the small-caps label look the subject
+   headings had. scroll-margin so a #niveau-b1 link does not land under the sticky header. */
+.ku-group { scroll-margin-top: 84px; }
 .ku-group-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
   margin: 0 0 12px;
   font-size: .72rem;
   font-weight: var(--fw-semibold);

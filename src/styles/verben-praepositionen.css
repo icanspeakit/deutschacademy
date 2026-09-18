@@ -491,6 +491,122 @@
   .vp-page--split[data-rule="hidden"] .vp-col--rule { transform: translateX(28px); opacity: 0; }
 }
 
+/* The pivot — what a collapsed column leaves behind.
+   ---------------------------------------------------------------------------
+   A rule column may vanish outright: it is an aside, and the pill in the toolbar is
+   trace enough. A column that is *navigation* may not. The Wortschatz Lernset list is
+   how a learner reaches the next set, and when it folded away completely the page lost
+   a feature rather than tidying one — the only way back was a pill at the far end of a
+   toolbar, with nothing connecting it to the space that had just closed.
+
+   So the column can leave a tab at the edge it retreated to. Fixed rather than in the
+   grid: the grid track is what collapses, and a tab that lived in it would have to be
+   the reason the track never reaches zero. Fixed costs the layout nothing and puts the
+   tab exactly where the eye last saw the column.
+
+   1180px, not the 1001px the split layout itself uses, and the extra 180 are measured
+   rather than chosen: the trainer's work column is 1040px wide and the page pads it to
+   1088, so below about 1180 there is no margin at the edge for a tab to stand in and it
+   lands on the flashcard's own border instead. Between 1001 and 1180 the collapse still
+   works and the toolbar pill is still the way back — that is the behaviour these pages
+   already had. Opting in is rendering the button, so a page without one is unaffected.
+
+   The tour re-measures the tab before lighting it and falls back to the pill when it is
+   not on screen (see runOpen in ruleIntro.js) — a spotlight on a display:none element is
+   a 0×0 box in the top-left corner. */
+.vp-rule-pivot { display: none; }
+
+@media (min-width: 1180px) {
+  /* Rendered in both states, not display-toggled, because the interesting part is the
+     handover: the column slides out over --vp-slide, and a tab that pops in at full
+     opacity while the column is still 270px wide reads as a glitch rather than as the
+     same thing arriving somewhere else. So the tab lives off the edge and slides on
+     once the column has gone — and on the way back it leaves first, before the column
+     starts moving, so the two are never on screen at once.
+
+     visibility rather than display: it can be transitioned (stepwise, via a delay), so
+     the tab is out of the a11y tree while it is invisible instead of being an offscreen
+     button anyone can tab to. ruleColumn.js sets `inert` on it as well. */
+  .vp-page--split .vp-rule-pivot {
+    position: fixed;
+    right: 0;
+    top: 50%;
+    z-index: 30;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding: 20px 10px 22px;
+    border: 1px solid var(--border);
+    border-right: none;
+    border-radius: var(--radius-lg) 0 0 var(--radius-lg);
+    background: var(--surface-card);
+    box-shadow: -8px 0 24px -16px rgba(15, 23, 42, .5);
+    cursor: pointer;
+    color: var(--muted);
+
+    /* Resting state: parked outside the edge it will come from. */
+    visibility: hidden;
+    opacity: 0;
+    transform: translate(100%, -50%);
+    /* Leaving: no delay. The column is on its way back and the tab has to be gone
+       before it arrives. `visibility` flips at the end, which is what the 0s-with-delay
+       is doing — it cannot tween, so it waits for the fade to finish. */
+    transition:
+      opacity .18s ease,
+      transform .22s var(--vp-ease),
+      visibility 0s linear .22s,
+      color .15s ease, border-color .15s ease, padding-right .15s ease;
+  }
+  /* Arriving: after most of the column's slide, so it reads as a handover rather than
+     a second thing appearing. Half of --vp-slide is measured from the easing — the
+     column is past 90% of its travel by then. */
+  .vp-page--split[data-rule="hidden"] .vp-rule-pivot {
+    visibility: visible;
+    opacity: 1;
+    transform: translate(0, -50%);
+    transition:
+      opacity .26s ease calc(var(--vp-slide) * .5),
+      transform .34s var(--vp-ease) calc(var(--vp-slide) * .5),
+      visibility 0s linear calc(var(--vp-slide) * .5),
+      color .15s ease, border-color .15s ease, padding-right .15s ease;
+  }
+  .vp-page--split[data-rule="hidden"] .vp-rule-pivot:hover,
+  .vp-page--split[data-rule="hidden"] .vp-rule-pivot:focus-visible {
+    color: var(--brand-blue-dark);
+    border-color: var(--blue-300);
+    /* Leans out a little under the pointer — the tab is a handle, and a handle that
+       moves toward you says it can be pulled. */
+    padding-right: 14px;
+  }
+}
+
+/* Vertical, because a tab at a vertical edge that reads horizontally is a tab three
+   times wider than it needs to be. Top-to-bottom is the direction a right-hand edge
+   label is read in. */
+.vp-rule-pivot-label {
+  writing-mode: vertical-rl;
+  font-family: var(--font-label);
+  font-size: var(--text-xs);
+  font-weight: var(--fw-semibold);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+/* Points left, at the space the column will reappear in. */
+.vp-rule-pivot-chevron {
+  width: 7px;
+  height: 7px;
+  flex: 0 0 auto;
+  border-left: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  transform: rotate(45deg);
+}
+.vp-rule-pivot[data-peek] {
+  color: var(--brand-blue-dark);
+  border-color: var(--blue-300);
+  animation: vp-peek-glow 1.4s ease-in-out 2;
+}
+
 /* The pop-out teaser.
    ---------------------------------------------------------------------------
    A rule panel that starts collapsed is a panel nobody knows about: the toggle
@@ -564,6 +680,109 @@
   }
 }
 
+/* --- The bottom sheet (.vp-page--sheet, phones only) -------------------------
+   An accordion works while the panel is roughly a screen. The Wortschatz picker is not:
+   expanding it in place put two screens of list ABOVE the trainer, so the control that
+   closed it rode down out of reach and the page the learner had been reading was gone.
+   And it never needed to share the screen in the first place — every row in that list is
+   a link to another page.
+
+   So below 1001px the card leaves the flow entirely and slides up over the work: the
+   trainer never moves, the ✕ is pinned to the sheet's own head, and dismissing puts the
+   learner back on the exact card they left. Desktop is untouched — there the column
+   really does sit beside the work, which is the point of it.
+
+   The selectors carry both page classes so they outrank the accordion rules above, which
+   would otherwise win or lose on file order alone. */
+.vp-sheet-scrim, .vp-sheet-x { display: none; }
+
+@media (max-width: 1000px) {
+  .vp-page--split.vp-page--sheet .vp-rule-card {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 70;
+    display: flex;
+    flex-direction: column;
+    max-height: min(86dvh, 86vh);
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    opacity: 1;
+    border-width: 1px 0 0;
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    box-shadow: 0 -14px 40px rgb(15 23 42 / 18%);
+    transform: translateY(0);
+    transition: transform var(--vp-slide) var(--vp-ease);
+  }
+  /* 101% rather than 100%: at a fractional device pixel ratio a 100% translate can leave
+     a hairline of the border showing along the bottom edge. */
+  .vp-page--split.vp-page--sheet[data-rule="hidden"] .vp-rule-card {
+    transform: translateY(101%);
+    max-height: min(86dvh, 86vh);
+    padding-block: 0;
+    border-width: 1px 0 0;
+    margin-bottom: 0;
+    opacity: 1;
+  }
+
+  .vp-page--sheet .vp-sheet-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex: 0 0 auto;
+    padding: 14px 18px;
+    border-bottom: 1px solid var(--border);
+    background: var(--surface-card);
+  }
+  .vp-page--sheet .vp-sheet-head .vp-card-label { margin: 0; }
+  .vp-page--sheet .vp-sheet-x {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    margin-right: -8px;
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+    background: none;
+    color: var(--muted);
+    cursor: pointer;
+  }
+  .vp-page--sheet .vp-sheet-x svg { width: 20px; height: 20px; }
+
+  /* The sheet scrolls, the page behind it does not — `contain` is what stops a flick at
+     the end of the list from handing the rest of the gesture to the document. */
+  .vp-page--sheet .vp-sheet-body {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+    padding: 18px 18px calc(24px + env(safe-area-inset-bottom, 0px));
+  }
+  /* For a sheet whose content scrolls itself — the Wortschatz rail, whose panel is the
+     scroller so that the rail stays put. The body is then only the box it sits in. */
+  .vp-page--sheet .vp-sheet-body--flush { overflow: hidden; padding: 0; display: flex; }
+
+  .vp-page--sheet .vp-sheet-scrim {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 69;
+    background: rgb(15 23 42 / 45%);
+    opacity: 1;
+    transition: opacity var(--vp-slide) var(--vp-ease);
+  }
+  .vp-page--sheet[data-rule="hidden"] .vp-sheet-scrim { opacity: 0; pointer-events: none; }
+
+  /* The opener keeps the room the accordion's collapsed card used to leave behind. */
+  .vp-page--sheet .vp-rule-peek { margin-bottom: 26px; }
+}
+
 /* The side column is the control on desktop; the button would be a second one. */
 @media (min-width: 1001px) {
   .vp-rule-peek { display: none; }
@@ -571,7 +790,10 @@
 
 @media (prefers-reduced-motion: reduce) {
   .vp-page--split, .vp-workspace, .vp-col--rule, .vp-rule-card { transition: none; }
-  .vp-rule-toggle[data-peek], .vp-rule-peek[data-peek] { animation: none; }
+  .vp-rule-toggle[data-peek], .vp-rule-peek[data-peek], .vp-rule-pivot[data-peek] { animation: none; }
+  /* No travel and no waiting for it: the tab is simply there or not. */
+  .vp-page--split .vp-rule-pivot,
+  .vp-page--split[data-rule="hidden"] .vp-rule-pivot { transition: none; transform: translateY(-50%); }
 }
 
 /* Dev-only reset button (rendered behind import.meta.env.DEV in [id].astro).
@@ -672,3 +894,25 @@
 .vp-slot.is-wrong { border-color: var(--danger); background: var(--danger-soft); color: var(--danger); }
 /* Inside prose the slot must sit on the text baseline, not float as a block. */
 .vp-story-text .vp-slot { display: inline-block; vertical-align: baseline; margin: 0 2px; }
+
+/* The Wortschatz column lives on the left (vokabeltrainer.css), so the tab it folds to
+   has to as well — a pivot on the far edge from the space that just closed is exactly
+   the disconnected control the pivot was invented to avoid. */
+@media (min-width: 1180px) {
+  .vt-split[data-rule="hidden"] .vp-rule-pivot {
+    right: auto;
+    left: 0;
+    border-right: 1px solid var(--border);
+    border-left: none;
+    border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+    box-shadow: 8px 0 24px -16px rgb(15 23 42 / 50%);
+  }
+  .vt-split[data-rule="hidden"] .vp-rule-pivot:hover,
+  .vt-split[data-rule="hidden"] .vp-rule-pivot:focus-visible {
+    padding-right: 10px;
+    padding-left: 14px;
+  }
+  /* Base is rotate(45deg) — a left-pointing corner. Half a turn on makes it point right,
+     which is again "the column comes back over there". */
+  .vt-split[data-rule="hidden"] .vp-rule-pivot .vp-rule-pivot-chevron { transform: rotate(-135deg); }
+}

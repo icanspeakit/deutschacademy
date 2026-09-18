@@ -1,11 +1,17 @@
 ---
 // The Lernset navigation that fills the side column on every Wortschatz page.
 //
-// It started as a dropdown over the trainer, which was the wrong shape: a menu you open,
-// use once and close is fine for a setting, but choosing what to study is the other half
-// of the page, and it belongs beside the cards rather than on top of them. So it now uses
-// the column the grammar topics already use (src/lib/ruleColumn.js): sticky on the right
-// on a desktop, collapsed behind one full-width button on a phone, remembered per browser.
+// It IS the dashboard's rail now — nav.css's `.nvb`, variant B, the same stylesheet
+// /dashboard loads — rather than a lookalike built out of `.ls-*` classes beside it. The
+// lookalike had already drifted: its rows were a bespoke three-column grid, its rail
+// buttons were 40px against the dashboard's 42, and its tooltips were a second
+// implementation of `.nvb-tip`. Two components meant to be one thing, kept in step by
+// hand, stay in step until the first time nobody checks.
+//
+// What is genuinely ours stays ours, under `ls-*`: the Thema/Reihe switch, the
+// collapsible Bereiche and the Portionen blocks are Wortschatz ideas with no dashboard
+// counterpart. Everything that exists on both sides — rail, panel, head, rows, overview
+// button — is nav.css's.
 //
 // This component renders only the column's *contents*. The shell — the card, the two
 // toggles, the collapse behaviour — lives in VokabelTrainer.astro, the same way a grammar
@@ -14,8 +20,10 @@
 // Every row and every count comes from src/lib/lernsets.js, i.e. from the lexicon at build
 // time. Nothing here is hand-typed, so a Lernset cannot appear unless its words exist
 // (docs/wortschatz-programm-v1.md §3).
-import { counts, modules, cohortBlocks, frequencyCounts } from "../lib/lernsets.js";
+import Icon from "./Icon.astro";
+import { counts, modules, cohortBlocks, frequencyCounts, portionBlocks, portions } from "../lib/lernsets.js";
 import { LEVELS } from "../lib/lexicon.js";
+import "../styles/nav.css";
 import "../styles/lernset-picker.css";
 
 interface Props {
@@ -42,7 +50,30 @@ const groupsByLevel = Object.fromEntries(
 
 const openLevel = liveLevels.find((l) => current.startsWith(l.toLowerCase())) ?? liveLevels[0];
 
-// The second way to cut the same lexicon: by corpus frequency rather than by topic. See
+// A level is 26 to 46 Lernsets, and listing them flat under open headings was a single
+// scroll several screens long — the group names went past as captions rather than working
+// as a way in. So the groups are collapsible: one open at a time, the rest one line each,
+// which puts the whole level's shape on one screen.
+//
+// Not collapsed when the level has only one group: a lone accordion that is always open
+// is a heading wearing a chevron.
+const groupsCollapse = (level) => groupsByLevel[level].length > 1;
+// The group holding the set you are on, so arriving on /a1-14 opens its Bereich rather
+// than the first one and a scroll.
+const openGroup = (level) =>
+  groupsByLevel[level].find((g) => g.sets.some((set) => set.id === current)) ?? groupsByLevel[level][0];
+
+// The level's own list in the level's own order, twenty at a time — a finer grain of the
+// level you already chose, rather than another way of ordering the whole lexicon. Blocks
+// of ten, collapsed, for the same reason the Bereiche collapse: B1 is 58 rows.
+const isTeil = /-teil-\d+$/.test(current);
+const teileByLevel = Object.fromEntries(liveLevels.map((level) => [level, portionBlocks(level)]));
+const teileCount = Object.fromEntries(liveLevels.map((level) => [level, portions(level).length]));
+const openCut = (level) => (isTeil && current.startsWith(level.toLowerCase()) ? "teile" : "thema");
+const openTeilBlock = (level) =>
+  teileByLevel[level].find((b) => b.portions.some((t) => t.id === current)) ?? teileByLevel[level][0];
+
+// The other way to cut the same lexicon: by corpus frequency rather than by topic. See
 // the long note in src/lib/lernsets.js for why it exists and what it does not claim.
 const freq = frequencyCounts();
 const blocks = cohortBlocks();
@@ -51,181 +82,327 @@ const openBlock = isFreq
   ? blocks.find((b) => b.cohorts.some((c) => c.id === current)) ?? blocks[0]
   : blocks[0];
 ---
-<div class="lp" data-current={current}>
-  <p class="lp-group-label">Schnellstart</p>
-  <div class="lp-quick">
+<div class="nvb ls-nvb" data-nvb data-current={current}>
+  <!-- The rail. A level is its own badge, exactly as on the dashboard; the two entries
+       that are not a level get an icon. Weiterlernen and Redemittel are links — they go
+       to a page — and the rest are tabs that switch the panel beside them, which is why
+       they are different elements rather than one element styled twice. -->
+  <div class="nvb-rail" role="tablist" aria-label="Wortschatz-Bereich">
     <!-- Filled by the script from this browser's own history, removed when there is
          none. Never server-rendered: there is no account, so the server cannot know. -->
-    <a class="lp-chip lp-chip--resume" id="lp-resume" href="/uebungen/wortschatz" hidden>
-      <span class="lp-chip-label">Weiterlernen</span>
-      <span class="lp-chip-name" id="lp-resume-name"></span>
+    <a class="nvb-railbtn" id="ls-resume" href="/uebungen/wortschatz" hidden aria-label="Weiterlernen">
+      <Icon name="sparkle" size={20} />
+      <span class="nvb-tip">Weiterlernen</span>
     </a>
-    <a class="lp-chip" href="/uebungen/wortschatz" aria-current={current === "redemittel" ? "page" : undefined}>
-      <span class="lp-chip-label">Redemittel</span>
-      <span class="lp-chip-name">Alltag · 4 Sprachen</span>
-    </a>
-    {liveLevels.map((level) => (
-      <a
-        class="lp-chip"
-        href={`/uebungen/wortschatz/${level.toLowerCase()}`}
-        aria-current={current === level.toLowerCase() ? "page" : undefined}
-      >
-        <span class="lp-chip-label">Alle {level}</span>
-        <span class="lp-chip-name">{c[level].words} Wörter</span>
-      </a>
-    ))}
-  </div>
 
-  <!-- Two orderings of the same words, so the switch between them is a switch, not two
-       lists stacked. Which one opens depends on where you already are. -->
-  <div class="lp-modes" role="tablist" aria-label="Sortierung wählen">
-    <button
-      type="button"
-      role="tab"
-      class={`lp-mode ${isFreq ? "" : "is-active"}`}
-      data-mode="niveau"
-      aria-selected={isFreq ? "false" : "true"}
-      aria-controls="lp-mode-niveau"
-    >Nach Niveau</button>
-    <button
-      type="button"
-      role="tab"
-      class={`lp-mode ${isFreq ? "is-active" : ""}`}
-      data-mode="haeufigkeit"
-      aria-selected={isFreq ? "true" : "false"}
-      aria-controls="lp-mode-haeufigkeit"
-    >Nach Häufigkeit</button>
-  </div>
-
-  <div class="lp-mode-panel" id="lp-mode-niveau" data-mode="niveau" hidden={isFreq}>
-  <div class="lp-levels" role="tablist" aria-label="Niveau wählen">
     {liveLevels.map((level) => (
       <button
         type="button"
         role="tab"
-        class={`lp-level ${level === openLevel ? "is-active" : ""}`}
-        data-level={level}
-        aria-selected={level === openLevel ? "true" : "false"}
-        aria-controls={`lp-sets-${level}`}
+        class:list={["nvb-railbtn", !isFreq && level === openLevel && "active"]}
+        data-rail={level}
+        aria-selected={!isFreq && level === openLevel ? "true" : "false"}
+        aria-controls={`ls-pane-${level}`}
+        aria-label={`Stufe ${level}`}
       >
-        {level}<span class="lp-level-n">{c[level].sets}</span>
+        <span class="nvb-railbadge">{level}</span>
+        <span class="nvb-tip">Stufe {level} · {c[level].sets} Lernsets</span>
       </button>
     ))}
+
+    <span class="ls-raildiv" aria-hidden="true"></span>
+
+    <button
+      type="button"
+      role="tab"
+      class:list={["nvb-railbtn", isFreq && "active"]}
+      data-rail="haeufigkeit"
+      aria-selected={isFreq ? "true" : "false"}
+      aria-controls="ls-pane-haeufigkeit"
+      aria-label="Nach Häufigkeit"
+    >
+      <Icon name="bars" size={20} />
+      <span class="nvb-tip">Nach Häufigkeit · {freq.cohorts} Portionen</span>
+    </button>
+
+    <a
+      class="nvb-railbtn"
+      href="/uebungen/wortschatz"
+      aria-current={current === "redemittel" ? "page" : undefined}
+      aria-label="Redemittel"
+    >
+      <Icon name="volume" size={20} />
+      <span class="nvb-tip">Redemittel · Alltag, 4 Sprachen</span>
+    </a>
   </div>
 
-  {liveLevels.map((level) => (
-    <div class="lp-sets" id={`lp-sets-${level}`} data-level={level} hidden={level !== openLevel}>
-      <p class="lp-level-lead">
-        {c[level].title} — {c[level].sets} Lernsets, {c[level].words} Wörter.
-        Ein Lernset ist eine Sitzung: rund 25 Wörter.
-      </p>
-      {groupsByLevel[level].map((group) => (
-        <section class="lp-module">
-          {group.title && (
-            <h3 class="lp-module-title">{group.title}<span class="lp-module-n">{group.words}</span></h3>
-          )}
-          <div class="lp-module-sets">
-            {group.sets.map((set) => (
-              <a
-                class="lp-set"
-                href={`/uebungen/wortschatz/${set.id}`}
-                aria-current={set.id === current ? "page" : undefined}
+  <div class="nvb-panel">
+    {liveLevels.map((level) => (
+      <div
+        class="nvb-section ls-sets"
+        id={`ls-pane-${level}`}
+        data-pane={level}
+        data-level={level}
+        hidden={isFreq || level !== openLevel}
+      >
+        <div class="nvb-panelhead">
+          <h3>Stufe {level}</h3>
+          <!-- The dashboard's own fold control, doing the dashboard's own job: the panel
+               goes, the rail stays, and a level icon brings it back. A different act from
+               "Lernsets ausblenden" in the tab row, which takes the whole column away —
+               one trades the list for room, the other trades the whole side. -->
+          <button type="button" class="nvb-collapse" data-nvb-collapse aria-label="Liste einklappen">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>
+          </button>
+        </div>
+
+        <a
+          class="nvb-overview"
+          href={`/uebungen/wortschatz/${level.toLowerCase()}`}
+          aria-current={current === level.toLowerCase() ? "page" : undefined}
+        >Alle {c[level].sets} Lernsets öffnen →</a>
+
+        <!-- Two grains of the same level: the topic a word belongs to, or the place it
+             sits in the list. Picking a theme and working straight through are different
+             intentions, and neither is a sub-case of the other. -->
+        <div class="ls-cuts" role="tablist" aria-label="Einteilung wählen">
+          <button
+            type="button"
+            role="tab"
+            class:list={["ls-cut", openCut(level) === "thema" && "is-active"]}
+            data-cut="thema"
+            aria-selected={openCut(level) === "thema" ? "true" : "false"}
+          >Nach Thema<span class="ls-cut-n">25er</span></button>
+          <button
+            type="button"
+            role="tab"
+            class:list={["ls-cut", openCut(level) === "teile" && "is-active"]}
+            data-cut="teile"
+            aria-selected={openCut(level) === "teile" ? "true" : "false"}
+          >Der Reihe nach<span class="ls-cut-n">20er</span></button>
+        </div>
+
+        <div class="ls-cut-panel" data-cut="thema" hidden={openCut(level) !== "thema"}>
+          {groupsByLevel[level].map((group) => (
+            <section class="ls-group">
+              {group.title && (groupsCollapse(level) ? (
+                <h4 class="ls-group-head">
+                  <button
+                    type="button"
+                    class:list={["ls-block-toggle", group === openGroup(level) && "is-open"]}
+                    data-block={group.id}
+                    aria-expanded={group === openGroup(level) ? "true" : "false"}
+                    aria-controls={`ls-block-${group.id}`}
+                  >{group.title}</button>
+                  <span class="ls-group-n">{group.sets.length} Sets</span>
+                </h4>
+              ) : (
+                <h4 class="ls-group-head">{group.title}<span class="ls-group-n">{group.sets.length} Sets</span></h4>
+              ))}
+              <div
+                class="ls-grouplist"
+                id={`ls-block-${group.id}`}
+                hidden={groupsCollapse(level) && !!group.title && group !== openGroup(level)}
               >
-                <span class="lp-set-id">{set.id.split("-")[1]}</span>
-                <span class="lp-set-title">{set.title}</span>
-                <span class="lp-set-n">{set.words}</span>
+                {group.sets.map((set) => (
+                  <a
+                    class:list={["nvb-item", set.id === current && "active"]}
+                    href={`/uebungen/wortschatz/${set.id}`}
+                    aria-current={set.id === current ? "page" : undefined}
+                  >
+                    <span class="nv-icon ls-num">{set.id.split("-")[1]}</span>
+                    <span>{set.title}</span>
+                    <span class="nv-count">{set.words}</span>
+                  </a>
+                ))}
+              </div>
+            </section>
+          ))}
+          {c[level].plannedModules > 0 && (
+            <p class="ls-plan">
+              {c[level].plannedModules} weitere Module sind geplant ({c[level].plannedUnits} Lernsets) —
+              die Wörter dafür gibt es noch nicht.
+            </p>
+          )}
+        </div>
+
+        <div class="ls-cut-panel" data-cut="teile" hidden={openCut(level) !== "teile"}>
+          <p class="ls-lead">
+            Alle {c[level].words} Wörter von {level} der Reihe nach, in {teileCount[level]} Portionen
+            zu je 20. Eine Portion läuft quer durch die Themen — darunter steht, durch welche.
+          </p>
+          {teileByLevel[level].map((block) => (
+            <section class="ls-group">
+              <h4 class="ls-group-head">
+                <button
+                  type="button"
+                  class:list={["ls-block-toggle", block === openTeilBlock(level) && "is-open"]}
+                  data-block={block.id}
+                  aria-expanded={block === openTeilBlock(level) ? "true" : "false"}
+                  aria-controls={`ls-block-${block.id}`}
+                >{block.title}</button>
+                <span class="ls-group-n">{block.words}</span>
+              </h4>
+              <div class="ls-grouplist" id={`ls-block-${block.id}`} hidden={block !== openTeilBlock(level)}>
+                {block.portions.map((teil) => (
+                  <a
+                    class:list={["nvb-item", "ls-item--teil", teil.id === current && "active"]}
+                    href={`/uebungen/wortschatz/${teil.id}`}
+                    aria-current={teil.id === current ? "page" : undefined}
+                  >
+                    <span class="nv-icon ls-num">{teil.index}</span>
+                    <span>
+                      {teil.from}-{teil.to}
+                      <span class="ls-item-sub">{teil.topics.join(" · ")}</span>
+                    </span>
+                    <span class="nv-count">{teil.words}</span>
+                  </a>
+                ))}
+              </div>
+            </section>
+          ))}
+        </div>
+      </div>
+    ))}
+
+    <div class="nvb-section" id="ls-pane-haeufigkeit" data-pane="haeufigkeit" hidden={!isFreq}>
+      <div class="nvb-panelhead">
+        <h3>Nach Häufigkeit</h3>
+        <button type="button" class="nvb-collapse" data-nvb-collapse aria-label="Liste einklappen">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>
+        </button>
+      </div>
+      <p class="ls-lead">
+        {freq.words} Wörter nach Korpushäufigkeit, in {freq.cohorts} Portionen zu je {freq.size}.
+        Gemischt — Verben, Nomen und Funktionswörter zusammen, so wie sie in der Liste stehen.
+      </p>
+
+      {blocks.map((block) => (
+        <section class="ls-group">
+          <h4 class="ls-group-head">
+            <button
+              type="button"
+              class:list={["ls-block-toggle", block === openBlock && "is-open"]}
+              data-block={block.id}
+              aria-expanded={block === openBlock ? "true" : "false"}
+              aria-controls={`ls-block-${block.id}`}
+            >{block.title}</button>
+            <span class="ls-group-n">{block.words}</span>
+          </h4>
+          <div class="ls-grouplist" id={`ls-block-${block.id}`} hidden={block !== openBlock}>
+            {block.cohorts.map((co) => (
+              <a
+                class:list={["nvb-item", co.id === current && "active"]}
+                href={`/uebungen/wortschatz/${co.id}`}
+                aria-current={co.id === current ? "page" : undefined}
+              >
+                <span class="nv-icon ls-num">{co.index}</span>
+                <span>{co.from}-{co.to}</span>
+                <span class="nv-count">{co.levels.join("·")}</span>
               </a>
             ))}
           </div>
         </section>
       ))}
-      {c[level].plannedModules > 0 && (
-        <p class="lp-plan">
-          {c[level].plannedModules} weitere Module sind geplant ({c[level].plannedUnits} Lernsets) —
-          die Wörter dafür gibt es noch nicht.
+
+      <!-- Said out loud rather than quietly dropped. The frequency source is a wordform
+           list, so a compound like "Ausländerbehörde" comes back unmatched because of how
+           it is written, not because it is rare — calling those words "selten" would be a
+           claim the data does not support. -->
+      <p class="ls-plan">
+        {freq.unranked} Wörter stehen nicht in der Häufigkeitsliste — meist Komposita, die dort
+        als Wortform nicht vorkommen. Das heißt nicht, dass sie selten sind; sie stehen in
+        ihrem Lernset unter ihrer Stufe.
+      </p>
+      {planLevels.length > 0 && (
+        <p class="ls-plan">
+          {planLevels.join(" und ")}: {planLevels.reduce((n, l) => n + c[l].plannedModules, 0)} Module
+          geplant, noch keine Wörter. Die Einstufung ist an A1–C2 orientiert, nicht die
+          offizielle Goethe-/telc-Liste.
         </p>
       )}
     </div>
-  ))}
-
-  {planLevels.length > 0 && (
-    <p class="lp-plan lp-plan--levels">
-      {planLevels.join(" und ")}: {planLevels.reduce((n, l) => n + c[l].plannedModules, 0)} Module
-      geplant, noch keine Wörter. Die Einstufung ist an A1–C2 orientiert, nicht die
-      offizielle Goethe-/telc-Liste.
-    </p>
-  )}
-  </div>
-
-  <div class="lp-mode-panel" id="lp-mode-haeufigkeit" data-mode="haeufigkeit" hidden={!isFreq}>
-    <p class="lp-level-lead">
-      {freq.words} Wörter nach Korpushäufigkeit sortiert, in {freq.cohorts} Portionen zu
-      je {freq.size}. Gemischt — Verben, Nomen und Funktionswörter zusammen, so wie sie in
-      der Häufigkeitsliste stehen.
-    </p>
-
-    {blocks.map((block) => (
-      <section class="lp-module">
-        <h3 class="lp-module-title">
-          <button
-            type="button"
-            class={`lp-block-toggle ${block === openBlock ? "is-open" : ""}`}
-            data-block={block.id}
-            aria-expanded={block === openBlock ? "true" : "false"}
-            aria-controls={`lp-block-${block.id}`}
-          >{block.title}</button>
-          <span class="lp-module-n">{block.words}</span>
-        </h3>
-        <div class="lp-module-sets" id={`lp-block-${block.id}`} hidden={block !== openBlock}>
-          {block.cohorts.map((co) => (
-            <a class="lp-set" href={`/uebungen/wortschatz/${co.id}`} aria-current={co.id === current ? "page" : undefined}>
-              <span class="lp-set-id">{co.index}</span>
-              <span class="lp-set-title">{co.from}-{co.to}</span>
-              <span class="lp-set-levels">{co.levels.join("·")}</span>
-            </a>
-          ))}
-        </div>
-      </section>
-    ))}
-
-    <!-- Said out loud rather than quietly dropped. The frequency source is a wordform
-         list, so a compound like "Ausländerbehörde" comes back unmatched because of how
-         it is written, not because it is rare — calling those words "selten" would be a
-         claim the data does not support. -->
-    <p class="lp-plan lp-plan--levels">
-      {freq.unranked} Wörter stehen nicht in der Häufigkeitsliste — meist Komposita, die dort
-      als Wortform nicht vorkommen. Das heißt nicht, dass sie selten sind; sie stehen in
-      ihrem Lernset unter „Nach Niveau“.
-    </p>
   </div>
 </div>
 
 <script>
   import { getResume } from "../lib/progress.js";
 
-  const root = document.querySelector(".lp");
+  const root = document.querySelector(".ls-nvb");
+  const FOLD_KEY = "da-wortschatz-lernsets-fold";
 
-  root.querySelectorAll(".lp-mode").forEach((tab) => {
+  // ── Fold: the panel goes, the rail stays ──────────────────────────────────────
+  // Distinct from the column's own collapse, which takes rail and all. This is the
+  // dashboard's `collapsed` class; the width animation that goes with it lives in
+  // lernset-picker.css, because nav.css expresses the fold as `display: none` on the
+  // panel and display cannot tween.
+  //
+  // The page is told as well as the picker: the grid track the column sits in is sized
+  // from --rule-w, and a panel that shrank inside a track that did not would just leave a
+  // hole where it used to be. .vt-split reads [data-fold] for that.
+  const page = document.getElementById("vp-page");
+  function setFold(on, persist = true) {
+    root.classList.toggle("collapsed", on);
+    if (page) page.dataset.fold = on ? "1" : "";
+    root.querySelectorAll("[data-nvb-collapse]").forEach((b) => {
+      b.setAttribute("aria-expanded", on ? "false" : "true");
+      b.setAttribute("aria-label", on ? "Liste ausklappen" : "Liste einklappen");
+    });
+    if (persist) { try { localStorage.setItem(FOLD_KEY, on ? "1" : "0"); } catch {} }
+  }
+
+  let folded = false;
+  try { folded = localStorage.getItem(FOLD_KEY) === "1"; } catch {}
+  // Restored without animating: the slide is feedback for an action, and nobody took one.
+  root.classList.add("no-anim");
+  setFold(folded, false);
+  requestAnimationFrame(() => requestAnimationFrame(() => root.classList.remove("no-anim")));
+
+  root.querySelectorAll("[data-nvb-collapse]").forEach((b) =>
+    b.addEventListener("click", (e) => {
+      e.stopPropagation();
+      setFold(!root.classList.contains("collapsed"));
+    }));
+
+  // ── The rail ──────────────────────────────────────────────────────────────────
+  // One handler for the whole rail: A1–B2 and "Nach Häufigkeit" are five views of the
+  // same lexicon, not a level switch nested inside a mode switch.
+  root.querySelectorAll("[data-rail]").forEach((tab) => {
     tab.addEventListener("click", () => {
-      const mode = tab.dataset.mode;
-      root.querySelectorAll(".lp-mode").forEach((t) => {
+      const pane = tab.dataset.rail;
+      root.querySelectorAll("[data-rail]").forEach((t) => {
         const on = t === tab;
-        t.classList.toggle("is-active", on);
+        t.classList.toggle("active", on);
         t.setAttribute("aria-selected", String(on));
       });
-      root.querySelectorAll(".lp-mode-panel").forEach((pnl) => { pnl.hidden = pnl.dataset.mode !== mode; });
+      root.querySelectorAll(".nvb-section").forEach((p) => { p.hidden = p.dataset.pane !== pane; });
+      // Pressing a rail icon is a request to see that list. Answering it by switching a
+      // panel nobody can see is not an answer, so a folded picker unfolds.
+      if (root.classList.contains("collapsed")) setFold(false);
+      // The dashboard's own arrival stagger, replayed so that switching level reads as
+      // the panel being replaced rather than quietly re-labelled.
+      const sec = root.querySelector(`.nvb-section[data-pane="${pane}"]`);
+      if (sec) {
+        sec.classList.remove("nvb-section--enter");
+        void sec.offsetWidth;
+        sec.classList.add("nvb-section--enter");
+      }
     });
   });
 
-  // One block open at a time: 123 cohorts listed flat is a scroll, not a menu.
-  root.querySelectorAll(".lp-block-toggle").forEach((btn) => {
+  // ── Groups ────────────────────────────────────────────────────────────────────
+  // One open at a time: 123 cohorts listed flat is a scroll, not a menu. Scoped to the
+  // list the button sits in — the Bereiche, the Portionen blocks and the frequency blocks
+  // are separate lists and must not close each other.
+  root.querySelectorAll(".ls-block-toggle").forEach((btn) => {
     btn.addEventListener("click", () => {
-      const panel = document.getElementById(`lp-block-${btn.dataset.block}`);
+      const scope = btn.closest(".ls-cut-panel") ?? btn.closest(".nvb-section") ?? root;
+      const panel = document.getElementById(`ls-block-${btn.dataset.block}`);
       const open = panel.hidden;
-      root.querySelectorAll(".lp-block-toggle").forEach((b) => {
+      scope.querySelectorAll(".ls-block-toggle").forEach((b) => {
         b.classList.remove("is-open");
         b.setAttribute("aria-expanded", "false");
-        document.getElementById(`lp-block-${b.dataset.block}`).hidden = true;
+        document.getElementById(`ls-block-${b.dataset.block}`).hidden = true;
       });
       if (open) {
         btn.classList.add("is-open");
@@ -235,28 +412,32 @@ const openBlock = isFreq
     });
   });
 
-  root.querySelectorAll(".lp-level").forEach((tab) => {
+  // ── Thema / Der Reihe nach, per level ─────────────────────────────────────────
+  root.querySelectorAll(".ls-cut").forEach((tab) => {
     tab.addEventListener("click", () => {
-      const level = tab.dataset.level;
-      root.querySelectorAll(".lp-level").forEach((t) => {
+      const scope = tab.closest(".ls-sets");
+      scope.querySelectorAll(".ls-cut").forEach((t) => {
         const on = t === tab;
         t.classList.toggle("is-active", on);
         t.setAttribute("aria-selected", String(on));
       });
-      root.querySelectorAll(".lp-sets").forEach((s) => { s.hidden = s.dataset.level !== level; });
+      scope.querySelectorAll(".ls-cut-panel").forEach((pnl) => {
+        pnl.hidden = pnl.dataset.cut !== tab.dataset.cut;
+      });
     });
   });
 
-  // "Weiterlernen" is whatever Wortschatz deck this browser last opened — progress.js
-  // already records every /uebungen/* page it lands on, so this needs no new store. It
-  // stays hidden when there is nothing to resume, rather than guessing a deck.
+  // ── Weiterlernen ──────────────────────────────────────────────────────────────
+  // Whatever Wortschatz deck this browser last opened — progress.js already records every
+  // /uebungen/* page it lands on, so this needs no new store. It stays hidden when there
+  // is nothing to resume, rather than guessing a deck.
   const resume = getResume();
   const last = (resume ? [resume.last, ...resume.recents] : []).find(
     (r) => r && r.path.startsWith("/uebungen/wortschatz") && r.path !== location.pathname.replace(/\/+$/, "")
   );
   if (last) {
-    const link = document.getElementById("lp-resume");
-    document.getElementById("lp-resume-name").textContent = last.title;
+    const link = document.getElementById("ls-resume");
+    link.querySelector(".nvb-tip").textContent = `Weiterlernen · ${last.title}`;
     link.href = last.path;
     link.hidden = false;
   }

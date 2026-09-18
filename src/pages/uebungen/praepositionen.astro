@@ -1,0 +1,190 @@
+---
+// /uebungen/praepositionen — the Präpositionen area.
+//
+// Prepositions were the one subject on this site you could not find by looking for it.
+// Wechselpräpositionen (A2) sat unlisted behind the Grammatik tile, "Verben mit
+// Präpositionen" (B1) had a tile that opened straight into the topic and named itself
+// after it, and /uebungen offered no third thing to click. So the two got an area, and
+// the tile points here instead of into one of them.
+//
+// The two topics answer two different questions and a learner who conflates them will
+// practise the wrong one, so the page says which is which before it lists them — that
+// orientation is the reason this page exists rather than being a second level index.
+import Layout from "../../layouts/Layout.astro";
+import PracticeHeader from "../../components/PracticeHeader.astro";
+import "../../styles/practice.css";
+import { praepositionTopics, GRAMMAR_ICON } from "../../lib/catalog.js";
+
+const totalTasks = praepositionTopics.reduce((n, t) => n + t.tasks, 0);
+
+// What each topic is actually for, in the learner's question rather than the grammar's
+// name. Keyed by id so a topic that grows a new title does not silently lose its line.
+const ASKS = {
+  wechselpraepositionen: "Wo steht es — oder wohin geht es?",
+  praepositionen: "Welche Präposition verlangt dieses Verb?",
+};
+---
+<Layout title="Präpositionen – DeutschAcademy">
+  <PracticeHeader title="Präpositionen" active="grammatik" />
+  <main class="practice-main praep-main">
+    <div class="praep-hero">
+      <p class="eyebrow" data-i18n="praep.hero.eyebrow">Grammatik üben</p>
+      <h1 data-i18n="praep.hero.title">Präpositionen</h1>
+      <p
+        data-i18n="praep.hero.subtitle"
+        data-i18n-vars={JSON.stringify({ n: praepositionTopics.length, q: totalTasks })}
+      >
+        {praepositionTopics.length} Themen, {totalTasks} Aufgaben. Zwei Fragen, die oft
+        verwechselt werden — und zwei Übungsräume, die sie getrennt beantworten.
+      </p>
+    </div>
+
+    <!-- Before the cards, not after: picking the wrong one of these two costs a learner a
+         whole session on a rule they were not confused about. -->
+    <div class="praep-split">
+      <div class="praep-split-col">
+        <p class="praep-split-q" data-i18n="praep.split.caseQ">Wo oder wohin?</p>
+        <p class="praep-split-a" data-i18n-html="praep.split.caseA">
+          Neun Präpositionen können Dativ <em>oder</em> Akkusativ verlangen. Die Frage
+          entscheidet den Fall: <b>im</b> Kino ist nicht <b>ins</b> Kino.
+        </p>
+      </div>
+      <div class="praep-split-col">
+        <p class="praep-split-q" data-i18n="praep.split.verbQ">Welche Präposition?</p>
+        <p class="praep-split-a" data-i18n-html="praep.split.verbA">
+          Manche Verben haben ihre Präposition fest dabei, und sie ist nicht zu erraten:
+          <b>warten auf</b>, <b>denken an</b>, <b>sich freuen über</b>.
+        </p>
+      </div>
+    </div>
+
+    <div class="praep-grid">
+      {praepositionTopics.map((t) => (
+        <a class="praep-card" href={t.href}>
+          <span class="praep-card-ic" aria-hidden="true">{GRAMMAR_ICON[t.id] ?? "🔗"}</span>
+          <span class="praep-card-body">
+            <span class="praep-card-head">
+              <b>{t.name}</b>
+              <span class="badge badge-info">{t.level}</span>
+            </span>
+            <i class="praep-card-ask">{ASKS[t.id]}</i>
+            <i class="praep-card-sub">{t.subtitle}</i>
+            <span class="praep-card-count">{t.exercises} Aufgabentypen · {t.tasks} Aufgaben</span>
+          </span>
+        </a>
+      ))}
+    </div>
+
+    <!-- Not a third topic: it is a B2 vocabulary pattern that happens to carry
+         prepositions, and pretending otherwise would put a learner who came for
+         "wo oder wohin" in front of Nomen-Verb-Verbindungen. -->
+    <p class="praep-more">
+      <span data-i18n="praep.more.label">Verwandt:</span>{" "}
+      <a href="/uebungen/grammatik/nomen-verb-verbindungen">Nomen-Verb-Verbindungen</a>{" "}
+      <span data-i18n-html="praep.more.note">— feste Wendungen wie <em>in Kontakt treten</em>, B2.</span>
+    </p>
+
+    <p class="praep-back">
+      <a href="/uebungen/grammatik" data-i18n="praep.back">← Alle Grammatikthemen</a>
+    </p>
+  </main>
+</Layout>
+
+<style>
+  /* A two-card index, so it keeps the reading width rather than the card-index width
+     uebungen/grammatik.astro uses for 27 of them. */
+  .praep-main { max-width: 880px; padding-top: 28px; padding-bottom: 56px; }
+
+  .praep-hero {
+    background: var(--gradient-brand);
+    border-radius: var(--radius-lg);
+    padding: 22px 28px;
+    margin-bottom: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .praep-hero .eyebrow { color: rgba(255, 255, 255, .85); margin: 0; }
+  .praep-hero h1 {
+    font-family: var(--font-display);
+    font-size: clamp(1.4rem, 2.4vw, 1.9rem);
+    color: #fff;
+    margin: 0;
+  }
+  .praep-hero p { color: rgba(255, 255, 255, .92); margin: 0; max-width: 62ch; font-size: .9rem; line-height: 1.45; }
+
+  .praep-split {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+    margin-bottom: 24px;
+  }
+  .praep-split-col {
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 14px 16px;
+    background: var(--surface-sunken, rgba(0, 0, 0, .02));
+  }
+  .praep-split-q {
+    margin: 0 0 6px;
+    font-family: var(--font-label);
+    font-size: var(--text-xs);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    color: var(--brand-blue);
+  }
+  .praep-split-a { margin: 0; font-size: .9rem; line-height: 1.5; color: var(--muted); }
+  .praep-split-a b { color: var(--ink); }
+
+  .praep-grid { display: grid; gap: 14px; }
+
+  .praep-card {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    padding: 18px 20px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface-card);
+    text-decoration: none;
+    color: var(--ink);
+    transition: box-shadow .2s ease, transform .2s ease, border-color .2s ease;
+  }
+  .praep-card:hover {
+    box-shadow: var(--shadow-hover);
+    transform: translateY(-2px);
+    border-color: var(--brand-blue);
+  }
+  .praep-card-ic { font-size: 1.7rem; line-height: 1; flex: none; }
+  .praep-card-body { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+  .praep-card-head { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .praep-card-head b { font-size: var(--text-lg); font-weight: var(--fw-regular); }
+  .praep-card-ask { font-style: normal; font-weight: 600; font-size: .9rem; color: var(--brand-blue); }
+  .praep-card-sub { font-style: normal; font-size: .88rem; line-height: 1.5; color: var(--muted); }
+  .praep-card-count {
+    align-self: flex-start;
+    margin-top: 6px;
+    background: var(--blue-100);
+    color: var(--brand-blue-dark);
+    font-size: var(--text-xs);
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: var(--radius-pill);
+  }
+
+  .praep-more { margin: 24px 0 0; font-size: .88rem; color: var(--muted); }
+  .praep-more a { color: var(--brand-blue); }
+  .praep-back { margin: 28px 0 0; font-size: .9rem; }
+  .praep-back a { color: var(--brand-blue); text-decoration: none; }
+  .praep-back a:hover { text-decoration: underline; }
+
+  /* Phone: the two orientation columns stack rather than shrinking to 40 characters a
+     line, and the card icon comes out of the flow so the title gets the full width. */
+  @media (max-width: 640px) {
+    .praep-split { grid-template-columns: 1fr; gap: 10px; }
+    .praep-hero { padding: 18px 18px; }
+    .praep-card { padding: 16px; gap: 12px; }
+    .praep-card-ic { font-size: 1.4rem; }
+  }
+</style>

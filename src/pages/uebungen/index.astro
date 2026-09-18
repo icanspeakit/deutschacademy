@@ -17,10 +17,11 @@ import "../../styles/practice.css";
 import "../../styles/uebungen-vorschau.css";
 import "../../styles/dashboard.css";
 // One catalogue for /uebungen and / — see src/lib/catalog.js.
-import { tools, exams, lexiconCounts } from "../../lib/catalog.js";
+import { tools, landingTools, exams, lexiconCounts, grammarWorkspaceLevels } from "../../lib/catalog.js";
 
 const exerciseCount = tools.length;
 const examCount = exams.length;
+const workspaceCount = grammarWorkspaceLevels.reduce((n, row) => n + row.topics.length, 0);
 ---
 <Layout title="Übungen – DeutschAcademy">
   <div class="uv">
@@ -66,7 +67,7 @@ const examCount = exams.length;
         <div class="uv-catalogue">
           <p class="uv-eyebrow" data-i18n="nav.exercises">Übungen</p>
           <div class="uv-grid">
-            {tools.map((t) => (
+            {landingTools.map((t) => (
               <a class="uv-card" href={t.href}>
                 <div class="uv-card-icon"><Icon name={t.icon} /></div>
                 <h3 data-i18n={t.titleKey}>{t.title}</h3>
@@ -76,6 +77,50 @@ const examCount = exams.length;
             ))}
           </div>
 
+        </div>
+
+        <!-- The Grammatik-Werkstatt. The Grammatik tile above leads to a level index; it
+             does not, and cannot, name the 21 topics behind it, so "wo sind die
+             Wechselpräpositionen?" had no answer on this page. They are listed here by
+             level instead — one level at a time, because 21 cards at once is the wall of
+             choice the picker below exists to avoid. -->
+        <section class="uv-werkstatt">
+          <p class="uv-eyebrow" data-i18n="hub.werkstatt.title">Grammatik-Werkstatt</p>
+          <p class="uv-werkstatt-sub" data-i18n="hub.werkstatt.sub" data-i18n-vars={JSON.stringify({ n: workspaceCount })}>
+            {workspaceCount} Themen mit Erklärung und mehreren Aufgabentypen. Wähle dein Niveau.
+          </p>
+
+          <div class="topic-tabs uv-lvl-tabs" role="tablist" aria-label="Niveau">
+            {grammarWorkspaceLevels.map((row, i) => (
+              <button
+                class:list={["topic-tab", i === 0 && "active"]}
+                type="button"
+                role="tab"
+                aria-selected={i === 0 ? "true" : "false"}
+                data-wk-tab={row.level}
+              >
+                {row.level} <span class="uv-lvl-n">{row.topics.length}</span>
+              </button>
+            ))}
+          </div>
+
+          {grammarWorkspaceLevels.map((row, i) => (
+            <div class="uv-wk-grid" data-wk-view={row.level} hidden={i !== 0}>
+              {row.topics.map((t) => (
+                <a class="uv-wk-card" href={t.href}>
+                  <span class="uv-wk-ic" aria-hidden="true">{t.icon}</span>
+                  <span class="uv-wk-txt">
+                    <b>{t.name}</b>
+                    <i>{t.subtitle}</i>
+                  </span>
+                  <span class="uv-wk-n">{t.tasks}</span>
+                </a>
+              ))}
+            </div>
+          ))}
+        </section>
+
+        <div class="uv-catalogue uv-catalogue--exams">
           <p class="uv-eyebrow" data-i18n="nav.exams">Prüfungen</p>
           <div class="uv-grid uv-grid--exams">
             {exams.map((e) => (
@@ -599,5 +644,29 @@ const examCount = exams.length;
       }
     });
     bootI18n();
+
+    // Grammatik-Werkstatt: one level at a time. Every level is in the HTML and only the
+    // first is shown, so with no JS the page still lists A1 rather than nothing — and
+    // the <noscript> rule below shows all four.
+    const wkTabs = Array.from(document.querySelectorAll("[data-wk-tab]"));
+    const wkViews = Array.from(document.querySelectorAll("[data-wk-view]"));
+    for (const tab of wkTabs) {
+      tab.addEventListener("click", () => {
+        for (const t of wkTabs) {
+          const on = t === tab;
+          t.classList.toggle("active", on);
+          t.setAttribute("aria-selected", String(on));
+        }
+        for (const v of wkViews) v.hidden = v.dataset.wkView !== tab.dataset.wkTab;
+      });
+    }
   </script>
+
+  <noscript>
+    <style>
+      /* No JS, no tabs: every level is simply a list. */
+      .uv-lvl-tabs { display: none; }
+      .uv-wk-grid[hidden] { display: grid !important; }
+    </style>
+  </noscript>
 </Layout>

@@ -15,10 +15,20 @@ import b1 from "../content/lexicon/b1.json" with { type: "json" };
 import b2 from "../content/lexicon/b2.json" with { type: "json" };
 import c1 from "../content/lexicon/c1.json" with { type: "json" };
 import c2 from "../content/lexicon/c2.json" with { type: "json" };
+// Arabic, Russian and Turkish live beside the lexicon rather than in it, keyed by word id.
+// Why: src/content/lexicon/i18n/README.md. `en` is not among them — it ships inline with
+// the word because it is part of how the lexicon was compiled.
+import ar from "../content/lexicon/i18n/ar.json" with { type: "json" };
+import ru from "../content/lexicon/i18n/ru.json" with { type: "json" };
+import tr from "../content/lexicon/i18n/tr.json" with { type: "json" };
 
 export const LEVELS = ["A1", "A2", "B1", "B2", "C1", "C2"];
 
+/** Every language a card can carry a translation in, English first. */
+export const TRANSLATION_LANGS = ["en", "ar", "ru", "tr"];
+
 const FILES = { A1: a1, A2: a2, B1: b1, B2: b2, C1: c1, C2: c2 };
+const SIDECARS = { ar, ru, tr };
 
 function flatten(file) {
   const out = [];
@@ -36,6 +46,14 @@ function flatten(file) {
         level: file.level,
         unit: unit.id,
       });
+      // The sidecar glosses, joined on the id the line above just settled. A language with
+      // no entry for this word leaves no key at all, so `w.ar != null` stays the honest
+      // test for "this word has an Arabic translation".
+      const row = out[out.length - 1];
+      for (const [lang, table] of Object.entries(SIDECARS)) {
+        const value = table[row.id];
+        if (value) row[lang] = value;
+      }
     }
   }
   return out;
@@ -132,12 +150,35 @@ export function counts() {
 export const asArtikelRows = (opts = {}) =>
   nouns({ ...opts, has: "gender" }).map((n) => ({ word: n.lemma, gender: n.gender }));
 
+/**
+ * Which of TRANSLATION_LANGS every one of these rows can be quizzed in.
+ *
+ * `every`, not `some`, and that is the whole point: the trainer renders one tab per
+ * language, and a tab that resolves to "Übersetzung folgt" partway through the deck is a
+ * promise the content did not keep. So a language appears only once the deck is complete
+ * in it — which also makes a half-finished translation pass invisible instead of broken.
+ */
+export function langsIn(rows) {
+  if (!rows.length) return ["en"];
+  return TRANSLATION_LANGS.filter((lang) => rows.every((r) => r[lang] != null));
+}
+
+/** The same question asked of cards rather than lexicon rows — what a page has in hand. */
+export function langsOf(cards) {
+  if (!cards.length) return ["en"];
+  return TRANSLATION_LANGS.filter((lang) => cards.every((c) => c.translations?.[lang]));
+}
+
 /** Shape of src/data/wortschatz.json: `{ front, note, translations }`. */
-const toCard = (e) => ({
-  front: e.lemma,
-  note: e.note ?? e.example ?? "",
-  translations: { en: e.en },
-});
+const toCard = (e) => {
+  const translations = {};
+  for (const lang of TRANSLATION_LANGS) if (e[lang] != null) translations[lang] = e[lang];
+  return {
+    front: e.lemma,
+    note: e.note ?? e.example ?? "",
+    translations,
+  };
+};
 export const asVokabelCards = (opts = {}) => select({ ...opts, has: "en" }).map(toCard);
 
 /** The same shape for rows a caller has already selected some other way — the frequency

@@ -3,6 +3,9 @@ import Layout from "../../layouts/Layout.astro";
 import PracticeHeader from "../../components/PracticeHeader.astro";
 import "../../styles/practice.css";
 import grammatik from "../../data/grammatik.json";
+// The icons are shared with /uebungen's Grammatik-Werkstatt — two surfaces drawing the
+// same topic with two different pictures is how one catalogue becomes two.
+import { GRAMMAR_ICON } from "../../lib/catalog.js";
 
 // The hub draws from two pools, in this order of preference:
 //   - src/data/grammatik/*.json — full workspaces (concept card + up to five exercises)
@@ -36,35 +39,6 @@ const topics = [
     })),
 ];
 
-const ICON = {
-  akkusativ: "🎯",
-  artikel: "🏷️",
-  "w-fragen": "❓",
-  "ja-nein-fragen": "🙋",
-  dativ: "🤝",
-  modalverben: "🔑",
-  "trennbare-verben": "✂️",
-  satzstellung: "🌉",
-  wechselpraepositionen: "🧭",
-  negation: "🚫",
-  perfekt: "⏪",
-  praepositionen: "🔗",
-  adjektivdeklination: "🎨",
-  "als-oder-wenn": "⏱️",
-  passiv: "🔄",
-  relativpronomen: "🧩",
-  "zweiteilige-konnektoren": "🔀",
-  "infinitiv-mit-zu": "🏁",
-  "indirekte-fragen": "🙏",
-  "n-deklination": "📐",
-  "praeteritum-plusquamperfekt": "📜",
-  irgend: "🌫️",
-  konjunktiv2: "💭",
-  "negationswoerter": "🔕",
-  "partizip-als-adjektiv": "🖌️",
-  "nomen-verb-verbindungen": "🧱",
-  fokuspartikeln: "🔦",
-};
 
 // The guided run walks the workspaces in syllabus order (the order itself lives in
 // lauf.astro). The chooser below only needs the size of it, derived rather than typed
@@ -121,7 +95,7 @@ const ROW_WIDTH = 4;
         <div class="tool-grid">
           {topics.filter((t) => t.level === level).map((t) => (
             <a class="tool-card" href={t.href}>
-              <div class="tool-card-icon">{ICON[t.id] || "📚"}</div>
+              <div class="tool-card-icon">{GRAMMAR_ICON[t.id] || "📚"}</div>
               <h3>{t.name}</h3>
               <p>{t.intro}</p>
               <span class={`tool-card-count ${t.isWorkspace ? "tool-card-count--workspace" : ""}`}>{t.badge}</span>

@@ -27,6 +27,17 @@
  * Where there is no panel to open (`ruleCard` absent) or only one beat of copy, the
  * tour falls back to lighting the button alone: a spotlight travelling from a target
  * to itself is a beat nobody needs to sit through.
+ *
+ * `restHidden: false` is the same story told backwards, for a column that is open by
+ * default — the Wortschatz Lernset list on a desktop. There the learner can already see
+ * the panel, so beat 1 names what is in front of them and beat 2 is the interesting one:
+ * the column closes, and the light lands on whatever brings it back. Passing `pivot` makes
+ * that the edge tab rather than the toolbar pill, because the tab is what the learner will
+ * actually reach for once the column is away.
+ *
+ * Either way the tour ends where it started. `restHidden` is not a preference the tour
+ * sets; it is the one it borrowed and has to give back, including when it is cancelled
+ * halfway through.
  */
 
 const CURSOR_SVG =
@@ -52,7 +63,18 @@ const COACH_COMPACT = [
    "Ein Tippen zeigt sie ganz, ein zweites klappt sie wieder ein. Deine Wahl wird gemerkt."],
 ];
 
-export function createRuleIntro({ ruleEl, ruleBtn, ruleCard, setRule, compact = false, coach: copy }) {
+export function createRuleIntro({
+  ruleEl,
+  ruleBtn,
+  ruleCard,
+  setRule,
+  compact = false,
+  coach: copy,
+  /** The state to hand back when the tour ends or is cancelled. */
+  restHidden = true,
+  /** Edge tab the collapsed column leaves behind; lit instead of `ruleBtn` in beat 2. */
+  pivot = null,
+}) {
   // Two beats either way; `coach` lets a page that is collapsing something other
   // than a grammar rule say so in its own words.
   const script = copy ?? (compact ? COACH_COMPACT : COACH);
@@ -140,6 +162,20 @@ export function createRuleIntro({ ruleEl, ruleBtn, ruleCard, setRule, compact = 
     coach.classList.add("is-on");
   }
 
+  // The control that brings the column back once it is away: the edge tab where a page
+  // renders one and the layout is actually showing it, the toolbar pill otherwise.
+  // Asked at the moment of use, never cached — the tab does not exist until the column
+  // collapses, and below the width that renders it a getBoundingClientRect() is a 0×0
+  // box in the top-left corner, which is where a spotlight would go.
+  const backControl = () => {
+    // Laid out AND on screen. The tab is rendered in both states now so that it can be
+    // transitioned, so a box with width is no longer proof that anyone can see it.
+    if (!pivot) return ruleBtn;
+    const box = pivot.getBoundingClientRect();
+    const vis = getComputedStyle(pivot).visibility !== "hidden";
+    return box.width > 0 && vis ? pivot : ruleBtn;
+  };
+
   function centerOf(el) {
     const r = el.getBoundingClientRect();
     return [r.left + r.width / 2, r.top + r.height / 2];
@@ -179,7 +215,8 @@ export function createRuleIntro({ ruleEl, ruleBtn, ruleCard, setRule, compact = 
     listen(false);
     removeOverlay();
     ruleBtn?.removeAttribute("data-peek");
-    setRule(true);
+    pivot?.removeAttribute("data-peek");
+    setRule(restHidden);
   }
 
   function finish() {
@@ -223,18 +260,22 @@ export function createRuleIntro({ ruleEl, ruleBtn, ruleCard, setRule, compact = 
       click();
       setRule(true);
     });
+    // The panel is away by now, so on a page with an edge tab the tab is what the eye
+    // should be left on — following the light back to the toolbar pill would point at
+    // the wrong one of the two ways back.
     at(8000, () => {
-      const r = frame(ruleBtn, 8, 999);
+      const r = frame(backControl(), 8, 999);
       placeCursor(r.left + r.width / 2, r.top + r.height / 2);
     });
     at(8500, () => {
       overlay?.classList.remove("is-on");
       cursor?.classList.remove("is-on");
-      ruleBtn?.setAttribute("data-peek", "");
+      backControl().setAttribute("data-peek", "");
     });
     at(9100, removeOverlay);
     at(11600, () => {
       ruleBtn?.removeAttribute("data-peek");
+      pivot?.removeAttribute("data-peek");
       finish();
     });
   }
@@ -294,6 +335,71 @@ export function createRuleIntro({ ruleEl, ruleBtn, ruleCard, setRule, compact = 
     at(9200, removeOverlay);
     at(11800, () => {
       ruleBtn?.removeAttribute("data-peek");
+      setRule(restHidden);
+      finish();
+    });
+  }
+
+  /* The desktop telling for a column that is already open.
+   *
+   * run() above has to open the panel before it can point at it, which costs it the
+   * first two seconds. Here the panel is on screen from the start, so beat 1 is simply
+   * "this is yours" — and the beat worth spending time on is the second: the column
+   * closes and the learner watches where it went. That is the moment the edge tab has
+   * to be lit, because a column that folds away with nothing marking the spot is the
+   * exact confusion this tour exists to prevent.
+   *
+   * 900ms after each setRule is --vp-slide plus a breath, the same as everywhere else
+   * in this file; keep the two in step or the spotlight measures a moving box.
+   */
+  function runOpen() {
+    setRule(false);
+    buildOverlay();
+
+    const [bx, by] = centerOf(ruleBtn);
+    frame(ruleEl, 12, 22);
+    placeCursor(
+      Math.min(bx + 130, window.innerWidth - 28),
+      Math.min(by + 110, window.innerHeight - 28),
+      true
+    );
+    requestAnimationFrame(() => overlay?.classList.add("is-on"));
+
+    // Beat 1 — name what is already there.
+    at(500, () => showCoach(0, frame(ruleEl, 12, 22), false));
+
+    // Beat 2 — put it away, and show what is left behind.
+    at(3200, () => {
+      coach?.classList.remove("is-on");
+      cursor?.classList.add("is-on");
+      placeCursor(bx, by);
+    });
+    at(3900, () => {
+      click();
+      setRule(true);
+    });
+    at(4900, () => {
+      const target = backControl();
+      const r = frame(target, 8, 14);
+      showCoach(1, r, false);
+      const [cx, cy] = centerOf(target);
+      placeCursor(cx, cy);
+    });
+
+    // And give the page back the way it was found.
+    at(7600, () => {
+      coach?.classList.remove("is-on");
+      click();
+      setRule(false);
+    });
+    at(8500, () => {
+      overlay?.classList.remove("is-on");
+      cursor?.classList.remove("is-on");
+      ruleBtn?.setAttribute("data-peek", "");
+    });
+    at(9100, removeOverlay);
+    at(11600, () => {
+      ruleBtn?.removeAttribute("data-peek");
       finish();
     });
   }
@@ -305,7 +411,8 @@ export function createRuleIntro({ ruleEl, ruleBtn, ruleCard, setRule, compact = 
     startW = window.innerWidth;
     listen(true);
     if (compact) runCompact();
-    else run();
+    else if (restHidden) run();
+    else runOpen();
   }
 
   return { play, cancel, get running() { return running; } };

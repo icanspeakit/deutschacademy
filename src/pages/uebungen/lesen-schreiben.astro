@@ -15,8 +15,10 @@ const { groups, formTask, writingPrompt, errorHunt } = lesen;
       <p data-i18n="lesen.hero.subtitle">Eine vollständige Leseverstehen-Simulation (Thema: Online-Unterricht und Integration, Niveau B1) mit echtem Lösungsschlüssel, plus zwei Schreibaufgaben.</p>
     </div>
 
+    {/* Anchored by id: the Fertigkeiten menu links to one task, not to the top of a
+        page with eight of them. */}
     {groups.map((g, gi) => (
-      <div class="reading-block">
+      <div class="reading-block" id={`lesen-${g.id}`}>
         <h3>{g.title}</h3>
         <div class="reading-level">{g.level}</div>
         <div class="reading-text">{g.text}</div>
@@ -24,7 +26,7 @@ const { groups, formTask, writingPrompt, errorHunt } = lesen;
       </div>
     ))}
 
-    <div class="reading-block">
+    <div class="reading-block" id="schreiben-formular">
       <h3>{formTask.title}</h3>
       <div class="reading-text">{formTask.email}</div>
       <p data-i18n="lesen.formTask.hint">Klicke auf ein Feld, um deine Antwort mit der Lösung zu vergleichen.</p>
@@ -38,7 +40,7 @@ const { groups, formTask, writingPrompt, errorHunt } = lesen;
       </div>
     </div>
 
-    <div class="reading-block">
+    <div class="reading-block" id="schreiben-brief">
       <h3>{writingPrompt.title}</h3>
       <p>{writingPrompt.context}</p>
       <div class="reading-text">{writingPrompt.email}</div>
@@ -49,7 +51,7 @@ const { groups, formTask, writingPrompt, errorHunt } = lesen;
       <div class="tips-box">{writingPrompt.tips}</div>
     </div>
 
-    <div class="reading-block">
+    <div class="reading-block" id="schreiben-fehlerjagd">
       <h3>{errorHunt.title}</h3>
       <p>{errorHunt.context}</p>
       <div class="reading-text">{errorHunt.text}</div>

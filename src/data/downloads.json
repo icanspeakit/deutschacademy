@@ -1,0 +1,183 @@
+{
+  "rightsNote": "Alles in dieser Wissensdatenbank ist von DeutschAcademy geschrieben und aus den Daten dieser Seite erzeugt. Nichts davon ist aus einem Lehrwerk gescannt, kopiert oder ausschnittsweise übernommen — genau deshalb dürfen wir es verschenken. Jede Datei trägt unten, woher sie kommt.\n\nWas hier bewusst NICHT liegt: Audio- und Buchdateien von Verlagen (Hueber, Klett, Cornelsen, telc). Die dürfen wir nicht weitergeben, auch nicht kostenlos und auch nicht im Unterricht. Offizielle Modellsätze verlinken wir stattdessen dort, wo sie herausgegeben werden — siehe „Offizielle Materialien“.",
+  "rights": {
+    "eigen": "Von DeutschAcademy geschrieben",
+    "verlinkt": "Offizielle Quelle, extern verlinkt"
+  },
+  "categories": [
+    {
+      "id": "grammatik",
+      "name": "Grammatik",
+      "icon": "book",
+      "blurb": "Regel, Beispiel und Übersichtstabelle zu jedem Thema — zum Nachschlagen und Ausdrucken. Die Übungen dazu bleiben online."
+    },
+    {
+      "id": "wortschatz",
+      "name": "Wortschatz",
+      "icon": "folder",
+      "blurb": "Die komplette Wortliste eines Niveaus, nach Lernsets geordnet, mit Artikel, Plural, Übersetzung und Beispielsatz."
+    },
+    {
+      "id": "pruefungen",
+      "name": "Prüfungen",
+      "icon": "graduation-cap",
+      "blurb": "Material zur Prüfungsvorbereitung, aus echtem Unterricht."
+    }
+  ],
+  "files": [
+    {
+      "id": "grammatik-komplett",
+      "category": "grammatik",
+      "level": "A1–B2",
+      "title": "Grammatik A1–B2 (komplett)",
+      "desc": "Alle 27 Grammatikthemen in einem Band, mit Inhaltsverzeichnis, Regeln, Beispielsätzen und allen Übersichtstabellen.",
+      "file": "grammatik-a1-b2-komplett.pdf",
+      "rights": "eigen",
+      "featured": true
+    },
+    {
+      "id": "grammatik-a1",
+      "category": "grammatik",
+      "level": "A1",
+      "title": "Grammatik A1",
+      "desc": "Artikel, Ja/Nein-Fragen, W-Fragen und der Akkusativ.",
+      "file": "grammatik-a1.pdf",
+      "rights": "eigen"
+    },
+    {
+      "id": "grammatik-a2",
+      "category": "grammatik",
+      "level": "A2",
+      "title": "Grammatik A2",
+      "desc": "Modalverben, Negation, Perfekt, Satzstellung, Wechselpräpositionen, Dativ und trennbare Verben.",
+      "file": "grammatik-a2.pdf",
+      "rights": "eigen"
+    },
+    {
+      "id": "grammatik-b1",
+      "category": "grammatik",
+      "level": "B1",
+      "title": "Grammatik B1",
+      "desc": "Adjektivdeklination, Nebensätze, Infinitiv mit zu, N-Deklination, Präteritum, Passiv, Relativpronomen und mehr.",
+      "file": "grammatik-b1.pdf",
+      "rights": "eigen"
+    },
+    {
+      "id": "grammatik-b2",
+      "category": "grammatik",
+      "level": "B2",
+      "title": "Grammatik B2",
+      "desc": "Fokuspartikeln, Negationswörter, Nomen-Verb-Verbindungen, Partizipien als Adjektiv und Konjunktiv II.",
+      "file": "grammatik-b2.pdf",
+      "rights": "eigen"
+    },
+    {
+      "id": "wortschatz-a1",
+      "category": "wortschatz",
+      "level": "A1",
+      "title": "Wortliste A1",
+      "desc": "650 Wörter in 26 Lernsets, mit Artikel, Plural, englischer Übersetzung und Beispielsatz.",
+      "file": "wortschatz-a1.pdf",
+      "rights": "eigen"
+    },
+    {
+      "id": "wortschatz-a2",
+      "category": "wortschatz",
+      "level": "A2",
+      "title": "Wortliste A2",
+      "desc": "700 Wörter in 28 Lernsets.",
+      "file": "wortschatz-a2.pdf",
+      "rights": "eigen"
+    },
+    {
+      "id": "wortschatz-b1",
+      "category": "wortschatz",
+      "level": "B1",
+      "title": "Wortliste B1",
+      "desc": "1.150 Wörter in 46 Lernsets — der größte Einzelband der Sammlung.",
+      "file": "wortschatz-b1.pdf",
+      "rights": "eigen",
+      "featured": true
+    },
+    {
+      "id": "wortschatz-b2",
+      "category": "wortschatz",
+      "level": "B2",
+      "title": "Wortliste B2",
+      "desc": "875 Wörter in 35 Lernsets.",
+      "file": "wortschatz-b2.pdf",
+      "rights": "eigen"
+    },
+    {
+      "id": "lid-fakten",
+      "category": "pruefungen",
+      "level": "A2/B1",
+      "title": "Leben in Deutschland: Fakten",
+      "desc": "Die bundesweiten Fakten für den Orientierungskurstest, nach Themen gegliedert, plus die Grunddaten aller 16 Bundesländer.",
+      "file": "leben-in-deutschland-fakten.pdf",
+      "rights": "eigen"
+    },
+    {
+      "id": "lid-fakten-einfach",
+      "category": "pruefungen",
+      "level": "A1/A2",
+      "title": "Leben in Deutschland: Fakten in einfachem Deutsch",
+      "desc": "Dieselben Fakten in einfacher Sprache — kurze Sätze, wenige Fremdwörter.",
+      "file": "leben-in-deutschland-fakten-einfach.pdf",
+      "rights": "eigen"
+    },
+    {
+      "id": "lid-bayern-a2",
+      "category": "pruefungen",
+      "level": "A2",
+      "title": "Leben in Deutschland: Bayern (A2)",
+      "desc": "Die Landesfragen für Bayern, auf A2-Niveau.",
+      "file": "leben-in-deutschland-bayern-a2.pdf",
+      "rights": "eigen"
+    },
+    {
+      "id": "lid-bayern-b1",
+      "category": "pruefungen",
+      "level": "B1",
+      "title": "Leben in Deutschland: Bayern (B1)",
+      "desc": "Die Landesfragen für Bayern, auf B1-Niveau.",
+      "file": "leben-in-deutschland-bayern-b1.pdf",
+      "rights": "eigen"
+    },
+    {
+      "id": "lid-bayern-b1-grafiken",
+      "category": "pruefungen",
+      "level": "B1",
+      "title": "Leben in Deutschland: Bayern (B1, mit Grafiken)",
+      "desc": "Dieselben Landesfragen mit Schaubildern.",
+      "file": "leben-in-deutschland-bayern-b1-grafiken.pdf",
+      "rights": "eigen"
+    }
+  ],
+  "links": [
+    {
+      "title": "telc: Übungstests DTZ und telc Deutsch",
+      "href": "https://www.telc.net/pruefungsteilnehmende/sprachpruefungen/pruefungen/",
+      "source": "telc gGmbH",
+      "note": "Kostenlose Modell- und Übungstests, direkt beim Herausgeber. Wir spiegeln sie nicht — dort sind sie immer aktuell."
+    },
+    {
+      "title": "Goethe-Institut: Übungsmaterialien A1–C2",
+      "href": "https://www.goethe.de/de/spr/kup/prf.html",
+      "source": "Goethe-Institut",
+      "note": "Modellsätze mit Audio zu jeder Goethe-Prüfung."
+    },
+    {
+      "title": "BAMF: Deutsch-Test für Zuwanderer",
+      "href": "https://www.bamf.de/DE/Themen/Integration/ZugewanderteTeilnehmende/Integrationskurse/Abschlusspruefung/abschlusspruefung-node.html",
+      "source": "Bundesamt für Migration und Flüchtlinge",
+      "note": "Offizielle Informationen und Übungssätze zum DTZ."
+    },
+    {
+      "title": "BAMF: Test „Leben in Deutschland“",
+      "href": "https://www.bamf.de/DE/Themen/Integration/ZugewanderteTeilnehmende/Integrationskurse/Abschlusspruefung/LebeninDeutschland/lebenindeutschland-node.html",
+      "source": "Bundesamt für Migration und Flüchtlinge",
+      "note": "Der vollständige Fragenkatalog mit allen Landesfragen."
+    }
+  ]
+}

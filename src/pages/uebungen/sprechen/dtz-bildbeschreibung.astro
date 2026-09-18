@@ -1,8 +1,8 @@
 ---
-import Layout from "../../layouts/Layout.astro";
-import PracticeHeader from "../../components/PracticeHeader.astro";
-import "../../styles/practice.css";
-import sprechen from "../../data/sprechen.json";
+import Layout from "../../../layouts/Layout.astro";
+import PracticeHeader from "../../../components/PracticeHeader.astro";
+import "../../../styles/practice.css";
+import sprechen from "../../../data/sprechen.json";
 ---
 <Layout title="Sprechen: Bildbeschreibung – DeutschAcademy">
   <PracticeHeader title="Sprechen: Bildbeschreibung" />
@@ -25,8 +25,8 @@ import sprechen from "../../data/sprechen.json";
   </main>
   <script type="application/json" id="sprechen-data" set:html={JSON.stringify(sprechen)}></script>
   <script type="module">
-    import { recordSession } from "../../lib/progress.js";
-    import { getLang, loadDict, onLangChange } from "../../lib/i18n.js";
+    import { recordSession } from "../../../lib/progress.js";
+    import { getLang, loadDict, onLangChange } from "../../../lib/i18n.js";
 
     let dict = {};
     function tr(key, vars) {

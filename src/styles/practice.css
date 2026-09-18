@@ -1,17 +1,20 @@
 /* Practice tools — reuses brand tokens from global.css */
 
+/* The practice bar is also the site nav (see PracticeHeader.astro), so it is as wide as
+   .lp-nav-row and carries the same breakpoint: menu bar above 900px, burger below. */
 .practice-header {
+  position: relative;
+  z-index: 20;
   background: var(--surface-card);
   border-bottom: 1px solid var(--border);
-  padding: 18px 24px;
+  padding: 12px 24px;
 }
 .practice-header-inner {
-  max-width: 880px;
+  max-width: 1240px;
   margin: 0 auto;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 16px;
+  gap: 24px;
 }
 .practice-back {
   color: var(--brand-blue-dark);
@@ -22,20 +25,77 @@
   margin: -10px -4px;
 }
 .practice-back:hover { text-decoration: underline; }
+
+/* The left slot: the logo, and it always goes to the front page. */
+.practice-home {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--brand-blue-dark);
+  padding: 6px 4px;
+  margin: -6px -4px;
+}
+.practice-home img { height: 36px; width: auto; display: block; }
+
 .practice-header-title {
+  min-width: 0;
   font-family: var(--font-body);
   font-weight: var(--fw-light);
   color: var(--ink);
 }
 
-/* On a phone this header was ~400px tall: the title, the back link and the four
-   right-hand controls each claimed their own row at full desktop type size, so the
-   first screen of every practice page was navigation. Two tight rows instead. */
-@media (max-width: 700px) {
+.practice-header-right { margin-left: auto; flex: 0 0 auto; display: flex; align-items: center; gap: 16px; }
+.practice-header-utils { display: flex; align-items: center; gap: 16px; }
+.practice-dash { display: inline-flex; align-items: center; }
+.practice-dash-icon { display: none; }
+
+/* Desktop: the menu bar fills the middle and the page's own <h1> is two lines below,
+   so repeating it here at half the size buys nothing. */
+@media (min-width: 901px) {
+  .practice-header-title { display: none; }
+}
+
+/* Seven menu items plus Dashboard plus the two utilities do not fit a small laptop: at
+   1100px the right-hand cluster ran 55px past the edge. site-nav.css already tightens the
+   menu bar itself below 1280px; the rest of the room comes from Dashboard, which drops its
+   word for its icon here instead of waiting for the phone. Nothing is lost — it is the
+   same control, and its aria-label still says what it is.
+
+   (The homepage solves the same squeeze by dropping its CTA below 1280px. This bar has no
+   CTA to drop, so it gives up a word instead.) */
+@media (max-width: 1279px) and (min-width: 901px) {
+  .practice-header-inner { gap: 16px; }
+  .practice-header-right, .practice-header-utils { gap: 12px; }
+  .practice-dash-icon { display: inline-flex; }
+  .practice-dash-label { display: none; }
+}
+
+/* Phone: the menu bar becomes the burger (site-nav.css owns that switch), the title takes
+   the middle and truncates rather than pushing the controls off the row, and language and
+   theme leave the bar for the drawer's footer, where the thumb can reach them.
+
+   This bar used to be ~400px tall here: the title, the back link and four right-hand
+   controls each claimed a row at desktop type size. It is one row now. */
+@media (max-width: 900px) {
   .practice-header { padding: 8px 14px; }
-  .practice-header-inner { flex-wrap: wrap; justify-content: space-between; row-gap: 2px; column-gap: 10px; }
-  .practice-header-title { order: -1; width: 100%; text-align: center; font-size: .85rem; font-weight: var(--fw-regular); }
-  .practice-back { font-size: .78rem; padding: 7px 2px; margin: -7px -2px; }
+  .practice-header-inner { gap: 10px; }
+  .practice-home img { height: 26px; }
+  .practice-header-title {
+    flex: 1 1 auto;
+    text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: .85rem;
+    font-weight: var(--fw-regular);
+  }
+  .practice-header-utils { display: none; }
+  .practice-header-right { gap: 6px; }
+  .practice-dash { padding: 7px 2px; margin: -7px -2px; }
+  .practice-dash-icon { display: inline-flex; }
+  .practice-dash-label { display: none; }
+  .practice-header .lp-nav-toggle { width: 40px; height: 40px; margin-right: -8px; }
 }
 
 .practice-main { max-width: 880px; margin: 0 auto; padding: 40px 24px 80px; }
@@ -271,7 +331,9 @@
 .prompt-reveal-btn { display: block; margin: 16px auto 0; }
 
 /* Reading / writing blocks */
-.reading-block { background: var(--surface-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 28px; margin-bottom: 32px; }
+/* scroll-margin: each block is a link target from the Fertigkeiten menu, and the practice
+   header is sticky — without it the heading lands underneath the bar. */
+.reading-block { background: var(--surface-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 28px; margin-bottom: 32px; scroll-margin-top: 84px; }
 .reading-block h3 { text-align: left; margin: 0 0 4px; font-weight: var(--fw-regular); }
 .reading-level { color: var(--muted); font-size: .85rem; margin-bottom: 16px; }
 .reading-text { white-space: pre-line; background: var(--surface); border-radius: 10px; padding: 18px; margin-bottom: 20px; line-height: 1.6; }

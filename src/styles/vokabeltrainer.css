@@ -4,6 +4,17 @@
    hints) per the prototype — loaded page-locally via <Fragment slot="head">. */
 
 #vt-eyebrow { font-family: var(--font-label); letter-spacing: .08em; text-align: left; }
+/* Read by a screen reader and by a crawler, drawn for nobody: the line said "Karteikarten"
+   over a tab row with "Karteikarten" underlined in it, and the head above the cards is the
+   most expensive 26px on the page. */
+.vt-eyebrow-quiet {
+  position: absolute;
+  width: 1px; height: 1px;
+  margin: -1px; padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
 
 .vt-hero { text-align: left; margin-bottom: 18px; }
 .vt-hero-sub { margin: 4px 0 0; font-size: .75rem; color: var(--vt-muted); }
@@ -50,17 +61,87 @@
    on a grammar page. */
 .vt-split {
   --ex-w: 1040px;
-  --rule-w: clamp(280px, 24vw, 360px);
+  /* 56px of rail plus a panel wide enough for "Wechselpräpositionen  25". */
+  --rule-w: clamp(324px, 27vw, 396px);
   padding-bottom: 64px;
 }
-/* The card, the tabs and the trainer's own chrome are already boxes; the column does not
-   need to be a third one. It is a list beside the work, so it drops the card's frame and
-   keeps only the hairline that separates it from the cards. */
-@media (min-width: 1001px) {
-  .vt-split .vp-rule-card {
-    background: none; border: none; border-left: 1px solid var(--vt-border);
-    border-radius: 0; padding: 0 0 0 26px; margin: 0;
+/* The column sits on the LEFT here, unlike the grammar and exam pages, where .vp-col--rule
+   is an aside to the right of the work. This one is not an aside — it is the dashboard's
+   rail, and a rail lives at the edge the reading starts from. It is also the same side the
+   learner just used it on if they arrived from /dashboard.
+
+   The card frame goes with it: .lp draws its own now (rail + panel in one rounded box, as
+   .nvb does), and a card inside a card is two borders saying one thing. */
+/* The edge tab follows the column. verben-praepositionen.css hangs it on the right,
+   where a rule column lives; here the column is on the left, and a tab on the far side
+   of the page from the thing it reopens is worse than no tab — it reads as a second,
+   unrelated control. Everything else about it (the 1180px floor, the glow, the hover
+   lean) is inherited; only the side is ours. */
+@media (min-width: 1180px) {
+  /* Mirrored, including which edge it parks behind while the column is here. */
+  .vt-split .vp-rule-pivot {
+    right: auto;
+    left: 0;
+    border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+    border-left: none;
+    border-right: 1px solid var(--border);
+    box-shadow: 8px 0 24px -16px rgba(15, 23, 42, .5);
+    transform: translate(-100%, -50%);
   }
+  .vt-split[data-rule="hidden"] .vp-rule-pivot { transform: translate(0, -50%); }
+  .vt-split[data-rule="hidden"] .vp-rule-pivot:hover,
+  .vt-split[data-rule="hidden"] .vp-rule-pivot:focus-visible {
+    padding-right: 10px;
+    padding-left: 14px;
+  }
+  /* Points at the space the column will come back into — which is now to its right. */
+  .vt-split .vp-rule-pivot-chevron { transform: rotate(-135deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vt-split .vp-rule-pivot,
+  .vt-split[data-rule="hidden"] .vp-rule-pivot { transform: translateY(-50%); }
+}
+
+@media (min-width: 1001px) {
+  .vt-split .vp-workspace { grid-template-columns: var(--rule-w) minmax(0, 1fr); }
+  .vt-split .vp-col--ex { grid-column: 2; }
+  .vt-split .vp-col--rule { grid-column: 1; padding-right: 0; padding-left: 2px; }
+  /* Away in the direction it lives in. */
+  .vt-split[data-rule="hidden"] .vp-col--rule { transform: translateX(-28px); }
+
+  .vt-split .vp-rule-card {
+    background: none; border: none; border-radius: 0; padding: 0; margin: 0;
+    min-height: 0;
+  }
+  /* verben-praepositionen.css makes the column itself the scroller, which is right for a
+     rule you read top to bottom. Here it would carry the rail off the screen with the
+     list: B1 is 46 Lernsets, and the moment you are deepest in one level is the moment
+     you are most likely to want another. So the column stops scrolling and hands the job
+     to the panel beside the rail. */
+  .vt-split .vp-col--rule {
+    overflow: visible;
+    max-height: none;
+    display: flex;
+    flex-direction: column;
+  }
+  .vt-split .vp-rule-card, .vt-split .vp-rule-card > .ls-nvb { min-height: 0; }
+  .vt-split .ls-nvb { max-height: calc(100vh - 32px); }
+
+  /* The picker can fold its panel away and keep the rail (the chevron in the panel
+     head). The track has to shrink with it, or the rail would sit alone in a 396px
+     column with a 300px hole beside it. Same duration as the panel's own width
+     transition in lernset-picker.css, so they move as one thing.
+
+     64px is nav.css's rail, plus the card's two 1px borders. Not a magic number for the
+     fold to own — if the rail changes width, this is where it is read from. */
+  .vt-split[data-fold="1"] { --rule-w: 66px; }
+  .vt-split[data-fold="1"] .vp-workspace { transition: grid-template-columns .34s var(--nv-ease-soft), gap .34s var(--nv-ease-soft); }
+  /* Except when the whole column is going: that is the slower, larger motion and it
+     owns the timing. Declared after, so it wins on equal specificity. */
+  .vt-split[data-rule="hidden"] { --rule-w: 0px; }
+  /* The rail's panel head names the cut; an eyebrow above the card would name it twice. */
+  .vt-split .vp-sheet-head { display: none; }
 }
 
 /* Tabs + toolbar + active card: the working surface itself, sized to dominate the
@@ -74,7 +155,26 @@
 .vt-tool .vt-content { flex: 1; display: flex; flex-direction: column; justify-content: center; }
 .vt-split .vt-flip { flex: 0 0 auto; }
 
-.vt-tabs { display: flex; flex-wrap: wrap; gap: 6px 22px; border-bottom: 1px solid var(--vt-border); margin: 0 0 26px; }
+/* The tabs and the Lernset switch on one line, with the hairline under both. The switch
+   is page chrome, not a deck control, so it belongs at the tabs' altitude rather than
+   down in the toolbar with the language tabs and the direction switch — and a rule the
+   row owns rather than the tabs is what lets the two sit on the same one.
+
+   align-items: end so the pill's baseline lands with the tabs however the tabs wrap. */
+.vt-tabrow {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 10px 20px;
+  flex-wrap: wrap;
+  border-bottom: 1px solid var(--vt-border);
+  margin: 0 0 26px;
+}
+/* The active tab's underline overhangs the row's rule by a pixel and covers it — the
+   same -1px trick it played against its own border before. */
+.vt-tabrow .vp-rule-toggle { margin: 0 0 9px; }
+
+.vt-tabs { display: flex; flex-wrap: wrap; gap: 6px 22px; margin: 0; }
 .vt-tab {
   background: none; border: none; border-bottom: 2px solid transparent;
   padding: 0 0 9px; margin-bottom: -1px;
@@ -154,6 +254,19 @@
 .vt-prompt { font-size: clamp(1.4rem, 4.5vw, 2.125rem); font-weight: 400; letter-spacing: -.015em; line-height: 1.25; color: var(--vt-ink); }
 .vt-answer { font-size: clamp(1.5rem, 5vw, 2.625rem); font-weight: 500; letter-spacing: -.02em; line-height: 1.2; color: var(--vt-ink); }
 .vt-hint { font-size: .8125rem; color: var(--vt-muted); }
+
+/* The two coaching lines (the flip hint on each face, the gesture line under the card) are
+   driven by .vt-coach-on on the content wrapper — see the coach block in wortschatz-app.js.
+   Opacity only, never display: the lines keep their space, so the card never reflows as the
+   hint comes and goes. */
+.vt-hint,
+.vt-kbd-hint { opacity: 0; transition: opacity .5s ease; }
+.vt-coach-on .vt-hint,
+.vt-coach-on .vt-kbd-hint { opacity: 1; }
+@media (prefers-reduced-motion: reduce) {
+  .vt-hint,
+  .vt-kbd-hint { transition: none; }
+}
 
 .vt-nav-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; border-top: 1px solid var(--vt-border); padding-top: 16px; }
 .vt-nav-link { font-size: .8125rem; color: var(--vt-muted); cursor: pointer; background: none; border: none; font-family: inherit; padding: 0; }

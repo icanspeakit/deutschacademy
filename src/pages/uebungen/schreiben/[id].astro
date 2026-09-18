@@ -1,0 +1,192 @@
+---
+// One Schreibaufgabe.
+//
+// Three editors behind one page, picked by `kind`:
+//   form    a source text and fields to transfer — the answers reveal together, at the end
+//   prompt  a situation, Leitpunkte, Redemittel, a textarea, and a Modelltext behind a fold
+//   errors  a text with mistakes to find, and no Lösungsschlüssel on purpose
+//
+// What they share is the order: write first, compare after. The Modelltext and the
+// examiner's checklist both sit inside a closed <details>, because a model answer read
+// beforehand turns every writing task into a reading task — and the thing being practised
+// is producing German, not recognising it.
+//
+// Nothing is graded. It cannot be, and pretending otherwise would be worse than admitting
+// it: a score on a Beschwerdebrief would have to come from counting words.
+import Layout from "../../../layouts/Layout.astro";
+import PracticeHeader from "../../../components/PracticeHeader.astro";
+import Icon from "../../../components/Icon.astro";
+import { schreiben, neighbours, SCHREIBEN_ICON } from "../../../lib/fertigkeiten.js";
+import "../../../styles/practice.css";
+import "../../../styles/skills.css";
+
+export function getStaticPaths() {
+  return schreiben.tasks.map((task) => ({
+    params: { id: task.id },
+    props: { task, ...neighbours(schreiben.tasks, task) },
+  }));
+}
+
+const { task, prev, next } = Astro.props;
+const { types } = schreiben;
+const parts = (task.source ?? "").split(/\*\*(.+?)\*\*/g);
+---
+<Layout
+  title={`${task.title} – Schreiben ${task.level} – DeutschAcademy`}
+  description={task.blurb}
+>
+  <PracticeHeader title="Schreiben" />
+  <main class="practice-main">
+    <a href="/uebungen/schreiben" class="vp-back-link">← Alle Schreibaufgaben</a>
+
+    <article>
+      <header class="sk-head">
+        <span class="sk-card-ic"><Icon name={SCHREIBEN_ICON[task.type] ?? "pencil"} size={22} /></span>
+        <div>
+          <p class="eyebrow">{types[task.type]}</p>
+          <h1>{task.title}</h1>
+        </div>
+        <span class="sk-badge">{task.level}</span>
+      </header>
+
+      <p class="sk-blurb">{task.blurb} · ca. {task.minutes} Minuten</p>
+
+      {task.situation && (
+        <section class="sk-block">
+          <h2>Aufgabe</h2>
+          <p>{task.situation}</p>
+        </section>
+      )}
+
+      {task.source && (
+        <section class="sk-block">
+          <h2>{task.kind === "errors" ? "Modelltext mit Fehlern" : "Vorlage"}</h2>
+          <div class="sk-text">{parts.map((p, i) => (i % 2 ? <b>{p}</b> : p))}</div>
+        </section>
+      )}
+
+      {task.kind === "form" && (
+        <section class="sk-block">
+          <h2>Formular</h2>
+          <p class="sk-blurb">
+            Übertrage die Angaben aus der Vorlage. Die Lösungen erscheinen erst, wenn du
+            unten auf „Lösung zeigen“ klickst.
+          </p>
+          <div class="sk-fields" id="sk-form">
+            {task.fields.map((f, i) => (
+              <>
+                <div class="sk-field">
+                  <label for={`sk-f${i}`}>{f.label}</label>
+                  <input id={`sk-f${i}`} type="text" autocomplete="off" />
+                </div>
+                <p class="sk-field-answer" data-answer hidden>{f.answer}</p>
+              </>
+            ))}
+          </div>
+          <p style="margin-top:16px"><button class="sk-btn" type="button" id="sk-solve">Lösung zeigen</button></p>
+        </section>
+      )}
+
+      {task.kind === "prompt" && (
+        <>
+          <section class="sk-block">
+            <h2>Das muss vorkommen</h2>
+            <ul class="sk-points">{task.points.map((p) => <li>{p}</li>)}</ul>
+            {task.phrases?.length > 0 && (
+              <div class="sk-phrases">{task.phrases.map((p) => <span class="sk-phrase">{p}</span>)}</div>
+            )}
+          </section>
+
+          <section class="sk-block">
+            <h2>Dein Text</h2>
+            <textarea
+              class="sk-write"
+              id="sk-write"
+              placeholder="Schreib hier…"
+              aria-label="Dein Text"
+            ></textarea>
+            <div class="sk-write-bar">
+              <span id="sk-count">0 Wörter</span>
+              <span>Der Text bleibt in diesem Browser — er wird nirgendwohin geschickt.</span>
+            </div>
+          </section>
+        </>
+      )}
+
+      {task.kind === "errors" && (
+        <section class="sk-block">
+          <h2>Deine Korrektur</h2>
+          <p class="sk-blurb">
+            Schreib den Text richtig ab — oder notiere nur die Stellen, die dir auffallen.
+          </p>
+          <textarea class="sk-write" id="sk-write" aria-label="Deine Korrektur"></textarea>
+          <div class="sk-write-bar">
+            <span id="sk-count">0 Wörter</span>
+            <span>Der Text bleibt in diesem Browser.</span>
+          </div>
+        </section>
+      )}
+
+      {task.model && (
+        <details class="sk-reveal">
+          <summary>Modelltext — erst öffnen, wenn du geschrieben hast</summary>
+          <div class="sk-reveal-body"><div class="sk-model">{task.model}</div></div>
+        </details>
+      )}
+
+      {task.check?.length > 0 && (
+        <details class="sk-reveal">
+          <summary>Worauf eine Prüferin schaut</summary>
+          <div class="sk-reveal-body">
+            <ul class="sk-check">{task.check.map((c) => <li>{c}</li>)}</ul>
+          </div>
+        </details>
+      )}
+
+      {task.kind === "errors" && (
+        <p class="sk-foot">
+          Zu dieser Aufgabe gibt es bewusst keinen Lösungsschlüssel: Die Fehler zu finden ist
+          die Übung, und welche davon schwer wiegen, entscheidet sich im Gespräch. Nimm den
+          Text mit in den Kurs oder zu einem Lernpartner.
+        </p>
+      )}
+
+      <nav class="sk-prevnext">
+        {prev ? <a href={`/uebungen/schreiben/${prev.id}`}>← {prev.title}</a> : <span />}
+        {next ? <a href={`/uebungen/schreiben/${next.id}`}>{next.title} →</a> : <span />}
+      </nav>
+    </article>
+  </main>
+
+  <script>
+    import { recordSession } from "../../../lib/progress.js";
+
+    // Word count. Nothing is graded here, but a learner writing to "60–80 Wörter" needs to
+    // know where they are without counting by hand — and in the DTZ the length is part of
+    // the task, not a detail.
+    const write = document.getElementById("sk-write");
+    const count = document.getElementById("sk-count");
+    if (write && count) {
+      let counted = false;
+      write.addEventListener("input", () => {
+        const n = write.value.trim().split(/\s+/).filter(Boolean).length;
+        count.textContent = `${n} ${n === 1 ? "Wort" : "Wörter"}`;
+        // One session per page, once the learner has actually started.
+        if (!counted && n > 4) { counted = true; recordSession("schreiben"); }
+      });
+    }
+
+    // The form task reveals every answer at once. Row by row would turn a transfer exercise
+    // into a guessing game: you would check field one, learn the pattern, and fill the rest
+    // from the answer rather than from the text.
+    const solve = document.getElementById("sk-solve");
+    if (solve) {
+      solve.addEventListener("click", () => {
+        for (const el of document.querySelectorAll("[data-answer]")) el.hidden = false;
+        solve.disabled = true;
+        solve.textContent = "Lösung steht dabei";
+        recordSession("schreiben");
+      });
+    }
+  </script>
+</Layout>

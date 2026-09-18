@@ -124,6 +124,12 @@
     max-height: none;
     display: flex;
     flex-direction: column;
+    /* Above the exercise column. The rail's tooltips reach outside the card by design,
+       and the two columns are both stacked (this one is sticky, which is its own
+       stacking context) with the exercise column later in the DOM — so without this the
+       tip is drawn and then painted over by the flashcard, which looks like the tip is
+       being cut in half. */
+    z-index: 2;
   }
   .vt-split .vp-rule-card, .vt-split .vp-rule-card > .ls-nvb { min-height: 0; }
   .vt-split .ls-nvb { max-height: calc(100vh - 32px); }

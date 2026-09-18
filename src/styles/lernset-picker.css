@@ -47,9 +47,13 @@
   opacity: 0;
   pointer-events: none;
 }
+/* The rail's unfold button exists only while there is something to unfold; the panel
+   head's chevron only while the panel is there to hold it. Never both. */
+.ls-unfold { display: none; }
+.ls-nvb.collapsed .ls-unfold { display: grid; }
+.ls-nvb.collapsed .nvb-collapse { display: none; }
+
 /* The chevron turns to face the way it will go next. */
-.ls-nvb .nvb-collapse svg { transition: transform .3s var(--nv-ease-soft); }
-.ls-nvb.collapsed .nvb-collapse svg { transform: rotate(180deg); }
 
 /* Restoring a remembered fold is not an action anyone took, so it does not animate. */
 .ls-nvb.no-anim,
@@ -74,6 +78,13 @@
 /* nav.css writes .nvb-overview for a <button>; here it is an <a>, because it goes to a
    page rather than switching a panel. Everything else about it is nav.css's. */
 .ls-nvb .nvb-overview { display: block; text-decoration: none; }
+
+/* ---- Rail tooltips ------------------------------------------------------------------ */
+/* Showing .nvb-tip on hover and focus, and letting it escape the folded card, are both
+   nav.css's job now — they were fixed there so the dashboard's rail gets them too. This
+   rail needed one thing more than that rail did, and it still does: the column it lives
+   in has to out-stack the flashcard beside it, or the tip is drawn and then painted over.
+   That rule is in vokabeltrainer.css, with .vp-col--rule. */
 
 /* ---- Thema / Der Reihe nach --------------------------------------------------------- */
 /* A level can be cut two ways: by topic (a Lernset, 25 words) or by position (a Portion,

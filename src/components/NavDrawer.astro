@@ -37,8 +37,14 @@ const vars = (v) => (v ? JSON.stringify(v) : undefined);
     <!-- One pane on screen at a time. Every pane carries `data-pane`, every back button
          names the pane it returns to, so the tree stays declarative. -->
     <div class="lp-drawer-body" data-drawer-body>
+      {/* Home mirrors the desktop bar's grouping: the four subjects under Üben, then
+          Prüfungen, then Wissen, then the account rows. Same three-plus-cluster shape,
+          one row per line instead of one column per subject — a phone has the height a
+          mega menu does not, so Üben lists its four rather than hiding them behind a
+          fifth tap. The sub-panes each subject opens are unchanged. */}
       <div data-pane="home">
-        {navSections.map((section) => (
+        <p class="lp-drawer-grouphead" data-i18n="nav.subject.ueben">Üben</p>
+        {navSections.filter((s) => s.id !== "pruefungen").map((section) => (
           <button class="lp-drawer-row" type="button" data-drawer-to={`sub:${section.id}`}>
             <span class="lp-drawer-ic"><Icon name={section.icon} size={18} /></span>
             <span class="lp-drawer-txt">
@@ -50,15 +56,29 @@ const vars = (v) => (v ? JSON.stringify(v) : undefined);
           </button>
         ))}
 
-        <button class="lp-drawer-row" type="button" data-drawer-to="niveaus">
-          <span class="lp-drawer-ic"><Icon name="layers" size={18} /></span>
-          <span class="lp-drawer-txt">
-            <b data-i18n="nav.subject.niveaus">Niveaus</b>
-            <i data-i18n="nav.subject.niveaus.blurb">A1 bis B2, Schritt für Schritt</i>
-          </span>
-          <span class="lp-drawer-n">{levels.length}</span>
-          <svg class="lp-drawer-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 6 15 12 9 18"></polyline></svg>
-        </button>
+        {/* The level filter, in the row it filters rather than as a destination of its
+            own. The old "Niveaus" pane was a second copy of the content tree; these
+            chips land on the same level anchors the listing pages use. */}
+        <div class="lp-drawer-chips">
+          <p class="lp-drawer-chips-head" data-i18n="nav.ueben.byLevel">Nach Niveau starten</p>
+          <div class="lp-chiprow">
+            {levels.map((lv) => (
+              <a class="lp-chip" href={`/uebungen/grammatik#niveau-${lv.slug}`}>{lv.level}</a>
+            ))}
+          </div>
+        </div>
+
+        {navSections.filter((s) => s.id === "pruefungen").map((section) => (
+          <button class="lp-drawer-row" type="button" data-drawer-to={`sub:${section.id}`}>
+            <span class="lp-drawer-ic"><Icon name={section.icon} size={18} /></span>
+            <span class="lp-drawer-txt">
+              <b data-i18n={section.nameKey}>{section.name}</b>
+              <i data-i18n={section.blurbKey}>{section.blurb}</i>
+            </span>
+            <span class="lp-drawer-n">{section.badge ?? section.items.length}</span>
+            <svg class="lp-drawer-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 6 15 12 9 18"></polyline></svg>
+          </button>
+        ))}
 
         <a class="lp-drawer-row" href={WISSEN_HREF}>
           <span class="lp-drawer-ic"><Icon name="document" size={18} /></span>
@@ -69,11 +89,22 @@ const vars = (v) => (v ? JSON.stringify(v) : undefined);
           <svg class="lp-drawer-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 6 15 12 9 18"></polyline></svg>
         </a>
 
+        {/* What the avatar holds on a desktop. Down here rather than in with the
+            subjects, because it is about the learner and not the material. */}
+        <p class="lp-drawer-grouphead" data-i18n="nav.account">Konto</p>
         <a class="lp-drawer-row" href={PROFILE_HREF}>
-          <span class="lp-drawer-ic"><Icon name="user" size={18} /></span>
+          <span class="lp-drawer-ic"><Icon name="grid" size={18} /></span>
           <span class="lp-drawer-txt">
             <b data-i18n="nav.subject.profil">Profil</b>
             <i data-i18n="nav.subject.profil.blurb">Dein Lernstand und deine Woche</i>
+          </span>
+          <svg class="lp-drawer-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 6 15 12 9 18"></polyline></svg>
+        </a>
+        <a class="lp-drawer-row" href="/fortschritt">
+          <span class="lp-drawer-ic"><Icon name="target" size={18} /></span>
+          <span class="lp-drawer-txt">
+            <b data-i18n="nav.account.progress">Fortschritt</b>
+            <i data-i18n="nav.account.progress.blurb">Was du geübt hast, Woche für Woche</i>
           </span>
           <svg class="lp-drawer-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 6 15 12 9 18"></polyline></svg>
         </a>

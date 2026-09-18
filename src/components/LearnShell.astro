@@ -51,8 +51,20 @@ import sprechen from "../data/sprechen.json";
 import lesen from "../data/lesen.json";
 import kultur from "../data/kultur.json";
 import lid from "../data/leben-in-deutschland.json";
+import hoeren from "../data/hoeren.json";
+import { counts as lexiconCounts } from "../lib/lexicon.js";
+import { files as downloadFiles } from "../lib/downloads.js";
+import { exams } from "../lib/catalog.js";
 
 const readingQuestionCount = lesen.groups.reduce((sum, g) => sum + g.questions.length, 0);
+
+/* What the site actually holds, counted from the data rather than typed out.
+ *
+ * On a phone the dashboard opens onto one exercise card and nothing else — the module list
+ * that shows how much is here sits two screens down, so the first impression of a site with
+ * 3.375 Wörter and 664 Aufgaben is "one gap-fill". This strip is that scale in one
+ * swipeable line, directly under the rail, and every chip is a way in. */
+const de = (n: number) => n.toLocaleString("de-DE");
 const ausspracheWordCount = wortschatz.length + artikel.length;
 const byLevel = (level: string) => grammatik.filter((t) => t.level === level);
 
@@ -89,6 +101,7 @@ type Section = {
   badge: string;
   icon: IconName;
   kind: "kurs" | "stufe" | "ziel";
+  /** Two-word caption under an icon-only rail chip; falls back to `badge`. */
   blurb: string;
   focus: string[];
   items: Item[];
@@ -236,6 +249,130 @@ const allGrammarTasks = allGrammarItems.reduce((a, i) => a + (i.tasks ?? 0), 0);
 const allGrammarDone = allGrammarItems.reduce((a, i) => a + (i.done ?? 0), 0);
 const allGrammarMinutes = allGrammarItems.reduce((a, i) => a + (i.minutes ?? 0), 0);
 
+/* The scale strip's chips. `allGrammarTasks` rather than a fresh count over grammatik.json:
+   that file holds only the seven quiz-only topics now, and counting it alone would advertise
+   37 Aufgaben two centimetres above a blurb that says 664. One number, one source. */
+const scaleChips = [
+  { label: "Grammatik", value: `${de(allGrammarTasks)} Aufgaben`, href: "/uebungen/grammatik", icon: "book" as const },
+  { label: "Wortschatz", value: `${de(lexiconCounts().total)} Wörter`, href: "/uebungen/wortschatz", icon: "folder" as const },
+  { label: "Hören", value: `${hoeren.texts.length} Hörtexte`, href: "/uebungen/hoeren", icon: "volume" as const },
+  { label: "Landeskunde", value: `${kultur.topics.length} Themen`, href: "/uebungen/kultur", icon: "map-pin" as const },
+  { label: "Prüfungen", value: `${exams.length} Formate`, href: "/pruefungen", icon: "graduation-cap" as const },
+  { label: "Downloads", value: `${downloadFiles.length} PDFs`, href: "/wissen", icon: "document" as const },
+];
+
+// ── The grammar module, handed out in portions ───────────────────────────
+// "Grammatik-Basis" was one row of 664 Aufgaben and the course strip above it
+// read 0 / 724. Neither is a number anyone starts. It is the whole grammar
+// catalogue stated as a single task, and a bar across it cannot visibly move
+// for days — the one thing a progress bar exists to do.
+//
+// Same material, handed out in portions of ten to thirty: a sitting, not a
+// syllabus. A portion never crosses a level, and apart from the short quiz
+// topics that cannot fill one alone it never crosses a topic either, so it is
+// always one page to open. Cuts fall on exercise boundaries, never inside one.
+// A topic over PORTION_MAX is divided into equal parts rather than a full one
+// and a remainder: 33 Aufgaben become 15 + 18, not 25 + 8.
+const PORTION_MAX = 25;
+const PORTION_MIN = 10;
+/** What absorbing a too-small portion may grow its neighbour to. */
+const PORTION_CAP = 30;
+
+type Part = { topic: string; from: number; size: number; topicLabel: string; href: string; level: string };
+
+/** One number per exercise, in the order the workspace renders them. */
+const exerciseSizes = (i: Item): number[] => {
+  const w = workspaceById[i.id];
+  const sizes = w ? (w.exercises ?? []).map(slotsOf) : [];
+  return sizes.length ? sizes : [i.tasks ?? 0];
+};
+
+function splitTopic(i: Item): Part[][] {
+  const sizes = exerciseSizes(i);
+  const total = sizes.reduce((a, b) => a + b, 0);
+  const wanted = Math.max(1, Math.ceil(total / PORTION_MAX));
+  const out: Part[][] = [];
+  let cur: Part[] = [];
+  let from = 0;
+  let acc = 0;
+  let left = total;
+  let made = 1;
+  for (const size of sizes) {
+    const share = left / (wanted - made + 1);
+    // Close here when taking one more exercise would land further from this
+    // part's share than stopping does.
+    if (cur.length && made < wanted && Math.abs(acc + size - share) > Math.abs(acc - share)) {
+      out.push(cur);
+      left -= acc;
+      cur = [];
+      acc = 0;
+      made++;
+    }
+    cur.push({ topic: i.id, from, size, topicLabel: i.label, href: i.href, level: i.level });
+    from += size;
+    acc += size;
+  }
+  if (cur.length) out.push(cur);
+  return out;
+}
+
+const partsSize = (parts: Part[]) => parts.reduce((a, x) => a + x.size, 0);
+
+// A four-question quiz topic is not a sitting. Those are the only portions that
+// come out under PORTION_MIN, they sit at the end of their level (grammarAt puts
+// the workspaces first), and they are also the only case a portion covers more
+// than one topic — so they pair off with each other before they are allowed to
+// weigh down a full topic's portion.
+const packedPortions: Part[][] = allGrammarItems.flatMap(splitTopic);
+
+const sameLevel = (a: Part[], b: Part[]) => a[0].level === b[0].level;
+
+// Pass one: two undersized neighbours make one portion (Dativ + Trennbare Verben).
+for (let k = packedPortions.length - 2; k >= 0; k--) {
+  const here = packedPortions[k];
+  const next = packedPortions[k + 1];
+  if (partsSize(here) < PORTION_MIN && partsSize(next) < PORTION_MIN && sameLevel(here, next)) {
+    packedPortions.splice(k, 2, [...here, ...next]);
+  }
+}
+// Pass two: whatever is still too small joins the portion before it, or the one
+// after when the level starts with it.
+for (let k = packedPortions.length - 1; k >= 0; k--) {
+  const here = packedPortions[k];
+  if (partsSize(here) >= PORTION_MIN) continue;
+  const prev = packedPortions[k - 1];
+  const next = packedPortions[k + 1];
+  if (prev && sameLevel(prev, here) && partsSize(prev) + partsSize(here) <= PORTION_CAP) {
+    packedPortions.splice(k - 1, 2, [...prev, ...here]);
+  } else if (next && sameLevel(here, next) && partsSize(here) + partsSize(next) <= PORTION_CAP) {
+    packedPortions.splice(k, 2, [...here, ...next]);
+  }
+}
+
+const pieceCount: Record<string, number> = {};
+for (const parts of packedPortions) pieceCount[parts[0].topic] = (pieceCount[parts[0].topic] ?? 0) + 1;
+const pieceSeen: Record<string, number> = {};
+
+const portions = packedPortions.map((parts, idx) => {
+  const head = parts[0];
+  const of = pieceCount[head.topic];
+  const nth = (pieceSeen[head.topic] = (pieceSeen[head.topic] ?? 0) + 1);
+  const names = parts.map((x) => x.topicLabel).filter((n, k, all) => all.indexOf(n) === k);
+  const base = of > 1 ? `${head.topicLabel} · Teil ${nth} von ${of}` : head.topicLabel;
+  const tasks = partsSize(parts);
+  return {
+    id: `portion-${idx + 1}`,
+    level: head.level,
+    label: names.length > 1 ? `${base} + ${names.slice(1).join(" + ")}` : base,
+    href: head.href,
+    topic: head.topic,
+    tasks,
+    minutes: Math.max(8, Math.round(tasks * 0.8)),
+    parts: parts.map((x) => ({ topic: x.topic, from: x.from, size: x.size })),
+  };
+});
+const firstPortion = portions[0];
+
 const sections: Section[] = [
   {
     id: "weg",
@@ -243,11 +380,16 @@ const sections: Section[] = [
     badge: "Kurs",
     icon: "sparkle",
     kind: "kurs",
-    blurb: "Dein aktueller Kurs — nach Reihenfolge sortiert, nicht nach Stufe. Erst die Grammatik, dann der Wortschatz, dann der komplette Probelauf.",
-    focus: ["Grammatik von A1 bis B2", "Redemittel für den Alltag", "Ein kompletter DTZ-Übungssatz"],
+    blurb: `Dein aktueller Kurs — nach Reihenfolge sortiert, nicht nach Stufe. Erst die Grammatik, dann der Wortschatz, dann der komplette Probelauf. Die Grammatik kommt in ${portions.length} Portionen von je 10 bis 30 Aufgaben; du siehst immer die, die dran ist.`,
+    focus: [`Grammatik von A1 bis B2 — ${portions.length} Portionen, ${allGrammarTasks} Aufgaben`, "Redemittel für den Alltag", "Ein kompletter DTZ-Übungssatz"],
     items: [
       { id: "start", label: "Start", icon: "sparkle", href: "/uebungen", level: "A1–B1", levelSource: "—", eyebrow: "Übersicht", lead: "Dein Einstieg: wo du stehst, was als Nächstes ansteht und wie viel bis zur Prüfung fehlt.", meta: "Übersicht", practice: "picker" },
-      { id: "grammatik-basis", label: "Grammatik-Basis", icon: "book", href: "/uebungen/grammatik", level: "A1–B2", levelSource: "data", eyebrow: "Modul 1", lead: `Regeln und Übungen zu ${allGrammarItems.length} Themen von A1 bis B2 — die meisten mit Regelkarte und fünf Übungstypen.`, tasks: allGrammarTasks, done: allGrammarDone, minutes: allGrammarMinutes, derived: allGrammarIds, practice: "picker" },
+      // Not the whole grammar catalogue any more: the portion the learner is on.
+      // The row, its bar and its count all speak about that one sitting, and
+      // repaint() moves them to the next as soon as this one is finished. The
+      // full figure still stands in the section's blurb, where it is context
+      // rather than a target.
+      { id: "grammatik-basis", label: firstPortion.label, icon: "book", href: firstPortion.href, level: firstPortion.level, levelSource: "data", eyebrow: `Modul 1 · Portion 1 von ${portions.length}`, lead: `Portion 1 von ${portions.length} aus ${allGrammarItems.length} Grammatikthemen von A1 bis B2 — Regelkarte und Übungen, ${firstPortion.tasks} Aufgaben in einem Durchgang.`, tasks: firstPortion.tasks, done: 0, minutes: firstPortion.minutes, practice: "picker" },
       { id: "wortschatz-kurs", label: "Wortschatz-Karten", icon: "folder", href: "/uebungen/wortschatz", level: "A1–B1", levelSource: "abgeleitet", eyebrow: "Modul 2", lead: "Redemittel für Amt, Wohnungssuche und Alltag — als Karteikarten zum Umdrehen.", tasks: wortschatz.length, done: 0, minutes: 15, practice: "cards" },
       { id: "probelauf", label: "Prüfungssimulation", icon: "document", href: "/pruefungen/dtz/uebungssatz", level: "A2/B1", levelSource: "abgeleitet", eyebrow: "Modul 3", lead: "Ein kompletter DTZ-Übungssatz im echten Format: neun Prüfungsteile, 45 bewertete Aufgaben.", tasks: 45, done: 0, minutes: 54, practice: "dtz" },
       { id: "ergebnis", label: "Ergebnis", icon: "graduation-cap", href: "/pruefungen/dtz", level: "A2/B1", levelSource: "—", eyebrow: "Abschluss", lead: "Deine Auswertung nach Stufe — live aus dem, was du auf dieser Seite geübt hast.", meta: "Am Ende", practice: "result" },
@@ -318,6 +460,8 @@ const sections: Section[] = [
     id: "pruefungen",
     label: "Prüfungen",
     badge: "Ziel",
+    // "Ziel" is how the section argues about itself; on a 42px chip the learner needs to
+    // know which part of the site it opens.
     icon: "landmark",
     kind: "ziel",
     blurb: "Prüfungen sind keine Stufe, sondern ein Ziel — deshalb eine eigene Gruppe, sortiert nach Einstiegsniveau statt nach Fortschritt.",
@@ -396,6 +540,9 @@ const clientData = {
   speak: sprechen,
   read: kultur,
   picker: allGrammarItems.map((i) => ({ id: i.id, label: i.label, level: i.level, tasks: i.tasks })),
+  // The grammar module's portions, in order. `parts` is a window over a topic's
+  // ordered slots, so a portion's progress is what that topic has done inside it.
+  portions,
   // Which levels a picker row should offer. Anything not listed shows all of them.
   pickerScope: { testdaf: ["B2"], goethe: ["A1", "A2", "B1", "B2"] } as Record<string, string[]>,
 };
@@ -452,7 +599,7 @@ const defaultVariant = variants[0];
       <span class="nv-strip-title">Dein Kurs</span>
       <span class="nv-strip-sub">DTZ-Vorbereitung</span>
       <span class="nv-strip-track"><span class="nv-strip-fill" data-strip-fill style={`width:${courseStats.pct}%`}></span></span>
-      <span class="nv-strip-points" data-strip-label>{courseStats.pct} % · {courseStats.done} / {courseStats.tasks} Aufgaben</span>
+      <span class="nv-strip-points" data-strip-label>0 % · Portion 1 von {portions.length} · 0 / {firstPortion.tasks} Aufgaben</span>
     </div>
 
     <div class="nv-shell">
@@ -501,8 +648,23 @@ const defaultVariant = variants[0];
       <aside class="nv-aside" data-variant-pane="b" aria-label="Seitennavigation, Variante Icon-Rail" hidden>
         <div class="nvb" data-nvb>
           <div class="nvb-rail" role="tablist" aria-label="Stufe">
+            {/* A level chip reads itself — "A1" needs no caption. An icon does not, and
+                the sparkle and the landmark were the only two rail buttons with nothing
+                to read: "what does the star mean?" is a question they earned.
+
+                They carried a printed caption for a while, which answered it at a cost:
+                8.5px type in a 46px rail, and two buttons a different height and shape
+                from the five beside them, so the row no longer read as one control. The
+                tooltip every rail button already has says the same thing in full words
+                on hover and on focus — see .nvb-tip in nav.css. */}
             {sections.map((section) => (
-              <button type="button" class="nvb-railbtn" data-section-btn={section.id} role="tab" aria-label={section.label}>
+              <button
+                type="button"
+                class="nvb-railbtn"
+                data-section-btn={section.id}
+                role="tab"
+                aria-label={section.label}
+              >
                 {section.kind === "stufe"
                   ? <span class="nvb-railbadge">{section.badge}</span>
                   : <Icon name={section.icon} size={20} />}
@@ -575,6 +737,20 @@ const defaultVariant = variants[0];
 
       <!-- ── Inhalt ────────────────────────────────────────────────────── -->
       <main class="nv-main">
+        <!-- How much is here, before the first exercise. Scrolls sideways on a phone and
+             wraps on a desktop; every chip is a link to that part of the site. -->
+        <nav class="nv-scale" aria-label="Was diese Seite enthält">
+          {scaleChips.map((chip) => (
+            <a class="nv-scale-chip" href={chip.href}>
+              <span class="nv-scale-ic"><Icon name={chip.icon} size={15} /></span>
+              <span class="nv-scale-txt">
+                <b>{chip.value}</b>
+                <i>{chip.label}</i>
+              </span>
+            </a>
+          ))}
+        </nav>
+
         <!-- Stufenübersicht: eine pro Gruppe, serverseitig gerendert. -->
         {sections.map((section) => {
           const st = sectionStats[section.id];
@@ -803,6 +979,7 @@ const defaultVariant = variants[0];
     const DATA = JSON.parse(document.getElementById("nv-data")!.textContent!);
     const ITEMS: Record<string, any> = DATA.items;
     const SECTIONS: Record<string, any> = DATA.sections;
+    const PORTIONS: any[] = DATA.portions ?? [];
     const SECTION_IDS = new Set(Object.keys(SECTIONS));
     const TOPICS: Record<string, any> = DATA.topics;
     const RING = 2 * Math.PI * 42;
@@ -888,6 +1065,27 @@ const defaultVariant = variants[0];
       const it = ITEMS[id];
       return it.tasks ? Math.round((progress[id] / it.tasks) * 100) : null;
     };
+    // The course as a whole: every grammar topic behind the portions, plus the
+    // two modules that are not split. Only the strip reads this — everything
+    // else speaks in portions.
+    function wholeCourse() {
+      const grammar = (DATA.picker ?? []) as { id: string; tasks: number | null }[];
+      let tasks = 0;
+      let done = 0;
+      for (const g of grammar) {
+        if (!g.tasks) continue;
+        tasks += g.tasks;
+        done += Math.min(progress[g.id] ?? 0, g.tasks);
+      }
+      for (const id of ["wortschatz-kurs", "probelauf"]) {
+        const it = ITEMS[id];
+        if (!it?.tasks) continue;
+        tasks += it.tasks;
+        done += Math.min(progress[id] ?? 0, it.tasks);
+      }
+      return { tasks, done, pct: tasks ? Math.round((done / tasks) * 100) : null };
+    }
+
     function sectionTotals(sid: string) {
       const ids = SECTIONS[sid].items.filter((id: string) => ITEMS[id].tasks);
       const tasks = ids.reduce((a: number, id: string) => a + ITEMS[id].tasks, 0);
@@ -895,9 +1093,50 @@ const defaultVariant = variants[0];
       return { tasks, done, pct: tasks ? Math.round((done / tasks) * 100) : null };
     }
 
+    // How much of one portion is done. A portion is a window over the ordered
+    // slots of a topic, so its progress is the overlap of that window with what
+    // the topic has answered — the workspaces run their exercises in order, so
+    // the overlap is the honest reading.
+    const portionDone = (p: any) => p.parts.reduce(
+      (n: number, part: any) => n + Math.min(Math.max((progress[part.topic] ?? 0) - part.from, 0), part.size),
+      0,
+    );
+
+    /** The first portion that is not finished — or the last, once they all are. */
+    function currentPortion() {
+      return PORTIONS.find((p) => portionDone(p) < p.tasks) ?? PORTIONS[PORTIONS.length - 1];
+    }
+
+    // Move the grammar module onto whichever portion is now current. Called from
+    // repaint, so finishing one hands over the next without a reload.
+    function paintPortion() {
+      if (!PORTIONS.length) return;
+      const cur = currentPortion();
+      const nth = PORTIONS.indexOf(cur) + 1;
+      const it = ITEMS["grammatik-basis"];
+      if (!it) return;
+      it.label = cur.label;
+      it.href = cur.href;
+      it.level = cur.level;
+      it.tasks = cur.tasks;
+      it.minutes = cur.minutes;
+      it.eyebrow = `Modul 1 · Portion ${nth} von ${PORTIONS.length}`;
+      it.lead = `Portion ${nth} von ${PORTIONS.length}: ${cur.label}. ${cur.tasks} Aufgaben, ca. ${cur.minutes} Min.`;
+      progress["grammatik-basis"] = portionDone(cur);
+
+      $$('[data-modrow="grammatik-basis"] .nv-modname').forEach((e) => (e.textContent = cur.label));
+      $$('[data-modrow="grammatik-basis"] .nv-modmeta').forEach((e) => {
+        e.textContent = `${cur.level} · ${cur.tasks} Aufgaben · ca. ${cur.minutes} Min. · Portion ${nth} von ${PORTIONS.length}`;
+      });
+      $$('[data-row="grammatik-basis"] > span:not(.nv-count):not(.nv-icon):not(.nva-dot)')
+        .forEach((e) => (e.textContent = cur.label));
+    }
+
     // Repaint every number that depends on `progress`.
     function repaint(sweep = false) {
-      // Aggregates first: a course module is the sum of the topics under it.
+      // The grammar module before the aggregates: it decides its own count.
+      paintPortion();
+      // Aggregates: a course module is the sum of the topics under it.
       Object.keys(ITEMS).forEach((id) => {
         const from: string[] | null = ITEMS[id].derived;
         if (from) progress[id] = from.reduce((a, x) => a + (progress[x] ?? 0), 0);
@@ -934,12 +1173,55 @@ const defaultVariant = variants[0];
 
       mounter.repaintResult();   // keeps the Ergebnis view live while it is open
 
-      const course = sectionTotals("weg");
+      // The strip carries both numbers, because neither alone is honest. The bar
+      // and the percentage are the whole course — all 27 grammar topics, the
+      // cards and the Probelauf — so finishing a portion visibly moves it. The
+      // count beside it is the portion, because that is the pile actually in
+      // front of the learner. Showing the course as a count instead put "0 / 724"
+      // at the top of the page, which is a number nobody starts.
+      const course = wholeCourse();
       const fill = $("[data-strip-fill]");
       if (fill && course.pct !== null) fill.style.width = course.pct + "%";
       const stripLabel = $("[data-strip-label]");
-      if (stripLabel && course.pct !== null) stripLabel.textContent = `${course.pct} % · ${course.done} / ${course.tasks} Aufgaben`;
+      const cur = PORTIONS.length ? currentPortion() : null;
+      if (stripLabel && course.pct !== null) {
+        stripLabel.textContent = cur
+          ? `${course.pct} % · Portion ${PORTIONS.indexOf(cur) + 1} von ${PORTIONS.length} · ${portionDone(cur)} / ${cur.tasks} Aufgaben`
+          : `${course.pct} % · ${course.done} / ${course.tasks} Aufgaben`;
+      }
     }
+
+    // ── The level chips, on a phone ───────────────────────────────────
+    // The rail sits last in the shell on a phone, because navigation should not
+    // stand between the learner and the exercise (see .nv-aside order in
+    // nav.css). That was right about the list and wrong about the chips: the
+    // whole rail ended up at y=1929 on a 390px screen, two and a half screens
+    // down, so "which level am I on" and "switch level" were effectively gone.
+    //
+    // The two halves split. The chip row — 58px — rides at the top of the shell
+    // and sticks there; the 328px list it used to sit on keeps its place below
+    // the exercise. CSS cannot lift one child of the aside to the top of the
+    // shell, so the row is moved in the DOM, and moved back when the viewport
+    // grows again.
+    const phone = window.matchMedia("(max-width: 900px)");
+    const shellEl = $(".nv-shell");
+    const railRow = $(".nvb-rail");
+    const railHome = railRow?.parentElement ?? null;
+
+    function placeRail() {
+      if (!shellEl || !railRow || !railHome) return;
+      if (phone.matches) {
+        if (railRow.parentElement !== shellEl) {
+          shellEl.prepend(railRow);
+          railRow.classList.add("nvb-rail--top");
+        }
+      } else if (railRow.parentElement !== railHome) {
+        railHome.prepend(railRow);
+        railRow.classList.remove("nvb-rail--top");
+      }
+    }
+    placeRail();
+    phone.addEventListener("change", placeRail);
 
     // ── Variant switch ────────────────────────────────────────────────
     function showVariant(id: string) {

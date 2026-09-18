@@ -672,3 +672,232 @@
 /* The empty note in the drawer is a row's neighbour, not a column's, so it needs the row
    padding the .lp-panel version gets from its column. */
 .lp-drawer-empty { margin: 2px 12px 8px; }
+
+/* ===========================================================================
+   The Üben mega menu, and the right-hand cluster
+   ===========================================================================
+   Added when the bar went from eight top-level items to three. Reasoning lives in
+   NavMenubar.astro; this is only how it looks. Everything below reuses the existing
+   tokens, so dark mode and the focus ring come for free. */
+
+/* Four columns of links, wide enough that none of them wraps a title. Not `--wide`'s
+   620px: that was sized for two columns of level views. */
+.lp-panel--mega { min-width: 860px; }
+/* It hangs off the first item in the bar, so it can open leftwards from there without
+   running off the screen. */
+.lp-menu[data-menu="ueben"] .lp-panel { left: 0; }
+
+.lp-mega-cols {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px 28px;
+}
+.lp-mega-col ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
+/* The same row as .lp-panel-col's, stacked rather than inline: a mega column is narrow
+   and "der/die/das-Trainer" beside "25 Nomen pro Runde" on one line wraps into a
+   paragraph. Title over count, which is also the order they are read in. */
+.lp-mega-col li a {
+  display: block;
+  padding: 7px 8px;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: background-color .15s ease;
+}
+.lp-mega-col li a:hover { background: var(--surface-sunken, rgba(0, 0, 0, .04)); }
+.lp-mega-col li a b {
+  display: block;
+  font-size: 13.5px;
+  font-weight: 500;
+  line-height: 1.3;
+  color: var(--ink);
+}
+.lp-mega-col li a i {
+  display: block;
+  margin-top: 1px;
+  font-size: 11.5px;
+  font-style: normal;
+  line-height: 1.35;
+  color: var(--muted);
+}
+
+/* The column head is a link, so it gets the same hover as the rows under it without
+   looking like one of them. */
+.lp-mega-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 6px;
+  padding: 4px 8px;
+  border-radius: 8px;
+  font-family: var(--font-label);
+  font-size: 11px;
+  font-weight: var(--fw-bold);
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--ink);
+  text-decoration: none;
+}
+.lp-mega-head:hover { background: var(--surface-sunken, rgba(0, 0, 0, .04)); }
+
+/* The level chips, across the foot of all four columns — a filter over the lot, not a
+   fifth column. */
+.lp-mega-levels {
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border);
+}
+.lp-mega-levels-head {
+  margin: 0 0 8px;
+  font-family: var(--font-label);
+  font-size: 11px;
+  font-weight: var(--fw-bold);
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.lp-chiprow { display: flex; flex-wrap: wrap; gap: 6px; }
+.lp-chip {
+  display: inline-flex;
+  align-items: center;
+  min-width: 44px;
+  justify-content: center;
+  padding: 6px 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  background: var(--surface);
+  color: var(--ink);
+  font-family: var(--font-label);
+  font-size: 13px;
+  font-weight: var(--fw-bold);
+  text-decoration: none;
+  transition: border-color .15s ease, background .15s ease, color .15s ease;
+}
+.lp-chip:hover {
+  border-color: var(--brand-blue);
+  background: var(--blue-50);
+  color: var(--brand-blue-dark);
+}
+
+/* ---- Right cluster: icon buttons ---------------------------------------- */
+.lp-nav-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  background: var(--surface-card);
+  color: var(--muted);
+  cursor: pointer;
+  transition: color .15s ease, border-color .15s ease;
+}
+.lp-nav-icon:hover:not(:disabled) { color: var(--ink); border-color: var(--border-strong); }
+.lp-nav-icon svg { width: 17px; height: 17px; }
+/* No search backend yet (see the TODO in SiteNav.astro). Dimmed rather than hidden:
+   the cluster's spacing is designed around it, and hiding it would move the avatar the
+   day search ships. */
+.lp-nav-icon:disabled { opacity: .45; cursor: default; }
+
+/* ---- Right cluster: the avatar and its menu ------------------------------ */
+.lp-acct { position: relative; }
+.lp-acct-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: 1px solid transparent;
+  border-radius: 50%;
+  background: var(--gradient-brand);
+  color: #fff;
+  cursor: pointer;
+  transition: box-shadow .15s ease;
+}
+.lp-acct-btn:hover,
+.lp-acct.is-open .lp-acct-btn { box-shadow: 0 0 0 3px var(--blue-50); }
+.lp-acct-mono {
+  font-family: var(--font-label);
+  font-size: 12px;
+  font-weight: var(--fw-bold);
+  letter-spacing: .02em;
+}
+
+.lp-acct-menu {
+  position: absolute;
+  top: calc(100% + 10px);
+  /* Right-aligned: it is the second control from the edge, and a left-aligned panel
+     would hang off the viewport. */
+  right: 0;
+  z-index: 30;
+  min-width: 268px;
+  padding: 8px;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: var(--surface-card);
+  box-shadow: var(--shadow-hover);
+  animation: lp-panel-in .16s ease-out;
+}
+.lp-acct-menu[hidden] { display: none; }
+@media (prefers-reduced-motion: reduce) {
+  .lp-acct-menu { animation: none; }
+}
+
+.lp-acct-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 10px;
+  border-radius: 10px;
+  color: var(--ink);
+  text-decoration: none;
+}
+.lp-acct-row:hover { background: var(--surface-sunken, rgba(0, 0, 0, .04)); }
+.lp-acct-row b { display: block; font-size: 14px; font-weight: var(--fw-semibold); }
+.lp-acct-row i { display: block; font-size: 12px; font-style: normal; color: var(--muted); }
+
+.lp-acct-sep { height: 1px; margin: 6px 10px; background: var(--border); }
+
+/* The theme row is a control, not a link, so it does not get the row hover — nothing
+   about it is "go somewhere". */
+.lp-acct-pref {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 6px 10px 8px;
+  font-size: 14px;
+  color: var(--ink);
+}
+
+/* Below the menubar breakpoint the drawer owns all of this. The CTA and the language
+   switcher stay; search, avatar and the burger are the row. */
+@media (max-width: 1080px) {
+  .lp-acct { display: none; }
+  .lp-nav-search { display: none; }
+}
+
+/* Every new control keeps the same visible focus ring the rest of the nav uses. */
+.lp-chip:focus-visible,
+.lp-mega-head:focus-visible,
+.lp-nav-icon:focus-visible,
+.lp-acct-btn:focus-visible,
+.lp-acct-row:focus-visible {
+  outline: 2px solid var(--brand-blue);
+  outline-offset: 2px;
+}
+
+/* The drawer's level chips. Same control as the mega menu's, in a row of its own so it
+   reads as a filter across the four subjects above it rather than a fifth subject. */
+.lp-drawer-chips { padding: 6px 4px 14px; }
+.lp-drawer-chips-head {
+  margin: 0 0 8px;
+  font-family: var(--font-label);
+  font-size: 11px;
+  font-weight: var(--fw-bold);
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}

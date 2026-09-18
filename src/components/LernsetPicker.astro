@@ -88,6 +88,19 @@ const openBlock = isFreq
        to a page — and the rest are tabs that switch the panel beside them, which is why
        they are different elements rather than one element styled twice. -->
   <div class="nvb-rail" role="tablist" aria-label="Wortschatz-Bereich">
+    <!-- The way back, and the reason it is here rather than in the panel head with its
+         twin: the head's chevron folds the panel away, and it is *inside* the panel, so
+         folding takes the control with it. What was left was a rail of levels and no
+         sign that a list had ever been beside it — the way out of a state cannot be
+         the state you just left.
+
+         Only one of the two is ever on screen. Both carry data-nvb-collapse, so the same
+         handler toggles either way. -->
+    <button type="button" class="nvb-railbtn ls-unfold" data-nvb-collapse aria-label="Liste ausklappen">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+      <span class="nvb-tip">Liste ausklappen</span>
+    </button>
+
     <!-- Filled by the script from this browser's own history, removed when there is
          none. Never server-rendered: there is no account, so the server cannot know. -->
     <a class="nvb-railbtn" id="ls-resume" href="/uebungen/wortschatz" hidden aria-label="Weiterlernen">

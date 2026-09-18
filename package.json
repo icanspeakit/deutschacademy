@@ -18,6 +18,7 @@
     "generate:hoeren": "node --env-file=.env.local scripts/generate-hoeren-audio.mjs",
     "validate:lexicon": "node scripts/validate-lexicon.mjs",
     "sprechen:bilder": "node scripts/list-sprechen-bilder.mjs",
+    "sprechen:fetch": "node --env-file=.env.local scripts/fetch-sprechen-bilder.mjs",
     "lexicon:ranks": "node scripts/attach-ranks.mjs",
     "prebuild": "node scripts/clean-prerender.mjs",
     "lexicon:ipa": "node scripts/fetch-wiktionary.mjs",

@@ -1,12 +1,15 @@
 ---
-// The site nav: the logo, the desktop menu bar, the utilities and the burger that opens
-// the mobile drawer.
+// The site nav: the logo, the desktop menu bar, the right-hand cluster and the burger
+// that opens the mobile drawer.
 //
-// The top level names subjects, not URL folders. "Übungen" and "Prüfungen" mirrored the
-// route tree and asked a learner to know which folder a tool lived in before they could
-// find it; the five subject menus (Grammatik, Wortschatz, Fertigkeiten, Landeskunde,
-// Prüfungen) name the thing they came to practise. Two more entries are about the learner
-// rather than the material: Niveaus, which opens an A1–B2 grid, and Profil.
+//   [Logo]  Üben ▾  Prüfungen ▾  Wissen        [Kostenlos üben]  ⌕  [Avatar]  DE ▾
+//
+// Three text items, not eight. The bar used to carry Grammatik, Wortschatz,
+// Fertigkeiten, Landeskunde, Prüfungen, Niveaus, Wissen and Profil — eight items, six of
+// them dropdowns, mixing content subjects with a cross-cutting filter and account links,
+// and wide enough to run into the logo wordmark. The four subjects are one decision, so
+// they are one menu; the level filter is a chip row inside it; Profil and the theme
+// toggle moved into the avatar. See NavMenubar.astro for the full reasoning.
 //
 // The two menus themselves live next door, because the practice pages need the same ones
 // in a different bar (see PracticeHeader.astro):
@@ -14,14 +17,17 @@
 //   NavDrawer.astro   the full-height mobile panel, ≤1080px
 // This file is only the row they hang in.
 import LanguageSwitcher from "./LanguageSwitcher.astro";
-import ThemeToggle from "./ThemeToggle.astro";
+import NavAccount from "./NavAccount.astro";
 import NavDrawer from "./NavDrawer.astro";
 import NavMenubar from "./NavMenubar.astro";
 import "../styles/site-nav.css";
 
 interface Props {
-  /** Marks the current section so its nav item reads as active. */
-  active?: "grammatik" | "wortschatz" | "fertigkeiten" | "landeskunde" | "pruefungen" | "niveaus" | "profil";
+  /**
+   * Marks the current section so its nav item reads as active. The four subject values
+   * all light "Üben", which is the item they now live under.
+   */
+  active?: "ueben" | "grammatik" | "wortschatz" | "fertigkeiten" | "landeskunde" | "pruefungen" | "wissen" | "profil";
 }
 const { active } = Astro.props;
 ---
@@ -35,7 +41,30 @@ const { active } = Astro.props;
 
     <div class="lp-nav-right">
       <a href="/uebungen" class="lp-btn lp-btn--primary" data-i18n="nav.cta">Kostenlos üben</a>
-      <div class="lp-nav-utils"><LanguageSwitcher /><ThemeToggle /></div>
+
+      <div class="lp-nav-utils">
+        {/* TODO: there is no site-wide search yet. The button is here because the
+            cluster's shape depends on it and adding it later would move everything
+            again; wire it to the real thing when one exists (a route or an overlay),
+            and drop `disabled`. */}
+        <button
+          class="lp-nav-icon lp-nav-search"
+          type="button"
+          aria-label="Suchen"
+          data-i18n-attr="aria-label:nav.search"
+          data-nav-search
+          disabled
+        >
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="11" cy="11" r="7"></circle>
+            <line x1="16.5" y1="16.5" x2="21" y2="21"></line>
+          </svg>
+        </button>
+
+        <NavAccount />
+        <LanguageSwitcher />
+      </div>
+
       <button
         class="lp-nav-toggle"
         type="button"
@@ -60,10 +89,10 @@ const { active } = Astro.props;
 <noscript>
   <style>
     /* Both menus are click-driven, so with JS off they are dead weight — the plain
-       links in .lp-nav-fallback take over at every width. */
-    .lp-menubar, .lp-nav-toggle, .lp-drawer { display: none !important; }
+       links in .lp-nav-fallback take over at every width. The avatar and search are
+       script-driven too. */
+    .lp-menubar, .lp-nav-toggle, .lp-drawer, .lp-acct, .lp-nav-search { display: none !important; }
     .lp-nav-fallback { display: flex; align-items: center; gap: 20px; font-size: 14px; font-weight: 500; flex-wrap: wrap; }
     .lp-nav-fallback a { color: var(--ink); text-decoration: none; }
   </style>
 </noscript>
-

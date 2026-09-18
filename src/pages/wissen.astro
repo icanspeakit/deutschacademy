@@ -12,11 +12,10 @@
 import Layout from "../layouts/Layout.astro";
 import PracticeHeader from "../components/PracticeHeader.astro";
 import Icon from "../components/Icon.astro";
-import { categories, links, rightsNote, totals } from "../lib/downloads.js";
+import { categories, featured, files, links, rightsNote, totals } from "../lib/downloads.js";
 import "../styles/practice.css";
 import "../styles/wissen.css";
 
-const featured = categories.flatMap((c) => c.items.filter((f) => f.featured));
 const mb = (totals.bytes / 1024 / 1024).toFixed(1).replace(".", ",");
 ---
 <Layout
@@ -34,20 +33,18 @@ const mb = (totals.bytes / 1024 / 1024).toFixed(1).replace(".", ",");
       </p>
     </div>
 
+    {/* Two lines, not two banners. These are the entry points into the two big
+        collections, and they used to be 190px each — half the first screen for
+        two files that were also listed again below. */}
     {featured.length > 0 && (
       <div class="wi-featured">
         {featured.map((f) => (
-          <a class="wi-feature" href={f.href} download>
-            <span class="wi-feature-txt">
-              <span class="wi-badge">{f.level}</span>
-              <b>{f.title}</b>
-              <i>{f.desc}</i>
-            </span>
-            <span class="wi-feature-go">
-              <span class="wi-meta">PDF{f.pages ? ` · ${f.pages} Seiten` : ""} · {f.size}</span>
-              <span class="wi-dl" aria-hidden="true">↓</span>
-            </span>
-          </a>
+          <button class="wi-feature" type="button" data-file={f.id}>
+            <span class="wi-badge">{f.level}</span>
+            <b>{f.title}</b>
+            <span class="wi-meta">PDF{f.pages ? ` · ${f.pages} Seiten` : ""} · {f.size}</span>
+            <span class="wi-dl" aria-hidden="true">↓</span>
+          </button>
         ))}
       </div>
     )}
@@ -61,8 +58,12 @@ const mb = (totals.bytes / 1024 / 1024).toFixed(1).replace(".", ",");
         </h2>
         <p class="wi-group-blurb">{cat.blurb}</p>
         <div class="wi-grid">
+          {/* A button, not a link: the card opens the sheet that says what is in
+              the file, and the download happens from there. A 210 KB PDF that
+              turns out to be the wrong level is a wasted download on a phone
+              plan, and nothing here said which one it was. */}
           {cat.items.map((f) => (
-            <a class="wi-card" href={f.href} download>
+            <button class="wi-card" type="button" data-file={f.id}>
               <span class="wi-badge">{f.level}</span>
               <b>{f.title}</b>
               <i>{f.desc}</i>
@@ -70,7 +71,7 @@ const mb = (totals.bytes / 1024 / 1024).toFixed(1).replace(".", ",");
                 <span class="wi-meta">PDF{f.pages ? ` · ${f.pages} Seiten` : ""} · {f.size}</span>
                 <span class="wi-dl" aria-hidden="true">↓</span>
               </span>
-            </a>
+            </button>
           ))}
         </div>
       </section>
@@ -107,5 +108,98 @@ const mb = (totals.bytes / 1024 / 1024).toFixed(1).replace(".", ",");
         <code>pnpm generate:pdfs</code>.
       </p>
     </section>
+
+    <!-- The sheet. Rendered here for all files rather than built by JS, so every
+         title and table of contents is in the HTML for crawlers, and so a reader
+         with no JS still gets the plain download links in the <noscript> below. -->
+    <div class="wi-sheet-scrim" data-sheet-scrim hidden></div>
+    <div class="wi-sheet" data-sheet hidden role="dialog" aria-modal="true" aria-labelledby="wi-sheet-title">
+      {files.map((f) => (
+        <div class="wi-sheet-body" data-sheet-for={f.id} hidden>
+          <div class="wi-sheet-head">
+            <span class="wi-badge">{f.level}</span>
+            <button class="wi-sheet-x" type="button" data-sheet-close aria-label="Schließen">✕</button>
+          </div>
+          <h2 id="wi-sheet-title">{f.title}</h2>
+          <p class="wi-meta">PDF{f.pages ? ` · ${f.pages} Seiten` : ""} · {f.size}</p>
+          <p class="wi-sheet-desc">{f.desc}</p>
+
+          {f.contents && f.contents.items.length > 0 && (
+            <div class="wi-sheet-toc">
+              <p class="wi-sheet-toclabel">{f.contents.label}</p>
+              <ul>{f.contents.items.map((line) => <li>{line}</li>)}</ul>
+            </div>
+          )}
+
+          <a class="wi-sheet-dl" href={f.href} download>
+            <span aria-hidden="true">↓</span>
+            <span>Jetzt herunterladen</span>
+          </a>
+          <p class="wi-sheet-foot">Kostenlos, ohne Konto. Zum Ausdrucken und Weitergeben.</p>
+        </div>
+      ))}
+    </div>
   </main>
+
+  <noscript>
+    <style>
+      /* No JS: the cards cannot open anything, so the sheets are simply the list. */
+      .wi-featured, .wi-grid { display: none; }
+      .wi-sheet-scrim { display: none; }
+      .wi-sheet, .wi-sheet-body { display: block !important; position: static; }
+      .wi-sheet-body[hidden] { display: block !important; }
+      .wi-sheet-x { display: none; }
+    </style>
+  </noscript>
+
+  <script>
+    // The download sheet. Every card is a button; the sheet it opens is already in
+    // the page, one body per file, and only the matching one is shown.
+    const sheet = document.querySelector<HTMLElement>("[data-sheet]");
+    const scrim = document.querySelector<HTMLElement>("[data-sheet-scrim]");
+    const bodies = Array.from(document.querySelectorAll<HTMLElement>("[data-sheet-for]"));
+    let opener: HTMLElement | null = null;
+
+    function closeSheet() {
+      if (!sheet || sheet.hidden) return;
+      sheet.hidden = true;
+      if (scrim) scrim.hidden = true;
+      document.body.classList.remove("wi-sheet-open");
+      for (const b of bodies) b.hidden = true;
+      // Back to the card it came from, so a keyboard reader does not land at the
+      // top of the page after every look.
+      opener?.focus();
+      opener = null;
+    }
+
+    function openSheet(id: string, from: HTMLElement) {
+      if (!sheet) return;
+      let found = false;
+      for (const b of bodies) {
+        const on = b.dataset.sheetFor === id;
+        b.hidden = !on;
+        found ||= on;
+      }
+      if (!found) return;
+      opener = from;
+      sheet.hidden = false;
+      if (scrim) scrim.hidden = false;
+      document.body.classList.add("wi-sheet-open");
+      sheet.scrollTop = 0;
+      sheet.querySelector<HTMLElement>("[data-sheet-close]:not([hidden])")?.focus();
+    }
+
+    for (const card of Array.from(document.querySelectorAll<HTMLElement>("[data-file]"))) {
+      card.addEventListener("click", () => openSheet(card.dataset.file!, card));
+    }
+    for (const x of Array.from(document.querySelectorAll<HTMLElement>("[data-sheet-close]"))) {
+      x.addEventListener("click", closeSheet);
+    }
+    scrim?.addEventListener("click", closeSheet);
+    document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeSheet(); });
+    // The download is the end of the errand: take the sheet away with it.
+    for (const dl of Array.from(document.querySelectorAll<HTMLElement>(".wi-sheet-dl"))) {
+      dl.addEventListener("click", () => window.setTimeout(closeSheet, 150));
+    }
+  </script>
 </Layout>

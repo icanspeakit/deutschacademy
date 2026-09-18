@@ -1,0 +1,124 @@
+---
+// The avatar button and its menu, in the nav's right-hand cluster.
+//
+// "Profil" used to be a text item in the content nav, between Landeskunde and the CTA.
+// It is not content — it is about the learner rather than the material — and sitting in
+// the same row as four subjects made the row read as eight equal choices. An avatar in
+// the utility cluster says "you" without spending a word on it.
+//
+// The theme toggle came with it. It was a standalone icon in the navbar, which put a
+// display preference at the same altitude as the whole content tree; here it is one row
+// in the menu it belongs to, and the navbar is one control lighter.
+//
+// There is no account system yet, so the avatar is a monogram rather than a photo and
+// the menu holds the two pages that exist. No "Einstellungen" row: /einstellungen does
+// not exist, and the dark-mode row below is the only setting there is today. Add the row
+// when the page does.
+import Icon from "./Icon.astro";
+import ThemeToggle from "./ThemeToggle.astro";
+import "../styles/site-nav.css";
+
+const LINKS = [
+  { href: "/dashboard", icon: "grid", titleKey: "nav.subject.profil", title: "Profil",
+    descKey: "nav.subject.profil.blurb", desc: "Dein Lernstand und deine Woche" },
+  { href: "/fortschritt", icon: "target", titleKey: "nav.account.progress", title: "Fortschritt",
+    descKey: "nav.account.progress.blurb", desc: "Was du geübt hast, Woche für Woche" },
+];
+---
+<div class="lp-acct" data-acct>
+  <button
+    class="lp-acct-btn"
+    type="button"
+    aria-haspopup="true"
+    aria-expanded="false"
+    aria-controls="lp-acct-menu"
+    aria-label="Konto"
+    data-i18n-attr="aria-label:nav.account"
+    data-acct-btn
+  >
+    {/* A monogram, not a photo: there is nobody signed in to have one, and a generic
+        silhouette reads as a broken image. */}
+    <span class="lp-acct-mono" aria-hidden="true">DA</span>
+  </button>
+
+  <div class="lp-acct-menu" id="lp-acct-menu" role="menu" aria-label="Konto" data-acct-menu hidden>
+    {LINKS.map((l) => (
+      <a class="lp-acct-row" href={l.href} role="menuitem">
+        <span class="lp-panel-ic"><Icon name={l.icon} size={18} /></span>
+        <span class="lp-panel-txt">
+          <b data-i18n={l.titleKey}>{l.title}</b>
+          <i data-i18n={l.descKey}>{l.desc}</i>
+        </span>
+      </a>
+    ))}
+
+    <div class="lp-acct-sep" role="separator"></div>
+
+    {/* Not a menuitem: it is a control that stays put, and activating it should not
+        close the menu the way following a link does. */}
+    <div class="lp-acct-pref">
+      <span data-i18n="nav.account.theme">Dunkelmodus</span>
+      <ThemeToggle />
+    </div>
+  </div>
+</div>
+
+<script>
+  /* The avatar menu -----------------------------------------------------------
+     Click-driven rather than hover: unlike the subject menus this one is not a place
+     anyone browses, and a menu that opens because the pointer passed the corner of the
+     screen on its way to the scrollbar is a menu that opens by accident. */
+  const root = document.querySelector<HTMLElement>("[data-acct]");
+  const btn = root?.querySelector<HTMLButtonElement>("[data-acct-btn]");
+  const menu = root?.querySelector<HTMLElement>("[data-acct-menu]");
+
+  if (root && btn && menu) {
+    const items = () => Array.from(menu.querySelectorAll<HTMLAnchorElement>("a[href]"));
+    const isOpen = () => btn.getAttribute("aria-expanded") === "true";
+
+    const open = (focusFirst = false) => {
+      menu.removeAttribute("hidden");
+      btn.setAttribute("aria-expanded", "true");
+      root.classList.add("is-open");
+      if (focusFirst) items()[0]?.focus();
+    };
+    const close = (refocus = false) => {
+      menu.setAttribute("hidden", "");
+      btn.setAttribute("aria-expanded", "false");
+      root.classList.remove("is-open");
+      if (refocus) btn.focus();
+    };
+
+    btn.addEventListener("click", () => (isOpen() ? close() : open()));
+    btn.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowDown" || e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        open(true);
+      } else if (e.key === "Escape") {
+        close(true);
+      }
+    });
+
+    menu.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") { e.preventDefault(); close(true); return; }
+      if (e.key !== "ArrowDown" && e.key !== "ArrowUp") return;
+      const list = items();
+      if (!list.length) return;
+      e.preventDefault();
+      const i = list.indexOf(document.activeElement as HTMLAnchorElement);
+      const next = e.key === "ArrowDown"
+        ? (i + 1) % list.length
+        : (i - 1 + list.length) % list.length;
+      list[next].focus();
+    });
+
+    // Leaving by Tab closes it; clicking outside does too. The theme toggle lives
+    // inside, so a click on it must not count as outside.
+    root.addEventListener("focusout", (e) => {
+      if (!root.contains(e.relatedTarget as Node)) close();
+    });
+    document.addEventListener("click", (e) => {
+      if (!root.contains(e.target as Node)) close();
+    });
+  }
+</script>

@@ -11,6 +11,9 @@
 import { existsSync, readFileSync, statSync } from "node:fs";
 import path from "node:path";
 import catalogue from "../data/downloads.json";
+import { grammarTopics } from "./catalog.js";
+import { lernsets } from "./lernsets.js";
+import lid from "../data/leben-in-deutschland.json";
 
 const DIR = path.join(process.cwd(), "public", "downloads");
 
@@ -45,11 +48,46 @@ function hydrate(entry) {
   };
 }
 
-export const files = catalogue.files.map(hydrate).filter(Boolean);
+// What is actually inside a PDF, read from the same data the generator used — not
+// typed into the catalogue, where it would drift the first time a topic is added.
+// The download page shows this before the file is fetched: a 210 KB PDF that turns
+// out to be the wrong level is a wasted download on a phone plan.
+function contentsOf(entry) {
+  if (entry.category === "grammatik") {
+    const level = entry.level === "A1–B2" ? null : entry.level;
+    const topics = grammarTopics.filter((t) => !level || t.level === level);
+    return {
+      label: level ? "Themen in diesem Band" : "Alle 27 Themen, nach Niveau",
+      items: topics.map((t) => (level ? t.name : `${t.level} · ${t.name}`)),
+    };
+  }
+  if (entry.category === "wortschatz") {
+    const sets = lernsets({ level: entry.level, status: "built" });
+    return {
+      label: `${sets.length} Lernsets`,
+      items: sets.map((s) => `${s.title} · ${s.words} Wörter`),
+    };
+  }
+  if (entry.category === "pruefungen") {
+    // The Bayern booklets are the Landesfragen; the two Fakten bands are the topic
+    // chapters. Both are answered by what the file's own name says it is.
+    if (entry.file.includes("bayern")) {
+      return { label: "Landesteil Bayern", items: ["10 Landesfragen mit Lösungen", "Karte und Kurzprofil des Bundeslands"] };
+    }
+    return { label: `${lid.topics.length} Kapitel`, items: lid.topics.map((t) => t.title) };
+  }
+  return null;
+}
 
-/** Categories in catalogue order, each carrying only the files that exist. */
+export const files = catalogue.files.map(hydrate).filter(Boolean).map((f) => ({ ...f, contents: contentsOf(f) }));
+
+export const featured = files.filter((f) => f.featured);
+
+/** Categories in catalogue order, each carrying only the files that exist.
+ *  The featured ones are left out: they already lead the page, and listing them
+ *  twice made "14 PDFs" look like sixteen rows. */
 export const categories = catalogue.categories
-  .map((c) => ({ ...c, items: files.filter((f) => f.category === c.id) }))
+  .map((c) => ({ ...c, items: files.filter((f) => f.category === c.id && !f.featured) }))
   .filter((c) => c.items.length);
 
 export const links = catalogue.links;

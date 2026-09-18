@@ -1,0 +1,37 @@
+{
+  "note": "Der Einstufungstest hinter der Kachel „Weiß ich nicht\" auf der Startseite (src/pages/einstufungstest.astro).\n\nJe sechs Aufgaben pro Stufe, aus denen der Test zwei zieht — wer den Test zweimal macht, bekommt nicht dieselben Sätze. Jede Aufgabe prüft genau ein Merkmal, das für ihre Stufe typisch ist und auf der Stufe darunter noch nicht vorkommt: Artikel und Konjugation für A1, Perfekt, Dativ und Nebensatzstellung für A2, Relativpronomen, Passiv und Konjunktiv II für B1, Partizipialattribut, Konjunktiv I und feste Nomen-Verb-Verbindungen für B2.\n\nNur eine Option ist richtig, und die falschen sind keine Fantasiewörter, sondern die Fehler, die an dieser Stelle wirklich gemacht werden. Ein Test, den man durch Ausschluss der unsinnigen Antwort besteht, misst nichts.",
+  "levels": {
+    "A1": [
+      { "prompt": "___ Buch liegt auf dem Tisch.", "options": ["Das", "Der", "Die"], "answer": "Das" },
+      { "prompt": "Wo ___ du?", "options": ["wohnst", "wohnt", "wohnen"], "answer": "wohnst" },
+      { "prompt": "Ich ___ einen Bruder.", "options": ["habe", "bin", "hat"], "answer": "habe" },
+      { "prompt": "Wie viel ___ das?", "options": ["kostet", "kosten", "kostest"], "answer": "kostet" },
+      { "prompt": "ein Buch – zwei ___", "options": ["Bücher", "Buchen", "Buchs"], "answer": "Bücher" },
+      { "prompt": "___ heißt du?", "options": ["Wie", "Wo", "Was"], "answer": "Wie" }
+    ],
+    "A2": [
+      { "prompt": "Gestern ___ ich ins Kino gegangen.", "options": ["bin", "habe", "war"], "answer": "bin" },
+      { "prompt": "Ich helfe ___ Kind.", "options": ["dem", "das", "den"], "answer": "dem" },
+      { "prompt": "Der Zug ___ um acht Uhr ___.", "options": ["fährt … ab", "abfährt … —", "fahrt … ab"], "answer": "fährt … ab" },
+      { "prompt": "Ich komme nicht, ___ ich keine Zeit habe.", "options": ["weil", "denn", "aber"], "answer": "weil" },
+      { "prompt": "Berlin ist ___ als Bonn.", "options": ["größer", "groß", "am größten"], "answer": "größer" },
+      { "prompt": "Stell die Flasche bitte ___.", "options": ["auf den Tisch", "auf dem Tisch", "auf der Tisch"], "answer": "auf den Tisch" }
+    ],
+    "B1": [
+      { "prompt": "Das ist der Mann, ___ ich gestern getroffen habe.", "options": ["den", "der", "dem"], "answer": "den" },
+      { "prompt": "Das Formular ___ von der Sachbearbeiterin geprüft.", "options": ["wird", "ist", "hat"], "answer": "wird" },
+      { "prompt": "Ich freue mich schon ___ das Wochenende.", "options": ["auf", "über", "für"], "answer": "auf" },
+      { "prompt": "Wissen Sie, ___?", "options": ["wann der Zug abfährt", "wann fährt der Zug ab", "wann abfährt der Zug"], "answer": "wann der Zug abfährt" },
+      { "prompt": "___ des schlechten Wetters bleiben wir zu Hause.", "options": ["Wegen", "Weil", "Obwohl"], "answer": "Wegen" },
+      { "prompt": "Wenn ich mehr Zeit ___, würde ich öfter kommen.", "options": ["hätte", "habe", "hatte"], "answer": "hätte" }
+    ],
+    "B2": [
+      { "prompt": "Das ___ Kind wollen wir nicht wecken.", "options": ["schlafende", "geschlafene", "schlafend"], "answer": "schlafende" },
+      { "prompt": "Der Antrag muss bis Freitag ___ werden.", "options": ["eingereicht", "einreichen", "einzureichen"], "answer": "eingereicht" },
+      { "prompt": "Er ist nicht nur klug, ___ auch fleißig.", "options": ["sondern", "aber", "dennoch"], "answer": "sondern" },
+      { "prompt": "Der Minister sagte, er ___ zurücktreten.", "options": ["werde", "wird", "wurde"], "answer": "werde" },
+      { "prompt": "Wir müssen bis Montag eine Entscheidung ___.", "options": ["treffen", "machen", "nehmen"], "answer": "treffen" },
+      { "prompt": "Die bereits ___ Unterlagen liegen dem Amt vor.", "options": ["eingereichten", "einreichenden", "eingereicht"], "answer": "eingereichten" }
+    ]
+  }
+}

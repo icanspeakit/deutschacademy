@@ -64,8 +64,18 @@
       "blurb": "Die erste Sprechaufgabe überhaupt — und die, die man im Alltag am häufigsten braucht.",
       "seconds": 60,
       "imageNeeded": "Eine kleine Gruppe von Erwachsenen im Kursraum, eine Person steht und spricht. Freundlich, alltäglich, keine Bühne.",
+      "imageQuery": "adult language class students classroom",
       "prompt": "Stellen Sie sich vor. Sprechen Sie eine Minute über sich.",
-      "bullets": ["Name", "Alter", "Land / Heimatstadt", "Wohnort", "Sprachen", "Beruf", "Familie", "Hobby"],
+      "bullets": [
+        "Name",
+        "Alter",
+        "Land / Heimatstadt",
+        "Wohnort",
+        "Sprachen",
+        "Beruf",
+        "Familie",
+        "Hobby"
+      ],
       "phrases": [
         "Ich heiße … / Mein Name ist …",
         "Ich bin … Jahre alt.",
@@ -83,7 +93,6 @@
       ],
       "exam": "Erster Teil im Sprechen bei Start Deutsch 1, telc A1 und DTZ."
     },
-
     {
       "id": "a1-bild-bahnhof",
       "level": "A1",
@@ -93,6 +102,7 @@
       "blurb": "Wer? Wo? Was macht die Person? Drei Fragen, drei Sätze.",
       "seconds": 60,
       "imageNeeded": "Bahnsteig, eine Frau mit Koffer schaut auf die Anzeigetafel. Tageslicht, wenige Menschen.",
+      "imageQuery": "woman suitcase train station platform",
       "prompt": "Was sehen Sie auf dem Bild? Sagen Sie drei bis fünf Sätze.",
       "bullets": [
         "Wer ist auf dem Bild?",
@@ -124,6 +134,7 @@
       "blurb": "Zwei Personen, ein Abendessen — und die Wörter, die dabei jeden Tag vorkommen.",
       "seconds": 60,
       "imageNeeded": "Kleine Wohnküche, ein Mann schneidet Gemüse, ein Kind deckt den Tisch. Warmes Abendlicht.",
+      "imageQuery": "father child cooking kitchen home",
       "prompt": "Was sehen Sie auf dem Bild? Sagen Sie drei bis fünf Sätze.",
       "bullets": [
         "Wie viele Personen sind auf dem Bild?",
@@ -155,6 +166,7 @@
       "blurb": "Einkaufen — Zahlen, Lebensmittel und das Wort „bezahlen“.",
       "seconds": 60,
       "imageNeeded": "Kasse im Supermarkt, eine Frau legt Obst aufs Band, die Kassiererin scannt. Alltäglich, keine Werbung erkennbar.",
+      "imageQuery": "supermarket checkout cashier customer",
       "prompt": "Was sehen Sie auf dem Bild? Sagen Sie drei bis fünf Sätze.",
       "bullets": [
         "Wo sind die Personen?",
@@ -186,6 +198,7 @@
       "blurb": "Kinder, Eltern, Wetter — und die erste Gelegenheit, „weil“ zu benutzen.",
       "seconds": 60,
       "imageNeeded": "Spielplatz im Wohnviertel, zwei Kinder auf der Schaukel, Erwachsene sitzen auf einer Bank. Sonniger Nachmittag.",
+      "imageQuery": "playground swing children parents bench",
       "prompt": "Was sehen Sie auf dem Bild? Sagen Sie drei bis fünf Sätze.",
       "bullets": [
         "Wer ist auf dem Bild?",
@@ -208,7 +221,6 @@
         "„weil“ schickt das Verb ans Ende: weil es dort ruhig ist."
       ]
     },
-
     {
       "id": "a2-bild-gartenarbeit",
       "level": "A2",
@@ -242,6 +254,7 @@
       "blurb": "Viele Menschen auf einem Bild — und die Frage, warum sie da sind.",
       "seconds": 90,
       "imageNeeded": "Hinterhof eines Mietshauses, lange Tischreihe, Menschen verschiedenen Alters essen und reden. Sommerabend, Lichterkette.",
+      "imageQuery": "street party long table neighbours evening",
       "prompt": "Beschreiben Sie das Bild. Sagen Sie dann, was Sie über die Situation denken.",
       "bullets": [
         "Wie viele Menschen sehen Sie ungefähr? Wer könnte das sein?",
@@ -274,6 +287,7 @@
       "blurb": "Warten, Termine, Ungeduld — und das Wort „Krankenkasse“.",
       "seconds": 90,
       "imageNeeded": "Wartezimmer einer Hausarztpraxis, sechs Menschen auf Stühlen, eine Person am Empfangstresen. Neutral, kein Praxisname erkennbar.",
+      "imageQuery": "waiting room chairs people clinic",
       "prompt": "Beschreiben Sie das Bild. Sagen Sie dann, was Sie über die Situation denken.",
       "bullets": [
         "Wo sind die Menschen?",
@@ -296,7 +310,6 @@
         "Eine konkrete Angabe aus dem eigenen Leben („zwei oder drei Wochen“) ist mehr wert als ein allgemeiner Satz."
       ]
     },
-
     {
       "id": "b1-bild-rolltreppe",
       "level": "B1",
@@ -318,6 +331,7 @@
       "blurb": "Zwei Seiten eines Tisches — und die Frage, wer hier eigentlich nervös ist.",
       "seconds": 120,
       "imageNeeded": "Besprechungsraum, eine Bewerberin sitzt einem Paar aus Personalerin und Abteilungsleiter gegenüber. Mappe und Laptop auf dem Tisch.",
+      "imageQuery": "job interview office desk candidate",
       "prompt": "Beschreiben Sie das Bild und sprechen Sie dann über das Thema.",
       "bullets": [
         "Wer sitzt wo, und woran erkennt man die Rollen?",
@@ -351,6 +365,7 @@
       "blurb": "Ausbildung, Handwerk und die Frage, warum zu wenige Leute diesen Weg gehen.",
       "seconds": 120,
       "imageNeeded": "Kfz- oder Metallwerkstatt, eine erfahrene Handwerkerin erklärt einem jungen Auszubildenden etwas an einer Maschine. Arbeitskleidung, echte Werkstatt.",
+      "imageQuery": "workshop apprentice mechanic teaching",
       "prompt": "Beschreiben Sie das Bild und sprechen Sie dann über das Thema.",
       "bullets": [
         "Was für ein Ort ist das?",
@@ -382,6 +397,7 @@
       "blurb": "Nummer ziehen, warten, Formular — und wie man darüber spricht, ohne zu schimpfen.",
       "seconds": 120,
       "imageNeeded": "Wartebereich eines Bürgeramts, Anzeigetafel mit Wartenummer, Menschen mit Unterlagen, im Hintergrund Schalter.",
+      "imageQuery": "public office counter waiting number queue",
       "prompt": "Beschreiben Sie das Bild und sprechen Sie dann über das Thema.",
       "bullets": [
         "Wo sind die Menschen, und woran erkennt man das?",
@@ -404,7 +420,6 @@
         "„Inzwischen …“ zeigt eine Entwicklung — genau das hört eine Prüferin auf B1 gern."
       ]
     },
-
     {
       "id": "b2-vortrag-ehrenamt",
       "level": "B2",
@@ -469,6 +484,7 @@
       "blurb": "Ein sympathisches Bild — und die Frage, wer sich das leisten kann.",
       "seconds": 150,
       "imageNeeded": "Wochenmarkt in einer Innenstadt, Gemüsestand, Kundin im Gespräch mit dem Händler. Vormittagslicht.",
+      "imageQuery": "farmers market vegetable stall customer",
       "prompt": "Beschreiben Sie das Bild kurz und nehmen Sie dann Stellung.",
       "bullets": [
         "Was ist auf dem Bild zu sehen?",
@@ -503,6 +519,7 @@
       "blurb": "Vier im Raum, vier auf dem Bildschirm — und wer dabei untergeht.",
       "seconds": 150,
       "imageNeeded": "Besprechungsraum, vier Personen am Tisch, auf dem Bildschirm an der Wand vier zugeschaltete Gesichter. Eine Person am Tisch spricht.",
+      "imageQuery": "hybrid meeting room video conference screen",
       "prompt": "Beschreiben Sie das Bild kurz und nehmen Sie dann Stellung.",
       "bullets": [
         "Was für eine Situation zeigt das Bild?",
@@ -536,6 +553,7 @@
       "blurb": "Umbau, Umleitung, Ärger — und die Frage, wem eine Stadt gehört.",
       "seconds": 150,
       "imageNeeded": "Innenstadtstraße, Bauzaun, Bagger, daneben ein Geschäft mit Schild „Wir haben geöffnet“. Fußgänger gehen auf einem schmalen Weg vorbei.",
+      "imageQuery": "construction site city street fence shops",
       "prompt": "Beschreiben Sie das Bild kurz und nehmen Sie dann Stellung.",
       "bullets": [
         "Was ist auf dem Bild zu sehen?",
@@ -568,6 +586,7 @@
       "blurb": "Trennen, sammeln, entsorgen — und ob das überhaupt etwas bringt.",
       "seconds": 150,
       "imageNeeded": "Wertstoffhof, mehrere große Container mit Beschriftung, Menschen laden Kartons und Altgeräte aus dem Kofferraum aus.",
+      "imageQuery": "recycling centre containers people unloading",
       "prompt": "Beschreiben Sie das Bild kurz und nehmen Sie dann Stellung.",
       "bullets": [
         "Was ist auf dem Bild zu sehen?",

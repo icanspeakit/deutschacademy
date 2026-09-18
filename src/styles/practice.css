@@ -208,6 +208,16 @@
 }
 .quiz-progress { font-size: .85rem; color: var(--muted); font-weight: 600; margin-bottom: 14px; }
 .quiz-progress--split { display: flex; justify-content: space-between; gap: 12px; }
+/* A row of dots instead of "Frage 3 von 8", for a quiz whose length is not known in
+   advance. The Einstufungstest stops as soon as it has placed you, so it cannot print a
+   denominator — but it can show that what is behind you is short, which is the thing that
+   keeps someone going. Here rather than in the page, because the row is rebuilt by script
+   on every question and Astro's scoped styles only reach what the server rendered. */
+.quiz-dots { display: flex; gap: 6px; margin-bottom: 16px; }
+.quiz-dot { width: 22px; height: 4px; border-radius: 2px; background: var(--border); }
+.quiz-dot--done { background: var(--brand-blue); }
+.quiz-dot--now { background: var(--brand-blue); opacity: .45; }
+
 .quiz-prompt { font-size: 1.15rem; line-height: 1.5; margin-bottom: 20px; }
 .quiz-prompt em { color: var(--brand-blue-dark); font-style: normal; font-weight: 600; }
 .quiz-form { display: flex; gap: 10px; }

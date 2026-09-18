@@ -11,6 +11,19 @@ const {
   title = "Deutsch Academy – Da für Dich!",
   description = "Deutsch lernen mit echtem Unterrichtsmaterial: kostenlose Übungen und Prüfungsvorbereitung für telc, Goethe-Zertifikat, TestDaF, DTZ und Leben in Deutschland.",
 } = Astro.props;
+
+// Open Graph / Twitter. There were none, so every link anyone pasted into WhatsApp,
+// Telegram or a Facebook group — which is how this audience actually shares things —
+// rendered as a grey box with a URL in it.
+//
+// The image is absolute where it can be. Scrapers fetch og:image out of band, with no
+// page to resolve a relative path against; Facebook and Twitter reject one outright,
+// while WhatsApp and Slack happen to cope. `site` is not set in astro.config.mjs yet, so
+// this falls back to the relative path rather than inventing a hostname — half the
+// scrapers is better than all of them pointed at the wrong domain. Set `site` and every
+// tag below becomes absolute with no further change.
+const OG_IMAGE = "/assets/og-default.png";
+const abs = (path) => (Astro.site ? new URL(path, Astro.site).href : path);
 ---
 <!doctype html>
 <html lang="de">
@@ -67,6 +80,21 @@ const {
     <link rel="preload" href="/fonts/sora-latin.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="/fonts/big-shoulders-display-latin.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="/fonts/albert-sans-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Deutsch Academy" />
+    <meta property="og:locale" content="de_DE" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={abs(OG_IMAGE)} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="da für Dich — Deutsch Academy" />
+    {Astro.site && <meta property="og:url" content={new URL(Astro.url.pathname, Astro.site).href} />}
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={abs(OG_IMAGE)} />
+
     <slot name="head" />
     <title>{title}</title>
   </head>

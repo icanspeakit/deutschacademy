@@ -77,7 +77,12 @@ const LEVELS = ENTRY.map(({ level, slug }) => {
   };
 });
 
-const unsureHref = LEVELS[0].href;
+// The escape hatch leads to the placement test, not to A1. "Wir fangen bei A1 an — du
+// merkst in zwei Fragen, ob es zu leicht ist" put the placing on the learner: guess, start,
+// notice, go back, guess again. Someone who cannot place themselves on the CEFR scale also
+// cannot tell from one exercise whether a topic is beneath them, so the guess mostly stood.
+// Eight questions answer it instead.
+const unsureHref = "/einstufungstest";
 
 const EXAM_CHIPS = [
   { label: "DTZ", href: "/pruefungen/dtz" },
@@ -105,11 +110,14 @@ const EXAM_CHIPS = [
           </span>
         </a>
       ))}
-      <a class="lf-tile lf-tile--unsure" href={unsureHref} data-lf-tile="A1">
+      <!-- No data-lf-tile: the other four open a level's panel, this one is a plain link
+           to the test. A new key rather than fold.unsureSub, whose translations all still
+           promise the old A1 start. -->
+      <a class="lf-tile lf-tile--unsure" href={unsureHref}>
         <span class="lf-tile-level">?</span>
         <span>
           <span class="lf-tile-name" data-i18n="fold.unsure">Weiß ich nicht</span>
-          <span class="lf-tile-meta" data-i18n="fold.unsureSub">Wir fangen bei A1 an — du merkst in zwei Fragen, ob es zu leicht ist.</span>
+          <span class="lf-tile-meta" data-i18n="fold.unsureTest">Kurzer Einstufungstest — höchstens acht Fragen, dann weißt du es.</span>
         </span>
       </a>
     </div>

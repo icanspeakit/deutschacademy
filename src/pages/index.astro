@@ -334,7 +334,7 @@ const userCount = 412; // actual signups so far
           <div class="lp-price-card lp-price-card--featured">
             <div class="lp-price-badge" data-i18n="home.pricing.badge">MOST POPULAR</div>
             <div class="lp-price-name" data-i18n="home.pricing.premium.name">Premium Membership</div>
-            <div class="lp-price-amount"><strong>€XX</strong><span data-i18n="home.pricing.premium.period">/month (TBD)</span></div>
+            <div class="lp-price-amount"><strong data-i18n="home.pricing.premium.amount">€14,90</strong><span data-i18n="home.pricing.premium.period">/Monat</span></div>
             <div class="lp-price-desc" data-i18n="home.pricing.premium.desc">Everything in Free, plus what you need to actually pass the exam.</div>
             <div class="lp-price-divider"></div>
             <div class="lp-price-list">
@@ -368,15 +368,34 @@ const userCount = 412; // actual signups so far
           <div class="lp-footer-brand">
             <img src="/assets/logo.png" alt="DeutschAcademy" />
             <strong data-i18n="home.footer.tagline">Da für Dich!</strong>
-            <p>Lorem ipsum dolor sit amet consectetur adipiscing elit sed.</p>
+            <p data-i18n="home.footer.blurb">Deutsch von A1 bis C1 — aufgebaut aus echtem Unterrichtsmaterial, kostenlos und ohne Konto.</p>
           </div>
-          <div class="lp-footer-col"><h5 data-i18n="home.footer.col.product">Product</h5><span>Lorem ipsum</span><span>Dolor sit</span><span>Amet consectetur</span><span>Adipiscing</span></div>
-          <div class="lp-footer-col"><h5 data-i18n="home.footer.col.company">Company</h5><span>Lorem ipsum</span><span>Dolor sit</span><span>Amet consectetur</span><span>Adipiscing</span></div>
-          <div class="lp-footer-col"><h5 data-i18n="home.footer.col.support">Support</h5><span>Lorem ipsum</span><span>Dolor sit</span><span>Amet consectetur</span><span>Adipiscing</span></div>
-          <div class="lp-footer-col"><h5 data-i18n="home.footer.col.legal">Legal</h5><span>Lorem ipsum</span><span>Dolor sit</span><span>Amet consectetur</span><span>Adipiscing</span></div>
+          <!-- Every entry is a route that exists. A footer of dead links is the same
+               construction site as a footer of filler text, only harder to spot. -->
+          <div class="lp-footer-col">
+            <h5 data-i18n="home.footer.col.practise">Üben</h5>
+            <a href="/uebungen/grammatik" data-i18n="nav.subject.grammatik">Grammatik</a>
+            <a href="/uebungen/wortschatz" data-i18n="nav.subject.wortschatz">Wortschatz</a>
+            <a href="/uebungen/fertigkeiten" data-i18n="nav.subject.fertigkeiten">Fertigkeiten</a>
+            <a href="/uebungen/kultur" data-i18n="group.kultur.name">Landeskunde</a>
+          </div>
+          <div class="lp-footer-col">
+            <h5 data-i18n="nav.exams">Prüfungen</h5>
+            <a href="/pruefungen/dtz">DTZ</a>
+            <a href="/pruefungen/telc">telc</a>
+            <a href="/pruefungen/goethe">Goethe-Zertifikat</a>
+            <a href="/pruefungen/testdaf">TestDaF</a>
+          </div>
+          <div class="lp-footer-col">
+            <h5 data-i18n="home.footer.col.more">Mehr</h5>
+            <a href="/uebungen" data-i18n="nav.exercises">Übungen</a>
+            <a href="/einstufungstest" data-i18n="home.footer.link.placement">Einstufungstest</a>
+            <a href="/wissen" data-i18n="home.footer.link.knowledge">Wissen</a>
+            <a href="/dashboard" data-i18n="home.footer.link.dashboard">Dein Fortschritt</a>
+          </div>
         </div>
         <div class="lp-footer-bottom">
-          <div class="lp-footer-copyright">© 2026 Lorem ipsum. Dolor sit amet.</div>
+          <div class="lp-footer-copyright">© 2026 DeutschAcademy — Da für Dich.</div>
           <LanguageSwitcher />
           <ThemeToggle />
         </div>

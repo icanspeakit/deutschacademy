@@ -682,3 +682,64 @@ export const navSections = [
     blurbKey: "group.pruefungen.blurb", blurb: "telc, Goethe, TestDaF, DTZ",
     items: notSelf("/pruefungen", itemsOf("pruefungen")) },
 ];
+
+// ---------------------------------------------------------------------------
+// The "Üben" mega menu
+// ---------------------------------------------------------------------------
+// Eight top-level items, six of them dropdowns, mixing three kinds of thing: four content
+// subjects, a cross-cutting filter (Niveaus) and two account/utility links. The bar was
+// wide enough to run into the logo, and a learner deciding where to click had to hold all
+// eight in mind.
+//
+// The four subjects are one decision, not four — "what do I practise" — so they become
+// four columns of one menu. Each column is that subject's own trainers and hubs, with its
+// overview page at the foot.
+//
+// What a column deliberately does NOT carry is the deep tree the old per-subject panels
+// held: every grammar topic per level, every Lernset, every skill × level cross-product.
+// Four columns cannot hold several hundred links, and the reason to merge the menus was
+// that there were too many things in them. Every one of those routes is still reachable —
+// one click further, from the hub the column links to, which is the page built to list
+// them. The level chips below the columns are the other way in.
+//
+// `navSections` stays exactly as it was: the drawer and PracticeHeader still read it, and
+// the per-subject panels it describes are what the section pages themselves render.
+const skillColumnItems = skills.map((s) => ({
+  id: s.id, icon: s.icon, href: s.href,
+  titleKey: s.nameKey, title: s.name,
+  countKey: s.total ? "nav.skill.count" : undefined,
+  countVars: s.total ? { n: s.total } : undefined,
+  count: s.total ? `${s.total} Übungen` : "folgt",
+}));
+
+export const navUeben = {
+  id: "ueben",
+  href: "/uebungen",
+  nameKey: "nav.subject.ueben",
+  name: "Üben",
+  columns: [
+    { id: "grammatik", icon: "book", href: "/uebungen/grammatik",
+      nameKey: "nav.subject.grammatik", name: "Grammatik",
+      items: itemsOf("grammatik") },
+    { id: "wortschatz", icon: "folder", href: "/uebungen/wortschatz",
+      nameKey: "nav.subject.wortschatz", name: "Wortschatz",
+      items: itemsOf("woerter") },
+    { id: "fertigkeiten", icon: "mic", href: "/uebungen/fertigkeiten",
+      nameKey: "nav.subject.fertigkeiten", name: "Fertigkeiten",
+      items: skillColumnItems },
+    { id: "landeskunde", icon: "map-pin", href: "/uebungen/kultur",
+      nameKey: "group.kultur.name", name: "Landeskunde",
+      items: [...itemsOf("kultur"), kulturQuizItem] },
+  ],
+  // A CEFR level is a filter over all four columns, not a fifth column and not a
+  // destination of its own — which is what "Niveaus" as a top-level menu made it, a
+  // second copy of the whole content tree. One chip row under the columns says the same
+  // thing in one line.
+  levels: levels.map((lv) => ({
+    level: lv.level,
+    slug: lv.slug,
+    href: `/uebungen/grammatik#niveau-${lv.slug}`,
+    blurbKey: lv.blurbKey,
+    blurb: lv.blurb,
+  })),
+};

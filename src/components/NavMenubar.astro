@@ -1,21 +1,37 @@
 ---
 // The desktop menu bar, lifted out of SiteNav so the practice pages can wear it too.
 //
-// Five subject menus plus Niveaus and Profil, each opening a panel in one of four shapes
-// picked by what the section carries:
-//   `levels`  A1–B2 tiles that switch the list below them   — Grammatik, Wortschatz
-//   `skills`  skill tabs, each with its own A1–B2 tiles     — Fertigkeiten
-//   `groups`  sub-headings side by side, or tabs past TAB_AT — Landeskunde
-//   `items`   a flat list                                    — Prüfungen
-// The level-tiled shape started as the Niveaus menu and earned its way into the subject
-// menus: "what is here for me at my level?" is the same question in all three, and picking
-// a level should never cost a page load.
+// Three text items, not eight:
+//
+//   Üben ▾        one mega menu, four columns — Grammatik, Wortschatz, Fertigkeiten,
+//                 Landeskunde — plus a level chip row under them
+//   Prüfungen ▾   a flat list; the exams are peers, not a tree
+//   Wissen        one page, so a link
+//
+// The bar used to carry five subject menus plus Niveaus, Profil and Wissen. Three
+// problems with that, in order of how much they cost a learner:
+//
+//   1. Eight items mixing three kinds of thing — four content subjects, a cross-cutting
+//      filter, and two account links — so "where do I click" needed all eight held in
+//      mind at once.
+//   2. "Niveaus" was a second copy of the entire content tree, keyed by a filter. A CEFR
+//      level is not a destination; it is a lens on the four subjects. It is now a chip
+//      row inside Üben, and the listing pages filter by level themselves.
+//   3. The row was wide enough to run into the logo wordmark at 1280px.
+//
+// Profil moved to the avatar in SiteNav's right cluster, with the theme toggle under it.
+//
+// What the columns deliberately do NOT carry: the deep per-level tree the old panels
+// held (every grammar topic, every Lernset, every skill × level). Four columns cannot
+// hold several hundred links, and too many links in the menu was the problem. Every one
+// of those routes is one click further, from the hub its column links to — the page that
+// exists to list them. See the note on `navUeben` in src/lib/catalog.js.
 //
 // Hidden below 1080px, where NavDrawer takes over. Rendered on the server and merely
 // shown/hidden, so every link is in the HTML for crawlers and the nav still navigates
 // with JS off — the `.lp-nav-fallback` block at the bottom is what JS-off gets instead.
 import Icon from "./Icon.astro";
-import { navSections, levels } from "../lib/catalog.js";
+import { navSections, navUeben } from "../lib/catalog.js";
 import "../styles/site-nav.css";
 
 interface Props {
@@ -24,455 +40,136 @@ interface Props {
 }
 const { active } = Astro.props;
 
-// B1 has eleven grammar topics and a menu that scrolls is a menu nobody reads to the end
-// of, so the Niveaus panel previews its first few and links to the rest.
-const GRAMMAR_PREVIEW = 5;
-
-// Up to this many sub-sections render side by side; more than this and the panel switches
-// to tabs, so its height stops tracking the size of the catalogue.
-const TAB_AT = 2;
-const PROFILE_HREF = "/dashboard";
 const WISSEN_HREF = "/wissen";
 
 /** `data-i18n-vars` wants a string or nothing — never the literal "undefined". */
 const vars = (v) => (v ? JSON.stringify(v) : undefined);
 
-/** Index of the first entry with something in it, or 0 when none of them have. */
-const firstFilled = (list, size) => {
-  const i = list.findIndex((x) => size(x) > 0);
-  return i === -1 ? 0 : i;
-};
+// Üben reads as current for any of the four subjects it now contains, so a Grammatik
+// page still shows which top-level item it lives under.
+const UEBEN_ACTIVE = ["ueben", "grammatik", "wortschatz", "fertigkeiten", "landeskunde"];
+const pruefungen = navSections.find((s) => s.id === "pruefungen");
 ---
 <!-- Desktop menu bar. Hidden below 1080px, where the drawer takes over. -->
-<div class="lp-menubar" data-menubar>
-  {navSections.map((section) => (
-    <div class="lp-menu" data-menu={section.id}>
-      <a
-        class:list={["lp-menu-btn", active === section.id && "is-active"]}
-        href={section.href}
-        aria-expanded="false"
-        aria-controls={`lp-panel-${section.id}`}
-        data-menu-btn
-      >
-        <span data-i18n={section.nameKey}>{section.name}</span>
-        <svg class="lp-menu-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
-      </a>
-      <div
-        class:list={[
-          "lp-panel",
-          (section.levels || section.skills) && "lp-panel--wide",
-          section.groups && (section.groups.length > TAB_AT ? "lp-panel--tabbed" : "lp-panel--grouped"),
-        ]}
-        id={`lp-panel-${section.id}`}
-        data-menu-panel
-        hidden
-      >
-        {/* Spans every group or level, so it sits above them rather than inside one. */}
-        {section.feature && (
-          <a class="lp-panel-feature" href={section.feature.href}>
-            <span class="lp-panel-ic"><Icon name={section.feature.icon} size={18} /></span>
-            <span class="lp-panel-txt">
-              <b data-i18n={section.feature.titleKey}>{section.feature.title}</b>
-              <i data-i18n={section.feature.countKey} data-i18n-vars={vars(section.feature.countVars)}>{section.feature.count}</i>
-            </span>
-            <span aria-hidden="true">→</span>
-          </a>
-        )}
-
-        {/* --- Skills: a tab per Fertigkeit, then that skill's own A1–B2 row ------
-
-            Hören keeps its place in the order the Lehrwerke use, but the panel does
-            not open on it: a menu whose first screen is an empty state reads as a
-            site with nothing in it. The same rule picks each skill's starting level —
-            Lesen opens on B1, where its material actually is. */}
-        {section.skills ? (
-          <>
-            <div class="lp-tabs" role="tablist" aria-label={section.name}>
-              {section.skills.map((skill, i) => (
-                <button
-                  class:list={["lp-tab", i === firstFilled(section.skills, (s) => s.total) && "is-on"]}
-                  type="button"
-                  role="tab"
-                  id={`lp-tab-${section.id}-${skill.id}`}
-                  aria-selected={i === firstFilled(section.skills, (s) => s.total) ? "true" : "false"}
-                  aria-controls={`lp-tabview-${section.id}-${skill.id}`}
-                  data-group-tab={`${section.id}:${skill.id}`}
-                  data-group-scope={section.id}
-                >
-                  <span data-i18n={skill.nameKey}>{skill.name}</span>
-                  {/* A skill with no material says so on the tab, rather than
-                      opening onto four empty levels before it admits it. */}
-                  {skill.soon
-                    ? <i class="lp-tab-soon" data-i18n="nav.skill.soonTag">bald</i>
-                    : <i>{skill.total}</i>}
-                </button>
-              ))}
-            </div>
-
-            {section.skills.map((skill, i) => (
-              <div
-                class="lp-tabview"
-                id={`lp-tabview-${section.id}-${skill.id}`}
-                role="tabpanel"
-                aria-labelledby={`lp-tab-${section.id}-${skill.id}`}
-                data-group-view={`${section.id}:${skill.id}`}
-                hidden={i !== firstFilled(section.skills, (s) => s.total)}
-              >
-                <div class="lp-levels lp-levels--compact" role="tablist" aria-label={skill.name}>
-                  {skill.levels.map((lv, j) => (
-                    <button
-                      class:list={[
-                        "lp-level-tile",
-                        j === firstFilled(skill.levels, (l) => l.items.length) && "is-on",
-                        !lv.items.length && "is-empty",
-                      ]}
-                      type="button"
-                      role="tab"
-                      id={`lp-level-tab-${section.id}-${skill.id}-${lv.slug}`}
-                      aria-selected={j === firstFilled(skill.levels, (l) => l.items.length) ? "true" : "false"}
-                      aria-controls={`lp-level-view-${section.id}-${skill.id}-${lv.slug}`}
-                      data-level-tab={`${section.id}-${skill.id}:${lv.slug}`}
-                      data-level-scope={`${section.id}-${skill.id}`}
-                    >
-                      <b>{lv.level}</b>
-                      {lv.items.length
-                        ? <i data-i18n="nav.skill.count" data-i18n-vars={vars({ n: lv.items.length })}>{lv.items.length} Übungen</i>
-                        : <i data-i18n="nav.skill.none">—</i>}
-                    </button>
-                  ))}
-                </div>
-
-                {skill.levels.map((lv, j) => (
-                  <div
-                    class="lp-level-view"
-                    id={`lp-level-view-${section.id}-${skill.id}-${lv.slug}`}
-                    role="tabpanel"
-                    aria-labelledby={`lp-level-tab-${section.id}-${skill.id}-${lv.slug}`}
-                    data-level-view={`${section.id}-${skill.id}:${lv.slug}`}
-                    hidden={j !== firstFilled(skill.levels, (l) => l.items.length)}
-                  >
-                    {lv.items.length ? (
-                      <ul class="lp-panel-list">
-                        {lv.items.map((it) => (
-                          <li>
-                            <a href={it.href}>
-                              <span class="lp-panel-ic"><Icon name={skill.icon} size={18} /></span>
-                              <span class="lp-panel-txt">
-                                <b>{it.title}</b>
-                                <i>{it.count}</i>
-                              </span>
-                            </a>
-                          </li>
-                        ))}
-                      </ul>
-                    ) : (
-                      <p class="lp-level-empty" data-i18n={lv.emptyKey}>{lv.empty}</p>
-                    )}
-                  </div>
-                ))}
-
-              </div>
-            ))}
-          </>
-
-        /* --- Levels: A1–B2 tiles that switch the columns below them ------------ */
-        ) : section.levels ? (
-          <>
-            <div class="lp-levels" role="tablist" aria-label="Niveau">
-              {section.levels.map((lv, i) => (
-                <button
-                  class:list={["lp-level-tile", i === 0 && "is-on"]}
-                  type="button"
-                  role="tab"
-                  id={`lp-level-tab-${section.id}-${lv.slug}`}
-                  aria-selected={i === 0 ? "true" : "false"}
-                  aria-controls={`lp-level-view-${section.id}-${lv.slug}`}
-                  data-level-tab={`${section.id}:${lv.slug}`}
-                  data-level-scope={section.id}
-                >
-                  <b>{lv.level}</b>
-                  <i data-i18n={lv.metaKey} data-i18n-vars={vars(lv.metaVars)}>{lv.meta}</i>
-                </button>
-              ))}
-            </div>
-
-            {section.levels.map((lv, i) => (
-              <div
-                class="lp-level-view"
-                id={`lp-level-view-${section.id}-${lv.slug}`}
-                role="tabpanel"
-                aria-labelledby={`lp-level-tab-${section.id}-${lv.slug}`}
-                data-level-view={`${section.id}:${lv.slug}`}
-                hidden={i !== 0}
-              >
-                <div class="lp-panel-grid">
-                  {lv.cols.map((col) => (
-                    <div class="lp-panel-col">
-                      {col.name && (
-                        <p class="lp-panel-head">
-                          {col.icon && <span class="lp-panel-head-ic"><Icon name={col.icon} size={16} /></span>}
-                          <span data-i18n={col.nameKey}>{col.name}</span>
-                        </p>
-                      )}
-                      {col.items.length ? (
-                        <ul>
-                          {col.items.map((it) => (
-                            <li>
-                              <a href={it.href}>
-                                <b>{it.title}</b>
-                                {it.count && <i>{it.count}</i>}
-                              </a>
-                            </li>
-                          ))}
-                        </ul>
-                      ) : (
-                        <p class="lp-level-empty" data-i18n={col.emptyKey}>{col.empty}</p>
-                      )}
-                      {col.more && (
-                        <a class="lp-level-more" href={col.more.href}>
-                          <span data-i18n={col.more.labelKey} data-i18n-vars={vars(col.more.labelVars)}>{col.more.label}</span>
-                          <span aria-hidden="true">→</span>
-                        </a>
-                      )}
-                    </div>
-                  ))}
-                </div>
-                {lv.more && (
-                  <a class="lp-level-more" href={lv.more.href}>
-                    <span data-i18n={lv.more.labelKey} data-i18n-vars={vars(lv.more.labelVars)}>{lv.more.label}</span>
-                    <span aria-hidden="true">→</span>
-                  </a>
-                )}
-              </div>
-            ))}
-          </>
-
-        /* --- Groups: side by side up to TAB_AT of them, tabs beyond that -------
-
-            Five Landeskunde groups in columns ran 626px tall at 1440px and 823px on
-            a small laptop — off the bottom of the screen — because the panel's height
-            grows with the catalogue. Tabs cap it at one group's worth however many
-            topics land later. */
-        ) : section.groups && section.groups.length > TAB_AT ? (
-          <>
-            <div class="lp-tabs" role="tablist" aria-label={section.name}>
-              {section.groups.map((group, i) => (
-                <button
-                  class:list={["lp-tab", i === 0 && "is-on"]}
-                  type="button"
-                  role="tab"
-                  id={`lp-tab-${section.id}-${group.id}`}
-                  aria-selected={i === 0 ? "true" : "false"}
-                  aria-controls={`lp-tabview-${section.id}-${group.id}`}
-                  data-group-tab={`${section.id}:${group.id}`}
-                  data-group-scope={section.id}
-                >
-                  <span data-i18n={group.nameKey}>{group.name}</span>
-                  <i>{group.items.length}</i>
-                </button>
-              ))}
-            </div>
-
-            {section.groups.map((group, i) => (
-              <div
-                class="lp-tabview"
-                id={`lp-tabview-${section.id}-${group.id}`}
-                role="tabpanel"
-                aria-labelledby={`lp-tab-${section.id}-${group.id}`}
-                data-group-view={`${section.id}:${group.id}`}
-                hidden={i !== 0}
-              >
-                <ul class="lp-panel-list">
-                  {group.items.map((item) => (
-                    <li>
-                      <a href={item.href}>
-                        <span class="lp-panel-ic"><Icon name={item.icon} size={18} /></span>
-                        <span class="lp-panel-txt">
-                          <b data-i18n={item.titleKey}>{item.title}</b>
-                          <i data-i18n={item.countKey} data-i18n-vars={vars(item.countVars)}>{item.count}</i>
-                        </span>
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </>
-        ) : section.groups ? (
-          /* `panelItems` where a group carries one: this panel cannot scroll, so a
-             long group shows its first few here and links to the rest. The drawer
-             below reads `items` and lists them all. */
-          <div class="lp-panel-cols">
-            {section.groups.map((group) => (
-              <div class:list={["lp-panel-col", group.inline && "lp-panel-col--inline"]}>
-                <p class="lp-panel-head">
-                  <span data-i18n={group.nameKey}>{group.name}</span>
-                </p>
-                <ul>
-                  {(group.panelItems ?? group.items).map((item) => (
-                    <li>
-                      <a href={item.href}>
-                        <b data-i18n={item.titleKey}>{item.title}</b>
-                        <i data-i18n={item.countKey} data-i18n-vars={vars(item.countVars)}>{item.count}</i>
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-                {group.more && (
-                  <a class="lp-level-more" href={group.more.href}>
-                    <span data-i18n={group.more.labelKey} data-i18n-vars={vars(group.more.labelVars)}>{group.more.label}</span>
-                    <span aria-hidden="true">→</span>
-                  </a>
-                )}
-              </div>
-            ))}
-          </div>
-        ) : (
-          <ul class="lp-panel-list">
-            {section.items.map((item) => (
-              <li>
-                <a href={item.href}>
-                  <span class="lp-panel-ic"><Icon name={item.icon} size={18} /></span>
-                  <span class="lp-panel-txt">
-                    <b data-i18n={item.titleKey}>{item.title}</b>
-                    <i data-i18n={item.countKey} data-i18n-vars={vars(item.countVars)}>{item.count}</i>
-                  </span>
-                </a>
-              </li>
-            ))}
-          </ul>
-        )}
-
-        <a class="lp-panel-foot" href={section.href}>
-          <span data-i18n="nav.panel.all">Übersicht</span>
-          <span aria-hidden="true">→</span>
-        </a>
-      </div>
-    </div>
-  ))}
-
-  <!-- Niveaus: the tiles pick, the columns below answer. The subject menus now use
-       the same shape; this one is the cross-subject view of it. -->
-  <div class="lp-menu" data-menu="niveaus">
+<div class="lp-menubar" data-menubar role="menubar" aria-label="Hauptnavigation">
+  <!-- ── Üben ─────────────────────────────────────────────────────────────── -->
+  <div class="lp-menu" data-menu="ueben">
     <a
-      class:list={["lp-menu-btn", active === "niveaus" && "is-active"]}
-      href="/uebungen/grammatik"
+      class:list={["lp-menu-btn", UEBEN_ACTIVE.includes(active ?? "") && "is-active"]}
+      href={navUeben.href}
+      role="menuitem"
+      aria-haspopup="true"
       aria-expanded="false"
-      aria-controls="lp-panel-niveaus"
+      aria-controls="lp-panel-ueben"
       data-menu-btn
     >
-      <span data-i18n="nav.subject.niveaus">Niveaus</span>
+      <span data-i18n={navUeben.nameKey}>{navUeben.name}</span>
       <svg class="lp-menu-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
     </a>
-    <div class="lp-panel lp-panel--wide" id="lp-panel-niveaus" data-menu-panel hidden>
-      <div class="lp-levels" role="tablist" aria-label="Niveau">
-        {levels.map((lv, i) => (
-          <button
-            class:list={["lp-level-tile", i === 0 && "is-on"]}
-            type="button"
-            role="tab"
-            id={`lp-level-tab-${lv.slug}`}
-            aria-selected={i === 0 ? "true" : "false"}
-            aria-controls={`lp-level-view-${lv.slug}`}
-            data-level-tab={`niveaus:${lv.slug}`}
-            data-level-scope="niveaus"
-          >
-            <b>{lv.level}</b>
-            <i data-i18n={lv.blurbKey}>{lv.blurb}</i>
-          </button>
+
+    <div class="lp-panel lp-panel--mega" id="lp-panel-ueben" data-menu-panel role="menu" aria-label="Üben" hidden>
+      <div class="lp-mega-cols">
+        {navUeben.columns.map((col) => (
+          <div class="lp-mega-col">
+            {/* The column head is a link, not a caption: "Grammatik" is a page, and a
+                heading you cannot click next to rows you can is a small lie. */}
+            <a class="lp-mega-head" href={col.href} role="menuitem">
+              <span class="lp-panel-head-ic"><Icon name={col.icon} size={16} /></span>
+              <span data-i18n={col.nameKey}>{col.name}</span>
+            </a>
+            <ul>
+              {col.items.map((item) => (
+                <li>
+                  <a href={item.href} role="menuitem">
+                    <b data-i18n={item.titleKey}>{item.title}</b>
+                    {item.count && (
+                      <i data-i18n={item.countKey} data-i18n-vars={vars(item.countVars)}>{item.count}</i>
+                    )}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
         ))}
       </div>
 
-      {levels.map((lv, i) => (
-        <div
-          class="lp-level-view"
-          id={`lp-level-view-${lv.slug}`}
-          role="tabpanel"
-          aria-labelledby={`lp-level-tab-${lv.slug}`}
-          data-level-view={`niveaus:${lv.slug}`}
-          hidden={i !== 0}
-        >
-          <div class="lp-panel-grid">
-            <div class="lp-panel-col">
-              <p class="lp-panel-head">
-                <span class="lp-panel-head-ic"><Icon name="book" size={16} /></span>
-                <span data-i18n="nav.level.grammar">Grammatik</span>
-              </p>
-              <ul>
-                {lv.grammar.slice(0, GRAMMAR_PREVIEW).map((t) => (
-                  <li><a href={t.href}><b>{t.name}</b></a></li>
-                ))}
-              </ul>
-              {lv.grammar.length > GRAMMAR_PREVIEW && (
-                <a class="lp-level-more" href={`/uebungen/grammatik#niveau-${lv.slug}`}>
-                  <span
-                    data-i18n="nav.level.allTopics"
-                    data-i18n-vars={JSON.stringify({ n: lv.grammar.length })}
-                  >Alle {lv.grammar.length} Themen</span>
-                  <span aria-hidden="true">→</span>
-                </a>
-              )}
-            </div>
-
-            <div class="lp-panel-col">
-              <p class="lp-panel-head">
-                <span class="lp-panel-head-ic"><Icon name="folder" size={16} /></span>
-                <span data-i18n="nav.level.vocab">Wortschatz</span>
-              </p>
-              {lv.vocab.length ? (
-                <ul>
-                  {lv.vocab.map((v) => (
-                    <li>
-                      <a href={v.href}>
-                        <b>{v.title}</b>
-                        <i>{v.count}</i>
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              ) : (
-                // The lexicon stops at A2 today. Saying so beats linking to a
-                // "Wortschatz B1" that would quietly hand back the A1 deck.
-                <p class="lp-level-empty" data-i18n="nav.level.vocabSoon">
-                  Wortlisten für dieses Niveau folgen.
-                </p>
-              )}
-            </div>
-          </div>
+      {/* A level is a filter over all four columns above, so it reads across the foot of
+          them rather than becoming a fifth. */}
+      <div class="lp-mega-levels">
+        <p class="lp-mega-levels-head" data-i18n="nav.ueben.byLevel">Nach Niveau starten</p>
+        <div class="lp-chiprow">
+          {navUeben.levels.map((lv) => (
+            <a class="lp-chip" href={lv.href} role="menuitem" title={lv.blurb}>{lv.level}</a>
+          ))}
         </div>
-      ))}
+      </div>
+
+      <a class="lp-panel-foot" href={navUeben.href} role="menuitem">
+        <span data-i18n="nav.panel.allTools">Alle Übungen ansehen</span>
+        <span aria-hidden="true">→</span>
+      </a>
     </div>
   </div>
 
-  {/* Two plain links rather than two more panels: neither has sub-sections worth opening,
-      and the bar is already carrying five menus plus Niveaus. */}
+  <!-- ── Prüfungen ────────────────────────────────────────────────────────── -->
+  <div class="lp-menu" data-menu="pruefungen">
+    <a
+      class:list={["lp-menu-btn", active === "pruefungen" && "is-active"]}
+      href={pruefungen.href}
+      role="menuitem"
+      aria-haspopup="true"
+      aria-expanded="false"
+      aria-controls="lp-panel-pruefungen"
+      data-menu-btn
+    >
+      <span data-i18n={pruefungen.nameKey}>{pruefungen.name}</span>
+      <svg class="lp-menu-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
+    </a>
+    <div class="lp-panel" id="lp-panel-pruefungen" data-menu-panel role="menu" aria-label={pruefungen.name} hidden>
+      <ul class="lp-panel-list">
+        {pruefungen.items.map((item) => (
+          <li>
+            <a href={item.href} role="menuitem">
+              <span class="lp-panel-ic"><Icon name={item.icon} size={18} /></span>
+              <span class="lp-panel-txt">
+                <b data-i18n={item.titleKey}>{item.title}</b>
+                <i data-i18n={item.countKey} data-i18n-vars={vars(item.countVars)}>{item.count}</i>
+              </span>
+            </a>
+          </li>
+        ))}
+      </ul>
+      <a class="lp-panel-foot" href={pruefungen.href} role="menuitem">
+        <span data-i18n="nav.panel.allExams">Alle Prüfungen ansehen</span>
+        <span aria-hidden="true">→</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- ── Wissen ───────────────────────────────────────────────────────────── -->
   <a
     class:list={["lp-menu-btn", "lp-menu-btn--plain", active === "wissen" && "is-active"]}
     href={WISSEN_HREF}
+    role="menuitem"
   >
     <span data-i18n="nav.subject.wissen">Wissen</span>
   </a>
-
-  <a
-    class:list={["lp-menu-btn", "lp-menu-btn--plain", active === "profil" && "is-active"]}
-    href={PROFILE_HREF}
-  >
-    <span data-i18n="nav.subject.profil">Profil</span>
-  </a>
 </div>
 
-<!-- No JS: neither the panels nor the drawer can open, so the sections get plain
-     links and the menus get out of the way entirely. -->
+<!-- No JS: the panels cannot open, so every section gets a plain link and the menus get
+     out of the way entirely. The four Üben columns are named individually here, because
+     without a panel "Üben" alone would hide them. -->
 <noscript>
   <div class="lp-nav-fallback">
-    {navSections.map((s) => <a href={s.href} data-i18n={s.nameKey}>{s.name}</a>)}
+    {navUeben.columns.map((c) => <a href={c.href} data-i18n={c.nameKey}>{c.name}</a>)}
+    <a href={pruefungen.href} data-i18n={pruefungen.nameKey}>{pruefungen.name}</a>
     <a href={WISSEN_HREF} data-i18n="nav.subject.wissen">Wissen</a>
-    <a href={PROFILE_HREF} data-i18n="nav.subject.profil">Profil</a>
   </div>
 </noscript>
 
 <script>
   /* Desktop panels ------------------------------------------------------------ */
+  const menubar = document.querySelector<HTMLElement>("[data-menubar]");
   const menus = Array.from(document.querySelectorAll<HTMLElement>("[data-menu]"));
 
   function closeMenus(except?: HTMLElement) {
@@ -495,7 +192,7 @@ const firstFilled = (list, size) => {
   //   - opening waits for the pointer to settle, so a mouse crossing the bar on its way
   //     to the Kostenlos-üben button does not flash every panel it brushes;
   //   - closing keeps a grace window, so straying a few pixels off the panel — over a
-  //     neighbouring trigger, or past the panel's edge — on the way to a tab does not
+  //     neighbouring trigger, or past the panel's edge — on the way to a link does not
   //     drop the menu before you have decided.
   // Re-entering anywhere in the nav cancels a pending close.
   const OPEN_DELAY = 90;
@@ -505,6 +202,27 @@ const firstFilled = (list, size) => {
   function cancelHoverTimers() {
     window.clearTimeout(openTimer);
     window.clearTimeout(closeTimer);
+  }
+
+  /** Every link inside a panel, in visual order — what the arrow keys walk. */
+  const itemsIn = (panel: HTMLElement) =>
+    Array.from(panel.querySelectorAll<HTMLAnchorElement>("a[href]")).filter(
+      (a) => a.offsetParent !== null,
+    );
+
+  // The triggers, for ArrowLeft/ArrowRight along the bar. The plain "Wissen" link is one
+  // of them: it has no panel, but it is a stop on the same row and skipping it would
+  // make the arrow keys disagree with what the eye sees.
+  const barItems = () =>
+    Array.from(
+      menubar?.querySelectorAll<HTMLAnchorElement>(":scope > [data-menu] > [data-menu-btn], :scope > a.lp-menu-btn") ?? [],
+    );
+
+  function focusBar(from: HTMLElement, delta: number) {
+    const items = barItems();
+    const i = items.indexOf(from as HTMLAnchorElement);
+    if (i === -1) return;
+    items[(i + delta + items.length) % items.length].focus();
   }
 
   for (const menu of menus) {
@@ -518,10 +236,19 @@ const firstFilled = (list, size) => {
       btn.setAttribute("aria-expanded", "true");
       menu.classList.add("is-open");
     };
-    const close = () => {
+    // Escape hands focus back to the trigger, and the trigger's focus handler opens the
+    // panel — so without this the panel closes and reopens in the same tick and Escape
+    // looks broken. The flag says "this focus is the tail of a dismissal, not intent".
+    let dismissing = false;
+    const close = (refocus = false) => {
       panel.setAttribute("hidden", "");
       btn.setAttribute("aria-expanded", "false");
       menu.classList.remove("is-open");
+      if (refocus) {
+        dismissing = true;
+        btn.focus();
+        dismissing = false;
+      }
     };
 
     btn.addEventListener("click", (e) => {
@@ -534,9 +261,52 @@ const firstFilled = (list, size) => {
     // Keyboard users never fire pointerenter, so focus opens the panel for them —
     // and without waiting, since a tab stop is intent enough.
     btn.addEventListener("focus", () => {
-      if (!canHover) return;
+      if (!canHover || dismissing) return;
       cancelHoverTimers();
       open();
+    });
+
+    // Enter and Space open rather than follow the link, so a keyboard reaches the panel
+    // at all; the panel's own footer is how you get to the section page from there.
+    // ArrowDown does the same and steps inside, which is what a menubar is expected to
+    // do. Left/Right walk the bar either way.
+    btn.addEventListener("keydown", (e) => {
+      const k = e.key;
+      if (k === " " || k === "Enter" || k === "ArrowDown") {
+        e.preventDefault();
+        open();
+        itemsIn(panel)[0]?.focus();
+      } else if (k === "ArrowRight") {
+        e.preventDefault();
+        focusBar(btn, 1);
+      } else if (k === "ArrowLeft") {
+        e.preventDefault();
+        focusBar(btn, -1);
+      } else if (k === "Escape") {
+        close(true);
+      }
+    });
+
+    // Inside the panel: Up/Down walk the links, Home/End jump, Escape returns to the
+    // trigger, Tab is left alone so the panel is never a trap.
+    panel.addEventListener("keydown", (e) => {
+      const k = e.key;
+      if (k === "Escape") {
+        e.preventDefault();
+        close(true);
+        return;
+      }
+      if (k !== "ArrowDown" && k !== "ArrowUp" && k !== "Home" && k !== "End") return;
+      const items = itemsIn(panel);
+      if (!items.length) return;
+      e.preventDefault();
+      const i = items.indexOf(document.activeElement as HTMLAnchorElement);
+      const next =
+        k === "Home" ? 0
+        : k === "End" ? items.length - 1
+        : k === "ArrowDown" ? (i + 1) % items.length
+        : (i - 1 + items.length) % items.length;
+      items[next].focus();
     });
 
     menu.addEventListener("pointerenter", (e) => {
@@ -557,75 +327,19 @@ const firstFilled = (list, size) => {
     });
   }
 
+  // The plain bar links have no panel of their own but are still stops on the row.
+  for (const link of barItems()) {
+    if (link.hasAttribute("data-menu-btn")) continue;
+    link.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowRight") { e.preventDefault(); focusBar(link, 1); }
+      else if (e.key === "ArrowLeft") { e.preventDefault(); focusBar(link, -1); }
+    });
+  }
+
   document.addEventListener("click", (e) => {
     if (!(e.target as HTMLElement).closest("[data-menu]")) {
       cancelHoverTimers();
       closeMenus();
     }
   });
-
-  /* Level tiles (desktop) ----------------------------------------------------- */
-  // Hover switches as well as click: with a mouse, reading across A1…B2 should not cost
-  // four clicks. The tiles are real buttons, so keyboard focus switches too.
-  //
-  // Keyed "<scope>:<level>" because there are now several level rows in one nav — one per
-  // level-tiled subject, one per Fertigkeit, and the cross-subject Niveaus panel — and an
-  // unscoped key would switch all of them at once.
-  const levelTabs = Array.from(document.querySelectorAll<HTMLElement>("[data-level-tab]"));
-  const levelViews = Array.from(document.querySelectorAll<HTMLElement>("[data-level-view]"));
-
-  function showLevel(key: string) {
-    const scope = key.slice(0, key.lastIndexOf(":"));
-    for (const tab of levelTabs) {
-      if (tab.dataset.levelScope !== scope) continue;
-      const on = tab.dataset.levelTab === key;
-      tab.classList.toggle("is-on", on);
-      tab.setAttribute("aria-selected", String(on));
-    }
-    for (const view of levelViews) {
-      if (!view.dataset.levelView!.startsWith(scope + ":")) continue;
-      if (view.dataset.levelView === key) view.removeAttribute("hidden");
-      else view.setAttribute("hidden", "");
-    }
-  }
-
-  for (const tab of levelTabs) {
-    const key = tab.dataset.levelTab!;
-    tab.addEventListener("click", () => showLevel(key));
-    tab.addEventListener("focus", () => showLevel(key));
-    tab.addEventListener("pointerenter", (e) => {
-      if ((e as PointerEvent).pointerType === "mouse") showLevel(key);
-    });
-  }
-
-  /* Sub-section tabs (desktop) ------------------------------------------------ */
-  // Click and keyboard focus switch these; hover deliberately does not. Unlike the level
-  // tiles, which show four short variants of one thing, these tabs swap the whole list
-  // below them — Landeskunde's levels, Fertigkeiten's skills — and swapping it
-  // under a pointer that is only sweeping across on its way to the tab it wants makes the
-  // panel unreadable. Keyed the same way, so the two coexist.
-  const groupTabs = Array.from(document.querySelectorAll<HTMLElement>("[data-group-tab]"));
-  const groupViews = Array.from(document.querySelectorAll<HTMLElement>("[data-group-view]"));
-
-  function showGroup(key: string) {
-    const scope = key.split(":")[0];
-    for (const tab of groupTabs) {
-      if (tab.dataset.groupScope !== scope) continue;
-      const on = tab.dataset.groupTab === key;
-      tab.classList.toggle("is-on", on);
-      tab.setAttribute("aria-selected", String(on));
-    }
-    for (const view of groupViews) {
-      if (!view.dataset.groupView!.startsWith(scope + ":")) continue;
-      if (view.dataset.groupView === key) view.removeAttribute("hidden");
-      else view.setAttribute("hidden", "");
-    }
-  }
-
-  for (const tab of groupTabs) {
-    const key = tab.dataset.groupTab!;
-    tab.addEventListener("click", () => showGroup(key));
-    tab.addEventListener("focus", () => showGroup(key));
-  }
-
 </script>

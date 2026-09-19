@@ -34,10 +34,18 @@ export function mountWortschatzApp(els, cards, languages, { onAnswer, onSessionS
     input: "",
     checked: false,
     results: {},
+    // Latest verdict per card index, whichever mode produced it. `results` stays keyed by
+    // mode because Testen scores its own run; the Wortliste wants "how does this word
+    // stand right now", and a word answered in Lernen and then in Testen has one standing.
+    lastResult: {},
     selected: {},
     filter: null,
     part: 0,
     tick: 0,
+    // Wortliste-local view state. Survives reset() — switching tabs or languages should
+    // not silently drop the search someone is in the middle of.
+    listQuery: "",
+    listSort: "deck",
   };
 
   let sessionStarted = false;
@@ -130,6 +138,7 @@ export function mountWortschatzApp(els, cards, languages, { onAnswer, onSessionS
 
   function record(ok) {
     state.results[`${state.mode}:${state.idx}`] = ok;
+    state.lastResult[state.idx] = ok;
     if (onAnswer) onAnswer(ok, cards[state.idx], state.idx);
   }
 
@@ -201,12 +210,16 @@ export function mountWortschatzApp(els, cards, languages, { onAnswer, onSessionS
     if (!row) return;
     const selected = !!state.selected[i];
     row.classList.toggle("is-selected", selected);
+    const pick = row.querySelector(".vt-list-pick");
+    if (pick) pick.setAttribute("aria-checked", selected ? "true" : "false");
     const box = row.querySelector(".vt-list-box");
     if (!box) return;
-    box.classList.remove("is-selected");
+    box.classList.toggle("is-selected", selected);
     if (selected) {
+      // Restart the pop: the class may already be there from a previous selection.
+      box.classList.remove("vt-pop");
       void box.offsetWidth;
-      box.classList.add("is-selected");
+      box.classList.add("vt-pop");
     }
   }
 
@@ -218,10 +231,22 @@ export function mountWortschatzApp(els, cards, languages, { onAnswer, onSessionS
         ? `${selIds.length} von ${cards.length} Wörtern ausgewählt`
         : "Tippe Wörter an, um eine eigene Runde zusammenzustellen.";
     }
+    const bar = contentEl.querySelector(".vt-sel-bar");
+    if (bar) bar.classList.toggle("has-selection", !!selIds.length);
     const startBtn = contentEl.querySelector("#vt-sel-start");
-    if (startBtn) startBtn.classList.toggle("is-active", !!selIds.length);
+    if (startBtn) {
+      startBtn.classList.toggle("is-active", !!selIds.length);
+      startBtn.disabled = !selIds.length;
+      startBtn.textContent = !selIds.length ? "Auswahl testen"
+        : selIds.length === 1 ? "1 Wort testen"
+        : `${selIds.length} Wörter testen`;
+    }
     const allBtn = contentEl.querySelector("#vt-sel-all");
-    if (allBtn) allBtn.textContent = selIds.length === cards.length ? "Auswahl aufheben" : "Alle auswählen";
+    if (allBtn) {
+      const on = allVisibleSelected();
+      allBtn.textContent = on ? "Keine" : "Alle";
+      allBtn.setAttribute("aria-label", on ? "Auswahl aufheben" : "Alle sichtbaren Wörter auswählen");
+    }
   }
 
   function toggleSelect(i) {
@@ -259,11 +284,21 @@ export function mountWortschatzApp(els, cards, languages, { onAnswer, onSessionS
     updateSelBar();
   }
 
+  /* "Alle auswählen" means the rows you can currently see. With a search active,
+     selecting the 2,900 words scrolled out of view would be a trap, not a shortcut. */
+  function allVisibleSelected() {
+    const rows = listRows();
+    return rows.length > 0 && rows.every((i) => state.selected[i]);
+  }
+
   function selectAll() {
-    const all = Object.keys(state.selected).length === cards.length;
-    state.selected = {};
-    if (!all) cards.forEach((_, i) => (state.selected[i] = true));
-    cards.forEach((_, i) => updateListRow(i));
+    const rows = listRows();
+    const on = !allVisibleSelected();
+    rows.forEach((i) => {
+      if (on) state.selected[i] = true;
+      else delete state.selected[i];
+    });
+    rows.forEach(updateListRow);
     updateSelBar();
   }
 
@@ -564,58 +599,159 @@ export function mountWortschatzApp(els, cards, languages, { onAnswer, onSessionS
     contentEl.querySelector("#vt-primary").addEventListener("click", check);
   }
 
-  function renderList() {
-    const dk = deck();
-    const meta = langMeta();
-    const isRtl = !!meta.rtl;
-    const selIds = selectedIds();
+  /* ---- Wortliste ----------------------------------------------------------
+     The list is the only place the whole deck is visible at once, so it carries the two
+     things a long deck needs and a card cannot give: find one word, and see where you
+     stand on all of them. Search and sort are view state only — they never change the
+     deck the other tabs run, which is what "Auswahl testen" is for. */
 
-    const rowsHtml = cards
-      .map((card, i) => {
-        const res = state.results[`${state.lastMode}:${i}`];
-        const seen = res !== undefined;
-        const selected = !!state.selected[i];
-        const active = i === state.idx;
-        return `
-          <button type="button" class="vt-list-row ${selected ? "is-selected" : ""} ${active && !selected ? "is-active" : ""}" data-i="${i}">
-            <span class="vt-list-box ${selected ? "is-selected" : ""}"></span>
-            <span class="vt-list-word">
-              <span class="vt-list-de">${escapeHtml(card.front)}</span>
-              <span class="vt-list-tr ${isRtl ? "vt-rtl" : ""}">${escapeHtml(foreignText(card))}</span>
-            </span>
-            <span class="vt-list-dot ${seen ? (res ? "is-right" : "is-wrong") : ""}"></span>
-            <span class="vt-list-jump ${active ? "is-active" : ""}" data-jump="${i}">→</span>
-          </button>`;
-      })
-      .join("");
+  const LIST_SORTS = [
+    ["deck", "Reihenfolge"],
+    ["az", "A–Z"],
+    ["wrong", "Fehler zuerst"],
+    ["open", "Noch offen"],
+  ];
+
+  /** Latest verdict for a card, from whichever mode answered it last. */
+  function verdict(i) { return state.lastResult[i]; }
+
+  /** wrong 0 · open 1 · right 2 — the order "Fehler zuerst" wants, read straight. */
+  function standing(i) {
+    const res = verdict(i);
+    return res === undefined ? 1 : res ? 2 : 0;
+  }
+
+  function searchHit(card, q) {
+    if (!q) return true;
+    return norm(card.front).includes(q) || norm(foreignText(card)).includes(q);
+  }
+
+  /** Card indices the list currently shows, in display order. */
+  function listRows() {
+    const q = norm(state.listQuery);
+    const rows = cards.map((_, i) => i).filter((i) => searchHit(cards[i], q));
+    const sort = state.listSort;
+    if (sort === "az") {
+      rows.sort((a, b) => cards[a].front.localeCompare(cards[b].front, "de") || a - b);
+    } else if (sort === "wrong") {
+      rows.sort((a, b) => standing(a) - standing(b) || a - b);
+    } else if (sort === "open") {
+      // open first, then wrong, then right: 1,0,2 → rank it explicitly.
+      const rank = (i) => [1, 0, 2].indexOf(standing(i));
+      rows.sort((a, b) => rank(a) - rank(b) || a - b);
+    }
+    return rows;
+  }
+
+  function listRowHtml(i) {
+    const card = cards[i];
+    const isRtl = !!langMeta().rtl;
+    const res = verdict(i);
+    const seen = res !== undefined;
+    const selected = !!state.selected[i];
+    const active = i === state.idx;
+    const dotLabel = seen ? (res ? "zuletzt richtig" : "zuletzt falsch") : "noch offen";
+    return `
+      <div class="vt-list-row ${selected ? "is-selected" : ""} ${active && !selected ? "is-active" : ""}" data-i="${i}">
+        <button type="button" class="vt-list-pick" role="checkbox" aria-checked="${selected ? "true" : "false"}" data-i="${i}">
+          <span class="vt-list-box ${selected ? "is-selected" : ""}"></span>
+          <span class="vt-list-word">
+            <span class="vt-list-de">${escapeHtml(card.front)}</span>
+            <span class="vt-list-tr ${isRtl ? "vt-rtl" : ""}">${escapeHtml(foreignText(card))}</span>
+          </span>
+          <span class="vt-list-dot ${seen ? (res ? "is-right" : "is-wrong") : ""}" title="${dotLabel}"></span>
+        </button>
+        <button type="button" class="vt-list-jump ${active ? "is-active" : ""}" data-jump="${i}"
+                aria-label="Bei „${escapeHtml(card.front)}“ weitermachen">→</button>
+      </div>`;
+  }
+
+  /** Repaint only the rows — the search field keeps its focus and caret. */
+  function renderListRows() {
+    const grid = contentEl.querySelector(".vt-list-grid");
+    if (!grid) return;
+    const rows = listRows();
+    grid.classList.toggle("is-empty", !rows.length);
+    grid.innerHTML = rows.length
+      ? rows.map(listRowHtml).join("")
+      : `<p class="vt-list-empty">Kein Wort passt zu „${escapeHtml(state.listQuery)}“.</p>`;
+    const count = contentEl.querySelector(".vt-list-count");
+    if (count) {
+      count.textContent = rows.length === cards.length
+        ? `${cards.length} Wörter`
+        : `${rows.length} von ${cards.length} Wörtern`;
+    }
+    updateSelBar();
+  }
+
+  function renderList() {
+    const selIds = selectedIds();
 
     contentEl.innerHTML = `
       <div class="vt-content ${swapClass()}">
         <div class="vt-list-head">
-          <div class="vt-list-hint">Alle Wörter dieser Übung — tippe eines an, um dort weiterzumachen.</div>
+          <div class="vt-list-hint">Antippen wählt aus · <span class="vt-list-hint-arrow">→</span> macht dort weiter</div>
           <div class="vt-list-legend">
             <span class="vt-legend-item"><span class="vt-legend-dot vt-legend-dot--richtig"></span>richtig</span>
             <span class="vt-legend-item"><span class="vt-legend-dot vt-legend-dot--falsch"></span>falsch</span>
             <span class="vt-legend-item"><span class="vt-legend-dot vt-legend-dot--offen"></span>offen</span>
-            <span>${cards.length} Wörter</span>
+            <span class="vt-list-count">${cards.length} Wörter</span>
           </div>
         </div>
-        <div class="vt-list-grid">${rowsHtml}</div>
-        <div class="vt-sel-bar">
+        <div class="vt-list-tools">
+          <div class="vt-list-search">
+            <input type="search" id="vt-list-q" class="vt-list-input" placeholder="Wort suchen"
+                   aria-label="Wort suchen" value="${escapeHtml(state.listQuery)}" autocomplete="off" />
+            <button type="button" class="vt-list-qclear ${state.listQuery ? "is-on" : ""}" id="vt-list-qclear" aria-label="Suche leeren">✕</button>
+          </div>
+          <label class="vt-list-sortwrap">
+            <span class="vt-list-sortlabel">Sortieren</span>
+            <select class="vt-list-sort" id="vt-list-sort" aria-label="Liste sortieren">
+              ${LIST_SORTS.map(([v, l]) => `<option value="${v}" ${state.listSort === v ? "selected" : ""}>${l}</option>`).join("")}
+            </select>
+          </label>
+        </div>
+        <div class="vt-list-grid"></div>
+        <div class="vt-sel-bar ${selIds.length ? "has-selection" : ""}">
           <span class="vt-sel-label">${selIds.length ? `${selIds.length} von ${cards.length} Wörtern ausgewählt` : "Tippe Wörter an, um eine eigene Runde zusammenzustellen."}</span>
-          <button type="button" class="vt-sel-start ${selIds.length ? "is-active" : ""}" id="vt-sel-start">Auswahl testen</button>
-          <button type="button" class="vt-sel-clear" id="vt-sel-clear">Auswahl leeren</button>
-          <button type="button" class="vt-sel-all" id="vt-sel-all">${selIds.length === cards.length ? "Auswahl aufheben" : "Alle auswählen"}</button>
+          <div class="vt-sel-actions">
+            <button type="button" class="vt-sel-clear" id="vt-sel-clear" aria-label="Auswahl leeren">Leeren</button>
+            <button type="button" class="vt-sel-all" id="vt-sel-all">Alle</button>
+            <button type="button" class="vt-sel-start ${selIds.length ? "is-active" : ""}" id="vt-sel-start" ${selIds.length ? "" : "disabled"}>Auswahl testen</button>
+          </div>
         </div>
       </div>`;
 
-    contentEl.querySelectorAll(".vt-list-row").forEach((row) => {
-      row.addEventListener("click", (e) => {
-        const jump = e.target.closest("[data-jump]");
-        if (jump) { e.stopPropagation(); jumpTo(+jump.dataset.jump); return; }
-        toggleSelect(+row.dataset.i);
-      });
+    renderListRows();
+
+    // One listener on the grid rather than one per row: a level deck is 650 rows, and
+    // every search keystroke rebuilds them.
+    contentEl.querySelector(".vt-list-grid").addEventListener("click", (e) => {
+      const jump = e.target.closest("[data-jump]");
+      if (jump) { jumpTo(+jump.dataset.jump); return; }
+      const pick = e.target.closest(".vt-list-pick");
+      if (pick) toggleSelect(+pick.dataset.i);
     });
+
+    const q = contentEl.querySelector("#vt-list-q");
+    q.addEventListener("input", () => {
+      state.listQuery = q.value;
+      contentEl.querySelector("#vt-list-qclear").classList.toggle("is-on", !!q.value);
+      renderListRows();
+    });
+    contentEl.querySelector("#vt-list-qclear").addEventListener("click", () => {
+      state.listQuery = "";
+      q.value = "";
+      contentEl.querySelector("#vt-list-qclear").classList.remove("is-on");
+      renderListRows();
+      q.focus();
+    });
+    const sortEl = contentEl.querySelector("#vt-list-sort");
+    sortEl.addEventListener("change", () => {
+      state.listSort = sortEl.value;
+      renderListRows();
+    });
+
     contentEl.querySelector("#vt-sel-start").addEventListener("click", startSelection);
     contentEl.querySelector("#vt-sel-clear").addEventListener("click", clearSelection);
     contentEl.querySelector("#vt-sel-all").addEventListener("click", selectAll);
@@ -640,9 +776,13 @@ export function mountWortschatzApp(els, cards, languages, { onAnswer, onSessionS
 
   document.addEventListener("keydown", (e) => {
     const tag = document.activeElement?.tagName;
-    if (tag === "INPUT" || tag === "TEXTAREA") return;
+    // SELECT too: the Wortliste's sort control opens on Space and steps on the arrows.
+    if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT") return;
     noteActivity();
-    if (e.code === "Space") { e.preventDefault(); if (state.mode === "cards") flip(); }
+    // Space is the flip only on a card. In the Wortliste it belongs to the focused
+    // row button, and swallowing it there would break keyboard selection.
+    if (e.code === "Space") { if (state.mode === "cards") { e.preventDefault(); flip(); } }
+    else if (state.mode === "list") return;
     else if (e.key === "ArrowLeft") go(-1);
     else if (e.key === "ArrowRight") go(1);
   });

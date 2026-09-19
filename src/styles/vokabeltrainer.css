@@ -344,17 +344,59 @@
 .vt-legend-dot--falsch { background: var(--danger); }
 .vt-legend-dot--offen { width: 6px; height: 6px; border-radius: 999px; background: var(--vt-border-strong); }
 
-.vt-list-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 32px; }
+/* Search + sort. One row on desktop; on a phone the field takes the width and the sort
+   sits under it, because a 44px-tall field squeezed next to a select is neither. */
+.vt-list-tools { display: flex; align-items: center; gap: 12px; margin: 14px 0 6px; }
+.vt-list-search { position: relative; flex: 1 1 auto; min-width: 0; }
+.vt-list-input {
+  width: 100%; min-height: 44px; padding: 10px 38px 10px 14px; border-radius: 999px;
+  border: 1px solid var(--vt-border); background: var(--vt-bg); color: var(--vt-ink);
+  font-family: inherit; font-size: .9375rem; -webkit-appearance: none; appearance: none;
+}
+.vt-list-input:focus-visible { outline: 2px solid var(--brand-blue); outline-offset: 1px; border-color: transparent; }
+.vt-list-input::-webkit-search-cancel-button { display: none; }
+.vt-list-qclear {
+  position: absolute; right: 4px; top: 50%; transform: translateY(-50%);
+  width: 36px; height: 36px; border: none; border-radius: 999px; background: none;
+  color: var(--vt-muted); font-family: inherit; font-size: .8125rem; cursor: pointer;
+  visibility: hidden;
+}
+.vt-list-qclear.is-on { visibility: visible; }
+.vt-list-qclear:hover { color: var(--vt-ink); }
+.vt-list-sortwrap { display: flex; align-items: center; gap: 8px; flex: 0 0 auto; }
+.vt-list-sortlabel { font-family: var(--font-label); font-size: .75rem; color: var(--vt-muted); }
+.vt-list-sort {
+  min-height: 44px; padding: 8px 12px; border-radius: 999px; cursor: pointer;
+  border: 1px solid var(--vt-border); background: var(--vt-bg); color: var(--vt-ink);
+  font-family: inherit; font-size: .875rem;
+}
+
+/* Columns, not a two-track grid: a grid fills row-wise, so an A–Z list read top to
+   bottom went Abend, Arbeit / Abend?? — the eye has to zigzag. Multicol runs the first
+   half down the left column and the rest down the right, which is how a word list is
+   read. */
+.vt-list-grid { column-count: 2; column-gap: 32px; }
+.vt-list-grid.is-empty { column-count: 1; }
+.vt-list-empty { font-size: .875rem; color: var(--vt-muted); padding: 28px 8px; }
+
+/* The row is a plain container with two real buttons in it: picking the word and jumping
+   to it are different actions, and a span inside a button gave the jump neither a tab
+   stop nor a thumb-sized target. */
 .vt-list-row {
-  display: grid; grid-template-columns: 14px minmax(0, 1fr) 8px 18px; align-items: baseline; gap: 12px;
-  padding: 11px 8px; border-bottom: 1px solid var(--vt-border); cursor: pointer;
-  background: transparent; border-left: none; border-right: none; border-top: none;
-  width: 100%; text-align: left; font-family: inherit; color: inherit;
+  display: grid; grid-template-columns: minmax(0, 1fr) 44px; align-items: stretch;
+  border-bottom: 1px solid var(--vt-border); break-inside: avoid;
 }
 .vt-list-row.is-selected { background: var(--vt-correct-bg); }
 .vt-list-row.is-active:not(.is-selected) { background: var(--vt-surface); }
-.vt-list-box { display: block; width: 12px; height: 12px; margin-top: 3px; border-radius: 999px; border: 1px solid var(--vt-border-strong); background: var(--vt-bg); }
-.vt-list-box.is-selected { border-color: var(--brand-blue); background: var(--brand-blue); animation: vtCheckPop .3s cubic-bezier(.34,1.56,.64,1); }
+.vt-list-pick {
+  display: grid; grid-template-columns: 14px minmax(0, 1fr) 8px; align-items: center; gap: 12px;
+  min-height: 52px; padding: 8px; cursor: pointer;
+  background: transparent; border: none; width: 100%; text-align: left;
+  font-family: inherit; color: inherit;
+}
+.vt-list-box { display: block; width: 14px; height: 14px; border-radius: 999px; border: 1px solid var(--vt-border-strong); background: var(--vt-bg); }
+.vt-list-box.is-selected { border-color: var(--brand-blue); background: var(--brand-blue); }
+.vt-list-box.vt-pop { animation: vtCheckPop .3s cubic-bezier(.34,1.56,.64,1); }
 @keyframes vtCheckPop {
   0% { transform: scale(.5); }
   60% { transform: scale(1.3); }
@@ -363,23 +405,40 @@
 .vt-list-word { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
 .vt-list-de { font-size: .875rem; font-weight: 500; color: var(--vt-ink); }
 .vt-list-tr { font-size: .8125rem; color: var(--vt-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.vt-list-dot { width: 6px; height: 6px; border-radius: 999px; margin-top: 6px; background: var(--vt-border-strong); }
+.vt-list-dot { width: 6px; height: 6px; border-radius: 999px; background: var(--vt-border-strong); }
 .vt-list-dot.is-right { background: var(--brand-blue); }
 .vt-list-dot.is-wrong { background: var(--danger); }
-.vt-list-jump { font-size: .8125rem; color: var(--vt-muted); cursor: pointer; padding-left: 6px; background: none; border: none; font-family: inherit; }
+.vt-list-jump {
+  display: flex; align-items: center; justify-content: center; width: 44px;
+  font-size: 1rem; color: var(--vt-muted); cursor: pointer;
+  background: none; border: none; font-family: inherit;
+}
+.vt-list-jump:hover { color: var(--vt-ink); }
 .vt-list-jump.is-active { color: var(--brand-blue-dark); }
+.vt-list-pick:focus-visible, .vt-list-jump:focus-visible { outline: 2px solid var(--brand-blue); outline-offset: -2px; }
 
-.vt-sel-bar { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; margin-top: 4px; padding-top: 14px; border-top: 1px solid var(--vt-border); }
+/* Sticky: on a 650-word deck the bar used to sit below every row, so starting a
+   selection meant scrolling past everything you had just chosen not to practise. */
+.vt-sel-bar {
+  position: sticky; bottom: 0; z-index: 2;
+  display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+  margin-top: 4px; padding: 12px 0 max(12px, env(safe-area-inset-bottom));
+  background: var(--vt-bg); border-top: 1px solid var(--vt-border);
+}
 .vt-sel-label { font-size: .8125rem; color: var(--vt-ink); }
+.vt-sel-actions { display: flex; align-items: center; gap: 12px; margin-left: auto; }
 .vt-sel-start {
-  font-size: .8125rem; font-weight: 500; padding: 8px 16px; border-radius: 999px; cursor: pointer;
+  font-size: .8125rem; font-weight: 500; padding: 11px 18px; border-radius: 999px; cursor: pointer;
   background: var(--vt-surface); color: var(--vt-muted); border: none; font-family: inherit;
+  white-space: nowrap;
 }
 .vt-sel-start.is-active { background: var(--brand-blue); color: #fff; }
-.vt-sel-clear { font-size: .8125rem; color: var(--vt-muted); cursor: pointer; background: none; border: none; font-family: inherit; }
-.vt-sel-clear:hover { color: var(--vt-ink); }
-.vt-sel-all { font-size: .8125rem; color: var(--vt-muted); cursor: pointer; margin-left: auto; background: none; border: none; font-family: inherit; }
-.vt-sel-all:hover { color: var(--vt-ink); }
+.vt-sel-start:disabled { cursor: default; }
+.vt-sel-clear, .vt-sel-all {
+  font-size: .8125rem; color: var(--vt-muted); cursor: pointer; padding: 11px 8px;
+  background: none; border: none; font-family: inherit; white-space: nowrap;
+}
+.vt-sel-clear:hover, .vt-sel-all:hover { color: var(--vt-ink); }
 
 .vt-rtl { direction: rtl; font-family: "Noto Sans Arabic", "Segoe UI", Tahoma, Arial, sans-serif; }
 
@@ -393,7 +452,24 @@
   .vt-tabs::-webkit-scrollbar { display: none; }
   .vt-tab { white-space: nowrap; }
   .vt-toolbar { margin-bottom: 18px; gap: 10px; }
-  .vt-list-grid { grid-template-columns: minmax(0, 1fr); }
+  .vt-list-grid { column-count: 1; }
+  /* The field owns the first line; the sort label and select share the second. Side by
+     side at 390px the field ends up too narrow to read what you typed. */
+  /* Field and sort share one line — the label is what made them not fit, and a select
+     reading "Reihenfolge" says what it is without one. */
+  .vt-list-tools { gap: 8px; margin: 10px 0 4px; }
+  .vt-list-sortlabel { display: none; }
+  .vt-list-sort { max-width: 42vw; }
+  .vt-list-head { gap: 6px; }
+  /* Label on its own line, the three actions on the next, each on one line. Before a
+     first pick the label only repeats the hint above the list, and two lines of it
+     pinned over the rows is the most expensive kind of chrome on a phone — so it
+     appears with the selection it counts. */
+  .vt-sel-bar { gap: 8px; }
+  .vt-sel-label { flex: 1 0 100%; }
+  .vt-sel-bar:not(.has-selection) .vt-sel-label { display: none; }
+  .vt-sel-actions { width: 100%; margin-left: 0; justify-content: flex-end; gap: 6px; }
+  .vt-sel-start { margin-left: auto; }
   .vt-toolbar { flex-direction: column; align-items: flex-start; }
   .vt-toolbar-right { width: 100%; justify-content: space-between; }
   .vt-nav-row { gap: 8px; }

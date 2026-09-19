@@ -1,0 +1,487 @@
+/* /leicht — the light prototype.
+ *
+ * Namespaced `lt-` throughout and loaded by one page, so nothing here can reach the real
+ * site and nothing on the real site reaches in. It borrows the design tokens from
+ * global.css (colour, type scale, radii) and none of its layout, which is the point:
+ * the study is about how much is on screen, not about a new skin.
+ *
+ * The whole app is one viewport tall and never scrolls the page. Header and the single
+ * primary action are fixed rows of a grid; only the middle scrolls, and on the screens
+ * that matter it does not need to. If a screen here ever needs scrolling on a 390px
+ * phone, that screen has failed the study and should lose something.
+ */
+
+.lt-app {
+  height: 100dvh;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  max-width: 440px;
+  margin-inline: auto;
+  background: var(--page-bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  overflow: hidden;
+}
+
+/* Wider than a phone: keep the phone. Seeing the real target width while testing on a
+   laptop is worth more than filling the window with a layout nobody will use. */
+@media (min-width: 560px) {
+  .lt-app {
+    height: min(860px, 100dvh);
+    margin-block: calc((100dvh - min(860px, 100dvh)) / 2);
+    border: 1px solid var(--border);
+    border-radius: 28px;
+    box-shadow: var(--shadow-raised);
+  }
+}
+
+/* ------------------------------------------------------------------ bar */
+
+.lt-bar {
+  display: grid;
+  grid-template-columns: 40px 1fr auto;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 1px solid var(--border);
+}
+
+.lt-back {
+  width: 40px;
+  height: 40px;
+  margin-left: -8px;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: none;
+  color: var(--ink);
+  font-size: 1.9rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.lt-back--ghost { pointer-events: none; }
+
+.lt-bar-title {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  font-weight: var(--fw-bold);
+  letter-spacing: .01em;
+}
+
+.lt-chip {
+  padding: 3px 9px;
+  border-radius: var(--radius-pill);
+  background: var(--warning-soft);
+  color: var(--warning);
+  font-family: var(--font-label);
+  font-size: .625rem;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+}
+
+/* ----------------------------------------------------------------- body */
+
+.lt-body {
+  min-height: 0;
+  overflow-y: auto;
+  padding: var(--space-5) var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.lt-hello {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: var(--text-3xl);
+  font-weight: var(--fw-bold);
+  line-height: 1.1;
+}
+
+.lt-hello--sm {
+  font-size: var(--text-lg);
+  color: var(--muted);
+}
+
+.lt-note {
+  margin: 0;
+  color: var(--muted);
+  font-size: var(--text-sm);
+  line-height: 1.5;
+}
+
+/* The one offer on Heute. Big enough that there is visibly nothing else being asked. */
+.lt-offer {
+  display: grid;
+  grid-template-columns: 52px 1fr 20px;
+  align-items: center;
+  gap: var(--space-3);
+  width: 100%;
+  padding: var(--space-5) var(--space-4);
+  border: 1px solid var(--blue-200);
+  border-radius: var(--radius-lg);
+  background: var(--gradient-brand-soft);
+  color: var(--ink);
+  text-align: left;
+  cursor: pointer;
+}
+
+.lt-offer-ic { font-size: 2rem; }
+.lt-offer-txt { display: grid; gap: 4px; }
+.lt-offer-txt b { font-size: var(--text-xl); font-weight: var(--fw-bold); }
+.lt-offer-txt i {
+  font-family: var(--font-label);
+  font-style: normal;
+  font-size: var(--text-sm);
+  color: var(--brand-blue-dark);
+}
+.lt-offer-go { font-size: var(--text-xl); color: var(--brand-blue-dark); }
+
+/* The shelf, peeked at. Never a number on its own — always the newest sentence. */
+.lt-shelf-peek {
+  display: grid;
+  gap: 4px;
+  width: 100%;
+  padding: var(--space-4);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface-card);
+  color: var(--ink);
+  text-align: left;
+  cursor: pointer;
+}
+.lt-shelf-peek b { font-size: var(--text-base); }
+.lt-shelf-peek i {
+  font-style: normal;
+  font-size: var(--text-sm);
+  color: var(--muted);
+}
+
+.lt-body--center { justify-content: center; }
+.lt-body--center .lt-quiet { margin-top: var(--space-6); }
+
+.lt-quiet {
+  margin-top: auto;
+  padding: var(--space-3);
+  border: 0;
+  background: none;
+  color: var(--muted);
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+/* ---------------------------------------------------------------- picker */
+
+.lt-picks { display: grid; gap: var(--space-3); }
+
+.lt-pick {
+  display: grid;
+  grid-template-columns: 40px 1fr;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface-card);
+  color: var(--ink);
+  text-align: left;
+  cursor: pointer;
+}
+.lt-pick-ic { font-size: 1.6rem; }
+.lt-pick-txt { display: grid; gap: 2px; }
+.lt-pick-txt b { font-size: var(--text-lg); }
+.lt-pick-txt i {
+  font-style: normal;
+  font-size: var(--text-sm);
+  color: var(--muted);
+}
+.lt-pick.is-done { opacity: .6; }
+
+/* ---------------------------------------------------------------- runner */
+
+.lt-dots {
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+}
+.lt-dot {
+  width: 100%;
+  max-width: 48px;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--border);
+}
+.lt-dot.is-done { background: var(--brand-blue); }
+.lt-dot.is-now { background: var(--blue-300); }
+
+.lt-task {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--space-4);
+  min-height: 0;
+}
+
+.lt-kind {
+  margin: 0;
+  font-family: var(--font-label);
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  color: var(--muted-soft);
+  text-align: center;
+}
+
+/* Flashcard. One tap, one word — the trainer's whole chrome removed to see what the
+   card alone is worth. */
+.lt-card {
+  display: grid;
+  align-content: center;
+  gap: var(--space-3);
+  min-height: 210px;
+  padding: var(--space-6) var(--space-5);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--surface-card);
+  box-shadow: var(--shadow-sm);
+  color: var(--ink);
+  cursor: pointer;
+}
+.lt-card b {
+  font-family: var(--font-display);
+  font-size: var(--text-4xl);
+  font-weight: var(--fw-bold);
+  line-height: 1.1;
+}
+.lt-card-back {
+  display: grid;
+  gap: 6px;
+  font-size: var(--text-xl);
+  color: var(--brand-blue-dark);
+  opacity: 0;
+  transition: opacity var(--duration-base) var(--ease-standard);
+}
+.lt-card-back i {
+  font-style: normal;
+  font-size: var(--text-sm);
+  color: var(--muted);
+}
+.lt-card.is-open .lt-card-back { opacity: 1; }
+.lt-card-tap {
+  font-family: var(--font-label);
+  font-size: var(--text-xs);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--muted-soft);
+}
+
+.lt-sentence {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: var(--text-3xl);
+  font-weight: var(--fw-semibold);
+  line-height: 1.25;
+  text-align: center;
+}
+.lt-gloss {
+  margin: 0;
+  text-align: center;
+  color: var(--muted);
+  font-size: var(--text-sm);
+}
+
+.lt-blank {
+  display: inline-block;
+  min-width: 2.6em;
+  padding-inline: 6px;
+  border-bottom: 3px solid var(--border-strong);
+  color: var(--muted-soft);
+}
+.lt-blank.is-right { border-color: var(--success-border); color: var(--success); }
+.lt-blank.is-wrong { border-color: var(--danger-border); color: var(--danger); }
+
+/* Sentence building. */
+.lt-line {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  gap: var(--space-2);
+  min-height: 92px;
+  padding: var(--space-3);
+  border: 2px dashed var(--border-strong);
+  border-radius: var(--radius);
+}
+.lt-line.is-right { border-color: var(--success-border); border-style: solid; }
+.lt-line.is-wrong { border-color: var(--danger-border); border-style: solid; }
+.lt-line-ph {
+  color: var(--muted-soft);
+  font-size: var(--text-sm);
+}
+.lt-pool {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  justify-content: center;
+}
+.lt-word {
+  padding: 10px 14px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-pill);
+  background: var(--surface-card);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  cursor: pointer;
+}
+.lt-word--pool { background: var(--surface); }
+
+/* The verdict is a fixed slot, not an insertion: the task above it must not jump when
+   an answer lands, or the learner loses the sentence they were reading. */
+.lt-verdict { min-height: 64px; }
+
+.lt-said {
+  margin: 0;
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius);
+  font-size: var(--text-sm);
+  line-height: 1.45;
+}
+.lt-said i {
+  display: block;
+  margin-top: 4px;
+  font-style: normal;
+  color: var(--muted);
+}
+.lt-said.is-right { background: var(--success-soft); color: var(--success); }
+.lt-said.is-wrong { background: var(--danger-soft); color: var(--danger); }
+.lt-said.is-wrong i { color: var(--danger); opacity: .85; }
+
+/* ---------------------------------------------------------------- payoff */
+
+.lt-win {
+  display: grid;
+  gap: var(--space-3);
+  justify-items: center;
+  padding: var(--space-6) var(--space-4);
+  border-radius: var(--radius-lg);
+  background: var(--gradient-brand-soft);
+  text-align: center;
+}
+.lt-win-ic { font-size: 2.6rem; }
+.lt-win-lead {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  font-weight: var(--fw-bold);
+}
+.lt-win-sub {
+  margin: 0;
+  font-family: var(--font-label);
+  font-size: var(--text-xs);
+  letter-spacing: .04em;
+  color: var(--brand-blue-dark);
+}
+
+.lt-claims {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--space-2);
+  width: 100%;
+}
+.lt-claims li {
+  display: grid;
+  gap: 2px;
+  padding: var(--space-3) var(--space-4) var(--space-3) var(--space-10);
+  border-radius: var(--radius);
+  background: var(--surface-card);
+  font-size: var(--text-base);
+  line-height: 1.35;
+  text-align: left;
+  position: relative;
+}
+.lt-claims li::before {
+  content: "✓";
+  position: absolute;
+  top: var(--space-3);
+  left: var(--space-4);
+  line-height: 1.35;
+  color: var(--success);
+  font-weight: var(--fw-bold);
+}
+.lt-claims li i {
+  font-style: normal;
+  font-size: var(--text-xs);
+  color: var(--muted-soft);
+}
+.lt-claims--shelf li { border: 1px solid var(--border); }
+.lt-claims--open li {
+  background: none;
+  border: 1px dashed var(--border-strong);
+  color: var(--muted);
+}
+.lt-claims--open li::before {
+  content: "○";
+  color: var(--muted-soft);
+  font-weight: var(--fw-regular);
+}
+
+/* ----------------------------------------------------------------- foot */
+
+.lt-foot {
+  padding: var(--space-3) var(--space-4) calc(var(--space-4) + env(safe-area-inset-bottom));
+  border-top: 1px solid var(--border);
+  background: var(--page-bg);
+}
+
+.lt-cta {
+  display: block;
+  width: 100%;
+  min-height: 54px;
+  padding: var(--space-3) var(--space-4);
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: var(--brand-blue);
+  color: #fff;
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  font-weight: var(--fw-semibold);
+  cursor: pointer;
+}
+:root[data-theme="dark"] .lt-cta {
+  background: var(--brand-blue-dark);
+  color: var(--page-bg);
+}
+
+.lt-cta[disabled] { opacity: .35; cursor: default; }
+.lt-cta--ghost,
+:root[data-theme="dark"] .lt-cta--ghost {
+  background: var(--surface);
+  color: var(--ink);
+  border: 1px solid var(--border-strong);
+}
+
+.lt-two { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3); }
+
+/* der/die/das and the gap options: three targets, one row, each one a full thumb wide. */
+.lt-opts { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-2); }
+.lt-opt {
+  min-height: 54px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius);
+  background: var(--surface-card);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: var(--text-lg);
+  font-weight: var(--fw-semibold);
+  cursor: pointer;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lt-card-back { transition: none; }
+}

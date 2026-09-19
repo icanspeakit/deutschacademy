@@ -1,0 +1,52 @@
+---
+// /leicht — a light study of the whole product in one route.
+//
+// The site knows a lot and says all of it: /uebungen/grammatik lists 28 topic cards under
+// five level headings, the Wortschatz trainer opens on a deck of 3.375 words with tabs,
+// language switches and a picker around it, and the dashboard reports six skills at once.
+// On a 390px phone — which is who this is for — none of that fits, and a learner who
+// cannot see the end of a screen decides they cannot do the thing on it.
+//
+// So this route rebuilds the same product under four rules and nothing else:
+//
+//   1. One decision per screen, three options at the very most.
+//   2. A sitting, not a pile. Nothing states a total — no 3.375, no 28, no 412.
+//   3. Progress is a sentence you can feel ("Du fragst nach dem Weg."), not a percentage.
+//   4. One primary action, in the thumb zone, always.
+//
+// It is deliberately content-free: three sittings of five tasks, hardcoded in
+// src/lib/leicht-app.js. It imports nothing from src/data and writes to its own
+// localStorage key, so running it can neither slow down nor disturb the real site. What
+// is being tested here is the shape of the flow; if it wins, the shape gets rebuilt
+// against the real catalogue, and nothing in these three files is meant to survive that.
+import Layout from "../layouts/Layout.astro";
+import "../styles/leicht.css";
+---
+<Layout
+  title="Leicht – UX-Prototyp – DeutschAcademy"
+  description="Interner Prototyp: der Lernfluss auf das Nötigste reduziert."
+>
+  <div id="lt-app" class="lt-app">
+    <noscript>
+      <p style="padding:24px">Dieser Prototyp braucht JavaScript — er ist eine Studie zum Ablauf, keine Seite zum Lesen.</p>
+    </noscript>
+  </div>
+</Layout>
+
+<script>
+  import { mountLeicht } from "../lib/leicht-view.js";
+  mountLeicht(document.getElementById("lt-app"));
+</script>
+
+<style is:global>
+  /* The prototype owns the viewport: no page scroll, no site chrome above it. Scoped to
+     this route by the attribute the page sets on <html> below. */
+  html[data-leicht],
+  html[data-leicht] body {
+    overflow: hidden;
+  }
+</style>
+
+<script is:inline>
+  document.documentElement.dataset.leicht = "";
+</script>

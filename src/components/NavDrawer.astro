@@ -104,6 +104,18 @@ const vars = (v) => (v ? JSON.stringify(v) : undefined);
             <b data-i18n="nav.account.progress">Fortschritt</b>
           </a>
         </div>
+
+        {/* /leicht — the light-flow study. It hangs here rather than on one page so it can
+            be opened from wherever the real site currently is, which is the only way the
+            two are comparable on a real phone. Gated exactly like VariantSwitch: the dev
+            server, or ?compare on the live site. Production renders nothing. */}
+        <a class="lp-drawer-row lp-drawer-row--compact lp-drawer-preview" href="/leicht" data-preview-link hidden>
+          <span class="lp-drawer-txt">
+            <b>Leichte Ansicht</b>
+            <i>Ein Schritt pro Bildschirm — UX-Studie</i>
+          </span>
+          <span class="lp-drawer-preview-tag">Prototyp</span>
+        </a>
       </div>
 
       {navSections.map((section) => (
@@ -389,6 +401,12 @@ const vars = (v) => (v ? JSON.stringify(v) : undefined);
     document.body.style.overflow = "";
     // Keep it mounted for the slide-out; 240ms matches the transition in site-nav.css.
     window.setTimeout(() => drawer.setAttribute("hidden", ""), 240);
+  }
+
+  // Preview-only rows (currently the /leicht study). Same gate VariantSwitch uses, so
+  // nothing internal reaches a learner on the live site.
+  if (import.meta.env.DEV || new URLSearchParams(location.search).has("compare")) {
+    for (const el of document.querySelectorAll("[data-preview-link]")) el.removeAttribute("hidden");
   }
 
   openBtn?.addEventListener("click", openDrawer);

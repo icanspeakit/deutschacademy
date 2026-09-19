@@ -336,6 +336,28 @@
 /* Icon-less variant, for lists where every row would carry the same icon. Still
    48px tall, comfortably over the 44px tap-target floor. */
 .lp-drawer-row--compact { padding: 11px 12px; }
+/* Preview-only rows — internal studies reachable from the drawer on the dev server or
+   behind ?compare. Marked, muted and set apart by a rule, so it can never be mistaken
+   for part of the site while it is showing. */
+.lp-drawer-preview {
+  margin-top: 10px;
+  padding-top: 14px;
+  border-top: 1px dashed var(--border);
+  color: var(--muted);
+}
+.lp-drawer-preview b { font-weight: var(--fw-semibold); }
+.lp-drawer-preview-tag {
+  margin-left: auto;
+  padding: 3px 9px;
+  border-radius: var(--radius-pill);
+  background: var(--warning-soft);
+  color: var(--warning);
+  font-family: var(--font-label);
+  font-size: .625rem;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+}
+
 
 .lp-drawer-ic {
   display: inline-flex;

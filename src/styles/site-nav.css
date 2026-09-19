@@ -320,9 +320,9 @@
   align-items: center;
   gap: 12px;
   width: 100%;
-  /* 12px block padding puts the row at 58px — above the 44px tap-target floor with
-     room to spare, since this is the only way to navigate on a phone. */
-  padding: 12px;
+  /* 10px block padding puts the row at 58px (the 38px icon sets the floor) — well above
+     the 44px tap-target minimum, and the two-line blurbs still clear it. */
+  padding: 10px 12px;
   border: none;
   border-radius: 14px;
   background: none;
@@ -889,15 +889,82 @@
   outline-offset: 2px;
 }
 
-/* The drawer's level chips. Same control as the mega menu's, in a row of its own so it
-   reads as a filter across the four subjects above it rather than a fifth subject. */
-.lp-drawer-chips { padding: 6px 4px 14px; }
-.lp-drawer-chips-head {
-  margin: 0 0 8px;
+/* The drawer's level chips. Same control as the mega menu's, but laid out as one strip
+   with its label on the left: an uppercase label stacked *above* a block reads as a
+   section heading, and this one sits between the subjects and Konto, where it would
+   look like it owned the rows below it. Beside the chips it can only be their label. */
+.lp-drawer-levelbar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 8px 2px 2px;
+  padding: 8px 10px;
+  border-radius: 14px;
+  background: var(--surface-sunken, rgba(0, 0, 0, .05));
+}
+.lp-drawer-levelbar-lbl {
+  flex-shrink: 0;
   font-family: var(--font-label);
   font-size: 11px;
   font-weight: var(--fw-bold);
   letter-spacing: .06em;
   text-transform: uppercase;
   color: var(--muted);
+}
+/* Four equal chips filling the rest of the strip, so each is a comfortable thumb target
+   even once the label takes its share of a 360px panel. */
+.lp-drawer-levelbar .lp-chiprow { flex: 1; min-width: 0; flex-wrap: nowrap; gap: 6px; }
+.lp-chip--drawer {
+  flex: 1;
+  min-width: 0;
+  padding: 9px 4px;
+  background: var(--surface-card);
+}
+
+/* Profil and Fortschritt, two-up. Together they cost one row's height instead of two,
+   which is the difference between a home pane that scrolls and one that does not. */
+.lp-drawer-duo {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  padding: 2px 2px 0;
+}
+.lp-drawer-tile {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 56px;
+  padding: 10px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  color: var(--ink);
+  text-decoration: none;
+}
+.lp-drawer-tile:active { background: var(--surface-sunken, rgba(0, 0, 0, .05)); }
+.lp-drawer-tile .lp-drawer-ic { width: 32px; height: 32px; border-radius: 9px; }
+.lp-drawer-tile b {
+  min-width: 0;
+  font-size: 13.5px;
+  font-weight: 500;
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+}
+
+/* Short phones — a 640pt-tall screen, or a 740 with the blurbs wrapping to two lines at
+   360px wide — cannot hold the home pane at full size. Rather than let it scroll, the
+   top level drops to labels only and a smaller icon; the sub-panes keep their blurbs,
+   since those are lists a thumb is expected to scroll anyway. */
+@media (max-height: 800px) {
+  [data-pane="home"] .lp-drawer-txt i { display: none; }
+  [data-pane="home"] .lp-drawer-ic { width: 30px; height: 30px; border-radius: 9px; }
+  [data-pane="home"] .lp-drawer-row { padding: 9px 12px; }
+  .lp-drawer-grouphead { margin-top: 10px; }
+  .lp-drawer-levelbar { margin-top: 6px; padding: 6px 10px; }
+  .lp-drawer-tile { min-height: 48px; }
+}
+/* And tighter still on a 640pt screen, where those last twenty pixels are the whole
+   difference between the eight destinations fitting and the pane scrolling. */
+@media (max-height: 680px) {
+  [data-pane="home"] .lp-drawer-row { padding: 7px 12px; }
+  .lp-drawer-foot { gap: 8px; padding-block: 8px; }
 }

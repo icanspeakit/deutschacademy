@@ -258,7 +258,11 @@
  * Scoped to .ls-nvb throughout: nav.css's .nvb is the dashboard's rail as well, and it
  * is meant to stay compact there.
  */
-.vt-split { --rule-w: clamp(352px, 29vw, 428px); }
+/* `.vt-split` and its --rule-w belong to vokabeltrainer.css, which owns that class and
+   loads after this file — so the wider value that used to be declared here never took
+   effect. Measured at 1440px: the column is 389px and the rail plus panel need 385px, so
+   nothing was clipped by losing it. If the picker ever does need a wider column, widen it
+   where the class is defined rather than racing it from here. */
 .ls-nvb { --ls-panel-w: 340px; --ls-panel-pad: 14px; }
 .ls-nvb .nvb-panel { padding: var(--ls-panel-pad); gap: 1px; }
 

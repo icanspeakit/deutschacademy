@@ -384,7 +384,10 @@
   line-height: 1.7;
   resize: vertical;
 }
-.word-count { margin: 8px 0 0; font-size: .82rem; color: var(--muted); }
+/* `.word-count` lives in practice.css, which every page mounting this file also loads —
+   and wins there, so the copy that used to sit here (.82rem / 8px) never applied on any
+   page. Port residue from Pflegeplace. Removed rather than scoped: a trainer wanting its
+   own size should say so deliberately, not inherit a rule nobody could see working. */
 .model-answer {
   margin-top: 14px;
   padding: 16px 18px;

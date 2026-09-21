@@ -169,6 +169,11 @@ export function langsOf(cards) {
   return TRANSLATION_LANGS.filter((lang) => cards.every((c) => c.translations?.[lang]));
 }
 
+/** What the voice says for a word: nouns carry their article, everything else is bare.
+ *  One place, because the generator and the page have to agree on the text or the slug
+ *  the page asks for is not the slug the file was written under. */
+export const spokenForm = (e) => (e.pos === "noun" && e.gender ? `${e.gender} ${e.lemma}` : e.lemma);
+
 /** Shape of src/data/wortschatz.json: `{ front, note, translations }`. */
 const toCard = (e) => {
   const translations = {};
@@ -177,6 +182,11 @@ const toCard = (e) => {
     front: e.lemma,
     note: e.note ?? e.example ?? "",
     translations,
+    // Only the words that actually have a file. A deck is partly voiced for as long as
+    // the generator has been run over part of the lexicon, and a play button that 404s
+    // is worse than no play button — so the card carries the source or carries nothing,
+    // and every renderer keys off its presence.
+    ...(e.audio ? { audioSrc: `/audio/wortschatz/${e.audio}.mp3`, spoken: spokenForm(e) } : {}),
   };
 };
 export const asVokabelCards = (opts = {}) => select({ ...opts, has: "en" }).map(toCard);

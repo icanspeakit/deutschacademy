@@ -326,6 +326,53 @@ export function mountWortschatzApp(els, cards, languages, { onAnswer, onSessionS
     return options;
   }
 
+  /* ---- Pronunciation ------------------------------------------------------
+     A word carries `audioSrc` only when a file for it exists (see toCard in
+     lexicon.js), so coverage is partial by design while the lexicon is being voiced and
+     every renderer keys off the field's presence rather than assuming a URL.
+
+     One <Audio> for the page, not one per row: a 650-word list would otherwise hold 650
+     media elements, and on a phone that is the kind of thing that gets a tab killed. */
+  const SPEAKER_SVG =
+    '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+    '<path d="M11 5 6 9H3v6h3l5 4V5Z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/></svg>';
+
+  let player = null;
+  function playAudio(src, btn) {
+    if (!src) return;
+    if (!player) player = new Audio();
+    contentEl.querySelectorAll(".vt-audio.is-playing").forEach((b) => b.classList.remove("is-playing"));
+    player.pause();
+    player.src = src;
+    if (btn) {
+      btn.classList.add("is-playing");
+      const done = () => btn.classList.remove("is-playing");
+      player.onended = done;
+      player.onerror = done;
+    }
+    // A play() the browser rejects (no gesture yet, decode failure) must not leave the
+    // button stuck mid-pulse, so the spinner is cleared on rejection too.
+    player.play().catch(() => btn && btn.classList.remove("is-playing"));
+  }
+
+  /** The button, or a spacer that keeps the column aligned for words with no file yet. */
+  function audioBtnHtml(card, cls) {
+    if (!card.audioSrc) return `<span class="vt-audio-gap ${cls}"></span>`;
+    const label = `„${escapeHtml(card.spoken || card.front)}“ anhören`;
+    return `<button type="button" class="vt-audio ${cls}" data-audio="${escapeHtml(card.audioSrc)}" aria-label="${label}" title="${label}">${SPEAKER_SVG}</button>`;
+  }
+
+  /** Shared by every renderer: play and swallow, or say it was not ours. */
+  function handleAudioClick(e) {
+    const btn = e.target.closest("[data-audio]");
+    if (!btn) return false;
+    e.stopPropagation();
+    playAudio(btn.dataset.audio, btn);
+    return true;
+  }
+
+  const deckHasAudio = cards.some((c) => c.audioSrc);
+
   function escapeHtml(s) {
     return String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
   }
@@ -381,11 +428,13 @@ export function mountWortschatzApp(els, cards, languages, { onAnswer, onSessionS
             <div class="vt-face">
               <span class="vt-face-eyebrow">${escapeHtml(frontLabel)}</span>
               <span class="vt-prompt ${frontRtl ? "vt-rtl" : ""}">${escapeHtml(front(card))}</span>
+              ${toDe ? "" : audioBtnHtml(card, "vt-audio--face")}
               <span class="vt-hint">${escapeHtml(flipHint)}</span>
             </div>
             <div class="vt-face vt-face--back">
               <span class="vt-face-eyebrow">${escapeHtml(backLabel)}</span>
               <span class="vt-answer ${backRtl ? "vt-rtl" : ""}">${escapeHtml(back(card))}</span>
+              ${toDe ? audioBtnHtml(card, "vt-audio--face") : ""}
               <span class="vt-hint">Zurück zur Vorderseite</span>
             </div>
           </div>
@@ -410,7 +459,8 @@ export function mountWortschatzApp(els, cards, languages, { onAnswer, onSessionS
     const flipEl = contentEl.querySelector("#vt-flip");
     // Guarded rather than calling flip() straight: the click a finished swipe generates
     // would otherwise flip the card the swipe just moved away from.
-    flipEl.addEventListener("click", () => {
+    flipEl.addEventListener("click", (e) => {
+      if (handleAudioClick(e)) return;
       if (suppressClick) { suppressClick = false; return; }
       flip();
     });
@@ -661,6 +711,7 @@ export function mountWortschatzApp(els, cards, languages, { onAnswer, onSessionS
           </span>
           <span class="vt-list-dot ${seen ? (res ? "is-right" : "is-wrong") : ""}" title="${dotLabel}"></span>
         </button>
+        ${audioBtnHtml(card, "vt-audio--row")}
         <button type="button" class="vt-list-jump ${active ? "is-active" : ""}" data-jump="${i}"
                 aria-label="Bei „${escapeHtml(card.front)}“ weitermachen">→</button>
       </div>`;
@@ -672,6 +723,7 @@ export function mountWortschatzApp(els, cards, languages, { onAnswer, onSessionS
     if (!grid) return;
     const rows = listRows();
     grid.classList.toggle("is-empty", !rows.length);
+    grid.classList.toggle("has-audio", deckHasAudio);
     grid.innerHTML = rows.length
       ? rows.map(listRowHtml).join("")
       : `<p class="vt-list-empty">Kein Wort passt zu „${escapeHtml(state.listQuery)}“.</p>`;
@@ -727,6 +779,7 @@ export function mountWortschatzApp(els, cards, languages, { onAnswer, onSessionS
     // One listener on the grid rather than one per row: a level deck is 650 rows, and
     // every search keystroke rebuilds them.
     contentEl.querySelector(".vt-list-grid").addEventListener("click", (e) => {
+      if (handleAudioClick(e)) return;
       const jump = e.target.closest("[data-jump]");
       if (jump) { jumpTo(+jump.dataset.jump); return; }
       const pick = e.target.closest(".vt-list-pick");

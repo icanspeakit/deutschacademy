@@ -408,6 +408,28 @@
 .vt-list-dot { width: 6px; height: 6px; border-radius: 999px; background: var(--vt-border-strong); }
 .vt-list-dot.is-right { background: var(--brand-blue); }
 .vt-list-dot.is-wrong { background: var(--danger); }
+/* Pronunciation. The column only exists on a deck that has some audio, and a word
+   without a file yet gets a spacer instead of a button, so the arrows stay in one line
+   down the list while the lexicon is only partly voiced. */
+.vt-audio {
+  display: flex; align-items: center; justify-content: center; width: 44px;
+  color: var(--vt-muted); cursor: pointer; background: none; border: none; padding: 0;
+}
+.vt-audio:hover { color: var(--brand-blue-dark); }
+.vt-audio.is-playing { color: var(--brand-blue); animation: vtSpeak .9s ease-in-out infinite; }
+.vt-audio:focus-visible { outline: 2px solid var(--brand-blue); outline-offset: -2px; border-radius: 8px; }
+.vt-audio-gap { display: block; width: 44px; }
+@keyframes vtSpeak {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.14); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .vt-audio.is-playing { animation: none; opacity: .7; }
+}
+/* On the card it is a real target under the word, not a 44px strip in a row. */
+.vt-audio--face { width: 44px; height: 44px; margin-top: 10px; }
+.vt-list-grid.has-audio .vt-list-row { grid-template-columns: minmax(0, 1fr) 44px 44px; }
+
 .vt-list-jump {
   display: flex; align-items: center; justify-content: center; width: 44px;
   font-size: 1rem; color: var(--vt-muted); cursor: pointer;

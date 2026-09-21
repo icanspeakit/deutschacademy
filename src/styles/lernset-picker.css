@@ -97,7 +97,17 @@
   margin: 0 var(--space-2) var(--space-3);
 }
 .ls-cut {
-  flex: 1;
+  /* `flex: 1` is `1 1 0%`: both pills get an identical share whatever they contain, so
+     the longer label was truncated at every width, including a 1920 screen with room to
+     spare. Basing on content and growing from there gives each the width its own words
+     need, and only shrinks them when the row genuinely cannot hold both. */
+  flex: 1 1 auto;
+  /* A flex item will not shrink below its min-content, and `white-space: nowrap` makes
+     min-content the whole label — so without this the two pills kept their full width and
+     pushed out of the panel instead of sharing it. Measured before the fix: 48px of
+     overflow at a 1200px viewport, 26px at 1280, 3px at 1366, clean only from 1440 up.
+     1280 and 1366 are ordinary laptops, so this was most desktop visitors. */
+  min-width: 0;
   display: inline-flex;
   align-items: baseline;
   justify-content: center;
@@ -122,7 +132,25 @@
   border-color: var(--brand-blue);
   background: var(--blue-50);
 }
-.ls-cut-n { font-family: var(--font-label); font-size: 9px; opacity: .7; }
+/* The label ellipsises rather than overflowing, so a row that cannot hold both pills
+   degrades inside the card instead of spilling out of it. */
+.ls-cut > span:not(.ls-cut-n) { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+.ls-cut-n { flex: none; font-family: var(--font-label); font-size: 9px; opacity: .7; }
+
+/* …but the words go last. "25er" and "20er" are a detail; "Nach Thema" and "Der Reihe
+   nach" are the control, and keeping the counts cost enough room to cut the labels to
+   "Nach T…". So in the band where the column is at its narrowest the counts drop and the
+   labels get their words back.
+
+   A viewport query, not a container query: `container-type: inline-size` on the panel
+   collapsed it to 28px at a 1000px viewport — size containment plus a flex column is not
+   a combination this panel survives — and it measured the content box, so a 321px panel
+   read as 293px and the counts stayed hidden where they fit. Measured instead: the panel
+   is 396px up to 900, 318px at 1000, 256–301px from 1100 to 1366, and clear again at
+   1440. Only that middle band needs the room. */
+@media (min-width: 1024px) and (max-width: 1439px) {
+  .ls-nvb .ls-cut-n { display: none; }
+}
 
 .ls-lead {
   margin: 0 var(--space-2) var(--space-3);
@@ -263,6 +291,13 @@
    effect. Measured at 1440px: the column is 389px and the rail plus panel need 385px, so
    nothing was clipped by losing it. If the picker ever does need a wider column, widen it
    where the class is defined rather than racing it from here. */
+/* --ls-panel-w is a CEILING, not the rendered width. The panel is the column minus a
+   64px rail minus padding, so it renders at 278/321/328 (1280/1440/1920) and never
+   reaches 340 — but the number is not inert: removing it drops the panel to the 302px
+   fallback in `width: var(--ls-panel-w, 302px)` above, which is 19px narrower at 1440 and
+   26px at 1920. Verified by deleting it and measuring, after an earlier test that set the
+   property inline said otherwise and was wrong. Leave it at 340 unless you mean to make
+   the panel smaller. */
 .ls-nvb { --ls-panel-w: 340px; --ls-panel-pad: 14px; }
 .ls-nvb .nvb-panel { padding: var(--ls-panel-pad); gap: 1px; }
 

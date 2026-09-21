@@ -97,6 +97,13 @@ export const tools = [
     countKey: "tool.artikel.round", countVars: { n: ARTIKEL_ROUND }, count: `${ARTIKEL_ROUND} Nomen pro Runde` },
   { id: "grammatik", group: "grammatik", href: "/uebungen/grammatik", icon: "book",
     titleKey: "tool.grammatik.title", title: "Grammatik", shortKey: "tool.grammatik.title", short: "Grammatik",
+    // Inside the Grammatik column of the menu, "Grammatik" was the row under a heading of
+    // the same word pointing at the same URL — two controls, one destination, one nested
+    // in the other. There the row's job is to say what it is beside its two siblings:
+    // they each drill one thing, this is the whole set. Standalone (the /uebungen card
+    // grid mixes subjects, the exam pages list it among five tools) it stays "Grammatik",
+    // because "Alle Themen" with no Grammatik above it names nothing.
+    menuTitleKey: "tool.grammatik.allTopics", menuTitle: "Alle Themen",
     descKey: "tool.grammatik.desc", desc: "Themen nach Niveau: Akkusativ, Dativ, Passiv und mehr.",
     countKey: "tool.grammatik.count", countVars: { n: grammarTopicCount, q: grammarTaskCount }, count: `${grammarTopicCount} Themen · ${grammarTaskCount} Aufgaben` },
   // The tile used to open one topic (verben-praepositionen) and call itself after it.
@@ -222,7 +229,11 @@ export const entries = [...tools, ...exams];
 export const total = entries.length;
 
 export function itemsOf(groupId) {
-  return entries.filter((e) => e.group === groupId);
+  // `menuTitle` wins here and only here: these items are rendered under their group's
+  // own heading, which supplies the context a standalone card does not have.
+  return entries
+    .filter((e) => e.group === groupId)
+    .map((e) => (e.menuTitle ? { ...e, title: e.menuTitle, titleKey: e.menuTitleKey } : e));
 }
 
 // ---------------------------------------------------------------------------

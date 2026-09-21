@@ -241,26 +241,64 @@
    the dashed ghost it used to be, and it names the level it returns to ("Stufenübersicht
    A1") instead of saying "öffnen" and leaving you to work out which. It sits above the
    panel's own rows in weight on purpose: everything below it is one level deep. */
+/* Raised, not tinted. As a pale blue bar it read as a coloured strip of the panel rather
+   than something to press — the one control here that changes the other column looked like
+   a label. So it is filled, lifted off the panel by a shadow, and it moves when pressed:
+   the three things that say "button" without a caption. The arrow that used to sit at its
+   right is gone with them — an affordance the surface now carries on its own. */
 .nvb-overview {
   display: flex; align-items: center; gap: var(--space-2);
   width: calc(100% - var(--space-2) * 2);
-  margin: 0 var(--space-2) var(--space-3); padding: 9px var(--space-3);
-  border: 1px solid var(--blue-200); border-radius: 10px;
-  background: var(--blue-50); cursor: pointer;
+  margin: 0 var(--space-2) var(--space-3); padding: 10px var(--space-3);
+  border: 0; border-radius: 10px;
+  background: var(--gradient-brand); cursor: pointer;
   font-family: var(--font-body); text-align: left;
+  box-shadow: 0 6px 14px -6px rgb(15 23 42 / 45%), 0 1px 0 0 rgb(255 255 255 / 18%) inset;
+  transition: transform .16s var(--ease-standard, ease), box-shadow .16s var(--ease-standard, ease);
 }
 .nvb-ov-txt { display: flex; flex-direction: column; gap: 1px; min-width: 0; flex: 1; }
+/* On the filled face both lines are white; the kicker carries the hierarchy with opacity
+   rather than a second colour, so it stays legible on the gradient in either theme. */
 .nvb-ov-kicker {
   font-family: var(--font-label); font-size: 10px; font-weight: var(--fw-bold);
-  letter-spacing: .08em; text-transform: uppercase; color: var(--muted);
+  letter-spacing: .08em; text-transform: uppercase; color: rgb(255 255 255 / 78%);
 }
 .nvb-ov-name {
-  font-size: var(--text-sm); font-weight: var(--fw-bold); color: var(--brand-blue-dark);
+  font-size: var(--text-sm); font-weight: var(--fw-bold); color: #fff;
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
-.nvb-ov-go { flex-shrink: 0; color: var(--brand-blue); font-weight: var(--fw-bold); }
-.nvb-overview:hover { border-color: var(--brand-blue); background: var(--blue-100); }
-.nvb-overview:hover .nvb-ov-kicker { color: var(--brand-blue-dark); }
+.nvb-overview:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 20px -7px rgb(15 23 42 / 55%), 0 1px 0 0 rgb(255 255 255 / 22%) inset;
+}
+/* Pressed: back down onto the panel, shadow pulled in under it. */
+.nvb-overview:active {
+  transform: translateY(1px);
+  box-shadow: 0 2px 6px -3px rgb(15 23 42 / 50%);
+}
+.nvb-overview:focus-visible { outline: 2px solid var(--brand-blue-dark); outline-offset: 2px; }
+
+/* Shown once, the first time the panel is ever opened: the button is new, it is at the top
+   of a panel that has just slid in, and a single shake is what makes an eye that is reading
+   the list below look up at it. Once per browser — see the localStorage guard in
+   LearnShell.astro — because a control that jiggles every time is a control that is asking
+   rather than telling. */
+@keyframes nvbOvJiggle {
+  0%, 100% { transform: translateX(0) rotate(0); }
+  15% { transform: translateX(-4px) rotate(-.7deg); }
+  30% { transform: translateX(4px) rotate(.7deg); }
+  45% { transform: translateX(-3px) rotate(-.5deg); }
+  60% { transform: translateX(3px) rotate(.5deg); }
+  75% { transform: translateX(-1.5px) rotate(0); }
+}
+.nvb-overview.nvb-ov-jiggle {
+  animation: nvbOvJiggle .62s var(--ease-standard, ease) .22s both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .nvb-overview { transition: none; }
+  .nvb-overview:hover, .nvb-overview:active { transform: none; }
+  .nvb-overview.nvb-ov-jiggle { animation: none; }
+}
 .nvb-tip {
   position: absolute; left: calc(100% + 8px); top: 50%; transform: translateY(-50%);
   /* --ink-deep flips with the theme — #0f141c in light, #f7f9fc in dark — so the

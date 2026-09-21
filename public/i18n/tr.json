@@ -42,8 +42,8 @@
   "tool.artikel.desc": "Anında geri bildirimle artikelleri pratik et.",
   "tool.grammatik.title": "Dilbilgisi",
   "tool.grammatik.desc": "Seviyeye göre konular: Akkusativ, Dativ, edilgen çatı ve daha fazlası.",
-  "tool.praepositionen.title": "Edatlı Fiiller",
-  "tool.praepositionen.desc": "Sabit edatları beş alıştırma türünde çalış.",
+  "tool.praepositionen.title": "Edatlar",
+  "tool.praepositionen.desc": "Çift yönlü edatlar ve fiillere bağlı sabit edatlar tek bir yerde.",
   "tool.wortschatz.title": "Kelime Bilgisi & İfadeler",
   "tool.wortschatz.desc": "Çevirip tekrar etmek için kelime kartları.",
   "tool.aussprache.title": "Telaffuz Eğitimi",
@@ -541,6 +541,10 @@
   "intro.setsAway.text": "Kart için daha çok yer, ve liste kaybolmadı: kenardaki sekme onu geri getirir. Seçimin hatırlanır.",
   "intro.setsCompact.title": "Setini buradan seçersin",
   "intro.setsCompact.text": "Konuya göre 25'likler, sırayla 20'likler ya da sıklığa göre — hepsi bu düğmenin ardında.",
+  "intro.stufen.title": "Seviyelerin yanında kalır",
+  "intro.stufen.text": "A1'den B2'ye, kursun ve sınavlar — sonraki seviye bir tık uzakta, alıştırmadan çıkmadan.",
+  "intro.stufenAway.title": "Katlandığında bu sekme kalır",
+  "intro.stufenAway.text": "Alıştırma için daha çok yer, liste de kaybolmaz: kenardaki sekme onu geri getirir.",
   "sets.close": "Setleri kapat",
   "sets.byFrequency": "Sıklığa göre",
   "sets.byFrequency.tip": "Sıklığa göre · {n} porsiyon",
@@ -1259,5 +1263,8 @@
   "sets.unranked": "{n} kelime sıklık listesinde yok — çoğu, orada sözcük biçimi olarak geçmeyen birleşik kelimeler. Bu, ender oldukları anlamına gelmez; kendi seviyelerinde kendi setlerinde duruyorlar.",
   "sets.prog.resume": "Devam et",
   "sets.prog.open": "Aç →",
-  "sets.planLevels": "{levels}: {n} modül planlandı, henüz kelime yok. Seviyelendirme A1–C2'yi esas alıyor, resmî Goethe/telc listesini değil."
+  "sets.planLevels": "{levels}: {n} modül planlandı, henüz kelime yok. Seviyelendirme A1–C2'yi esas alıyor, resmî Goethe/telc listesini değil.",
+  "fortschritt.tab.practice": "Alıştırmalar",
+  "fortschritt.tabsLabel": "Görünüm",
+  "tool.grammatik.allTopics": "Bütün konular"
 }

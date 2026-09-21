@@ -890,6 +890,9 @@
    switcher stay; search, avatar and the burger are the row. */
 @media (max-width: 1080px) {
   .lp-acct { display: none; }
+  /* Same reason the avatar went: the drawer carries its own theme toggle, and two of
+     them in one header is one of them being wrong about the state. */
+  .lp-nav-theme { display: none; }
   .lp-nav-search { display: none; }
 }
 

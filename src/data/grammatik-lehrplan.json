@@ -1,8 +1,21 @@
 {
   "note": "Reihenfolge des geführten Laufs (/uebungen/grammatik/lauf). Das ist eine Unterrichtsentscheidung, keine abgeleitete Sortierung: innerhalb eines Niveaus steht das, worauf später aufgebaut wird, vorn — erst die Form, dann der Satzbau, dann die Feinheiten. Themen, die hier fehlen, hängt der Lauf hinten an ihr Niveau an, damit ein neues Thema nie stillschweigend aus dem Lauf fällt.",
   "order": {
-    "A1": ["artikel", "w-fragen", "ja-nein-fragen", "akkusativ"],
-    "A2": ["perfekt", "modalverben", "trennbare-verben", "dativ", "negation", "satzstellung", "wechselpraepositionen"],
+    "A1": [
+      "artikel",
+      "w-fragen",
+      "ja-nein-fragen",
+      "akkusativ"
+    ],
+    "A2": [
+      "perfekt",
+      "modalverben",
+      "trennbare-verben",
+      "dativ",
+      "negation",
+      "satzstellung",
+      "wechselpraepositionen"
+    ],
     "B1": [
       "verben-praepositionen",
       "als-oder-wenn",
@@ -10,12 +23,18 @@
       "relativpronomen",
       "indirekte-fragen",
       "praeteritum-plusquamperfekt",
-      "passiv",
       "adjektivdeklination",
-      "n-deklination",
-      "zweiteilige-konnektoren",
-      "irgend"
+      "n-deklination"
     ],
-    "B2": ["partizip-als-adjektiv", "konjunktiv2", "nomen-verb-verbindungen", "negationswoerter", "fokuspartikeln"]
+    "B2": [
+      "passiv",
+      "partizip-als-adjektiv",
+      "konjunktiv2",
+      "zweiteilige-konnektoren",
+      "nomen-verb-verbindungen",
+      "irgend",
+      "negationswoerter",
+      "fokuspartikeln"
+    ]
   }
 }

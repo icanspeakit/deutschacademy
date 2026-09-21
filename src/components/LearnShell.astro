@@ -43,6 +43,7 @@ import "../styles/akkusativ.css";
 import "../styles/dtz.css";
 import "../styles/verben-praepositionen.css";
 import "../styles/nav.css";
+import "../styles/rule-intro.css";
 import artikel from "../data/artikel.json";
 import { nouns } from "../lib/lexicon.js";
 import { byPlan } from "../lib/lehrplan.js";
@@ -101,7 +102,7 @@ type Section = {
   label: string;
   badge: string;
   icon: IconName;
-  kind: "kurs" | "stufe" | "ziel";
+  kind: "kurs" | "stufe" | "ziel" | "uebergreifend";
   /** Two-word caption under an icon-only rail chip; falls back to `badge`. */
   blurb: string;
   focus: string[];
@@ -431,13 +432,10 @@ const sections: Section[] = [
     badge: "B1",
     icon: "book-open",
     kind: "stufe",
-    blurb: "Das DTZ-Niveau: komplexere Sätze und die echten Prüfungsaufgabenformen. Der größte Block — und der, der für die Prüfung zählt.",
-    focus: ["Passiv, Relativsätze, Präpositionalverben", "DTZ-Leseverstehen", "Bildbeschreibung mit Prüferfragen"],
+    blurb: "Das DTZ-Niveau: längere Nebensätze, feste Präpositionen und die Feinheiten der Deklination. Der Block, der für die Prüfung am meisten zählt.",
+    focus: ["Nebensätze: als oder wenn, indirekte Fragen", "Verben mit festen Präpositionen", "Adjektiv- und n-Deklination"],
     items: [
       ...grammarAt("B1"),
-      { id: "sprechen", label: "Sprechen: Bildbeschreibung", icon: "mic", href: "/uebungen/sprechen", level: "A2/B1", levelSource: "abgeleitet", eyebrow: "Übung · B1", lead: "Bildbeschreibung mit echten DTZ-Prüferfragen und 90-Sekunden-Timer — dieselbe Aufgabenform wie im Prüfungsteil Sprechen.", tasks: sprechen.length, done: 0, minutes: 15, practice: "speak" },
-      { id: "lesen", label: "Lesen & Schreiben", icon: "pencil", href: "/uebungen/lesen-schreiben", level: "A2/B1", levelSource: "abgeleitet", eyebrow: "Übung · B1", lead: `DTZ-Leseverstehen-Simulation mit ${readingQuestionCount} Aufgaben in vier Teilen, dazu Schreibaufgaben.`, tasks: readingQuestionCount, done: 0, minutes: 25, practice: "choice" },
-      { id: "kultur", label: "Kulturwissen", icon: "map-pin", href: "/uebungen/kultur", level: "B1", levelSource: "abgeleitet", eyebrow: "Übung · B1", lead: "Diskussionsthemen aus echten Unterrichtsgesprächen — mit Pro- und Kontra-Argumenten zum Nachsprechen.", tasks: kultur.topics.length, done: 0, minutes: 10, practice: "read" },
     ],
   },
   {
@@ -446,16 +444,23 @@ const sections: Section[] = [
     badge: "B2",
     icon: "graduation-cap",
     kind: "stufe",
-    blurb: "Jenseits des DTZ: Konjunktiv und Feinheiten. Für alle, die nach der Prüfung weitermachen oder aufs Studium zielen.",
-    focus: ["Konjunktiv II: höflich und hypothetisch", "Feinere Satzstrukturen"],
+    blurb: "Nach dem DTZ: Passiv mit Modalverben, Konjunktiv II und die Feinheiten, an denen man Fortgeschrittene hört. Für alle, die weitermachen oder aufs Studium zielen.",
+    focus: ["Passiv und Partizipien als Adjektiv", "Konjunktiv II: höflich und hypothetisch", "Feste Wendungen, Negation, Fokuspartikeln"],
     items: grammarAt("B2"),
   },
   {
     id: "alle",
-    label: "Alle Stufen",
+    label: "Stufenübergreifend",
     badge: "A1–B1",
     icon: "folder",
-    kind: "stufe",
+    // Not "stufe": it sat in the rail as a fifth level chip reading "A1–B1" beside A1, A2,
+    // B1 and B2, and called itself "Alle Stufen" — a name that promises the whole catalogue
+    // and opens two tools. Its own kind, so the rail gives it an icon instead of a level
+    // chip and every label below says what it is: the shelf for the exercises no single
+    // level owns, because their content genuinely runs across all of them. Deleting the
+    // section instead would leave Wortschatz & Redemittel and das Aussprache-Training with
+    // nowhere to live, since neither can honestly be filed under one level.
+    kind: "uebergreifend",
     blurb: "Übungen, deren Inhalt echt über mehrere Stufen läuft — die Karteikarten reichen von „Wie geht's dir?“ bis „Ich bin der Meinung, dass …“.",
     focus: ["Redemittel A1 bis B1", "Aussprache im Langsam-Modus"],
     items: [
@@ -471,14 +476,24 @@ const sections: Section[] = [
     // know which part of the site it opens.
     icon: "landmark",
     kind: "ziel",
-    blurb: "Prüfungen sind keine Stufe, sondern ein Ziel — deshalb eine eigene Gruppe, sortiert nach Einstiegsniveau statt nach Fortschritt.",
-    focus: ["Format und Dauer", "Was zum Bestehen reicht", "Welche Prüfung zu welchem Ziel passt"],
+    blurb: "Prüfungen sind keine Stufe, sondern ein Ziel — deshalb eine eigene Gruppe, sortiert nach Einstiegsniveau statt nach Fortschritt. Dazu die DTZ-Prüfungsteile zum Üben.",
+    focus: ["Format und Dauer", "Was zum Bestehen reicht", "DTZ üben: Lesen, Bildbeschreibung, Landeskunde"],
     items: [
       { id: "dtz", label: "DTZ", icon: "document", href: "/pruefungen/dtz", level: "A2/B1", levelSource: "data", eyebrow: "Prüfung", lead: "Deutsch-Test für Zuwanderer: Hören, Lesen, Schreiben, Sprechen — 45 bewertete Aufgaben plus Schreibteil.", tasks: 45, done: 0, minutes: 54, practice: "dtz" },
       { id: "lid", label: "Leben in Deutschland", icon: "map-pin", href: "/pruefungen/leben-in-deutschland", level: "kein GER", levelSource: "data", eyebrow: "Prüfung", lead: `33 Fragen aus dem offiziellen Katalog, dazu die Landesfragen aller ${lid.bundeslaender.length} Bundesländer — Wissenstest, keine Sprachprüfung.`, tasks: lid.questions.length, done: 0, minutes: 20, practice: "choice" },
       { id: "telc", label: "telc", icon: "document", href: "/pruefungen/telc", level: "A1–C2", levelSource: "data", eyebrow: "Prüfung", lead: "Sprachbausteine — der Prüfungsteil, den es so nur bei telc gibt: Grammatik im laufenden Text.", tasks: 20, done: 0, minutes: 20, practice: "bausteine" },
       { id: "goethe", label: "Goethe-Zertifikat", icon: "landmark", href: "/pruefungen/goethe", level: "A1–C2", levelSource: "data", eyebrow: "Prüfung", lead: "Die Goethe-Zertifikate decken A1 bis C2 ab — hier alle Themen, nach Stufe sortiert.", meta: "A1–C2", practice: "picker" },
       { id: "testdaf", label: "TestDaF", icon: "graduation-cap", href: "/pruefungen/testdaf", level: "B2–C1", levelSource: "data", eyebrow: "Prüfung", lead: "TestDaF setzt B2–C1 voraus — hier die Themen dieser Stufen.", meta: "B2–C1", practice: "picker" },
+
+      /* DTZ skill practice, moved here out of Stufe B1. These are exam formats —
+         Bildbeschreibung with real examiner questions, the Leseverstehen simulation,
+         the discussion topics — not B1 grammar. They sat in B1 only because B1 is the
+         DTZ level, which made the biggest group three entries bigger still and put
+         exam rehearsal in the middle of a grammar syllabus. This group is explicitly
+         "ein Ziel, keine Stufe", which is exactly what they are. */
+      { id: "sprechen", label: "Sprechen: Bildbeschreibung", icon: "mic", href: "/uebungen/sprechen", level: "A2/B1", levelSource: "abgeleitet", eyebrow: "Übung · B1", lead: "Bildbeschreibung mit echten DTZ-Prüferfragen und 90-Sekunden-Timer — dieselbe Aufgabenform wie im Prüfungsteil Sprechen.", tasks: sprechen.length, done: 0, minutes: 15, practice: "speak" },
+      { id: "lesen", label: "Lesen & Schreiben", icon: "pencil", href: "/uebungen/lesen-schreiben", level: "A2/B1", levelSource: "abgeleitet", eyebrow: "Übung · B1", lead: `DTZ-Leseverstehen-Simulation mit ${readingQuestionCount} Aufgaben in vier Teilen, dazu Schreibaufgaben.`, tasks: readingQuestionCount, done: 0, minutes: 25, practice: "choice" },
+      { id: "kultur", label: "Kulturwissen", icon: "map-pin", href: "/uebungen/kultur", level: "B1", levelSource: "abgeleitet", eyebrow: "Übung · B1", lead: "Diskussionsthemen aus echten Unterrichtsgesprächen — mit Pro- und Kontra-Argumenten zum Nachsprechen.", tasks: kultur.topics.length, done: 0, minutes: 10, practice: "read" },
     ],
   },
 ];
@@ -751,11 +766,13 @@ const defaultVariant = variants[0];
                           carries its own name. */}
                       <span class="nvb-ov-name">{section.kind === "stufe" ? section.badge : section.label}</span>
                     </span>
-                    <span class="nvb-ov-go" aria-hidden="true">→</span>
                   </button>
                   <span class="nvb-tip nvb-tip--wide" id={`nvb-ovtip-${section.id}`} role="tooltip">
-                    Zeigt rechts wieder die ganze {section.kind === "stufe" ? "Stufe" : "Gruppe"} statt eines
-                    einzelnen Themas — Beschreibung, Umfang, Schwerpunkte und der Startknopf für alles.
+                    Zeigt rechts wieder {section.kind === "stufe" ? "die ganze Stufe"
+                      : section.kind === "kurs" ? "den ganzen Kurs"
+                      : section.kind === "ziel" ? "alle Prüfungen"
+                      : "alle stufenübergreifenden Übungen"} statt eines einzelnen Themas —
+                    Beschreibung, Umfang, Schwerpunkte und der Startknopf für alles.
                   </span>
                 </span>
 
@@ -868,7 +885,7 @@ const defaultVariant = variants[0];
             <div class="nv-view" data-section-view={section.id} hidden>
               <section class="nv-detail">
                 <div>
-                  <p class="nv-detail-eyebrow">{section.kind === "stufe" ? "Stufe" : section.kind === "ziel" ? "Ziel" : "Kurs"}</p>
+                  <p class="nv-detail-eyebrow">{section.kind === "stufe" ? "Stufe" : section.kind === "ziel" ? "Ziel" : section.kind === "uebergreifend" ? "Übergreifend" : "Kurs"}</p>
                   <h1>{section.label}</h1>
                   <p class="nv-detail-level">
                     <span class="nv-levelchip nv-levelchip--lg">{section.badge}</span>
@@ -910,7 +927,7 @@ const defaultVariant = variants[0];
                   the learner opened the level to see its contents, and a trainer card at the top
                   pushed that list under the fold. "Direkt üben" stays — one scroll further down. */}
               <section class="nv-panel">
-                <h2>{section.kind === "kurs" ? "Module" : section.kind === "ziel" ? "Prüfungen" : "Inhalte dieser Stufe"}</h2>
+                <h2>{section.kind === "kurs" ? "Module" : section.kind === "ziel" ? "Prüfungen" : section.kind === "uebergreifend" ? "Diese Übungen" : "Inhalte dieser Stufe"}</h2>
                 {section.items.map((item, n) => (
                   <div class="nv-modrow" style={`--i:${n}`} data-modrow={item.id}>
                     <span class="nv-modnum">{n + 1}</span>
@@ -1112,6 +1129,13 @@ const defaultVariant = variants[0];
       <button type="button" class="vp-dev-reset" id="nv-seed-clear" title="Fortschritt löschen und neu laden">
         ↻ Leer
       </button>
+      {/* Every intro runs once per browser and there is no way to un-see one, so there
+          has to be a way to un-remember them. This page has no tour of its own — it
+          clears the flags for all of them, so the next trainer, deck or exam opened
+          plays its introduction again. */}
+      <button type="button" class="vp-dev-reset" id="nv-seed-tour" title="Alle Tour-Flags löschen — die nächste Übungsseite zeigt ihre Einführung wieder">
+        ✦ Tour neu
+      </button>
     </div>
   )}
 
@@ -1124,6 +1148,7 @@ const defaultVariant = variants[0];
     import { getTopicProgress, recordAttempt, resetProgress } from "../lib/progress.js";
     import { mountWegPanel, paintWegPanel } from "../lib/wegPanel.js";
     import { createExerciseMounter, INLINE_TITLES, loaderFor } from "../lib/inlineExercises.js";
+    import { createRuleIntro } from "../lib/ruleIntro.js";
     import { mountQuiz, withChoices } from "../lib/quiz.js";
     import { mountGrammarWorkspace } from "../lib/grammarWorkspace.js";
     import { mountPracticeWorkspace } from "../lib/practiceWorkspace.js";
@@ -1439,6 +1464,12 @@ const defaultVariant = variants[0];
     };
 
     let railShown: string | null = null;
+
+    // One shake, once per browser, for the Stufenübersicht button — see the .nvb-ov-jiggle
+    // block in nav.css. Read once here rather than per open, so a throwing localStorage
+    // costs one try/catch instead of one per level switch.
+    const OV_JIGGLE_KEY = "da_ov_jiggled_v1";
+    let ovJiggled = (() => { try { return localStorage.getItem(OV_JIGGLE_KEY) === "1"; } catch (e) { return true; } })();
     let itemShown: string | null = null;
 
     // Akkusativ → W-Fragen only rewrote the card's text in place, so the swap fell
@@ -1478,6 +1509,25 @@ const defaultVariant = variants[0];
         s.hidden = !on;
         s.classList.remove("nvb-section--enter");
         if (on && railChanged) { void s.offsetWidth; s.classList.add("nvb-section--enter"); }
+        // The Stufenübersicht button is the one control in here that changes the other
+        // column, and it is easy to read past on the way to the topic list. The first time
+        // a panel is ever opened it shakes once to be noticed; after that the flag is set
+        // and it never does it again. Storage can throw (private mode, blocked cookies),
+        // and a decoration must not take the rail down with it.
+        if (on && railChanged && !ovJiggled) {
+          // By id, not by walking up from the rail section: .nvb-ovwrap is a SIBLING of
+          // [data-rail-section], one per section, so a parentElement lookup finds
+          // whichever button comes first in the panel rather than this section's.
+          const btn = document.querySelector(`.nvb-overview[data-section-btn="${id}"]`);
+          if (btn) {
+            ovJiggled = true;
+            try { localStorage.setItem(OV_JIGGLE_KEY, "1"); } catch (e) {}
+            btn.classList.remove("nvb-ov-jiggle");
+            void (btn as HTMLElement).offsetWidth;
+            btn.classList.add("nvb-ov-jiggle");
+            btn.addEventListener("animationend", () => btn.classList.remove("nvb-ov-jiggle"), { once: true });
+          }
+        }
       });
       $$("[data-section-btn]").forEach((b) => b.classList.toggle("active", b.dataset.sectionBtn === id));
       $("[data-nvb]")?.classList.remove("collapsed");
@@ -1881,7 +1931,13 @@ const defaultVariant = variants[0];
     let applying = false;
 
     function urlFor(section: string, item: string | null) {
-      const p = new URLSearchParams();
+      /* Seeded from the current query, not empty: on /fortschritt this component shares
+         the address bar with the view tabs (?ansicht=) and the exam dashboard's
+         selection (?pruefung=). Rebuilding from scratch dropped both the first time
+         anyone clicked a level, which silently threw you back to the practice tab. */
+      const p = new URLSearchParams(location.search);
+      p.delete("stufe");
+      p.delete("thema");
       if (section && section !== "weg") p.set("stufe", section);
       if (item) p.set("thema", item);
       const q = p.toString();
@@ -1962,6 +2018,69 @@ const defaultVariant = variants[0];
       syncUrl(true);
     }
 
+    /* The Stufen tab explains itself to nobody. The list is open on arrival, so what a
+       learner cannot guess is that it folds — and that the 40px sliver left at the edge is
+       what brings it back. Same story the Wortschatz Lernset column tells, so it is the
+       same module: `restHidden: false` because this column rests OPEN, which puts the two
+       beats the other way round — beat 1 names what is already in front of you, beat 2 is
+       the fold and the light landing on the tab.
+
+       Once per browser. ?intro replays it without spending that one time. */
+    {
+      const nvb = $("[data-nvb]");
+      const foldtab = $(".nvb-foldtab") as HTMLElement | null;
+      const panel = $(".nvb-panel") as HTMLElement | null;
+      const SEEN = "da-stufen-foldtab-seen";
+      if (nvb && foldtab && panel) {
+        const intro = createRuleIntro({
+          ruleEl: panel,
+          ruleBtn: foldtab,
+          ruleCard: panel,
+          setRule: (next: boolean) => nvb.classList.toggle("collapsed", next),
+          // It rests open, and the tour has to give back the state it borrowed.
+          restHidden: false,
+          // The tab both folds the list and brings it back, so it is also the pivot —
+          // beat 2 lights the thing the learner will actually reach for.
+          pivot: foldtab,
+          coach: [
+            ["intro.stufen.title", "intro.stufen.text"],
+            ["intro.stufenAway.title", "intro.stufenAway.text"],
+          ],
+        });
+        const forced = new URLSearchParams(location.search).has("intro");
+        let seen = false;
+        try { seen = localStorage.getItem(SEEN) === "1"; } catch {}
+        const calm = matchMedia("(prefers-reduced-motion: reduce)").matches;
+        // Desktop only: below the breakpoint the rail is not the navigation and there is
+        // no tab to explain.
+        const playIntro = () => {
+          if (!forced) { try { localStorage.setItem(SEEN, "1"); } catch {} }
+          intro.play();
+        };
+        if (!calm && matchMedia("(min-width: 1001px)").matches && (forced || !seen)) {
+          /* Only once it is actually on screen. On /fortschritt this shell sits in a tab
+             panel that starts `hidden` when the URL asks for the Prüfungen view — which
+             is what every "back to the overview" link from a sitting now does. Playing
+             there would run the tour where nobody can see it AND spend the once-per-
+             browser flag, so the learner who later opens the Übungen tab would never be
+             shown it at all. */
+          if (nvb.offsetParent !== null) playIntro();
+          else {
+            const io = new IntersectionObserver((entries) => {
+              if (!entries.some((e) => e.isIntersecting)) return;
+              io.disconnect();
+              playIntro();
+            });
+            io.observe(nvb);
+          }
+        }
+        // The dev button already clears the other tours' flags; this one joins them.
+        document.getElementById("vp-dev-reset")?.addEventListener("click", () => {
+          try { localStorage.removeItem(SEEN); } catch {}
+        });
+      }
+    }
+
     // Dev only. ITEMS is what the page is already rendering, so the seed fills the bars
     // that exist rather than inventing slugs — a renamed topic stays empty instead of
     // becoming a phantom row. Vite drops the whole branch from a production build.
@@ -1985,6 +2104,17 @@ const defaultVariant = variants[0];
       clear?.addEventListener("click", async () => {
         const { clearSeed } = await import("../lib/devSeed.js");
         clearSeed();
+        location.reload();
+      });
+      // The tours live on the trainers, one flag each ("…-seen", "…-peek", and the
+      // nudge's "…-seen-used"). Matched by shape rather than listed by name: a page that
+      // gains an intro tomorrow is covered without anyone remembering this button.
+      document.getElementById("nv-seed-tour")?.addEventListener("click", () => {
+        try {
+          for (const k of Object.keys(localStorage)) {
+            if (/^da-.*(seen|peek)/.test(k)) localStorage.removeItem(k);
+          }
+        } catch (e) {}
         location.reload();
       });
     }

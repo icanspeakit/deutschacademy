@@ -17,7 +17,7 @@
 //   NavDrawer.astro   the full-height mobile panel, ≤1080px
 // This file is only the row they hang in.
 import LanguageSwitcher from "./LanguageSwitcher.astro";
-import NavAccount from "./NavAccount.astro";
+import ThemeToggle from "./ThemeToggle.astro";
 import Icon from "./Icon.astro";
 import NavDrawer from "./NavDrawer.astro";
 import NavMenubar from "./NavMenubar.astro";
@@ -78,7 +78,12 @@ const { active } = Astro.props;
           <Icon name="grid" size={17} />
         </a>
 
-        <NavAccount />
+        {/* The "DA" monogram that used to sit here was an account button for an account
+            system that does not exist, and its menu had one thing in it: this toggle. A
+            monogram is a poor sign for "light or dark" — you had to open it to find out
+            what it held — so the toggle takes the slot directly, the same way Fortschritt
+            did when the menu's last link moved out into the cluster above. */}
+        <span class="lp-nav-theme"><ThemeToggle /></span>
         <LanguageSwitcher />
       </div>
 
@@ -108,7 +113,7 @@ const { active } = Astro.props;
     /* Both menus are click-driven, so with JS off they are dead weight — the plain
        links in .lp-nav-fallback take over at every width. The avatar and search are
        script-driven too. */
-    .lp-menubar, .lp-nav-toggle, .lp-drawer, .lp-acct, .lp-nav-search { display: none !important; }
+    .lp-menubar, .lp-nav-toggle, .lp-drawer, .lp-acct, .lp-nav-theme, .lp-nav-search { display: none !important; }
     .lp-nav-fallback { display: flex; align-items: center; gap: 20px; font-size: 14px; font-weight: 500; flex-wrap: wrap; }
     .lp-nav-fallback a { color: var(--ink); text-decoration: none; }
   </style>

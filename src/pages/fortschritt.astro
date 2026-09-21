@@ -4,8 +4,13 @@
 // This used to be two pages. /dashboard was the level-and-topic view over the practice
 // tools; /fortschritt was the per-exam view. Both were reached from a KONTO section in
 // the drawer that listed them side by side under two names meaning the same thing, and a
-// learner had no way to tell which one held "their progress" — so they are now one page,
-// in that order: what you are practising, then where you stand in each Prüfung.
+// learner had no way to tell which one held "their progress" — so they are now one page.
+//
+// TABS, not one above the other. Stacked, the exam half started 1763px down a 2845px
+// page: two full screens of scrolling past a different question before reaching it, and
+// no anchor to link to. They answer two questions about the same learner — what am I
+// practising, and where do I stand in each Prüfung — which is the shape a tab is for.
+// Each tab is addressable as ?ansicht=, so a link can open either one.
 //
 // The name is Fortschritt in every language. "Dashboard" survives only as the English
 // rendering of that label (nav.account.progress), never as a second destination.
@@ -27,52 +32,150 @@ import "../styles/exam-dashboard.css";
 >
   <PracticeHeader title="Mein Fortschritt" />
 
-  {/* The practice half. LearnShell reads and writes only `location.search`, never a
-      fixed path, so it works here unchanged — see its URL helpers around navUrl(). */}
-  <LearnShell variants={["b"]} />
-
-  {/* The exam half, under it: a different question about the same learner, so it keeps
-      its own section heading rather than pretending to be another level row. */}
-  <main class="practice-main practice-main--wide fs-section">
-    <h2 class="fs-section-title" data-i18n="fortschritt.exams.title">Prüfungen</h2>
-    <div class="fs-topbar">
-      <span class="fs-topbar-brand">DeutschAcademy <small data-i18n="nav.account.progress">Mein Fortschritt</small></span>
-      <span class="fs-topbar-hint" data-i18n="fortschritt.localOnly">Nur in diesem Browser gespeichert</span>
+  {/* Rendered with the practice tab on, because that is the default and a page whose
+      first paint shows neither panel flashes empty. The script turns the other one on
+      if the URL asks for it, before anything below the fold matters. */}
+  <div class="fs-tabsbar">
+    <div class="fs-tabs" role="tablist" aria-label="Ansicht" data-i18n-attr="aria-label:fortschritt.tabsLabel">
+      <button type="button" class="fs-tab is-on" role="tab" aria-selected="true"
+              aria-controls="fs-view-uebungen" data-ansicht="uebungen">
+        <span data-i18n="fortschritt.tab.practice">Übungen</span>
+      </button>
+      <button type="button" class="fs-tab" role="tab" aria-selected="false"
+              aria-controls="fs-view-pruefungen" data-ansicht="pruefungen">
+        <span data-i18n="nav.exams">Prüfungen</span>
+      </button>
     </div>
+  </div>
 
-    <div class="fs-shell" data-fs-root>
-      <aside class="fs-rail" data-fs-rail></aside>
-      <section class="fs-main" data-fs-main></section>
-    </div>
+  <div id="fs-view-uebungen" role="tabpanel" data-view-panel="uebungen">
+    {/* LearnShell reads and writes only `location.search`, never a fixed path, so it
+        works here unchanged — see its urlFor(), which preserves ?ansicht=. */}
+    <LearnShell variants={["b"]} />
+  </div>
 
-    <!-- Without JS there is no localStorage to read, so the page offers the trainers
-         themselves rather than an empty panel. -->
-    <noscript>
-      <ul class="fs-noscript">
-        {examRegistry.map((e) => (
-          <li><a href={e.href}>{e.title}</a> — {e.subtitle}</li>
-        ))}
-      </ul>
-      <style>{`.fs-shell { display: none; }`}</style>
-    </noscript>
-  </main>
+  <div id="fs-view-pruefungen" role="tabpanel" data-view-panel="pruefungen" hidden>
+    <main class="practice-main practice-main--wide fs-section">
+      <div class="fs-topbar">
+        <span class="fs-topbar-brand">DeutschAcademy <small data-i18n="nav.account.progress">Mein Fortschritt</small></span>
+        <span class="fs-topbar-hint" data-i18n="fortschritt.localOnly">Nur in diesem Browser gespeichert</span>
+      </div>
+
+      <div class="fs-shell" data-fs-root>
+        <aside class="fs-rail" data-fs-rail></aside>
+        <section class="fs-main" data-fs-main></section>
+      </div>
+
+      <!-- Without JS there is no localStorage to read, so the page offers the trainers
+           themselves rather than an empty panel. -->
+      <noscript>
+        <ul class="fs-noscript">
+          {examRegistry.map((e) => (
+            <li><a href={e.href}>{e.title}</a> — {e.subtitle}</li>
+          ))}
+        </ul>
+        <style>{`.fs-shell { display: none; }`}</style>
+      </noscript>
+    </main>
+  </div>
+
+  <noscript>
+    {/* The tabs are script-driven, so with JS off both panels are shown rather than one
+        being permanently unreachable behind a button that does nothing. */}
+    <style>{`.fs-tabsbar { display: none; } [data-view-panel][hidden] { display: revert !important; }`}</style>
+  </noscript>
 
   <script type="module">
     import { mountExamDashboard } from "../lib/examDashboard.js";
-    mountExamDashboard(document.querySelector("[data-fs-root]"));
+
+    const VIEWS = ["uebungen", "pruefungen"];
+    const tabs = Array.from(document.querySelectorAll("[data-ansicht]"));
+    const panels = new Map(
+      Array.from(document.querySelectorAll("[data-view-panel]")).map((p) => [p.dataset.viewPanel, p]),
+    );
+
+    /* Mounted on first reveal rather than at load. The dashboard animates its ring and
+       slides its rail open; doing that inside a `hidden` subtree runs the animation
+       where nobody can see it and leaves the ring showing its end state on arrival. */
+    let mounted = false;
+    function mountOnce() {
+      if (mounted) return;
+      mounted = true;
+      mountExamDashboard(document.querySelector("[data-fs-root]"));
+    }
+
+    function show(view, { push = false } = {}) {
+      const next = VIEWS.includes(view) ? view : "uebungen";
+      for (const [name, panel] of panels) panel.hidden = name !== next;
+      for (const t of tabs) {
+        const on = t.dataset.ansicht === next;
+        t.classList.toggle("is-on", on);
+        t.setAttribute("aria-selected", String(on));
+      }
+      if (next === "pruefungen") mountOnce();
+
+      /* Only ?ansicht= is touched. ?stufe=/?thema= belong to LearnShell and ?pruefung=
+         to the dashboard, and both keep writing to this same query string. */
+      const u = new URL(location.href);
+      if (next === "uebungen") u.searchParams.delete("ansicht");
+      else u.searchParams.set("ansicht", next);
+      const href = u.pathname + (u.search || "") + u.hash;
+      if (href !== location.pathname + location.search + location.hash) {
+        try { history[push ? "pushState" : "replaceState"]({ fsView: next }, "", href); } catch (e) {}
+      }
+    }
+
+    for (const t of tabs) t.addEventListener("click", () => show(t.dataset.ansicht, { push: true }));
+
+    // Back and forward move between the tabs, which is what a URL per view promises.
+    addEventListener("popstate", () => show(new URLSearchParams(location.search).get("ansicht")));
+
+    /* A ?pruefung= without an ?ansicht= still means "show me that exam" — that is what
+       the back links from a sitting send, and honouring it saves them a second param. */
+    const p = new URLSearchParams(location.search);
+    show(p.get("ansicht") ?? (p.get("pruefung") ? "pruefungen" : "uebungen"));
   </script>
 </Layout>
 
 <style>
-  /* The two halves are one page but not one grid: LearnShell owns a full-bleed shell of
-     its own, so the exam section is separated by a rule rather than tucked inside it. */
-  .fs-section {
-    margin-top: var(--space-7, 40px);
-    padding-top: var(--space-6, 32px);
-    border-top: 1px solid var(--border);
+  /* Sits in the page gutter above both panels, matching .practice-main--wide so it lines
+     up with the cards under it rather than with the full-bleed LearnShell shell. */
+  .fs-tabsbar {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: var(--space-4, 16px) var(--space-5, 20px) 0;
   }
-  .fs-section-title {
-    margin: 0 0 var(--space-4, 16px);
-    font-size: 1.25rem;
+  /* Same segmented-pill treatment as the Karten/Liste switch inside the dashboard
+     (.fs-viewtabs in exam-dashboard.css) — one control, used at two altitudes. */
+  .fs-tabs {
+    display: inline-flex;
+    gap: 2px;
+    padding: 3px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-pill);
+    background: var(--surface);
   }
+  .fs-tab {
+    padding: 8px 20px;
+    border: none;
+    border-radius: var(--radius-pill);
+    background: none;
+    font: inherit;
+    font-size: .9rem;
+    color: var(--muted);
+    cursor: pointer;
+  }
+  .fs-tab:hover { color: var(--ink); }
+  .fs-tab.is-on {
+    background: var(--surface-card);
+    color: var(--ink);
+    font-weight: var(--fw-semibold);
+    box-shadow: var(--shadow);
+  }
+  /* No rule above it any more: the tab is what separates the two halves now, so the
+     border that used to mark the seam would be a line under nothing. .practice-main
+     already brings 40px of its own padding-top, which with a margin on top of it left
+     60px under the tabs against 16px above them — the control read as belonging to the
+     header rather than to the panel it switches. */
+  .fs-section { margin-top: 0; padding-top: var(--space-5, 20px); }
 </style>

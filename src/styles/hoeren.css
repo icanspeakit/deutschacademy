@@ -30,15 +30,24 @@
   letter-spacing: .02em;
 }
 
+/* Two columns, not auto-fit. Every level in hoeren.json holds exactly four texts, and
+   auto-fit at desktop width chose three — so each group rendered as a row of three and
+   one orphan hanging under the left edge. Fixed at two, the four make a square, and the
+   wider card lets the blurb wrap to two lines instead of four. */
 .ho-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 16px;
+}
+@media (max-width: 720px) {
+  .ho-grid { grid-template-columns: minmax(0, 1fr); }
 }
 
 .ho-card {
   display: flex;
-  align-items: flex-start;
+  /* stretch, not flex-start: .ho-card-txt has to be as tall as the card for its meta
+     line to reach the bottom. The icon keeps its own 40px height and stays at the top. */
+  align-items: stretch;
   gap: 14px;
   padding: 18px 20px;
   border: 1px solid var(--border);
@@ -64,12 +73,15 @@
   background: var(--blue-100);
   color: var(--brand-blue-dark);
 }
-.ho-card-txt { flex: 1; min-width: 0; }
+/* A column, so the meta line can be pushed to the bottom: the cards in a row stretch to
+   the tallest one, and without this their footers sit at four different heights. */
+.ho-card-txt { flex: 1; min-width: 0; display: flex; flex-direction: column; }
 .ho-card-txt b { display: block; font-weight: var(--fw-regular); font-size: 1.02rem; margin-bottom: 4px; }
 .ho-card-txt i { display: block; font-style: normal; color: var(--muted); font-size: .9rem; line-height: 1.45; }
 .ho-card-meta {
   display: block;
-  margin-top: 8px;
+  margin-top: auto;
+  padding-top: 8px;
   font-size: .78rem;
   letter-spacing: .02em;
   color: var(--muted-soft, var(--muted));

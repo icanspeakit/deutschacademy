@@ -4,42 +4,52 @@
  * Phone first: below 860px the rail collapses into one select and the pane runs full
  * width, because that is the width ~90% of the learners arrive at.
  */
+/* No width or gutter of its own. All three pages that mount this already sit inside
+   .practice-main--wide, so a second 1180px cap with its own 16px padding made a sitting
+   116px narrower than /fortschritt and indented it against everything else on the page.
+   The page container owns the width; this owns only the space under itself. */
 .exam-app {
-  max-width: 1180px;
-  margin: 0 auto;
-  padding: 0 16px 48px;
+  padding-bottom: 48px;
 }
 
+/* The shell no longer draws a box of its own: the rail and the pane are each their own
+   card, the way /fortschritt composes them. One outer border around both, with the rail
+   as a shaded pane inside it, is what made this read as a different product. */
 .exam-shell {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 16px;
-  background: var(--surface-card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  overflow: hidden;
+  gap: 18px;
 }
+/* Grid items refuse to shrink below their widest min-content, and one wide child (the
+   TestDaF ad grid, a table) used to push the pane past the shell. Same fix as .fs-shell. */
+.exam-shell > * { min-width: 0; }
 
 /* --- top bar ---------------------------------------------------------------- */
+/* Its own card above the shell — .fs-topbar, with the sitting's progress bar added,
+   since a sitting has a live count and the overview does not. */
 .exam-topbar {
-  grid-column: 1 / -1;
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 16px;
   flex-wrap: wrap;
-  padding: 12px 16px;
-  border-bottom: 1px solid var(--border);
-  background: var(--surface);
+  padding: 14px 18px;
+  margin-bottom: 18px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--surface-card);
 }
+.exam-topbar-hint { font-size: .78rem; color: var(--muted); margin-left: auto; }
 .exam-brand {
   font-family: var(--font-body);
   font-size: .95rem;
   font-weight: var(--fw-semibold);
-  color: var(--ink);
+  color: var(--brand-blue-dark);
 }
+/* Inline, not stacked: .fs-topbar-brand keeps the sub on the same baseline, and a
+   two-line brand made this bar 14px taller than the one on /fortschritt. */
 .exam-brand small {
-  display: block;
-  font-size: .7rem;
+  margin-left: 8px;
+  font-size: .8rem;
   font-weight: var(--fw-regular);
   color: var(--muted);
 }
@@ -123,6 +133,9 @@
 .exam-main {
   padding: 16px;
   min-height: 320px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--surface-card);
   /* A grid item defaults to min-width:auto, i.e. it refuses to shrink below the widest
      min-content in it — so one wide child (the TestDaF ad grid, a table) pushed the pane
      to 472px inside a 310px shell, and .exam-shell's overflow:hidden clipped the rest
@@ -499,15 +512,18 @@
 
 /* --- wider than a phone ------------------------------------------------------ */
 @media (min-width: 860px) {
-  .exam-shell { grid-template-columns: 236px minmax(0, 1fr); gap: 0; }
+  /* 268px and a 22px gutter are /fortschritt's numbers (.fs-shell), so the rail lines up
+     between the two pages instead of being 32px narrower on one of them. */
+  .exam-shell { grid-template-columns: 268px minmax(0, 1fr); gap: 22px; }
   .exam-sidebar {
     display: flex;
     flex-direction: column;
     gap: 2px;
-    padding: 14px 12px;
-    border-right: 1px solid var(--border);
-    background: var(--surface);
-    min-height: 100%;
+    padding: 14px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    background: var(--surface-card);
+    align-self: start;
   }
   .mobile-nav { display: none; }
   .exam-main { padding: 22px 24px 28px; }

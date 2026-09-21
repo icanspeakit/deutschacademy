@@ -16,15 +16,21 @@ interface Props {
 }
 const { brand, sub, unit = "Fragen" } = Astro.props;
 ---
+<!-- Composed the way /fortschritt is: a topbar card, then a rail card beside a panel
+     card. It used to be one bordered box with the bar and the rail as panes inside it,
+     which made a sitting and the progress view read as two different products even
+     though they are the same exam. See src/styles/exam-dashboard.css — the .fs-* rules
+     this now mirrors. -->
 <div class="exam-app" data-exam-root>
-  <div class="exam-shell">
-    <div class="exam-topbar">
-      <div class="exam-brand">{brand}{sub && <small>{sub}</small>}</div>
-      <div class="topbar-progress">
-        <div class="topbar-track"><span class="topbar-fill" data-exam-topfill></span></div>
-        <div class="topbar-count" data-exam-topcount>0 / 0 {unit}</div>
-      </div>
+  <div class="exam-topbar">
+    <div class="exam-brand">{brand}{sub && <small>{sub}</small>}</div>
+    <div class="topbar-progress">
+      <div class="topbar-track"><span class="topbar-fill" data-exam-topfill></span></div>
+      <div class="topbar-count" data-exam-topcount>0 / 0 {unit}</div>
     </div>
+    <span class="exam-topbar-hint" data-i18n="fortschritt.localOnly">Nur in diesem Browser gespeichert</span>
+  </div>
+  <div class="exam-shell">
     <nav class="exam-sidebar" data-exam-sidebar aria-label="Prüfungsteile" data-i18n-attr="aria-label:exam.parts"></nav>
     <div class="mobile-nav" data-exam-mobile-nav></div>
     <main class="exam-main" data-exam-main></main>

@@ -6,34 +6,26 @@
 // the same row as four subjects made the row read as eight equal choices. An avatar in
 // the utility cluster says "you" without spending a word on it.
 //
-// The theme toggle came with it. It was a standalone icon in the navbar, which put a
-// display preference at the same altitude as the whole content tree; here it is one row
-// in the menu it belongs to, and the navbar is one control lighter.
+// What is left in the menu is the theme toggle. The menu used to carry two destinations
+// as well, "Dashboard" and "Mein Fortschritt" — two names for one promise — which became
+// one when the pages merged, and a menu holding a single destination is just a click in
+// front of it. That link is now its own button in the cluster (SiteNav.astro).
 //
-// There is no account system yet, so the avatar is a monogram rather than a photo and
-// the menu holds the two pages that exist. No "Einstellungen" row: /einstellungen does
-// not exist, and the dark-mode row below is the only setting there is today. Add the row
-// when the page does.
+// A display preference is the one thing that genuinely belongs here rather than beside
+// it: it is a setting, not a place, so it has no page to be a link to, and putting it in
+// the navbar would sit a colour scheme at the same altitude as the whole content tree.
 //
-// The two rows used to read "Profil — dein Lernstand und deine Woche" and "Fortschritt —
-// was du geübt hast, Woche für Woche", which is the same promise twice, and neither page
-// has a week in it. They are one split, not two overlapping ones: the dashboard is the
-// ÜBUNGEN view (levels, topics, what to practise next), /fortschritt is the PRÜFUNGEN
-// view (points per sitting, which parts are still open). Each row now names its own half,
-// and the titles match the page you land on — "Profil" pointed at a page headed
-// "Dein Dashboard". When one of them absorbs the other, this list loses a row rather
-// than being rewritten.
-import Icon from "./Icon.astro";
+// There is no account system yet, so the avatar is a monogram rather than a photo. No
+// "Einstellungen" row: /einstellungen does not exist. Add rows when the pages do.
 import ThemeToggle from "./ThemeToggle.astro";
 import "../styles/site-nav.css";
 
-// One entry, not two. These used to be "Dashboard" (/dashboard) and "Mein Fortschritt"
-// (/fortschritt): two names for the same promise, side by side, with nothing to tell a
-// learner which held their progress. The pages are now one page.
-const LINKS = [
-  { href: "/fortschritt", icon: "target", titleKey: "nav.account.progress", title: "Mein Fortschritt",
-    descKey: "nav.account.progress.blurb", desc: "Dein Lernstand und deine Prüfungen" },
-];
+// No links left. This held "Dashboard" and "Mein Fortschritt", then just the latter once
+// the two pages merged — and a menu whose whole content is one destination is a click in
+// front of that destination for no reason. Fortschritt is now its own button in the
+// cluster (SiteNav.astro). What stays here is the display preference, which is a setting
+// rather than a place: it has no page of its own to be a link to, and it belongs under
+// "you" rather than in the content row. Add rows back when there is an account to hold.
 ---
 <div class="lp-acct" data-acct>
   <button
@@ -52,18 +44,6 @@ const LINKS = [
   </button>
 
   <div class="lp-acct-menu" id="lp-acct-menu" role="menu" aria-label="Konto" data-acct-menu hidden>
-    {LINKS.map((l) => (
-      <a class="lp-acct-row" href={l.href} role="menuitem">
-        <span class="lp-panel-ic"><Icon name={l.icon} size={18} /></span>
-        <span class="lp-panel-txt">
-          <b data-i18n={l.titleKey}>{l.title}</b>
-          <i data-i18n={l.descKey}>{l.desc}</i>
-        </span>
-      </a>
-    ))}
-
-    <div class="lp-acct-sep" role="separator"></div>
-
     {/* Not a menuitem: it is a control that stays put, and activating it should not
         close the menu the way following a link does. */}
     <div class="lp-acct-pref">

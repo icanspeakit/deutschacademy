@@ -123,6 +123,83 @@ export function seedProgress(items = {}, { streak = 6, days = 24, seed = 7 } = {
   return data;
 }
 
+/* Everything on the page, answered.
+ *
+ * seedProgress() above spreads the items across five phases on purpose, because the
+ * interesting bugs are at the ends and an all-full page hides the empty styles. This is
+ * the other end of that: every bar on the page at 100 %, for the questions the spread
+ * never answers — what the course looks like once it is finished, whether a section that
+ * is complete says so, whether "Stufe starten" becomes something else when there is
+ * nothing left to start.
+ *
+ * Same store, same shape, same rule about not inventing slugs: the caller passes the
+ * items the page is already rendering.
+ *
+ * @param {Record<string, {tasks?: number}>} items  the page's real items, keyed by slug
+ * @param {object} [opts]
+ * @param {number} [opts.accuracy]  share of attempts that were right, 0..1. Below 1 the
+ *   record carries the wrong answers that a real 100 % is reached through.
+ * @param {number} [opts.streak]
+ * @param {number} [opts.days]
+ * @param {number} [opts.seed]
+ */
+export function fillProgress(items = {}, { accuracy = 0.8, streak = 12, days = 30, seed = 11 } = {}) {
+  const rand = rng(seed);
+  const today = todayStr();
+  const acc = Math.min(1, Math.max(0.05, accuracy));
+
+  const topics = {};
+  for (const id of Object.keys(items)) {
+    const tasks = Number(items[id]?.tasks) || 0;
+    if (!tasks) continue;
+    // `done` is the count of correct answers, so a full bar needs `tasks` of them; the
+    // attempts above that are the wrong ones it took to get there. At accuracy 1 the two
+    // are equal, which is the "never been wrong" record — available, not the default.
+    topics[id] = { done: tasks, attempts: Math.max(tasks, Math.round(tasks / acc)) };
+  }
+
+  const totalDone = Object.values(topics).reduce((a, t) => a + t.done, 0);
+  const totalTries = Object.values(topics).reduce((a, t) => a + t.attempts, 0);
+
+  const split = { grammatik: 0.55, wortschatz: 0.2, hoeren: 0.1, lesen: 0.08, kultur: 0.07 };
+  const skills = {};
+  for (const [skill, w] of Object.entries(split)) {
+    const attempts = Math.round(totalTries * w);
+    if (!attempts) continue;
+    // Every skill is active today: the page is meant to read as just-finished.
+    skills[skill] = { attempts, correct: Math.round(totalDone * w), sessions: 2 + Math.round(rand() * 6), lastActiveDate: today };
+  }
+
+  const dailyActivity = {};
+  for (let i = 0; i < days; i++) {
+    if (i >= streak && rand() < 0.3) continue;
+    dailyActivity[daysAgoStr(i)] = i < streak ? 10 + Math.round(rand() * 20) : 2 + Math.round(rand() * 8);
+  }
+
+  const vocabMastered = [];
+  for (let i = 0; i < 240; i++) vocabMastered.push(`wortschatz:fill-${i}`);
+
+  const data = {
+    streak,
+    lastActiveDate: today,
+    lastSkill: "grammatik",
+    skills,
+    dailyActivity,
+    vocabMastered,
+    topics,
+    drills: { dativ: { said: 40, sure: 36 }, "artikel-trainer": { said: 60, sure: 54 } },
+    recents: [
+      { path: "/uebungen/grammatik/dativ", title: "Dativ", n: 9, at: today },
+      { path: "/uebungen/wortschatz/a1-01", title: "Person & Vorstellung", n: 7, at: today },
+      { path: "/uebungen/artikel-trainer", title: "Artikel-Trainer", n: 12, at: daysAgoStr(1) },
+    ],
+  };
+
+  localStorage.setItem(STORE_KEY, JSON.stringify(data));
+  if (!localStorage.getItem(NAME_KEY)) localStorage.setItem(NAME_KEY, "Testnutzer");
+  return data;
+}
+
 /** Back to the honest empty state, including the display name the seed set. */
 export function clearSeed() {
   localStorage.removeItem(STORE_KEY);

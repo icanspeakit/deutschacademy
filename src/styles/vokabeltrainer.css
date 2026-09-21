@@ -536,7 +536,14 @@
  *
  * --gender-plural, not --accent-dark: that token is #c2410c and --danger is #c1462f, so
  * the two "die"s were one indistinguishable red. See the token's note in global.css. */
-.vt-art--plural { color: var(--gender-plural); }
+.vt-art--plural {
+  color: var(--gender-plural);
+  /* Yellow at this hue is 1.5:1 on white, so the colour alone would be a pale smear at the
+     plural line's 13px. The weight is what keeps it readable; the hue is what makes it not
+     the feminine red. The word "die" is printed either way, so nothing is carried by
+     colour alone here. */
+  font-weight: 600;
+}
 
 /* The plural, where the card has room for it: a noun you can only use in the singular is
  * half learnt. Kept off the prompt in Lernen and Testen, which ask one thing at a time. */

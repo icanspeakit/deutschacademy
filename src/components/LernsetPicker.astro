@@ -75,6 +75,11 @@ const openTeilBlock = (level) =>
 
 // The other way to cut the same lexicon: by corpus frequency rather than by topic. See
 // the long note in src/lib/lernsets.js for why it exists and what it does not claim.
+// teil.topics carries set TITLES, but the keys are by id — so map one to the other once.
+const setKeyByTitle = Object.fromEntries(
+  liveLevels.flatMap((lv) => groupsByLevel[lv].flatMap((g) => g.sets.map((st) => [st.title, `ws.set.${st.id}`])))
+);
+
 const freq = frequencyCounts();
 const blocks = cohortBlocks();
 const isFreq = current.startsWith("haeufigkeit-");
@@ -136,7 +141,7 @@ const openBlock = isFreq
         aria-label={`Stufe ${level}`}
       >
         <span class="nvb-railbadge">{level}</span>
-        <span class="nvb-tip">Stufe {level} · {c[level].sets} Lernsets</span>
+        <span class="nvb-tip" data-i18n="sets.railTip" data-i18n-vars={JSON.stringify({ level, n: c[level].sets })}>Stufe {level} · {c[level].sets} Lernsets</span>
       </button>
     ))}
 
@@ -177,12 +182,12 @@ const openBlock = isFreq
         hidden={isFreq || level !== openLevel}
       >
         <div class="nvb-panelhead">
-          <h3>Stufe {level}<span class="ls-head-where" data-ls-where>{openGroup(level)?.title ? ` · ${openGroup(level).title}` : ""}</span></h3>
+          <h3><span data-i18n="sets.levelHead" data-i18n-vars={JSON.stringify({ level })}>Stufe {level}</span><span class="ls-head-where" data-ls-where>{openGroup(level)?.title ? " · " : ""}<span data-ls-where-name data-i18n={openGroup(level) ? `ws.module.${openGroup(level).id}` : undefined}>{openGroup(level)?.title ?? ""}</span></span></h3>
           <!-- The dashboard's own fold control, doing the dashboard's own job: the panel
                goes, the rail stays, and a level icon brings it back. A different act from
                "Lernsets ausblenden" in the tab row, which takes the whole column away —
                one trades the list for room, the other trades the whole side. -->
-          <button type="button" class="nvb-collapse" data-nvb-collapse aria-label="Liste einklappen">
+          <button type="button" class="nvb-collapse" data-nvb-collapse aria-label="Liste einklappen" data-i18n-attr="aria-label:sets.collapseList">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>
           </button>
         </div>
@@ -197,14 +202,14 @@ const openBlock = isFreq
             class:list={["ls-cut", openCut(level) === "thema" && "is-active"]}
             data-cut="thema"
             aria-selected={openCut(level) === "thema" ? "true" : "false"}
-          >Nach Thema<span class="ls-cut-n">25er</span></button>
+          ><span data-i18n="sets.cut.thema">Nach Thema</span><span class="ls-cut-n">25er</span></button>
           <button
             type="button"
             role="tab"
             class:list={["ls-cut", openCut(level) === "teile" && "is-active"]}
             data-cut="teile"
             aria-selected={openCut(level) === "teile" ? "true" : "false"}
-          >Der Reihe nach<span class="ls-cut-n">20er</span></button>
+          ><span data-i18n="sets.cut.reihe">Der Reihe nach</span><span class="ls-cut-n">20er</span></button>
         </div>
 
         <div class="ls-cut-panel" data-cut="thema" hidden={openCut(level) !== "thema"}>
@@ -218,11 +223,12 @@ const openBlock = isFreq
                     data-block={group.id}
                     aria-expanded={group === openGroup(level) ? "true" : "false"}
                     aria-controls={`ls-block-${group.id}`}
+                    data-i18n={`ws.module.${group.id}`}
                   >{group.title}</button>
-                  <span class="ls-group-n">{group.sets.length} Sets</span>
+                  <span class="ls-group-n" data-i18n="sets.setCount" data-i18n-vars={JSON.stringify({ n: group.sets.length })}>{group.sets.length} Sets</span>
                 </h4>
               ) : (
-                <h4 class="ls-group-head">{group.title}<span class="ls-group-n">{group.sets.length} Sets</span></h4>
+                <h4 class="ls-group-head"><span data-i18n={`ws.module.${group.id}`}>{group.title}</span><span class="ls-group-n" data-i18n="sets.setCount" data-i18n-vars={JSON.stringify({ n: group.sets.length })}>{group.sets.length} Sets</span></h4>
               ))}
               <div
                 class="ls-grouplist"
@@ -236,7 +242,7 @@ const openBlock = isFreq
                     aria-current={set.id === current ? "page" : undefined}
                   >
                     <span class="nv-icon ls-num">{set.id.split("-")[1]}</span>
-                    <span>{set.title}</span>
+                    <span data-i18n={`ws.set.${set.id}`}>{set.title}</span>
                     <span class="nv-count">{set.words}</span>
                   </a>
                 ))}
@@ -244,7 +250,7 @@ const openBlock = isFreq
             </section>
           ))}
           {c[level].plannedModules > 0 && (
-            <p class="ls-plan">
+            <p class="ls-plan" data-i18n="sets.planned" data-i18n-vars={JSON.stringify({ n: c[level].plannedModules, sets: c[level].plannedUnits })}>
               {c[level].plannedModules} weitere Module sind geplant ({c[level].plannedUnits} Lernsets) —
               die Wörter dafür gibt es noch nicht.
             </p>
@@ -252,7 +258,7 @@ const openBlock = isFreq
         </div>
 
         <div class="ls-cut-panel" data-cut="teile" hidden={openCut(level) !== "teile"}>
-          <p class="ls-lead">
+          <p class="ls-lead" data-i18n="sets.teile.lead" data-i18n-vars={JSON.stringify({ n: c[level].words, level, c: teileCount[level], size: 20 })}>
             Alle {c[level].words} Wörter von {level} der Reihe nach, in {teileCount[level]} Portionen
             zu je 20. Eine Portion läuft quer durch die Themen — darunter steht, durch welche.
           </p>
@@ -265,6 +271,8 @@ const openBlock = isFreq
                   data-block={block.id}
                   aria-expanded={block === openTeilBlock(level) ? "true" : "false"}
                   aria-controls={`ls-block-${block.id}`}
+                  data-i18n="sets.wordRange"
+                  data-i18n-vars={JSON.stringify({ from: block.portions[0]?.from ?? 0, to: block.portions[block.portions.length - 1]?.to ?? 0 })}
                 >{block.title}</button>
                 <span class="ls-group-n">{block.words}</span>
               </h4>
@@ -278,7 +286,14 @@ const openBlock = isFreq
                     <span class="nv-icon ls-num">{teil.index}</span>
                     <span>
                       {teil.from}-{teil.to}
-                      <span class="ls-item-sub">{teil.topics.join(" · ")}</span>
+                      <span class="ls-item-sub">
+                        {teil.topics.map((t, i) => (
+                          <>
+                            {i > 0 && " · "}
+                            <span data-i18n={setKeyByTitle[t]}>{t}</span>
+                          </>
+                        ))}
+                      </span>
                     </span>
                     <span class="nv-count">{teil.words}</span>
                   </a>
@@ -303,7 +318,7 @@ const openBlock = isFreq
       <div class="nvb-panelhead">
         {/* The heading's own words sit in a span of their own: data-i18n replaces
             textContent, which would take the "· <block>" suffix with it. */}
-        <h3><span data-i18n="sets.byFrequency">Nach Häufigkeit</span><span class="ls-head-where" data-ls-where>{openBlock?.title ? ` · ${openBlock.title}` : ""}</span></h3>
+        <h3><span data-i18n="sets.byFrequency">Nach Häufigkeit</span><span class="ls-head-where" data-ls-where>{openBlock?.title ? " · " : ""}<span data-ls-where-name data-i18n={openBlock ? "sets.wordRange" : undefined} data-i18n-vars={openBlock ? JSON.stringify({ from: openBlock.cohorts[0]?.from ?? 0, to: openBlock.cohorts[openBlock.cohorts.length - 1]?.to ?? 0 }) : undefined}>{openBlock?.title ?? ""}</span></span></h3>
         <button type="button" class="nvb-collapse" data-nvb-collapse aria-label="Liste einklappen" data-i18n-attr="aria-label:sets.collapseList">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>
         </button>
@@ -322,6 +337,8 @@ const openBlock = isFreq
               data-block={block.id}
               aria-expanded={block === openBlock ? "true" : "false"}
               aria-controls={`ls-block-${block.id}`}
+              data-i18n="sets.wordRange"
+              data-i18n-vars={JSON.stringify({ from: block.cohorts[0]?.from ?? 0, to: block.cohorts[block.cohorts.length - 1]?.to ?? 0 })}
             >{block.title}</button>
             <span class="ls-group-n">{block.words}</span>
           </h4>
@@ -345,13 +362,13 @@ const openBlock = isFreq
            list, so a compound like "Ausländerbehörde" comes back unmatched because of how
            it is written, not because it is rare — calling those words "selten" would be a
            claim the data does not support. -->
-      <p class="ls-plan">
+      <p class="ls-plan" data-i18n="sets.unranked" data-i18n-vars={JSON.stringify({ n: freq.unranked })}>
         {freq.unranked} Wörter stehen nicht in der Häufigkeitsliste — meist Komposita, die dort
         als Wortform nicht vorkommen. Das heißt nicht, dass sie selten sind; sie stehen in
         ihrem Lernset unter ihrer Stufe.
       </p>
       {planLevels.length > 0 && (
-        <p class="ls-plan">
+        <p class="ls-plan" data-i18n="sets.planLevels" data-i18n-vars={JSON.stringify({ levels: planLevels.join(" / "), n: planLevels.reduce((n, l) => n + c[l].plannedModules, 0) })}>
           {planLevels.join(" und ")}: {planLevels.reduce((n, l) => n + c[l].plannedModules, 0)} Module
           geplant, noch keine Wörter. Die Einstufung ist an A1–C2 orientiert, nicht die
           offizielle Goethe-/telc-Liste.
@@ -364,6 +381,16 @@ const openBlock = isFreq
 <script>
   import { getResume, getProgress } from "../lib/progress.js";
   import { slide, replay } from "../lib/fold.js";
+  import { onLangChange, translate } from "../lib/i18n.js";
+
+  // This panel is built as an HTML string, so it cannot carry data-i18n attributes the way
+  // the rest of the picker does — it reads the dictionary directly instead. Seeded with the
+  // German so the first paint, before initI18n() has fetched anything, says words rather
+  // than a key.
+  let dict = {
+    "sets.progressEmpty": "Noch nichts geübt. Sobald du Karten umdrehst, steht hier, wie viele Wörter du schon kannst und wo du weitermachst.",
+  };
+  const say = (k, vars) => translate(dict, k, vars);
 
   const root = document.querySelector(".ls-nvb");
   const FOLD_KEY = "da-wortschatz-lernsets-fold";
@@ -490,8 +517,14 @@ const openBlock = isFreq
       // The panel head names the open group — the rail then says where you are
       // ("Stufe A1 · Wohnen") without a breadcrumb above the list. Closing the last
       // open group empties it rather than leaving a stale name.
+      // btn.textContent is already in the current language — the button carries its own
+      // data-i18n — so the head follows a language switch without extra wiring.
       const where = btn.closest(".nvb-section")?.querySelector("[data-ls-where]");
-      if (where) where.textContent = open ? ` · ${btn.textContent.trim()}` : "";
+      const whereName = where?.querySelector("[data-ls-where-name]");
+      if (where && whereName) {
+        whereName.textContent = open ? btn.textContent.trim() : "";
+        where.firstChild.textContent = open ? " · " : "";
+      }
     });
   });
 
@@ -534,29 +567,28 @@ const openBlock = isFreq
     const pct = week.goal ? Math.min(100, Math.round((week.count / week.goal) * 100)) : 0;
 
     if (!words && !skill.attempts && !mine.length) {
-      return `<p class="ls-lead">Noch nichts geübt. Sobald du Karten umdrehst, steht hier,
-        wie viele Wörter du schon kannst und wo du weitermachst.</p>`;
+      return `<p class="ls-lead">${esc(say("sets.progressEmpty"))}</p>`;
     }
 
     return `
       ${next ? `<a class="ls-prog-next" href="${esc(next.path)}">
-        <span class="ls-prog-next-label">Weiterlernen</span>
+        <span class="ls-prog-next-label">${esc(say("sets.prog.resume"))}</span>
         <b>${esc(next.title)}</b>
-        <span class="ls-prog-next-go">Öffnen →</span>
+        <span class="ls-prog-next-go">${esc(say("sets.prog.open"))}</span>
       </a>` : ""}
 
       <div class="ls-prog-stats">
-        <div class="ls-prog-stat"><b>${words}</b><i>Wörter gekonnt</i></div>
-        <div class="ls-prog-stat"><b>${skill.attempts}</b><i>Karten geprüft</i></div>
-        <div class="ls-prog-stat"><b>${data.streak || 0}</b><i>Tage in Folge</i></div>
+        <div class="ls-prog-stat"><b>${words}</b><i>${esc(say("sets.prog.words"))}</i></div>
+        <div class="ls-prog-stat"><b>${skill.attempts}</b><i>${esc(say("sets.prog.cards"))}</i></div>
+        <div class="ls-prog-stat"><b>${data.streak || 0}</b><i>${esc(say("sets.prog.streak"))}</i></div>
       </div>
 
       ${week.goal ? `<div class="ls-prog-week">
-        <p><span>Diese Woche</span><span>${week.count} / ${week.goal}</span></p>
+        <p><span>${esc(say("sets.prog.week"))}</span><span>${week.count} / ${week.goal}</span></p>
         <span class="ls-prog-bar"><span style="width:${pct}%"></span></span>
       </div>` : ""}
 
-      ${mine.length ? `<p class="ls-group-head ls-prog-head">Zuletzt geübt</p>
+      ${mine.length ? `<p class="ls-group-head ls-prog-head">${esc(say("sets.prog.recent"))}</p>
       <div class="ls-grouplist">${mine
         .slice(0, 4)
         .map((r) => `<a class="nvb-item${r.path === here ? " active" : ""}" href="${esc(r.path)}">
@@ -568,5 +600,8 @@ const openBlock = isFreq
   }
 
   const progEl = root.querySelector("[data-ls-prog]");
-  if (progEl) progEl.innerHTML = progressHtml();
+  const paintProgress = () => { if (progEl) progEl.innerHTML = progressHtml(); };
+  paintProgress();
+  // Repaint on a language switch: applyToDom() cannot reach text this panel wrote itself.
+  onLangChange((_code, d) => { dict = d; paintProgress(); });
 </script>

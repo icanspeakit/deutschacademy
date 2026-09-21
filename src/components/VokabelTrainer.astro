@@ -27,10 +27,19 @@ interface Props {
   heading: string;
   /** i18n key for the heading, when the deck has a translated name. */
   headingKey?: string;
+  /** Interpolation values for `headingKey`, for the generated deck names. */
+  headingVars?: Record<string, unknown>;
   /** Deck id for the picker: "redemittel", a level ("a1") or a unit id ("a1-04"). */
   deck: string;
   /** Where this deck sits — "A1 · Wohnen · 25 Wörter". Shown on the picker bar. */
   sub: string;
+  /**
+   * The same line as keyed parts, joined with " · ". One string could not be translated:
+   * the middle segment is a module name that needs its own key, and the others are counts
+   * with their own plural shape. Each part carries `text` plus an optional `key`/`vars`;
+   * a part with no key renders as-is (a CEFR code is a code in every language).
+   */
+  subParts?: Array<{ text: string; key?: string; vars?: Record<string, unknown> }>;
   /**
    * Which languages this deck actually has. A deck must not render a tab that resolves to
    * "Übersetzung folgt" on every card — that is a promise the content cannot keep. Since
@@ -40,7 +49,7 @@ interface Props {
    */
   langs?: string[];
 }
-const { cards, heading, headingKey, deck, sub, langs = ["en"] } = Astro.props;
+const { cards, heading, headingKey, headingVars, deck, sub, subParts, langs = ["en"] } = Astro.props;
 
 // The trainer quizzes German against one other language at a time.
 const ALL_LANGUAGES = [
@@ -67,8 +76,17 @@ const languages = ALL_LANGUAGES.filter((l) => langs.includes(l.code));
          is showing — but not drawn: it read "Karteikarten" over a tab row whose
          "Karteikarten" is underlined 80px below it. -->
     <p class="eyebrow vt-eyebrow-quiet" id="vt-eyebrow">Karteikarten</p>
-    <h1 data-i18n={headingKey}>{heading}</h1>
-    <p class="vt-hero-sub">{sub}</p>
+    <h1 data-i18n={headingKey} data-i18n-vars={headingVars ? JSON.stringify(headingVars) : undefined}>{heading}</h1>
+    <p class="vt-hero-sub">
+      {subParts
+        ? subParts.map((part, i) => (
+            <>
+              {i > 0 && " · "}
+              <span data-i18n={part.key} data-i18n-vars={part.vars ? JSON.stringify(part.vars) : undefined}>{part.text}</span>
+            </>
+          ))
+        : sub}
+    </p>
   </div>
 
   <div class="vp-workspace">

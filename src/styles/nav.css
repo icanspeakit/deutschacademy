@@ -80,9 +80,9 @@
 
 .nv-aside {
   position: sticky;
-  /* Clears whatever sits above it: the study page has its own sticky top bar,
-     the real page has a static site header, so the rail can sit higher. */
-  top: var(--space-6);
+  /* Clears whatever sits above it: the study page has its own sticky top bar, and the
+     practice pages' header is sticky as well, so the rail parks below it. */
+  top: calc(var(--practice-header-h, 0px) + var(--space-4));
   align-self: start;
   /* Above .nv-main. The rail's tooltips reach outside their card by design, and sticky
      makes this a stacking context — so without a z-index the tip is painted and then
@@ -262,6 +262,29 @@
    a mouse explains itself to the wrong half of the people who need it. */
 .nvb-railbtn:hover .nvb-tip,
 .nvb-railbtn:focus-visible .nvb-tip { opacity: 1; }
+
+/* The rail's tip is one or two words on one line beside an icon. This one is a sentence
+   explaining a control whose label does not say what it does, so it wraps, sits under the
+   button rather than beside it (there is no room to the right inside the panel), and is
+   held above the list below it. */
+/* z-index, not just `position: relative`: .nvb-section--enter animates every row with
+   `both`, so the final keyframe stays applied and each row keeps a stacking context for
+   good. Those contexts count as z-index 0 and the rows come later in the DOM, so at
+   `auto` they painted over the tip — the list's text showed through the dark box. */
+.nvb-ovwrap { position: relative; display: block; z-index: 5; }
+.nvb-tip--wide {
+  left: var(--space-2);
+  right: var(--space-2);
+  top: calc(100% + 6px);
+  transform: none;
+  white-space: normal;
+  width: auto;
+  line-height: 1.4;
+  font-weight: var(--fw-regular);
+  box-shadow: 0 6px 18px rgba(8, 20, 34, .22);
+}
+.nvb-ovwrap:hover .nvb-tip--wide,
+.nvb-overview:focus-visible ~ .nvb-tip--wide { opacity: 1; }
 .nvb-panel { width: 242px; padding: var(--space-4) var(--space-3); display: flex; flex-direction: column; gap: 2px; }
 /* Workspace topics have long names ("Präteritum & Plusquamperfekt"), so the
    label truncates rather than pushing the count out of the panel. */
@@ -1096,3 +1119,159 @@
   gap: 8px;
 }
 .nv-dev-seed .vp-dev-reset { position: static; }
+
+/* ─────────────────────────────────────────────────────────────── Dein Weg ──
+ * The left pane of /fortschritt, as a record instead of a menu. Sits inside
+ * .nvb-section, so it inherits that column's width — everything below is built
+ * for ~250px and must stay legible there. See src/lib/wegPanel.js for what
+ * fills it.
+ */
+
+.wg { display: flex; flex-direction: column; gap: 18px; margin-top: 4px; }
+
+.wg-row { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; margin-bottom: 8px; }
+.wg-h {
+  font-family: var(--font-label);
+  font-size: 11px;
+  font-weight: var(--fw-bold);
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.wg-sub { font-size: 11px; color: var(--muted-soft); text-align: right; }
+
+/* The one thing in this pane you can click. It is a button, not a row, because
+   everything around it is a readout and the difference has to be obvious. */
+.wg-resume {
+  display: block;
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--blue-200);
+  border-radius: var(--radius);
+  background: var(--blue-50);
+  text-align: left;
+  cursor: pointer;
+  transition: background var(--duration-fast), border-color var(--duration-fast);
+}
+.wg-resume:hover { background: var(--blue-100); border-color: var(--blue-300); }
+.wg-resume-kicker {
+  display: block;
+  font-family: var(--font-label);
+  font-size: 10px;
+  font-weight: var(--fw-bold);
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  color: var(--brand-blue);
+}
+.wg-resume-label {
+  display: block;
+  margin-top: 2px;
+  font-size: 13px;
+  font-weight: var(--fw-semibold);
+  line-height: 1.3;
+  color: var(--ink);
+}
+.wg-resume-meta { display: block; margin-top: 2px; font-size: 11px; color: var(--muted); }
+
+/* Seven days, Monday first. The square carries the intensity; the letter under it
+   carries the day, so neither has to be read to get the shape of the week. */
+.wg-days { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
+.wg-day {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  font-size: 9px;
+  font-weight: var(--fw-semibold);
+  color: var(--muted-soft);
+}
+.wg-day i {
+  display: block;
+  width: 100%;
+  height: 22px;
+  border-radius: 5px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+}
+.wg-day[data-level="1"] i { background: var(--blue-100); border-color: var(--blue-200); }
+.wg-day[data-level="2"] i { background: var(--blue-300); border-color: var(--blue-300); }
+.wg-day[data-level="3"] i { background: var(--blue-500); border-color: var(--blue-500); }
+.wg-day[data-level="4"] i { background: var(--brand-blue-dark); border-color: var(--brand-blue-dark); }
+.wg-day[data-today="1"] { color: var(--ink); }
+.wg-day[data-today="1"] i { box-shadow: 0 0 0 2px var(--surface-card), 0 0 0 3px var(--ink); }
+
+.wg-streak { font-size: 11px; font-weight: var(--fw-semibold); color: var(--muted); }
+.wg-streak[data-hot="1"] { color: var(--accent-dark); }
+
+/* One grid for both readouts, so the bars line up down the pane even though the
+   labels are different lengths. minmax(0,1fr) lets the bar shrink instead of
+   pushing the number off the edge at 250px. */
+.wg-level, .wg-skill {
+  display: grid;
+  grid-template-columns: 34px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 0;
+}
+.wg-level-name, .wg-skill-name {
+  font-family: var(--font-label);
+  font-size: 11px;
+  font-weight: var(--fw-semibold);
+  color: var(--muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.wg-skill { grid-template-columns: 64px minmax(0, 1fr) auto; }
+
+.wg-level-bar, .wg-skill-bar {
+  height: 6px;
+  border-radius: var(--radius-pill);
+  background: var(--surface);
+  overflow: hidden;
+}
+.wg-level-bar i, .wg-skill-bar i {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--border-strong);
+  transition: width var(--duration-slow) var(--ease-standard);
+}
+.wg-level[data-state="current"] .wg-level-bar i { background: var(--brand-blue); }
+.wg-level[data-state="done"] .wg-level-bar i { background: var(--success); }
+.wg-level[data-state="current"] .wg-level-name { color: var(--ink); }
+
+/* Accuracy is banded, not just measured: 80 % reads as fine, under 60 % as the
+   thing to go back to. Colour says which without the learner doing the maths. */
+.wg-skill[data-band="good"] .wg-skill-bar i { background: var(--success); }
+.wg-skill[data-band="ok"] .wg-skill-bar i { background: var(--warning); }
+.wg-skill[data-band="low"] .wg-skill-bar i { background: var(--danger); }
+/* Too few answers to call it: grey, and the number shown as a count instead. */
+.wg-skill[data-thin="1"] .wg-skill-bar i { background: var(--border-strong); }
+
+.wg-level-num, .wg-skill-num {
+  font-size: 11px;
+  font-weight: var(--fw-semibold);
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+.wg-level-num span { font-weight: var(--fw-regular); color: var(--muted-soft); }
+
+.wg-block--speak { padding-top: 14px; border-top: 1px solid var(--border); }
+.wg-speak-note { margin: 0; font-size: 11px; line-height: 1.5; color: var(--muted); }
+
+.wg-empty { margin: 0; font-size: 12px; line-height: 1.6; color: var(--muted); }
+
+:root[data-theme="dark"] .wg-resume { background: #0c2c2a; border-color: var(--blue-800); }
+:root[data-theme="dark"] .wg-resume:hover { background: #0f3b38; }
+/* Only the empty square. The four intensity rules below are less specific than a
+   `:root[data-theme="dark"] .wg-day i` selector would be, so a blanket dark override
+   silently flattened the whole week to outlines — the ramp has to be restated at
+   matching specificity rather than overridden at the top. Dark mode also needs its own
+   ramp: --blue-100 is a near-black tint here and reads as "nothing" on the card. */
+:root[data-theme="dark"] .wg-day[data-level="0"] i { background: rgba(255,255,255,.05); border-color: var(--border); }
+:root[data-theme="dark"] .wg-day[data-level="1"] i { background: #1f5a58; border-color: #1f5a58; }
+:root[data-theme="dark"] .wg-day[data-level="2"] i { background: #2a8f86; border-color: #2a8f86; }
+:root[data-theme="dark"] .wg-day[data-level="3"] i { background: #2dd4bf; border-color: #2dd4bf; }
+:root[data-theme="dark"] .wg-day[data-level="4"] i { background: #5eead4; border-color: #5eead4; }
+:root[data-theme="dark"] .wg-day[data-today="1"] i { box-shadow: 0 0 0 2px var(--surface-card), 0 0 0 3px var(--muted-soft); }

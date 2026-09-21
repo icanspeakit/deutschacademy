@@ -804,6 +804,10 @@
   transition: color .15s ease, border-color .15s ease;
 }
 .lp-nav-icon:hover:not(:disabled) { color: var(--ink); border-color: var(--border-strong); }
+/* The Fortschritt shortcut is an anchor, not a button, so it keeps a link's underline
+   and visited colour unless told otherwise — and it can be the page you are already on. */
+.lp-nav-icon[href] { text-decoration: none; }
+.lp-nav-icon[aria-current="page"] { color: var(--brand-blue-dark); border-color: var(--brand-blue); }
 .lp-nav-icon svg { width: 17px; height: 17px; }
 /* No search backend yet (see the TODO in SiteNav.astro). Dimmed rather than hidden:
    the cluster's spacing is designed around it, and hiding it would move the avatar the

@@ -9,9 +9,12 @@
   /* The plural article's colour, used where a noun's gender is shown by hue (see the note
      on .vt-art in vokabeltrainer.css). Its own token rather than --accent-dark, which is
      #c2410c — a burnt orange one step from --danger's #c1462f, so the plural "die" and the
-     feminine "die" were effectively the same colour. Yellow-leaning, so it separates from
-     the red at a glance and from the green das takes. */
-  --gender-plural:    #b45309;
+     feminine "die" were effectively the same colour.
+     Hue is what separates these two: the feminine red is at 9°, this is at 48°. Yellow, as
+     asked for. Note that it is 1.53:1 on white — well under the 4.5:1 normal text wants —
+     so the plural line pairs it with the weight bump in vokabeltrainer.css rather than
+     standing on colour alone. */
+  --gender-plural:    #facc15;
 
   --blue-50:  #f0fdfa;
   --blue-100: #ccfbf1;
@@ -202,8 +205,9 @@
   --brand-blue-light: #99f6e4;
   --accent:      #fb923c;
   --accent-dark: #fdba74;
-  /* Lighter and more golden here, against --danger's #f87171. */
-  --gender-plural: #fbbf24;
+  /* On a dark card yellow needs no help — #fde047 is 13:1 here, against --danger's
+     #f87171. Brighter than the light-mode value, and the weight bump is harmless. */
+  --gender-plural: #fde047;
 
   --blue-50:  #102a2c;
   --blue-100: #133a3a;

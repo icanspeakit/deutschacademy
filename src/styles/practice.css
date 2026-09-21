@@ -3,7 +3,13 @@
 /* The practice bar is also the site nav (see PracticeHeader.astro), so it is as wide as
    .lp-nav-row and carries the same breakpoint: menu bar above 900px, burger below. */
 .practice-header {
-  position: relative;
+  /* Sticky, because this bar carries the menu and the drawer, not just a title: after a
+     jump to #niveau-a1 — or three screens into a trainer — it is the only way to anything
+     else on the site. Its height is published so the things that pin under it (the beat
+     chips, the dashboard rail) and every anchor target can clear it. */
+  position: sticky;
+  top: 0;
+  --practice-header-h: 66px;
   z-index: 20;
   background: var(--surface-card);
   border-bottom: 1px solid var(--border);
@@ -44,6 +50,11 @@
   font-weight: var(--fw-light);
   color: var(--ink);
 }
+
+/* An anchor jump has to land below the pinned bar, not under it. */
+:root { --practice-header-h: 66px; }
+.practice-main :target,
+.practice-main [id] { scroll-margin-top: calc(var(--practice-header-h) + 16px); }
 
 .practice-header-right { margin-left: auto; flex: 0 0 auto; display: flex; align-items: center; gap: 16px; }
 .practice-header-utils { display: flex; align-items: center; gap: 16px; }

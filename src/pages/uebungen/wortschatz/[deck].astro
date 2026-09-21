@@ -84,19 +84,49 @@ const heading =
   : `Wortschatz ${level}`;
 const deckId = set ? set.id : freq ? freq.id : teil ? teil.id : level.toLowerCase();
 
+// A Lernset's name is a category label, not vocabulary, so it translates. The other three
+// deck kinds are generated descriptions and get their own keys below.
+const headingKey =
+  set ? `ws.set.${set.id}`
+  : freq ? "ws.deck.freq.title"
+  : teil ? "ws.deck.teil.title"
+  : "ws.deck.level.title";
+const headingVars =
+  freq ? { from: freq.from, to: freq.to }
+  : teil ? { level: teil.level, from: teil.from, to: teil.to }
+  : set ? undefined
+  : { level };
+
 // The line under the heading answers "what am I in". For a Lernset that is its module —
 // "Haus & Räume" means something different inside "Wohnen" than it would on its own. For a
 // cohort it is the level spread, because a frequency cut crosses levels by construction.
 // A Portion has no name of its own — it is a window onto the level list — so the line
 // under the heading carries the topics it happens to cross instead.
-const sub =
-  set ? [set.level, set.moduleTitle, `${set.words} Wörter`].filter(Boolean).join(" · ")
-  : freq ? `Nach Häufigkeit · ${freq.levels.join("–")} · ${freq.words} Wörter`
-  : teil ? [`Teil ${teil.index} von ${teil.of}`, ...teil.topics, `${teil.words} Wörter`].join(" · ")
+const words = (n) => ({ text: `${n} Wörter`, key: "sets.wordCount", vars: { n } });
+const subParts =
+  set ? [
+    { text: set.level },
+    ...(set.moduleTitle ? [{ text: set.moduleTitle, key: `ws.module.${set.moduleId ?? ""}` }] : []),
+    words(set.words),
+  ]
+  : freq ? [
+    { text: "Nach Häufigkeit", key: "sets.byFrequency" },
+    { text: freq.levels.join("–") },
+    words(freq.words),
+  ]
+  : teil ? [
+    { text: `Teil ${teil.index} von ${teil.of}`, key: "sets.partOf", vars: { i: teil.index, of: teil.of } },
+    ...teil.topics.map((t) => ({ text: t })),
+    words(teil.words),
+  ]
   // The level deck runs in Runden of 25 (PART_SIZE in wortschatz-app.js), so the line says
   // what a sitting is rather than what the pile is: "26 Runden · je 25 Wörter", not "650
   // Wörter". The total is still one multiplication away and the picker below spells it out.
-  : `${level} · ${Math.ceil(cards.length / 25)} Runden · je 25 Wörter`;
+  : [
+    { text: level },
+    { text: `${Math.ceil(cards.length / 25)} Runden · je 25 Wörter`, key: "sets.rounds", vars: { n: Math.ceil(cards.length / 25), size: 25 } },
+  ];
+const sub = subParts.map((p) => p.text).join(" · ");
 
 const title =
   set ? `${set.title} (${set.level}) – Wortschatz – DeutschAcademy`
@@ -113,7 +143,10 @@ const description =
   <VokabelTrainer
     cards={cards}
     heading={heading}
+    headingKey={headingKey}
+    headingVars={headingVars}
     sub={sub}
+    subParts={subParts}
     deck={deckId}
     langs={langs}
   />

@@ -82,7 +82,7 @@ const pruefungen = navSections.find((s) => s.id === "pruefungen");
               {col.items.map((item) => (
                 <li>
                   <a href={item.href} role="menuitem">
-                    <b data-i18n={item.titleKey}>{item.title}</b>
+                    <b data-i18n={item.titleKey} data-i18n-vars={vars(item.titleVars)}>{item.title}</b>
                     {item.count && (
                       <i data-i18n={item.countKey} data-i18n-vars={vars(item.countVars)}>{item.count}</i>
                     )}

@@ -344,11 +344,15 @@ export const levels = NAV_LEVELS.map((level) => {
   const vocab = [];
   if (genderedNouns) {
     vocab.push({ id: "artikel", icon: "target", title: "der/die/das-Trainer",
-      href: `/uebungen/artikel-trainer?niveau=${level}`, count: `${ARTIKEL_ROUND} Nomen pro Runde` });
+      titleKey: "tool.artikel.title",
+      href: `/uebungen/artikel-trainer?niveau=${level}`, count: `${ARTIKEL_ROUND} Nomen pro Runde`,
+      countKey: "tool.artikel.round", countVars: { n: ARTIKEL_ROUND } });
   }
   if (words) {
     vocab.push({ id: "wortschatz", icon: "folder", title: `Wortliste ${level}`,
-      href: `/uebungen/wortschatz/${slug}`, count: `${parts(words)} Runden · je ${PART_SIZE} Wörter` });
+      titleKey: "nav.vocab.listLevel", titleVars: { level },
+      href: `/uebungen/wortschatz/${slug}`, count: `${parts(words)} Runden · je ${PART_SIZE} Wörter`,
+      countKey: "sets.rounds", countVars: { n: parts(words), size: PART_SIZE } });
   }
 
   return {
@@ -436,12 +440,15 @@ const vocabLevelView = (level) => {
   // words are coming rather than handing back another level's deck.
   const lists = [];
   if (words) {
-    lists.push(levelRow(`Wortliste ${level}`, `/uebungen/wortschatz/${head.slug}`,
-      `${parts(words)} Runden · je ${PART_SIZE} Wörter`));
+    lists.push({ ...levelRow(`Wortliste ${level}`, `/uebungen/wortschatz/${head.slug}`,
+      `${parts(words)} Runden · je ${PART_SIZE} Wörter`),
+      titleKey: "nav.vocab.listLevel", titleVars: { level },
+      countKey: "sets.rounds", countVars: { n: parts(words), size: PART_SIZE } });
   }
   if (nouns) {
-    lists.push(levelRow(`der/die/das · ${level}`, `/uebungen/artikel-trainer?niveau=${level}`,
-      `${ARTIKEL_ROUND} Nomen pro Runde`));
+    lists.push({ ...levelRow(`der/die/das · ${level}`, `/uebungen/artikel-trainer?niveau=${level}`,
+      `${ARTIKEL_ROUND} Nomen pro Runde`),
+      countKey: "tool.artikel.round", countVars: { n: ARTIKEL_ROUND } });
   }
 
   return {

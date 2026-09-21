@@ -60,7 +60,10 @@ const { title, titleKey, active } = Astro.props;
         aria-label="Fortschritt"
         data-i18n-attr="aria-label:header.progress"
       >
-        <span class="practice-dash-icon" aria-hidden="true"><Icon name="target" size={20} /></span>
+        {/* The same grid glyph the SiteNav shortcut uses. "target" read as a goal or a
+            focus mode, not as "the page with all your numbers on it", and the two headers
+            pointed at one destination with two different marks. */}
+        <span class="practice-dash-icon" aria-hidden="true"><Icon name="grid" size={20} /></span>
         <span class="practice-dash-label" data-i18n="header.progress">Fortschritt</span>
       </a>
       <div class="practice-header-utils"><LanguageSwitcher /><ThemeToggle /></div>

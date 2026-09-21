@@ -463,7 +463,9 @@ const BEATS = [
 
       // The beat chips pin below the site nav, not under it. Measured, because the nav is
       // 69px tall today and a different height the moment it gains a row.
-      const navEl = document.querySelector(".lp-nav");
+      // .lp-nav on the pages that carry SiteNav, .practice-header on the trainers — both
+      // are sticky at top:0 now, and the chips have to pin under whichever one is there.
+      const navEl = document.querySelector(".lp-nav, .practice-header");
       const syncNav = () => {
         if (navEl) page.style.setProperty("--ak-nav-h", navEl.offsetHeight + "px");
       };

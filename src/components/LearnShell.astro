@@ -518,7 +518,7 @@ const clientData = {
     practice: i.practice ?? null, derived: i.derived ?? null,
     section: sectionOf[i.id].id, sectionLabel: sectionOf[i.id].label,
   }]))),
-  sections: Object.fromEntries(sections.map((s) => [s.id, { label: s.label, items: s.items.map((i) => i.id) }])),
+  sections: Object.fromEntries(sections.map((s) => [s.id, { label: s.label, badge: s.badge, items: s.items.map((i) => i.id) }])),
   // Which coarse skill bucket each kind of exercise reports into, so /uebungen's
   // existing per-skill stats keep working alongside the per-topic numbers.
   skillOf: Object.fromEntries(sections.flatMap((s) => s.items.map((i) => [i.id,
@@ -688,14 +688,84 @@ const defaultVariant = variants[0];
                     <span data-secpct={section.id}>{sectionStats[section.id].pct} %</span>
                   </div>
                 )}
-                <button type="button" class="nvb-overview" data-section-btn={section.id}>Stufenübersicht öffnen →</button>
-                {section.items.map((item) => (
-                  <button type="button" class="nvb-item" data-nav-item={item.id} data-row={item.id}>
-                    <span class="nv-icon"><Icon name={item.icon} size={16} /></span>
-                    <span>{item.label}</span>
-                    <span class="nv-count" data-count={item.id}>{item.meta ?? `${item.done ?? 0}/${item.tasks}`}</span>
-                  </button>
-                ))}
+                {/* What this does is not guessable from its label, and it is the one control
+                    here that changes the OTHER column. The tip is a sibling, not a child, so
+                    its sentence does not become part of the button's accessible name; the
+                    button points at it with aria-describedby instead. */}
+                <span class="nvb-ovwrap">
+                  <button
+                    type="button"
+                    class="nvb-overview"
+                    data-section-btn={section.id}
+                    aria-describedby={`nvb-ovtip-${section.id}`}
+                  >Stufenübersicht öffnen →</button>
+                  <span class="nvb-tip nvb-tip--wide" id={`nvb-ovtip-${section.id}`} role="tooltip">
+                    Zeigt rechts wieder die ganze {section.kind === "stufe" ? "Stufe" : "Gruppe"} statt eines
+                    einzelnen Themas — Beschreibung, Umfang, Schwerpunkte und der Startknopf für alles.
+                  </span>
+                </span>
+
+                {section.id === "weg" ? (
+                  /* "Dein Weg" is the one group that is not a shelf of things to pick from —
+                     it is the answer to "how am I doing". Listing its five modules here just
+                     repeated the Stufenübersicht two centimetres to its right. This pane
+                     shows the learner's own record instead: what to resume, how the week
+                     went, how the four levels stand, and how accurate the answers were.
+                     Everything below is an empty skeleton on the server and is filled by
+                     mountWegPanel() from the same localStorage the trainers write. */
+                  <div class="wg" data-weg-panel>
+                    <button type="button" class="wg-resume" data-weg-resume hidden>
+                      <span class="wg-resume-kicker">Weitermachen</span>
+                      <span class="wg-resume-label" data-weg-resume-label></span>
+                      <span class="wg-resume-meta" data-weg-resume-meta></span>
+                    </button>
+
+                    <div class="wg-week" data-weg-week>
+                      <div class="wg-row">
+                        <span class="wg-h">Letzte 7 Tage</span>
+                        <span class="wg-streak" data-weg-streak></span>
+                      </div>
+                      <div class="wg-days" data-weg-days></div>
+                    </div>
+
+                    <div class="wg-block">
+                      <div class="wg-row">
+                        <span class="wg-h">Stufen</span>
+                        <span class="wg-sub" data-weg-levelsum></span>
+                      </div>
+                      <div data-weg-levels></div>
+                    </div>
+
+                    <div class="wg-block" data-weg-skillblock hidden>
+                      <div class="wg-row">
+                        <span class="wg-h">Treffsicherheit</span>
+                        <span class="wg-sub" data-weg-skillsum></span>
+                      </div>
+                      <div data-weg-skills></div>
+                    </div>
+
+                    <div class="wg-block wg-block--speak" data-weg-speakblock hidden>
+                      <div class="wg-row">
+                        <span class="wg-h">Laut gesprochen</span>
+                        <span class="wg-sub" data-weg-speaksum></span>
+                      </div>
+                      <p class="wg-speak-note" data-weg-speaknote></p>
+                    </div>
+
+                    <p class="wg-empty" data-weg-empty hidden>
+                      Noch nichts geübt. Sobald du die erste Aufgabe beantwortest, steht hier
+                      dein Fortschritt — nach Stufe, nach Woche und nach Treffsicherheit.
+                    </p>
+                  </div>
+                ) : (
+                  section.items.map((item) => (
+                    <button type="button" class="nvb-item" data-nav-item={item.id} data-row={item.id}>
+                      <span class="nv-icon"><Icon name={item.icon} size={16} /></span>
+                      <span>{item.label}</span>
+                      <span class="nv-count" data-count={item.id}>{item.meta ?? `${item.done ?? 0}/${item.tasks}`}</span>
+                    </button>
+                  ))
+                )}
               </div>
             ))}
           </div>
@@ -972,6 +1042,9 @@ const defaultVariant = variants[0];
       <button type="button" class="vp-dev-reset" id="nv-seed-fill" title="Dummy-Fortschritt schreiben und neu laden">
         ✱ Demo-Daten
       </button>
+      <button type="button" class="vp-dev-reset" id="nv-seed-fill-all" title="Jede Aufgabe auf dieser Seite als erledigt schreiben und neu laden">
+        ⚡ Autofill
+      </button>
       <button type="button" class="vp-dev-reset" id="nv-seed-clear" title="Fortschritt löschen und neu laden">
         ↻ Leer
       </button>
@@ -985,6 +1058,7 @@ const defaultVariant = variants[0];
 
   <script>
     import { getTopicProgress, recordAttempt, resetProgress } from "../lib/progress.js";
+    import { mountWegPanel, paintWegPanel } from "../lib/wegPanel.js";
     import { createExerciseMounter, INLINE_TITLES, loaderFor } from "../lib/inlineExercises.js";
     import { mountQuiz, withChoices } from "../lib/quiz.js";
     import { mountGrammarWorkspace } from "../lib/grammarWorkspace.js";
@@ -1146,6 +1220,25 @@ const defaultVariant = variants[0];
         .forEach((e) => (e.textContent = cur.label));
     }
 
+    // "Dein Weg" in the left pane. Its four levels have to be counted here rather than in
+    // wegPanel.js: sectionTotals() is the one place that knows how a level's topics add
+    // up, and a second copy of that arithmetic would disagree the first time a topic moved
+    // between levels. The module gets the finished numbers and owns only the presentation.
+    const wegRoot = $("[data-weg-panel]");
+    function paintWeg() {
+      if (!wegRoot) return;
+      const levels = ["a1", "a2", "b1", "b2"]
+        .filter((id) => SECTIONS[id])
+        .map((id) => ({ id, label: SECTIONS[id].badge ?? id.toUpperCase(), ...sectionTotals(id) }));
+      const cur = currentPortion();
+      paintWegPanel(wegRoot, {
+        levels,
+        resume: cur
+          ? { label: cur.label, meta: `${cur.level} · ${cur.tasks} Aufgaben · ca. ${cur.minutes} Min.` }
+          : null,
+      });
+    }
+
     // Repaint every number that depends on `progress`.
     function repaint(sweep = false) {
       // The grammar module before the aggregates: it decides its own count.
@@ -1184,6 +1277,8 @@ const defaultVariant = variants[0];
         if (visible) countUp($(`[data-secringvalue="${sid}"]`), st.pct);
         else setCount($(`[data-secringvalue="${sid}"]`), st.pct + "%");
       });
+
+      paintWeg();
 
       mounter.repaintResult();   // keeps the Ergebnis view live while it is open
 
@@ -1736,6 +1831,12 @@ const defaultVariant = variants[0];
     // ── Wiring ────────────────────────────────────────────────────────
     $$("[data-section-btn]").forEach((b) => b.addEventListener("click", () => { selectSection(b.dataset.sectionBtn!); syncUrl(); }));
     $$("[data-nav-item]").forEach((b) => b.addEventListener("click", () => { selectItem(b.dataset.navItem!); syncUrl(); }));
+
+    // "Weitermachen" in Dein Weg opens the portion the course is actually on — the same
+    // target the grammatik-basis row used to be, which is why that row could go.
+    mountWegPanel(wegRoot, {
+      onResume: () => { selectItem("grammatik-basis"); syncUrl(); },
+    });
     $$("[data-reset-progress]").forEach((b) =>
       b.addEventListener("click", () => {
         if (!confirm("Deinen gesamten Fortschritt löschen? Das lässt sich nicht rückgängig machen.")) return;
@@ -1780,10 +1881,19 @@ const defaultVariant = variants[0];
     // becoming a phantom row. Vite drops the whole branch from a production build.
     if (import.meta.env.DEV) {
       const fill = document.getElementById("nv-seed-fill");
+      const fillAll = document.getElementById("nv-seed-fill-all");
       const clear = document.getElementById("nv-seed-clear");
       fill?.addEventListener("click", async () => {
         const { seedProgress } = await import("../lib/devSeed.js");
         seedProgress(ITEMS);
+        location.reload();
+      });
+      // Demo-Daten spreads the items across five phases; this puts every one of them at
+      // 100 %, which is the state the spread never produces and the one the finished
+      // course has to be looked at in. Same ITEMS, so it fills the bars that exist.
+      fillAll?.addEventListener("click", async () => {
+        const { fillProgress } = await import("../lib/devSeed.js");
+        fillProgress(ITEMS);
         location.reload();
       });
       clear?.addEventListener("click", async () => {

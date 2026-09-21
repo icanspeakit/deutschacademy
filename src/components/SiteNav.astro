@@ -18,6 +18,7 @@
 // This file is only the row they hang in.
 import LanguageSwitcher from "./LanguageSwitcher.astro";
 import NavAccount from "./NavAccount.astro";
+import Icon from "./Icon.astro";
 import NavDrawer from "./NavDrawer.astro";
 import NavMenubar from "./NavMenubar.astro";
 import "../styles/site-nav.css";
@@ -60,6 +61,22 @@ const { active } = Astro.props;
             <line x1="16.5" y1="16.5" x2="21" y2="21"></line>
           </svg>
         </button>
+
+        {/* One click, not two. This used to be the only link inside the avatar menu,
+            which meant the most-visited personal page on the site was hidden behind a
+            monogram that gives no hint of holding it. It is a destination, so it is a
+            link in the cluster like any other. The grid glyph is the conventional
+            dashboard mark and matches the one the mobile drawer toggle already uses. */}
+        <a
+          class="lp-nav-icon lp-nav-progress"
+          href="/fortschritt"
+          aria-current={Astro.url.pathname.replace(/\/+$/, "") === "/fortschritt" ? "page" : undefined}
+          aria-label="Mein Fortschritt"
+          data-i18n-attr="aria-label:nav.account.progress;title:nav.account.progress"
+          title="Mein Fortschritt"
+        >
+          <Icon name="grid" size={17} />
+        </a>
 
         <NavAccount />
         <LanguageSwitcher />

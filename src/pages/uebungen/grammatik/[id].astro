@@ -8,6 +8,7 @@ import "../../../styles/practice.css";
 import "../../../styles/landing.css";
 import "../../../styles/verben-praepositionen.css";
 import "../../../styles/rule-intro.css";
+import "../../../styles/aktiv.css";
 import grammatik from "../../../data/grammatik.json";
 
 // Two kinds of topic live on this route:
@@ -48,6 +49,31 @@ const reference = concept?.reference;
 // `topicKey` is the URL slug, which is the key /dashboard draws its per-topic bars from.
 const topicKey = topicKeyOf(data) ?? Astro.params.id;
 const tasks = taskCountOf(data);
+
+// Aktiv mode — Sehen · Hören · Sprechen, for the topics whose JSON carries an `aktiv`
+// block. It is a second view of THIS page, not a second page: the fourth beat, Schreiben,
+// is the exercise column below, so the exercises are mounted once and both modes share
+// their state. Topics without the block never render the switch and are untouched.
+const aktiv = workspace?.aktiv ?? null;
+// No mp3s for this topic yet, so the browser's own German voice reads every line. Say so
+// rather than let a learner conclude the site sounds like that on purpose. The check is
+// the data, not a flag, so the notice disappears by itself the moment the generator runs.
+const synthetic = aktiv ? !aktiv.hoeren?.items?.some((i) => i.audio) : false;
+// The collapsed rule strip's one line. Most flows are a sequence and read correctly
+// joined by an arrow, but some steps are already whole alternatives — Wechselpräpositionen
+// has ["Wohin? → Akkusativ", "Wo? → Dativ"], and arrowing those together claims Dativ
+// follows Akkusativ. A step containing its own arrow gets a separator instead.
+const flowSteps = concept?.flow?.map((s) => s.text) ?? [];
+const gist = flowSteps.join(flowSteps.some((t) => t.includes("→")) ? " · " : " → ");
+
+const BEATS = [
+  { id: "sehen", n: 1, label: "Sehen" },
+  { id: "hoeren", n: 2, label: "Hören" },
+  { id: "sprechen", n: 3, label: "Sprechen" },
+  // No panel of its own: this chip hands the learner back to Üben mode, where the
+  // exercises already live. See onExit in mountBeats.
+  { id: "schreiben", n: 4, label: "Schreiben" },
+];
 ---
 <Layout title={`${name} – DeutschAcademy`}>
   <SiteNav active="grammatik" />
@@ -62,8 +88,106 @@ const tasks = taskCountOf(data);
        Collapsed is the more common state — the side column slides away on desktop,
        the rule card crops to a preview on a phone — so starting here means no
        visible re-layout on load. -->
-  <main class="vp-page vp-page--split" id="vp-page" data-rule="hidden" data-anim="off" data-topic-key={topicKey}>
-    <a href="/uebungen/grammatik" class="vp-back-link" data-i18n="header.back">← Zurück zur Übersicht</a>
+  <main class="vp-page vp-page--split" id="vp-page" data-rule="hidden" data-anim="off" data-topic-key={topicKey} data-mode="ueben">
+    {aktiv && (
+      <div class="ak-modes" role="tablist" aria-label="Ansicht">
+        <button type="button" class="ak-mode" data-mode-btn="ueben" role="tab" aria-selected="true" title="Lesen &amp; schreiben">
+          Üben<span class="ak-mode-tip">lesen &amp; schreiben</span>
+        </button>
+        <button type="button" class="ak-mode" data-mode-btn="aktiv" role="tab" aria-selected="false" title="Hören &amp; sprechen">
+          Aktiv<span class="ak-mode-tip">hören &amp; sprechen</span>
+        </button>
+      </div>
+    )}
+
+    {aktiv && (
+      <div class="ak-aktiv" id="ak-aktiv">
+        <!-- The beat chips and the rule, pinned together. On a phone this pair is the
+             whole left-hand page of the book: where you are, and the rule you need. -->
+        <div class="ak-sticky" id="ak-sticky">
+          <div class="ak-beats" role="tablist" aria-label="Phasen">
+            {BEATS.map((b) => (
+              <button type="button" class="ak-beat-chip" data-beat-chip={b.id} role="tab" aria-selected="false">
+                <b>{b.n}</b>{b.label}
+              </button>
+            ))}
+          </div>
+
+          {concept && (
+            <div class="ak-rule-strip">
+              <button type="button" class="ak-rule-toggle" id="ak-rule-toggle" aria-expanded="false" aria-controls="ak-rule-body">
+                Regel <span class="ak-rule-gist">{gist}</span>
+                <span class="ak-caret" aria-hidden="true">▾</span>
+              </button>
+              <div class="ak-rule-body" id="ak-rule-body">
+                <div class="ak-flow">
+                  {concept.flow?.map((step, i) => (
+                    <>
+                      {i > 0 && <span class="ak-flow-arrow">→</span>}
+                      <span class={`ak-flow-step ${step.variant ? `ak-flow-step--${step.variant}` : ""}`}>{step.text}</span>
+                    </>
+                  ))}
+                </div>
+                <div class="ak-qa">
+                  {concept.qa?.map((item) => <div class="ak-qa-item" set:html={item.html} />)}
+                </div>
+                {concept.noteHtml && <p class="ak-note" set:html={concept.noteHtml} />}
+              </div>
+            </div>
+          )}
+        </div>
+
+        {synthetic && (
+          <p class="ak-proto">
+            <strong>Die Stimme ist noch synthetisch.</strong> Für dieses Thema gibt es noch
+            keine Aufnahmen — alles wird von der deutschen Stimme deines Browsers
+            vorgelesen. Auf manchen Geräten klingt das hölzern oder fehlt ganz.
+          </p>
+        )}
+
+        <section class="ak-panel" data-beat-panel="sehen">
+          <h2>Sehen</h2>
+          <p class="ak-panel-lead">Erst die Regel, dann das Ohr. Tipp auf ▶ — die Endung hört man deutlicher, als man sie liest.</p>
+
+          <div class="ak-card">
+            <div class="ak-flow">
+              {concept?.flow?.map((step, i) => (
+                <>
+                  {i > 0 && <span class="ak-flow-arrow">→</span>}
+                  <span class={`ak-flow-step ${step.variant ? `ak-flow-step--${step.variant}` : ""}`}>{step.text}</span>
+                </>
+              ))}
+            </div>
+            <ul class="ak-listen-list" id="ak-listen"></ul>
+          </div>
+
+          {concept && (
+            <div class="ak-card">
+              <div class="ak-qa">
+                {concept.qa?.map((item) => <div class="ak-qa-item" set:html={item.html} />)}
+              </div>
+              {concept.noteHtml && <p class="ak-note" set:html={concept.noteHtml} />}
+            </div>
+          )}
+
+          <button type="button" class="ak-next" data-beat-next="hoeren">Weiter → Hören</button>
+        </section>
+
+        <section class="ak-panel" data-beat-panel="hoeren" hidden>
+          <h2>Hören</h2>
+          <p class="ak-panel-lead">{aktiv.hoeren.instruction}</p>
+          <div id="ak-hoeren"></div>
+          <button type="button" class="ak-next" data-beat-next="sprechen">Weiter → Sprechen</button>
+        </section>
+
+        <section class="ak-panel" data-beat-panel="sprechen" hidden>
+          <h2>Sprechen</h2>
+          <p class="ak-panel-lead">Hören, kurz überlegen, laut sagen — dann kommt die Lösung. Die einzige Übung hier, bei der du die Form selbst produzieren musst.</p>
+          <div id="ak-sprechen"></div>
+          <button type="button" class="ak-next" data-beat-next="schreiben">Weiter → Schreiben</button>
+        </section>
+      </div>
+    )}
 
     <!-- Two columns on desktop: rule sticky on the right, exercises on the left.
          The rule stays FIRST in the DOM so that on a phone — where scroll order is
@@ -314,5 +438,75 @@ const tasks = taskCountOf(data);
     // Per-exercise rule buttons, plus the glow that waits until one is on screen so it
     // does not compete with the column's tour. See src/lib/exerciseRule.js.
     mountExerciseRules(document.getElementById("vp-page"), { seenKey: "da-grammatik-ex-rule-peek" });
+
+    // Aktiv mode. Only topics whose JSON carries an `aktiv` block have the markup.
+    if (data.aktiv && document.getElementById("ak-aktiv")) {
+      const { makeVoice, mountBeats, mountListen, mountHoeren, mountSprechen } =
+        await import("../../../lib/aktivMode.js");
+      const { recordDrill } = await import("../../../lib/progress.js");
+
+      const page = document.getElementById("vp-page");
+      const voice = makeVoice();
+
+      // Read before mountBeats: it writes the opening beat into the hash, so asking
+      // afterwards always finds one and every first visit would land in Aktiv.
+      const askedForBeat = ["sehen", "hoeren", "sprechen"].includes(location.hash.slice(1));
+
+      mountListen(document.getElementById("ak-listen"), data.aktiv.listen, voice);
+      mountHoeren(document.getElementById("ak-hoeren"), data.aktiv.hoeren, { voice, notify: onAnswer });
+      // Self-rated, so it goes on its own counter rather than into the accuracy figure
+      // /dashboard presents as measured. See recordDrill in progress.js.
+      mountSprechen(document.getElementById("ak-sprechen"), data.aktiv.sprechen, {
+        voice,
+        onRate: (sure) => { try { recordDrill({ topic: topicKey, sure }); } catch (e) {} },
+      });
+
+      // The beat chips pin below the site nav, not under it. Measured, because the nav is
+      // 69px tall today and a different height the moment it gains a row.
+      const navEl = document.querySelector(".lp-nav");
+      const syncNav = () => {
+        if (navEl) page.style.setProperty("--ak-nav-h", navEl.offsetHeight + "px");
+      };
+      syncNav();
+      addEventListener("resize", syncNav);
+
+      const setMode = (mode) => {
+        page.dataset.mode = mode;
+        page.querySelectorAll("[data-mode-btn]").forEach((b) => {
+          const on = b.dataset.modeBtn === mode;
+          b.classList.toggle("is-active", on);
+          b.setAttribute("aria-selected", String(on));
+        });
+        if (mode !== "aktiv") voice.stop();
+        try { localStorage.setItem("da-grammatik-mode", mode); } catch (e) {}
+      };
+
+      mountBeats(page, {
+        onLeave: () => voice.stop(),
+        // The fourth chip has no panel: Schreiben IS the exercise column, one mode over.
+        onExit: () => setMode("ueben"),
+        anchor: document.getElementById("ak-sticky"),
+      });
+
+      page.querySelectorAll("[data-mode-btn]").forEach((b) =>
+        b.addEventListener("click", () => setMode(b.dataset.modeBtn))
+      );
+
+      const ruleBtn = document.getElementById("ak-rule-toggle");
+      if (ruleBtn) {
+        ruleBtn.addEventListener("click", () => {
+          const open = page.dataset.aktivRule === "open";
+          page.dataset.aktivRule = open ? "closed" : "open";
+          ruleBtn.setAttribute("aria-expanded", String(!open));
+        });
+      }
+
+      // A link to #sprechen means "open the drill", not "scroll past the exercises", so
+      // the hash decides the mode. Otherwise the learner's last choice wins, and Üben —
+      // the mode every topic has — is the default for anyone who has never picked.
+      let saved = null;
+      try { saved = localStorage.getItem("da-grammatik-mode"); } catch (e) {}
+      setMode(askedForBeat || saved === "aktiv" ? "aktiv" : "ueben");
+    }
   </script>
 </Layout>

@@ -205,6 +205,186 @@
       ]
     }
   },
+  "aktiv": {
+    "listen": [
+      {
+        "text": "Ich habe gestern einen Kaffee getrunken.",
+        "note": "haben — das Verb hat ein Akkusativobjekt. Das Partizip steht ganz am Ende.",
+        "audio": "/audio/grammatik/perfekt/ich-habe-gestern-einen-kaffee-getrunken.mp3"
+      },
+      {
+        "text": "Ich bin um neun Uhr gekommen.",
+        "note": "sein — kommen ist Bewegung von A nach B.",
+        "audio": "/audio/grammatik/perfekt/ich-bin-um-neun-uhr-gekommen.mp3"
+      },
+      {
+        "text": "Wir haben zwei Stunden telefoniert.",
+        "note": "Verben auf -ieren bilden das Partizip ohne ge-.",
+        "audio": "/audio/grammatik/perfekt/wir-haben-zwei-stunden-telefoniert.mp3"
+      }
+    ],
+    "hoeren": {
+      "instruction": "Hör zu und wähle das Hilfsverb und das Partizip, die du gehört hast.",
+      "items": [
+        {
+          "text": "Sie ist gestern nach Berlin gefahren.",
+          "choices": [
+            "hat gefahren",
+            "ist gefahren",
+            "ist gefahrt"
+          ],
+          "correct": 1,
+          "audio": "/audio/grammatik/perfekt/sie-ist-gestern-nach-berlin-gefahren.mp3"
+        },
+        {
+          "text": "Ich habe den ganzen Tag gearbeitet.",
+          "choices": [
+            "habe gearbeitet",
+            "habe gearbeit",
+            "bin gearbeitet"
+          ],
+          "correct": 0,
+          "audio": "/audio/grammatik/perfekt/ich-habe-den-ganzen-tag-gearbeitet.mp3"
+        },
+        {
+          "text": "Wann bist du eingeschlafen?",
+          "choices": [
+            "hast eingeschlafen",
+            "bist eingeschlaft",
+            "bist eingeschlafen"
+          ],
+          "correct": 2,
+          "audio": "/audio/grammatik/perfekt/wann-bist-du-eingeschlafen.mp3"
+        },
+        {
+          "text": "Wir haben zwei Stunden telefoniert.",
+          "choices": [
+            "haben getelefoniert",
+            "haben telefoniert",
+            "sind telefoniert"
+          ],
+          "correct": 1,
+          "audio": "/audio/grammatik/perfekt/wir-haben-zwei-stunden-telefoniert.mp3"
+        },
+        {
+          "text": "Er hat mir ein gutes Buch empfohlen.",
+          "choices": [
+            "hat geempfohlen",
+            "ist empfohlen",
+            "hat empfohlen"
+          ],
+          "correct": 2,
+          "audio": "/audio/grammatik/perfekt/er-hat-mir-ein-gutes-buch-empfohlen.mp3"
+        },
+        {
+          "text": "Das Konzert hat um acht angefangen.",
+          "choices": [
+            "hat angefangen",
+            "ist angefangen",
+            "hat anfangen"
+          ],
+          "correct": 0,
+          "audio": "/audio/grammatik/perfekt/das-konzert-hat-um-acht-angefangen.mp3"
+        }
+      ]
+    },
+    "sprechen": {
+      "rounds": [
+        {
+          "label": "1 · Präsens → Perfekt",
+          "instruction": "Du hörst einen Satz im Präsens. Sag denselben Satz im Perfekt.",
+          "example": {
+            "prompt": "Ich trinke einen Kaffee.",
+            "answer": "Ich habe einen Kaffee getrunken."
+          },
+          "items": [
+            {
+              "prompt": "Ich kaufe ein Brot.",
+              "answer": "Ich habe ein Brot gekauft.",
+              "audioPrompt": "/audio/grammatik/perfekt/ich-kaufe-ein-brot.mp3",
+              "audioAnswer": "/audio/grammatik/perfekt/ich-habe-ein-brot-gekauft--8wphfh.mp3"
+            },
+            {
+              "prompt": "Ich fahre nach Berlin.",
+              "answer": "Ich bin nach Berlin gefahren.",
+              "audioPrompt": "/audio/grammatik/perfekt/ich-fahre-nach-berlin.mp3",
+              "audioAnswer": "/audio/grammatik/perfekt/ich-bin-nach-berlin-gefahren--8wphfh.mp3"
+            },
+            {
+              "prompt": "Ich arbeite bis sechs.",
+              "answer": "Ich habe bis sechs gearbeitet.",
+              "audioPrompt": "/audio/grammatik/perfekt/ich-arbeite-bis-sechs.mp3",
+              "audioAnswer": "/audio/grammatik/perfekt/ich-habe-bis-sechs-gearbeitet--8wphfh.mp3"
+            },
+            {
+              "prompt": "Ich komme um neun.",
+              "answer": "Ich bin um neun gekommen.",
+              "audioPrompt": "/audio/grammatik/perfekt/ich-komme-um-neun.mp3",
+              "audioAnswer": "/audio/grammatik/perfekt/ich-bin-um-neun-gekommen--8wphfh.mp3"
+            },
+            {
+              "prompt": "Ich spreche mit dem Chef.",
+              "answer": "Ich habe mit dem Chef gesprochen.",
+              "audioPrompt": "/audio/grammatik/perfekt/ich-spreche-mit-dem-chef.mp3",
+              "audioAnswer": "/audio/grammatik/perfekt/ich-habe-mit-dem-chef-gesprochen--8wphfh.mp3"
+            },
+            {
+              "prompt": "Ich studiere in München.",
+              "answer": "Ich habe in München studiert.",
+              "audioPrompt": "/audio/grammatik/perfekt/ich-studiere-in-muenchen.mp3",
+              "audioAnswer": "/audio/grammatik/perfekt/ich-habe-in-muenchen-studiert--8wphfh.mp3"
+            }
+          ]
+        },
+        {
+          "label": "2 · haben oder sein?",
+          "instruction": "Du hörst ein Verb und eine Ergänzung. Bilde daraus einen Satz im Perfekt mit „er“.",
+          "example": {
+            "prompt": "gehen — nach Hause",
+            "answer": "Er ist nach Hause gegangen."
+          },
+          "items": [
+            {
+              "prompt": "schlafen — acht Stunden",
+              "answer": "Er hat acht Stunden geschlafen.",
+              "audioPrompt": "/audio/grammatik/perfekt/schlafen-acht-stunden.mp3",
+              "audioAnswer": "/audio/grammatik/perfekt/er-hat-acht-stunden-geschlafen--8wphfh.mp3"
+            },
+            {
+              "prompt": "einschlafen — sofort",
+              "answer": "Er ist sofort eingeschlafen.",
+              "audioPrompt": "/audio/grammatik/perfekt/einschlafen-sofort.mp3",
+              "audioAnswer": "/audio/grammatik/perfekt/er-ist-sofort-eingeschlafen--8wphfh.mp3"
+            },
+            {
+              "prompt": "bekommen — einen Brief",
+              "answer": "Er hat einen Brief bekommen.",
+              "audioPrompt": "/audio/grammatik/perfekt/bekommen-einen-brief.mp3",
+              "audioAnswer": "/audio/grammatik/perfekt/er-hat-einen-brief-bekommen--8wphfh.mp3"
+            },
+            {
+              "prompt": "aufstehen — um sechs",
+              "answer": "Er ist um sechs aufgestanden.",
+              "audioPrompt": "/audio/grammatik/perfekt/aufstehen-um-sechs.mp3",
+              "audioAnswer": "/audio/grammatik/perfekt/er-ist-um-sechs-aufgestanden--8wphfh.mp3"
+            },
+            {
+              "prompt": "telefonieren — mit Anna",
+              "answer": "Er hat mit Anna telefoniert.",
+              "audioPrompt": "/audio/grammatik/perfekt/telefonieren-mit-anna.mp3",
+              "audioAnswer": "/audio/grammatik/perfekt/er-hat-mit-anna-telefoniert--8wphfh.mp3"
+            },
+            {
+              "prompt": "bleiben — zu Hause",
+              "answer": "Er ist zu Hause geblieben.",
+              "audioPrompt": "/audio/grammatik/perfekt/bleiben-zu-hause.mp3",
+              "audioAnswer": "/audio/grammatik/perfekt/er-ist-zu-hause-geblieben--8wphfh.mp3"
+            }
+          ]
+        }
+      ]
+    }
+  },
   "exercises": [
     {
       "type": "table",

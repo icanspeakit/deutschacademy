@@ -16,8 +16,15 @@ export function slotsOf(ex) {
   return 0;
 }
 
-/** Gradeable slots across a whole workspace. */
-export const workspaceSlots = (w) => (w.exercises ?? []).reduce((n, e) => n + slotsOf(e), 0);
+/**
+ * Gradeable slots across a whole workspace, including the Aktiv mode's Hören items.
+ *
+ * Hören is checked by the site, so it counts. The Sprechen drill is not: it is self-rated
+ * and lives on its own counter (recordDrill in progress.js), so counting it here would put
+ * a denominator on /dashboard that no checked answer can ever fill.
+ */
+export const workspaceSlots = (w) =>
+  (w.exercises ?? []).reduce((n, e) => n + slotsOf(e), 0) + (w.aktiv?.hoeren?.items?.length ?? 0);
 
 /**
  * Tasks in whatever [id].astro was handed: a workspace (exercises) or a bare quiz topic

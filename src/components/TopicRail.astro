@@ -35,12 +35,10 @@ const railSections = [
     badge: null,
     icon: "sparkle",
     overview: { label: "Kursübersicht öffnen →", href: "/uebungen" },
-    items: [
-      { key: null, label: "Start", icon: "sparkle", href: "/uebungen", meta: "Übersicht" },
-      { key: null, label: "Grammatik-Basis", icon: "book", href: "/uebungen/grammatik", meta: `${grammarCatalog.length} Themen` },
-      { key: null, label: "Wortschatz-Karten", icon: "folder", href: "/uebungen/wortschatz", meta: "Karten" },
-      { key: null, label: "Prüfungssimulation", icon: "document", href: "/pruefungen/dtz/uebungssatz", meta: "45 Aufgaben" },
-    ],
+    // No items: this pane reports rather than navigates — see the progress block in the
+    // panel below, which the script fills from the same store as the level bars.
+    progress: true,
+    items: [],
   },
   ...NAV_LEVELS.map((level) => ({
     id: level.toLowerCase(),
@@ -99,10 +97,37 @@ const openSection = grammarByKey(current)?.level?.toLowerCase() ?? "weg";
             </button>
           </div>
 
-          <div class="nvb-panelprogress" data-rail-secprog={sec.id} hidden={!sec.items.some((i) => i.tasks)}>
+          <div class="nvb-panelprogress" data-rail-secprog={sec.id} hidden={sec.progress || !sec.items.some((i) => i.tasks)}>
             <span class="nvb-panelbar"><span data-rail-secbar={sec.id} style="width:0%"></span></span>
             <span data-rail-secpct={sec.id}>0 %</span>
           </div>
+
+          {sec.progress && (
+            <div class="tr-prog" data-tr-prog>
+              {/* Written by the script — all of it comes from localStorage, so a
+                  server-rendered number would be a guess about a stranger. */}
+              <p class="tr-prog-empty" data-tr-prog-empty>Noch nichts geübt.</p>
+              <div class="tr-prog-body" data-tr-prog-body hidden>
+                <a class="tr-prog-next" data-tr-prog-next hidden>
+                  <span class="tr-prog-kicker">Weitermachen</span>
+                  <b data-tr-prog-next-title></b>
+                </a>
+                <div class="tr-prog-week" data-tr-prog-week hidden>
+                  <p><span>Diese Woche</span><span data-tr-prog-weekn></span></p>
+                  <span class="tr-prog-bar"><span data-tr-prog-weekbar style="width:0%"></span></span>
+                </div>
+                <p class="tr-prog-streak" data-tr-prog-streak hidden></p>
+                <p class="tr-prog-label">Grammatik nach Stufe</p>
+                {NAV_LEVELS.map((level) => (
+                  <button type="button" class="tr-prog-level" data-rail-sec={level.toLowerCase()}>
+                    <span class="tr-prog-level-name">{level}</span>
+                    <span class="tr-prog-bar"><span data-tr-prog-lvlbar={level.toLowerCase()} style="width:0%"></span></span>
+                    <span class="tr-prog-level-pct" data-tr-prog-lvlpct={level.toLowerCase()}>0 %</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
 
           <a class="nvb-overview" href={sec.overview.href}>{sec.overview.label}</a>
 
@@ -128,7 +153,7 @@ const openSection = grammarByKey(current)?.level?.toLowerCase() ?? "weg";
 <script>
   // Numbers come from the same store the dashboard reads, so the two surfaces cannot
   // disagree about how far a topic got.
-  import { getTopicProgress } from "../lib/progress.js";
+  import { getTopicProgress, getProgress, getResume } from "../lib/progress.js";
 
   const rail = document.querySelector<HTMLElement>("[data-rail]");
   const scrim = document.querySelector<HTMLElement>("[data-rail-scrim]");
@@ -167,8 +192,59 @@ const openSection = grammarByKey(current)?.level?.toLowerCase() ?? "weg";
         const dot = rail.querySelector<HTMLElement>(`[data-rail-secdot="${id}"]`);
         if (bar) bar.style.width = pct + "%";
         if (txt) txt.textContent = pct + " %";
+        // The same percentage, repeated in "Dein Weg" so that pane answers "how far am I"
+        // for every level at once rather than for the one that happens to be open.
+        const lvlBar = rail.querySelector<HTMLElement>(`[data-tr-prog-lvlbar="${id}"]`);
+        const lvlPct = rail.querySelector<HTMLElement>(`[data-tr-prog-lvlpct="${id}"]`);
+        if (lvlBar) lvlBar.style.width = pct + "%";
+        if (lvlPct) lvlPct.textContent = pct + " %";
         // The same three states the dashboard rail's dot carries.
         if (dot) dot.dataset.state = !total ? "" : pct >= 100 ? "done" : pct > 0 ? "current" : "";
+      }
+
+      paintWeg();
+    }
+
+    /** "Dein Weg": where this learner is, not where they could go. */
+    function paintWeg() {
+      const box = rail.querySelector<HTMLElement>("[data-tr-prog]");
+      if (!box) return;
+      let data: any = {}, resume: any = null;
+      try { data = getProgress() ?? {}; resume = getResume(); } catch {}
+      const week = resume?.week ?? { count: 0, goal: 0 };
+      const streak = data.streak || 0;
+      const attempts = Object.values(data.topics ?? {}).reduce((n: number, t: any) => n + (t?.attempts ?? 0), 0);
+      const empty = !attempts && !streak && !resume;
+
+      box.querySelector<HTMLElement>("[data-tr-prog-empty]")!.hidden = !empty;
+      box.querySelector<HTMLElement>("[data-tr-prog-body]")!.hidden = empty;
+      if (empty) return;
+
+      const next = resume?.last;
+      const nextEl = box.querySelector<HTMLAnchorElement>("[data-tr-prog-next]");
+      if (nextEl) {
+        const show = !!next && next.path !== location.pathname.replace(/\/+$/, "");
+        nextEl.hidden = !show;
+        if (show) {
+          nextEl.href = next.path;
+          box.querySelector<HTMLElement>("[data-tr-prog-next-title]")!.textContent = next.title;
+        }
+      }
+
+      const weekEl = box.querySelector<HTMLElement>("[data-tr-prog-week]");
+      if (weekEl) {
+        weekEl.hidden = !week.goal;
+        if (week.goal) {
+          box.querySelector<HTMLElement>("[data-tr-prog-weekn]")!.textContent = `${week.count} / ${week.goal}`;
+          box.querySelector<HTMLElement>("[data-tr-prog-weekbar]")!.style.width =
+            Math.min(100, Math.round((week.count / week.goal) * 100)) + "%";
+        }
+      }
+
+      const streakEl = box.querySelector<HTMLElement>("[data-tr-prog-streak]");
+      if (streakEl) {
+        streakEl.hidden = !streak;
+        streakEl.textContent = streak === 1 ? "1 Tag in Folge" : `${streak} Tage in Folge`;
       }
     }
 

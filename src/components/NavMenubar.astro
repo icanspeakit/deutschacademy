@@ -5,7 +5,8 @@
 //
 //   Üben ▾        one mega menu, four columns — Grammatik, Wortschatz, Fertigkeiten,
 //                 Landeskunde — plus a level chip row under them
-//   Prüfungen ▾   a flat list; the exams are peers, not a tree
+//   Prüfungen ▾   a grid of five; the exams are peers, not a tree, and a grid reads
+//                 the way the Üben columns next door do rather than as a tall list
 //   Wissen        one page, so a link
 //
 // The bar used to carry five subject menus plus Niveaus, Profil and Wissen. Three
@@ -67,7 +68,7 @@ const pruefungen = navSections.find((s) => s.id === "pruefungen");
       <svg class="lp-menu-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
     </a>
 
-    <div class="lp-panel lp-panel--mega" id="lp-panel-ueben" data-menu-panel role="menu" aria-label="Üben" hidden>
+    <div class="lp-panel lp-panel--mega" id="lp-panel-ueben" data-menu-panel role="menu" aria-label="Üben" data-i18n-attr="aria-label:nav.practise" hidden>
       <div class="lp-mega-cols">
         {navUeben.columns.map((col) => (
           <div class="lp-mega-col">
@@ -103,11 +104,6 @@ const pruefungen = navSections.find((s) => s.id === "pruefungen");
           ))}
         </div>
       </div>
-
-      <a class="lp-panel-foot" href={navUeben.href} role="menuitem">
-        <span data-i18n="nav.panel.allTools">Alle Übungen ansehen</span>
-        <span aria-hidden="true">→</span>
-      </a>
     </div>
   </div>
 
@@ -125,7 +121,7 @@ const pruefungen = navSections.find((s) => s.id === "pruefungen");
       <span data-i18n={pruefungen.nameKey}>{pruefungen.name}</span>
       <svg class="lp-menu-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
     </a>
-    <div class="lp-panel" id="lp-panel-pruefungen" data-menu-panel role="menu" aria-label={pruefungen.name} hidden>
+    <div class="lp-panel lp-panel--exams" id="lp-panel-pruefungen" data-menu-panel role="menu" aria-label={pruefungen.name} hidden>
       <ul class="lp-panel-list">
         {pruefungen.items.map((item) => (
           <li>
@@ -139,10 +135,6 @@ const pruefungen = navSections.find((s) => s.id === "pruefungen");
           </li>
         ))}
       </ul>
-      <a class="lp-panel-foot" href={pruefungen.href} role="menuitem">
-        <span data-i18n="nav.panel.allExams">Alle Prüfungen ansehen</span>
-        <span aria-hidden="true">→</span>
-      </a>
     </div>
   </div>
 

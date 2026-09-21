@@ -69,7 +69,7 @@ const ASKS = {
             </span>
             <i class="praep-card-ask">{ASKS[t.id]}</i>
             <i class="praep-card-sub">{t.subtitle}</i>
-            <span class="praep-card-count">{t.exercises} Aufgabentypen · {t.tasks} Aufgaben</span>
+            <span class="praep-card-count" data-i18n="praep.card.count" data-i18n-vars={JSON.stringify({ e: t.exercises, q: t.tasks })}>{t.exercises} Aufgabentypen · {t.tasks} Aufgaben</span>
           </span>
         </a>
       ))}

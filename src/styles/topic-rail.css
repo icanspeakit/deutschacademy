@@ -79,9 +79,116 @@
   .tr-wrap .nvb.collapsed .nvb-panel { transition: none; }
 }
 
+/* The folded strip is fixed to the viewport while the page is centred, so the page can
+   slide underneath it — and does: opening the rule column widens .vp-page--split, its
+   auto margins shrink, and between 1101px and roughly 1520px they end up narrower than
+   the rail itself. Measured at 1440px the back link started at 58px with the strip
+   reaching 74px, i.e. straight through the text.
+
+   So the rail gets a gutter. Only the shortfall is taken, out of the page's own left
+   padding: where the auto margin already clears the strip — a wide screen, or a narrow
+   one with the rule closed — the max() picks the normal padding and nothing moves.
+   (100vw counts the scrollbar, so the margin is read a few pixels generous; the 10px of
+   air below covers it.) */
+@media (min-width: 1101px) {
+  /* Scoped to a page that actually renders the rail: .vp-page--split is also the exam
+     shell, the Vokabeltrainer and navnew, and none of those has a strip to make room
+     for. Both classes on top of that, because verben-praepositionen.css is loaded after
+     this file and its base `.vp-page { padding: ... }` shorthand would otherwise win on
+     source order. */
+  body:has(.tr-wrap) .vp-page.vp-page--split {
+    /* 10px offset + the 64px strip + 32px of air. Ten was enough to stop the strip
+       cutting through the text and not enough to read as a margin: the back link and the
+       tab row sat against the rail like a seam. */
+    --tr-gutter: 106px;
+    padding-left: max(
+      clamp(14px, 4vw, 24px),
+      calc(var(--tr-gutter) - (100vw - min(var(--vp-w), 100vw)) / 2)
+    );
+  }
+}
+
 /* Below this width the rail would overlap the content it is supposed to help with, and
    SiteNav's drawer already covers navigation at that size. Not rendered rather than
    squeezed. */
 @media (max-width: 1100px) {
   .tr-wrap, .tr-scrim { display: none !important; }
 }
+
+/* ---- "Dein Weg" — the progress pane -------------------------------------------------
+ * The one rail button that is about the learner rather than the material used to hold
+ * four links to pages the nav already offers. It reports instead: what you did this week,
+ * how many days in a row, how far each level has got, and the one door back to where you
+ * were. The level rows are buttons, not links — they switch this rail to that level,
+ * which is the one navigation the pane genuinely owes.
+ */
+.tr-prog { padding: 0 var(--space-2) var(--space-2); }
+.tr-prog-empty { margin: 0 0 var(--space-3); font-size: var(--text-xs); color: var(--muted); line-height: 1.5; }
+
+.tr-prog-next {
+  display: grid;
+  gap: 1px;
+  padding: 9px 11px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  background: var(--gradient-brand-soft);
+  color: var(--brand-blue-dark);
+  text-decoration: none;
+}
+.tr-prog-kicker {
+  font-family: var(--font-label);
+  font-size: 9.5px;
+  font-weight: var(--fw-bold);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--brand-blue);
+}
+.tr-prog-next b { font-size: var(--text-sm); font-weight: var(--fw-semibold); }
+
+.tr-prog-week { margin-bottom: 10px; }
+.tr-prog-week p {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  margin: 0 0 5px;
+  font-size: var(--text-xs);
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+.tr-prog-bar {
+  display: block;
+  height: 5px;
+  border-radius: var(--radius-pill);
+  background: var(--blue-50);
+  overflow: hidden;
+}
+.tr-prog-bar > span { display: block; height: 100%; background: var(--gradient-brand); border-radius: var(--radius-pill); }
+.tr-prog-streak { margin: 0 0 12px; font-size: var(--text-xs); color: var(--muted); }
+
+.tr-prog-label {
+  margin: 0 0 6px;
+  font-family: var(--font-label);
+  font-size: 9.5px;
+  font-weight: var(--fw-bold);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--muted-soft);
+}
+.tr-prog-level {
+  display: grid;
+  grid-template-columns: 22px minmax(0, 1fr) 34px;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 7px 6px;
+  border: none;
+  border-radius: 8px;
+  background: none;
+  font: inherit;
+  color: var(--ink);
+  cursor: pointer;
+  text-align: left;
+}
+.tr-prog-level:hover { background: var(--surface); }
+.tr-prog-level-name { font-family: var(--font-label); font-size: var(--text-xs); font-weight: var(--fw-bold); }
+.tr-prog-level-pct { font-size: var(--text-xs); color: var(--muted); text-align: right; font-variant-numeric: tabular-nums; }

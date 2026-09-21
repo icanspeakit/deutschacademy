@@ -23,11 +23,11 @@ import satz from "../../../data/pruefungen/testdaf/uebungssatz-1.json";
 >
   <PracticeHeader title="TestDaF" />
   <main class="practice-main practice-main--wide practice-main--trainer">
-    <a href="/pruefungen/testdaf" class="vp-back-link">← Zurück zur TestDaF-Seite</a>
+    <a href="/pruefungen/testdaf" class="vp-back-link" data-i18n="exam.backToTestdaf">← Zurück zur TestDaF-Seite</a>
 
     <div class="practice-hero">
       <p class="eyebrow">TestDaF · Übungssatz</p>
-      <h1><span class="hero-exam">TestDaF</span> Leseverstehen und Schreiben</h1>
+      <h1><span class="hero-exam">TestDaF</span> <span data-i18n="exam.h1.readWrite">Leseverstehen und Schreiben</span></h1>
       <p>
         Drei Leseaufgaben im TestDaF-Format, dazu der Schreibauftrag zur Grafik. Wie die Aufgaben
         entstanden sind, steht im Teil „Start“ — bitte einmal lesen.
@@ -43,6 +43,16 @@ import satz from "../../../data/pruefungen/testdaf/uebungssatz-1.json";
     import { choiceCard, el, sectionHeader, escapeHtml, practiceToggle } from "../../../lib/exam/renderHelpers.js";
     import { countAnswered, countCorrect, percent } from "../../../lib/exam/scoring.js";
     import { recordAttempt } from "../../../lib/progress.js";
+    import { getLang, loadDict, translate } from "../../../lib/i18n.js";
+
+    /* Resolved once, before the app mounts, rather than re-rendered on every language
+       change. This page is a running exam: its sections are built from one config array
+       at mount and hold answers already typed, so rebuilding them mid-sitting to change a
+       table header would be a poor trade. The surrounding page still re-translates
+       instantly via data-i18n; the simulator's own chrome follows on the next visit.
+       Exam CONTENT is untouched — prompts, options and transcripts stay German. */
+    const dict = await loadDict(getLang());
+    const t = (key, vars) => translate(dict, key, vars);
 
     const data = JSON.parse(document.getElementById("tdaf-data").textContent);
     const { leseverstehen: lv, schreiben } = data;
@@ -66,11 +76,11 @@ import satz from "../../../data/pruefungen/testdaf/uebungssatz-1.json";
       for (const para of t.body.split("\n\n")) body.appendChild(el("p", null, escapeHtml(para)));
       box.appendChild(body);
 
-      const toggle = el("button", "quiz-btn quiz-btn--ghost", "Text einklappen");
+      const toggle = el("button", "quiz-btn quiz-btn--ghost", t("exam.hideText"));
       toggle.type = "button";
       toggle.addEventListener("click", () => {
         const folded = box.classList.toggle("is-folded");
-        toggle.textContent = folded ? "Text wieder aufklappen" : "Text einklappen";
+        toggle.textContent = t(folded ? "exam.showText" : "exam.hideText");
       });
       box.appendChild(toggle);
       return box;
@@ -91,11 +101,11 @@ import satz from "../../../data/pruefungen/testdaf/uebungssatz-1.json";
 
           const facts = el("table", "exam-breakdown");
           facts.innerHTML =
-            "<thead><tr><th>Aufgabe</th><th>Was zu tun ist</th></tr></thead><tbody>" +
-            "<tr><td>Lesen 1</td><td>Zuordnung · 10 Aufgaben</td></tr>" +
-            "<tr><td>Lesen 2</td><td>Multiple Choice · 10 Aufgaben</td></tr>" +
-            "<tr><td>Lesen 3</td><td>Ja / Nein / steht nicht im Text · 10 Aufgaben</td></tr>" +
-            "<tr><td>Schreiben</td><td>Grafik beschreiben und Stellung nehmen · ca. 60 Min.</td></tr>" +
+            "<thead><tr><th>" + escapeHtml(t("format.th.task")) + "</th><th>" + escapeHtml(t("format.th.todo")) + "</th></tr></thead><tbody>" +
+            "<tr><td>" + escapeHtml(t("skill.lesen")) + " 1</td><td>" + escapeHtml(t("tdf.row.lesen1")) + "</td></tr>" +
+            "<tr><td>" + escapeHtml(t("skill.lesen")) + " 2</td><td>" + escapeHtml(t("tdf.row.lesen2")) + "</td></tr>" +
+            "<tr><td>" + escapeHtml(t("skill.lesen")) + " 3</td><td>" + escapeHtml(t("tdf.row.lesen3")) + "</td></tr>" +
+            "<tr><td>" + escapeHtml(t("skill.schreiben")) + "</td><td>" + escapeHtml(t("tdf.row.schreiben")) + "</td></tr>" +
             "</tbody>";
           main.appendChild(el("div", "exam-result")).appendChild(facts);
 
@@ -108,7 +118,7 @@ import satz from "../../../data/pruefungen/testdaf/uebungssatz-1.json";
               "Hörverstehen fehlt in diesem Übungssatz: Dafür brauchen wir Tonaufnahmen. Einen Vortrag zu lesen statt zu hören wäre eine andere Übung unter demselben Namen.")
           );
 
-          const go = el("button", "quiz-btn quiz-btn--primary", "Übungssatz starten →");
+          const go = el("button", "quiz-btn quiz-btn--primary", t("exam.startSet"));
           go.type = "button";
           go.addEventListener("click", () => ctx.goTo("lesen1"));
           main.appendChild(el("div", "exam-actions")).appendChild(go);
@@ -355,15 +365,15 @@ import satz from "../../../data/pruefungen/testdaf/uebungssatz-1.json";
             // Explicitly not a TDN. TestDaF grades each skill separately and every
             // university sets its own requirement, so a percentage here is feedback on
             // this practice set and nothing more.
-            const band = pct >= 80 ? ["", "Sehr sicher in diesem Übungssatz"]
-              : pct >= 60 ? ["mid", "Solide, mit Lücken"]
-              : ["low", "Hier lohnt sich weiteres Üben"];
+            const band = pct >= 80 ? ["", t("tdf.verdict.strong")]
+              : pct >= 60 ? ["mid", t("tdf.verdict.mid")]
+              : ["low", t("tdf.verdict.low")];
             card.appendChild(el("span", "exam-band " + band[0], band[1]));
             card.appendChild(el("p", "instruction", pct + "% richtig. Das ist keine TDN-Einstufung — siehe den Hinweis darunter."));
 
             const table = el("table", "exam-breakdown");
             table.innerHTML =
-              "<thead><tr><th>Aufgabe</th><th>Richtig</th></tr></thead><tbody>" +
+              "<thead><tr><th>" + escapeHtml(t("format.th.task")) + "</th><th>" + escapeHtml(t("exam.th.correct")) + "</th></tr></thead><tbody>" +
               "<tr><td>1 · Zuordnung</td><td>" + countCorrect(a1Ids, ctx.state) + " / " + a1Ids.length + "</td></tr>" +
               "<tr><td>2 · Multiple Choice</td><td>" + countCorrect(a2Ids, ctx.state) + " / " + a2Ids.length + "</td></tr>" +
               "<tr><td>3 · Ja/Nein/nichts</td><td>" + countCorrect(a3Ids, ctx.state) + " / " + a3Ids.length + "</td></tr>" +

@@ -33,8 +33,18 @@ interface Props {
   badges?: string[];
   /** Heading over the practice column. */
   practiceHeading?: string;
+  /* i18n keys for the three strings above. The German prop stays the server-rendered
+     text and the fallback; the key is what the other four languages are read from. An
+     exam's own name (`header`, and `title` where it is a proper noun like "TestDaF")
+     needs no key — it is the same word everywhere. */
+  titleKey?: string;
+  leadKey?: string;
+  practiceHeadingKey?: string;
 }
-const { header, title, lead, badges = [], practiceHeading = "Üben" } = Astro.props;
+const {
+  header, title, lead, badges = [], practiceHeading = "Üben",
+  titleKey, leadKey, practiceHeadingKey = "exam.practiceHeading",
+} = Astro.props;
 ---
 <PracticeHeader title={header} />
 
@@ -42,7 +52,7 @@ const { header, title, lead, badges = [], practiceHeading = "Üben" } = Astro.pr
      Collapsed is the more common state, so starting here means no visible re-layout
      on load. -->
 <main class="vp-page vp-page--split" id="vp-page" data-rule="hidden" data-anim="off">
-  <a href="/pruefungen" class="vp-back-link">← Alle Prüfungen</a>
+  <a href="/pruefungen" class="vp-back-link" data-i18n="exam.backToAll">← Alle Prüfungen</a>
 
   <div class="vp-workspace">
     <!-- First in the DOM so that on a phone — where scroll order is the only hierarchy
@@ -51,15 +61,15 @@ const { header, title, lead, badges = [], practiceHeading = "Üben" } = Astro.pr
     <aside class="vp-col vp-col--rule" id="vp-rule">
       <div class="vp-hero">
         <div class="vp-hero-badges">
-          <span class="badge badge-brand">Prüfung</span>
+          <span class="badge badge-brand" data-i18n="exam.badge">Prüfung</span>
           {badges.map((b) => <span class="badge badge-info">{b}</span>)}
         </div>
-        <h1>{title}</h1>
-        <p>{lead}</p>
+        <h1 data-i18n={titleKey}>{title}</h1>
+        <p data-i18n={leadKey}>{lead}</p>
       </div>
 
       <div class="vp-card vp-rule-card" id="vp-rule-card">
-        <div class="vp-card-label">Was ist das für eine Prüfung?</div>
+        <div class="vp-card-label" data-i18n="exam.whatIsThis">Was ist das für eine Prüfung?</div>
         <slot name="info" />
       </div>
 
@@ -71,19 +81,21 @@ const { header, title, lead, badges = [], practiceHeading = "Üben" } = Astro.pr
         id="vp-rule-peek"
         data-show="Was ist das für eine Prüfung?"
         data-hide="Erklärung einklappen"
+        data-i18n-attr="data-show:exam.whatIsThis;data-hide:exam.collapseInfo"
         aria-controls="vp-rule-card"
       >Was ist das für eine Prüfung?</button>
     </aside>
 
     <section class="vp-col vp-col--ex">
       <div class="vp-ex-toolbar">
-        <h2 class="vp-section-title">{practiceHeading}</h2>
+        <h2 class="vp-section-title" data-i18n={practiceHeadingKey}>{practiceHeading}</h2>
         <button
           type="button"
           class="vp-rule-toggle"
           id="vp-rule-toggle"
           data-show="Erklärung einblenden"
           data-hide="Erklärung ausblenden"
+          data-i18n-attr="data-show:exam.showInfo;data-hide:exam.hideInfo"
         >Erklärung einblenden</button>
       </div>
 
@@ -111,16 +123,12 @@ const { header, title, lead, badges = [], practiceHeading = "Üben" } = Astro.pr
     storageKey: "da-pruefung-info",
     seenKey: "da-pruefung-info-seen",
     coach: [
-      ["Was die Prüfung ist, steht hier",
-       "Aufbau, Bewertung und Quellen — neben den Übungen statt vor ihnen."],
-      ["Hier ein- und ausblenden",
-       "Über diesen Schalter. Deine Wahl wird gemerkt, auch für die nächste Prüfung."],
+      ["intro.exam.title", "intro.exam.text"],
+      ["intro.toggle.title", "intro.exam.toggleText"],
     ],
     coachCompact: [
-      ["Das ist die Erklärung",
-       "Aufbau, Bewertung und Quellen — eingeklappt, damit die Übungen sofort beginnen."],
-      ["Hier ein- und ausblenden",
-       "Ein Tippen zeigt sie ganz, ein zweites klappt sie wieder ein. Deine Wahl wird gemerkt."],
+      ["intro.examCompact.title", "intro.examCompact.text"],
+      ["intro.toggle.title", "intro.toggleCompact.text"],
     ],
   });
 </script>

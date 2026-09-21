@@ -6,15 +6,32 @@
   "source": "MATRIX ADJEKTIVE.pdf (vollständige Deklinationstabelle), Adjektivübung.pdf, Adjektivubung nur ABs.pdf",
   "concept": {
     "flow": [
-      { "text": "Artikelwort", "variant": "verb" },
-      { "text": "Adjektiv + Endung", "variant": "prep" },
-      { "text": "Nomen" }
+      {
+        "text": "Artikelwort",
+        "variant": "verb"
+      },
+      {
+        "text": "Adjektiv + Endung",
+        "variant": "prep"
+      },
+      {
+        "text": "Nomen"
+      }
     ],
     "exampleHtml": "der <span class=\"vp-prep\">hohe</span> Baum · ein <span class=\"vp-prep\">hoher</span> Baum · <span class=\"vp-prep\">alter</span> Wein",
     "qa": [
-      { "html": "<strong>Typ A</strong> — nach <em>der/die/das</em>: das Artikelwort zeigt den Kasus schon an, das Adjektiv bekommt nur <strong>-e</strong> oder <strong>-en</strong>.", "tag": "schwach" },
-      { "html": "<strong>Typ B</strong> — nach <em>ein-/kein-/mein-</em>: dort, wo <em>ein</em> keine Endung hat, muss das Adjektiv die Arbeit machen (<em>ein hoh<strong>er</strong> Baum</em>).", "tag": "gemischt" },
-      { "html": "<strong>Typ C</strong> — ohne Artikel: das Adjektiv trägt die Artikelendung selbst (<em>alt<strong>er</strong> Wein</em>, <em>mit alt<strong>em</strong> Wein</em>).", "tag": "stark" }
+      {
+        "html": "<strong>Typ A</strong> — nach <em>der/die/das</em>: das Artikelwort zeigt den Kasus schon an, das Adjektiv bekommt nur <strong>-e</strong> oder <strong>-en</strong>.",
+        "tag": "schwach"
+      },
+      {
+        "html": "<strong>Typ B</strong> — nach <em>ein-/kein-/mein-</em>: dort, wo <em>ein</em> keine Endung hat, muss das Adjektiv die Arbeit machen (<em>ein hoh<strong>er</strong> Baum</em>).",
+        "tag": "gemischt"
+      },
+      {
+        "html": "<strong>Typ C</strong> — ohne Artikel: das Adjektiv trägt die Artikelendung selbst (<em>alt<strong>er</strong> Wein</em>, <em>mit alt<strong>em</strong> Wein</em>).",
+        "tag": "stark"
+      }
     ],
     "noteHtml": "Faustregel für Typ A: im <em>Singular Nominativ</em> (und Akkusativ feminin/neutral) steht <em>-e</em> — überall sonst <em>-en</em>. Im <em>Plural</em> ist nach jedem Artikelwort immer <em>-en</em>.",
     "reference": {
@@ -24,45 +41,320 @@
         {
           "caption": "Typ A · Singular — nach dem bestimmten Artikel",
           "note": "Ebenso nach: dies-, jen-, jed-, manch-, welch-, derjenige, derselbe, folgend-.",
-          "head": ["", "maskulin", "feminin", "neutral"],
+          "head": [
+            "",
+            "maskulin",
+            "feminin",
+            "neutral"
+          ],
           "rows": [
-            ["Nominativ", "der hohe Baum", "die weiße Wand", "das kleine Tier"],
-            ["Akkusativ", "den hohen Baum", "die weiße Wand", "das kleine Tier"],
-            ["Dativ", "dem hohen Baum", "der weißen Wand", "dem kleinen Tier"],
-            ["Genitiv", "des hohen Baums", "der weißen Wand", "des kleinen Tiers"]
+            [
+              "Nominativ",
+              "der hohe Baum",
+              "die weiße Wand",
+              "das kleine Tier"
+            ],
+            [
+              "Akkusativ",
+              "den hohen Baum",
+              "die weiße Wand",
+              "das kleine Tier"
+            ],
+            [
+              "Dativ",
+              "dem hohen Baum",
+              "der weißen Wand",
+              "dem kleinen Tier"
+            ],
+            [
+              "Genitiv",
+              "des hohen Baums",
+              "der weißen Wand",
+              "des kleinen Tiers"
+            ]
           ]
         },
         {
           "caption": "Typ B · Singular — nach dem unbestimmten Artikel",
           "note": "Ebenso nach: Possessivpronomen (mein-, dein- usw.), kein-, irgendein-.",
-          "head": ["", "maskulin", "feminin", "neutral"],
+          "head": [
+            "",
+            "maskulin",
+            "feminin",
+            "neutral"
+          ],
           "rows": [
-            ["Nominativ", "ein hoher Baum", "eine weiße Wand", "ein kleines Tier"],
-            ["Akkusativ", "einen hohen Baum", "eine weiße Wand", "ein kleines Tier"],
-            ["Dativ", "einem hohen Baum", "einer weißen Wand", "einem kleinen Tier"],
-            ["Genitiv", "eines hohen Baums", "einer weißen Wand", "eines kleinen Tiers"]
+            [
+              "Nominativ",
+              "ein hoher Baum",
+              "eine weiße Wand",
+              "ein kleines Tier"
+            ],
+            [
+              "Akkusativ",
+              "einen hohen Baum",
+              "eine weiße Wand",
+              "ein kleines Tier"
+            ],
+            [
+              "Dativ",
+              "einem hohen Baum",
+              "einer weißen Wand",
+              "einem kleinen Tier"
+            ],
+            [
+              "Genitiv",
+              "eines hohen Baums",
+              "einer weißen Wand",
+              "eines kleinen Tiers"
+            ]
           ]
         },
         {
           "caption": "Typ C · Singular — ohne Artikel",
           "note": "Ebenso nach: vorangestelltem Genitiv (Evas roter Mantel), dessen, wessen, manch, solch, welch, etwas, genug, mehr, viel, wenig, nichts.",
-          "head": ["", "maskulin", "feminin", "neutral"],
+          "head": [
+            "",
+            "maskulin",
+            "feminin",
+            "neutral"
+          ],
           "rows": [
-            ["Nominativ", "alter Wein", "frische Milch", "helles Bier"],
-            ["Akkusativ", "alten Wein", "frische Milch", "helles Bier"],
-            ["Dativ", "altem Wein", "frischer Milch", "hellem Bier"],
-            ["Genitiv", "alten Weins", "frischer Milch", "hellen Biers"]
+            [
+              "Nominativ",
+              "alter Wein",
+              "frische Milch",
+              "helles Bier"
+            ],
+            [
+              "Akkusativ",
+              "alten Wein",
+              "frische Milch",
+              "helles Bier"
+            ],
+            [
+              "Dativ",
+              "altem Wein",
+              "frischer Milch",
+              "hellem Bier"
+            ],
+            [
+              "Genitiv",
+              "alten Weins",
+              "frischer Milch",
+              "hellen Biers"
+            ]
           ]
         },
         {
           "caption": "Plural — mit und ohne Artikelwort",
           "note": "Mit Artikelwort immer -en. Ohne Artikelwort: Nominativ/Akkusativ -e, Dativ -en, Genitiv -er. Ebenso ohne Artikel nach: Zahlwörtern, andere, einige, ein paar, mehrere, viele, wenige.",
-          "head": ["", "mit Artikelwort", "ohne Artikelwort"],
+          "head": [
+            "",
+            "mit Artikelwort",
+            "ohne Artikelwort"
+          ],
           "rows": [
-            ["Nominativ", "die hohen Bäume", "hohe Bäume"],
-            ["Akkusativ", "die hohen Bäume", "hohe Bäume"],
-            ["Dativ", "den hohen Bäumen", "hohen Bäumen"],
-            ["Genitiv", "der hohen Bäume", "hoher Bäume"]
+            [
+              "Nominativ",
+              "die hohen Bäume",
+              "hohe Bäume"
+            ],
+            [
+              "Akkusativ",
+              "die hohen Bäume",
+              "hohe Bäume"
+            ],
+            [
+              "Dativ",
+              "den hohen Bäumen",
+              "hohen Bäumen"
+            ],
+            [
+              "Genitiv",
+              "der hohen Bäume",
+              "hoher Bäume"
+            ]
+          ]
+        }
+      ]
+    }
+  },
+  "aktiv": {
+    "listen": [
+      {
+        "text": "der hohe Baum",
+        "note": "Typ A — der Artikel zeigt den Kasus, das Adjektiv sagt nur -e.",
+        "audio": "/audio/grammatik/adjektivdeklination/der-hohe-baum.mp3"
+      },
+      {
+        "text": "ein hoher Baum",
+        "note": "Typ B — ein hat keine Endung, also trägt das Adjektiv sie.",
+        "audio": "/audio/grammatik/adjektivdeklination/ein-hoher-baum.mp3"
+      },
+      {
+        "text": "alter Wein",
+        "note": "Typ C — kein Artikel, das Adjektiv übernimmt seine Endung.",
+        "audio": "/audio/grammatik/adjektivdeklination/alter-wein.mp3"
+      }
+    ],
+    "hoeren": {
+      "instruction": "Hör zu und wähle die Form, die du gehört hast. Zweimal hören ist erlaubt.",
+      "items": [
+        {
+          "text": "Ich fahre mit dem neuen Auto zur Arbeit.",
+          "choices": [
+            "dem neuen",
+            "den neuen",
+            "einem neuen"
+          ],
+          "correct": 0,
+          "audio": "/audio/grammatik/adjektivdeklination/ich-fahre-mit-dem-neuen-auto-zur-arbeit.mp3"
+        },
+        {
+          "text": "Das ist wirklich ein guter Wein.",
+          "choices": [
+            "gute",
+            "guter",
+            "gutes"
+          ],
+          "correct": 1,
+          "audio": "/audio/grammatik/adjektivdeklination/das-ist-wirklich-ein-guter-wein.mp3"
+        },
+        {
+          "text": "Sie hat eine kleine Wohnung in der Altstadt gefunden.",
+          "choices": [
+            "kleine",
+            "kleinen",
+            "kleiner"
+          ],
+          "correct": 0,
+          "audio": "/audio/grammatik/adjektivdeklination/sie-hat-eine-kleine-wohnung-in-der-altstadt-gefunden.mp3"
+        },
+        {
+          "text": "Wir haben den ganzen Abend über das Projekt gesprochen.",
+          "choices": [
+            "ganze",
+            "ganzen",
+            "ganzem"
+          ],
+          "correct": 1,
+          "audio": "/audio/grammatik/adjektivdeklination/wir-haben-den-ganzen-abend-ueber-das-projekt-gesprochen.mp3"
+        },
+        {
+          "text": "Mit altem Wein schmeckt die Soße besser.",
+          "choices": [
+            "alten",
+            "altem",
+            "alter"
+          ],
+          "correct": 1,
+          "audio": "/audio/grammatik/adjektivdeklination/mit-altem-wein-schmeckt-die-sosse-besser.mp3"
+        },
+        {
+          "text": "Die weißen Wände gefallen mir am besten.",
+          "choices": [
+            "weiße",
+            "weißer",
+            "weißen"
+          ],
+          "correct": 2,
+          "audio": "/audio/grammatik/adjektivdeklination/die-weissen-waende-gefallen-mir-am-besten.mp3"
+        }
+      ]
+    },
+    "sprechen": {
+      "rounds": [
+        {
+          "label": "1 · der → ein",
+          "instruction": "Du hörst eine Gruppe mit der/die/das. Sag sie noch einmal mit ein-.",
+          "example": {
+            "prompt": "der hohe Baum",
+            "answer": "ein hoher Baum"
+          },
+          "items": [
+            {
+              "prompt": "der neue Film",
+              "answer": "ein neuer Film",
+              "audioPrompt": "/audio/grammatik/adjektivdeklination/der-neue-film.mp3",
+              "audioAnswer": "/audio/grammatik/adjektivdeklination/ein-neuer-film--8wphfh.mp3"
+            },
+            {
+              "prompt": "die weiße Wand",
+              "answer": "eine weiße Wand",
+              "audioPrompt": "/audio/grammatik/adjektivdeklination/die-weisse-wand.mp3",
+              "audioAnswer": "/audio/grammatik/adjektivdeklination/eine-weisse-wand--8wphfh.mp3"
+            },
+            {
+              "prompt": "das kleine Tier",
+              "answer": "ein kleines Tier",
+              "audioPrompt": "/audio/grammatik/adjektivdeklination/das-kleine-tier.mp3",
+              "audioAnswer": "/audio/grammatik/adjektivdeklination/ein-kleines-tier--8wphfh.mp3"
+            },
+            {
+              "prompt": "der gute Wein",
+              "answer": "ein guter Wein",
+              "audioPrompt": "/audio/grammatik/adjektivdeklination/der-gute-wein.mp3",
+              "audioAnswer": "/audio/grammatik/adjektivdeklination/ein-guter-wein--8wphfh.mp3"
+            },
+            {
+              "prompt": "das alte Haus",
+              "answer": "ein altes Haus",
+              "audioPrompt": "/audio/grammatik/adjektivdeklination/das-alte-haus.mp3",
+              "audioAnswer": "/audio/grammatik/adjektivdeklination/ein-altes-haus--8wphfh.mp3"
+            },
+            {
+              "prompt": "die junge Frau",
+              "answer": "eine junge Frau",
+              "audioPrompt": "/audio/grammatik/adjektivdeklination/die-junge-frau.mp3",
+              "audioAnswer": "/audio/grammatik/adjektivdeklination/eine-junge-frau--8wphfh.mp3"
+            }
+          ]
+        },
+        {
+          "label": "2 · Nominativ → Dativ",
+          "instruction": "Du hörst eine Gruppe im Nominativ. Sag sie im Dativ — mit „mit“.",
+          "example": {
+            "prompt": "der hohe Baum",
+            "answer": "mit dem hohen Baum"
+          },
+          "items": [
+            {
+              "prompt": "das neue Auto",
+              "answer": "mit dem neuen Auto",
+              "audioPrompt": "/audio/grammatik/adjektivdeklination/das-neue-auto.mp3",
+              "audioAnswer": "/audio/grammatik/adjektivdeklination/mit-dem-neuen-auto--8wphfh.mp3"
+            },
+            {
+              "prompt": "ein kleines Tier",
+              "answer": "mit einem kleinen Tier",
+              "audioPrompt": "/audio/grammatik/adjektivdeklination/ein-kleines-tier.mp3",
+              "audioAnswer": "/audio/grammatik/adjektivdeklination/mit-einem-kleinen-tier--8wphfh.mp3"
+            },
+            {
+              "prompt": "alter Wein",
+              "answer": "mit altem Wein",
+              "audioPrompt": "/audio/grammatik/adjektivdeklination/alter-wein.mp3",
+              "audioAnswer": "/audio/grammatik/adjektivdeklination/mit-altem-wein--8wphfh.mp3"
+            },
+            {
+              "prompt": "die weiße Wand",
+              "answer": "mit der weißen Wand",
+              "audioPrompt": "/audio/grammatik/adjektivdeklination/die-weisse-wand.mp3",
+              "audioAnswer": "/audio/grammatik/adjektivdeklination/mit-der-weissen-wand--8wphfh.mp3"
+            },
+            {
+              "prompt": "eine junge Frau",
+              "answer": "mit einer jungen Frau",
+              "audioPrompt": "/audio/grammatik/adjektivdeklination/eine-junge-frau.mp3",
+              "audioAnswer": "/audio/grammatik/adjektivdeklination/mit-einer-jungen-frau--8wphfh.mp3"
+            },
+            {
+              "prompt": "warmes Wasser",
+              "answer": "mit warmem Wasser",
+              "audioPrompt": "/audio/grammatik/adjektivdeklination/warmes-wasser.mp3",
+              "audioAnswer": "/audio/grammatik/adjektivdeklination/mit-warmem-wasser--8wphfh.mp3"
+            }
           ]
         }
       ]
@@ -112,28 +404,70 @@
       "title": "Welcher Typ steckt dahinter?",
       "hint": "Klicke erst ein Artikelwort, dann den passenden Deklinationstyp.",
       "pairs": [
-        { "q": "dieser, jeder, welcher", "a": "Typ A — Adjektiv nur -e / -en" },
-        { "q": "ein, kein, mein, irgendein", "a": "Typ B — Adjektiv springt ein, wo der Artikel keine Endung hat" },
-        { "q": "gar kein Artikelwort", "a": "Typ C — Adjektiv trägt die Artikelendung selbst" },
-        { "q": "viele, einige, mehrere (Plural)", "a": "Plural ohne Artikelwort — Nom./Akk. -e, Dativ -en" },
-        { "q": "die, diese, alle (Plural)", "a": "Plural mit Artikelwort — immer -en" }
+        {
+          "q": "dieser, jeder, welcher",
+          "a": "Typ A — Adjektiv nur -e / -en"
+        },
+        {
+          "q": "ein, kein, mein, irgendein",
+          "a": "Typ B — Adjektiv springt ein, wo der Artikel keine Endung hat"
+        },
+        {
+          "q": "gar kein Artikelwort",
+          "a": "Typ C — Adjektiv trägt die Artikelendung selbst"
+        },
+        {
+          "q": "viele, einige, mehrere (Plural)",
+          "a": "Plural ohne Artikelwort — Nom./Akk. -e, Dativ -en"
+        },
+        {
+          "q": "die, diese, alle (Plural)",
+          "a": "Plural mit Artikelwort — immer -en"
+        }
       ]
     },
     {
       "type": "table",
       "title": "Ergänzen Sie die Endung.",
       "hint": "Jede Zeile ist ein Kasus aus der Tabelle oben.",
-      "columns": ["Form", "Endung"],
+      "columns": [
+        "Form",
+        "Endung"
+      ],
       "placeholder": "Endung…",
       "rows": [
-        { "term": "die weiß___ Wand (Nominativ)", "answer": "e" },
-        { "term": "den hoh___ Baum (Akkusativ)", "answer": "en" },
-        { "term": "einem klein___ Tier (Dativ)", "answer": "en" },
-        { "term": "eine weiß___ Wand (Akkusativ)", "answer": "e" },
-        { "term": "hell___ Bier (Nominativ, ohne Artikel)", "answer": "es" },
-        { "term": "mit alt___ Wein (Dativ, ohne Artikel)", "answer": "em" },
-        { "term": "die hoh___ Bäume (Plural, Nominativ)", "answer": "en" },
-        { "term": "frisch___ Milch (Nominativ, ohne Artikel)", "answer": "e" }
+        {
+          "term": "die weiß___ Wand (Nominativ)",
+          "answer": "e"
+        },
+        {
+          "term": "den hoh___ Baum (Akkusativ)",
+          "answer": "en"
+        },
+        {
+          "term": "einem klein___ Tier (Dativ)",
+          "answer": "en"
+        },
+        {
+          "term": "eine weiß___ Wand (Akkusativ)",
+          "answer": "e"
+        },
+        {
+          "term": "hell___ Bier (Nominativ, ohne Artikel)",
+          "answer": "es"
+        },
+        {
+          "term": "mit alt___ Wein (Dativ, ohne Artikel)",
+          "answer": "em"
+        },
+        {
+          "term": "die hoh___ Bäume (Plural, Nominativ)",
+          "answer": "en"
+        },
+        {
+          "term": "frisch___ Milch (Nominativ, ohne Artikel)",
+          "answer": "e"
+        }
       ]
     },
     {
@@ -141,21 +475,58 @@
       "title": "Lückentext: Ergänzen Sie die Endungen.",
       "hint": "Eine kleine Wohnungsbesichtigung — nur die Endungen eintippen.",
       "segments": [
-        { "text": "Gestern haben wir eine klein" },
-        { "blank": 0, "answer": "e" },
-        { "text": " Wohnung in der Altstadt besichtigt. Der alt" },
-        { "blank": 1, "answer": "e" },
-        { "text": " Holzboden hat mir sofort gefallen. Aus dem groß" },
-        { "blank": 2, "answer": "en" },
-        { "text": " Fenster sieht man den Park. In der Küche steht ein neu" },
-        { "blank": 3, "answer": "er" },
-        { "text": " Herd, und im Bad liegen weiß" },
-        { "blank": 4, "answer": "e" },
-        { "text": " Fliesen. Nur das klein" },
-        { "blank": 5, "answer": "e" },
-        { "text": " Schlafzimmer ist wirklich eng. Trotzdem: Für diesen günstig" },
-        { "blank": 6, "answer": "en" },
-        { "text": " Preis nehmen wir sie." }
+        {
+          "text": "Gestern haben wir eine klein"
+        },
+        {
+          "blank": 0,
+          "answer": "e"
+        },
+        {
+          "text": " Wohnung in der Altstadt besichtigt. Der alt"
+        },
+        {
+          "blank": 1,
+          "answer": "e"
+        },
+        {
+          "text": " Holzboden hat mir sofort gefallen. Aus dem groß"
+        },
+        {
+          "blank": 2,
+          "answer": "en"
+        },
+        {
+          "text": " Fenster sieht man den Park. In der Küche steht ein neu"
+        },
+        {
+          "blank": 3,
+          "answer": "er"
+        },
+        {
+          "text": " Herd, und im Bad liegen weiß"
+        },
+        {
+          "blank": 4,
+          "answer": "e"
+        },
+        {
+          "text": " Fliesen. Nur das klein"
+        },
+        {
+          "blank": 5,
+          "answer": "e"
+        },
+        {
+          "text": " Schlafzimmer ist wirklich eng. Trotzdem: Für diesen günstig"
+        },
+        {
+          "blank": 6,
+          "answer": "en"
+        },
+        {
+          "text": " Preis nehmen wir sie."
+        }
       ]
     },
     {
@@ -165,20 +536,76 @@
         {
           "id": "a1",
           "hint": "Typ A · Akkusativ",
-          "correct": ["Ich", "habe", "den", "neuen", "Film", "schon", "gesehen", "."],
-          "shuffled": ["neuen", "Ich", "gesehen", "den", ".", "habe", "Film", "schon"]
+          "correct": [
+            "Ich",
+            "habe",
+            "den",
+            "neuen",
+            "Film",
+            "schon",
+            "gesehen",
+            "."
+          ],
+          "shuffled": [
+            "neuen",
+            "Ich",
+            "gesehen",
+            "den",
+            ".",
+            "habe",
+            "Film",
+            "schon"
+          ]
         },
         {
           "id": "a2",
           "hint": "Typ B · Dativ nach „mit“",
-          "correct": ["Sie", "kommt", "mit", "einem", "alten", "Fahrrad", "zur", "Arbeit", "."],
-          "shuffled": ["alten", "mit", "Sie", "Arbeit", "einem", ".", "kommt", "Fahrrad", "zur"]
+          "correct": [
+            "Sie",
+            "kommt",
+            "mit",
+            "einem",
+            "alten",
+            "Fahrrad",
+            "zur",
+            "Arbeit",
+            "."
+          ],
+          "shuffled": [
+            "alten",
+            "mit",
+            "Sie",
+            "Arbeit",
+            "einem",
+            ".",
+            "kommt",
+            "Fahrrad",
+            "zur"
+          ]
         },
         {
           "id": "a3",
           "hint": "Typ C · ohne Artikel",
-          "correct": ["Zum", "Frühstück", "trinkt", "er", "immer", "schwarzen", "Kaffee", "."],
-          "shuffled": ["schwarzen", "Zum", "Kaffee", "trinkt", ".", "er", "Frühstück", "immer"]
+          "correct": [
+            "Zum",
+            "Frühstück",
+            "trinkt",
+            "er",
+            "immer",
+            "schwarzen",
+            "Kaffee",
+            "."
+          ],
+          "shuffled": [
+            "schwarzen",
+            "Zum",
+            "Kaffee",
+            "trinkt",
+            ".",
+            "er",
+            "Frühstück",
+            "immer"
+          ]
         }
       ]
     }

@@ -64,8 +64,12 @@ const pending = set.items.filter((t) => t.imageNeeded && !t.image).length;
               <span class="sk-card-ic"><Icon name="map-pin" size={20} /></span>
               <span class="sk-card-txt">
                 <b>{i + 1}. {t.title}</b>
-                <i>{t.blurb}</i>
-                <span class="sk-card-meta">{types[t.type]} · {t.seconds} Sek. Redezeit</span>
+                <i data-i18n={`sprechen.${t.id}.blurb`}>{t.blurb}</i>
+                <span class="sk-card-meta">
+                  <span data-i18n={`type.sprechen.${t.type}`}>{types[t.type]}</span>
+                  {" · "}
+                  <span data-i18n="meta.redezeit" data-i18n-vars={JSON.stringify({ s: t.seconds })}>{t.seconds} Sek. Redezeit</span>
+                </span>
               </span>
               <span class="sk-card-go" aria-hidden="true">→</span>
             </a>

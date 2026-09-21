@@ -50,6 +50,7 @@
  */
 import { createRuleIntro } from "./ruleIntro.js";
 import { createCardCollapse } from "./cardCollapse.js";
+import { onLangChange } from "./i18n.js";
 
 const WIDE = "(min-width: 1001px)";
 
@@ -115,15 +116,22 @@ export function mountRuleColumn(page, {
     document.body.style.overflow = on && compactMq.matches ? "hidden" : "";
   }
 
+  // Split out of apply() so a language change can repaint the words without moving the
+  // column: the labels live in data-show / data-hide, which i18n rewrites in place, and
+  // rewriting an attribute does not touch the text already painted from it.
+  function paintLabels(next) {
+    if (ruleBtn) ruleBtn.textContent = next ? ruleBtn.dataset.show : ruleBtn.dataset.hide;
+    // The sheet's opener keeps its word: while the sheet is up the button is behind the
+    // scrim, and the control the learner reaches for is the sheet's own ✕.
+    if (peekBtn && !sheet) peekBtn.textContent = next ? peekBtn.dataset.show : peekBtn.dataset.hide;
+  }
+
   function apply(next, persist = true) {
     crop.animate(next);
     hidden = next;
     page.dataset.rule = next ? "hidden" : "";
-    if (ruleBtn) ruleBtn.textContent = next ? ruleBtn.dataset.show : ruleBtn.dataset.hide;
+    paintLabels(next);
     if (peekBtn) {
-      // The sheet's opener keeps its word: while the sheet is up the button is behind the
-      // scrim, and the control the learner reaches for is the sheet's own ✕.
-      if (!sheet) peekBtn.textContent = next ? peekBtn.dataset.show : peekBtn.dataset.hide;
       peekBtn.setAttribute("aria-expanded", next ? "false" : "true");
     }
     // The pivot's label never changes — it only exists while the column is away, and
@@ -136,7 +144,14 @@ export function mountRuleColumn(page, {
     if (minBtn) minBtn.setAttribute("aria-expanded", next ? "false" : "true");
     syncInert();
     lockScroll(!next);
-    if (persist && storageKey) { try { localStorage.setItem(storageKey, next ? "hidden" : "shown"); } catch {} }
+    // A sheet is not a preference. Every row in the Wortschatz picker is a link, so
+    // "open" means "I am choosing right now", and remembering it would open the next
+    // page — and the one after that — underneath a sheet nobody asked for. The desktop
+    // column is the opposite: there it is a standing choice about the layout, and that
+    // is what the key holds.
+    if (persist && storageKey && !(sheet && !wide.matches)) {
+      try { localStorage.setItem(storageKey, next ? "hidden" : "shown"); } catch {}
+    }
   }
 
   let saved = null, seen = true;
@@ -151,7 +166,9 @@ export function mountRuleColumn(page, {
     typeof defaultHidden === "function" ? !!defaultHidden({ wide: wide.matches }) : !!defaultHidden;
   // The state this learner has when nothing has happened yet — their saved preference, or
   // the default where they have none. The tour borrows it and gives it back.
-  const resting = saved === null ? firstVisit : saved === "hidden";
+  // Same reason in the other direction: a phone arriving with the desktop's "shown" must
+  // not open the sheet over the cards. In sheet mode the default is the resting state.
+  const resting = sheet && !wide.matches ? firstVisit : saved === null ? firstVisit : saved === "hidden";
   apply(resting, false);
   requestAnimationFrame(() => requestAnimationFrame(() => {
     delete page.dataset.anim;
@@ -202,8 +219,65 @@ export function mountRuleColumn(page, {
     else intro.play();
   }
 
+  /* ── The nudge ───────────────────────────────────────────────────────────────────
+     The pivot is a 40px sliver at the edge of the screen, and a learner who never saw
+     the tour — or saw it three visits ago — has no reason to read it as a handle. So it
+     leans out and back, twice on arrival and again whenever the page has gone quiet,
+     and it stops for good the first time the column is actually opened: an animation
+     that keeps asking after the answer is given is a nag.
+
+     It is the same gesture as the hover lean, which is the point — the tab is telling
+     you what it does when you touch it. */
+  const USED_KEY = seenKey ? seenKey + "-used" : null;
+  let used = false;
+  try { used = USED_KEY ? localStorage.getItem(USED_KEY) === "1" : false; } catch {}
+
+  const NUDGES_MAX = 3;
+  const IDLE_MS = 45000;
+  let nudges = 0;
+  let idleTimer = null;
+
+  function nudge() {
+    if (!pivotBtn || used || calm.matches) return;
+    // Nothing to point at while the column is open, and nothing to see below the
+    // pivot's own 1180px floor — which offsetParent cannot answer here, because the tab
+    // is position: fixed and that is always null.
+    if (page.dataset.rule !== "hidden") return;
+    const cs = getComputedStyle(pivotBtn);
+    if (cs.display === "none" || cs.visibility === "hidden") return;
+    if (nudges >= NUDGES_MAX) return;
+    nudges++;
+    pivotBtn.classList.remove("is-nudge");
+    void pivotBtn.offsetWidth;
+    pivotBtn.classList.add("is-nudge");
+  }
+  pivotBtn?.addEventListener("animationend", () => pivotBtn.classList.remove("is-nudge"));
+
+  function armIdle() {
+    clearTimeout(idleTimer);
+    if (used || !pivotBtn) return;
+    idleTimer = setTimeout(nudge, IDLE_MS);
+  }
+  if (pivotBtn && !used) {
+    // After the first paint has settled, and not while the tour is doing the same job
+    // with words.
+    const playingIntro = withIntro && !calm.matches && (forced || (saved === null && !seen));
+    if (!playingIntro) setTimeout(nudge, 1400);
+    for (const ev of ["pointerdown", "keydown", "wheel", "scroll"]) {
+      addEventListener(ev, armIdle, { passive: true });
+    }
+    armIdle();
+  }
+
   const onToggle = () => {
     intro.cancel();
+    // Opening the column is the answer the nudge was asking for.
+    if (!used) {
+      used = true;
+      clearTimeout(idleTimer);
+      pivotBtn?.classList.remove("is-nudge");
+      if (USED_KEY) { try { localStorage.setItem(USED_KEY, "1"); } catch {} }
+    }
     apply(page.dataset.rule !== "hidden");
   };
   ruleBtn?.addEventListener("click", onToggle);
@@ -230,7 +304,7 @@ export function mountRuleColumn(page, {
   document.getElementById(devResetId)?.addEventListener("click", () => {
     try {
       if (storageKey) localStorage.removeItem(storageKey);
-      if (seenKey) localStorage.removeItem(seenKey);
+      if (seenKey) { localStorage.removeItem(seenKey); localStorage.removeItem(seenKey + "-used"); }
     } catch {}
     // A restored scroll position would put the compact tour's targets off screen,
     // which is the one thing a fresh load never has.
@@ -240,6 +314,11 @@ export function mountRuleColumn(page, {
     location.replace(location.pathname);
   });
 
+  // Which of the two words is showing depends on the state the column is in, so the
+  // buttons cannot carry a plain data-i18n; they get repainted from the freshly
+  // translated attributes instead.
+  onLangChange(() => paintLabels(page.dataset.rule === "hidden"));
+
   return { apply, intro };
 }
 
@@ -248,10 +327,13 @@ export function mountRuleColumn(page, {
  * wires it identically. */
 export function mountRefToggle(btn, panel) {
   if (!btn || !panel) return;
+  const paint = () => { btn.textContent = panel.hidden ? btn.dataset.show : btn.dataset.hide; };
   btn.setAttribute("aria-expanded", String(!panel.hidden));
   btn.addEventListener("click", () => {
     panel.hidden = !panel.hidden;
-    btn.textContent = panel.hidden ? btn.dataset.show : btn.dataset.hide;
+    paint();
     btn.setAttribute("aria-expanded", String(!panel.hidden));
   });
+  // Same reason as paintLabels() above: the words live in attributes i18n rewrites.
+  onLangChange(paint);
 }

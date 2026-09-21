@@ -1,32 +1,43 @@
 ---
-// /fortschritt — one page that answers "how far am I with this exam?"
+// /fortschritt — the one place that answers "how far am I?".
 //
-// Shape taken from the Pflegeplace dashboard: a left rail nesting the open exam's parts
-// under it with a count each, the other exams below as a switcher, and a main panel with
-// the headline number, a carry-on button and a module table. The rail says where you are,
-// the table says what is left.
+// This used to be two pages. /dashboard was the level-and-topic view over the practice
+// tools; /fortschritt was the per-exam view. Both were reached from a KONTO section in
+// the drawer that listed them side by side under two names meaning the same thing, and a
+// learner had no way to tell which one held "their progress" — so they are now one page,
+// in that order: what you are practising, then where you stand in each Prüfung.
 //
-// Distinct from /dashboard, which is the level-and-topic view over the practice tools.
-// This one is only about the exam sittings, and it reads what those trainers already
-// store (src/lib/exam/registry.js knows where each one keeps its answers).
+// The name is Fortschritt in every language. "Dashboard" survives only as the English
+// rendering of that label (nav.account.progress), never as a second destination.
+// /dashboard itself redirects here — see `redirects` in astro.config.mjs.
 //
-// Rendered empty and filled on the client, because all of it comes from localStorage —
-// there is no account yet, so a first visit genuinely has nothing to show and says so.
+// Both halves read the same localStorage the trainers write: LearnShell hydrates from
+// src/lib/progress.js, the exam section from src/lib/exam/registry.js. There is no
+// account, so a first visit genuinely has nothing to show and says so.
 import Layout from "../layouts/Layout.astro";
 import PracticeHeader from "../components/PracticeHeader.astro";
+import LearnShell from "../components/LearnShell.astro";
 import { examRegistry } from "../lib/exam/registry.js";
 import "../styles/practice.css";
 import "../styles/exam-dashboard.css";
 ---
 <Layout
   title="Mein Fortschritt – DeutschAcademy"
-  description="Dein Stand in jeder Prüfung: Start Deutsch 1, TestDaF, DTZ und Leben in Deutschland — Punkte, begonnene Teile und der nächste offene Prüfungsteil."
+  description="Dein Lernstand auf einen Blick: Grammatik, Wortschatz und Prüfungsvorbereitung nach GER-Stufe — und dein Stand in jeder Prüfung, mit Punkten und dem nächsten offenen Prüfungsteil."
 >
   <PracticeHeader title="Mein Fortschritt" />
-  <main class="practice-main practice-main--wide">
+
+  {/* The practice half. LearnShell reads and writes only `location.search`, never a
+      fixed path, so it works here unchanged — see its URL helpers around navUrl(). */}
+  <LearnShell variants={["b"]} />
+
+  {/* The exam half, under it: a different question about the same learner, so it keeps
+      its own section heading rather than pretending to be another level row. */}
+  <main class="practice-main practice-main--wide fs-section">
+    <h2 class="fs-section-title" data-i18n="fortschritt.exams.title">Prüfungen</h2>
     <div class="fs-topbar">
-      <span class="fs-topbar-brand">DeutschAcademy <small>Mein Fortschritt</small></span>
-      <span class="fs-topbar-hint">Nur in diesem Browser gespeichert</span>
+      <span class="fs-topbar-brand">DeutschAcademy <small data-i18n="nav.account.progress">Mein Fortschritt</small></span>
+      <span class="fs-topbar-hint" data-i18n="fortschritt.localOnly">Nur in diesem Browser gespeichert</span>
     </div>
 
     <div class="fs-shell" data-fs-root>
@@ -35,7 +46,7 @@ import "../styles/exam-dashboard.css";
     </div>
 
     <!-- Without JS there is no localStorage to read, so the page offers the trainers
-         themselves rather than an empty dashboard. -->
+         themselves rather than an empty panel. -->
     <noscript>
       <ul class="fs-noscript">
         {examRegistry.map((e) => (
@@ -51,3 +62,17 @@ import "../styles/exam-dashboard.css";
     mountExamDashboard(document.querySelector("[data-fs-root]"));
   </script>
 </Layout>
+
+<style>
+  /* The two halves are one page but not one grid: LearnShell owns a full-bleed shell of
+     its own, so the exam section is separated by a rule rather than tucked inside it. */
+  .fs-section {
+    margin-top: var(--space-7, 40px);
+    padding-top: var(--space-6, 32px);
+    border-top: 1px solid var(--border);
+  }
+  .fs-section-title {
+    margin: 0 0 var(--space-4, 16px);
+    font-size: 1.25rem;
+  }
+</style>

@@ -89,6 +89,9 @@
     transform: translate(-100%, -50%);
   }
   .vt-split[data-rule="hidden"] .vp-rule-pivot { transform: translate(0, -50%); }
+  /* Mirrored lean: this tab opens to the right, so that is the way it leans when it
+     nudges and when the pointer is on it. */
+  .vt-split .vp-rule-pivot { --pivot-lean: 1; }
   .vt-split[data-rule="hidden"] .vp-rule-pivot:hover,
   .vt-split[data-rule="hidden"] .vp-rule-pivot:focus-visible {
     padding-right: 10px;
@@ -141,11 +144,15 @@
 
      64px is nav.css's rail, plus the card's two 1px borders. Not a magic number for the
      fold to own — if the rail changes width, this is where it is read from. */
-  .vt-split[data-fold="1"] { --rule-w: 66px; }
+  /* The freed width goes to the card, rather than to the page getting narrower: the
+     shell's max-width is --ex-w + gap + --rule-w, so folding without raising --ex-w just
+     pulls the right edge in and leaves the flashcard exactly as it was. Raised past what
+     any viewport gives, so the card takes whatever the fold actually released. */
+  .vt-split[data-fold="1"] { --rule-w: 66px; --ex-w: 1400px; }
   .vt-split[data-fold="1"] .vp-workspace { transition: grid-template-columns .34s var(--nv-ease-soft), gap .34s var(--nv-ease-soft); }
   /* Except when the whole column is going: that is the slower, larger motion and it
      owns the timing. Declared after, so it wins on equal specificity. */
-  .vt-split[data-rule="hidden"] { --rule-w: 0px; }
+  .vt-split[data-rule="hidden"] { --rule-w: 0px; --ex-w: 1460px; }
   /* The rail's panel head names the cut; an eyebrow above the card would name it twice. */
   .vt-split .vp-sheet-head { display: none; }
 }
@@ -215,12 +222,16 @@
 .vt-switch:checked { background: var(--brand-blue); }
 .vt-switch:checked::after { transform: translateX(18px); }
 
+/* The chip only renders when it has an action — drop a selection, or step to the next
+   part; see the note in wortschatz-app.js — so it is always clickable. It used to carry
+   `cursor: default` with `pointer` added back only for .is-filtered, which left the part
+   state ("Runde 1 von 3 ›") clickable but showing the default arrow. */
 .vt-pill {
   border: 1px solid var(--vt-border); border-radius: var(--radius-pill); padding: 5px 11px;
-  font-size: .75rem; color: var(--vt-muted); background: none; cursor: default;
+  font-size: .75rem; color: var(--vt-muted); background: none; cursor: pointer;
   font-family: inherit;
 }
-.vt-pill.is-filtered { cursor: pointer; border-color: var(--brand-blue); color: var(--brand-blue-dark); background: var(--vt-correct-bg); }
+.vt-pill.is-filtered { border-color: var(--brand-blue); color: var(--brand-blue-dark); background: var(--vt-correct-bg); }
 .vt-position { font-family: var(--font-label); font-size: .75rem; color: var(--vt-muted); font-variant-numeric: tabular-nums; }
 
 
@@ -498,3 +509,45 @@
   .vt-face { padding: 22px 18px; }
   .vt-flip-inner { min-height: 260px; }
 }
+
+/* ---- Der, die, das ------------------------------------------------------------------ */
+/* The article is the half of a German noun that has to be memorised, so it is drawn as
+ * its own thing rather than as more of the word: one colour per gender, the same three
+ * the Aussprache page uses, and a shade lighter than the noun so the word still leads.
+ * Nouns only — nothing else on a card has a gender.
+ */
+.vt-art {
+  font-weight: 400;
+  color: var(--vt-muted);
+}
+/* Four hues, one per gender, plural included — der blue, die red, das green, plural
+ * orange. Not --brand-blue for der: that token is teal (#0d9488), which sits right next
+ * to the green das would take, and two of the four genders reading as the same colour is
+ * worse than no colour at all. --info is the only true blue in the palette.
+ *
+ * The article word is always printed beside the colour, so nothing here is carried by hue
+ * alone — which matters for the red/green pair in particular. */
+.vt-art--der { color: var(--info); }
+.vt-art--die { color: var(--danger); }
+.vt-art--das { color: var(--success); }
+/* A Pluraletantum (die Eltern, die Möbel) takes the plural colour, not the feminine one:
+ * its "die" is a plural article that happens to look like the feminine. Same for the
+ * plural line under a singular noun ("die Tische" below "der Tisch").
+ *
+ * --gender-plural, not --accent-dark: that token is #c2410c and --danger is #c1462f, so
+ * the two "die"s were one indistinguishable red. See the token's note in global.css. */
+.vt-art--plural { color: var(--gender-plural); }
+
+/* The plural, where the card has room for it: a noun you can only use in the singular is
+ * half learnt. Kept off the prompt in Lernen and Testen, which ask one thing at a time. */
+.vt-plural {
+  display: block;
+  margin-top: 6px;
+  font-size: .8125rem;
+  font-weight: 400;
+  color: var(--vt-muted);
+}
+
+/* In the Wortliste the article sits in the same column as the word and must not push the
+ * translation around, so it is the row's own small type. */
+.vt-list-de .vt-art { font-size: .95em; }

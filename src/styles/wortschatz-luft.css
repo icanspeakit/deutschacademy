@@ -1,0 +1,77 @@
+/* "Luft" — the Wortschatz page with room to breathe.
+ * ---------------------------------------------------------------------------
+ * Same page, same words, same controls: nothing here hides or shortens anything. What
+ * changes is the space around it. The live page was tuned when the picker was a compact
+ * dashboard rail, and after it grew to the /fortschritt scale the two halves sit closer
+ * together than either wants — 26 set rows, four tab rows and a card, all at one density.
+ *
+ * Every value in this file is a padding, a gap or a margin. If a rule here changes a font
+ * size, a colour or what is on screen, it is in the wrong file.
+ *
+ * Loaded only by /wortliste-luft, scoped to .luft, so the live page is untouched while
+ * the two are compared side by side.
+ */
+
+/* ---- The page ----------------------------------------------------------------------- */
+.luft .vt-split {
+  /* The track holds rail + panel exactly (72 + 384), so the wider rows never buy their
+     air by truncating a set title — "Familie & Beziehungen" has to still fit. */
+  --rule-w: clamp(456px, 32vw, 492px);
+  --rule-gap: 44px;
+  padding-bottom: 96px;
+}
+/* Restated, because this file's own --rule-w would otherwise beat the fold's on source
+   order and the column would keep its width with nothing in it. */
+.luft .vt-split[data-fold="1"] { --rule-w: 66px; }
+.luft .vt-split[data-rule="hidden"] { --rule-w: 0px; }
+.luft .vt-hero { margin-bottom: 34px; }
+.luft .vt-hero-sub { margin-top: 8px; }
+
+/* ---- The picker --------------------------------------------------------------------- */
+/* A row's own padding does the breathing; the 1px hairline gaps between rows stay small,
+   because a list that is spaced twice reads as separate buttons rather than one list. */
+.luft .ls-nvb { --ls-panel-w: 384px; --ls-panel-pad: 20px 18px; }
+.luft .ls-nvb .nvb-panel { gap: 3px; }
+.luft .ls-nvb .nvb-panelhead { margin-bottom: 14px; padding: 14px 16px; }
+.luft .ls-nvb .ls-cuts { margin-bottom: 16px; gap: 6px; }
+.luft .ls-nvb .ls-cut { padding: 10px 12px; }
+.luft .ls-nvb .ls-group-head { padding: 12px 16px; }
+.luft .ls-nvb .nvb-item { padding: 12px 16px; }
+.luft .ls-nvb .ls-grouplist .nvb-item { padding-left: 30px; }
+.luft .ls-nvb .ls-grouplist { gap: 3px; padding-bottom: 6px; }
+.luft .ls-nvb .ls-lead,
+.luft .ls-nvb .ls-plan { padding: 0 16px; margin: 14px 0; line-height: 1.6; }
+
+/* The dark level rail keeps its width but stops crowding its own buttons. */
+.luft .ls-nvb .nvb-rail { width: 72px; gap: 10px; padding: 18px 0; }
+
+/* ---- The workspace ------------------------------------------------------------------ */
+.luft .vt-tabrow { padding-bottom: 6px; margin-bottom: 26px; }
+.luft .vt-tabs { gap: 8px 30px; }
+.luft .vt-tab { padding-bottom: 14px; }
+.luft .vt-toolbar { margin-bottom: 42px; gap: 18px 22px; }
+.luft .vt-content { gap: 38px; }
+
+/* The card is where the air is most obviously missing: a single word in a box the width
+   of the screen, with the frame tight around it. */
+.luft .vt-face { padding: clamp(40px, 7vw, 76px) clamp(28px, 7vw, 64px); }
+.luft .vt-flip { min-height: 340px; }
+.luft .vt-nav-row { padding-top: 26px; margin-top: 8px; }
+
+/* Lists and options in the other three tabs get the same treatment, so switching tab
+   does not switch density. */
+.luft .vt-options { gap: 12px; }
+.luft .vt-option { padding: 18px 20px; }
+.luft .vt-feedback { padding: 6px 0 6px 18px; }
+
+/* ---- Phone ------------------------------------------------------------------------- */
+/* Less extra air than on a desktop: on a 390px screen the margin has to come out of the
+   content's own width, and the sheet is already the whole surface. The rows still grow —
+   a 44px tap target is the one place where more padding is not decoration. */
+@media (max-width: 1000px) {
+  .luft .vt-split { padding-bottom: 64px; }
+  .luft .vp-sheet-body .ls-nvb .nvb-panel { padding: 16px 14px; }
+  .luft .vt-toolbar { margin-bottom: 28px; }
+  .luft .vt-content { gap: 26px; }
+  .luft .vt-flip { min-height: 260px; }
+}

@@ -6,17 +6,39 @@
   "source": "Positionen im Satz.pdf (Kapitel 11) · Satzstellung.pdf (Kapitel 1) · Positionen im Satz Hausaufgabe.pdf · Sätze.pdf",
   "concept": {
     "flow": [
-      { "text": "Position 1" },
-      { "text": "Verb 1", "variant": "verb" },
-      { "text": "Mittelfeld" },
-      { "text": "Verb 2 · Ende", "variant": "prep" }
+      {
+        "text": "Position 1"
+      },
+      {
+        "text": "Verb 1",
+        "variant": "verb"
+      },
+      {
+        "text": "Mittelfeld"
+      },
+      {
+        "text": "Verb 2 · Ende",
+        "variant": "prep"
+      }
     ],
     "exampleHtml": "Heute <span class=\"vp-verb\">möchte</span> ich ins Schwimmbad <span class=\"vp-prep\">gehen</span>.",
     "qa": [
-      { "html": "Auf <strong>Position 1</strong> kann fast jeder Satzteil stehen — auch mehrere Wörter: <em>Wie jeden Dienstag möchte ich ins Kino gehen.</em>", "tag": "frei" },
-      { "html": "Auf <strong>Position 2</strong> steht immer das konjugierte Verb. Das ist die feste Regel im Aussagesatz und in der W-Frage.", "tag": "Verb = 2" },
-      { "html": "Das <strong>Subjekt</strong> steht direkt neben dem Verb — links davon oder rechts davon: <em>Ich gehe heute … / Heute gehe ich …</em>", "tag": "Subjekt" },
-      { "html": "Der <strong>zweite Verbteil</strong> geht ans Satzende: trennbares Präfix, Infinitiv oder Partizip. <em>Ich hole dich um zwei Uhr <strong>ab</strong>.</em>", "tag": "Brücke" }
+      {
+        "html": "Auf <strong>Position 1</strong> kann fast jeder Satzteil stehen — auch mehrere Wörter: <em>Wie jeden Dienstag möchte ich ins Kino gehen.</em>",
+        "tag": "frei"
+      },
+      {
+        "html": "Auf <strong>Position 2</strong> steht immer das konjugierte Verb. Das ist die feste Regel im Aussagesatz und in der W-Frage.",
+        "tag": "Verb = 2"
+      },
+      {
+        "html": "Das <strong>Subjekt</strong> steht direkt neben dem Verb — links davon oder rechts davon: <em>Ich gehe heute … / Heute gehe ich …</em>",
+        "tag": "Subjekt"
+      },
+      {
+        "html": "Der <strong>zweite Verbteil</strong> geht ans Satzende: trennbares Präfix, Infinitiv oder Partizip. <em>Ich hole dich um zwei Uhr <strong>ab</strong>.</em>",
+        "tag": "Brücke"
+      }
     ],
     "noteHtml": "Faustregel fürs Mittelfeld: die <strong>Zeit</strong> steht meistens links (oft schon auf Position 1), der <strong>Ort</strong> meistens rechts. <em>Ich wohne <strong>seit zwei Monaten</strong> in Deutschland.</em> — und nach Position 1 steht kein Komma, außer wenn dort ein ganzer Nebensatz steht.",
     "reference": {
@@ -25,26 +47,105 @@
       "tables": [
         {
           "caption": "Position 2 und Satzende — dieselbe Brücke in jeder Zeitform",
-          "head": ["", "Position 1", "Position 2", "Mittelfeld", "Ende"],
+          "head": [
+            "",
+            "Position 1",
+            "Position 2",
+            "Mittelfeld",
+            "Ende"
+          ],
           "rows": [
-            ["Aussagesatz", "Ich", "gehe", "heute ins Schwimmbad.", "—"],
-            ["W-Frage", "Wohin", "gehst", "du heute?", "—"],
-            ["trennbares Verb", "Ich", "hole", "dich um zwei Uhr", "ab."],
-            ["Modalverb", "Ich", "möchte", "schon lange ins Schwimmbad", "gehen."],
-            ["Perfekt", "Ich", "bin", "letzte Woche ins Schwimmbad", "gegangen."],
-            ["Futur", "Die Sonne", "wird", "heute den ganzen Tag", "scheinen."],
-            ["Passiv", "Das Bad", "wird", "jetzt", "renoviert."],
-            ["Konjunktiv", "Ich", "würde", "am liebsten jeden Tag", "gehen."]
+            [
+              "Aussagesatz",
+              "Ich",
+              "gehe",
+              "heute ins Schwimmbad.",
+              "—"
+            ],
+            [
+              "W-Frage",
+              "Wohin",
+              "gehst",
+              "du heute?",
+              "—"
+            ],
+            [
+              "trennbares Verb",
+              "Ich",
+              "hole",
+              "dich um zwei Uhr",
+              "ab."
+            ],
+            [
+              "Modalverb",
+              "Ich",
+              "möchte",
+              "schon lange ins Schwimmbad",
+              "gehen."
+            ],
+            [
+              "Perfekt",
+              "Ich",
+              "bin",
+              "letzte Woche ins Schwimmbad",
+              "gegangen."
+            ],
+            [
+              "Futur",
+              "Die Sonne",
+              "wird",
+              "heute den ganzen Tag",
+              "scheinen."
+            ],
+            [
+              "Passiv",
+              "Das Bad",
+              "wird",
+              "jetzt",
+              "renoviert."
+            ],
+            [
+              "Konjunktiv",
+              "Ich",
+              "würde",
+              "am liebsten jeden Tag",
+              "gehen."
+            ]
           ]
         },
         {
           "caption": "Position 1 wechselt, Position 2 bleibt",
-          "head": ["Position 1", "Position 2", "Position 3", "Ende"],
+          "head": [
+            "Position 1",
+            "Position 2",
+            "Position 3",
+            "Ende"
+          ],
           "rows": [
-            ["Ich", "gehe", "heute", "ins Kino."],
-            ["Heute", "gehe", "ich", "ins Kino."],
-            ["Wie jeden Dienstag", "möchte", "ich", "ins Kino gehen."],
-            ["Obwohl ich wenig Zeit habe,", "gehe", "ich", "ins Kino."]
+            [
+              "Ich",
+              "gehe",
+              "heute",
+              "ins Kino."
+            ],
+            [
+              "Heute",
+              "gehe",
+              "ich",
+              "ins Kino."
+            ],
+            [
+              "Wie jeden Dienstag",
+              "möchte",
+              "ich",
+              "ins Kino gehen."
+            ],
+            [
+              "Obwohl ich wenig Zeit habe,",
+              "gehe",
+              "ich",
+              "ins Kino."
+            ]
           ]
         }
       ],
@@ -72,6 +173,186 @@
       ]
     }
   },
+  "aktiv": {
+    "listen": [
+      {
+        "text": "Heute möchte ich ins Schwimmbad gehen.",
+        "note": "Position 1 ist heute — das Verb bleibt trotzdem auf Position 2.",
+        "audio": "/audio/grammatik/satzstellung/heute-moechte-ich-ins-schwimmbad-gehen.mp3"
+      },
+      {
+        "text": "Ich hole dich um zwei Uhr ab.",
+        "note": "Das trennbare Präfix wartet ganz am Ende.",
+        "audio": "/audio/grammatik/satzstellung/ich-hole-dich-um-zwei-uhr-ab.mp3"
+      },
+      {
+        "text": "Wie jeden Dienstag gehe ich ins Kino.",
+        "note": "Position 1 darf auch mehrere Wörter lang sein.",
+        "audio": "/audio/grammatik/satzstellung/wie-jeden-dienstag-gehe-ich-ins-kino.mp3"
+      }
+    ],
+    "hoeren": {
+      "instruction": "Hör zu und wähle die Wortstellung, die du gehört hast.",
+      "items": [
+        {
+          "text": "Heute gehe ich ins Kino.",
+          "choices": [
+            "Heute gehe ich",
+            "Heute ich gehe",
+            "Gehe heute ich"
+          ],
+          "correct": 0,
+          "audio": "/audio/grammatik/satzstellung/heute-gehe-ich-ins-kino.mp3"
+        },
+        {
+          "text": "Morgen muss ich früh aufstehen.",
+          "choices": [
+            "Morgen ich muss",
+            "Morgen muss ich",
+            "Muss morgen ich"
+          ],
+          "correct": 1,
+          "audio": "/audio/grammatik/satzstellung/morgen-muss-ich-frueh-aufstehen.mp3"
+        },
+        {
+          "text": "Ich rufe dich heute Abend an.",
+          "choices": [
+            "Ich rufe an dich",
+            "Ich anrufe dich",
+            "Ich rufe dich an"
+          ],
+          "correct": 2,
+          "audio": "/audio/grammatik/satzstellung/ich-rufe-dich-heute-abend-an.mp3"
+        },
+        {
+          "text": "Am Wochenende fahren wir ans Meer.",
+          "choices": [
+            "fahren wir",
+            "wir fahren",
+            "wir fahren an"
+          ],
+          "correct": 0,
+          "audio": "/audio/grammatik/satzstellung/am-wochenende-fahren-wir-ans-meer.mp3"
+        },
+        {
+          "text": "Sie hat gestern lange gearbeitet.",
+          "choices": [
+            "hat gearbeitet gestern",
+            "hat gestern gearbeitet",
+            "gestern hat gearbeitet"
+          ],
+          "correct": 1,
+          "audio": "/audio/grammatik/satzstellung/sie-hat-gestern-lange-gearbeitet.mp3"
+        },
+        {
+          "text": "Nach dem Essen räumen wir auf.",
+          "choices": [
+            "räumen wir auf",
+            "wir räumen auf",
+            "wir aufräumen"
+          ],
+          "correct": 0,
+          "audio": "/audio/grammatik/satzstellung/nach-dem-essen-raeumen-wir-auf.mp3"
+        }
+      ]
+    },
+    "sprechen": {
+      "rounds": [
+        {
+          "label": "1 · Zeit auf Position 1",
+          "instruction": "Du hörst einen Satz, der mit dem Subjekt beginnt. Stell die Zeitangabe nach vorn.",
+          "example": {
+            "prompt": "Ich gehe heute ins Kino.",
+            "answer": "Heute gehe ich ins Kino."
+          },
+          "items": [
+            {
+              "prompt": "Ich fahre morgen nach Berlin.",
+              "answer": "Morgen fahre ich nach Berlin.",
+              "audioPrompt": "/audio/grammatik/satzstellung/ich-fahre-morgen-nach-berlin.mp3",
+              "audioAnswer": "/audio/grammatik/satzstellung/morgen-fahre-ich-nach-berlin--8wphfh.mp3"
+            },
+            {
+              "prompt": "Wir essen um sieben.",
+              "answer": "Um sieben essen wir.",
+              "audioPrompt": "/audio/grammatik/satzstellung/wir-essen-um-sieben.mp3",
+              "audioAnswer": "/audio/grammatik/satzstellung/um-sieben-essen-wir--8wphfh.mp3"
+            },
+            {
+              "prompt": "Sie arbeitet am Samstag.",
+              "answer": "Am Samstag arbeitet sie.",
+              "audioPrompt": "/audio/grammatik/satzstellung/sie-arbeitet-am-samstag.mp3",
+              "audioAnswer": "/audio/grammatik/satzstellung/am-samstag-arbeitet-sie--8wphfh.mp3"
+            },
+            {
+              "prompt": "Er kommt heute Abend.",
+              "answer": "Heute Abend kommt er.",
+              "audioPrompt": "/audio/grammatik/satzstellung/er-kommt-heute-abend.mp3",
+              "audioAnswer": "/audio/grammatik/satzstellung/heute-abend-kommt-er--8wphfh.mp3"
+            },
+            {
+              "prompt": "Ich stehe am Montag früh auf.",
+              "answer": "Am Montag stehe ich früh auf.",
+              "audioPrompt": "/audio/grammatik/satzstellung/ich-stehe-am-montag-frueh-auf.mp3",
+              "audioAnswer": "/audio/grammatik/satzstellung/am-montag-stehe-ich-frueh-auf--8wphfh.mp3"
+            },
+            {
+              "prompt": "Wir fahren im Sommer ans Meer.",
+              "answer": "Im Sommer fahren wir ans Meer.",
+              "audioPrompt": "/audio/grammatik/satzstellung/wir-fahren-im-sommer-ans-meer.mp3",
+              "audioAnswer": "/audio/grammatik/satzstellung/im-sommer-fahren-wir-ans-meer--8wphfh.mp3"
+            }
+          ]
+        },
+        {
+          "label": "2 · zweiter Verbteil ans Ende",
+          "instruction": "Du hörst ein trennbares Verb und eine Angabe. Bau den Satz — das Präfix kommt zuletzt.",
+          "example": {
+            "prompt": "abholen — um zwei Uhr",
+            "answer": "Ich hole dich um zwei Uhr ab."
+          },
+          "items": [
+            {
+              "prompt": "anrufen — heute Abend",
+              "answer": "Ich rufe dich heute Abend an.",
+              "audioPrompt": "/audio/grammatik/satzstellung/anrufen-heute-abend.mp3",
+              "audioAnswer": "/audio/grammatik/satzstellung/ich-rufe-dich-heute-abend-an--8wphfh.mp3"
+            },
+            {
+              "prompt": "anfangen — um neun",
+              "answer": "Wir fangen um neun an.",
+              "audioPrompt": "/audio/grammatik/satzstellung/anfangen-um-neun.mp3",
+              "audioAnswer": "/audio/grammatik/satzstellung/wir-fangen-um-neun-an--8wphfh.mp3"
+            },
+            {
+              "prompt": "einkaufen — am Samstag",
+              "answer": "Sie kauft am Samstag ein.",
+              "audioPrompt": "/audio/grammatik/satzstellung/einkaufen-am-samstag.mp3",
+              "audioAnswer": "/audio/grammatik/satzstellung/sie-kauft-am-samstag-ein--8wphfh.mp3"
+            },
+            {
+              "prompt": "aufstehen — sehr früh",
+              "answer": "Er steht sehr früh auf.",
+              "audioPrompt": "/audio/grammatik/satzstellung/aufstehen-sehr-frueh.mp3",
+              "audioAnswer": "/audio/grammatik/satzstellung/er-steht-sehr-frueh-auf--8wphfh.mp3"
+            },
+            {
+              "prompt": "aufräumen — nach dem Essen",
+              "answer": "Wir räumen nach dem Essen auf.",
+              "audioPrompt": "/audio/grammatik/satzstellung/aufraeumen-nach-dem-essen.mp3",
+              "audioAnswer": "/audio/grammatik/satzstellung/wir-raeumen-nach-dem-essen-auf--8wphfh.mp3"
+            },
+            {
+              "prompt": "mitbringen — morgen",
+              "answer": "Ich bringe es morgen mit.",
+              "audioPrompt": "/audio/grammatik/satzstellung/mitbringen-morgen.mp3",
+              "audioAnswer": "/audio/grammatik/satzstellung/ich-bringe-es-morgen-mit--8wphfh.mp3"
+            }
+          ]
+        }
+      ]
+    }
+  },
   "exercises": [
     {
       "type": "build",
@@ -80,32 +361,126 @@
         {
           "id": "ss1",
           "hint": "Er heißt Peter Schmidt.",
-          "correct": ["Er", "heißt", "Peter", "Schmidt", "."],
-          "shuffled": ["Schmidt", "Er", ".", "Peter", "heißt"]
+          "correct": [
+            "Er",
+            "heißt",
+            "Peter",
+            "Schmidt",
+            "."
+          ],
+          "shuffled": [
+            "Schmidt",
+            "Er",
+            ".",
+            "Peter",
+            "heißt"
+          ]
         },
         {
           "id": "ss2",
           "hint": "Zwei Subjekte, ein Verb — trotzdem Position 2.",
-          "correct": ["Peter", "und", "seine", "Frau", "wohnen", "jetzt", "in", "Heidelberg", "."],
-          "shuffled": ["wohnen", "Peter", "in", "seine", "jetzt", "und", "Heidelberg", "Frau", "."]
+          "correct": [
+            "Peter",
+            "und",
+            "seine",
+            "Frau",
+            "wohnen",
+            "jetzt",
+            "in",
+            "Heidelberg",
+            "."
+          ],
+          "shuffled": [
+            "wohnen",
+            "Peter",
+            "in",
+            "seine",
+            "jetzt",
+            "und",
+            "Heidelberg",
+            "Frau",
+            "."
+          ]
         },
         {
           "id": "ss3",
           "hint": "Trennbares Verb — das Präfix wandert ans Ende.",
-          "correct": ["Ich", "hole", "dich", "um", "zwei", "Uhr", "ab", "."],
-          "shuffled": ["um", "Ich", "ab", "dich", "zwei", "hole", ".", "Uhr"]
+          "correct": [
+            "Ich",
+            "hole",
+            "dich",
+            "um",
+            "zwei",
+            "Uhr",
+            "ab",
+            "."
+          ],
+          "shuffled": [
+            "um",
+            "Ich",
+            "ab",
+            "dich",
+            "zwei",
+            "hole",
+            ".",
+            "Uhr"
+          ]
         },
         {
           "id": "ss4",
           "hint": "Modalverb auf Position 2, Infinitiv ans Ende.",
-          "correct": ["Am", "liebsten", "würde", "sie", "nächstes", "Jahr", "eine", "Wanderung", "machen", "."],
-          "shuffled": ["eine", "Am", "machen", "würde", "nächstes", "sie", "Wanderung", "liebsten", ".", "Jahr"]
+          "correct": [
+            "Am",
+            "liebsten",
+            "würde",
+            "sie",
+            "nächstes",
+            "Jahr",
+            "eine",
+            "Wanderung",
+            "machen",
+            "."
+          ],
+          "shuffled": [
+            "eine",
+            "Am",
+            "machen",
+            "würde",
+            "nächstes",
+            "sie",
+            "Wanderung",
+            "liebsten",
+            ".",
+            "Jahr"
+          ]
         },
         {
           "id": "ss5",
           "hint": "Perfekt — das Partizip schließt den Satz.",
-          "correct": ["In", "diesem", "Jahr", "hat", "Marie", "keinen", "richtigen", "Urlaub", "gemacht", "."],
-          "shuffled": ["keinen", "hat", "In", "gemacht", "Marie", "Jahr", "richtigen", "diesem", ".", "Urlaub"]
+          "correct": [
+            "In",
+            "diesem",
+            "Jahr",
+            "hat",
+            "Marie",
+            "keinen",
+            "richtigen",
+            "Urlaub",
+            "gemacht",
+            "."
+          ],
+          "shuffled": [
+            "keinen",
+            "hat",
+            "In",
+            "gemacht",
+            "Marie",
+            "Jahr",
+            "richtigen",
+            "diesem",
+            ".",
+            "Urlaub"
+          ]
         }
       ]
     },
@@ -115,26 +490,77 @@
       "hint": "Der Satzteil in Klammern soll auf Position 1 stehen. Schreiben Sie nur das Wort, das dann auf Position 2 steht.",
       "placeholder": "Verb auf Position 2",
       "items": [
-        { "prompt": "Wir essen am Abend Pizza. (Am Abend …) — Auf Position 2 steht: ___", "hint": "Das konjugierte Verb bleibt, wo es war.", "answer": ["essen"] },
-        { "prompt": "Ich bin letzte Woche ins Schwimmbad gegangen. (Letzte Woche …) — Auf Position 2 steht: ___", "hint": "Nicht das Partizip!", "answer": ["bin"] },
-        { "prompt": "Ich möchte heute ins Kino gehen. (Heute …) — Auf Position 2 steht: ___", "hint": "Das Modalverb.", "answer": ["möchte"] },
-        { "prompt": "Ich hole dich um zwei Uhr ab. (Um zwei Uhr …) — Auf Position 2 steht: ___", "hint": "Ohne Präfix.", "answer": ["hole"] },
-        { "prompt": "Die Sonne wird heute scheinen. (Heute …) — Auf Position 2 steht: ___", "hint": "Das Hilfsverb.", "answer": ["wird"] }
+        {
+          "prompt": "Wir essen am Abend Pizza. (Am Abend …) — Auf Position 2 steht: ___",
+          "hint": "Das konjugierte Verb bleibt, wo es war.",
+          "answer": [
+            "essen"
+          ]
+        },
+        {
+          "prompt": "Ich bin letzte Woche ins Schwimmbad gegangen. (Letzte Woche …) — Auf Position 2 steht: ___",
+          "hint": "Nicht das Partizip!",
+          "answer": [
+            "bin"
+          ]
+        },
+        {
+          "prompt": "Ich möchte heute ins Kino gehen. (Heute …) — Auf Position 2 steht: ___",
+          "hint": "Das Modalverb.",
+          "answer": [
+            "möchte"
+          ]
+        },
+        {
+          "prompt": "Ich hole dich um zwei Uhr ab. (Um zwei Uhr …) — Auf Position 2 steht: ___",
+          "hint": "Ohne Präfix.",
+          "answer": [
+            "hole"
+          ]
+        },
+        {
+          "prompt": "Die Sonne wird heute scheinen. (Heute …) — Auf Position 2 steht: ___",
+          "hint": "Das Hilfsverb.",
+          "answer": [
+            "wird"
+          ]
+        }
       ]
     },
     {
       "type": "table",
       "title": "Welches Wort steht am Satzende?",
       "hint": "Der zweite Verbteil — Präfix, Infinitiv oder Partizip.",
-      "columns": ["Satz", "Wort am Ende"],
+      "columns": [
+        "Satz",
+        "Wort am Ende"
+      ],
       "placeholder": "Wort",
       "rows": [
-        { "term": "Ich hole dich um zwei Uhr …", "answer": "ab" },
-        { "term": "Ich möchte schon lange ins Schwimmbad …", "answer": "gehen" },
-        { "term": "Ich bin letzte Woche nicht ins Schwimmbad …", "answer": "gegangen" },
-        { "term": "Das Bad wird jetzt …", "answer": "renoviert" },
-        { "term": "Es hatte den ganzen Tag …", "answer": "geregnet" },
-        { "term": "Ich gehe sehr gerne …", "answer": "schwimmen" }
+        {
+          "term": "Ich hole dich um zwei Uhr …",
+          "answer": "ab"
+        },
+        {
+          "term": "Ich möchte schon lange ins Schwimmbad …",
+          "answer": "gehen"
+        },
+        {
+          "term": "Ich bin letzte Woche nicht ins Schwimmbad …",
+          "answer": "gegangen"
+        },
+        {
+          "term": "Das Bad wird jetzt …",
+          "answer": "renoviert"
+        },
+        {
+          "term": "Es hatte den ganzen Tag …",
+          "answer": "geregnet"
+        },
+        {
+          "term": "Ich gehe sehr gerne …",
+          "answer": "schwimmen"
+        }
       ]
     },
     {
@@ -142,12 +568,30 @@
       "title": "Satzanfang und Fortsetzung.",
       "hint": "Achten Sie darauf, wo das Subjekt landet.",
       "pairs": [
-        { "q": "Am Abend", "a": "essen wir Pizza." },
-        { "q": "Wir", "a": "essen am Abend Pizza." },
-        { "q": "Seit zwei Monaten", "a": "wohne ich in Deutschland." },
-        { "q": "Wohin", "a": "gehst du heute Abend?" },
-        { "q": "Holst", "a": "du einen Kaffee?" },
-        { "q": "Bring", "a": "mir bitte einen Kaffee mit!" }
+        {
+          "q": "Am Abend",
+          "a": "essen wir Pizza."
+        },
+        {
+          "q": "Wir",
+          "a": "essen am Abend Pizza."
+        },
+        {
+          "q": "Seit zwei Monaten",
+          "a": "wohne ich in Deutschland."
+        },
+        {
+          "q": "Wohin",
+          "a": "gehst du heute Abend?"
+        },
+        {
+          "q": "Holst",
+          "a": "du einen Kaffee?"
+        },
+        {
+          "q": "Bring",
+          "a": "mir bitte einen Kaffee mit!"
+        }
       ]
     }
   ]

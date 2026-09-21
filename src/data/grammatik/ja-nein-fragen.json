@@ -6,16 +6,36 @@
   "source": "Ja Nein Fragen.pdf (Kapitel 10, Übungen 1–2)",
   "concept": {
     "flow": [
-      { "text": "Verb · Position 1", "variant": "verb" },
-      { "text": "Subjekt", "variant": "prep" },
-      { "text": "Rest?" }
+      {
+        "text": "Verb · Position 1",
+        "variant": "verb"
+      },
+      {
+        "text": "Subjekt",
+        "variant": "prep"
+      },
+      {
+        "text": "Rest?"
+      }
     ],
     "exampleHtml": "Aussage: Er <span class=\"vp-prep\">kommt</span> aus Berlin. → Frage: <span class=\"vp-verb\">Kommt</span> er aus Berlin?",
     "qa": [
-      { "html": "Das konjugierte <strong>Verb steht am Beginn</strong>, das Subjekt direkt dahinter. Sonst ändert sich nichts.", "tag": "Verb zuerst" },
-      { "html": "Auf eine <strong>positive</strong> Frage antwortet man mit <em>ja</em> oder <em>nein</em>: <em>Kommen Sie heute? — Ja, ich komme.</em>", "tag": "ja / nein" },
-      { "html": "Auf eine <strong>negative</strong> Frage antwortet man mit <em>doch</em> oder <em>nein</em>: <em>Kommen Sie heute nicht? — Doch, ich komme.</em>", "tag": "doch" },
-      { "html": "Auch der <strong>Imperativ</strong> beginnt mit dem Verb: <em>Trink eine Tasse Kaffee! Essen Sie doch ein Stück Schokolade!</em>", "tag": "Imperativ" }
+      {
+        "html": "Das konjugierte <strong>Verb steht am Beginn</strong>, das Subjekt direkt dahinter. Sonst ändert sich nichts.",
+        "tag": "Verb zuerst"
+      },
+      {
+        "html": "Auf eine <strong>positive</strong> Frage antwortet man mit <em>ja</em> oder <em>nein</em>: <em>Kommen Sie heute? — Ja, ich komme.</em>",
+        "tag": "ja / nein"
+      },
+      {
+        "html": "Auf eine <strong>negative</strong> Frage antwortet man mit <em>doch</em> oder <em>nein</em>: <em>Kommen Sie heute nicht? — Doch, ich komme.</em>",
+        "tag": "doch"
+      },
+      {
+        "html": "Auch der <strong>Imperativ</strong> beginnt mit dem Verb: <em>Trink eine Tasse Kaffee! Essen Sie doch ein Stück Schokolade!</em>",
+        "tag": "Imperativ"
+      }
     ],
     "noteHtml": "<strong>doch</strong> ist das Wort, das viele Sprachen nicht haben. Es widerspricht einer Verneinung: <em>„Du hast doch keine Zeit, oder?“ — „Doch!“</em> heißt: ich habe sehr wohl Zeit. Mit <em>ja</em> wäre die Antwort unverständlich. Höflicher bitten Sie übrigens im Konjunktiv: <em>Könnten Sie mir bitte helfen? Würden Sie bitte das Fenster öffnen?</em>",
     "reference": {
@@ -24,20 +44,237 @@
       "tables": [
         {
           "caption": "Aussagesatz, W-Frage, Ja/Nein-Frage",
-          "head": ["Satzart", "Position 1", "Position 2", "Rest"],
+          "head": [
+            "Satzart",
+            "Position 1",
+            "Position 2",
+            "Rest"
+          ],
           "rows": [
-            ["Aussagesatz", "Er", "kommt", "aus Berlin."],
-            ["W-Frage", "Woher", "kommt", "er?"],
-            ["Ja/Nein-Frage", "Kommt", "er", "aus Berlin?"],
-            ["Imperativ", "Trink", "—", "eine Tasse Kaffee!"]
+            [
+              "Aussagesatz",
+              "Er",
+              "kommt",
+              "aus Berlin."
+            ],
+            [
+              "W-Frage",
+              "Woher",
+              "kommt",
+              "er?"
+            ],
+            [
+              "Ja/Nein-Frage",
+              "Kommt",
+              "er",
+              "aus Berlin?"
+            ],
+            [
+              "Imperativ",
+              "Trink",
+              "—",
+              "eine Tasse Kaffee!"
+            ]
           ]
         },
         {
           "caption": "Die Antwort hängt von der Frage ab",
-          "head": ["Frage", "positiv antworten", "negativ antworten"],
+          "head": [
+            "Frage",
+            "positiv antworten",
+            "negativ antworten"
+          ],
           "rows": [
-            ["Kommen Sie heute?", "Ja, ich komme heute Nachmittag.", "Nein, ich kann heute nicht."],
-            ["Kommen Sie heute nicht?", "Doch, ich komme heute Nachmittag.", "Nein, ich kann heute nicht."]
+            [
+              "Kommen Sie heute?",
+              "Ja, ich komme heute Nachmittag.",
+              "Nein, ich kann heute nicht."
+            ],
+            [
+              "Kommen Sie heute nicht?",
+              "Doch, ich komme heute Nachmittag.",
+              "Nein, ich kann heute nicht."
+            ]
+          ]
+        }
+      ]
+    }
+  },
+  "aktiv": {
+    "listen": [
+      {
+        "text": "Er kommt aus Berlin.",
+        "note": "Aussage: Subjekt zuerst, Verb auf Position 2.",
+        "audio": "/audio/grammatik/ja-nein-fragen/er-kommt-aus-berlin.mp3"
+      },
+      {
+        "text": "Kommt er aus Berlin?",
+        "note": "Frage: dasselbe Verb rutscht auf Position 1.",
+        "audio": "/audio/grammatik/ja-nein-fragen/kommt-er-aus-berlin.mp3"
+      },
+      {
+        "text": "Kommen Sie heute nicht? — Doch, ich komme.",
+        "note": "Auf eine negative Frage antwortet man mit doch.",
+        "audio": "/audio/grammatik/ja-nein-fragen/kommen-sie-heute-nicht-doch-ich-komme.mp3"
+      }
+    ],
+    "hoeren": {
+      "instruction": "Hör die Frage und wähle die Antwort, die passt.",
+      "items": [
+        {
+          "text": "Kommst du heute nicht?",
+          "choices": [
+            "Ja, ich komme.",
+            "Doch, ich komme.",
+            "Nein, ich komme."
+          ],
+          "correct": 1,
+          "audio": "/audio/grammatik/ja-nein-fragen/kommst-du-heute-nicht.mp3"
+        },
+        {
+          "text": "Hast du Hunger?",
+          "choices": [
+            "Ja, ich habe Hunger.",
+            "Doch, ich habe Hunger.",
+            "Doch, danke."
+          ],
+          "correct": 0,
+          "audio": "/audio/grammatik/ja-nein-fragen/hast-du-hunger.mp3"
+        },
+        {
+          "text": "Ist das nicht dein Auto?",
+          "choices": [
+            "Ja, das ist meins.",
+            "Doch, das ist meins.",
+            "Nein, das ist meins."
+          ],
+          "correct": 1,
+          "audio": "/audio/grammatik/ja-nein-fragen/ist-das-nicht-dein-auto.mp3"
+        },
+        {
+          "text": "Wohnst du in Hamburg?",
+          "choices": [
+            "Doch, ich wohne dort.",
+            "Ja, ich wohne dort.",
+            "Doch, nicht mehr."
+          ],
+          "correct": 1,
+          "audio": "/audio/grammatik/ja-nein-fragen/wohnst-du-in-hamburg.mp3"
+        },
+        {
+          "text": "Magst du keinen Kaffee?",
+          "choices": [
+            "Ja, ich mag Kaffee.",
+            "Nein, ich mag Kaffee.",
+            "Doch, ich mag Kaffee."
+          ],
+          "correct": 2,
+          "audio": "/audio/grammatik/ja-nein-fragen/magst-du-keinen-kaffee.mp3"
+        },
+        {
+          "text": "Hast du das gesehen?",
+          "choices": [
+            "Ja, ich habe es gesehen.",
+            "Doch, ich habe es gesehen.",
+            "Doch, nichts."
+          ],
+          "correct": 0,
+          "audio": "/audio/grammatik/ja-nein-fragen/hast-du-das-gesehen.mp3"
+        }
+      ]
+    },
+    "sprechen": {
+      "rounds": [
+        {
+          "label": "1 · Aussage → Frage",
+          "instruction": "Du hörst eine Aussage. Mach eine Ja/Nein-Frage daraus — das Verb nach vorn.",
+          "example": {
+            "prompt": "Er kommt aus Berlin.",
+            "answer": "Kommt er aus Berlin?"
+          },
+          "items": [
+            {
+              "prompt": "Sie wohnt in Wien.",
+              "answer": "Wohnt sie in Wien?",
+              "audioPrompt": "/audio/grammatik/ja-nein-fragen/sie-wohnt-in-wien.mp3",
+              "audioAnswer": "/audio/grammatik/ja-nein-fragen/wohnt-sie-in-wien--8wphfh.mp3"
+            },
+            {
+              "prompt": "Du hast Zeit.",
+              "answer": "Hast du Zeit?",
+              "audioPrompt": "/audio/grammatik/ja-nein-fragen/du-hast-zeit.mp3",
+              "audioAnswer": "/audio/grammatik/ja-nein-fragen/hast-du-zeit--8wphfh.mp3"
+            },
+            {
+              "prompt": "Das Kind schläft.",
+              "answer": "Schläft das Kind?",
+              "audioPrompt": "/audio/grammatik/ja-nein-fragen/das-kind-schlaeft.mp3",
+              "audioAnswer": "/audio/grammatik/ja-nein-fragen/schlaeft-das-kind--8wphfh.mp3"
+            },
+            {
+              "prompt": "Ihr kommt morgen.",
+              "answer": "Kommt ihr morgen?",
+              "audioPrompt": "/audio/grammatik/ja-nein-fragen/ihr-kommt-morgen.mp3",
+              "audioAnswer": "/audio/grammatik/ja-nein-fragen/kommt-ihr-morgen--8wphfh.mp3"
+            },
+            {
+              "prompt": "Der Zug fährt um acht.",
+              "answer": "Fährt der Zug um acht?",
+              "audioPrompt": "/audio/grammatik/ja-nein-fragen/der-zug-faehrt-um-acht.mp3",
+              "audioAnswer": "/audio/grammatik/ja-nein-fragen/faehrt-der-zug-um-acht--8wphfh.mp3"
+            },
+            {
+              "prompt": "Sie sprechen Deutsch.",
+              "answer": "Sprechen Sie Deutsch?",
+              "audioPrompt": "/audio/grammatik/ja-nein-fragen/sie-sprechen-deutsch.mp3",
+              "audioAnswer": "/audio/grammatik/ja-nein-fragen/sprechen-sie-deutsch--8wphfh.mp3"
+            }
+          ]
+        },
+        {
+          "label": "2 · doch statt ja",
+          "instruction": "Du hörst eine negative Frage. Antworte positiv — also mit doch.",
+          "example": {
+            "prompt": "Kommen Sie heute nicht?",
+            "answer": "Doch, ich komme."
+          },
+          "items": [
+            {
+              "prompt": "Hast du keinen Hunger?",
+              "answer": "Doch, ich habe Hunger.",
+              "audioPrompt": "/audio/grammatik/ja-nein-fragen/hast-du-keinen-hunger.mp3",
+              "audioAnswer": "/audio/grammatik/ja-nein-fragen/doch-ich-habe-hunger--8wphfh.mp3"
+            },
+            {
+              "prompt": "Ist das nicht dein Auto?",
+              "answer": "Doch, das ist mein Auto.",
+              "audioPrompt": "/audio/grammatik/ja-nein-fragen/ist-das-nicht-dein-auto.mp3",
+              "audioAnswer": "/audio/grammatik/ja-nein-fragen/doch-das-ist-mein-auto--8wphfh.mp3"
+            },
+            {
+              "prompt": "Magst du keinen Kaffee?",
+              "answer": "Doch, ich mag Kaffee.",
+              "audioPrompt": "/audio/grammatik/ja-nein-fragen/magst-du-keinen-kaffee.mp3",
+              "audioAnswer": "/audio/grammatik/ja-nein-fragen/doch-ich-mag-kaffee--8wphfh.mp3"
+            },
+            {
+              "prompt": "Wohnst du nicht in Berlin?",
+              "answer": "Doch, ich wohne in Berlin.",
+              "audioPrompt": "/audio/grammatik/ja-nein-fragen/wohnst-du-nicht-in-berlin.mp3",
+              "audioAnswer": "/audio/grammatik/ja-nein-fragen/doch-ich-wohne-in-berlin--8wphfh.mp3"
+            },
+            {
+              "prompt": "Hast du das nicht gesehen?",
+              "answer": "Doch, ich habe das gesehen.",
+              "audioPrompt": "/audio/grammatik/ja-nein-fragen/hast-du-das-nicht-gesehen.mp3",
+              "audioAnswer": "/audio/grammatik/ja-nein-fragen/doch-ich-habe-das-gesehen--8wphfh.mp3"
+            },
+            {
+              "prompt": "Kommt sie nicht mit?",
+              "answer": "Doch, sie kommt mit.",
+              "audioPrompt": "/audio/grammatik/ja-nein-fragen/kommt-sie-nicht-mit.mp3",
+              "audioAnswer": "/audio/grammatik/ja-nein-fragen/doch-sie-kommt-mit--8wphfh.mp3"
+            }
           ]
         }
       ]
@@ -50,12 +287,48 @@
       "hint": "Achten Sie darauf, ob die Frage eine Verneinung enthält.",
       "placeholder": "ja / nein / doch",
       "items": [
-        { "prompt": "Sprechen Sie Deutsch? — ___, ein bisschen.", "hint": "positive Frage, positive Antwort", "answer": ["Ja"] },
-        { "prompt": "Kommst du heute nicht? — ___, ich komme um sechs.", "hint": "negative Frage, positive Antwort", "answer": ["Doch"] },
-        { "prompt": "Hast du keine Zeit? — ___, ich habe leider wirklich keine.", "hint": "negative Frage, negative Antwort", "answer": ["Nein"] },
-        { "prompt": "Ist das nicht dein Mantel? — ___, der gehört mir.", "hint": "Widerspruch gegen die Verneinung.", "answer": ["Doch"] },
-        { "prompt": "Haben Sie Kinder? — ___, drei.", "hint": "positive Frage", "answer": ["Ja"] },
-        { "prompt": "Wohnen Sie nicht mehr in Berlin? — ___, ich bin letztes Jahr umgezogen.", "hint": "Die Verneinung stimmt.", "answer": ["Nein"] }
+        {
+          "prompt": "Sprechen Sie Deutsch? — ___, ein bisschen.",
+          "hint": "positive Frage, positive Antwort",
+          "answer": [
+            "Ja"
+          ]
+        },
+        {
+          "prompt": "Kommst du heute nicht? — ___, ich komme um sechs.",
+          "hint": "negative Frage, positive Antwort",
+          "answer": [
+            "Doch"
+          ]
+        },
+        {
+          "prompt": "Hast du keine Zeit? — ___, ich habe leider wirklich keine.",
+          "hint": "negative Frage, negative Antwort",
+          "answer": [
+            "Nein"
+          ]
+        },
+        {
+          "prompt": "Ist das nicht dein Mantel? — ___, der gehört mir.",
+          "hint": "Widerspruch gegen die Verneinung.",
+          "answer": [
+            "Doch"
+          ]
+        },
+        {
+          "prompt": "Haben Sie Kinder? — ___, drei.",
+          "hint": "positive Frage",
+          "answer": [
+            "Ja"
+          ]
+        },
+        {
+          "prompt": "Wohnen Sie nicht mehr in Berlin? — ___, ich bin letztes Jahr umgezogen.",
+          "hint": "Die Verneinung stimmt.",
+          "answer": [
+            "Nein"
+          ]
+        }
       ]
     },
     {
@@ -65,26 +338,72 @@
         {
           "id": "jn1",
           "hint": "„Sie heißen Schmidt.“ → Frage",
-          "correct": ["Heißen", "Sie", "Schmidt", "?"],
-          "shuffled": ["Sie", "?", "Heißen", "Schmidt"]
+          "correct": [
+            "Heißen",
+            "Sie",
+            "Schmidt",
+            "?"
+          ],
+          "shuffled": [
+            "Sie",
+            "?",
+            "Heißen",
+            "Schmidt"
+          ]
         },
         {
           "id": "jn2",
           "hint": "„Sie kommen aus Südafrika.“ → Frage",
-          "correct": ["Kommen", "Sie", "aus", "Südafrika", "?"],
-          "shuffled": ["aus", "Sie", "Kommen", "?", "Südafrika"]
+          "correct": [
+            "Kommen",
+            "Sie",
+            "aus",
+            "Südafrika",
+            "?"
+          ],
+          "shuffled": [
+            "aus",
+            "Sie",
+            "Kommen",
+            "?",
+            "Südafrika"
+          ]
         },
         {
           "id": "jn3",
           "hint": "„Sie sind verheiratet.“ → Frage",
-          "correct": ["Sind", "Sie", "verheiratet", "?"],
-          "shuffled": ["verheiratet", "Sind", "?", "Sie"]
+          "correct": [
+            "Sind",
+            "Sie",
+            "verheiratet",
+            "?"
+          ],
+          "shuffled": [
+            "verheiratet",
+            "Sind",
+            "?",
+            "Sie"
+          ]
         },
         {
           "id": "jn4",
           "hint": "Höfliche Bitte im Konjunktiv.",
-          "correct": ["Könnten", "Sie", "mir", "bitte", "helfen", "?"],
-          "shuffled": ["mir", "Könnten", "helfen", "bitte", "?", "Sie"]
+          "correct": [
+            "Könnten",
+            "Sie",
+            "mir",
+            "bitte",
+            "helfen",
+            "?"
+          ],
+          "shuffled": [
+            "mir",
+            "Könnten",
+            "helfen",
+            "bitte",
+            "?",
+            "Sie"
+          ]
         }
       ]
     },
@@ -93,26 +412,62 @@
       "title": "Welche Frage passt zu welcher Antwort?",
       "hint": "Die Antwort verrät das Verb der Frage.",
       "pairs": [
-        { "q": "Sprechen Sie Französisch?", "a": "Nein, ich spreche kein Französisch." },
-        { "q": "Sind Sie Deutsche?", "a": "Nein, ich bin keine Deutsche, ich bin Türkin." },
-        { "q": "Ist er Lehrer von Beruf?", "a": "Ja, er ist Lehrer von Beruf." },
-        { "q": "Wohnen Sie schon lange hier im Haus?", "a": "Ja, wir wohnen schon lange hier." },
-        { "q": "Haben sie Kinder?", "a": "Nein, sie haben keine Kinder." }
+        {
+          "q": "Sprechen Sie Französisch?",
+          "a": "Nein, ich spreche kein Französisch."
+        },
+        {
+          "q": "Sind Sie Deutsche?",
+          "a": "Nein, ich bin keine Deutsche, ich bin Türkin."
+        },
+        {
+          "q": "Ist er Lehrer von Beruf?",
+          "a": "Ja, er ist Lehrer von Beruf."
+        },
+        {
+          "q": "Wohnen Sie schon lange hier im Haus?",
+          "a": "Ja, wir wohnen schon lange hier."
+        },
+        {
+          "q": "Haben sie Kinder?",
+          "a": "Nein, sie haben keine Kinder."
+        }
       ]
     },
     {
       "type": "table",
       "title": "W-Frage oder Ja/Nein-Frage?",
       "hint": "Steht das Verb auf Position 1 oder auf Position 2?",
-      "columns": ["Frage", "Position des Verbs"],
+      "columns": [
+        "Frage",
+        "Position des Verbs"
+      ],
       "placeholder": "1 oder 2",
       "rows": [
-        { "term": "Kommt er aus Berlin?", "answer": "1" },
-        { "term": "Woher kommt er?", "answer": "2" },
-        { "term": "Essen wir heute Abend Pizza?", "answer": "1" },
-        { "term": "Wann essen wir Pizza?", "answer": "2" },
-        { "term": "Möchten Sie Schokolade essen?", "answer": "1" },
-        { "term": "Wie alt ist dein Sohn?", "answer": "2" }
+        {
+          "term": "Kommt er aus Berlin?",
+          "answer": "1"
+        },
+        {
+          "term": "Woher kommt er?",
+          "answer": "2"
+        },
+        {
+          "term": "Essen wir heute Abend Pizza?",
+          "answer": "1"
+        },
+        {
+          "term": "Wann essen wir Pizza?",
+          "answer": "2"
+        },
+        {
+          "term": "Möchten Sie Schokolade essen?",
+          "answer": "1"
+        },
+        {
+          "term": "Wie alt ist dein Sohn?",
+          "answer": "2"
+        }
       ]
     }
   ]

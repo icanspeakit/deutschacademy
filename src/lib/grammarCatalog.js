@@ -22,6 +22,9 @@ const topicOf = (t, kind) => ({
   href: `/uebungen/grammatik/${topicKeyOf(t)}`,
   tasks: taskCountOf(t),
   kind,
+  // Whether this topic can be heard and spoken, not just read and typed. Surfaces on the
+  // hub and the rail so a learner looking for something to do out loud can find one.
+  aktiv: !!t.aktiv,
 });
 
 /** Workspaces first within a level, then the quiz-only topics — same order as the hub. */

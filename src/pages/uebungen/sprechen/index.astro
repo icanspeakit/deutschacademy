@@ -32,7 +32,7 @@ const pending = tasks.filter((t) => t.imageNeeded && !t.image).length;
   <main class="practice-main practice-main--wide">
     <div class="practice-hero">
       <p class="eyebrow">Sprechen</p>
-      <h1>Sprechen üben</h1>
+      <h1 data-i18n="skill.sprechen.h1">Sprechen üben</h1>
       <p>
         {pictures} Bildbeschreibungen in Serien zu vier, dazu sich vorstellen, gemeinsam planen,
         Kurzvortrag und Diskussion. Jede Aufgabe mit Timer, Redemitteln und einer Modellantwort
@@ -48,8 +48,12 @@ const pending = tasks.filter((t) => t.imageNeeded && !t.image).length;
             <span class="sk-card-ic"><Icon name="map-pin" size={20} /></span>
             <span class="sk-card-txt">
               <b>{set.title}</b>
-              <i>{set.blurb}</i>
-              <span class="sk-card-meta">{set.level} · {set.items.length} Bilder</span>
+              <i data-i18n={`sprechenSet.${set.id}.blurb`}>{set.blurb}</i>
+              <span class="sk-card-meta">
+                {set.level}
+                {" · "}
+                <span data-i18n="meta.bilder" data-i18n-vars={JSON.stringify({ n: set.items.length })}>{set.items.length} Bilder</span>
+              </span>
             </span>
             <span class="sk-card-go" aria-hidden="true">→</span>
           </a>
@@ -58,7 +62,7 @@ const pending = tasks.filter((t) => t.imageNeeded && !t.image).length;
     </section>
 
     <h2 class="sk-group-title" style="margin-top:44px">
-      <span>Weitere Sprechaufgaben</span>
+      <span data-i18n="sprechen.moreTasks">Weitere Sprechaufgaben</span>
     </h2>
     {loose.map((g) => (
       <section class="sk-group" id={`niveau-${g.level.toLowerCase()}`}>
@@ -72,8 +76,12 @@ const pending = tasks.filter((t) => t.imageNeeded && !t.image).length;
               <span class="sk-card-ic"><Icon name={SPRECHEN_ICON[t.type] ?? "mic"} size={20} /></span>
               <span class="sk-card-txt">
                 <b>{t.title}</b>
-                <i>{t.blurb}</i>
-                <span class="sk-card-meta">{types[t.type]} · {t.seconds} Sek. Redezeit</span>
+                <i data-i18n={`sprechen.${t.id}.blurb`}>{t.blurb}</i>
+                <span class="sk-card-meta">
+                  <span data-i18n={`type.sprechen.${t.type}`}>{types[t.type]}</span>
+                  {" · "}
+                  <span data-i18n="meta.redezeit" data-i18n-vars={JSON.stringify({ s: t.seconds })}>{t.seconds} Sek. Redezeit</span>
+                </span>
               </span>
               <span class="sk-card-go" aria-hidden="true">→</span>
             </a>
@@ -83,9 +91,13 @@ const pending = tasks.filter((t) => t.imageNeeded && !t.image).length;
     ))}
 
     <p class="sk-foot">
-      {tasks.length} Aufgaben. Sprechen ist die Fertigkeit, die man allein am schwersten übt —
-      deshalb steht bei jeder Aufgabe, was eine Prüferin hören will, und eine Modellantwort daneben.
-      {pending > 0 && ` Zu ${pending} Aufgaben fehlt noch das Foto; solange steht die beschriebene Szene an seiner Stelle und die Aufgabe funktioniert trotzdem.`}
+      {/* The always-there part carries the key on a span of its own: data-i18n replaces
+          textContent, which would take the conditional sentence after it with it. */}
+      <span data-i18n="sprechen.foot" data-i18n-vars={JSON.stringify({ n: tasks.length })}>
+        {tasks.length} Aufgaben. Sprechen ist die Fertigkeit, die man allein am schwersten übt —
+        deshalb steht bei jeder Aufgabe, was eine Prüferin hören will, und eine Modellantwort daneben.
+      </span>
+      {pending > 0 && <span data-i18n="sprechen.foot.pending" data-i18n-vars={JSON.stringify({ n: pending })}>{` Zu ${pending} Aufgaben fehlt noch das Foto; solange steht die beschriebene Szene an seiner Stelle und die Aufgabe funktioniert trotzdem.`}</span>}
     </p>
   </main>
 </Layout>

@@ -143,6 +143,186 @@
       ]
     }
   },
+  "aktiv": {
+    "listen": [
+      {
+        "text": "der Baum",
+        "note": "Maskulin. Das Genus steckt nicht im Wort — nur im Artikel.",
+        "audio": "/audio/grammatik/artikel/der-baum.mp3"
+      },
+      {
+        "text": "die Lampe",
+        "note": "Feminin. Nomen auf -e sind sehr oft die.",
+        "audio": "/audio/grammatik/artikel/die-lampe.mp3"
+      },
+      {
+        "text": "das Fenster",
+        "note": "Neutral. Nomen auf -er, -en, -chen sind oft das.",
+        "audio": "/audio/grammatik/artikel/das-fenster.mp3"
+      }
+    ],
+    "hoeren": {
+      "instruction": "Hör zu und wähle die Form, die du gehört hast.",
+      "items": [
+        {
+          "text": "Auf dem Tisch liegt ein Buch.",
+          "choices": [
+            "dem Tisch",
+            "den Tisch",
+            "der Tisch"
+          ],
+          "correct": 0,
+          "audio": "/audio/grammatik/artikel/auf-dem-tisch-liegt-ein-buch.mp3"
+        },
+        {
+          "text": "Ich sehe einen Baum im Garten.",
+          "choices": [
+            "ein Baum",
+            "einen Baum",
+            "einem Baum"
+          ],
+          "correct": 1,
+          "audio": "/audio/grammatik/artikel/ich-sehe-einen-baum-im-garten.mp3"
+        },
+        {
+          "text": "Die Kinder spielen draußen.",
+          "choices": [
+            "Das Kind",
+            "Die Kinder",
+            "Den Kindern"
+          ],
+          "correct": 1,
+          "audio": "/audio/grammatik/artikel/die-kinder-spielen-draussen.mp3"
+        },
+        {
+          "text": "Sie gibt der Frau das Buch.",
+          "choices": [
+            "der Frau",
+            "die Frau",
+            "den Frauen"
+          ],
+          "correct": 0,
+          "audio": "/audio/grammatik/artikel/sie-gibt-der-frau-das-buch.mp3"
+        },
+        {
+          "text": "Ein Vogel sitzt auf dem Dach.",
+          "choices": [
+            "Eine Vogel",
+            "Ein Vogel",
+            "Einen Vogel"
+          ],
+          "correct": 1,
+          "audio": "/audio/grammatik/artikel/ein-vogel-sitzt-auf-dem-dach.mp3"
+        },
+        {
+          "text": "Ich suche die Schlüssel.",
+          "choices": [
+            "der Schlüssel",
+            "dem Schlüssel",
+            "die Schlüssel"
+          ],
+          "correct": 2,
+          "audio": "/audio/grammatik/artikel/ich-suche-die-schluessel.mp3"
+        }
+      ]
+    },
+    "sprechen": {
+      "rounds": [
+        {
+          "label": "1 · der, die oder das?",
+          "instruction": "Du hörst ein Nomen ohne Artikel. Sag es mit dem bestimmten Artikel.",
+          "example": {
+            "prompt": "Tisch",
+            "answer": "der Tisch"
+          },
+          "items": [
+            {
+              "prompt": "Fenster",
+              "answer": "das Fenster",
+              "audioPrompt": "/audio/grammatik/artikel/fenster.mp3",
+              "audioAnswer": "/audio/grammatik/artikel/das-fenster--8wphfh.mp3"
+            },
+            {
+              "prompt": "Lampe",
+              "answer": "die Lampe",
+              "audioPrompt": "/audio/grammatik/artikel/lampe.mp3",
+              "audioAnswer": "/audio/grammatik/artikel/die-lampe--8wphfh.mp3"
+            },
+            {
+              "prompt": "Stuhl",
+              "answer": "der Stuhl",
+              "audioPrompt": "/audio/grammatik/artikel/stuhl.mp3",
+              "audioAnswer": "/audio/grammatik/artikel/der-stuhl--8wphfh.mp3"
+            },
+            {
+              "prompt": "Buch",
+              "answer": "das Buch",
+              "audioPrompt": "/audio/grammatik/artikel/buch.mp3",
+              "audioAnswer": "/audio/grammatik/artikel/das-buch--8wphfh.mp3"
+            },
+            {
+              "prompt": "Tür",
+              "answer": "die Tür",
+              "audioPrompt": "/audio/grammatik/artikel/tuer.mp3",
+              "audioAnswer": "/audio/grammatik/artikel/die-tuer--8wphfh.mp3"
+            },
+            {
+              "prompt": "Garten",
+              "answer": "der Garten",
+              "audioPrompt": "/audio/grammatik/artikel/garten.mp3",
+              "audioAnswer": "/audio/grammatik/artikel/der-garten--8wphfh.mp3"
+            }
+          ]
+        },
+        {
+          "label": "2 · bestimmt → unbestimmt",
+          "instruction": "Du hörst ein Nomen mit der, die oder das. Sag es mit ein oder eine.",
+          "example": {
+            "prompt": "der Tisch",
+            "answer": "ein Tisch"
+          },
+          "items": [
+            {
+              "prompt": "die Lampe",
+              "answer": "eine Lampe",
+              "audioPrompt": "/audio/grammatik/artikel/die-lampe.mp3",
+              "audioAnswer": "/audio/grammatik/artikel/eine-lampe--8wphfh.mp3"
+            },
+            {
+              "prompt": "das Buch",
+              "answer": "ein Buch",
+              "audioPrompt": "/audio/grammatik/artikel/das-buch.mp3",
+              "audioAnswer": "/audio/grammatik/artikel/ein-buch--8wphfh.mp3"
+            },
+            {
+              "prompt": "der Garten",
+              "answer": "ein Garten",
+              "audioPrompt": "/audio/grammatik/artikel/der-garten.mp3",
+              "audioAnswer": "/audio/grammatik/artikel/ein-garten--8wphfh.mp3"
+            },
+            {
+              "prompt": "die Blume",
+              "answer": "eine Blume",
+              "audioPrompt": "/audio/grammatik/artikel/die-blume.mp3",
+              "audioAnswer": "/audio/grammatik/artikel/eine-blume--8wphfh.mp3"
+            },
+            {
+              "prompt": "das Kind",
+              "answer": "ein Kind",
+              "audioPrompt": "/audio/grammatik/artikel/das-kind.mp3",
+              "audioAnswer": "/audio/grammatik/artikel/ein-kind--8wphfh.mp3"
+            },
+            {
+              "prompt": "der Vogel",
+              "answer": "ein Vogel",
+              "audioPrompt": "/audio/grammatik/artikel/der-vogel.mp3",
+              "audioAnswer": "/audio/grammatik/artikel/ein-vogel--8wphfh.mp3"
+            }
+          ]
+        }
+      ]
+    }
+  },
   "exercises": [
     {
       "type": "table",

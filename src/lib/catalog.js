@@ -379,7 +379,13 @@ const notSelf = (href, list) => list.filter((i) => i.href !== href);
 // content would be a menu lying about the catalogue.
 
 /** One row in a level view. `count` is optional — a grammar topic has nothing to count. */
-const levelRow = (title, href, count) => ({ title, href, count });
+/* `count` is the German line the server renders; `meta` is what the client i18n pass uses
+   to rebuild it. It is split into a type key and a count template because the task type
+   ("Durchsage", "Zeitungsartikel") and the numbers translate from different keys, and a
+   data-i18n-vars payload is static JSON that cannot itself reference another key.
+   Titles carry no key on purpose — a Hörtext or Lesetext title names the situation in the
+   language being learnt and stays German. */
+const levelRow = (title, href, count, meta) => ({ title, href, count, meta });
 
 const levelHead = (level) => ({
   level,
@@ -577,28 +583,40 @@ const SKILLS = [
     // or telc Hörteil actually varies between items. The three skills below follow it.
     byLevel: indexLevels(hoeren.texts, (t) =>
       levelRow(t.title, `/uebungen/hoeren/${t.id}`,
-        `${hoeren.types[t.type]} · ${t.questions.length} Fragen`)),
+        `${hoeren.types[t.type]} · ${t.questions.length} Fragen`,
+        { typeKey: `type.hoeren.${t.type}`, typeText: hoeren.types[t.type],
+          countKey: "grammatik.card.questions", countVars: { n: t.questions.length },
+          countText: `${t.questions.length} Fragen` })),
   },
   {
     id: "lesen", name: "Lesen", nameKey: "nav.skill.lesen", icon: "book-open",
     href: "/uebungen/lesen",
     byLevel: indexLevels(lesenIndex.texts, (t) =>
       levelRow(t.title, `/uebungen/lesen/${t.id}`,
-        `${lesenIndex.types[t.type]} · ca. ${t.minutes} Min.`)),
+        `${lesenIndex.types[t.type]} · ca. ${t.minutes} Min.`,
+        { typeKey: `type.lesen.${t.type}`, typeText: lesenIndex.types[t.type],
+          countKey: "meta.min", countVars: { m: t.minutes },
+          countText: `ca. ${t.minutes} Min.` })),
   },
   {
     id: "schreiben", name: "Schreiben", nameKey: "nav.skill.schreiben", icon: "pencil",
     href: "/uebungen/schreiben",
     byLevel: indexLevels(schreibenIndex.tasks, (t) =>
       levelRow(t.title, `/uebungen/schreiben/${t.id}`,
-        `${schreibenIndex.types[t.type]} · ca. ${t.minutes} Min.`)),
+        `${schreibenIndex.types[t.type]} · ca. ${t.minutes} Min.`,
+        { typeKey: `type.schreiben.${t.type}`, typeText: schreibenIndex.types[t.type],
+          countKey: "meta.min", countVars: { m: t.minutes },
+          countText: `ca. ${t.minutes} Min.` })),
   },
   {
     id: "sprechen", name: "Sprechen", nameKey: "nav.skill.sprechen", icon: "mic",
     href: "/uebungen/sprechen/",
     byLevel: indexLevels(sprechenIndex.tasks, (t) =>
       levelRow(t.title, `/uebungen/sprechen/${t.id}`,
-        `${sprechenIndex.types[t.type]} · ${t.seconds} Sek.`)),
+        `${sprechenIndex.types[t.type]} · ${t.seconds} Sek.`,
+        { typeKey: `type.sprechen.${t.type}`, typeText: sprechenIndex.types[t.type],
+          countKey: "meta.sek", countVars: { s: t.seconds },
+          countText: `${t.seconds} Sek.` })),
   },
 ];
 

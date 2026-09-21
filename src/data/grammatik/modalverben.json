@@ -140,6 +140,186 @@
       ]
     }
   },
+  "aktiv": {
+    "listen": [
+      {
+        "text": "Nach dem Umzug müssen wir die Adresse anmelden.",
+        "note": "Modalverb auf Position 2, Infinitiv ganz am Ende.",
+        "audio": "/audio/grammatik/modalverben/nach-dem-umzug-muessen-wir-die-adresse-anmelden.mp3"
+      },
+      {
+        "text": "Hier darf man nicht parken.",
+        "note": "dürfen verneint heißt Verbot, nicht nur fehlende Erlaubnis.",
+        "audio": "/audio/grammatik/modalverben/hier-darf-man-nicht-parken.mp3"
+      },
+      {
+        "text": "Ich musste lange warten.",
+        "note": "Bei Modalverben nimmt man auch im Gespräch das Präteritum.",
+        "audio": "/audio/grammatik/modalverben/ich-musste-lange-warten.mp3"
+      }
+    ],
+    "hoeren": {
+      "instruction": "Hör zu und wähle die Form des Modalverbs, die du gehört hast.",
+      "items": [
+        {
+          "text": "Wir konnten leider nicht kommen.",
+          "choices": [
+            "können",
+            "konnten",
+            "könnten"
+          ],
+          "correct": 1,
+          "audio": "/audio/grammatik/modalverben/wir-konnten-leider-nicht-kommen.mp3"
+        },
+        {
+          "text": "Hier darf man nicht rauchen.",
+          "choices": [
+            "darf",
+            "durfte",
+            "dürfte"
+          ],
+          "correct": 0,
+          "audio": "/audio/grammatik/modalverben/hier-darf-man-nicht-rauchen.mp3"
+        },
+        {
+          "text": "Sie wollte nichts dazu sagen.",
+          "choices": [
+            "will",
+            "wollte",
+            "wollten"
+          ],
+          "correct": 1,
+          "audio": "/audio/grammatik/modalverben/sie-wollte-nichts-dazu-sagen.mp3"
+        },
+        {
+          "text": "Du musst den Ausweis mitbringen.",
+          "choices": [
+            "musst",
+            "musstest",
+            "müsstest"
+          ],
+          "correct": 0,
+          "audio": "/audio/grammatik/modalverben/du-musst-den-ausweis-mitbringen.mp3"
+        },
+        {
+          "text": "Der Arzt sagt, ich soll mehr schlafen.",
+          "choices": [
+            "sollte",
+            "soll",
+            "sollten"
+          ],
+          "correct": 1,
+          "audio": "/audio/grammatik/modalverben/der-arzt-sagt-ich-soll-mehr-schlafen.mp3"
+        },
+        {
+          "text": "Wir mussten eine Stunde warten.",
+          "choices": [
+            "müssen",
+            "mussten",
+            "müssten"
+          ],
+          "correct": 1,
+          "audio": "/audio/grammatik/modalverben/wir-mussten-eine-stunde-warten.mp3"
+        }
+      ]
+    },
+    "sprechen": {
+      "rounds": [
+        {
+          "label": "1 · Satz + Modalverb",
+          "instruction": "Du hörst einen Satz und ein Modalverb. Bau beides zusammen — der Infinitiv ans Ende.",
+          "example": {
+            "prompt": "Ich warte. — müssen",
+            "answer": "Ich muss warten."
+          },
+          "items": [
+            {
+              "prompt": "Sie schwimmt. — können",
+              "answer": "Sie kann schwimmen.",
+              "audioPrompt": "/audio/grammatik/modalverben/sie-schwimmt-koennen.mp3",
+              "audioAnswer": "/audio/grammatik/modalverben/sie-kann-schwimmen--8wphfh.mp3"
+            },
+            {
+              "prompt": "Wir parken hier nicht. — dürfen",
+              "answer": "Wir dürfen hier nicht parken.",
+              "audioPrompt": "/audio/grammatik/modalverben/wir-parken-hier-nicht-duerfen.mp3",
+              "audioAnswer": "/audio/grammatik/modalverben/wir-duerfen-hier-nicht-parken--8wphfh.mp3"
+            },
+            {
+              "prompt": "Er schläft mehr. — sollen",
+              "answer": "Er soll mehr schlafen.",
+              "audioPrompt": "/audio/grammatik/modalverben/er-schlaeft-mehr-sollen.mp3",
+              "audioAnswer": "/audio/grammatik/modalverben/er-soll-mehr-schlafen--8wphfh.mp3"
+            },
+            {
+              "prompt": "Ich gehe nach Hause. — wollen",
+              "answer": "Ich will nach Hause gehen.",
+              "audioPrompt": "/audio/grammatik/modalverben/ich-gehe-nach-hause-wollen.mp3",
+              "audioAnswer": "/audio/grammatik/modalverben/ich-will-nach-hause-gehen--8wphfh.mp3"
+            },
+            {
+              "prompt": "Du hilfst mir. — können",
+              "answer": "Du kannst mir helfen.",
+              "audioPrompt": "/audio/grammatik/modalverben/du-hilfst-mir-koennen.mp3",
+              "audioAnswer": "/audio/grammatik/modalverben/du-kannst-mir-helfen--8wphfh.mp3"
+            },
+            {
+              "prompt": "Sie meldet die Adresse an. — müssen",
+              "answer": "Sie muss die Adresse anmelden.",
+              "audioPrompt": "/audio/grammatik/modalverben/sie-meldet-die-adresse-an-muessen.mp3",
+              "audioAnswer": "/audio/grammatik/modalverben/sie-muss-die-adresse-anmelden--8wphfh.mp3"
+            }
+          ]
+        },
+        {
+          "label": "2 · Präsens → Präteritum",
+          "instruction": "Du hörst einen Satz im Präsens. Sag ihn im Präteritum — so spricht man bei Modalverben wirklich.",
+          "example": {
+            "prompt": "Ich muss warten.",
+            "answer": "Ich musste warten."
+          },
+          "items": [
+            {
+              "prompt": "Wir können nicht kommen.",
+              "answer": "Wir konnten nicht kommen.",
+              "audioPrompt": "/audio/grammatik/modalverben/wir-koennen-nicht-kommen.mp3",
+              "audioAnswer": "/audio/grammatik/modalverben/wir-konnten-nicht-kommen--8wphfh.mp3"
+            },
+            {
+              "prompt": "Er will nichts sagen.",
+              "answer": "Er wollte nichts sagen.",
+              "audioPrompt": "/audio/grammatik/modalverben/er-will-nichts-sagen.mp3",
+              "audioAnswer": "/audio/grammatik/modalverben/er-wollte-nichts-sagen--8wphfh.mp3"
+            },
+            {
+              "prompt": "Du darfst hier parken.",
+              "answer": "Du durftest hier parken.",
+              "audioPrompt": "/audio/grammatik/modalverben/du-darfst-hier-parken.mp3",
+              "audioAnswer": "/audio/grammatik/modalverben/du-durftest-hier-parken--8wphfh.mp3"
+            },
+            {
+              "prompt": "Sie soll mehr schlafen.",
+              "answer": "Sie sollte mehr schlafen.",
+              "audioPrompt": "/audio/grammatik/modalverben/sie-soll-mehr-schlafen.mp3",
+              "audioAnswer": "/audio/grammatik/modalverben/sie-sollte-mehr-schlafen--8wphfh.mp3"
+            },
+            {
+              "prompt": "Ich mag keinen Kaffee.",
+              "answer": "Ich mochte keinen Kaffee.",
+              "audioPrompt": "/audio/grammatik/modalverben/ich-mag-keinen-kaffee.mp3",
+              "audioAnswer": "/audio/grammatik/modalverben/ich-mochte-keinen-kaffee--8wphfh.mp3"
+            },
+            {
+              "prompt": "Ihr müsst lange warten.",
+              "answer": "Ihr musstet lange warten.",
+              "audioPrompt": "/audio/grammatik/modalverben/ihr-muesst-lange-warten.mp3",
+              "audioAnswer": "/audio/grammatik/modalverben/ihr-musstet-lange-warten--8wphfh.mp3"
+            }
+          ]
+        }
+      ]
+    }
+  },
   "exercises": [
     {
       "type": "fill",

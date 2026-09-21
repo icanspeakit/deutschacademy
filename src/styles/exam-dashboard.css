@@ -38,23 +38,123 @@
   align-self: start;
 }
 
+/* The head is a fold, not a heading: it names the exam AND the skill the rail is
+   pivoted to ("Start Deutsch 1 · Hören"), and collapses the whole part tree so the
+   exam switcher below it comes up to the fold. */
 .fs-rail-head,
 .fs-rail-result {
   display: flex;
   align-items: center;
   gap: 10px;
+  width: 100%;
   padding: 10px 12px;
+  border: none;
   border-radius: 12px;
+  font: inherit;
   font-weight: var(--fw-semibold);
   color: var(--brand-blue-dark);
+  text-align: left;
   text-decoration: none;
 }
-.fs-rail-head { background: var(--gradient-brand-soft); margin-bottom: 4px; }
+.fs-rail-head { background: var(--gradient-brand-soft); margin-bottom: 4px; cursor: pointer; }
+.fs-rail-head-txt { flex: 1; min-width: 0; }
+.fs-rail-head-txt i {
+  /* The "· Hören" half: same line, quieter, so the head reads as one sentence
+     rather than as two competing titles. */
+  font-style: normal;
+  font-weight: var(--fw-regular);
+  color: var(--brand-blue);
+}
+.fs-rail-head-n {
+  flex-shrink: 0;
+  font-size: .78rem;
+  font-weight: var(--fw-regular);
+  font-variant-numeric: tabular-nums;
+  color: var(--brand-blue);
+}
 .fs-rail-result { color: var(--ink); font-weight: var(--fw-regular); }
 .fs-rail-result:hover { background: var(--surface-sunken, rgba(0, 0, 0, .04)); }
 .fs-rail-flag { font-size: .7rem; color: var(--brand-blue); }
 
+/* One triangle for every fold on the page — head and skill groups — so "there is more
+   under this" looks the same wherever it appears. */
+.fs-caret {
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  width: 12px;
+  height: 12px;
+  color: var(--brand-blue);
+  transition: transform .15s ease;
+}
+.fs-caret::before {
+  content: "";
+  border-left: 5px solid currentColor;
+  border-top: 4px solid transparent;
+  border-bottom: 4px solid transparent;
+}
+[aria-expanded="true"] > .fs-caret { transform: rotate(90deg); }
+@media (prefers-reduced-motion: reduce) { .fs-caret { transition: none; } }
+
+.fs-rail-body[hidden], .fs-group-items[hidden] { display: none; }
+
+/* The pivot. The height of a fold is animated in JS (see slide() in examDashboard.js —
+   `hidden` cannot tween); what lives here is the stagger that makes the rows read as
+   arriving rather than appearing, on the group that just opened and on the whole tree
+   when the exam changes underneath it. Six delays is enough: no exam part list is
+   longer, and the seventh row simply arrives with the sixth. */
+@keyframes fs-row-in {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: none; }
+}
+.fs-group-items--enter > .fs-part,
+.fs-parts--enter > * { animation: fs-row-in .24s cubic-bezier(.22, .7, .28, 1) both; }
+.fs-group-items--enter > .fs-part:nth-child(2),
+.fs-parts--enter > :nth-child(2) { animation-delay: 30ms; }
+.fs-group-items--enter > .fs-part:nth-child(3),
+.fs-parts--enter > :nth-child(3) { animation-delay: 60ms; }
+.fs-group-items--enter > .fs-part:nth-child(4),
+.fs-parts--enter > :nth-child(4) { animation-delay: 90ms; }
+.fs-group-items--enter > .fs-part:nth-child(5),
+.fs-parts--enter > :nth-child(5) { animation-delay: 120ms; }
+.fs-group-items--enter > .fs-part:nth-child(n + 6),
+.fs-parts--enter > :nth-child(n + 6) { animation-delay: 150ms; }
+
+@media (prefers-reduced-motion: reduce) {
+  .fs-group-items--enter > .fs-part,
+  .fs-parts--enter > * { animation: none; }
+}
+
 .fs-parts { display: grid; gap: 1px; }
+
+/* A skill group: Hören, Lesen, Schreiben. Only one is open at a time — the rail is a
+   pivot between skills, not a list to scroll, and the open one is what the head names. */
+.fs-group-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 9px 12px;
+  border: none;
+  border-radius: 10px;
+  background: none;
+  font: inherit;
+  font-size: .88rem;
+  color: var(--ink);
+  text-align: left;
+  cursor: pointer;
+}
+.fs-group-head:hover { background: var(--surface-sunken, rgba(0, 0, 0, .04)); }
+.fs-group.is-open .fs-group-head { color: var(--brand-blue-dark); font-weight: var(--fw-semibold); }
+.fs-group-name { flex: 1; min-width: 0; }
+.fs-group-n {
+  flex-shrink: 0;
+  font-size: .78rem;
+  font-weight: var(--fw-regular);
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+.fs-group-items { display: grid; gap: 1px; }
 .fs-part {
   display: flex;
   align-items: center;
@@ -67,6 +167,11 @@
   color: var(--ink);
   font-size: .88rem;
 }
+/* Inside a group the dot lines up under the group name, not under its caret: the
+   indent is what says "part of Hören". A part with no group (Schreiben) sits at the
+   group's own altitude instead, because that is what it is. */
+.fs-group-items .fs-part { padding-left: 34px; }
+.fs-part--solo { padding-left: 12px; }
 .fs-part:hover { background: var(--surface-sunken, rgba(0, 0, 0, .04)); }
 .fs-part-label { flex: 1; min-width: 0; }
 .fs-part-n {
@@ -330,7 +435,7 @@
   /* The rail's nested parts repeat what the table already says at this width, so only
      the exam switcher survives — scrolling sideways through four exams beats stacking
      four exams plus nine parts above the panel. */
-  .fs-rail-head, .fs-parts, .fs-rail-result, .fs-reset, .fs-rail-label { display: none; }
+  .fs-rail-head, .fs-rail-body, .fs-parts, .fs-rail-result, .fs-reset, .fs-rail-label { display: none; }
   .fs-rail { padding: 8px; }
   .fs-examlist {
     grid-auto-flow: column;

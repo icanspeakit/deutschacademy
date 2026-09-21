@@ -85,9 +85,21 @@ const languages = ALL_LANGUAGES.filter((l) => langs.includes(l.code));
           <div class="vp-card-label">Lernsets</div>
           <button
             type="button"
+            class="vp-sheet-fold"
+            data-sheet-close
+            aria-label="Lernsets einklappen"
+            aria-controls="vp-rule-card"
+          >
+            <span>Einklappen</span>
+            {/* Down, because that is where the sheet goes. */}
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </button>
+          <button
+            type="button"
             class="vp-sheet-x"
             data-sheet-close
             aria-label="Lernsets schließen"
+            data-i18n-attr="aria-label:sets.close"
             aria-controls="vp-rule-card"
           >
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="6" y1="6" x2="18" y2="18"></line><line x1="18" y1="6" x2="6" y2="18"></line></svg>
@@ -222,16 +234,13 @@ const languages = ALL_LANGUAGES.filter((l) => langs.includes(l.code));
     // never a reason for it to share the screen with the cards.
     sheet: true,
     coach: [
-      ["Deine Lernsets bleiben daneben",
-       "Thema, Niveau oder Häufigkeit — das nächste Set ist einen Klick entfernt, ohne die Karten zu verlassen."],
-      ["Weggeklappt bleibt dieser Reiter",
-       "Mehr Platz für die Karte, und die Liste ist nicht weg: der Reiter am Rand holt sie zurück. Deine Wahl wird gemerkt."],
+      ["intro.sets.title", "intro.sets.text"],
+      ["intro.setsAway.title", "intro.setsAway.text"],
     ],
     // One beat on a phone, not two: the button opens a sheet over the cards, so there is
     // no "and this is how you put it away again" to tell — the sheet carries its own ✕.
     coachCompact: [
-      ["Hier wählst du dein Lernset",
-       "25er nach Thema, 20er der Reihe nach, oder nach Häufigkeit — alles hinter diesem Knopf."],
+      ["intro.setsCompact.title", "intro.setsCompact.text"],
     ],
   });
 

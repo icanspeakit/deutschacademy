@@ -34,11 +34,12 @@ function load() {
         dailyActivity: data.dailyActivity || {},
         vocabMastered: data.vocabMastered || [],
         topics: data.topics || {},
+        drills: data.drills || {},
         recents: data.recents || [],
       };
     }
   } catch {}
-  return { streak: 0, lastActiveDate: null, lastSkill: null, skills: {}, dailyActivity: {}, vocabMastered: [], topics: {}, recents: [] };
+  return { streak: 0, lastActiveDate: null, lastSkill: null, skills: {}, dailyActivity: {}, vocabMastered: [], topics: {}, drills: {}, recents: [] };
 }
 
 function save(data) {
@@ -122,6 +123,35 @@ export function recordSession(skill) {
   s.sessions += 1;
   s.lastActiveDate = todayStr();
   save(data);
+}
+
+/**
+ * One item of the Sprechen drill, rated by the learner who said it out loud.
+ *
+ * Deliberately not recordAttempt(): a tap on "Konnte ich" is the learner's own word, not
+ * something the site checked. Folding it into skills.grammatik.correct would inflate the
+ * accuracy figure /dashboard presents as measured, and the first learner who noticed
+ * would be right to stop believing the rest of it. Its own shelf, counted in its own
+ * words — "gesprochen", not "richtig".
+ *
+ * It still touches the skill, because the day you spent drilling out loud is a day you
+ * practised, and the streak should say so.
+ */
+export function recordDrill({ topic, sure } = {}) {
+  const data = load();
+  touch(data, "grammatik");
+  const s = ensureSkill(data, "grammatik");
+  s.lastActiveDate = todayStr();
+  const key = topic || "_";
+  if (!data.drills[key]) data.drills[key] = { said: 0, sure: 0 };
+  data.drills[key].said += 1;
+  if (sure) data.drills[key].sure += 1;
+  save(data);
+}
+
+// { [topicSlug]: { said, sure } } — spoken drill items, kept apart from graded answers.
+export function getDrillProgress() {
+  return load().drills;
 }
 
 export function getProgress() {

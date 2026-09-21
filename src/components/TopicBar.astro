@@ -48,9 +48,9 @@ const { topic, kind, title, level, tasks = 0 } = Astro.props;
     <!-- Says where progress lives, not just that it exists. "Gespeichert" alone would imply
          an account; there is none, and a learner who clears their browser should know that
          before they lose six weeks of it. -->
-    <a class="tb-saved" href="/dashboard" data-topic-saved>
+    <a class="tb-saved" href="/fortschritt" data-topic-saved>
       <svg viewBox="0 0 24 24" aria-hidden="true" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 12 10 18 20 6"></polyline></svg>
-      <span data-topic-saved-text>Fortschritt wird auf diesem Gerät gespeichert</span>
+      <span data-topic-saved-text data-i18n="topic.savedLocally">Fortschritt wird auf diesem Gerät gespeichert</span>
     </a>
   </div>
 </div>
@@ -135,7 +135,19 @@ const { topic, kind, title, level, tasks = 0 } = Astro.props;
   .tb-saved:hover { color: var(--brand-blue); }
   /* Briefly after an answer lands, so the claim is tied to the thing that just happened
      rather than being a permanent label nobody reads twice. */
-  .tb-saved.is-just-saved { color: var(--brand-blue); }
+  .tb-saved.is-just-saved { color: var(--brand-blue); opacity: 1; }
+  /* And then it goes. It is a reassurance, not a status: worth reading once on arrival
+     and worth nothing on the four hundredth answer, while it costs a line of the bar on
+     a phone the whole time. It comes back for a moment whenever something is actually
+     saved (is-just-saved above), which is the only time it says anything new. */
+  .tb-saved {
+    transition: opacity .5s ease, visibility 0s linear .5s;
+  }
+  .tb-saved.is-idle {
+    opacity: 0;
+    visibility: hidden;
+  }
+  @media (prefers-reduced-motion: reduce) { .tb-saved { transition: none; } }
 
   @media (max-width: 720px) {
     .tb-inner { gap: 8px 12px; padding: 9px 16px; }
@@ -153,6 +165,7 @@ const { topic, kind, title, level, tasks = 0 } = Astro.props;
   // that owns the exercise tells us about each one via a `da:progress` event, so this file
   // never has to know which of the five exercise widgets produced it.
   import { getTopicProgress } from "../lib/progress.js";
+  import { onLangChange, translate } from "../lib/i18n.js";
 
   const bar = document.querySelector<HTMLElement>("[data-topic-bar]");
   if (bar) {
@@ -162,21 +175,41 @@ const { topic, kind, title, level, tasks = 0 } = Astro.props;
     const count = bar.querySelector<HTMLElement>("[data-topic-count]");
     const saved = bar.querySelector<HTMLElement>("[data-topic-saved]");
     const savedText = bar.querySelector<HTMLElement>("[data-topic-saved-text]");
-    const savedLabel = savedText?.textContent ?? "";
+    // Seeded with the German so the first paint — which happens before initI18n() has
+    // fetched anything — says words rather than the key itself.
+    let dict: Record<string, string> = {
+      "topic.taskCount": "{n} / {total} Aufgaben",
+      "topic.saved": "Gespeichert",
+      "topic.savedLocally": "Fortschritt wird auf diesem Gerät gespeichert",
+    };
     let done = 0;
     let savedTimer = 0;
+    let idleTimer = 0;
+
+    // Read once, then out of the way. Six seconds is long enough to notice and short
+    // enough that it is gone before the first exercise is answered.
+    function idle() {
+      window.clearTimeout(idleTimer);
+      idleTimer = window.setTimeout(() => saved?.classList.add("is-idle"), 6000);
+    }
 
     function paint() {
       if (!tasks) return;
       const pct = Math.min(100, Math.round((done / tasks) * 100));
       if (fill) fill.style.width = pct + "%";
-      if (count) count.textContent = `${done} / ${tasks} Aufgaben`;
+      if (count) count.textContent = translate(dict, "topic.taskCount", { n: done, total: tasks });
     }
+
+    // The counter and the "saved" flash are painted from JS, so they need the dictionary
+    // rather than a data-i18n. The flash is transient; the resting label is not, and
+    // i18n repaints that one itself through its data-i18n.
+    onLangChange((_code, d) => { dict = d; paint(); });
 
     try {
       done = Math.min(getTopicProgress()[topic]?.done ?? 0, tasks || Infinity);
     } catch (e) {}
     paint();
+    idle();
 
     // `correct` is what moves the bar; a wrong answer is still recorded (it counts toward
     // accuracy and the streak) and still proves the saving is live, so it flashes too.
@@ -185,12 +218,14 @@ const { topic, kind, title, level, tasks = 0 } = Astro.props;
       if (ok && tasks) done = Math.min(done + 1, tasks);
       paint();
       if (!saved) return;
+      saved.classList.remove("is-idle");
       saved.classList.add("is-just-saved");
-      if (savedText) savedText.textContent = "Gespeichert";
+      if (savedText) savedText.textContent = translate(dict, "topic.saved");
       window.clearTimeout(savedTimer);
       savedTimer = window.setTimeout(() => {
         saved.classList.remove("is-just-saved");
-        if (savedText) savedText.textContent = savedLabel;
+        if (savedText) savedText.textContent = translate(dict, "topic.savedLocally");
+        idle();
       }, 1600);
     });
   }

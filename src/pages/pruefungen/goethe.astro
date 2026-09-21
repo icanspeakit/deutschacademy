@@ -13,17 +13,19 @@ import goetheFormate from "../../data/pruefungen/goethe-formate.json";
     header="Goethe-Zertifikat"
     title="Goethe-Zertifikat"
     lead="Die eigenen Prüfungen des Goethe-Instituts — weltweit anerkannt für Visa, Studium und Arbeitgeber."
+    leadKey="goethe.lead"
     badges={["A1–C2"]}
     practiceHeading="Für Goethe üben"
+    practiceHeadingKey="goethe.practiceHeading"
   >
     <Fragment slot="info">
       <section class="exam-section">
-        <h2>Für wen ist das Goethe-Zertifikat?</h2>
+        <h2 data-i18n="goethe.who.title">Für wen ist das Goethe-Zertifikat?</h2>
         <div class="exam-meta-row">
-          <span class="exam-meta-badge">Niveau A1–C2</span>
-          <span class="exam-meta-badge">Ein Zertifikat pro Niveau</span>
+          <span class="exam-meta-badge" data-i18n="telc.who.badge.level">Niveau A1–C2</span>
+          <span class="exam-meta-badge" data-i18n="goethe.who.badge.perLevel">Ein Zertifikat pro Niveau</span>
         </div>
-        <p>
+        <p data-i18n="goethe.who.text">
           Anders als telc ist jedes Goethe-Zertifikat eine eigenständige Prüfung für genau ein Niveau
           (z. B. Goethe-Zertifikat B1, nicht "B1 oder B2"). Goethe-Zertifikat A1 ("Start Deutsch 1") wird
           häufig für den Ehegattennachzug (Familienzusammenführung) verlangt; höhere Niveaus werden für
@@ -32,20 +34,20 @@ import goetheFormate from "../../data/pruefungen/goethe-formate.json";
       </section>
 
       <section class="exam-section">
-        <h2>Geprüfte Fertigkeiten</h2>
+        <h2 data-i18n="exam.skills.title">Geprüfte Fertigkeiten</h2>
         <div class="skill-grid">
-          <div class="skill-card"><div class="skill-card-icon">📖</div><h4>Lesen</h4><p>Leseverstehen</p></div>
-          <div class="skill-card"><div class="skill-card-icon">🎧</div><h4>Hören</h4><p>Hörverstehen</p></div>
-          <div class="skill-card"><div class="skill-card-icon">✍️</div><h4>Schreiben</h4><p>Schriftlicher Ausdruck</p></div>
-          <div class="skill-card"><div class="skill-card-icon">🗣️</div><h4>Sprechen</h4><p>Mündliche Prüfung, meist paarweise</p></div>
+          <div class="skill-card"><div class="skill-card-icon">📖</div><h4 data-i18n="skill.lesen">Lesen</h4><p data-i18n="skill.lesen.desc">Leseverstehen</p></div>
+          <div class="skill-card"><div class="skill-card-icon">🎧</div><h4 data-i18n="skill.hoeren">Hören</h4><p data-i18n="skill.hoeren.desc">Hörverstehen</p></div>
+          <div class="skill-card"><div class="skill-card-icon">✍️</div><h4 data-i18n="skill.schreiben">Schreiben</h4><p data-i18n="skill.schreiben.desc">Schriftlicher Ausdruck</p></div>
+          <div class="skill-card"><div class="skill-card-icon">🗣️</div><h4 data-i18n="skill.sprechen">Sprechen</h4><p data-i18n="skill.sprechen.pairDesc">Mündliche Prüfung, meist paarweise</p></div>
         </div>
       </section>
 
       {goetheFormate.formate.map((f) => <ExamFormat format={f} />)}
 
       <section class="exam-section">
-        <h2>Weitere Niveaus</h2>
-        <p class="format-note">
+        <h2 data-i18n="telc.moreLevels.title">Weitere Niveaus</h2>
+        <p class="format-note" data-i18n="goethe.moreLevels.text">
           Oben steht das Niveau, für das uns ein Übungssatz als Quelle vorliegt. Zeiten, Aufgabenzahlen und
           Bestehensgrenzen unterscheiden sich zwischen A1 und C2 erheblich — für A2, B1, B2, C1 oder C2
           prüfe bitte den offiziellen Modellsatz des Goethe-Instituts. Wir tragen hier nur ein, was wir
@@ -55,19 +57,21 @@ import goetheFormate from "../../data/pruefungen/goethe-formate.json";
     </Fragment>
 
     <div class="mock-cta mock-cta--lead">
-      <h2>Für A1 zugleich telc üben</h2>
-      <p>
+      <h2 data-i18n="goethe.a1.title">Für A1 zugleich telc üben</h2>
+      <p data-i18n="goethe.a1.text">
         Start Deutsch 1 ist eine gemeinsame Prüfung von Goethe-Institut und telc — der mündliche Teil ist
         bei beiden identisch (Sich vorstellen · Um Informationen bitten · Bitten formulieren). Die
         telc-Seite zeigt dieselbe Prüfung mit Punkteverteilung und Notenskala.
       </p>
-      <a class="quiz-btn quiz-btn--primary" href="/pruefungen/start-deutsch-1">Übungssatz starten →</a>
-      <a class="quiz-btn" href="/pruefungen/telc">Zur telc-Seite →</a>
+      <a class="quiz-btn quiz-btn--primary" href="/pruefungen/start-deutsch-1" data-i18n="exam.startSet">Übungssatz starten →</a>
+      <a class="quiz-btn" href="/pruefungen/telc" data-i18n="goethe.a1.telcLink">Zur telc-Seite →</a>
     </div>
 
     <ExamPractice
       heading="Weiter üben"
+      headingKey="exam.practice.heading"
       intro="Diese Tools sind niveau- und prüfungsübergreifend nützlich. Sie stammen aus dem DTZ-Unterrichtsmaterial und prüfen allgemeine Artikel-, Grammatik- und Wortschatzkenntnisse — keine Goethe-spezifischen Aufgabenformate."
+      introKey="goethe.practice.intro"
       tools={["artikel", "grammatik", "wortschatz"]}
     />
   </ExamShell>

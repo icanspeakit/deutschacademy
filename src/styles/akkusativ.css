@@ -390,6 +390,24 @@
   background: var(--akk-amber-bg);
   border: 1px solid var(--akk-amber) !important;
 }
+/* In the rule column the table has ~360px, not the 760px card it was drawn for. The
+   `display: block; overflow-x: auto` above is the escape hatch for a wide page; inside a
+   grid track it does not clip — the track grows to the table's max-content and carries the
+   whole page sideways with it (1096px of it, at 1440). Beside the work it is a plain fixed
+   table that wraps into the column instead. */
+.vp-col--rule .akk-decl-table {
+  display: table;
+  table-layout: fixed;
+  width: 100%;
+  min-width: 0;
+  font-size: 0.85rem;
+}
+.vp-col--rule .akk-decl-table th,
+.vp-col--rule .akk-decl-table td {
+  padding: 8px 9px;
+  overflow-wrap: anywhere;
+}
+
 .akk-regel-note { color: var(--akk-muted); font-size: 0.92rem; line-height: 1.6; margin: 0 0 24px; }
 .akk-btn {
   font-family: var(--akk-font);

@@ -18,7 +18,7 @@ import "../styles/site-nav.css";
 // B1 has eleven grammar topics and a menu that scrolls is a menu nobody reads to the end
 // of, so the Niveaus pane previews its first few and links to the rest.
 const GRAMMAR_PREVIEW = 5;
-const PROFILE_HREF = "/dashboard";
+const PROFILE_HREF = "/fortschritt";
 const WISSEN_HREF = "/wissen";
 
 /** `data-i18n-vars` wants a string or nothing — never the literal "undefined". */
@@ -26,7 +26,7 @@ const vars = (v) => (v ? JSON.stringify(v) : undefined);
 ---
 <div class="lp-drawer" id="lp-drawer" data-drawer hidden>
   <div class="lp-drawer-scrim" data-drawer-close></div>
-  <div class="lp-drawer-panel" role="dialog" aria-modal="true" aria-label="Menü">
+  <div class="lp-drawer-panel" role="dialog" aria-modal="true" aria-label="Menü" data-i18n-attr="aria-label:nav.menu">
     <div class="lp-drawer-top">
       <img src="/assets/logo.png" alt="DeutschAcademy" />
       <button class="lp-drawer-x" type="button" aria-label="Menü schließen" data-drawer-close data-i18n-attr="aria-label:nav.menuClose">
@@ -51,7 +51,6 @@ const vars = (v) => (v ? JSON.stringify(v) : undefined);
               <b data-i18n={section.nameKey}>{section.name}</b>
               <i data-i18n={section.blurbKey}>{section.blurb}</i>
             </span>
-            <span class="lp-drawer-n">{section.badge ?? section.items.length}</span>
             <svg class="lp-drawer-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 6 15 12 9 18"></polyline></svg>
           </button>
         ))}
@@ -63,7 +62,6 @@ const vars = (v) => (v ? JSON.stringify(v) : undefined);
               <b data-i18n={section.nameKey}>{section.name}</b>
               <i data-i18n={section.blurbKey}>{section.blurb}</i>
             </span>
-            <span class="lp-drawer-n">{section.badge ?? section.items.length}</span>
             <svg class="lp-drawer-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 6 15 12 9 18"></polyline></svg>
           </button>
         ))}
@@ -92,16 +90,12 @@ const vars = (v) => (v ? JSON.stringify(v) : undefined);
         {/* What the avatar holds on a desktop. Down here rather than in with the
             subjects, because it is about the learner and not the material. */}
         <p class="lp-drawer-grouphead" data-i18n="nav.account">Konto</p>
-        {/* Two-up, and without their blurbs: side by side these two fit in the height one
-            full row would have taken, which is what keeps the home pane free of a scroll. */}
-        <div class="lp-drawer-duo">
+        {/* Was a two-up pair, "Dashboard" beside "Fortschritt". They were one destination
+            wearing two names, so this is one tile now — and the row it used to need back. */}
+        <div class="lp-drawer-duo lp-drawer-duo--single">
           <a class="lp-drawer-tile" href={PROFILE_HREF}>
-            <span class="lp-drawer-ic"><Icon name="grid" size={18} /></span>
-            <b data-i18n="nav.subject.profil">Profil</b>
-          </a>
-          <a class="lp-drawer-tile" href="/fortschritt">
             <span class="lp-drawer-ic"><Icon name="target" size={18} /></span>
-            <b data-i18n="nav.account.progress">Fortschritt</b>
+            <b data-i18n="nav.account.progress.short">Fortschritt</b>
           </a>
         </div>
 

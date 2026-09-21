@@ -182,6 +182,24 @@ const toCard = (e) => {
     front: e.lemma,
     note: e.note ?? e.example ?? "",
     translations,
+    // A German noun without its article is half a word: "Name" is not learnable, "der
+    // Name" is. The lexicon has carried `gender` and `plural` all along — 2 577 of the
+    // 2 594 nouns — and only the card dropped them, which is why the audio already said "der
+    // Name" while the card showed "Name".
+    //
+    // They stay two fields rather than one string: the Wortliste sorts on `front` and
+    // would otherwise file every noun under d, and the test checks against it. The
+    // renderers compose them.
+    //
+    // A Pluraletantum (Eltern, Ferien, Möbel) has no gender of its own and takes the
+    // plural article, which is what a dictionary prints: "die Eltern".
+    ...(e.pos === "noun"
+      ? {
+          gender: e.gender ?? (e.pluralOnly ? "die" : null),
+          plural: e.plural ?? null,
+          pluralOnly: !!e.pluralOnly,
+        }
+      : {}),
     // Only the words that actually have a file. A deck is partly voiced for as long as
     // the generator has been run over part of the lexicon, and a play button that 404s
     // is worse than no play button — so the card carries the source or carries nothing,

@@ -6,16 +6,36 @@
   "source": "Auch.pdf (Kapitel 7, Position von auch und Fokuspartikeln; im Original als C1 markiert)",
   "concept": {
     "flow": [
-      { "text": "auch", "variant": "verb" },
-      { "text": "+ betonter Satzteil", "variant": "prep" },
-      { "text": "= genau dieser Teil ist gemeint" }
+      {
+        "text": "auch",
+        "variant": "verb"
+      },
+      {
+        "text": "+ betonter Satzteil",
+        "variant": "prep"
+      },
+      {
+        "text": "= genau dieser Teil ist gemeint"
+      }
     ],
     "exampleHtml": "<span class=\"vp-verb\">Auch</span> <span class=\"vp-prep\">ich</span> schenke dir Blumen (nicht nur er). — Ich schenke dir <span class=\"vp-verb\">auch</span> <span class=\"vp-prep\">Blumen</span> (nicht nur Pralinen).",
     "qa": [
-      { "html": "Bezieht sich <em>auch</em> auf den <strong>ganzen Satz</strong>, hat es dieselbe Position wie <em>nicht</em> — oder steht direkt davor.", "tag": "Satzbezug" },
-      { "html": "Als <strong>Fokuspartikel</strong> steht <em>auch</em> direkt <strong>vor</strong> dem Satzteil, den es hervorhebt. Dieser Teil wird betont gesprochen.", "tag": "Fokus" },
-      { "html": "Andere Partikeln stehen an derselben Stelle: <em>ebenfalls, nur, bloß, lediglich, sogar, selbst, gerade, ausgerechnet, insbesondere</em>.", "tag": "dieselbe Stelle" },
-      { "html": "<em>auch</em> und die anderen Fokuspartikeln können <strong>nicht allein auf Position 1</strong> stehen — nur zusammen mit ihrem Satzteil: <em>Auch ich schenke …</em>", "tag": "nie allein" }
+      {
+        "html": "Bezieht sich <em>auch</em> auf den <strong>ganzen Satz</strong>, hat es dieselbe Position wie <em>nicht</em> — oder steht direkt davor.",
+        "tag": "Satzbezug"
+      },
+      {
+        "html": "Als <strong>Fokuspartikel</strong> steht <em>auch</em> direkt <strong>vor</strong> dem Satzteil, den es hervorhebt. Dieser Teil wird betont gesprochen.",
+        "tag": "Fokus"
+      },
+      {
+        "html": "Andere Partikeln stehen an derselben Stelle: <em>ebenfalls, nur, bloß, lediglich, sogar, selbst, gerade, ausgerechnet, insbesondere</em>.",
+        "tag": "dieselbe Stelle"
+      },
+      {
+        "html": "<em>auch</em> und die anderen Fokuspartikeln können <strong>nicht allein auf Position 1</strong> stehen — nur zusammen mit ihrem Satzteil: <em>Auch ich schenke …</em>",
+        "tag": "nie allein"
+      }
     ],
     "noteHtml": "Dieselbe Merkhilfe wie bei <em>nicht</em>, nur mit <em>auch</em>: <strong>te-ka-<span class=\"vp-verb\">auch</span>-nicht-mo-lo</strong>. <em>Ich konnte meinen Vater gestern dank deiner Hilfe <strong>auch</strong> pünktlich am Bahnhof abholen.</em> Steht <em>nicht</em> mit im Satz, kommt <em>auch</em> direkt davor: <em>Ich kann mich heute <strong>auch nicht</strong> um meinen Kollegen kümmern.</em> Nicht verwechseln mit dem <strong>Modalpartikel</strong> <em>auch</em> (<em>Warum hast du auch nicht aufgepasst!</em>) — das ist eine andere Funktion.",
     "reference": {
@@ -24,31 +44,93 @@
       "tables": [
         {
           "caption": "Fokuspartikeln und ihre Bedeutung",
-          "head": ["Partikeln", "Beispiel", "bedeutet"],
+          "head": [
+            "Partikeln",
+            "Beispiel",
+            "bedeutet"
+          ],
           "rows": [
-            ["ebenfalls, ebenso, gleichfalls", "Seine Eltern sind ebenfalls gekommen.", "nicht nur meine Eltern"],
-            ["nur, bloß, lediglich, allein, ausschließlich, einzig", "Heute konnte ich lediglich eine Aufgabe fertig machen.", "diese eine, die anderen nicht"],
-            ["sogar, selbst, nicht einmal", "Heute hat sogar meine Schwester geholfen.", "sie hat überraschenderweise auch geholfen"],
-            ["gerade, genau, eben, ausgerechnet, insbesondere", "Dass gerade er gekommen ist, hat mich überrascht.", "dieser eine ist etwas Besonderes"]
+            [
+              "ebenfalls, ebenso, gleichfalls",
+              "Seine Eltern sind ebenfalls gekommen.",
+              "nicht nur meine Eltern"
+            ],
+            [
+              "nur, bloß, lediglich, allein, ausschließlich, einzig",
+              "Heute konnte ich lediglich eine Aufgabe fertig machen.",
+              "diese eine, die anderen nicht"
+            ],
+            [
+              "sogar, selbst, nicht einmal",
+              "Heute hat sogar meine Schwester geholfen.",
+              "sie hat überraschenderweise auch geholfen"
+            ],
+            [
+              "gerade, genau, eben, ausgerechnet, insbesondere",
+              "Dass gerade er gekommen ist, hat mich überrascht.",
+              "dieser eine ist etwas Besonderes"
+            ]
           ]
         },
         {
           "caption": "Derselbe Satz, fünf Bedeutungen",
-          "head": ["Satz", "heißt"],
+          "head": [
+            "Satz",
+            "heißt"
+          ],
           "rows": [
-            ["Auch ich schenke dir dieses Jahr Blumen zum Geburtstag.", "nicht nur er"],
-            ["Ich schenke auch dir dieses Jahr Blumen zum Geburtstag.", "nicht nur ihm"],
-            ["Ich schenke dir auch dieses Jahr Blumen zum Geburtstag.", "nicht nur letztes Jahr"],
-            ["Ich schenke dir dieses Jahr auch Blumen zum Geburtstag.", "nicht nur Pralinen"],
-            ["Ich schenke dir dieses Jahr Blumen auch zum Geburtstag.", "nicht nur zum Hochzeitstag"]
+            [
+              "Auch ich schenke dir dieses Jahr Blumen zum Geburtstag.",
+              "nicht nur er"
+            ],
+            [
+              "Ich schenke auch dir dieses Jahr Blumen zum Geburtstag.",
+              "nicht nur ihm"
+            ],
+            [
+              "Ich schenke dir auch dieses Jahr Blumen zum Geburtstag.",
+              "nicht nur letztes Jahr"
+            ],
+            [
+              "Ich schenke dir dieses Jahr auch Blumen zum Geburtstag.",
+              "nicht nur Pralinen"
+            ],
+            [
+              "Ich schenke dir dieses Jahr Blumen auch zum Geburtstag.",
+              "nicht nur zum Hochzeitstag"
+            ]
           ]
         },
         {
           "caption": "te-ka-auch-nicht-mo-lo",
-          "head": ["Subjekt", "Verb 1", "temporal / kausal", "auch", "nicht", "modal / lokal", "Verb 2"],
+          "head": [
+            "Subjekt",
+            "Verb 1",
+            "temporal / kausal",
+            "auch",
+            "nicht",
+            "modal / lokal",
+            "Verb 2"
+          ],
           "rows": [
-            ["Ich", "konnte", "gestern · dank deiner Hilfe", "auch", "—", "pünktlich · am Bahnhof", "abholen."],
-            ["Ich", "kann", "heute", "auch", "nicht", "um meinen Kollegen", "kümmern."]
+            [
+              "Ich",
+              "konnte",
+              "gestern · dank deiner Hilfe",
+              "auch",
+              "—",
+              "pünktlich · am Bahnhof",
+              "abholen."
+            ],
+            [
+              "Ich",
+              "kann",
+              "heute",
+              "auch",
+              "nicht",
+              "um meinen Kollegen",
+              "kümmern."
+            ]
           ]
         }
       ],
@@ -77,26 +159,245 @@
       ]
     }
   },
+  "aktiv": {
+    "listen": [
+      {
+        "text": "Auch ich schenke dir Blumen.",
+        "note": "auch vor ich: nicht nur er — ich auch.",
+        "audio": "/audio/grammatik/fokuspartikeln/auch-ich-schenke-dir-blumen.mp3"
+      },
+      {
+        "text": "Ich schenke dir auch Blumen.",
+        "note": "auch vor Blumen: nicht nur Pralinen — auch Blumen.",
+        "audio": "/audio/grammatik/fokuspartikeln/ich-schenke-dir-auch-blumen.mp3"
+      },
+      {
+        "text": "Sogar Anna ist gekommen.",
+        "note": "sogar markiert das Überraschende an genau dieser Stelle.",
+        "audio": "/audio/grammatik/fokuspartikeln/sogar-anna-ist-gekommen.mp3"
+      }
+    ],
+    "hoeren": {
+      "instruction": "Diese Übung geht nur mit den Ohren: dieselben Wörter, andere Stelle, andere Aussage. Was ist gemeint?",
+      "items": [
+        {
+          "text": "Auch ich schenke dir Blumen.",
+          "choices": [
+            "Nicht nur er – ich auch.",
+            "Nicht nur Pralinen – auch Blumen.",
+            "Nicht nur ihr – auch dir."
+          ],
+          "correct": 0,
+          "audio": "/audio/grammatik/fokuspartikeln/auch-ich-schenke-dir-blumen.mp3"
+        },
+        {
+          "text": "Ich schenke dir auch Blumen.",
+          "choices": [
+            "Nicht nur er – ich auch.",
+            "Nicht nur Pralinen – auch Blumen.",
+            "Nicht nur ihr – auch dir."
+          ],
+          "correct": 1,
+          "audio": "/audio/grammatik/fokuspartikeln/ich-schenke-dir-auch-blumen.mp3"
+        },
+        {
+          "text": "Ich schenke auch dir Blumen.",
+          "choices": [
+            "Nicht nur er – ich auch.",
+            "Nicht nur Pralinen – auch Blumen.",
+            "Nicht nur ihr – auch dir."
+          ],
+          "correct": 2,
+          "audio": "/audio/grammatik/fokuspartikeln/ich-schenke-auch-dir-blumen.mp3"
+        },
+        {
+          "text": "Nur ich habe das gewusst.",
+          "choices": [
+            "Sonst niemand.",
+            "Sonst nichts.",
+            "Erst seit Kurzem."
+          ],
+          "correct": 0,
+          "audio": "/audio/grammatik/fokuspartikeln/nur-ich-habe-das-gewusst.mp3"
+        },
+        {
+          "text": "Ich habe nur das gewusst.",
+          "choices": [
+            "Sonst niemand.",
+            "Sonst nichts.",
+            "Erst seit Kurzem."
+          ],
+          "correct": 1,
+          "audio": "/audio/grammatik/fokuspartikeln/ich-habe-nur-das-gewusst.mp3"
+        },
+        {
+          "text": "Sogar Anna ist gekommen.",
+          "choices": [
+            "Anna ist die Einzige.",
+            "Überraschend – Anna auch.",
+            "Anna kam als Erste."
+          ],
+          "correct": 1,
+          "audio": "/audio/grammatik/fokuspartikeln/sogar-anna-ist-gekommen.mp3"
+        }
+      ]
+    },
+    "sprechen": {
+      "rounds": [
+        {
+          "label": "1 · auch verschieben",
+          "instruction": "Du hörst einen Satz und was betont werden soll. Setz auch an die richtige Stelle.",
+          "example": {
+            "prompt": "Ich koche heute. — nicht nur er",
+            "answer": "Auch ich koche heute."
+          },
+          "items": [
+            {
+              "prompt": "Ich koche heute. — nicht nur morgen",
+              "answer": "Ich koche auch heute.",
+              "audioPrompt": "/audio/grammatik/fokuspartikeln/ich-koche-heute-nicht-nur-morgen.mp3",
+              "audioAnswer": "/audio/grammatik/fokuspartikeln/ich-koche-auch-heute--8wphfh.mp3"
+            },
+            {
+              "prompt": "Sie lädt Anna ein. — nicht nur Peter",
+              "answer": "Sie lädt auch Anna ein.",
+              "audioPrompt": "/audio/grammatik/fokuspartikeln/sie-laedt-anna-ein-nicht-nur-peter.mp3",
+              "audioAnswer": "/audio/grammatik/fokuspartikeln/sie-laedt-auch-anna-ein--8wphfh.mp3"
+            },
+            {
+              "prompt": "Sie lädt Anna ein. — nicht nur er lädt ein",
+              "answer": "Auch sie lädt Anna ein.",
+              "audioPrompt": "/audio/grammatik/fokuspartikeln/sie-laedt-anna-ein-nicht-nur-er-laedt-ein.mp3",
+              "audioAnswer": "/audio/grammatik/fokuspartikeln/auch-sie-laedt-anna-ein--8wphfh.mp3"
+            },
+            {
+              "prompt": "Wir fahren nach Rom. — nicht nur nach Wien",
+              "answer": "Wir fahren auch nach Rom.",
+              "audioPrompt": "/audio/grammatik/fokuspartikeln/wir-fahren-nach-rom-nicht-nur-nach-wien.mp3",
+              "audioAnswer": "/audio/grammatik/fokuspartikeln/wir-fahren-auch-nach-rom--8wphfh.mp3"
+            },
+            {
+              "prompt": "Er spricht Deutsch. — nicht nur ich",
+              "answer": "Auch er spricht Deutsch.",
+              "audioPrompt": "/audio/grammatik/fokuspartikeln/er-spricht-deutsch-nicht-nur-ich.mp3",
+              "audioAnswer": "/audio/grammatik/fokuspartikeln/auch-er-spricht-deutsch--8wphfh.mp3"
+            },
+            {
+              "prompt": "Er spricht Deutsch. — nicht nur Englisch",
+              "answer": "Er spricht auch Deutsch.",
+              "audioPrompt": "/audio/grammatik/fokuspartikeln/er-spricht-deutsch-nicht-nur-englisch.mp3",
+              "audioAnswer": "/audio/grammatik/fokuspartikeln/er-spricht-auch-deutsch--8wphfh.mp3"
+            }
+          ]
+        },
+        {
+          "label": "2 · nur, sogar, ausgerechnet",
+          "instruction": "Du hörst einen Satz und eine Nuance. Setz die passende Partikel davor.",
+          "example": {
+            "prompt": "Anna ist gekommen. — überraschend",
+            "answer": "Sogar Anna ist gekommen."
+          },
+          "items": [
+            {
+              "prompt": "Ich habe das gewusst. — sonst niemand",
+              "answer": "Nur ich habe das gewusst.",
+              "audioPrompt": "/audio/grammatik/fokuspartikeln/ich-habe-das-gewusst-sonst-niemand.mp3",
+              "audioAnswer": "/audio/grammatik/fokuspartikeln/nur-ich-habe-das-gewusst--8wphfh.mp3"
+            },
+            {
+              "prompt": "Er hat Wasser getrunken. — sonst nichts",
+              "answer": "Er hat nur Wasser getrunken.",
+              "audioPrompt": "/audio/grammatik/fokuspartikeln/er-hat-wasser-getrunken-sonst-nichts.mp3",
+              "audioAnswer": "/audio/grammatik/fokuspartikeln/er-hat-nur-wasser-getrunken--8wphfh.mp3"
+            },
+            {
+              "prompt": "Der Chef hat sich entschuldigt. — überraschend",
+              "answer": "Sogar der Chef hat sich entschuldigt.",
+              "audioPrompt": "/audio/grammatik/fokuspartikeln/der-chef-hat-sich-entschuldigt-ueberraschend.mp3",
+              "audioAnswer": "/audio/grammatik/fokuspartikeln/sogar-der-chef-hat-sich-entschuldigt--8wphfh.mp3"
+            },
+            {
+              "prompt": "Heute regnet es. — unpassenderweise",
+              "answer": "Ausgerechnet heute regnet es.",
+              "audioPrompt": "/audio/grammatik/fokuspartikeln/heute-regnet-es-unpassenderweise.mp3",
+              "audioAnswer": "/audio/grammatik/fokuspartikeln/ausgerechnet-heute-regnet-es--8wphfh.mp3"
+            },
+            {
+              "prompt": "Sie hat angerufen. — sonst niemand",
+              "answer": "Nur sie hat angerufen.",
+              "audioPrompt": "/audio/grammatik/fokuspartikeln/sie-hat-angerufen-sonst-niemand.mp3",
+              "audioAnswer": "/audio/grammatik/fokuspartikeln/nur-sie-hat-angerufen--8wphfh.mp3"
+            },
+            {
+              "prompt": "Am Sonntag arbeitet er. — unpassenderweise",
+              "answer": "Ausgerechnet am Sonntag arbeitet er.",
+              "audioPrompt": "/audio/grammatik/fokuspartikeln/am-sonntag-arbeitet-er-unpassenderweise.mp3",
+              "audioAnswer": "/audio/grammatik/fokuspartikeln/ausgerechnet-am-sonntag-arbeitet-er--8wphfh.mp3"
+            }
+          ]
+        }
+      ]
+    }
+  },
   "exercises": [
     {
       "type": "table",
       "title": "Steht der Satzteil links oder rechts von „auch“?",
       "hint": "Wenn sich „auch“ auf den ganzen Satz bezieht. Tippen Sie „links“ oder „rechts“.",
-      "columns": ["Satzteil", "links / rechts"],
+      "columns": [
+        "Satzteil",
+        "links / rechts"
+      ],
       "placeholder": "links / rechts",
       "rows": [
-        { "term": "morgen (temporal)", "answer": "links" },
-        { "term": "letzte Woche (temporal)", "answer": "links" },
-        { "term": "nachts (temporal)", "answer": "links" },
-        { "term": "wegen des Staus (kausal)", "answer": "links" },
-        { "term": "aufgrund von Krankheiten (kausal)", "answer": "links" },
-        { "term": "nicht mehr", "answer": "rechts" },
-        { "term": "höflich (modal)", "answer": "rechts" },
-        { "term": "mit dem Auto (modal)", "answer": "rechts" },
-        { "term": "zu Hause (lokal)", "answer": "rechts" },
-        { "term": "in ihrem Büro (lokal)", "answer": "rechts" },
-        { "term": "Musik (hören) (Verbgefährte)", "answer": "rechts" },
-        { "term": "eine Rolle (spielen) (Verbgefährte)", "answer": "rechts" }
+        {
+          "term": "morgen (temporal)",
+          "answer": "links"
+        },
+        {
+          "term": "letzte Woche (temporal)",
+          "answer": "links"
+        },
+        {
+          "term": "nachts (temporal)",
+          "answer": "links"
+        },
+        {
+          "term": "wegen des Staus (kausal)",
+          "answer": "links"
+        },
+        {
+          "term": "aufgrund von Krankheiten (kausal)",
+          "answer": "links"
+        },
+        {
+          "term": "nicht mehr",
+          "answer": "rechts"
+        },
+        {
+          "term": "höflich (modal)",
+          "answer": "rechts"
+        },
+        {
+          "term": "mit dem Auto (modal)",
+          "answer": "rechts"
+        },
+        {
+          "term": "zu Hause (lokal)",
+          "answer": "rechts"
+        },
+        {
+          "term": "in ihrem Büro (lokal)",
+          "answer": "rechts"
+        },
+        {
+          "term": "Musik (hören) (Verbgefährte)",
+          "answer": "rechts"
+        },
+        {
+          "term": "eine Rolle (spielen) (Verbgefährte)",
+          "answer": "rechts"
+        }
       ]
     },
     {
@@ -104,11 +405,26 @@
       "title": "Was ist hier gemeint?",
       "hint": "Der Satzteil direkt nach „auch“ ist hervorgehoben.",
       "pairs": [
-        { "q": "Auch ich schenke dir dieses Jahr Blumen.", "a": "nicht nur er" },
-        { "q": "Ich schenke auch dir dieses Jahr Blumen.", "a": "nicht nur ihm" },
-        { "q": "Ich schenke dir auch dieses Jahr Blumen.", "a": "nicht nur letztes Jahr" },
-        { "q": "Ich schenke dir dieses Jahr auch Blumen.", "a": "nicht nur Pralinen" },
-        { "q": "Ich schenke dir Blumen auch zum Geburtstag.", "a": "nicht nur zum Hochzeitstag" }
+        {
+          "q": "Auch ich schenke dir dieses Jahr Blumen.",
+          "a": "nicht nur er"
+        },
+        {
+          "q": "Ich schenke auch dir dieses Jahr Blumen.",
+          "a": "nicht nur ihm"
+        },
+        {
+          "q": "Ich schenke dir auch dieses Jahr Blumen.",
+          "a": "nicht nur letztes Jahr"
+        },
+        {
+          "q": "Ich schenke dir dieses Jahr auch Blumen.",
+          "a": "nicht nur Pralinen"
+        },
+        {
+          "q": "Ich schenke dir Blumen auch zum Geburtstag.",
+          "a": "nicht nur zum Hochzeitstag"
+        }
       ]
     },
     {
@@ -117,11 +433,50 @@
       "hint": "nur / lediglich · sogar / selbst · ebenfalls · ausgerechnet",
       "placeholder": "Fokuspartikel",
       "items": [
-        { "prompt": "Seine Eltern sind ___ gekommen — nicht nur meine.", "hint": "„auch“ in gehobener Form.", "answer": ["ebenfalls", "ebenso", "gleichfalls"] },
-        { "prompt": "Heute konnte ich ___ eine Aufgabe fertig machen, die anderen nicht.", "hint": "Einschränkung auf eine einzige.", "answer": ["lediglich", "nur", "bloß"] },
-        { "prompt": "Heute hat ___ meine Schwester geholfen — das hätte ich nie erwartet.", "hint": "Überraschung.", "answer": ["sogar", "selbst"] },
-        { "prompt": "Dass ___ er gekommen ist, hat mich überrascht.", "hint": "Genau dieser eine, ausgerechnet.", "answer": ["gerade", "ausgerechnet", "genau", "eben"] },
-        { "prompt": "Er hat ___ nicht angerufen — nicht einmal das.", "hint": "Verstärkte Verneinung.", "answer": ["nicht einmal", "sogar"] }
+        {
+          "prompt": "Seine Eltern sind ___ gekommen — nicht nur meine.",
+          "hint": "„auch“ in gehobener Form.",
+          "answer": [
+            "ebenfalls",
+            "ebenso",
+            "gleichfalls"
+          ]
+        },
+        {
+          "prompt": "Heute konnte ich ___ eine Aufgabe fertig machen, die anderen nicht.",
+          "hint": "Einschränkung auf eine einzige.",
+          "answer": [
+            "lediglich",
+            "nur",
+            "bloß"
+          ]
+        },
+        {
+          "prompt": "Heute hat ___ meine Schwester geholfen — das hätte ich nie erwartet.",
+          "hint": "Überraschung.",
+          "answer": [
+            "sogar",
+            "selbst"
+          ]
+        },
+        {
+          "prompt": "Dass ___ er gekommen ist, hat mich überrascht.",
+          "hint": "Genau dieser eine, ausgerechnet.",
+          "answer": [
+            "gerade",
+            "ausgerechnet",
+            "genau",
+            "eben"
+          ]
+        },
+        {
+          "prompt": "Er hat ___ nicht angerufen — nicht einmal das.",
+          "hint": "Verstärkte Verneinung.",
+          "answer": [
+            "nicht einmal",
+            "sogar"
+          ]
+        }
       ]
     },
     {
@@ -131,20 +486,86 @@
         {
           "id": "fp1",
           "hint": "Satzbezug: temporal links, modal und lokal rechts.",
-          "correct": ["Ich", "konnte", "meinen", "Vater", "gestern", "auch", "pünktlich", "am", "Bahnhof", "abholen", "."],
-          "shuffled": ["gestern", "pünktlich", "Ich", "abholen", "auch", "Vater", "am", "konnte", "meinen", "Bahnhof", "."]
+          "correct": [
+            "Ich",
+            "konnte",
+            "meinen",
+            "Vater",
+            "gestern",
+            "auch",
+            "pünktlich",
+            "am",
+            "Bahnhof",
+            "abholen",
+            "."
+          ],
+          "shuffled": [
+            "gestern",
+            "pünktlich",
+            "Ich",
+            "abholen",
+            "auch",
+            "Vater",
+            "am",
+            "konnte",
+            "meinen",
+            "Bahnhof",
+            "."
+          ]
         },
         {
           "id": "fp2",
           "hint": "„auch“ steht direkt vor „nicht“.",
-          "correct": ["Ich", "kann", "mich", "heute", "auch", "nicht", "um", "meinen", "Kollegen", "kümmern", "."],
-          "shuffled": ["heute", "nicht", "Ich", "kümmern", "auch", "mich", "um", "kann", "meinen", "Kollegen", "."]
+          "correct": [
+            "Ich",
+            "kann",
+            "mich",
+            "heute",
+            "auch",
+            "nicht",
+            "um",
+            "meinen",
+            "Kollegen",
+            "kümmern",
+            "."
+          ],
+          "shuffled": [
+            "heute",
+            "nicht",
+            "Ich",
+            "kümmern",
+            "auch",
+            "mich",
+            "um",
+            "kann",
+            "meinen",
+            "Kollegen",
+            "."
+          ]
         },
         {
           "id": "fp3",
           "hint": "Fokus auf das Subjekt — „auch“ und Subjekt zusammen auf Position 1.",
-          "correct": ["Auch", "ich", "schenke", "dir", "dieses", "Jahr", "Blumen", "."],
-          "shuffled": ["ich", "dieses", "Auch", "Blumen", "dir", "Jahr", "schenke", "."]
+          "correct": [
+            "Auch",
+            "ich",
+            "schenke",
+            "dir",
+            "dieses",
+            "Jahr",
+            "Blumen",
+            "."
+          ],
+          "shuffled": [
+            "ich",
+            "dieses",
+            "Auch",
+            "Blumen",
+            "dir",
+            "Jahr",
+            "schenke",
+            "."
+          ]
         }
       ]
     }

@@ -22,11 +22,11 @@ const { questions, meta, bundeslaender } = lid;
 >
   <PracticeHeader title="Leben in Deutschland" />
   <main class="practice-main practice-main--wide practice-main--trainer">
-    <a href="/pruefungen/leben-in-deutschland" class="vp-back-link">← Zurück zur Übersicht</a>
+    <a href="/pruefungen/leben-in-deutschland" class="vp-back-link" data-i18n="exam.backToOverview">← Zurück zur Übersicht</a>
 
     <div class="practice-hero">
       <p class="eyebrow">Leben in Deutschland · Übungstest</p>
-      <h1><span class="hero-exam">Leben in Deutschland</span> Übungstest für dein Bundesland</h1>
+      <h1><span class="hero-exam">Leben in Deutschland</span> <span data-i18n="exam.h1.lidTest">Übungstest für dein Bundesland</span></h1>
       <p>
         {meta.federalQuestions} bundesweite Fragen aus echtem Unterrichtsmaterial, plus die Fragen zu deinem
         Bundesland. Der echte Test hat {meta.totalQuestions} Fragen, {meta.minutes} Minuten Zeit, bestanden ab
@@ -44,6 +44,13 @@ const { questions, meta, bundeslaender } = lid;
     import { choiceCard, el, sectionHeader, escapeHtml } from "../../../lib/exam/renderHelpers.js";
     import { countAnswered, countCorrect, percent } from "../../../lib/exam/scoring.js";
     import { recordAttempt } from "../../../lib/progress.js";
+    import { getLang, loadDict, translate } from "../../../lib/i18n.js";
+
+    /* Resolved once, before the app mounts — see the note on start-deutsch-1.astro. The
+       test holds answers in progress, so its chrome is fixed at load rather than
+       re-rendered on a language switch. The questions themselves stay German. */
+    const dict = await loadDict(getLang());
+    const t = (key, vars) => translate(dict, key, vars);
 
     const { questions: federal, meta, bundeslaender } = JSON.parse(document.getElementById("lid-data").textContent);
     const LAND_KEY = "da-lid-land";
@@ -91,7 +98,7 @@ const { questions, meta, bundeslaender } = lid;
         render(main, ctx) {
           sectionHeader(main, {
             eyebrow: "Übungstest",
-            title: "Wähle dein Bundesland",
+            title: t("lid.chooseState"),
             instruction:
               "Die bundesweiten Fragen sind für alle gleich. Dazu kommen die Fragen zu deinem Bundesland — der echte Test stellt drei davon.",
           });
@@ -116,7 +123,7 @@ const { questions, meta, bundeslaender } = lid;
               : `${escapeHtml(l.name)}: ${l.stateQuestions.length} Fragen aus allgemein bekannten, öffentlichen Fakten — keine DeutschAcademy-Quelle.`)
           );
 
-          const go = el("button", "quiz-btn quiz-btn--primary", "Test starten →");
+          const go = el("button", "quiz-btn quiz-btn--primary", t("exam.startTest"));
           go.type = "button";
           go.addEventListener("click", () => ctx.goTo("bund"));
           main.appendChild(el("div", "exam-actions")).appendChild(go);
@@ -129,7 +136,7 @@ const { questions, meta, bundeslaender } = lid;
         render(main, ctx) {
           sectionHeader(main, {
             eyebrow: "Teil 1",
-            title: "Bundesweite Fragen",
+            title: t("lid.federalQuestions"),
             instruction: `${federal.length} Fragen, die in jedem Bundesland drankommen.`,
           });
           askAll(main, federal, federalIds, ctx, "Frage");
@@ -169,7 +176,7 @@ const { questions, meta, bundeslaender } = lid;
             // states with six sourced questions, so the comparison is made on the share,
             // and the rule it comes from is printed underneath.
             const passPct = Math.round((meta.passScore / meta.totalQuestions) * 100);
-            const band = pct >= passPct ? ["", "Über der Bestehensgrenze"] : pct >= passPct - 12 ? ["mid", "Knapp darunter"] : ["low", "Noch zu wenig"];
+            const band = pct >= passPct ? ["", t("lid.abovePass")] : pct >= passPct - 12 ? ["mid", t("lid.band.near")] : ["low", t("lid.band.low")];
             card.appendChild(el("span", "exam-band " + band[0], band[1]));
             card.appendChild(el("p", "instruction", `${pct}% richtig. Im echten Test: ${meta.passScore} von ${meta.totalQuestions} Fragen reichen zum Bestehen (${passPct}%).`));
 
@@ -188,7 +195,7 @@ const { questions, meta, bundeslaender } = lid;
           main.appendChild(card);
 
           const actions = el("div", "exam-actions");
-          const facts = el("a", "quiz-btn", "Zur Fakten-Seite");
+          const facts = el("a", "quiz-btn", t("lid.toFacts"));
           facts.href = "/pruefungen/leben-in-deutschland/fakten";
           actions.appendChild(facts);
           main.appendChild(actions);

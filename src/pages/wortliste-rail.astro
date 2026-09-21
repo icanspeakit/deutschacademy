@@ -1,0 +1,212 @@
+---
+// Sketch: the Wortschatz-A1 picker wearing the /fortschritt rail.
+//
+// Today /uebungen/wortschatz/a1 opens with a dark icon column plus a panel that lists
+// every module at once — eight headings, three of them unfolded, before the card. The
+// question this page asks is whether the exam rail answers the same need with less: one
+// fold that names where you are ("Stufe A1 · Ich & die Anderen"), one module open at a
+// time, and the levels as a switcher underneath instead of a second column.
+//
+// Deliberately one card and no trainer: this is about the rail, and a working deck next
+// to it would only argue about the card. Everything in the rail is real — the modules,
+// the set titles and the word counts come from the same lernsets() the live picker uses,
+// so the list is as long here as it is there. Not linked from the nav; noindex.
+import Layout from "../layouts/Layout.astro";
+import PracticeHeader from "../components/PracticeHeader.astro";
+import { modules, lernsetCards } from "../lib/lernsets.js";
+import { LEVELS } from "../lib/lexicon.js";
+import "../styles/practice.css";
+import "../styles/exam-dashboard.css";
+
+const LEVEL = "A1";
+const groups = modules(LEVEL);
+const setCount = groups.reduce((n, g) => n + g.sets.length, 0);
+const wordCount = groups.reduce((n, g) => n + g.words, 0);
+
+// The card is the first word of the first set — the same one the live page opens on.
+const firstSet = groups[0].sets[0];
+const card = lernsetCards(firstSet.id)[0];
+
+// Each level keeps its real set count, so the switcher is not four equal-looking rows.
+const levels = LEVELS.map((level) => {
+  const g = modules(level);
+  return { level, sets: g.reduce((n, m) => n + m.sets.length, 0) };
+});
+---
+<Layout
+  title="Wortliste im Fortschritt-Design – DeutschAcademy"
+  description="Skizze: der Wortschatz-Bereich mit dem Rail aus /fortschritt."
+>
+  <Fragment slot="head">
+    <meta name="robots" content="noindex, nofollow" />
+  </Fragment>
+  <PracticeHeader title="Wortliste · Rail-Skizze" />
+  <main class="practice-main practice-main--wide">
+    <div class="fs-topbar">
+      <span class="fs-topbar-brand">Wortschatz {LEVEL} <small>{setCount} Lernsets · {wordCount} Wörter</small></span>
+      <span class="fs-topbar-hint">Skizze — Rail aus /fortschritt</span>
+    </div>
+
+    <div class="fs-shell" data-wr>
+      <aside class="fs-rail">
+        {/* The fold head, exactly as on /fortschritt: the deck, then the module that is
+            open, so the line says where you are without a breadcrumb. */}
+        <button type="button" class="fs-rail-head" data-wr-toggle aria-expanded="true" aria-controls="wr-body">
+          <span class="fs-caret" aria-hidden="true"></span>
+          <span class="fs-rail-head-txt"><b>Stufe {LEVEL}</b> <i data-wr-where>· {groups[0].title}</i></span>
+          <span class="fs-rail-head-n">{setCount} Sets</span>
+        </button>
+
+        <div class="fs-rail-body" id="wr-body">
+          <nav class="fs-parts" aria-label="Lernsets">
+            {groups.map((g, gi) => (
+              <div class={`fs-group${gi === 0 ? " is-open" : ""}`}>
+                <button type="button" class="fs-group-head" data-wr-group={g.title} aria-expanded={gi === 0}>
+                  <span class="fs-caret" aria-hidden="true"></span>
+                  <span class="fs-group-name">{g.title}</span>
+                  <span class="fs-group-n">{g.sets.length} Sets</span>
+                </button>
+                <div class="fs-group-items" hidden={gi !== 0}>
+                  {g.sets.map((s, i) => (
+                    <a class="fs-part" href={`/uebungen/wortschatz/${s.id}`}>
+                      <span class="fs-dot" style="--pct:0%"></span>
+                      <span class="fs-part-label">{String(i + 1).padStart(2, "0")} {s.title}</span>
+                      <span class="fs-part-n">{s.words}</span>
+                    </a>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </nav>
+
+          <a class="fs-rail-result" href={`/uebungen/wortschatz/${LEVEL.toLowerCase()}`}>
+            <span class="fs-rail-flag">■</span><span>Alle {setCount} Lernsets</span>
+          </a>
+        </div>
+
+        <p class="fs-rail-label">Niveau</p>
+        <div class="fs-examlist">
+          {levels.map((l) => (
+            <a class={`fs-examitem${l.level === LEVEL ? " is-on" : ""}`} href={`/uebungen/wortschatz/${l.level.toLowerCase()}`}>
+              <span class="fs-examitem-name">{l.level}</span>
+              <span class="fs-examitem-n">{l.sets} Sets</span>
+            </a>
+          ))}
+        </div>
+      </aside>
+
+      <section class="fs-main">
+        <div class="fs-viewtabs" role="tablist">
+          <button type="button" class="fs-viewtab is-on" role="tab" aria-selected="true">Karteikarten</button>
+          <button type="button" class="fs-viewtab" role="tab" aria-selected="false">Lernen</button>
+          <button type="button" class="fs-viewtab" role="tab" aria-selected="false">Testen</button>
+          <button type="button" class="fs-viewtab" role="tab" aria-selected="false">Wortliste</button>
+        </div>
+
+        <div class="wr-deckhead">
+          <p class="fs-eyebrow">{groups[0].title}</p>
+          <h2 class="fs-exam-title">{firstSet.title} <small>Karte 1 von {firstSet.words}</small></h2>
+        </div>
+
+        {/* One card, flipped by the button or the space bar — enough to see how the rail
+            sits next to the thing it is choosing. */}
+        <button type="button" class="wr-card" data-wr-card aria-live="polite">
+          <span class="wr-card-lang" data-wr-side>Deutsch</span>
+          <b class="wr-card-word" data-wr-word>{card.front}</b>
+          <i class="wr-card-note" data-wr-note>{card.note}</i>
+          <span class="wr-card-hint">Umdrehen für English</span>
+        </button>
+
+        <div class="wr-deckfoot">
+          <span>Zurück</span>
+          <button type="button" class="wr-flip" data-wr-card>Umdrehen</button>
+          <span>Weiter →</span>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <style>
+    /* Set titles are longer than "Hören · Teil 1", so the rail gets the extra 32px
+       rather than wrapping every second row. */
+    @media (min-width: 900px) { .fs-shell { grid-template-columns: 300px minmax(0, 1fr); } }
+    .wr-deckhead { margin: 18px 0 12px; }
+    .wr-card {
+      display: grid;
+      gap: 6px;
+      justify-items: start;
+      width: 100%;
+      min-height: 260px;
+      align-content: center;
+      padding: 28px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      background: var(--surface-card);
+      font: inherit;
+      text-align: left;
+      cursor: pointer;
+    }
+    .wr-card-lang { font-size: .7rem; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+    .wr-card-word { font-size: 2.4rem; font-weight: var(--fw-semibold); line-height: 1.1; }
+    .wr-card-note { font-style: normal; color: var(--muted); }
+    .wr-card-hint { margin-top: 10px; font-size: .82rem; color: var(--muted); }
+    .wr-deckfoot {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-top: 14px;
+      color: var(--muted);
+      font-size: .9rem;
+    }
+    .wr-flip {
+      border: none;
+      background: none;
+      font: inherit;
+      font-weight: var(--fw-semibold);
+      color: var(--brand-blue-dark);
+      cursor: pointer;
+    }
+  </style>
+
+  <script is:inline define:vars={{ back: card.translations.en }}>
+    const root = document.querySelector("[data-wr]");
+    const head = root.querySelector("[data-wr-toggle]");
+    const body = root.querySelector("#wr-body");
+    const where = root.querySelector("[data-wr-where]");
+
+    // Same rule as /fortschritt: one module open at a time, and the head names it — the
+    // rail is a pivot between modules, not a list to scroll.
+    head.addEventListener("click", () => {
+      const open = head.getAttribute("aria-expanded") !== "true";
+      head.setAttribute("aria-expanded", String(open));
+      body.hidden = !open;
+    });
+
+    for (const btn of root.querySelectorAll("[data-wr-group]")) {
+      btn.addEventListener("click", () => {
+        const open = btn.getAttribute("aria-expanded") !== "true";
+        for (const other of root.querySelectorAll("[data-wr-group]")) {
+          const on = other === btn && open;
+          other.setAttribute("aria-expanded", String(on));
+          other.closest(".fs-group").classList.toggle("is-open", on);
+          other.nextElementSibling.hidden = !on;
+        }
+        if (open) where.textContent = "· " + btn.dataset.wrGroup;
+      });
+    }
+
+    const word = root.querySelector("[data-wr-word]");
+    const note = root.querySelector("[data-wr-note]");
+    const side = root.querySelector("[data-wr-side]");
+    const front = { word: word.textContent, note: note.textContent, lang: "Deutsch" };
+    let flipped = false;
+    const flip = () => {
+      flipped = !flipped;
+      side.textContent = flipped ? "English" : front.lang;
+      word.textContent = flipped ? back : front.word;
+      note.textContent = flipped ? "" : front.note;
+    };
+    for (const b of root.querySelectorAll("[data-wr-card]")) b.addEventListener("click", flip);
+  </script>
+</Layout>

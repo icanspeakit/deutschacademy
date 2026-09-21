@@ -1,8 +1,11 @@
 ---
 import Layout from "../../layouts/Layout.astro";
-import LanguageSwitcher from "../../components/LanguageSwitcher.astro";
-import ThemeToggle from "../../components/ThemeToggle.astro";
+import SiteNav from "../../components/SiteNav.astro";
 import "../../styles/akkusativ.css";
+// The split layout the grammar topics and the Wortschatz trainer use: rule column beside
+// the work on a desktop, one button on a phone. See src/lib/ruleColumn.js.
+import "../../styles/verben-praepositionen.css";
+import "../../styles/rule-intro.css";
 import { nouns } from "../../lib/lexicon.js";
 
 // One session is SESSION_SIZE questions drawn from the chosen level — the pool is now
@@ -43,36 +46,113 @@ const levels = [
 const total = Math.min(SESSION_SIZE, pool.length);
 ---
 <Layout title="Artikel-Trainer – DeutschAcademy">
-  <div class="akk akk--page">
-    <header class="akk-topbar">
-      <div class="akk-topbar-inner">
-        <span class="akk-wordmark">DeutschAcademy</span>
-        <nav class="akk-breadcrumb" aria-label="Breadcrumb">
-          <a href="/uebungen" data-i18n="nav.exercises">Übungen</a><span class="akk-crumb-sep">›</span>
-          <span class="akk-crumb-current">Artikel-Trainer</span>
-        </nav>
-        <div style="margin-left:auto; display:flex; align-items:center; gap:10px;">
-          <LanguageSwitcher />
-          <ThemeToggle />
-        </div>
-      </div>
-    </header>
+  {/* .akk stays the outer scope: every --akk-* token the exercise and the rule card read
+      is defined on it. It is no longer .akk--page, because .vp-page owns the page now. */}
+  <div class="akk">
+    <SiteNav active="grammatik" />
 
-    <main class="akk-main">
-      <div class="akk-card">
-        <div class="akk-card-header">
-          <div class="akk-title-group">
-            <span class="akk-tag">ART</span>
-            <h1 class="akk-title">Artikel-Trainer</h1>
+    <!-- Rendered collapsed, then opened by the script if this learner asked for it —
+         the same contract the grammar topics use, so there is no re-layout on load. -->
+    <main class="vp-page vp-page--split vp-page--sheet" id="vp-page" data-rule="hidden" data-anim="off">
+      <a href="/uebungen/grammatik" class="vp-back-link" data-i18n="header.back">← Zurück zur Übersicht</a>
+
+      <div class="vp-workspace">
+        <aside class="vp-col vp-col--rule" id="vp-rule">
+          <div class="vp-hero">
+            <div class="vp-hero-badges">
+              <span class="badge badge-brand" data-i18n="grammatik.hero.eyebrow">GRAMMATIK ÜBEN</span>
+              <span class="badge badge-info">A1–A2</span>
+            </div>
+            <h1>Artikel-Trainer</h1>
+            <p>Der Artikel eines Nomens ist meist nicht an der Sache erkennbar — aber die Endung verrät oft, welcher es ist.</p>
           </div>
-        </div>
 
-        <div class="akk-tabs" role="tablist">
-          <button class="akk-tab active" id="akk-tab-uebung" type="button" role="tab" aria-selected="true" data-i18n="akk.tab.uebung">Übung</button>
-          <button class="akk-tab" id="akk-tab-regel" type="button" role="tab" aria-selected="false" data-i18n="akk.tab.regel">Regel</button>
-        </div>
+          <!-- The Regel. It was a second tab beside "Übung": reading it meant leaving the
+               exercise, and the exercise was what the tab bar put you back in. Here it sits
+               beside the work, which is the point of a rule you consult mid-question. -->
+          <div class="vp-card vp-rule-card" id="vp-rule-card">
+            <!-- On a desktop this head is just the card's label. On a phone the card is a
+                 bottom sheet and the head is its handle: pinned to the top with the ✕, so
+                 the way out is never a scroll away — the table below is five rows tall and
+                 the button under it was off screen the moment the sheet opened. -->
+            <div class="vp-sheet-head">
+              <div class="vp-card-label" data-i18n="vp.howItWorks">Wie funktioniert das?</div>
+              <button
+                type="button"
+                class="vp-sheet-fold"
+                data-sheet-close
+                aria-label="Regel einklappen"
+                aria-controls="vp-rule-card"
+              >
+                <span>Einklappen</span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
+              </button>
+              <button
+                type="button"
+                class="vp-sheet-x"
+                data-sheet-close
+                aria-label="Regel schließen"
+                aria-controls="vp-rule-card"
+              >
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="6" y1="6" x2="18" y2="18"></line><line x1="18" y1="6" x2="6" y2="18"></line></svg>
+              </button>
+            </div>
+            <div class="vp-sheet-body">
+            <p class="akk-regel-intro">
+              Der Artikel eines deutschen Nomens ist meist nicht am Genus der Sache erkennbar – aber manche
+              Wortendungen geben einen zuverlässigen Hinweis. Die folgenden Muster helfen beim Raten, wenn
+              das Wort noch unbekannt ist.
+            </p>
+            <table class="akk-decl-table">
+              <thead>
+                <tr>
+                  <th>Endung</th>
+                  <th>meist</th>
+                  <th>Beispiel</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>-e</td><td>feminin</td><td>die Tasche, die Sonne</td></tr>
+                <tr><td>-in</td><td>feminin</td><td>die Ärztin, die Kollegin</td></tr>
+                <tr><td>-chen / -lein</td><td>neutrum</td><td>das Mädchen, das Kaninchen</td></tr>
+                <tr><td>-er</td><td>maskulin</td><td>der Computer, der Lehrer</td></tr>
+                <tr><td>-el</td><td>maskulin</td><td>der Schlüssel, der Apfel</td></tr>
+              </tbody>
+            </table>
+            <p class="akk-regel-note">
+              Männliche Personenbezeichnungen bleiben maskulin, auch wenn sie auf -e enden (z. B. der Kollege,
+              der Junge). Bei vielen Wörtern gibt es kein Muster – der Artikel muss einfach mitgelernt werden.
+            </p>
+            </div>
+          </div>
 
-        <div id="akk-uebung-view">
+          <!-- Phone counterpart of .vp-rule-toggle: no column to slide, so the card crops
+               to a preview and this opens it. -->
+          <button
+            type="button"
+            class="vp-rule-peek"
+            id="vp-rule-peek"
+            data-show="Regel anzeigen"
+            data-hide="Regel einklappen"
+            aria-controls="vp-rule-card"
+          >Regel anzeigen</button>
+        </aside>
+
+        <div class="vp-sheet-scrim" data-sheet-close aria-hidden="true"></div>
+
+        <section class="vp-col vp-col--ex">
+          <div class="vp-ex-toolbar">
+            <h2 class="vp-section-title" data-i18n="nav.exercises">Übungen</h2>
+            <button
+              type="button"
+              class="vp-rule-toggle"
+              id="vp-rule-toggle"
+              data-show="Regel einblenden"
+              data-hide="Regel ausblenden"
+            >Regel einblenden</button>
+          </div>
+
+          <div class="vp-card">
           <div class="akk-mode-row">
             <div class="akk-mode" role="group" aria-label="Übungsmodus" data-i18n-attr="aria-label:akk.mode.ariaLabel">
               <span class="akk-mode-label" data-i18n="akk.mode.label">Modus</span>
@@ -94,72 +174,24 @@ const total = Math.min(SESSION_SIZE, pool.length);
             </div>
           </div>
           <div id="akk-exercise-root"></div>
-        </div>
+          </div>
 
-        <div id="akk-regel-view" hidden>
-          <p class="akk-regel-intro">
-            Der Artikel eines deutschen Nomens ist meist nicht am Genus der Sache erkennbar – aber manche
-            Wortendungen geben einen zuverlässigen Hinweis. Die folgenden Muster helfen beim Raten, wenn
-            das Wort noch unbekannt ist.
-          </p>
-          <table class="akk-decl-table">
-            <thead>
-              <tr>
-                <th>Endung</th>
-                <th>meist</th>
-                <th>Beispiel</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>-e</td>
-                <td>feminin</td>
-                <td>die Tasche, die Sonne</td>
-              </tr>
-              <tr>
-                <td>-in</td>
-                <td>feminin</td>
-                <td>die Ärztin, die Kollegin</td>
-              </tr>
-              <tr>
-                <td>-chen / -lein</td>
-                <td>neutrum</td>
-                <td>das Mädchen, das Kaninchen</td>
-              </tr>
-              <tr>
-                <td>-er</td>
-                <td>maskulin</td>
-                <td>der Computer, der Lehrer</td>
-              </tr>
-              <tr>
-                <td>-el</td>
-                <td>maskulin</td>
-                <td>der Schlüssel, der Apfel</td>
-              </tr>
-            </tbody>
-          </table>
-          <p class="akk-regel-note">
-            Männliche Personenbezeichnungen bleiben maskulin, auch wenn sie auf -e enden (z. B. der Kollege,
-            der Junge). Bei vielen Wörtern gibt es kein Muster – der Artikel muss einfach mitgelernt werden.
-          </p>
-          <button class="akk-btn akk-btn-primary" id="akk-back-to-uebung" type="button" data-i18n="akk.backToPractice">Zurück zur Übung</button>
-        </div>
+          <footer class="akk-footer">
+            <div class="akk-session-ring">
+              <svg viewBox="0 0 56 56">
+                <circle class="akk-ring-track" cx="28" cy="28" r="24" />
+                <circle class="akk-ring-fill" id="akk-ring-fill" cx="28" cy="28" r="24" stroke-dasharray="150.8" stroke-dashoffset="150.8" />
+              </svg>
+              <span class="akk-ring-num" id="akk-ring-num">0%</span>
+            </div>
+            <div class="akk-session-text">
+              <span class="akk-session-label" data-i18n="akk.session.label">Diese Sitzung</span>
+              <p class="akk-session-stats" id="akk-session-stats">0 von {total} beantwortet · 0 richtig · 0 Hinweise</p>
+            </div>
+            <span class="akk-session-badge" data-i18n="akk.session.badge">lokal · ohne Konto</span>
+          </footer>
+        </section>
       </div>
-
-      <footer class="akk-footer">
-        <div class="akk-session-ring">
-          <svg viewBox="0 0 56 56">
-            <circle class="akk-ring-track" cx="28" cy="28" r="24" />
-            <circle class="akk-ring-fill" id="akk-ring-fill" cx="28" cy="28" r="24" stroke-dasharray="150.8" stroke-dashoffset="150.8" />
-          </svg>
-          <span class="akk-ring-num" id="akk-ring-num">0%</span>
-        </div>
-        <div class="akk-session-text">
-          <span class="akk-session-label" data-i18n="akk.session.label">Diese Sitzung</span>
-          <p class="akk-session-stats" id="akk-session-stats">0 von {total} beantwortet · 0 richtig · 0 Hinweise</p>
-        </div>
-        <span class="akk-session-badge" data-i18n="akk.session.badge">lokal · ohne Konto</span>
-      </footer>
     </main>
   </div>
 
@@ -167,6 +199,7 @@ const total = Math.min(SESSION_SIZE, pool.length);
   <script type="application/json" id="akk-session-size" set:html={JSON.stringify(SESSION_SIZE)}></script>
   <script type="module">
     import { mountPracticeWorkspace } from "../../lib/practiceWorkspace.js";
+    import { mountRuleColumn } from "../../lib/ruleColumn.js";
     import { recordAttempt } from "../../lib/progress.js";
     import { getLang, loadDict, onLangChange } from "../../lib/i18n.js";
 
@@ -259,31 +292,17 @@ const total = Math.min(SESSION_SIZE, pool.length);
     });
     document.getElementById("akk-new-round").addEventListener("click", startSession);
 
-    const tabUebung = document.getElementById("akk-tab-uebung");
-    const tabRegel = document.getElementById("akk-tab-regel");
-    const uebungView = document.getElementById("akk-uebung-view");
-    const regelView = document.getElementById("akk-regel-view");
-
-    function playEnter(el) {
-      el.classList.remove("akk-anim-in");
-      void el.offsetWidth;
-      el.classList.add("akk-anim-in");
-    }
-
-    function showView(view) {
-      const isUebung = view === "uebung";
-      uebungView.hidden = !isUebung;
-      regelView.hidden = isUebung;
-      tabUebung.classList.toggle("active", isUebung);
-      tabRegel.classList.toggle("active", !isUebung);
-      tabUebung.setAttribute("aria-selected", String(isUebung));
-      tabRegel.setAttribute("aria-selected", String(!isUebung));
-      playEnter(isUebung ? uebungView : regelView);
-    }
-
-    tabUebung.addEventListener("click", () => showView("uebung"));
-    tabRegel.addEventListener("click", () => showView("regel"));
-    document.getElementById("akk-back-to-uebung").addEventListener("click", () => showView("uebung"));
+    // The rule column's behaviour — collapse state per learner, what "collapsed" means at
+    // each width, the one-time tour — is the same module the grammar topics and the exam
+    // pages use. Its own storage key, so this page's preference is its own.
+    mountRuleColumn(document.getElementById("vp-page"), {
+      storageKey: "da-artikel-rule",
+      seenKey: "da-artikel-rule-peek",
+      // Below 1001px the Regel is a bottom sheet rather than an accordion, as the
+      // Wortschatz picker is. The table is five rows tall: expanded in place it pushed the
+      // exercise a screen down and took its own "einklappen" button with it.
+      sheet: true,
+    });
 
     document.querySelectorAll(".akk-mode-btn").forEach((btn) => {
       btn.addEventListener("click", () => {

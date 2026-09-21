@@ -32,7 +32,7 @@
      duration, so the track and the panel arrive together.
 
      The padding animates too, or 24px of it survives the fold as a sliver. */
-  width: 302px;
+  width: var(--ls-panel-w, 302px);
   transition:
     width var(--ls-fold, .34s) var(--nv-ease-soft),
     padding var(--ls-fold, .34s) var(--nv-ease-soft),
@@ -75,9 +75,10 @@
   background: rgb(255 255 255 / 14%);
 }
 
-/* nav.css writes .nvb-overview for a <button>; here it is an <a>, because it goes to a
-   page rather than switching a panel. Everything else about it is nav.css's. */
-.ls-nvb .nvb-overview { display: block; text-decoration: none; }
+/* No overview link: "Alle 26 Lernsets öffnen" opened the whole level as one 650-card
+   pile, which is the deck you are already on when you arrive from the nav — and from a
+   Lernset it offered the pile in place of the topic you had just chosen. The rail's own
+   level badge still goes there. */
 
 /* ---- Rail tooltips ------------------------------------------------------------------ */
 /* Showing .nvb-tip on hover and focus, and letting it escape the folded card, are both
@@ -239,4 +240,275 @@
     overflow-y: visible;
   }
   .ls-nvb .nvb-collapse { display: none; }
+
+  /* The sheet's fold button moved to verben-praepositionen.css: it is part of the shared
+     sheet contract (.vp-sheet-head / -x / -scrim all live there), not something only the
+     Lernset picker has, and a page that mounts a sheet without importing THIS file was
+     rendering it as an unstyled default button. */
 }
+
+/* ---- Sized up to the /fortschritt rail ---------------------------------------------- */
+/* The Wortschatz page stays the dominant model — the dark level rail, the Thema/Reihe
+ * switch, the sheet on a phone are all still here. What changes is the scale and the
+ * shape of the list, which was the dashboard's compact 10px-uppercase idiom: next to the
+ * exam rail on /fortschritt it read as a different product. So the head becomes a fold
+ * bar that names where you are, the Bereiche become full-width rows with a triangle and
+ * a count, and the sets get the exam rail's 0.88rem row on a 10px radius.
+ *
+ * Scoped to .ls-nvb throughout: nav.css's .nvb is the dashboard's rail as well, and it
+ * is meant to stay compact there.
+ */
+.vt-split { --rule-w: clamp(352px, 29vw, 428px); }
+.ls-nvb { --ls-panel-w: 340px; --ls-panel-pad: 14px; }
+.ls-nvb .nvb-panel { padding: var(--ls-panel-pad); gap: 1px; }
+
+/* The head, as /fortschritt's .fs-rail-head: brand-soft, rounded, and carrying the open
+   group after the level. */
+.ls-nvb .nvb-panelhead {
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: var(--gradient-brand-soft);
+}
+.ls-nvb .nvb-panelhead h3 {
+  flex: 1;
+  min-width: 0;
+  /* The h3 inherits a centred text-align from the card; shrink-to-fit used to hide
+     that, and giving it the row does not. */
+  text-align: left;
+  font-size: 1rem;
+  font-weight: var(--fw-semibold);
+  color: var(--brand-blue-dark);
+}
+.ls-head-where { font-weight: var(--fw-regular); color: var(--brand-blue); }
+.ls-nvb .nvb-collapse { color: var(--brand-blue); }
+.ls-nvb .nvb-collapse:hover { background: rgb(255 255 255 / 45%); color: var(--brand-blue-dark); }
+
+.ls-nvb .ls-cuts { margin: 0 0 10px; }
+.ls-nvb .ls-cut { padding: 7px 10px; font-size: var(--text-sm); }
+
+/* A Bereich is a row now, not a caption: full width, hoverable, its count on the right,
+   and the triangle that says "there is more under this" — the same one the exam rail
+   uses for Hören and Lesen. */
+.ls-nvb .ls-group { margin-bottom: 0; }
+.ls-nvb .ls-group-head {
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+  padding: 9px 12px;
+  border-radius: 10px;
+  font-family: var(--font-body);
+  font-size: .88rem;
+  font-weight: var(--fw-regular);
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--ink);
+}
+.ls-nvb .ls-group-head:hover { background: var(--surface-sunken, rgb(0 0 0 / 4%)); }
+.ls-nvb .ls-block-toggle {
+  flex: 1;
+  min-width: 0;
+  gap: 10px;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+}
+.ls-nvb .ls-block-toggle.is-open { color: var(--brand-blue-dark); font-weight: var(--fw-semibold); }
+.ls-nvb .ls-block-toggle::before {
+  /* A triangle rather than a chevron box, and it turns 90° instead of flipping — the
+     same gesture as .fs-caret. The margins stand in for that caret's 12px column, so a
+     group name and a set title start on the same x. */
+  width: 0;
+  height: 0;
+  margin: 0 3px 0 2px;
+  border: 4px solid transparent;
+  border-left: 5px solid currentColor;
+  border-right: none;
+  transform: none;
+  transition: transform .15s ease;
+}
+.ls-nvb .ls-block-toggle.is-open::before { transform: rotate(90deg); }
+.ls-nvb .ls-group-n {
+  flex-shrink: 0;
+  font-family: var(--font-label);
+  font-size: .78rem;
+  font-variant-numeric: tabular-nums;
+}
+
+/* The set rows, at the exam rail's scale and indented under their Bereich. */
+.ls-nvb .nvb-item {
+  gap: 10px;
+  padding: 9px 12px;
+  border-radius: 10px;
+  font-size: .88rem;
+}
+.ls-nvb .ls-grouplist .nvb-item { padding-left: 24px; }
+.ls-nvb .ls-num { min-width: 20px; font-size: .78rem; }
+.ls-nvb .nv-count { font-size: .78rem; }
+
+/* In the phone sheet the picker is the whole surface and has no track to size, so the
+   panel goes back to filling it. */
+@media (max-width: 1000px) {
+  .vp-sheet-body .ls-nvb .nvb-panel { width: auto; }
+}
+
+/* ---- The pivot's stagger ------------------------------------------------------------ */
+/* The height of a fold is animated in script (src/lib/fold.js — `hidden` cannot tween);
+   this is the arrival of the rows inside it, the same 30ms step the exam rail uses. Six
+   delays: a Bereich holds two to six sets, and a longer block's tail arrives together. */
+@keyframes ls-row-in {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: none; }
+}
+.ls-grouplist--enter > .nvb-item { animation: ls-row-in .24s cubic-bezier(.22, .7, .28, 1) both; }
+.ls-grouplist--enter > .nvb-item:nth-child(2) { animation-delay: 30ms; }
+.ls-grouplist--enter > .nvb-item:nth-child(3) { animation-delay: 60ms; }
+.ls-grouplist--enter > .nvb-item:nth-child(4) { animation-delay: 90ms; }
+.ls-grouplist--enter > .nvb-item:nth-child(5) { animation-delay: 120ms; }
+.ls-grouplist--enter > .nvb-item:nth-child(n + 6) { animation-delay: 150ms; }
+
+@media (prefers-reduced-motion: reduce) {
+  .ls-grouplist--enter > .nvb-item { animation: none; }
+}
+
+/* Thema ↔ Reihe: the whole cut arrives, group by group. */
+.ls-cut-panel--enter > * { animation: ls-row-in .26s cubic-bezier(.22, .7, .28, 1) both; }
+.ls-cut-panel--enter > :nth-child(2) { animation-delay: 35ms; }
+.ls-cut-panel--enter > :nth-child(3) { animation-delay: 70ms; }
+.ls-cut-panel--enter > :nth-child(4) { animation-delay: 105ms; }
+.ls-cut-panel--enter > :nth-child(n + 5) { animation-delay: 140ms; }
+
+@media (prefers-reduced-motion: reduce) {
+  .ls-cut-panel--enter > * { animation: none; }
+}
+
+/* ---- The fold tab ------------------------------------------------------------------- */
+/* A Karteiordner carries its tab on the edge of the card, not inside it, and that is the
+ * one part of the folder you can always reach — the list pivots away and the tab stays.
+ * So the panel head's chevron and the rail's unfold arrow both step aside for it: three
+ * controls for one act, two of which vanished exactly when you needed them.
+ *
+ * The card has to stop clipping for the tab to hang off its edge, so the rail takes over
+ * drawing its own rounded corners.
+ */
+.ls-nvb { position: relative; overflow: visible; }
+.ls-nvb .nvb-rail { border-radius: var(--radius) 0 0 var(--radius); }
+.ls-nvb .nvb-collapse { display: none; }
+.ls-nvb.collapsed .ls-unfold { display: none; }
+
+.ls-foldtab {
+  position: absolute;
+  z-index: 3;
+  /* Upper third, where a divider tab sits — not centred, which would read as a drawer
+     handle, and not at the top, where it would fight the head. */
+  top: 88px;
+  right: -18px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  width: 18px;
+  padding: 14px 0;
+  border: 1px solid var(--border);
+  border-left: none;
+  border-radius: 0 10px 10px 0;
+  background: var(--surface-card);
+  color: var(--muted);
+  font-family: var(--font-label);
+  cursor: pointer;
+  box-shadow: 10px 0 26px -20px rgb(15 23 42 / 55%);
+  transition: color .2s var(--nv-ease-soft), background .2s var(--nv-ease-soft), padding .2s var(--nv-ease-soft);
+}
+.ls-foldtab:hover,
+.ls-foldtab:focus-visible { color: var(--brand-blue-dark); background: var(--surface); padding-right: 3px; }
+.ls-foldtab-txt {
+  writing-mode: vertical-rl;
+  font-size: 9.5px;
+  font-weight: var(--fw-bold);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+.ls-foldtab-chev { width: 12px; height: 12px; transition: transform .28s var(--nv-ease-soft); }
+/* Folded, it points at the space the list will come back into. */
+.ls-nvb.collapsed .ls-foldtab-chev { transform: rotate(180deg); }
+
+/* In the phone sheet the picker is the whole surface and the sheet's ✕ is the way out;
+   a tab on its edge would hang over the scrim. */
+@media (max-width: 1000px) {
+  .ls-foldtab { display: none; }
+}
+
+/* ---- Dein Fortschritt --------------------------------------------------------------- */
+/* The rail's third kind of pane: not a way into the lexicon but a report on what this
+ * browser has done in it — the dashboard's question, asked about this one tool. The
+ * numbers are small and few on purpose: everything the picker can honestly say fits above
+ * the fold, and the link at the bottom is for the rest.
+ */
+.ls-prog-next {
+  display: grid;
+  gap: 2px;
+  padding: 12px 14px;
+  margin-bottom: 12px;
+  border-radius: 12px;
+  background: var(--gradient-brand-soft);
+  color: var(--brand-blue-dark);
+  text-decoration: none;
+}
+.ls-prog-next-label {
+  font-family: var(--font-label);
+  font-size: .68rem;
+  font-weight: var(--fw-bold);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--brand-blue);
+}
+.ls-prog-next b { font-size: .95rem; font-weight: var(--fw-semibold); }
+.ls-prog-next-go { font-size: .78rem; color: var(--brand-blue); }
+
+.ls-prog-stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; margin-bottom: 12px; }
+.ls-prog-stat {
+  display: grid;
+  gap: 1px;
+  padding: 10px 8px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  text-align: center;
+}
+.ls-prog-stat b { font-size: 1.15rem; font-weight: var(--fw-semibold); font-variant-numeric: tabular-nums; }
+.ls-prog-stat i { font-style: normal; font-size: .68rem; line-height: 1.25; color: var(--muted); }
+
+.ls-prog-week { margin-bottom: 14px; padding: 0 2px; }
+.ls-prog-week p {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin: 0 0 6px;
+  font-size: .78rem;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+.ls-prog-bar { display: block; height: 6px; border-radius: var(--radius-pill); background: var(--surface-sunken, rgb(0 0 0 / 6%)); overflow: hidden; }
+.ls-prog-bar > span { display: block; height: 100%; background: var(--gradient-brand); border-radius: var(--radius-pill); }
+
+.ls-prog-head { margin-top: 4px; }
+/* The same dot the exam rail marks a part with, here saying only "you were here". */
+.ls-prog-dot {
+  flex-shrink: 0;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--brand-blue);
+  opacity: .55;
+}
+.ls-prog-more {
+  display: block;
+  margin-top: 12px;
+  padding: 10px 12px;
+  border-top: 1px solid var(--border);
+  font-size: .82rem;
+  color: var(--brand-blue-dark);
+  text-decoration: none;
+}
+.ls-prog-more:hover { text-decoration: underline; }

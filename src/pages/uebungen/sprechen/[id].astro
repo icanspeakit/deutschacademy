@@ -50,7 +50,7 @@ const back = set
         <span class="sk-badge">{task.level}</span>
       </header>
 
-      <p class="sk-blurb">{task.blurb}</p>
+      <p class="sk-blurb" data-i18n={`sprechen.${task.id}.blurb`}>{task.blurb}</p>
 
       {task.image ? (
         <section class="sk-block">

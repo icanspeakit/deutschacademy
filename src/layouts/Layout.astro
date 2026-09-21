@@ -52,6 +52,25 @@ const abs = (path) => (Astro.site ? new URL(path, Astro.site).href : path);
         }
       })();
     </script>
+    <!-- Language + direction, also before first paint. initI18n() at the end of <body> can
+         only run after its module and /i18n/<code>.json have both arrived, so an Arabic or
+         Ukrainian reader used to get a German LTR page first and watch it flip — on every
+         single navigation, and for RTL that flip moves the whole layout. Setting the two
+         attributes here costs one localStorage read and makes the first paint already
+         correct; the async pass then only fills in the text.
+         Keep the codes and directions in sync with LANGUAGES/STORAGE_KEY in src/lib/i18n.js. -->
+    <script is:inline>
+      (function () {
+        var DIR = { de: "ltr", en: "ltr", ar: "rtl", tr: "ltr", uk: "ltr" };
+        var lang = "de";
+        try {
+          var saved = localStorage.getItem("da_lang");
+          if (saved && DIR[saved]) lang = saved;
+        } catch (e) {}
+        document.documentElement.lang = lang;
+        document.documentElement.dir = DIR[lang];
+      })();
+    </script>
     <!-- Favicons. The `?v=` is load-bearing, not decoration: Chrome caches favicons by
          URL in a store that survives a hard reload, so replacing the file at the same
          path leaves returning visitors on the old icon indefinitely. That is exactly what

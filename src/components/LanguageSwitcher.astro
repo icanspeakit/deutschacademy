@@ -32,6 +32,12 @@ import { LANGUAGES } from "../lib/i18n.js";
     cursor: pointer;
   }
   .lang-switcher-btn:hover { border-color: var(--brand-blue); }
+  /* Opens downward by default, which is right in a header. In the nav drawer the switcher
+     sits in the footer, pinned to the bottom of the screen, and the menu dropped 168px
+     past the viewport — completely unreachable. The script measures on open and sets
+     data-drop="up" when there is no room below; it also nudges the menu back inside the
+     left/right edges with an inline transform, which at 390px it needs (right: 0 anchors
+     to the button, and the button is 7px from the edge). */
   .lang-switcher-menu {
     position: absolute;
     top: calc(100% + 6px);
@@ -43,8 +49,10 @@ import { LANGUAGES } from "../lib/i18n.js";
     padding: 6px;
     min-width: 160px;
     z-index: 50;
+    max-height: calc(100vh - 24px);
+    overflow-y: auto;
   }
-  :global([dir="rtl"]) .lang-switcher-menu { right: auto; left: 0; }
+  .lang-switcher-menu[data-drop="up"] { top: auto; bottom: calc(100% + 6px); }
   .lang-switcher-option {
     display: flex;
     align-items: center;
@@ -59,7 +67,6 @@ import { LANGUAGES } from "../lib/i18n.js";
     color: var(--ink);
     cursor: pointer;
   }
-  :global([dir="rtl"]) .lang-switcher-option { text-align: right; }
   .lang-switcher-option:hover { background: var(--surface); }
   .lang-switcher-option[aria-current="true"] { font-weight: 700; color: var(--brand-blue-dark); background: var(--blue-50); }
 </style>
@@ -88,12 +95,35 @@ import { LANGUAGES } from "../lib/i18n.js";
       btn.setAttribute("aria-expanded", "false");
     }
 
+    /* Where the menu can actually go, measured rather than assumed: this component sits in
+       the top-right of a header on one page and in the bottom-left of the drawer footer on
+       a phone, and a fixed "downward, right-aligned" is wrong in the second. Runs while the
+       menu is visible but before the browser paints, so the learner never sees it move.
+       The horizontal nudge is an inline transform on purpose — postcss-rtlcss rewrites
+       transforms in the stylesheet, and this offset is already in viewport pixels and must
+       not be flipped again for Arabic. */
+    function place() {
+      menu.removeAttribute("data-drop");
+      menu.style.transform = "";
+      const b = btn.getBoundingClientRect();
+      const room = window.innerHeight - b.bottom;
+      if (menu.offsetHeight + 12 > room && b.top > room) menu.setAttribute("data-drop", "up");
+
+      const m = menu.getBoundingClientRect();
+      const pad = 8;
+      let shift = 0;
+      if (m.left < pad) shift = pad - m.left;
+      else if (m.right > window.innerWidth - pad) shift = window.innerWidth - pad - m.right;
+      if (shift) menu.style.transform = `translateX(${Math.round(shift)}px)`;
+    }
+
     btn.addEventListener("click", (e) => {
       e.stopPropagation();
       const isOpen = !menu.hidden;
       document.querySelectorAll("[data-lang-menu]").forEach((m) => (m.hidden = true));
       menu.hidden = isOpen;
       btn.setAttribute("aria-expanded", String(!isOpen));
+      if (!menu.hidden) place();
     });
 
     root.querySelectorAll("[data-lang-option]").forEach((opt) => {
@@ -109,5 +139,8 @@ import { LANGUAGES } from "../lib/i18n.js";
     document.addEventListener("keydown", (e) => {
       if (e.key === "Escape") closeMenu();
     });
+    // A rotate or a resize invalidates the measurement; closing beats re-placing for a
+    // five-item list the learner has to reopen anyway.
+    window.addEventListener("resize", closeMenu);
   });
 </script>

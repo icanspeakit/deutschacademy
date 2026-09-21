@@ -6,16 +6,36 @@
   "source": "irgend.pdf (Kapitel 75)",
   "concept": {
     "flow": [
-      { "text": "irgend", "variant": "verb" },
-      { "text": "+ Fragewort / ein / welche", "variant": "prep" },
-      { "text": "= beliebig, unbekannt" }
+      {
+        "text": "irgend",
+        "variant": "verb"
+      },
+      {
+        "text": "+ Fragewort / ein / welche",
+        "variant": "prep"
+      },
+      {
+        "text": "= beliebig, unbekannt"
+      }
     ],
     "exampleHtml": "<span class=\"vp-verb\">Irgendwer</span> hat meine Schlüssel <span class=\"vp-verb\">irgendwohin</span> gelegt. Das kommt mir <span class=\"vp-prep\">irgendwie</span> komisch vor.",
     "qa": [
-      { "html": "<strong>irgend…</strong> heißt: etwas Unbekanntes oder Beliebiges. Ich habe keine genaueren Informationen — oder es ist mir egal.", "tag": "beliebig" },
-      { "html": "Es verbindet sich mit <strong>Fragewörtern</strong> (<em>wer, was, wo, wann, wie, wohin, woher</em>), mit dem <strong>unbestimmten Artikel</strong> und mit <strong>welche</strong>.", "tag": "Baukasten" },
-      { "html": "Im <strong>Singular</strong>: <em>irgend + ein</em> (dekliniert). Im <strong>Plural</strong>: <em>irgend + welche</em> (dekliniert).", "tag": "irgendein / irgendwelche" },
-      { "html": "<em>irgend…</em> steht an genau der Stelle, an der auch der Satzteil stünde, den es vertritt: <em>irgendwann</em> temporal, <em>irgendwie</em> modal.", "tag": "Position" }
+      {
+        "html": "<strong>irgend…</strong> heißt: etwas Unbekanntes oder Beliebiges. Ich habe keine genaueren Informationen — oder es ist mir egal.",
+        "tag": "beliebig"
+      },
+      {
+        "html": "Es verbindet sich mit <strong>Fragewörtern</strong> (<em>wer, was, wo, wann, wie, wohin, woher</em>), mit dem <strong>unbestimmten Artikel</strong> und mit <strong>welche</strong>.",
+        "tag": "Baukasten"
+      },
+      {
+        "html": "Im <strong>Singular</strong>: <em>irgend + ein</em> (dekliniert). Im <strong>Plural</strong>: <em>irgend + welche</em> (dekliniert).",
+        "tag": "irgendein / irgendwelche"
+      },
+      {
+        "html": "<em>irgend…</em> steht an genau der Stelle, an der auch der Satzteil stünde, den es vertritt: <em>irgendwann</em> temporal, <em>irgendwie</em> modal.",
+        "tag": "Position"
+      }
     ],
     "noteHtml": "<strong>irgendjemand, irgendwer</strong> und <strong>irgendeiner</strong> bedeuten dasselbe. Zwei Stolperstellen: <em>irgendjemand</em> <strong>kann</strong> dekliniert werden (<em>irgendjemanden</em>), <em>irgendeiner / irgendeine / irgendeins / irgendwelche</em> <strong>müssen</strong> es. Und: <em>irgend…</em> gehört überwiegend in die gesprochene Sprache — je nach Tonfall kann es abwertend klingen.",
     "reference": {
@@ -24,21 +44,75 @@
       "tables": [
         {
           "caption": "irgend… ohne Nomen",
-          "head": ["für Personen", "für Sachen", "für Orte", "für Zeit", "für Methoden"],
+          "head": [
+            "für Personen",
+            "für Sachen",
+            "für Orte",
+            "für Zeit",
+            "für Methoden"
+          ],
           "rows": [
-            ["irgendjemand", "irgend(et)was", "irgendwo", "irgendwann", "irgendwie"],
-            ["irgendwer", "irgendeins", "irgendwohin", "—", "—"],
-            ["irgendeiner / irgendeine", "irgendwelche", "irgendwoher", "—", "—"]
+            [
+              "irgendjemand",
+              "irgend(et)was",
+              "irgendwo",
+              "irgendwann",
+              "irgendwie"
+            ],
+            [
+              "irgendwer",
+              "irgendeins",
+              "irgendwohin",
+              "—",
+              "—"
+            ],
+            [
+              "irgendeiner / irgendeine",
+              "irgendwelche",
+              "irgendwoher",
+              "—",
+              "—"
+            ]
           ]
         },
         {
           "caption": "irgend… als Artikel vor einem Nomen",
-          "head": ["", "maskulin", "neutral", "feminin", "Plural"],
+          "head": [
+            "",
+            "maskulin",
+            "neutral",
+            "feminin",
+            "Plural"
+          ],
           "rows": [
-            ["Nominativ", "irgendein Mann", "irgendein Kind", "irgendeine Frau", "irgendwelche Leute"],
-            ["Akkusativ", "irgendeinen Mann", "irgendein Kind", "irgendeine Frau", "irgendwelche Leute"],
-            ["Dativ", "irgendeinem Mann", "irgendeinem Kind", "irgendeiner Frau", "irgendwelchen Leuten"],
-            ["Genitiv", "irgendeines Mannes", "irgendeines Kindes", "irgendeiner Frau", "irgendwelcher Leute"]
+            [
+              "Nominativ",
+              "irgendein Mann",
+              "irgendein Kind",
+              "irgendeine Frau",
+              "irgendwelche Leute"
+            ],
+            [
+              "Akkusativ",
+              "irgendeinen Mann",
+              "irgendein Kind",
+              "irgendeine Frau",
+              "irgendwelche Leute"
+            ],
+            [
+              "Dativ",
+              "irgendeinem Mann",
+              "irgendeinem Kind",
+              "irgendeiner Frau",
+              "irgendwelchen Leuten"
+            ],
+            [
+              "Genitiv",
+              "irgendeines Mannes",
+              "irgendeines Kindes",
+              "irgendeiner Frau",
+              "irgendwelcher Leute"
+            ]
           ]
         }
       ],
@@ -67,31 +141,280 @@
       ]
     }
   },
+  "aktiv": {
+    "listen": [
+      {
+        "text": "Irgendwer hat meine Schlüssel genommen.",
+        "note": "irgend + Fragewort: unbekannt oder egal.",
+        "audio": "/audio/grammatik/irgend/irgendwer-hat-meine-schluessel-genommen.mp3"
+      },
+      {
+        "text": "Das kommt mir irgendwie komisch vor.",
+        "note": "irgendwie steht dort, wo auch die genaue Angabe stünde.",
+        "audio": "/audio/grammatik/irgend/das-kommt-mir-irgendwie-komisch-vor.mp3"
+      },
+      {
+        "text": "Hast du irgendwelche Fragen?",
+        "note": "Im Plural: irgendwelche, dekliniert wie welche.",
+        "audio": "/audio/grammatik/irgend/hast-du-irgendwelche-fragen.mp3"
+      }
+    ],
+    "hoeren": {
+      "instruction": "Hör zu und wähle das irgend-Wort, das du gehört hast.",
+      "items": [
+        {
+          "text": "Irgendwer hat angerufen.",
+          "choices": [
+            "Irgendwer",
+            "Irgendwas",
+            "Irgendwo"
+          ],
+          "correct": 0,
+          "audio": "/audio/grammatik/irgend/irgendwer-hat-angerufen.mp3"
+        },
+        {
+          "text": "Er wohnt irgendwo in der Nähe.",
+          "choices": [
+            "irgendwie",
+            "irgendwo",
+            "irgendwann"
+          ],
+          "correct": 1,
+          "audio": "/audio/grammatik/irgend/er-wohnt-irgendwo-in-der-naehe.mp3"
+        },
+        {
+          "text": "Wir treffen uns irgendwann nächste Woche.",
+          "choices": [
+            "irgendwann",
+            "irgendwo",
+            "irgendwohin"
+          ],
+          "correct": 0,
+          "audio": "/audio/grammatik/irgend/wir-treffen-uns-irgendwann-naechste-woche.mp3"
+        },
+        {
+          "text": "Sie ist irgendwohin gefahren.",
+          "choices": [
+            "irgendwo",
+            "irgendwoher",
+            "irgendwohin"
+          ],
+          "correct": 2,
+          "audio": "/audio/grammatik/irgend/sie-ist-irgendwohin-gefahren.mp3"
+        },
+        {
+          "text": "Hast du irgendwelche Fragen?",
+          "choices": [
+            "irgendein",
+            "irgendwelche",
+            "irgendwas"
+          ],
+          "correct": 1,
+          "audio": "/audio/grammatik/irgend/hast-du-irgendwelche-fragen.mp3"
+        },
+        {
+          "text": "Gib mir bitte irgendeinen Stift.",
+          "choices": [
+            "irgendeinen",
+            "irgendwelchen",
+            "irgendwas"
+          ],
+          "correct": 0,
+          "audio": "/audio/grammatik/irgend/gib-mir-bitte-irgendeinen-stift.mp3"
+        }
+      ]
+    },
+    "sprechen": {
+      "rounds": [
+        {
+          "label": "1 · genau → unbestimmt",
+          "instruction": "Du hörst eine genaue Angabe. Sag sie unbestimmt — mit einem irgend-Wort.",
+          "example": {
+            "prompt": "Anna hat angerufen.",
+            "answer": "Irgendwer hat angerufen."
+          },
+          "items": [
+            {
+              "prompt": "Er wohnt in Berlin.",
+              "answer": "Er wohnt irgendwo.",
+              "audioPrompt": "/audio/grammatik/irgend/er-wohnt-in-berlin.mp3",
+              "audioAnswer": "/audio/grammatik/irgend/er-wohnt-irgendwo--8wphfh.mp3"
+            },
+            {
+              "prompt": "Wir treffen uns um acht.",
+              "answer": "Wir treffen uns irgendwann.",
+              "audioPrompt": "/audio/grammatik/irgend/wir-treffen-uns-um-acht.mp3",
+              "audioAnswer": "/audio/grammatik/irgend/wir-treffen-uns-irgendwann--8wphfh.mp3"
+            },
+            {
+              "prompt": "Sie ist nach Rom gefahren.",
+              "answer": "Sie ist irgendwohin gefahren.",
+              "audioPrompt": "/audio/grammatik/irgend/sie-ist-nach-rom-gefahren.mp3",
+              "audioAnswer": "/audio/grammatik/irgend/sie-ist-irgendwohin-gefahren--8wphfh.mp3"
+            },
+            {
+              "prompt": "Er hat ein Buch gekauft.",
+              "answer": "Er hat irgendwas gekauft.",
+              "audioPrompt": "/audio/grammatik/irgend/er-hat-ein-buch-gekauft.mp3",
+              "audioAnswer": "/audio/grammatik/irgend/er-hat-irgendwas-gekauft--8wphfh.mp3"
+            },
+            {
+              "prompt": "Das hat er mit dem Auto gemacht.",
+              "answer": "Das hat er irgendwie gemacht.",
+              "audioPrompt": "/audio/grammatik/irgend/das-hat-er-mit-dem-auto-gemacht.mp3",
+              "audioAnswer": "/audio/grammatik/irgend/das-hat-er-irgendwie-gemacht--8wphfh.mp3"
+            },
+            {
+              "prompt": "Der Brief kommt aus Polen.",
+              "answer": "Der Brief kommt irgendwoher.",
+              "audioPrompt": "/audio/grammatik/irgend/der-brief-kommt-aus-polen.mp3",
+              "audioAnswer": "/audio/grammatik/irgend/der-brief-kommt-irgendwoher--8wphfh.mp3"
+            }
+          ]
+        },
+        {
+          "label": "2 · irgendein und irgendwelche",
+          "instruction": "Du hörst ein Nomen. Sag es unbestimmt — Singular mit irgendein, Plural mit irgendwelche.",
+          "example": {
+            "prompt": "ein Buch",
+            "answer": "irgendein Buch"
+          },
+          "items": [
+            {
+              "prompt": "eine Frage",
+              "answer": "irgendeine Frage",
+              "audioPrompt": "/audio/grammatik/irgend/eine-frage.mp3",
+              "audioAnswer": "/audio/grammatik/irgend/irgendeine-frage--8wphfh.mp3"
+            },
+            {
+              "prompt": "Bücher",
+              "answer": "irgendwelche Bücher",
+              "audioPrompt": "/audio/grammatik/irgend/buecher.mp3",
+              "audioAnswer": "/audio/grammatik/irgend/irgendwelche-buecher--8wphfh.mp3"
+            },
+            {
+              "prompt": "mit einem Stift",
+              "answer": "mit irgendeinem Stift",
+              "audioPrompt": "/audio/grammatik/irgend/mit-einem-stift.mp3",
+              "audioAnswer": "/audio/grammatik/irgend/mit-irgendeinem-stift--8wphfh.mp3"
+            },
+            {
+              "prompt": "Probleme",
+              "answer": "irgendwelche Probleme",
+              "audioPrompt": "/audio/grammatik/irgend/probleme.mp3",
+              "audioAnswer": "/audio/grammatik/irgend/irgendwelche-probleme--8wphfh.mp3"
+            },
+            {
+              "prompt": "ein Kind",
+              "answer": "irgendein Kind",
+              "audioPrompt": "/audio/grammatik/irgend/ein-kind.mp3",
+              "audioAnswer": "/audio/grammatik/irgend/irgendein-kind--8wphfh.mp3"
+            },
+            {
+              "prompt": "Leute",
+              "answer": "irgendwelche Leute",
+              "audioPrompt": "/audio/grammatik/irgend/leute.mp3",
+              "audioAnswer": "/audio/grammatik/irgend/irgendwelche-leute--8wphfh.mp3"
+            }
+          ]
+        }
+      ]
+    }
+  },
   "exercises": [
     {
       "type": "story",
       "title": "Lückentext: Dünne Wände.",
       "hint": "Ergänzen Sie das passende Wort mit irgend…",
       "segments": [
-        { "text": "Leider hat meine Wohnung sehr dünne Wände. Gestern hat sich " },
-        { "blank": 0, "answer": ["irgendwer", "irgendjemand"] },
-        { "text": " im Haus sehr aufgeregt. Er hat geschrien und geschimpft. " },
-        { "blank": 1, "answer": ["Irgendwann"] },
-        { "text": " hat er gerufen: Sag doch endlich " },
-        { "blank": 2, "answer": ["irgendetwas", "irgendwas"] },
-        { "text": "! Siehst du mich " },
-        { "blank": 3, "answer": ["irgendwann"] },
-        { "text": " vielleicht mal an? Immer liest du nur " },
-        { "blank": 4, "answer": ["irgendetwas", "irgendwas"] },
-        { "text": "! Du bist " },
-        { "blank": 5, "answer": ["irgendwo"] },
-        { "text": ", aber nicht hier! Endlich hat " },
-        { "blank": 6, "answer": ["irgendjemand", "irgendwer"] },
-        { "text": " zurückgeschrien: Kann ich " },
-        { "blank": 7, "answer": ["irgendwann"] },
-        { "text": " auch mal " },
-        { "blank": 8, "answer": ["irgendwie"] },
-        { "text": " ohne dich tun?" }
+        {
+          "text": "Leider hat meine Wohnung sehr dünne Wände. Gestern hat sich "
+        },
+        {
+          "blank": 0,
+          "answer": [
+            "irgendwer",
+            "irgendjemand"
+          ]
+        },
+        {
+          "text": " im Haus sehr aufgeregt. Er hat geschrien und geschimpft. "
+        },
+        {
+          "blank": 1,
+          "answer": [
+            "Irgendwann"
+          ]
+        },
+        {
+          "text": " hat er gerufen: Sag doch endlich "
+        },
+        {
+          "blank": 2,
+          "answer": [
+            "irgendetwas",
+            "irgendwas"
+          ]
+        },
+        {
+          "text": "! Siehst du mich "
+        },
+        {
+          "blank": 3,
+          "answer": [
+            "irgendwann"
+          ]
+        },
+        {
+          "text": " vielleicht mal an? Immer liest du nur "
+        },
+        {
+          "blank": 4,
+          "answer": [
+            "irgendetwas",
+            "irgendwas"
+          ]
+        },
+        {
+          "text": "! Du bist "
+        },
+        {
+          "blank": 5,
+          "answer": [
+            "irgendwo"
+          ]
+        },
+        {
+          "text": ", aber nicht hier! Endlich hat "
+        },
+        {
+          "blank": 6,
+          "answer": [
+            "irgendjemand",
+            "irgendwer"
+          ]
+        },
+        {
+          "text": " zurückgeschrien: Kann ich "
+        },
+        {
+          "blank": 7,
+          "answer": [
+            "irgendwann"
+          ]
+        },
+        {
+          "text": " auch mal "
+        },
+        {
+          "blank": 8,
+          "answer": [
+            "irgendwie"
+          ]
+        },
+        {
+          "text": " ohne dich tun?"
+        }
       ]
     },
     {
@@ -100,13 +423,55 @@
       "hint": "Schreiben Sie das ganze Wort, zum Beispiel „irgendeinem“.",
       "placeholder": "irgend…",
       "items": [
-        { "prompt": "Kinder sollten nicht mit ___ Mann auf der Straße sprechen.", "hint": "Dativ, maskulin.", "answer": ["irgendeinem"] },
-        { "prompt": "Sie dürfen nie mit ___ fremden Person mitgehen.", "hint": "Dativ, feminin.", "answer": ["irgendeiner"] },
-        { "prompt": "Wenn ich ___ Leute sehe, die Sachen auf die Straße werfen, rege ich mich auf.", "hint": "Akkusativ, Plural.", "answer": ["irgendwelche"] },
-        { "prompt": "Es hat ___ Mann im Hotel angerufen.", "hint": "Nominativ, maskulin.", "answer": ["irgendein"] },
-        { "prompt": "Er hatte ___ wichtige Information.", "hint": "Akkusativ, feminin.", "answer": ["irgendeine"] },
-        { "prompt": "Wie findet man die Telefonnummer ___ unbekannten Mannes?", "hint": "Genitiv, maskulin.", "answer": ["irgendeines"] },
-        { "prompt": "Hast du mit ___ neuen Gast gesprochen?", "hint": "Dativ, maskulin.", "answer": ["irgendeinem"] }
+        {
+          "prompt": "Kinder sollten nicht mit ___ Mann auf der Straße sprechen.",
+          "hint": "Dativ, maskulin.",
+          "answer": [
+            "irgendeinem"
+          ]
+        },
+        {
+          "prompt": "Sie dürfen nie mit ___ fremden Person mitgehen.",
+          "hint": "Dativ, feminin.",
+          "answer": [
+            "irgendeiner"
+          ]
+        },
+        {
+          "prompt": "Wenn ich ___ Leute sehe, die Sachen auf die Straße werfen, rege ich mich auf.",
+          "hint": "Akkusativ, Plural.",
+          "answer": [
+            "irgendwelche"
+          ]
+        },
+        {
+          "prompt": "Es hat ___ Mann im Hotel angerufen.",
+          "hint": "Nominativ, maskulin.",
+          "answer": [
+            "irgendein"
+          ]
+        },
+        {
+          "prompt": "Er hatte ___ wichtige Information.",
+          "hint": "Akkusativ, feminin.",
+          "answer": [
+            "irgendeine"
+          ]
+        },
+        {
+          "prompt": "Wie findet man die Telefonnummer ___ unbekannten Mannes?",
+          "hint": "Genitiv, maskulin.",
+          "answer": [
+            "irgendeines"
+          ]
+        },
+        {
+          "prompt": "Hast du mit ___ neuen Gast gesprochen?",
+          "hint": "Dativ, maskulin.",
+          "answer": [
+            "irgendeinem"
+          ]
+        }
       ]
     },
     {
@@ -114,28 +479,76 @@
       "title": "Zwei Sätze werden einer.",
       "hint": "Welches Wort mit irgend… fasst die Unsicherheit zusammen?",
       "pairs": [
-        { "q": "Ein Mann hat angerufen, ich weiß nicht, wer.", "a": "Irgendein Mann hat angerufen." },
-        { "q": "Sie ist heute Nacht gekommen, aber ich weiß nicht, wann.", "a": "Sie ist irgendwann heute Nacht gekommen." },
-        { "q": "Er hat Probleme, aber ich weiß nicht genau, welche.", "a": "Er hat irgendwelche Probleme." },
-        { "q": "Sie ist gegangen. Ich weiß nicht, wohin.", "a": "Sie ist irgendwohin gegangen." },
-        { "q": "Als er kam, hat er komisch reagiert. Ich kann nicht erklären, wie.", "a": "Er hat irgendwie komisch reagiert." },
-        { "q": "Das Baby hat Schmerzen, aber es kann nicht sagen, wo.", "a": "Das Baby hat irgendwo Schmerzen." }
+        {
+          "q": "Ein Mann hat angerufen, ich weiß nicht, wer.",
+          "a": "Irgendein Mann hat angerufen."
+        },
+        {
+          "q": "Sie ist heute Nacht gekommen, aber ich weiß nicht, wann.",
+          "a": "Sie ist irgendwann heute Nacht gekommen."
+        },
+        {
+          "q": "Er hat Probleme, aber ich weiß nicht genau, welche.",
+          "a": "Er hat irgendwelche Probleme."
+        },
+        {
+          "q": "Sie ist gegangen. Ich weiß nicht, wohin.",
+          "a": "Sie ist irgendwohin gegangen."
+        },
+        {
+          "q": "Als er kam, hat er komisch reagiert. Ich kann nicht erklären, wie.",
+          "a": "Er hat irgendwie komisch reagiert."
+        },
+        {
+          "q": "Das Baby hat Schmerzen, aber es kann nicht sagen, wo.",
+          "a": "Das Baby hat irgendwo Schmerzen."
+        }
       ]
     },
     {
       "type": "table",
       "title": "Welches irgend-Wort passt?",
       "hint": "Wonach wird gefragt?",
-      "columns": ["fragt nach", "irgend-Wort"],
+      "columns": [
+        "fragt nach",
+        "irgend-Wort"
+      ],
       "placeholder": "irgend…",
       "rows": [
-        { "term": "einer Person (Nominativ)", "answer": ["irgendwer", "irgendjemand"] },
-        { "term": "einer Sache", "answer": ["irgendetwas", "irgendwas"] },
-        { "term": "einem Ort (Position)", "answer": "irgendwo" },
-        { "term": "einer Richtung", "answer": "irgendwohin" },
-        { "term": "einer Herkunft", "answer": "irgendwoher" },
-        { "term": "einem Zeitpunkt", "answer": "irgendwann" },
-        { "term": "der Art und Weise", "answer": "irgendwie" }
+        {
+          "term": "einer Person (Nominativ)",
+          "answer": [
+            "irgendwer",
+            "irgendjemand"
+          ]
+        },
+        {
+          "term": "einer Sache",
+          "answer": [
+            "irgendetwas",
+            "irgendwas"
+          ]
+        },
+        {
+          "term": "einem Ort (Position)",
+          "answer": "irgendwo"
+        },
+        {
+          "term": "einer Richtung",
+          "answer": "irgendwohin"
+        },
+        {
+          "term": "einer Herkunft",
+          "answer": "irgendwoher"
+        },
+        {
+          "term": "einem Zeitpunkt",
+          "answer": "irgendwann"
+        },
+        {
+          "term": "der Art und Weise",
+          "answer": "irgendwie"
+        }
       ]
     }
   ]

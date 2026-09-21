@@ -6,17 +6,39 @@
   "source": "zweiteilige Konnektoren.pdf (Roman Giesing, mit Lösungsschlüssel) · Doppelkonnektoren.pdf (Kapitel 75)",
   "concept": {
     "flow": [
-      { "text": "Teil 1", "variant": "verb" },
-      { "text": "Satzteil A" },
-      { "text": "Teil 2", "variant": "prep" },
-      { "text": "Satzteil B" }
+      {
+        "text": "Teil 1",
+        "variant": "verb"
+      },
+      {
+        "text": "Satzteil A"
+      },
+      {
+        "text": "Teil 2",
+        "variant": "prep"
+      },
+      {
+        "text": "Satzteil B"
+      }
     ],
     "exampleHtml": "Er hat <span class=\"vp-verb\">nicht nur</span> einen guten Job, <span class=\"vp-prep\">sondern auch</span> eine tolle Wohnung.",
     "qa": [
-      { "html": "<strong>sowohl … als auch</strong> — beides gilt, gleichwertig. <em>Ich trinke Kaffee sowohl mit Milch als auch mit Zucker.</em>", "tag": "+ +" },
-      { "html": "<strong>nicht nur … sondern auch</strong> — beides gilt, aber der zweite Teil wird betont. <em>Er trinkt Kaffee nicht nur mit Zucker, sondern auch mit Sahne.</em>", "tag": "+ + betont" },
-      { "html": "<strong>weder … noch</strong> — beides gilt nicht. Achtung: <em>weder…noch</em> ist schon negativ, ein zusätzliches <em>nicht</em> wäre falsch.", "tag": "− −" },
-      { "html": "<strong>entweder … oder</strong> — nur eins von beiden, ein starkes „oder“. <em>Ich trinke Tee entweder mit Zitrone oder mit Milch.</em>", "tag": "a oder b" }
+      {
+        "html": "<strong>sowohl … als auch</strong> — beides gilt, gleichwertig. <em>Ich trinke Kaffee sowohl mit Milch als auch mit Zucker.</em>",
+        "tag": "+ +"
+      },
+      {
+        "html": "<strong>nicht nur … sondern auch</strong> — beides gilt, aber der zweite Teil wird betont. <em>Er trinkt Kaffee nicht nur mit Zucker, sondern auch mit Sahne.</em>",
+        "tag": "+ + betont"
+      },
+      {
+        "html": "<strong>weder … noch</strong> — beides gilt nicht. Achtung: <em>weder…noch</em> ist schon negativ, ein zusätzliches <em>nicht</em> wäre falsch.",
+        "tag": "− −"
+      },
+      {
+        "html": "<strong>entweder … oder</strong> — nur eins von beiden, ein starkes „oder“. <em>Ich trinke Tee entweder mit Zitrone oder mit Milch.</em>",
+        "tag": "a oder b"
+      }
     ],
     "noteHtml": "Drei weitere gehören dazu: <strong>zwar … aber</strong> räumt erst ein und schränkt dann ein (<em>Jan möchte zwar gern reisen, aber er hat Angst vorm Fliegen</em>), <strong>einerseits … andererseits</strong> stellt zwei Seiten nebeneinander, und <strong>je … desto</strong> verbindet zwei Steigerungen — dabei steht nach <em>je</em> ein Nebensatz mit Verb am Ende und nach <em>desto</em> das Verb direkt hinter dem Komparativ: <em>Je länger Lara lernt, desto mehr Spaß macht ihr die Schule.</em>",
     "reference": {
@@ -25,25 +47,81 @@
       "tables": [
         {
           "caption": "Die sieben Paare",
-          "head": ["Konnektor", "Bedeutung", "Beispiel"],
+          "head": [
+            "Konnektor",
+            "Bedeutung",
+            "Beispiel"
+          ],
           "rows": [
-            ["sowohl … als auch", "+ + beides", "Hier kann man sowohl schwimmen als auch klettern."],
-            ["nicht nur … sondern auch", "+ + das 2. betont", "Er hat nicht nur einen guten Job, sondern auch eine tolle Wohnung."],
-            ["weder … noch", "− − beides nicht", "Julia gefällt weder das grüne noch das rote Kleid."],
-            ["entweder … oder", "a oder b", "Wir können entweder ins Kino oder ins Museum gehen."],
-            ["zwar … aber", "Einschränkung", "Jan möchte zwar gern nach Australien reisen, aber er hat Angst vorm Fliegen."],
-            ["einerseits … andererseits", "zwei Seiten", "Einerseits möchte ich studieren, andererseits finde ich auch einen Handwerksberuf interessant."],
-            ["je … desto", "zwei Steigerungen", "Je länger Lara lernt, desto mehr Spaß macht ihr die Schule."]
+            [
+              "sowohl … als auch",
+              "+ + beides",
+              "Hier kann man sowohl schwimmen als auch klettern."
+            ],
+            [
+              "nicht nur … sondern auch",
+              "+ + das 2. betont",
+              "Er hat nicht nur einen guten Job, sondern auch eine tolle Wohnung."
+            ],
+            [
+              "weder … noch",
+              "− − beides nicht",
+              "Julia gefällt weder das grüne noch das rote Kleid."
+            ],
+            [
+              "entweder … oder",
+              "a oder b",
+              "Wir können entweder ins Kino oder ins Museum gehen."
+            ],
+            [
+              "zwar … aber",
+              "Einschränkung",
+              "Jan möchte zwar gern nach Australien reisen, aber er hat Angst vorm Fliegen."
+            ],
+            [
+              "einerseits … andererseits",
+              "zwei Seiten",
+              "Einerseits möchte ich studieren, andererseits finde ich auch einen Handwerksberuf interessant."
+            ],
+            [
+              "je … desto",
+              "zwei Steigerungen",
+              "Je länger Lara lernt, desto mehr Spaß macht ihr die Schule."
+            ]
           ]
         },
         {
           "caption": "je … desto — die Wortstellung",
           "note": "Nach „je“ steht ein Nebensatz (Verb am Ende), nach „desto“ ein Hauptsatz (Verb direkt nach dem Komparativ).",
-          "head": ["Je + Komparativ", "… Verb", "desto + Komparativ", "Verb", "Subjekt"],
+          "head": [
+            "Je + Komparativ",
+            "… Verb",
+            "desto + Komparativ",
+            "Verb",
+            "Subjekt"
+          ],
           "rows": [
-            ["Je mehr Sterne ein Hotel", "hat,", "desto teurer", "ist", "die Übernachtung."],
-            ["Je älter der Käse", "ist,", "desto intensiver", "schmeckt", "er."],
-            ["Je knapper die Erdölvorräte", "werden,", "desto höher", "steigt", "der Preis."]
+            [
+              "Je mehr Sterne ein Hotel",
+              "hat,",
+              "desto teurer",
+              "ist",
+              "die Übernachtung."
+            ],
+            [
+              "Je älter der Käse",
+              "ist,",
+              "desto intensiver",
+              "schmeckt",
+              "er."
+            ],
+            [
+              "Je knapper die Erdölvorräte",
+              "werden,",
+              "desto höher",
+              "steigt",
+              "der Preis."
+            ]
           ]
         }
       ],
@@ -72,41 +150,321 @@
       ]
     }
   },
+  "aktiv": {
+    "listen": [
+      {
+        "text": "Er hat nicht nur einen guten Job, sondern auch eine tolle Wohnung.",
+        "note": "Beides gilt — der zweite Teil wird betont.",
+        "audio": "/audio/grammatik/zweiteilige-konnektoren/er-hat-nicht-nur-einen-guten-job-sondern-auch-eine--ijn4cc.mp3"
+      },
+      {
+        "text": "Ich trinke weder Kaffee noch Tee.",
+        "note": "Beides gilt nicht. Ein zusätzliches nicht wäre falsch.",
+        "audio": "/audio/grammatik/zweiteilige-konnektoren/ich-trinke-weder-kaffee-noch-tee.mp3"
+      },
+      {
+        "text": "Je mehr ich lerne, desto besser verstehe ich.",
+        "note": "je + Komparativ, desto + Komparativ — und das Verb ans Ende.",
+        "audio": "/audio/grammatik/zweiteilige-konnektoren/je-mehr-ich-lerne-desto-besser-verstehe-ich.mp3"
+      }
+    ],
+    "hoeren": {
+      "instruction": "Hör zu und wähle das Konnektorenpaar, das du gehört hast.",
+      "items": [
+        {
+          "text": "Ich trinke weder Kaffee noch Tee.",
+          "choices": [
+            "sowohl … als auch",
+            "weder … noch",
+            "entweder … oder"
+          ],
+          "correct": 1,
+          "audio": "/audio/grammatik/zweiteilige-konnektoren/ich-trinke-weder-kaffee-noch-tee.mp3"
+        },
+        {
+          "text": "Wir fahren entweder nach Rom oder nach Wien.",
+          "choices": [
+            "entweder … oder",
+            "weder … noch",
+            "nicht nur … sondern auch"
+          ],
+          "correct": 0,
+          "audio": "/audio/grammatik/zweiteilige-konnektoren/wir-fahren-entweder-nach-rom-oder-nach-wien.mp3"
+        },
+        {
+          "text": "Sie spricht sowohl Spanisch als auch Französisch.",
+          "choices": [
+            "nicht nur … sondern auch",
+            "sowohl … als auch",
+            "entweder … oder"
+          ],
+          "correct": 1,
+          "audio": "/audio/grammatik/zweiteilige-konnektoren/sie-spricht-sowohl-spanisch-als-auch-franzoesisch.mp3"
+        },
+        {
+          "text": "Er ist nicht nur klug, sondern auch fleißig.",
+          "choices": [
+            "sowohl … als auch",
+            "entweder … oder",
+            "nicht nur … sondern auch"
+          ],
+          "correct": 2,
+          "audio": "/audio/grammatik/zweiteilige-konnektoren/er-ist-nicht-nur-klug-sondern-auch-fleissig.mp3"
+        },
+        {
+          "text": "Je länger ich warte, desto nervöser werde ich.",
+          "choices": [
+            "je … desto",
+            "weder … noch",
+            "zwar … aber"
+          ],
+          "correct": 0,
+          "audio": "/audio/grammatik/zweiteilige-konnektoren/je-laenger-ich-warte-desto-nervoeser-werde-ich.mp3"
+        },
+        {
+          "text": "Das Zimmer ist zwar klein, aber sehr hell.",
+          "choices": [
+            "nicht nur … sondern auch",
+            "zwar … aber",
+            "sowohl … als auch"
+          ],
+          "correct": 1,
+          "audio": "/audio/grammatik/zweiteilige-konnektoren/das-zimmer-ist-zwar-klein-aber-sehr-hell.mp3"
+        }
+      ]
+    },
+    "sprechen": {
+      "rounds": [
+        {
+          "label": "1 · nicht nur … sondern auch",
+          "instruction": "Du hörst zwei Sätze. Verbinde sie mit nicht nur … sondern auch.",
+          "example": {
+            "prompt": "Er hat einen guten Job. Er hat eine tolle Wohnung.",
+            "answer": "Er hat nicht nur einen guten Job, sondern auch eine tolle Wohnung."
+          },
+          "items": [
+            {
+              "prompt": "Sie ist klug. Sie ist fleißig.",
+              "answer": "Sie ist nicht nur klug, sondern auch fleißig.",
+              "audioPrompt": "/audio/grammatik/zweiteilige-konnektoren/sie-ist-klug-sie-ist-fleissig.mp3",
+              "audioAnswer": "/audio/grammatik/zweiteilige-konnektoren/sie-ist-nicht-nur-klug-sondern-auch-fleissig--8wphfh.mp3"
+            },
+            {
+              "prompt": "Das Zimmer ist groß. Das Zimmer ist hell.",
+              "answer": "Das Zimmer ist nicht nur groß, sondern auch hell.",
+              "audioPrompt": "/audio/grammatik/zweiteilige-konnektoren/das-zimmer-ist-gross-das-zimmer-ist-hell.mp3",
+              "audioAnswer": "/audio/grammatik/zweiteilige-konnektoren/das-zimmer-ist-nicht-nur-gross-sondern-auch-hell--8wphfh.mp3"
+            },
+            {
+              "prompt": "Er spricht Deutsch. Er spricht Italienisch.",
+              "answer": "Er spricht nicht nur Deutsch, sondern auch Italienisch.",
+              "audioPrompt": "/audio/grammatik/zweiteilige-konnektoren/er-spricht-deutsch-er-spricht-italienisch.mp3",
+              "audioAnswer": "/audio/grammatik/zweiteilige-konnektoren/er-spricht-nicht-nur-deutsch-sondern-auch-italienisch--8wphfh.mp3"
+            },
+            {
+              "prompt": "Ich mag Tee. Ich mag Kaffee.",
+              "answer": "Ich mag nicht nur Tee, sondern auch Kaffee.",
+              "audioPrompt": "/audio/grammatik/zweiteilige-konnektoren/ich-mag-tee-ich-mag-kaffee.mp3",
+              "audioAnswer": "/audio/grammatik/zweiteilige-konnektoren/ich-mag-nicht-nur-tee-sondern-auch-kaffee--8wphfh.mp3"
+            },
+            {
+              "prompt": "Der Film war lang. Der Film war langweilig.",
+              "answer": "Der Film war nicht nur lang, sondern auch langweilig.",
+              "audioPrompt": "/audio/grammatik/zweiteilige-konnektoren/der-film-war-lang-der-film-war-langweilig.mp3",
+              "audioAnswer": "/audio/grammatik/zweiteilige-konnektoren/der-film-war-nicht-nur-lang-sondern-auch-langweilig--8wphfh.mp3"
+            },
+            {
+              "prompt": "Sie kocht gern. Sie backt gern.",
+              "answer": "Sie kocht nicht nur gern, sondern backt auch gern.",
+              "audioPrompt": "/audio/grammatik/zweiteilige-konnektoren/sie-kocht-gern-sie-backt-gern.mp3",
+              "audioAnswer": "/audio/grammatik/zweiteilige-konnektoren/sie-kocht-nicht-nur-gern-sondern-backt-auch-gern--8wphfh.mp3"
+            }
+          ]
+        },
+        {
+          "label": "2 · weder … noch",
+          "instruction": "Jetzt gilt beides nicht. Sag es mit weder … noch — ohne zusätzliches nicht.",
+          "example": {
+            "prompt": "Ich trinke keinen Kaffee. Ich trinke keinen Tee.",
+            "answer": "Ich trinke weder Kaffee noch Tee."
+          },
+          "items": [
+            {
+              "prompt": "Er trinkt keinen Wein. Er trinkt kein Bier.",
+              "answer": "Er trinkt weder Wein noch Bier.",
+              "audioPrompt": "/audio/grammatik/zweiteilige-konnektoren/er-trinkt-keinen-wein-er-trinkt-kein-bier.mp3",
+              "audioAnswer": "/audio/grammatik/zweiteilige-konnektoren/er-trinkt-weder-wein-noch-bier--8wphfh.mp3"
+            },
+            {
+              "prompt": "Sie hat kein Auto. Sie hat kein Fahrrad.",
+              "answer": "Sie hat weder ein Auto noch ein Fahrrad.",
+              "audioPrompt": "/audio/grammatik/zweiteilige-konnektoren/sie-hat-kein-auto-sie-hat-kein-fahrrad.mp3",
+              "audioAnswer": "/audio/grammatik/zweiteilige-konnektoren/sie-hat-weder-ein-auto-noch-ein-fahrrad--8wphfh.mp3"
+            },
+            {
+              "prompt": "Ich habe keine Zeit. Ich habe kein Geld.",
+              "answer": "Ich habe weder Zeit noch Geld.",
+              "audioPrompt": "/audio/grammatik/zweiteilige-konnektoren/ich-habe-keine-zeit-ich-habe-kein-geld.mp3",
+              "audioAnswer": "/audio/grammatik/zweiteilige-konnektoren/ich-habe-weder-zeit-noch-geld--8wphfh.mp3"
+            },
+            {
+              "prompt": "Das Zimmer hat kein Fenster. Es hat keinen Balkon.",
+              "answer": "Das Zimmer hat weder ein Fenster noch einen Balkon.",
+              "audioPrompt": "/audio/grammatik/zweiteilige-konnektoren/das-zimmer-hat-kein-fenster-es-hat-keinen-balkon.mp3",
+              "audioAnswer": "/audio/grammatik/zweiteilige-konnektoren/das-zimmer-hat-weder-ein-fenster-noch-einen-balkon--8wphfh.mp3"
+            },
+            {
+              "prompt": "Er spricht kein Englisch. Er spricht kein Französisch.",
+              "answer": "Er spricht weder Englisch noch Französisch.",
+              "audioPrompt": "/audio/grammatik/zweiteilige-konnektoren/er-spricht-kein-englisch-er-spricht-kein-franzoesisch.mp3",
+              "audioAnswer": "/audio/grammatik/zweiteilige-konnektoren/er-spricht-weder-englisch-noch-franzoesisch--8wphfh.mp3"
+            },
+            {
+              "prompt": "Wir kennen den Weg nicht. Wir kennen die Stadt nicht.",
+              "answer": "Wir kennen weder den Weg noch die Stadt.",
+              "audioPrompt": "/audio/grammatik/zweiteilige-konnektoren/wir-kennen-den-weg-nicht-wir-kennen-die-stadt-nicht.mp3",
+              "audioAnswer": "/audio/grammatik/zweiteilige-konnektoren/wir-kennen-weder-den-weg-noch-die-stadt--8wphfh.mp3"
+            }
+          ]
+        }
+      ]
+    }
+  },
   "exercises": [
     {
       "type": "story",
       "title": "Lückentext: Verbinden Sie die Sätze.",
       "hint": "Sieben Sätze, sieben Konnektorpaare — jedes kommt genau einmal vor.",
       "segments": [
-        { "text": "1. Jan möchte " },
-        { "blank": 0, "answer": ["zwar"] },
-        { "text": " gern nach Australien reisen, " },
-        { "blank": 1, "answer": ["aber"] },
-        { "text": " er hat Angst vorm Fliegen.\n2. Julia gefällt " },
-        { "blank": 2, "answer": ["weder"] },
-        { "text": " das grüne " },
-        { "blank": 3, "answer": ["noch"] },
-        { "text": " das rote Kleid.\n3. Was wollen wir heute machen? Wir können " },
-        { "blank": 4, "answer": ["entweder"] },
-        { "text": " ins Kino " },
-        { "blank": 5, "answer": ["oder"] },
-        { "text": " ins Museum gehen.\n4. " },
-        { "blank": 6, "answer": ["Je"] },
-        { "text": " länger Lara lernt, " },
-        { "blank": 7, "answer": ["desto"] },
-        { "text": " mehr Spaß macht ihr die Schule.\n5. Michael gefällt es in Berlin. Er hat " },
-        { "blank": 8, "answer": ["nicht nur"] },
-        { "text": " einen guten Job, " },
-        { "blank": 9, "answer": ["sondern auch"] },
-        { "text": " eine tolle Wohnung.\n6. " },
-        { "blank": 10, "answer": ["Einerseits"] },
-        { "text": " möchte ich studieren, " },
-        { "blank": 11, "answer": ["andererseits"] },
-        { "text": " finde ich auch einen Handwerksberuf interessant.\n7. Hier in Portugal kann man " },
-        { "blank": 12, "answer": ["sowohl"] },
-        { "text": " schwimmen " },
-        { "blank": 13, "answer": ["als auch"] },
-        { "text": " klettern." }
+        {
+          "text": "1. Jan möchte "
+        },
+        {
+          "blank": 0,
+          "answer": [
+            "zwar"
+          ]
+        },
+        {
+          "text": " gern nach Australien reisen, "
+        },
+        {
+          "blank": 1,
+          "answer": [
+            "aber"
+          ]
+        },
+        {
+          "text": " er hat Angst vorm Fliegen.\n2. Julia gefällt "
+        },
+        {
+          "blank": 2,
+          "answer": [
+            "weder"
+          ]
+        },
+        {
+          "text": " das grüne "
+        },
+        {
+          "blank": 3,
+          "answer": [
+            "noch"
+          ]
+        },
+        {
+          "text": " das rote Kleid.\n3. Was wollen wir heute machen? Wir können "
+        },
+        {
+          "blank": 4,
+          "answer": [
+            "entweder"
+          ]
+        },
+        {
+          "text": " ins Kino "
+        },
+        {
+          "blank": 5,
+          "answer": [
+            "oder"
+          ]
+        },
+        {
+          "text": " ins Museum gehen.\n4. "
+        },
+        {
+          "blank": 6,
+          "answer": [
+            "Je"
+          ]
+        },
+        {
+          "text": " länger Lara lernt, "
+        },
+        {
+          "blank": 7,
+          "answer": [
+            "desto"
+          ]
+        },
+        {
+          "text": " mehr Spaß macht ihr die Schule.\n5. Michael gefällt es in Berlin. Er hat "
+        },
+        {
+          "blank": 8,
+          "answer": [
+            "nicht nur"
+          ]
+        },
+        {
+          "text": " einen guten Job, "
+        },
+        {
+          "blank": 9,
+          "answer": [
+            "sondern auch"
+          ]
+        },
+        {
+          "text": " eine tolle Wohnung.\n6. "
+        },
+        {
+          "blank": 10,
+          "answer": [
+            "Einerseits"
+          ]
+        },
+        {
+          "text": " möchte ich studieren, "
+        },
+        {
+          "blank": 11,
+          "answer": [
+            "andererseits"
+          ]
+        },
+        {
+          "text": " finde ich auch einen Handwerksberuf interessant.\n7. Hier in Portugal kann man "
+        },
+        {
+          "blank": 12,
+          "answer": [
+            "sowohl"
+          ]
+        },
+        {
+          "text": " schwimmen "
+        },
+        {
+          "blank": 13,
+          "answer": [
+            "als auch"
+          ]
+        },
+        {
+          "text": " klettern."
+        }
       ]
     },
     {
@@ -114,11 +472,26 @@
       "title": "Fernsehen: Was passt zusammen?",
       "hint": "Der erste Teil verrät, welcher zweite Teil folgen muss.",
       "pairs": [
-        { "q": "Im Fernsehen kann man sowohl Filme", "a": "als auch Nachrichten sehen." },
-        { "q": "Es gibt nicht nur gute Serien,", "a": "sondern auch interessante Dokumentationen und Talkshows." },
-        { "q": "Aber ich mag weder Krimis", "a": "noch Science-Fiction-Filme." },
-        { "q": "Ich kann mich beim Fernsehen entweder entspannen", "a": "oder informieren." },
-        { "q": "Je mehr Werbung ein Sender zeigt,", "a": "desto seltener schalte ich ihn ein." }
+        {
+          "q": "Im Fernsehen kann man sowohl Filme",
+          "a": "als auch Nachrichten sehen."
+        },
+        {
+          "q": "Es gibt nicht nur gute Serien,",
+          "a": "sondern auch interessante Dokumentationen und Talkshows."
+        },
+        {
+          "q": "Aber ich mag weder Krimis",
+          "a": "noch Science-Fiction-Filme."
+        },
+        {
+          "q": "Ich kann mich beim Fernsehen entweder entspannen",
+          "a": "oder informieren."
+        },
+        {
+          "q": "Je mehr Werbung ein Sender zeigt,",
+          "a": "desto seltener schalte ich ihn ein."
+        }
       ]
     },
     {
@@ -127,11 +500,41 @@
       "hint": "Das Zeichen in Klammern sagt, welche Bedeutung gemeint ist.",
       "placeholder": "Konnektorpaar",
       "items": [
-        { "prompt": "In der Nähe des Bahnhofs gibt es ___ Hotels als auch kleine Pensionen. (+/+)", "hint": "Beides gilt, gleichwertig.", "answer": ["sowohl"] },
-        { "prompt": "Wir haben noch kein Zimmer gefunden: ___ in einem Hotel noch in einer Pension. (−/−)", "hint": "Beides gilt nicht.", "answer": ["weder"] },
-        { "prompt": "Jetzt ist es nicht nur zu spät, ___ sehr kalt. (+/+, betont)", "hint": "Zweiteiliger Abschluss von „nicht nur“.", "answer": ["sondern auch"] },
-        { "prompt": "Wir müssen ___ im Auto oder unter der Brücke schlafen. (a oder b)", "hint": "Nur eins von beiden.", "answer": ["entweder"] },
-        { "prompt": "Das Hotel war ___ teuer, aber wenigstens warm.", "hint": "Einräumen und einschränken.", "answer": ["zwar"] }
+        {
+          "prompt": "In der Nähe des Bahnhofs gibt es ___ Hotels als auch kleine Pensionen. (+/+)",
+          "hint": "Beides gilt, gleichwertig.",
+          "answer": [
+            "sowohl"
+          ]
+        },
+        {
+          "prompt": "Wir haben noch kein Zimmer gefunden: ___ in einem Hotel noch in einer Pension. (−/−)",
+          "hint": "Beides gilt nicht.",
+          "answer": [
+            "weder"
+          ]
+        },
+        {
+          "prompt": "Jetzt ist es nicht nur zu spät, ___ sehr kalt. (+/+, betont)",
+          "hint": "Zweiteiliger Abschluss von „nicht nur“.",
+          "answer": [
+            "sondern auch"
+          ]
+        },
+        {
+          "prompt": "Wir müssen ___ im Auto oder unter der Brücke schlafen. (a oder b)",
+          "hint": "Nur eins von beiden.",
+          "answer": [
+            "entweder"
+          ]
+        },
+        {
+          "prompt": "Das Hotel war ___ teuer, aber wenigstens warm.",
+          "hint": "Einräumen und einschränken.",
+          "answer": [
+            "zwar"
+          ]
+        }
       ]
     },
     {
@@ -141,20 +544,94 @@
         {
           "id": "zk1",
           "hint": "sowohl … als auch",
-          "correct": ["Heute", "gehen", "wir", "sowohl", "ins", "Restaurant", "als", "auch", "ins", "Kino", "."],
-          "shuffled": ["ins", "wir", "sowohl", "Heute", "Kino", "als", "Restaurant", "gehen", "auch", "ins", "."]
+          "correct": [
+            "Heute",
+            "gehen",
+            "wir",
+            "sowohl",
+            "ins",
+            "Restaurant",
+            "als",
+            "auch",
+            "ins",
+            "Kino",
+            "."
+          ],
+          "shuffled": [
+            "ins",
+            "wir",
+            "sowohl",
+            "Heute",
+            "Kino",
+            "als",
+            "Restaurant",
+            "gehen",
+            "auch",
+            "ins",
+            "."
+          ]
         },
         {
           "id": "zk2",
           "hint": "nicht nur … sondern auch",
-          "correct": ["Elena", "ist", "nicht", "nur", "schön", ",", "sondern", "auch", "intelligent", "."],
-          "shuffled": ["schön", "nur", "Elena", "intelligent", "sondern", "nicht", ",", "auch", "ist", "."]
+          "correct": [
+            "Elena",
+            "ist",
+            "nicht",
+            "nur",
+            "schön",
+            ",",
+            "sondern",
+            "auch",
+            "intelligent",
+            "."
+          ],
+          "shuffled": [
+            "schön",
+            "nur",
+            "Elena",
+            "intelligent",
+            "sondern",
+            "nicht",
+            ",",
+            "auch",
+            "ist",
+            "."
+          ]
         },
         {
           "id": "zk3",
           "hint": "je … desto — Verb am Ende des ersten Teils.",
-          "correct": ["Je", "mehr", "Sterne", "ein", "Hotel", "hat", ",", "desto", "teurer", "ist", "die", "Übernachtung", "."],
-          "shuffled": ["hat", "Je", "die", "Sterne", "desto", "ein", "teurer", "mehr", ",", "Übernachtung", "ist", "Hotel", "."]
+          "correct": [
+            "Je",
+            "mehr",
+            "Sterne",
+            "ein",
+            "Hotel",
+            "hat",
+            ",",
+            "desto",
+            "teurer",
+            "ist",
+            "die",
+            "Übernachtung",
+            "."
+          ],
+          "shuffled": [
+            "hat",
+            "Je",
+            "die",
+            "Sterne",
+            "desto",
+            "ein",
+            "teurer",
+            "mehr",
+            ",",
+            "Übernachtung",
+            "ist",
+            "Hotel",
+            "."
+          ]
         }
       ]
     }

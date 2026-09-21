@@ -6,17 +6,39 @@
   "source": "Fragewörter.pdf (Kapitel 9, Übungen 3–8) · Wo steht was? — Wörter im Satz 1.pdf",
   "concept": {
     "flow": [
-      { "text": "W-Wort", "variant": "verb" },
-      { "text": "Verb · Position 2", "variant": "prep" },
-      { "text": "Subjekt" },
-      { "text": "Rest?" }
+      {
+        "text": "W-Wort",
+        "variant": "verb"
+      },
+      {
+        "text": "Verb · Position 2",
+        "variant": "prep"
+      },
+      {
+        "text": "Subjekt"
+      },
+      {
+        "text": "Rest?"
+      }
     ],
     "exampleHtml": "<span class=\"vp-verb\">Wo</span> <span class=\"vp-prep\">wohnen</span> Sie? — <span class=\"vp-verb\">Wie</span> <span class=\"vp-prep\">heißt</span> dein Sohn?",
     "qa": [
-      { "html": "<strong>Position 1</strong> gehört dem Fragewort, <strong>Position 2</strong> immer dem konjugierten Verb.", "tag": "Verb = 2" },
-      { "html": "Das <strong>Subjekt</strong> steht direkt rechts vom Verb: <em>Wann essen Ilse und Heiko?</em>", "tag": "Position 3" },
-      { "html": "<strong>Wer / wen / wem</strong> fragen nach Personen und verändern sich nach Kasus — <em>Wer kommt? Wen siehst du? Wem gehört das?</em>", "tag": "Personen" },
-      { "html": "Nach einer Präposition bleibt die Präposition am Fragewort kleben: <em>Mit wem? Von wem? Für wen?</em>", "tag": "Präposition" }
+      {
+        "html": "<strong>Position 1</strong> gehört dem Fragewort, <strong>Position 2</strong> immer dem konjugierten Verb.",
+        "tag": "Verb = 2"
+      },
+      {
+        "html": "Das <strong>Subjekt</strong> steht direkt rechts vom Verb: <em>Wann essen Ilse und Heiko?</em>",
+        "tag": "Position 3"
+      },
+      {
+        "html": "<strong>Wer / wen / wem</strong> fragen nach Personen und verändern sich nach Kasus — <em>Wer kommt? Wen siehst du? Wem gehört das?</em>",
+        "tag": "Personen"
+      },
+      {
+        "html": "Nach einer Präposition bleibt die Präposition am Fragewort kleben: <em>Mit wem? Von wem? Für wen?</em>",
+        "tag": "Präposition"
+      }
     ],
     "noteHtml": "Zwei Fragewörter werden gern verwechselt: <strong>wo</strong> fragt nach dem Ort (<em>Wo bist du? — Im Wohnzimmer.</em>), <strong>wohin</strong> nach der Richtung (<em>Wohin gehst du? — Ins Kino.</em>) und <strong>woher</strong> nach der Herkunft (<em>Woher kommst du? — Aus Passau.</em>).",
     "reference": {
@@ -25,19 +47,67 @@
       "tables": [
         {
           "caption": "Die wichtigsten Fragewörter",
-          "head": ["Fragewort", "fragt nach", "Beispielantwort"],
+          "head": [
+            "Fragewort",
+            "fragt nach",
+            "Beispielantwort"
+          ],
           "rows": [
-            ["wer", "Person (Nominativ)", "Der Lehrer."],
-            ["wen", "Person (Akkusativ)", "Den Lehrer."],
-            ["wem", "Person (Dativ)", "Dem Lehrer."],
-            ["was", "Sache", "Das ist Obst."],
-            ["wo", "Ort", "In der Schönhauser Straße."],
-            ["wohin", "Richtung", "Ins Kino."],
-            ["woher", "Herkunft", "Aus Ulm."],
-            ["wann", "Zeitpunkt", "Um halb acht."],
-            ["wie", "Art und Weise", "Mit dem Zug."],
-            ["wie viel / wie viele", "Menge", "Ein Kilo 3,50 Euro. / Fünf."],
-            ["warum", "Grund", "Weil die Züge Verspätung haben."]
+            [
+              "wer",
+              "Person (Nominativ)",
+              "Der Lehrer."
+            ],
+            [
+              "wen",
+              "Person (Akkusativ)",
+              "Den Lehrer."
+            ],
+            [
+              "wem",
+              "Person (Dativ)",
+              "Dem Lehrer."
+            ],
+            [
+              "was",
+              "Sache",
+              "Das ist Obst."
+            ],
+            [
+              "wo",
+              "Ort",
+              "In der Schönhauser Straße."
+            ],
+            [
+              "wohin",
+              "Richtung",
+              "Ins Kino."
+            ],
+            [
+              "woher",
+              "Herkunft",
+              "Aus Ulm."
+            ],
+            [
+              "wann",
+              "Zeitpunkt",
+              "Um halb acht."
+            ],
+            [
+              "wie",
+              "Art und Weise",
+              "Mit dem Zug."
+            ],
+            [
+              "wie viel / wie viele",
+              "Menge",
+              "Ein Kilo 3,50 Euro. / Fünf."
+            ],
+            [
+              "warum",
+              "Grund",
+              "Weil die Züge Verspätung haben."
+            ]
           ]
         }
       ],
@@ -65,6 +135,186 @@
       ]
     }
   },
+  "aktiv": {
+    "listen": [
+      {
+        "text": "Wo wohnen Sie?",
+        "note": "W-Wort auf Position 1, Verb auf Position 2, Subjekt dahinter.",
+        "audio": "/audio/grammatik/w-fragen/wo-wohnen-sie.mp3"
+      },
+      {
+        "text": "Wem gehört das Fahrrad?",
+        "note": "wer, wen, wem ändern sich nach Kasus.",
+        "audio": "/audio/grammatik/w-fragen/wem-gehoert-das-fahrrad.mp3"
+      },
+      {
+        "text": "Mit wem fährst du?",
+        "note": "Nach einer Präposition bleibt sie am Fragewort kleben.",
+        "audio": "/audio/grammatik/w-fragen/mit-wem-faehrst-du.mp3"
+      }
+    ],
+    "hoeren": {
+      "instruction": "Hör zu und wähle das Fragewort, das du gehört hast. Der Unterschied ist nur eine Silbe.",
+      "items": [
+        {
+          "text": "Wem gehört das Fahrrad?",
+          "choices": [
+            "Wer",
+            "Wen",
+            "Wem"
+          ],
+          "correct": 2,
+          "audio": "/audio/grammatik/w-fragen/wem-gehoert-das-fahrrad.mp3"
+        },
+        {
+          "text": "Wen hast du gestern getroffen?",
+          "choices": [
+            "Wer",
+            "Wen",
+            "Wem"
+          ],
+          "correct": 1,
+          "audio": "/audio/grammatik/w-fragen/wen-hast-du-gestern-getroffen.mp3"
+        },
+        {
+          "text": "Wer kommt heute Abend?",
+          "choices": [
+            "Wer",
+            "Wen",
+            "Wem"
+          ],
+          "correct": 0,
+          "audio": "/audio/grammatik/w-fragen/wer-kommt-heute-abend.mp3"
+        },
+        {
+          "text": "Woher kommen Sie?",
+          "choices": [
+            "Wo",
+            "Wohin",
+            "Woher"
+          ],
+          "correct": 2,
+          "audio": "/audio/grammatik/w-fragen/woher-kommen-sie.mp3"
+        },
+        {
+          "text": "Wohin fährt der Zug?",
+          "choices": [
+            "Wo",
+            "Wohin",
+            "Woher"
+          ],
+          "correct": 1,
+          "audio": "/audio/grammatik/w-fragen/wohin-faehrt-der-zug.mp3"
+        },
+        {
+          "text": "Woran denkst du gerade?",
+          "choices": [
+            "Woran",
+            "Worauf",
+            "Wovon"
+          ],
+          "correct": 0,
+          "audio": "/audio/grammatik/w-fragen/woran-denkst-du-gerade.mp3"
+        }
+      ]
+    },
+    "sprechen": {
+      "rounds": [
+        {
+          "label": "1 · Antwort → Frage",
+          "instruction": "Du hörst eine Aussage. Frag nach dem markierten Teil — mit dem passenden W-Wort.",
+          "example": {
+            "prompt": "Er wohnt in Berlin.",
+            "answer": "Wo wohnt er?"
+          },
+          "items": [
+            {
+              "prompt": "Sie heißt Anna.",
+              "answer": "Wie heißt sie?",
+              "audioPrompt": "/audio/grammatik/w-fragen/sie-heisst-anna.mp3",
+              "audioAnswer": "/audio/grammatik/w-fragen/wie-heisst-sie--8wphfh.mp3"
+            },
+            {
+              "prompt": "Der Zug kommt um acht.",
+              "answer": "Wann kommt der Zug?",
+              "audioPrompt": "/audio/grammatik/w-fragen/der-zug-kommt-um-acht.mp3",
+              "audioAnswer": "/audio/grammatik/w-fragen/wann-kommt-der-zug--8wphfh.mp3"
+            },
+            {
+              "prompt": "Das Buch kostet zehn Euro.",
+              "answer": "Wie viel kostet das Buch?",
+              "audioPrompt": "/audio/grammatik/w-fragen/das-buch-kostet-zehn-euro.mp3",
+              "audioAnswer": "/audio/grammatik/w-fragen/wie-viel-kostet-das-buch--8wphfh.mp3"
+            },
+            {
+              "prompt": "Sie fährt nach Wien.",
+              "answer": "Wohin fährt sie?",
+              "audioPrompt": "/audio/grammatik/w-fragen/sie-faehrt-nach-wien.mp3",
+              "audioAnswer": "/audio/grammatik/w-fragen/wohin-faehrt-sie--8wphfh.mp3"
+            },
+            {
+              "prompt": "Das ist mein Bruder.",
+              "answer": "Wer ist das?",
+              "audioPrompt": "/audio/grammatik/w-fragen/das-ist-mein-bruder.mp3",
+              "audioAnswer": "/audio/grammatik/w-fragen/wer-ist-das--8wphfh.mp3"
+            },
+            {
+              "prompt": "Er arbeitet in einer Bank.",
+              "answer": "Wo arbeitet er?",
+              "audioPrompt": "/audio/grammatik/w-fragen/er-arbeitet-in-einer-bank.mp3",
+              "audioAnswer": "/audio/grammatik/w-fragen/wo-arbeitet-er--8wphfh.mp3"
+            }
+          ]
+        },
+        {
+          "label": "2 · Präposition + Fragewort",
+          "instruction": "Du hörst einen Satz mit Präposition. Frag danach — die Präposition bleibt vorn.",
+          "example": {
+            "prompt": "Ich fahre mit Anna.",
+            "answer": "Mit wem fährst du?"
+          },
+          "items": [
+            {
+              "prompt": "Ich warte auf meinen Bruder.",
+              "answer": "Auf wen wartest du?",
+              "audioPrompt": "/audio/grammatik/w-fragen/ich-warte-auf-meinen-bruder.mp3",
+              "audioAnswer": "/audio/grammatik/w-fragen/auf-wen-wartest-du--8wphfh.mp3"
+            },
+            {
+              "prompt": "Das Geschenk ist für Oma.",
+              "answer": "Für wen ist das Geschenk?",
+              "audioPrompt": "/audio/grammatik/w-fragen/das-geschenk-ist-fuer-oma.mp3",
+              "audioAnswer": "/audio/grammatik/w-fragen/fuer-wen-ist-das-geschenk--8wphfh.mp3"
+            },
+            {
+              "prompt": "Ich komme aus Polen.",
+              "answer": "Woher kommst du?",
+              "audioPrompt": "/audio/grammatik/w-fragen/ich-komme-aus-polen.mp3",
+              "audioAnswer": "/audio/grammatik/w-fragen/woher-kommst-du--8wphfh.mp3"
+            },
+            {
+              "prompt": "Der Schlüssel gehört meinem Nachbarn.",
+              "answer": "Wem gehört der Schlüssel?",
+              "audioPrompt": "/audio/grammatik/w-fragen/der-schluessel-gehoert-meinem-nachbarn.mp3",
+              "audioAnswer": "/audio/grammatik/w-fragen/wem-gehoert-der-schluessel--8wphfh.mp3"
+            },
+            {
+              "prompt": "Ich denke an den Urlaub.",
+              "answer": "Woran denkst du?",
+              "audioPrompt": "/audio/grammatik/w-fragen/ich-denke-an-den-urlaub.mp3",
+              "audioAnswer": "/audio/grammatik/w-fragen/woran-denkst-du--8wphfh.mp3"
+            },
+            {
+              "prompt": "Ich spreche über die Arbeit.",
+              "answer": "Worüber sprichst du?",
+              "audioPrompt": "/audio/grammatik/w-fragen/ich-spreche-ueber-die-arbeit.mp3",
+              "audioAnswer": "/audio/grammatik/w-fragen/worueber-sprichst-du--8wphfh.mp3"
+            }
+          ]
+        }
+      ]
+    }
+  },
   "exercises": [
     {
       "type": "fill",
@@ -72,13 +322,59 @@
       "hint": "Die Antwort verrät, wonach gefragt wird.",
       "placeholder": "Fragewort",
       "items": [
-        { "prompt": "___ ist das? — Das ist Obst.", "hint": "Sache", "answer": ["Was"] },
-        { "prompt": "___ kostet das? — Ein Kilo 3,50 Euro.", "hint": "Preis", "answer": ["Was", "Wie viel"] },
-        { "prompt": "___ Kinder haben Sie? — Fünf.", "hint": "Menge", "answer": ["Wie viele", "Wieviele"] },
-        { "prompt": "___ kommt heute? — Dennis.", "hint": "Person im Nominativ", "answer": ["Wer"] },
-        { "prompt": "Um wie viel ___ kommt er? — Um halb acht.", "hint": "Ein Nomen, kein Fragewort.", "answer": ["Uhr"] },
-        { "prompt": "___ beginnt der Film? — Um acht.", "hint": "Zeitpunkt", "answer": ["Wann"] },
-        { "prompt": "___ kommt sie heute später? — Weil die Züge Verspätung haben.", "hint": "Grund", "answer": ["Warum", "Wieso", "Weshalb"] }
+        {
+          "prompt": "___ ist das? — Das ist Obst.",
+          "hint": "Sache",
+          "answer": [
+            "Was"
+          ]
+        },
+        {
+          "prompt": "___ kostet das? — Ein Kilo 3,50 Euro.",
+          "hint": "Preis",
+          "answer": [
+            "Was",
+            "Wie viel"
+          ]
+        },
+        {
+          "prompt": "___ Kinder haben Sie? — Fünf.",
+          "hint": "Menge",
+          "answer": [
+            "Wie viele",
+            "Wieviele"
+          ]
+        },
+        {
+          "prompt": "___ kommt heute? — Dennis.",
+          "hint": "Person im Nominativ",
+          "answer": [
+            "Wer"
+          ]
+        },
+        {
+          "prompt": "Um wie viel ___ kommt er? — Um halb acht.",
+          "hint": "Ein Nomen, kein Fragewort.",
+          "answer": [
+            "Uhr"
+          ]
+        },
+        {
+          "prompt": "___ beginnt der Film? — Um acht.",
+          "hint": "Zeitpunkt",
+          "answer": [
+            "Wann"
+          ]
+        },
+        {
+          "prompt": "___ kommt sie heute später? — Weil die Züge Verspätung haben.",
+          "hint": "Grund",
+          "answer": [
+            "Warum",
+            "Wieso",
+            "Weshalb"
+          ]
+        }
       ]
     },
     {
@@ -86,17 +382,54 @@
       "title": "Lückentext: Zwei Leute lernen sich kennen.",
       "hint": "Ergänzen Sie die Fragewörter im Dialog.",
       "segments": [
-        { "text": "Rudi: Guten Tag, mein Name ist Schmidt, Rudi Schmidt. Und " },
-        { "blank": 0, "answer": ["wie"] },
-        { "text": " heißen Sie?\nGisela: Gisela Baumann. Ich komme aus Passau, und " },
-        { "blank": 1, "answer": ["woher"] },
-        { "text": " kommen Sie?\nRudi: Ich komme aus Ulm, aber jetzt wohne ich in München. Und Sie? " },
-        { "blank": 2, "answer": ["Wo"] },
-        { "text": " wohnen Sie?\nGisela: Auch in München.\nRudi: Und " },
-        { "blank": 3, "answer": ["wer"] },
-        { "text": " ist das?\nGisela: Das ist Daniel, mein Sohn.\nRudi: " },
-        { "blank": 4, "answer": ["Wie"] },
-        { "text": " alt ist er?\nGisela: 5 Jahre." }
+        {
+          "text": "Rudi: Guten Tag, mein Name ist Schmidt, Rudi Schmidt. Und "
+        },
+        {
+          "blank": 0,
+          "answer": [
+            "wie"
+          ]
+        },
+        {
+          "text": " heißen Sie?\nGisela: Gisela Baumann. Ich komme aus Passau, und "
+        },
+        {
+          "blank": 1,
+          "answer": [
+            "woher"
+          ]
+        },
+        {
+          "text": " kommen Sie?\nRudi: Ich komme aus Ulm, aber jetzt wohne ich in München. Und Sie? "
+        },
+        {
+          "blank": 2,
+          "answer": [
+            "Wo"
+          ]
+        },
+        {
+          "text": " wohnen Sie?\nGisela: Auch in München.\nRudi: Und "
+        },
+        {
+          "blank": 3,
+          "answer": [
+            "wer"
+          ]
+        },
+        {
+          "text": " ist das?\nGisela: Das ist Daniel, mein Sohn.\nRudi: "
+        },
+        {
+          "blank": 4,
+          "answer": [
+            "Wie"
+          ]
+        },
+        {
+          "text": " alt ist er?\nGisela: 5 Jahre."
+        }
       ]
     },
     {
@@ -104,28 +437,70 @@
       "title": "Frage und Antwort zusammenbringen.",
       "hint": "Achten Sie auf den Kasus im Fragewort.",
       "pairs": [
-        { "q": "Wer kommt heute?", "a": "Der Lehrer." },
-        { "q": "Wen hast du gestern besucht?", "a": "Den Lehrer." },
-        { "q": "Wem gehört die Tasche?", "a": "Dem Lehrer." },
-        { "q": "Mit wem gehst du ins Theater?", "a": "Mit dem Lehrer." },
-        { "q": "Warum bist du nicht gekommen?", "a": "Ich hatte keine Zeit." },
-        { "q": "Wohin fahren Sie in Urlaub?", "a": "Wahrscheinlich wieder in die Alpen." }
+        {
+          "q": "Wer kommt heute?",
+          "a": "Der Lehrer."
+        },
+        {
+          "q": "Wen hast du gestern besucht?",
+          "a": "Den Lehrer."
+        },
+        {
+          "q": "Wem gehört die Tasche?",
+          "a": "Dem Lehrer."
+        },
+        {
+          "q": "Mit wem gehst du ins Theater?",
+          "a": "Mit dem Lehrer."
+        },
+        {
+          "q": "Warum bist du nicht gekommen?",
+          "a": "Ich hatte keine Zeit."
+        },
+        {
+          "q": "Wohin fahren Sie in Urlaub?",
+          "a": "Wahrscheinlich wieder in die Alpen."
+        }
       ]
     },
     {
       "type": "table",
       "title": "wo, wohin oder woher?",
       "hint": "Die Antwort steht links.",
-      "columns": ["Antwort", "Fragewort"],
+      "columns": [
+        "Antwort",
+        "Fragewort"
+      ],
       "placeholder": "wo / wohin / woher",
       "rows": [
-        { "term": "Im Wohnzimmer.", "answer": "wo" },
-        { "term": "Ins Kino.", "answer": "wohin" },
-        { "term": "Aus Passau.", "answer": "woher" },
-        { "term": "In die Schule.", "answer": "wohin" },
-        { "term": "Am Meer.", "answer": "wo" },
-        { "term": "Vom Fußballplatz.", "answer": "woher" },
-        { "term": "In der Küche.", "answer": "wo" }
+        {
+          "term": "Im Wohnzimmer.",
+          "answer": "wo"
+        },
+        {
+          "term": "Ins Kino.",
+          "answer": "wohin"
+        },
+        {
+          "term": "Aus Passau.",
+          "answer": "woher"
+        },
+        {
+          "term": "In die Schule.",
+          "answer": "wohin"
+        },
+        {
+          "term": "Am Meer.",
+          "answer": "wo"
+        },
+        {
+          "term": "Vom Fußballplatz.",
+          "answer": "woher"
+        },
+        {
+          "term": "In der Küche.",
+          "answer": "wo"
+        }
       ]
     },
     {
@@ -135,20 +510,62 @@
         {
           "id": "wf1",
           "hint": "Fragewort, Verb, Subjekt.",
-          "correct": ["Wo", "wohnen", "Sie", "jetzt", "?"],
-          "shuffled": ["Sie", "Wo", "?", "wohnen", "jetzt"]
+          "correct": [
+            "Wo",
+            "wohnen",
+            "Sie",
+            "jetzt",
+            "?"
+          ],
+          "shuffled": [
+            "Sie",
+            "Wo",
+            "?",
+            "wohnen",
+            "jetzt"
+          ]
         },
         {
           "id": "wf2",
           "hint": "Nach der Uhrzeit fragen.",
-          "correct": ["Wann", "beginnt", "der", "Film", "heute", "?"],
-          "shuffled": ["der", "heute", "beginnt", "Wann", "?", "Film"]
+          "correct": [
+            "Wann",
+            "beginnt",
+            "der",
+            "Film",
+            "heute",
+            "?"
+          ],
+          "shuffled": [
+            "der",
+            "heute",
+            "beginnt",
+            "Wann",
+            "?",
+            "Film"
+          ]
         },
         {
           "id": "wf3",
           "hint": "Die Präposition bleibt beim Fragewort.",
-          "correct": ["Mit", "wem", "fahrt", "ihr", "nach", "Berlin", "?"],
-          "shuffled": ["wem", "nach", "Mit", "ihr", "Berlin", "fahrt", "?"]
+          "correct": [
+            "Mit",
+            "wem",
+            "fahrt",
+            "ihr",
+            "nach",
+            "Berlin",
+            "?"
+          ],
+          "shuffled": [
+            "wem",
+            "nach",
+            "Mit",
+            "ihr",
+            "Berlin",
+            "fahrt",
+            "?"
+          ]
         }
       ]
     }

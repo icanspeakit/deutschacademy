@@ -40,27 +40,42 @@
  * halfway through.
  */
 
+import { onLangChange } from "./i18n.js";
+
 const CURSOR_SVG =
   '<svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true">' +
   '<path d="M5.5 2.2 5.5 20.4 10.1 16.1 13.1 22.2 16.1 20.7 13.1 14.7 19.2 14.7z" ' +
   'fill="#0f172a" stroke="#fff" stroke-width="1.5" stroke-linejoin="round"/></svg>';
 
+// Coach copy is given as i18n keys. The tour paints from whatever dictionary is
+// current at play() time — see `dict` below — and falls back to the key itself, so a
+// caller that still passes plain German sentences keeps working unchanged.
+// Seeded with the German so a tour that somehow plays before /i18n/de.json has landed
+// shows a sentence rather than the key. Keep in sync with public/i18n/de.json.
+let dict = {
+  "intro.rule.title": "Die Regel bleibt neben dir",
+  "intro.rule.text": "Erklärung und Übungen nebeneinander — statt einer Erklärung, an der du einmal vorbeiscrollst.",
+  "intro.toggle.title": "Hier ein- und ausblenden",
+  "intro.toggle.text": "Über diesen Schalter. Deine Wahl wird gemerkt, auch für die nächste Übung.",
+  "intro.ruleCompact.title": "Das ist die Regel",
+  "intro.ruleCompact.text": "Sie ist eingeklappt, damit die Übungen sofort beginnen — sie geht nicht verloren.",
+  "intro.toggleCompact.text": "Ein Tippen zeigt sie ganz, ein zweites klappt sie wieder ein. Deine Wahl wird gemerkt.",
+};
+onLangChange((_code, d) => { dict = d; });
+const say = (k) => dict[k] ?? k;
+
 // Two beats: what the panel is, then where the control for it lives. The second
 // beat matters — the first one lights a panel whose toggle is still in the dark.
 const COACH = [
-  ["Die Regel bleibt neben dir",
-   "Erklärung und Übungen nebeneinander — statt einer Erklärung, an der du einmal vorbeiscrollst."],
-  ["Hier ein- und ausblenden",
-   "Über diesen Schalter. Deine Wahl wird gemerkt, auch für die nächste Übung."],
+  ["intro.rule.title", "intro.rule.text"],
+  ["intro.toggle.title", "intro.toggle.text"],
 ];
 
 // Two beats, matching the two the panel itself plays: what this is, then where the
 // switch for it lives.
 const COACH_COMPACT = [
-  ["Das ist die Regel",
-   "Sie ist eingeklappt, damit die Übungen sofort beginnen — sie geht nicht verloren."],
-  ["Hier ein- und ausblenden",
-   "Ein Tippen zeigt sie ganz, ein zweites klappt sie wieder ein. Deine Wahl wird gemerkt."],
+  ["intro.ruleCompact.title", "intro.ruleCompact.text"],
+  ["intro.toggle.title", "intro.toggleCompact.text"],
 ];
 
 export function createRuleIntro({
@@ -138,8 +153,8 @@ export function createRuleIntro({
   // Beside a tall target (the panel), below a short one (the toggle).
   function showCoach(step, r, below) {
     const gap = 20;
-    coach.querySelector(".ri-coach-title").textContent = script[step][0];
-    coach.querySelector(".ri-coach-text").textContent = script[step][1];
+    coach.querySelector(".ri-coach-title").textContent = say(script[step][0]);
+    coach.querySelector(".ri-coach-text").textContent = say(script[step][1]);
     // The card is narrower than 300px on a small phone, so ask it rather than
     // assume — every clamp below is in terms of its real width.
     const w = coach.offsetWidth;

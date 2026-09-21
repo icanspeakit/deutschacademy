@@ -21,7 +21,7 @@ const first = saetze[0];
   <PracticeHeader title="DTZ-Übungssatz" />
 
   <main class="practice-main practice-main--wide practice-main--trainer" id="dtz-root">
-    <a href="/pruefungen/dtz" class="vp-back-link">← Zurück zur DTZ-Übersicht</a>
+    <a href="/pruefungen/dtz" class="vp-back-link" data-i18n="exam.backToDtz">← Zurück zur DTZ-Übersicht</a>
 
     <div class="practice-hero">
       <p class="eyebrow">Prüfung simulieren</p>
@@ -48,7 +48,7 @@ const first = saetze[0];
     <div class="dtz-body" data-dtz-body></div>
     <div class="dtz-summary" data-dtz-summary></div>
 
-    <p class="format-note">{first.meta.sourceNote}</p>
+    <p class="format-note" data-i18n="dtzSet.sourceNote">{first.meta.sourceNote}</p>
   </main>
 
   <script type="application/json" id="dtz-data" set:html={JSON.stringify(saetze)}></script>

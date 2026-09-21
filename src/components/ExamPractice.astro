@@ -14,62 +14,89 @@ interface Props {
   heading: string;
   intro: string;
   tools: Array<"artikel" | "grammatik" | "wortschatz" | "sprechen" | "lesen">;
+  /** i18n keys for the two strings above; the German props stay the fallback. */
+  headingKey?: string;
+  introKey?: string;
 }
-const { heading, intro, tools } = Astro.props;
+const { heading, intro, tools, headingKey = "exam.practice.heading", introKey } = Astro.props;
 
 const grammarQuestionCount = grammatik.reduce((sum, t) => sum + t.questions.length, 0);
 const readingQuestionCount = lesen.groups.reduce((sum, g) => sum + g.questions.length, 0);
 
+// Deliberately not src/lib/catalog.js's `tools`: two of these five point somewhere
+// else (the DTZ picture task rather than the speaking hub, Lesen & Schreiben rather
+// than Leseverstehen) and count different things, so they carry their own copy — and,
+// since this page has five translations, their own keys.
 const catalog = {
   artikel: {
     href: "/uebungen/artikel-trainer",
     icon: "target",
     title: "der/die/das-Trainer",
+    titleKey: "tool.artikel.title",
     desc: "Schnelles Artikel-Training mit sofortigem Feedback.",
+    descKey: "exam.tool.artikel.desc",
     count: `${artikel.length} Nomen`,
+    countKey: "tool.artikel.count",
+    countVars: { n: artikel.length },
   },
   grammatik: {
     href: "/uebungen/grammatik",
     icon: "book",
     title: "Grammatik",
+    titleKey: "tool.grammatik.title",
     desc: "Themen nach Niveau: Akkusativ, Dativ, Passiv, Konjunktiv II und mehr.",
+    descKey: "exam.tool.grammatik.desc",
     count: `${grammatik.length} Themen · ${grammarQuestionCount} Fragen`,
+    countKey: "exam.tool.grammatik.count",
+    countVars: { n: grammatik.length, q: grammarQuestionCount },
   },
   wortschatz: {
     href: "/uebungen/wortschatz",
     icon: "folder",
     title: "Wortschatz & Redemittel",
+    titleKey: "tool.wortschatz.title",
     desc: "Karteikarten mit nützlichen Redemitteln und Alltagsvokabeln.",
+    descKey: "exam.tool.wortschatz.desc",
     count: `${wortschatz.length} Karten`,
+    countKey: "tool.wortschatz.count",
+    countVars: { n: wortschatz.length },
   },
   sprechen: {
     href: "/uebungen/sprechen/dtz-bildbeschreibung",
     icon: "mic",
     title: "Sprechen: Bildbeschreibung",
+    titleKey: "exam.tool.sprechen.title",
     desc: "Echte DTZ-Prüferfragen zur Bildbeschreibung, mit 90-Sekunden-Timer.",
+    descKey: "exam.tool.sprechen.desc",
     count: `${sprechen.length} Bilder`,
+    countKey: "exam.tool.sprechen.count",
+    countVars: { n: sprechen.length },
   },
   lesen: {
     href: "/uebungen/lesen-schreiben",
     icon: "pencil",
     title: "Lesen & Schreiben",
+    titleKey: "lesen.hero.title.plain",
     desc: "Vollständige DTZ-Leseverstehen-Simulation mit Lösungen, plus Schreibaufgaben.",
+    descKey: "exam.tool.lesen.desc",
     count: `${readingQuestionCount} Leseaufgaben`,
+    countKey: "exam.tool.lesen.count",
+    countVars: { n: readingQuestionCount },
   },
 };
 ---
 <section class="exam-practice">
-  <h2>{heading}</h2>
-  <p>{intro}</p>
+  <h2 data-i18n={headingKey}>{heading}</h2>
+  <p data-i18n={introKey}>{intro}</p>
   <div class="tool-grid">
     {tools.map((key) => {
       const t = catalog[key];
       return (
         <a class="tool-card" href={t.href}>
           <div class="tool-card-icon"><Icon name={t.icon} /></div>
-          <h3>{t.title}</h3>
-          <p>{t.desc}</p>
-          <span class="tool-card-count">{t.count}</span>
+          <h3 data-i18n={t.titleKey}>{t.title}</h3>
+          <p data-i18n={t.descKey}>{t.desc}</p>
+          <span class="tool-card-count" data-i18n={t.countKey} data-i18n-vars={JSON.stringify(t.countVars)}>{t.count}</span>
         </a>
       );
     })}

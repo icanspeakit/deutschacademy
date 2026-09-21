@@ -9,8 +9,7 @@
 // from real localStorage activity via src/lib/progress.js) still lives behind the
 // "Mein Fortschritt" toggle.
 import Layout from "../../layouts/Layout.astro";
-import LanguageSwitcher from "../../components/LanguageSwitcher.astro";
-import ThemeToggle from "../../components/ThemeToggle.astro";
+import PracticeHeader from "../../components/PracticeHeader.astro";
 import PracticePicker from "../../components/PracticePicker.astro";
 import Icon from "../../components/Icon.astro";
 import "../../styles/practice.css";
@@ -25,18 +24,7 @@ const workspaceCount = grammarWorkspaceLevels.reduce((n, row) => n + row.topics.
 ---
 <Layout title="Übungen – DeutschAcademy">
   <div class="uv">
-    <nav class="uv-nav">
-      <div class="uv-nav-row">
-        <a href="/" class="uv-brand"><img src="/assets/logo.png" alt="DeutschAcademy" /></a>
-        <div class="uv-nav-links">
-          <a href="/uebungen" data-i18n="nav.exercises">Übungen</a>
-          <a href="/pruefungen" data-i18n="nav.exams">Prüfungen</a>
-        </div>
-        <LanguageSwitcher />
-        <ThemeToggle />
-        <a href="/uebungen" class="uv-btn uv-btn--primary" data-i18n="nav.cta">Kostenlos üben</a>
-      </div>
-    </nav>
+    <PracticeHeader active="ueben" />
 
     <header class="uv-hero">
       <div class="uv-hero-inner">
@@ -111,7 +99,8 @@ const workspaceCount = grammarWorkspaceLevels.reduce((n, row) => n + row.topics.
                   <span class="uv-wk-ic" aria-hidden="true">{t.icon}</span>
                   <span class="uv-wk-txt">
                     <b>{t.name}</b>
-                    <i>{t.subtitle}</i>
+                    {/* Same sentences as the /uebungen/grammatik cards, so the same keys. */}
+                    <i data-i18n={`grammatik.${t.id}.intro`}>{t.subtitle}</i>
                   </span>
                   <span class="uv-wk-n">{t.tasks}</span>
                 </a>

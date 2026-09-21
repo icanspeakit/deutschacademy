@@ -7,7 +7,11 @@ export const LANGUAGES = [
 ];
 
 const STORAGE_KEY = "da_lang";
+// The German file is the source of truth: every key exists there, and the server-rendered
+// HTML is German. The other files are translations and lag behind it. See mergedDict().
+const BASE_LANG = "de";
 const dictCache = {};
+const mergedCache = {};
 const listeners = new Set();
 
 export function getLang() {
@@ -45,7 +49,7 @@ function applyToDom(dict) {
     const key = el.getAttribute("data-i18n");
     const vars = el.dataset.i18nVars ? JSON.parse(el.dataset.i18nVars) : undefined;
     const val = translate(dict, key, vars);
-    if (el.getAttribute("data-i18n") && dict[key] != null) el.textContent = val;
+    if (dict[key] != null) el.textContent = val;
   });
   // Same as [data-i18n], but sets innerHTML instead of textContent — for the rare string that
   // must keep an embedded tag (e.g. a link) in place across languages. Dict values here are
@@ -64,11 +68,27 @@ function applyToDom(dict) {
   });
 }
 
+// A translation file that is missing a key used to mean "leave the element alone", which
+// only looks right on a first paint, when the element still holds its German server text.
+// After one switch it is stale: de -> en -> ar left every ar-untranslated string sitting in
+// English. Layering the target language over the German base makes the fallback German
+// wherever it is, no matter what was painted before.
+async function mergedDict(code) {
+  if (mergedCache[code]) return mergedCache[code];
+  if (code === BASE_LANG) {
+    mergedCache[code] = await loadDict(BASE_LANG);
+    return mergedCache[code];
+  }
+  const [base, own] = await Promise.all([loadDict(BASE_LANG), loadDict(code)]);
+  mergedCache[code] = { ...base, ...own };
+  return mergedCache[code];
+}
+
 export async function applyLang(code) {
   const lang = LANGUAGES.find((l) => l.code === code) || LANGUAGES[0];
   document.documentElement.lang = lang.code;
   document.documentElement.dir = lang.dir;
-  const dict = await loadDict(lang.code);
+  const dict = await mergedDict(lang.code);
   applyToDom(dict);
   listeners.forEach((fn) => fn(lang.code, dict));
   return dict;
@@ -81,7 +101,7 @@ export function setLang(code) {
   return applyLang(code);
 }
 
-export { loadDict };
+export { mergedDict as loadDict };
 
 export function onLangChange(fn) {
   listeners.add(fn);

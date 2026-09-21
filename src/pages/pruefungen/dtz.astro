@@ -11,17 +11,19 @@ import ExamPractice from "../../components/ExamPractice.astro";
     header="DTZ"
     title="Deutsch-Test für Zuwanderer (DTZ)"
     lead="Die Abschlussprüfung eines staatlich geförderten Integrationskurses — Ergebnis auf Niveau A2 oder B1."
+    leadKey="dtz.lead"
     badges={["A2 / B1"]}
     practiceHeading="Für den DTZ üben"
+    practiceHeadingKey="dtz.practiceHeading"
   >
     <Fragment slot="info">
       <section class="exam-section">
-        <h2>Für wen ist der DTZ?</h2>
+        <h2 data-i18n="dtz.who.title">Für wen ist der DTZ?</h2>
         <div class="exam-meta-row">
-          <span class="exam-meta-badge">Ergebnis: A2 oder B1</span>
-          <span class="exam-meta-badge">Ende des Integrationskurses</span>
+          <span class="exam-meta-badge" data-i18n="dtz.who.badge.result">Ergebnis: A2 oder B1</span>
+          <span class="exam-meta-badge" data-i18n="dtz.who.badge.course">Ende des Integrationskurses</span>
         </div>
-        <p>
+        <p data-i18n="dtz.who.text">
           Der DTZ steht am Ende eines Integrationskurses und ist für viele Zuwanderer in Deutschland
           relevant — unter anderem für den Nachweis von Deutschkenntnissen bei einem unbefristeten
           Aufenthaltstitel. Je nach erreichter Punktzahl wird entweder das Sprachniveau A2 oder B1
@@ -30,39 +32,39 @@ import ExamPractice from "../../components/ExamPractice.astro";
       </section>
 
       <section class="exam-section">
-        <h2>Geprüfte Fertigkeiten</h2>
+        <h2 data-i18n="exam.skills.title">Geprüfte Fertigkeiten</h2>
         <div class="skill-grid">
-          <div class="skill-card"><div class="skill-card-icon">📖</div><h4>Lesen</h4><p>Leseverstehen</p></div>
-          <div class="skill-card"><div class="skill-card-icon">🎧</div><h4>Hören</h4><p>Hörverstehen</p></div>
-          <div class="skill-card"><div class="skill-card-icon">✍️</div><h4>Schreiben</h4><p>Zwei Schreibaufgaben</p></div>
-          <div class="skill-card"><div class="skill-card-icon">🗣️</div><h4>Sprechen</h4><p>Mündliche Prüfung, meist paarweise</p></div>
+          <div class="skill-card"><div class="skill-card-icon">📖</div><h4 data-i18n="skill.lesen">Lesen</h4><p data-i18n="skill.lesen.desc">Leseverstehen</p></div>
+          <div class="skill-card"><div class="skill-card-icon">🎧</div><h4 data-i18n="skill.hoeren">Hören</h4><p data-i18n="skill.hoeren.desc">Hörverstehen</p></div>
+          <div class="skill-card"><div class="skill-card-icon">✍️</div><h4 data-i18n="skill.schreiben">Schreiben</h4><p data-i18n="dtz.skill.schreiben.desc">Zwei Schreibaufgaben</p></div>
+          <div class="skill-card"><div class="skill-card-icon">🗣️</div><h4 data-i18n="skill.sprechen">Sprechen</h4><p data-i18n="skill.sprechen.pairDesc">Mündliche Prüfung, meist paarweise</p></div>
         </div>
       </section>
 
       <section class="exam-section">
-        <h2>Format</h2>
+        <h2 data-i18n="exam.format.title">Format</h2>
         <div class="format-table-wrap">
           <table class="format-table">
-            <thead><tr><th>Teil</th><th>Was wird geprüft</th><th>Quelle</th></tr></thead>
+            <thead><tr><th data-i18n="format.th.part">Teil</th><th data-i18n="format.th.what">Was wird geprüft</th><th data-i18n="format.th.source">Quelle</th></tr></thead>
             <tbody>
-              <tr><td>Lesen: Anzeigen zuordnen</td><td>Kurze Anzeigen passenden Personenbeschreibungen zuordnen</td><td>Eigenes Unterrichtsmaterial</td></tr>
-              <tr><td>Lesen: Richtig/Falsch</td><td>Zeitungsartikel verstehen und Aussagen bewerten</td><td>Eigenes Unterrichtsmaterial</td></tr>
-              <tr><td>Lesen: Forum &amp; Interview</td><td>Aussagen Personen zuordnen; Interview verstehen</td><td>Eigenes Unterrichtsmaterial</td></tr>
-              <tr><td>Lesen: Formular</td><td>Informationen aus einer E-Mail in ein Formular übertragen</td><td>Eigenes Unterrichtsmaterial</td></tr>
-              <tr><td>Schreiben</td><td>Persönliche Antwort-Mail + formeller Brief</td><td>Eigenes Unterrichtsmaterial</td></tr>
-              <tr><td>Sprechen, Teil 2: Bildbeschreibung</td><td>Ein Bild beschreiben, dann persönliche Nachfragen beantworten</td><td>Eigenes Unterrichtsmaterial — 90 Sek. Beschreibung + 90 Sek. Nachfragen</td></tr>
+              <tr><td data-i18n="dtz.fmt.ads.part">Lesen: Anzeigen zuordnen</td><td data-i18n="dtz.fmt.ads.what">Kurze Anzeigen passenden Personenbeschreibungen zuordnen</td><td data-i18n="exam.source.ownMaterial">Eigenes Unterrichtsmaterial</td></tr>
+              <tr><td data-i18n="dtz.fmt.tf.part">Lesen: Richtig/Falsch</td><td data-i18n="dtz.fmt.tf.what">Zeitungsartikel verstehen und Aussagen bewerten</td><td data-i18n="exam.source.ownMaterial">Eigenes Unterrichtsmaterial</td></tr>
+              <tr><td data-i18n="dtz.fmt.forum.part">Lesen: Forum &amp; Interview</td><td data-i18n="dtz.fmt.forum.what">Aussagen Personen zuordnen; Interview verstehen</td><td data-i18n="exam.source.ownMaterial">Eigenes Unterrichtsmaterial</td></tr>
+              <tr><td data-i18n="dtz.fmt.form.part">Lesen: Formular</td><td data-i18n="dtz.fmt.form.what">Informationen aus einer E-Mail in ein Formular übertragen</td><td data-i18n="exam.source.ownMaterial">Eigenes Unterrichtsmaterial</td></tr>
+              <tr><td data-i18n="skill.schreiben">Schreiben</td><td data-i18n="dtz.fmt.write.what">Persönliche Antwort-Mail + formeller Brief</td><td data-i18n="exam.source.ownMaterial">Eigenes Unterrichtsmaterial</td></tr>
+              <tr><td data-i18n="dtz.fmt.speak.part">Sprechen, Teil 2: Bildbeschreibung</td><td data-i18n="dtz.fmt.speak.what">Ein Bild beschreiben, dann persönliche Nachfragen beantworten</td><td data-i18n="dtz.fmt.speak.source">Eigenes Unterrichtsmaterial — 90 Sek. Beschreibung + 90 Sek. Nachfragen</td></tr>
             </tbody>
           </table>
         </div>
-        <p class="format-note">
+        <p class="format-note" data-i18n-html="dtz.format.note">
           Die Aufgabentypen oben stammen aus dem eigenen DTZ-Unterrichtsmaterial, das auch unsere
           interaktive <a href="/uebungen/lesen-schreiben">Lesen &amp; Schreiben</a>- und
           <a href="/uebungen/sprechen/dtz-bildbeschreibung">Sprechen</a>-Übung speist. Für die offizielle Gesamtdauer der
           Prüfung liegt uns keine eigene Quelle vor — dafür prüfe den Modellsatz des BAMF/telc.
         </p>
 
-        <h3>Wie der DTZ bewertet wird</h3>
-        <p>
+        <h3 data-i18n="dtz.scoring.title">Wie der DTZ bewertet wird</h3>
+        <p data-i18n-html="dtz.scoring.text">
           Es gibt keine einzelne „Bestehensgrenze“ in Prozent. Hören und Lesen werden <strong>zusammen</strong>
           ausgewertet: 20 Höraufgaben und 25 Leseaufgaben ergeben 45 Punkte. Ab <strong>33 Punkten</strong>
           wird das Niveau B1 bescheinigt, ab <strong>20 Punkten</strong> A2. Schreiben und Sprechen werden
@@ -73,24 +75,26 @@ import ExamPractice from "../../components/ExamPractice.astro";
     </Fragment>
 
     <div class="mock-cta mock-cta--lead">
-      <h2>Kompletter Übungssatz im Prüfungsformat</h2>
-      <p>
+      <h2 data-i18n="dtz.set.title">Kompletter Übungssatz im Prüfungsformat</h2>
+      <p data-i18n="dtz.set.text">
         Neun Prüfungsteile, 45 bewertete Aufgaben — Hören Teil 1–4 und Lesen Teil 1–5, dazu die
         Schreibaufgabe. Am Ende steht die Auswertung nach den offiziellen Punktegrenzen, aufgeschlüsselt
         nach Prüfungsteil. Der Fortschritt bleibt im Browser gespeichert.
       </p>
-      <a class="quiz-btn quiz-btn--primary" href="/pruefungen/dtz/uebungssatz">Übungssatz starten →</a>
+      <a class="quiz-btn quiz-btn--primary" href="/pruefungen/dtz/uebungssatz" data-i18n="exam.startSet">Übungssatz starten →</a>
     </div>
 
     <div class="mock-cta">
-      <h2>Kürzer: Mock-Test Lesen (Aufgabe 1–4)</h2>
-      <p>Alle vier Lese-Aufgaben der DTZ-Simulation als ein zusammenhängender Test mit Gesamtergebnis am Ende — aus echtem DTZ-Unterrichtsmaterial.</p>
-      <a class="quiz-btn quiz-btn--primary" href="/pruefungen/dtz/mock-test">Mock-Test starten →</a>
+      <h2 data-i18n="dtz.mock.title">Kürzer: Mock-Test Lesen (Aufgabe 1–4)</h2>
+      <p data-i18n="dtz.mock.text">Alle vier Lese-Aufgaben der DTZ-Simulation als ein zusammenhängender Test mit Gesamtergebnis am Ende — aus echtem DTZ-Unterrichtsmaterial.</p>
+      <a class="quiz-btn quiz-btn--primary" href="/pruefungen/dtz/mock-test" data-i18n="dtz.mock.start">Mock-Test starten →</a>
     </div>
 
     <ExamPractice
       heading="Weiter üben"
+      headingKey="exam.practice.heading"
       intro="Alle fünf Übungstools stammen aus echtem DTZ-Unterrichtsmaterial — die reichhaltigsten Übungen der ganzen Seite."
+      introKey="dtz.practice.intro"
       tools={["artikel", "grammatik", "wortschatz", "sprechen", "lesen"]}
     />
   </ExamShell>

@@ -6,16 +6,36 @@
   "source": "Nr. 5 PQP und Präteritum.pdf (Kapitel 27, Übungen 3–5)",
   "concept": {
     "flow": [
-      { "text": "Plusquamperfekt", "variant": "prep" },
-      { "text": "→ Präteritum / Perfekt", "variant": "verb" },
-      { "text": "→ Gegenwart" }
+      {
+        "text": "Plusquamperfekt",
+        "variant": "prep"
+      },
+      {
+        "text": "→ Präteritum / Perfekt",
+        "variant": "verb"
+      },
+      {
+        "text": "→ Gegenwart"
+      }
     ],
     "exampleHtml": "Nachdem wir uns <span class=\"vp-prep\">verabschiedet hatten</span>, <span class=\"vp-verb\">fuhr</span> ich in die Stadt.",
     "qa": [
-      { "html": "<strong>Perfekt</strong> ist die Form der gesprochenen Sprache: <em>Was hast du gestern gemacht?</em>", "tag": "mündlich" },
-      { "html": "<strong>Präteritum</strong> ist die Form geschriebener Erzählungen und Berichte: <em>1966 startete die Serie in den USA.</em>", "tag": "schriftlich" },
-      { "html": "Bei <strong>haben, sein und den Modalverben</strong> nimmt man auch im Gespräch das Präteritum: <em>ich war, ich hatte, ich musste, ich wollte, ich konnte</em>.", "tag": "immer Präteritum" },
-      { "html": "<strong>Plusquamperfekt</strong> = <em>hatte/war</em> im Präteritum + Partizip II. Es markiert die Vorzeitigkeit: erst das, dann das andere.", "tag": "davor" }
+      {
+        "html": "<strong>Perfekt</strong> ist die Form der gesprochenen Sprache: <em>Was hast du gestern gemacht?</em>",
+        "tag": "mündlich"
+      },
+      {
+        "html": "<strong>Präteritum</strong> ist die Form geschriebener Erzählungen und Berichte: <em>1966 startete die Serie in den USA.</em>",
+        "tag": "schriftlich"
+      },
+      {
+        "html": "Bei <strong>haben, sein und den Modalverben</strong> nimmt man auch im Gespräch das Präteritum: <em>ich war, ich hatte, ich musste, ich wollte, ich konnte</em>.",
+        "tag": "immer Präteritum"
+      },
+      {
+        "html": "<strong>Plusquamperfekt</strong> = <em>hatte/war</em> im Präteritum + Partizip II. Es markiert die Vorzeitigkeit: erst das, dann das andere.",
+        "tag": "davor"
+      }
     ],
     "noteHtml": "Das Plusquamperfekt steht fast nie allein — es braucht einen zweiten Satz in der Vergangenheit, auf den es sich bezieht. Der typische Auslöser ist <strong>nachdem</strong>: <em>Nachdem das Raumschiff in Deutschland <strong>gelandet war</strong>, <strong>eroberte</strong> es die Herzen des Publikums.</em> Merken Sie sich die Kombination: <em>nachdem</em> + Plusquamperfekt im Nebensatz, Präteritum im Hauptsatz.",
     "reference": {
@@ -24,39 +44,127 @@
       "tables": [
         {
           "caption": "Dieselbe Handlung in drei Formen",
-          "head": ["Form", "Beispiel", "wann?"],
+          "head": [
+            "Form",
+            "Beispiel",
+            "wann?"
+          ],
           "rows": [
-            ["Perfekt", "Ich habe einen Kaffee getrunken.", "Gespräch, Alltag"],
-            ["Präteritum", "Ich trank einen Kaffee.", "Text, Erzählung, Bericht"],
-            ["Plusquamperfekt", "Ich hatte einen Kaffee getrunken.", "vor einer anderen Vergangenheit"]
+            [
+              "Perfekt",
+              "Ich habe einen Kaffee getrunken.",
+              "Gespräch, Alltag"
+            ],
+            [
+              "Präteritum",
+              "Ich trank einen Kaffee.",
+              "Text, Erzählung, Bericht"
+            ],
+            [
+              "Plusquamperfekt",
+              "Ich hatte einen Kaffee getrunken.",
+              "vor einer anderen Vergangenheit"
+            ]
           ]
         },
         {
           "caption": "Starke Verben im Präteritum",
-          "head": ["Infinitiv", "Präteritum (ich/er)", "Partizip II"],
+          "head": [
+            "Infinitiv",
+            "Präteritum (ich/er)",
+            "Partizip II"
+          ],
           "rows": [
-            ["gehen", "ging", "gegangen"],
-            ["sehen", "sah", "gesehen"],
-            ["treffen", "traf", "getroffen"],
-            ["trinken", "trank", "getrunken"],
-            ["lesen", "las", "gelesen"],
-            ["denken", "dachte", "gedacht"],
-            ["sein", "war", "gewesen"],
-            ["haben", "hatte", "gehabt"],
-            ["werden", "wurde", "geworden"],
-            ["können", "konnte", "gekonnt"],
-            ["müssen", "musste", "gemusst"],
-            ["wollen", "wollte", "gewollt"]
+            [
+              "gehen",
+              "ging",
+              "gegangen"
+            ],
+            [
+              "sehen",
+              "sah",
+              "gesehen"
+            ],
+            [
+              "treffen",
+              "traf",
+              "getroffen"
+            ],
+            [
+              "trinken",
+              "trank",
+              "getrunken"
+            ],
+            [
+              "lesen",
+              "las",
+              "gelesen"
+            ],
+            [
+              "denken",
+              "dachte",
+              "gedacht"
+            ],
+            [
+              "sein",
+              "war",
+              "gewesen"
+            ],
+            [
+              "haben",
+              "hatte",
+              "gehabt"
+            ],
+            [
+              "werden",
+              "wurde",
+              "geworden"
+            ],
+            [
+              "können",
+              "konnte",
+              "gekonnt"
+            ],
+            [
+              "müssen",
+              "musste",
+              "gemusst"
+            ],
+            [
+              "wollen",
+              "wollte",
+              "gewollt"
+            ]
           ]
         },
         {
           "caption": "Plusquamperfekt bilden",
-          "head": ["Hilfsverb im Präteritum", "+ Partizip II", "Beispiel"],
+          "head": [
+            "Hilfsverb im Präteritum",
+            "+ Partizip II",
+            "Beispiel"
+          ],
           "rows": [
-            ["hatte", "gemacht", "Ich hatte den Einkauf schon gemacht."],
-            ["war", "gefahren", "Wir waren in die Stadt gefahren."],
-            ["hatte", "gesehen", "Er hatte den Film schon gesehen."],
-            ["war", "angekommen", "Als ich oben angekommen war, …"]
+            [
+              "hatte",
+              "gemacht",
+              "Ich hatte den Einkauf schon gemacht."
+            ],
+            [
+              "war",
+              "gefahren",
+              "Wir waren in die Stadt gefahren."
+            ],
+            [
+              "hatte",
+              "gesehen",
+              "Er hatte den Film schon gesehen."
+            ],
+            [
+              "war",
+              "angekommen",
+              "Als ich oben angekommen war, …"
+            ]
           ]
         }
       ],
@@ -85,26 +193,245 @@
       ]
     }
   },
+  "aktiv": {
+    "listen": [
+      {
+        "text": "Ich habe gestern lange gearbeitet.",
+        "note": "Perfekt — so spricht man.",
+        "audio": "/audio/grammatik/praeteritum-plusquamperfekt/ich-habe-gestern-lange-gearbeitet.mp3"
+      },
+      {
+        "text": "1966 startete die Serie in den USA.",
+        "note": "Präteritum — so schreibt und erzählt man.",
+        "audio": "/audio/grammatik/praeteritum-plusquamperfekt/1966-startete-die-serie-in-den-usa.mp3"
+      },
+      {
+        "text": "Nachdem wir uns verabschiedet hatten, fuhr ich in die Stadt.",
+        "note": "Plusquamperfekt: das, was noch davor war.",
+        "audio": "/audio/grammatik/praeteritum-plusquamperfekt/nachdem-wir-uns-verabschiedet-hatten-fuhr-ich-in-die-stadt.mp3"
+      }
+    ],
+    "hoeren": {
+      "instruction": "Hör zu und wähle die Zeitform, die du gehört hast.",
+      "items": [
+        {
+          "text": "Er kam um acht nach Hause.",
+          "choices": [
+            "Perfekt",
+            "Präteritum",
+            "Plusquamperfekt"
+          ],
+          "correct": 1,
+          "audio": "/audio/grammatik/praeteritum-plusquamperfekt/er-kam-um-acht-nach-hause.mp3"
+        },
+        {
+          "text": "Er ist um acht nach Hause gekommen.",
+          "choices": [
+            "Perfekt",
+            "Präteritum",
+            "Plusquamperfekt"
+          ],
+          "correct": 0,
+          "audio": "/audio/grammatik/praeteritum-plusquamperfekt/er-ist-um-acht-nach-hause-gekommen.mp3"
+        },
+        {
+          "text": "Er war schon nach Hause gekommen.",
+          "choices": [
+            "Perfekt",
+            "Präteritum",
+            "Plusquamperfekt"
+          ],
+          "correct": 2,
+          "audio": "/audio/grammatik/praeteritum-plusquamperfekt/er-war-schon-nach-hause-gekommen.mp3"
+        },
+        {
+          "text": "Wir hatten das Essen schon bestellt.",
+          "choices": [
+            "Perfekt",
+            "Präteritum",
+            "Plusquamperfekt"
+          ],
+          "correct": 2,
+          "audio": "/audio/grammatik/praeteritum-plusquamperfekt/wir-hatten-das-essen-schon-bestellt.mp3"
+        },
+        {
+          "text": "Wir bestellten das Essen.",
+          "choices": [
+            "Perfekt",
+            "Präteritum",
+            "Plusquamperfekt"
+          ],
+          "correct": 1,
+          "audio": "/audio/grammatik/praeteritum-plusquamperfekt/wir-bestellten-das-essen.mp3"
+        },
+        {
+          "text": "Wir haben das Essen bestellt.",
+          "choices": [
+            "Perfekt",
+            "Präteritum",
+            "Plusquamperfekt"
+          ],
+          "correct": 0,
+          "audio": "/audio/grammatik/praeteritum-plusquamperfekt/wir-haben-das-essen-bestellt.mp3"
+        }
+      ]
+    },
+    "sprechen": {
+      "rounds": [
+        {
+          "label": "1 · Perfekt → Präteritum",
+          "instruction": "Du hörst einen Satz im Perfekt. Sag ihn im Präteritum — so, wie man es schreibt.",
+          "example": {
+            "prompt": "Ich habe gearbeitet.",
+            "answer": "Ich arbeitete."
+          },
+          "items": [
+            {
+              "prompt": "Er ist gekommen.",
+              "answer": "Er kam.",
+              "audioPrompt": "/audio/grammatik/praeteritum-plusquamperfekt/er-ist-gekommen.mp3",
+              "audioAnswer": "/audio/grammatik/praeteritum-plusquamperfekt/er-kam--8wphfh.mp3"
+            },
+            {
+              "prompt": "Wir haben gesprochen.",
+              "answer": "Wir sprachen.",
+              "audioPrompt": "/audio/grammatik/praeteritum-plusquamperfekt/wir-haben-gesprochen.mp3",
+              "audioAnswer": "/audio/grammatik/praeteritum-plusquamperfekt/wir-sprachen--8wphfh.mp3"
+            },
+            {
+              "prompt": "Sie hat das Buch gelesen.",
+              "answer": "Sie las das Buch.",
+              "audioPrompt": "/audio/grammatik/praeteritum-plusquamperfekt/sie-hat-das-buch-gelesen.mp3",
+              "audioAnswer": "/audio/grammatik/praeteritum-plusquamperfekt/sie-las-das-buch--8wphfh.mp3"
+            },
+            {
+              "prompt": "Ich bin nach Hause gegangen.",
+              "answer": "Ich ging nach Hause.",
+              "audioPrompt": "/audio/grammatik/praeteritum-plusquamperfekt/ich-bin-nach-hause-gegangen.mp3",
+              "audioAnswer": "/audio/grammatik/praeteritum-plusquamperfekt/ich-ging-nach-hause--8wphfh.mp3"
+            },
+            {
+              "prompt": "Das Konzert hat angefangen.",
+              "answer": "Das Konzert fing an.",
+              "audioPrompt": "/audio/grammatik/praeteritum-plusquamperfekt/das-konzert-hat-angefangen.mp3",
+              "audioAnswer": "/audio/grammatik/praeteritum-plusquamperfekt/das-konzert-fing-an--8wphfh.mp3"
+            },
+            {
+              "prompt": "Sie haben lange gewartet.",
+              "answer": "Sie warteten lange.",
+              "audioPrompt": "/audio/grammatik/praeteritum-plusquamperfekt/sie-haben-lange-gewartet.mp3",
+              "audioAnswer": "/audio/grammatik/praeteritum-plusquamperfekt/sie-warteten-lange--8wphfh.mp3"
+            }
+          ]
+        },
+        {
+          "label": "2 · nachdem + Plusquamperfekt",
+          "instruction": "Du hörst zwei Sätze. Sag den ersten mit nachdem — er war ja vorher.",
+          "example": {
+            "prompt": "Wir verabschiedeten uns. Ich fuhr in die Stadt.",
+            "answer": "Nachdem wir uns verabschiedet hatten, fuhr ich in die Stadt."
+          },
+          "items": [
+            {
+              "prompt": "Er aß zu Abend. Er ging ins Bett.",
+              "answer": "Nachdem er zu Abend gegessen hatte, ging er ins Bett.",
+              "audioPrompt": "/audio/grammatik/praeteritum-plusquamperfekt/er-ass-zu-abend-er-ging-ins-bett.mp3",
+              "audioAnswer": "/audio/grammatik/praeteritum-plusquamperfekt/nachdem-er-zu-abend-gegessen-hatte-ging-er-ins-bett--8wphfh.mp3"
+            },
+            {
+              "prompt": "Sie kam an. Sie rief mich an.",
+              "answer": "Nachdem sie angekommen war, rief sie mich an.",
+              "audioPrompt": "/audio/grammatik/praeteritum-plusquamperfekt/sie-kam-an-sie-rief-mich-an.mp3",
+              "audioAnswer": "/audio/grammatik/praeteritum-plusquamperfekt/nachdem-sie-angekommen-war-rief-sie-mich-an--8wphfh.mp3"
+            },
+            {
+              "prompt": "Ich las den Brief. Ich warf ihn weg.",
+              "answer": "Nachdem ich den Brief gelesen hatte, warf ich ihn weg.",
+              "audioPrompt": "/audio/grammatik/praeteritum-plusquamperfekt/ich-las-den-brief-ich-warf-ihn-weg.mp3",
+              "audioAnswer": "/audio/grammatik/praeteritum-plusquamperfekt/nachdem-ich-den-brief-gelesen-hatte-warf-ich-ihn-weg--8wphfh.mp3"
+            },
+            {
+              "prompt": "Der Film endete. Wir gingen nach Hause.",
+              "answer": "Nachdem der Film geendet hatte, gingen wir nach Hause.",
+              "audioPrompt": "/audio/grammatik/praeteritum-plusquamperfekt/der-film-endete-wir-gingen-nach-hause.mp3",
+              "audioAnswer": "/audio/grammatik/praeteritum-plusquamperfekt/nachdem-der-film-geendet-hatte-gingen-wir-nach-hause--8wphfh.mp3"
+            },
+            {
+              "prompt": "Wir zogen um. Wir fühlten uns wohl.",
+              "answer": "Nachdem wir umgezogen waren, fühlten wir uns wohl.",
+              "audioPrompt": "/audio/grammatik/praeteritum-plusquamperfekt/wir-zogen-um-wir-fuehlten-uns-wohl.mp3",
+              "audioAnswer": "/audio/grammatik/praeteritum-plusquamperfekt/nachdem-wir-umgezogen-waren-fuehlten-wir-uns-wohl--8wphfh.mp3"
+            },
+            {
+              "prompt": "Sie lernte viel. Sie bestand die Prüfung.",
+              "answer": "Nachdem sie viel gelernt hatte, bestand sie die Prüfung.",
+              "audioPrompt": "/audio/grammatik/praeteritum-plusquamperfekt/sie-lernte-viel-sie-bestand-die-pruefung.mp3",
+              "audioAnswer": "/audio/grammatik/praeteritum-plusquamperfekt/nachdem-sie-viel-gelernt-hatte-bestand-sie-die-pruefung--8wphfh.mp3"
+            }
+          ]
+        }
+      ]
+    }
+  },
   "exercises": [
     {
       "type": "table",
       "title": "Wie lautet das Präteritum?",
       "hint": "Form für „ich“ oder „er“.",
-      "columns": ["Infinitiv", "Präteritum"],
+      "columns": [
+        "Infinitiv",
+        "Präteritum"
+      ],
       "placeholder": "Präteritum",
       "rows": [
-        { "term": "gehen", "answer": "ging" },
-        { "term": "sehen", "answer": "sah" },
-        { "term": "treffen", "answer": "traf" },
-        { "term": "trinken", "answer": "trank" },
-        { "term": "lesen", "answer": "las" },
-        { "term": "denken", "answer": "dachte" },
-        { "term": "sein", "answer": "war" },
-        { "term": "haben", "answer": "hatte" },
-        { "term": "werden", "answer": "wurde" },
-        { "term": "wollen", "answer": "wollte" },
-        { "term": "müssen", "answer": "musste" },
-        { "term": "warten", "answer": "wartete" }
+        {
+          "term": "gehen",
+          "answer": "ging"
+        },
+        {
+          "term": "sehen",
+          "answer": "sah"
+        },
+        {
+          "term": "treffen",
+          "answer": "traf"
+        },
+        {
+          "term": "trinken",
+          "answer": "trank"
+        },
+        {
+          "term": "lesen",
+          "answer": "las"
+        },
+        {
+          "term": "denken",
+          "answer": "dachte"
+        },
+        {
+          "term": "sein",
+          "answer": "war"
+        },
+        {
+          "term": "haben",
+          "answer": "hatte"
+        },
+        {
+          "term": "werden",
+          "answer": "wurde"
+        },
+        {
+          "term": "wollen",
+          "answer": "wollte"
+        },
+        {
+          "term": "müssen",
+          "answer": "musste"
+        },
+        {
+          "term": "warten",
+          "answer": "wartete"
+        }
       ]
     },
     {
@@ -113,12 +440,48 @@
       "hint": "Schreiben Sie nur das Hilfsverb im Präteritum.",
       "placeholder": "hatte / war",
       "items": [
-        { "prompt": "Nachdem ich den Einkauf gemacht ___, ging ich nach Hause.", "hint": "„machen“ nimmt haben.", "answer": ["hatte"] },
-        { "prompt": "Nachdem wir uns verabschiedet ___, fuhr ich in die Stadt.", "hint": "„sich verabschieden“ nimmt haben.", "answer": ["hatten"] },
-        { "prompt": "Als ich oben angekommen ___, standen plötzlich Fotografen um mich herum.", "hint": "„ankommen“ nimmt sein.", "answer": ["war"] },
-        { "prompt": "Nachdem die Serie Kultstatus erlangt ___, wurde der Name berühmt.", "hint": "„erlangen“ nimmt haben.", "answer": ["hatte"] },
-        { "prompt": "Nachdem das Raumschiff in Deutschland gelandet ___, eroberte es die Herzen des Publikums.", "hint": "„landen“ nimmt sein.", "answer": ["war"] },
-        { "prompt": "Er erzählte, dass er den Film schon gesehen ___.", "hint": "„sehen“ nimmt haben.", "answer": ["hatte"] }
+        {
+          "prompt": "Nachdem ich den Einkauf gemacht ___, ging ich nach Hause.",
+          "hint": "„machen“ nimmt haben.",
+          "answer": [
+            "hatte"
+          ]
+        },
+        {
+          "prompt": "Nachdem wir uns verabschiedet ___, fuhr ich in die Stadt.",
+          "hint": "„sich verabschieden“ nimmt haben.",
+          "answer": [
+            "hatten"
+          ]
+        },
+        {
+          "prompt": "Als ich oben angekommen ___, standen plötzlich Fotografen um mich herum.",
+          "hint": "„ankommen“ nimmt sein.",
+          "answer": [
+            "war"
+          ]
+        },
+        {
+          "prompt": "Nachdem die Serie Kultstatus erlangt ___, wurde der Name berühmt.",
+          "hint": "„erlangen“ nimmt haben.",
+          "answer": [
+            "hatte"
+          ]
+        },
+        {
+          "prompt": "Nachdem das Raumschiff in Deutschland gelandet ___, eroberte es die Herzen des Publikums.",
+          "hint": "„landen“ nimmt sein.",
+          "answer": [
+            "war"
+          ]
+        },
+        {
+          "prompt": "Er erzählte, dass er den Film schon gesehen ___.",
+          "hint": "„sehen“ nimmt haben.",
+          "answer": [
+            "hatte"
+          ]
+        }
       ]
     },
     {
@@ -126,11 +489,26 @@
       "title": "Was passierte zuerst?",
       "hint": "Der Satzteil im Plusquamperfekt beschreibt das frühere Ereignis.",
       "pairs": [
-        { "q": "Nachdem wir uns verabschiedet hatten,", "a": "fuhr ich in die Stadt." },
-        { "q": "Nachdem ich ausgestiegen war,", "a": "fuhr ich auf der Rolltreppe nach oben." },
-        { "q": "Als ich oben angekommen war,", "a": "standen plötzlich Fotografen um mich herum." },
-        { "q": "Nachdem ich herausgefunden hatte, dass ich der zehnmillionste Benutzer war,", "a": "bekam ich einen Gutschein über 200 Euro." },
-        { "q": "Nachdem die TV-Serie Kultstatus erlangt hatte,", "a": "wurde der Name „Enterprise“ auch für die Raumfähre benutzt." }
+        {
+          "q": "Nachdem wir uns verabschiedet hatten,",
+          "a": "fuhr ich in die Stadt."
+        },
+        {
+          "q": "Nachdem ich ausgestiegen war,",
+          "a": "fuhr ich auf der Rolltreppe nach oben."
+        },
+        {
+          "q": "Als ich oben angekommen war,",
+          "a": "standen plötzlich Fotografen um mich herum."
+        },
+        {
+          "q": "Nachdem ich herausgefunden hatte, dass ich der zehnmillionste Benutzer war,",
+          "a": "bekam ich einen Gutschein über 200 Euro."
+        },
+        {
+          "q": "Nachdem die TV-Serie Kultstatus erlangt hatte,",
+          "a": "wurde der Name „Enterprise“ auch für die Raumfähre benutzt."
+        }
       ]
     },
     {
@@ -138,25 +516,90 @@
       "title": "Lückentext: Überraschung auf der Rolltreppe.",
       "hint": "Präteritum oder Plusquamperfekt — achten Sie auf die Reihenfolge der Ereignisse.",
       "segments": [
-        { "text": "Nachdem wir uns verabschiedet " },
-        { "blank": 0, "answer": ["hatten"] },
-        { "text": ", " },
-        { "blank": 1, "answer": ["fuhr"] },
-        { "text": " ich in die Stadt und ging ins Einkaufszentrum. Ich " },
-        { "blank": 2, "answer": ["wollte"] },
-        { "text": " einfach nur gucken. Also " },
-        { "blank": 3, "answer": ["stieg"] },
-        { "text": " ich gestern am Nordwestzentrum aus und fuhr auf der Rolltreppe nach oben. Als ich oben angekommen " },
-        { "blank": 4, "answer": ["war"] },
-        { "text": ", standen plötzlich mehrere Fotografen um mich herum und es " },
-        { "blank": 5, "answer": ["blitzte"] },
-        { "text": " wie bei Politikern. Das " },
-        { "blank": 6, "answer": ["war"] },
-        { "text": " ein Schock für mich! Ich " },
-        { "blank": 7, "answer": ["fand"] },
-        { "text": " dann heraus, dass ich der zehnmillionste Benutzer der Rolltreppe gewesen " },
-        { "blank": 8, "answer": ["war"] },
-        { "text": ", und ich bekam einen Einkaufsgutschein im Wert von 200 Euro." }
+        {
+          "text": "Nachdem wir uns verabschiedet "
+        },
+        {
+          "blank": 0,
+          "answer": [
+            "hatten"
+          ]
+        },
+        {
+          "text": ", "
+        },
+        {
+          "blank": 1,
+          "answer": [
+            "fuhr"
+          ]
+        },
+        {
+          "text": " ich in die Stadt und ging ins Einkaufszentrum. Ich "
+        },
+        {
+          "blank": 2,
+          "answer": [
+            "wollte"
+          ]
+        },
+        {
+          "text": " einfach nur gucken. Also "
+        },
+        {
+          "blank": 3,
+          "answer": [
+            "stieg"
+          ]
+        },
+        {
+          "text": " ich gestern am Nordwestzentrum aus und fuhr auf der Rolltreppe nach oben. Als ich oben angekommen "
+        },
+        {
+          "blank": 4,
+          "answer": [
+            "war"
+          ]
+        },
+        {
+          "text": ", standen plötzlich mehrere Fotografen um mich herum und es "
+        },
+        {
+          "blank": 5,
+          "answer": [
+            "blitzte"
+          ]
+        },
+        {
+          "text": " wie bei Politikern. Das "
+        },
+        {
+          "blank": 6,
+          "answer": [
+            "war"
+          ]
+        },
+        {
+          "text": " ein Schock für mich! Ich "
+        },
+        {
+          "blank": 7,
+          "answer": [
+            "fand"
+          ]
+        },
+        {
+          "text": " dann heraus, dass ich der zehnmillionste Benutzer der Rolltreppe gewesen "
+        },
+        {
+          "blank": 8,
+          "answer": [
+            "war"
+          ]
+        },
+        {
+          "text": ", und ich bekam einen Einkaufsgutschein im Wert von 200 Euro."
+        }
       ]
     },
     {
@@ -166,20 +609,84 @@
         {
           "id": "pq1",
           "hint": "Nebensatz im Plusquamperfekt, Hauptsatz im Präteritum.",
-          "correct": ["Nachdem", "er", "gegessen", "hatte", ",", "ging", "er", "spazieren", "."],
-          "shuffled": ["hatte", "Nachdem", "spazieren", "gegessen", "ging", "er", ",", "er", "."]
+          "correct": [
+            "Nachdem",
+            "er",
+            "gegessen",
+            "hatte",
+            ",",
+            "ging",
+            "er",
+            "spazieren",
+            "."
+          ],
+          "shuffled": [
+            "hatte",
+            "Nachdem",
+            "spazieren",
+            "gegessen",
+            "ging",
+            "er",
+            ",",
+            "er",
+            "."
+          ]
         },
         {
           "id": "pq2",
           "hint": "„ankommen“ nimmt sein.",
-          "correct": ["Nachdem", "sie", "angekommen", "war", ",", "rief", "sie", "sofort", "an", "."],
-          "shuffled": ["war", "sofort", "Nachdem", "an", "rief", "angekommen", "sie", ",", "sie", "."]
+          "correct": [
+            "Nachdem",
+            "sie",
+            "angekommen",
+            "war",
+            ",",
+            "rief",
+            "sie",
+            "sofort",
+            "an",
+            "."
+          ],
+          "shuffled": [
+            "war",
+            "sofort",
+            "Nachdem",
+            "an",
+            "rief",
+            "angekommen",
+            "sie",
+            ",",
+            "sie",
+            "."
+          ]
         },
         {
           "id": "pq3",
           "hint": "Präteritum im Bericht.",
-          "correct": ["1966", "startete", "die", "Serie", "„Raumschiff", "Enterprise“", "in", "den", "USA", "."],
-          "shuffled": ["die", "in", "1966", "USA", "Serie", "den", "startete", "Enterprise“", "„Raumschiff", "."]
+          "correct": [
+            "1966",
+            "startete",
+            "die",
+            "Serie",
+            "„Raumschiff",
+            "Enterprise“",
+            "in",
+            "den",
+            "USA",
+            "."
+          ],
+          "shuffled": [
+            "die",
+            "in",
+            "1966",
+            "USA",
+            "Serie",
+            "den",
+            "startete",
+            "Enterprise“",
+            "„Raumschiff",
+            "."
+          ]
         }
       ]
     }

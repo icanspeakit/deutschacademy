@@ -6,15 +6,32 @@
   "source": "ue04_nebensatz_als_wenn.pdf (graf-gutfreund.at), Nebensatze A.pdf, Nebensatze B.pdf",
   "concept": {
     "flow": [
-      { "text": "als / wenn", "variant": "verb" },
-      { "text": "Subjekt + …" },
-      { "text": "Verb · Satzende", "variant": "prep" }
+      {
+        "text": "als / wenn",
+        "variant": "verb"
+      },
+      {
+        "text": "Subjekt + …"
+      },
+      {
+        "text": "Verb · Satzende",
+        "variant": "prep"
+      }
     ],
     "exampleHtml": "<span class=\"vp-verb\">Als</span> ich nach Österreich gekommen bin, <span class=\"vp-prep\">habe</span> ich kein Wort Deutsch verstanden.",
     "qa": [
-      { "html": "<strong>als</strong> — ein einziger, abgeschlossener Moment oder Zeitabschnitt in der <em>Vergangenheit</em>.", "tag": "einmalig" },
-      { "html": "<strong>wenn</strong> — etwas, das sich <em>wiederholt</em> („immer wenn“), oder eine <em>Bedingung</em>.", "tag": "wiederholt" },
-      { "html": "<strong>wenn</strong> — alles in <em>Gegenwart und Zukunft</em>, auch wenn es nur einmal passiert.", "tag": "Zukunft" }
+      {
+        "html": "<strong>als</strong> — ein einziger, abgeschlossener Moment oder Zeitabschnitt in der <em>Vergangenheit</em>.",
+        "tag": "einmalig"
+      },
+      {
+        "html": "<strong>wenn</strong> — etwas, das sich <em>wiederholt</em> („immer wenn“), oder eine <em>Bedingung</em>.",
+        "tag": "wiederholt"
+      },
+      {
+        "html": "<strong>wenn</strong> — alles in <em>Gegenwart und Zukunft</em>, auch wenn es nur einmal passiert.",
+        "tag": "Zukunft"
+      }
     ],
     "noteHtml": "Test: Passt <em>immer wenn</em> davor? Dann ist es <strong>wenn</strong>. Steht dabei eine einmalige Zeitangabe wie <em>gestern, letzte Woche, 1998</em> in der Vergangenheit? Dann ist es <strong>als</strong>. In beiden Fällen steht das konjugierte Verb am <strong>Satzende</strong>.",
     "reference": {
@@ -47,12 +64,212 @@
       "tables": [
         {
           "caption": "Der Unterschied auf einen Blick",
-          "head": ["", "als", "wenn"],
+          "head": [
+            "",
+            "als",
+            "wenn"
+          ],
           "rows": [
-            ["Wie oft?", "genau einmal", "immer wieder / jedes Mal"],
-            ["Wann?", "nur Vergangenheit", "Vergangenheit, Gegenwart, Zukunft"],
-            ["Bedingung?", "nein", "ja („falls“)"],
-            ["Signalwörter", "gestern, damals, letzte Woche, 1998", "immer, jedes Mal, jeden Tag, falls"]
+            [
+              "Wie oft?",
+              "genau einmal",
+              "immer wieder / jedes Mal"
+            ],
+            [
+              "Wann?",
+              "nur Vergangenheit",
+              "Vergangenheit, Gegenwart, Zukunft"
+            ],
+            [
+              "Bedingung?",
+              "nein",
+              "ja („falls“)"
+            ],
+            [
+              "Signalwörter",
+              "gestern, damals, letzte Woche, 1998",
+              "immer, jedes Mal, jeden Tag, falls"
+            ]
+          ]
+        }
+      ]
+    }
+  },
+  "aktiv": {
+    "listen": [
+      {
+        "text": "Als ich nach Wien kam, sprach ich kein Deutsch.",
+        "note": "Ein einziger Moment in der Vergangenheit — immer als.",
+        "audio": "/audio/grammatik/als-oder-wenn/als-ich-nach-wien-kam-sprach-ich-kein-deutsch.mp3"
+      },
+      {
+        "text": "Immer wenn es regnet, bleiben wir zu Hause.",
+        "note": "Wiederholt — also wenn.",
+        "audio": "/audio/grammatik/als-oder-wenn/immer-wenn-es-regnet-bleiben-wir-zu-hause.mp3"
+      },
+      {
+        "text": "Wenn du morgen kommst, kochen wir zusammen.",
+        "note": "Gegenwart und Zukunft: immer wenn, auch bei einem einzigen Mal.",
+        "audio": "/audio/grammatik/als-oder-wenn/wenn-du-morgen-kommst-kochen-wir-zusammen.mp3"
+      }
+    ],
+    "hoeren": {
+      "instruction": "Hör zu und wähle das Wort, das du gehört hast.",
+      "items": [
+        {
+          "text": "Als ich klein war, wohnten wir in Wien.",
+          "choices": [
+            "Als",
+            "Wenn",
+            "Immer wenn"
+          ],
+          "correct": 0,
+          "audio": "/audio/grammatik/als-oder-wenn/als-ich-klein-war-wohnten-wir-in-wien.mp3"
+        },
+        {
+          "text": "Wenn ich Zeit habe, rufe ich dich an.",
+          "choices": [
+            "Als",
+            "Wenn",
+            "Immer wenn"
+          ],
+          "correct": 1,
+          "audio": "/audio/grammatik/als-oder-wenn/wenn-ich-zeit-habe-rufe-ich-dich-an.mp3"
+        },
+        {
+          "text": "Immer wenn er kam, brachte er Blumen mit.",
+          "choices": [
+            "Als",
+            "Wenn",
+            "Immer wenn"
+          ],
+          "correct": 2,
+          "audio": "/audio/grammatik/als-oder-wenn/immer-wenn-er-kam-brachte-er-blumen-mit.mp3"
+        },
+        {
+          "text": "Als der Film begann, ging das Licht aus.",
+          "choices": [
+            "Als",
+            "Wenn",
+            "Immer wenn"
+          ],
+          "correct": 0,
+          "audio": "/audio/grammatik/als-oder-wenn/als-der-film-begann-ging-das-licht-aus.mp3"
+        },
+        {
+          "text": "Wenn das Wetter besser wird, fahren wir los.",
+          "choices": [
+            "Als",
+            "Wenn",
+            "Immer wenn"
+          ],
+          "correct": 1,
+          "audio": "/audio/grammatik/als-oder-wenn/wenn-das-wetter-besser-wird-fahren-wir-los.mp3"
+        },
+        {
+          "text": "Als wir ankamen, regnete es schon.",
+          "choices": [
+            "Als",
+            "Wenn",
+            "Immer wenn"
+          ],
+          "correct": 0,
+          "audio": "/audio/grammatik/als-oder-wenn/als-wir-ankamen-regnete-es-schon.mp3"
+        }
+      ]
+    },
+    "sprechen": {
+      "rounds": [
+        {
+          "label": "1 · einmal → als",
+          "instruction": "Du hörst zwei Sätze aus der Vergangenheit. Verbinde sie mit als.",
+          "example": {
+            "prompt": "Ich war zehn. Wir zogen um.",
+            "answer": "Als ich zehn war, zogen wir um."
+          },
+          "items": [
+            {
+              "prompt": "Ich kam nach Wien. Ich sprach kein Deutsch.",
+              "answer": "Als ich nach Wien kam, sprach ich kein Deutsch.",
+              "audioPrompt": "/audio/grammatik/als-oder-wenn/ich-kam-nach-wien-ich-sprach-kein-deutsch.mp3",
+              "audioAnswer": "/audio/grammatik/als-oder-wenn/als-ich-nach-wien-kam-sprach-ich-kein-deutsch--8wphfh.mp3"
+            },
+            {
+              "prompt": "Der Film begann. Das Licht ging aus.",
+              "answer": "Als der Film begann, ging das Licht aus.",
+              "audioPrompt": "/audio/grammatik/als-oder-wenn/der-film-begann-das-licht-ging-aus.mp3",
+              "audioAnswer": "/audio/grammatik/als-oder-wenn/als-der-film-begann-ging-das-licht-aus--8wphfh.mp3"
+            },
+            {
+              "prompt": "Sie hörte die Nachricht. Sie weinte.",
+              "answer": "Als sie die Nachricht hörte, weinte sie.",
+              "audioPrompt": "/audio/grammatik/als-oder-wenn/sie-hoerte-die-nachricht-sie-weinte.mp3",
+              "audioAnswer": "/audio/grammatik/als-oder-wenn/als-sie-die-nachricht-hoerte-weinte-sie--8wphfh.mp3"
+            },
+            {
+              "prompt": "Wir kamen an. Es regnete.",
+              "answer": "Als wir ankamen, regnete es.",
+              "audioPrompt": "/audio/grammatik/als-oder-wenn/wir-kamen-an-es-regnete.mp3",
+              "audioAnswer": "/audio/grammatik/als-oder-wenn/als-wir-ankamen-regnete-es--8wphfh.mp3"
+            },
+            {
+              "prompt": "Ich stand auf. Es war schon hell.",
+              "answer": "Als ich aufstand, war es schon hell.",
+              "audioPrompt": "/audio/grammatik/als-oder-wenn/ich-stand-auf-es-war-schon-hell.mp3",
+              "audioAnswer": "/audio/grammatik/als-oder-wenn/als-ich-aufstand-war-es-schon-hell--8wphfh.mp3"
+            },
+            {
+              "prompt": "Er ging weg. Niemand sagte etwas.",
+              "answer": "Als er wegging, sagte niemand etwas.",
+              "audioPrompt": "/audio/grammatik/als-oder-wenn/er-ging-weg-niemand-sagte-etwas.mp3",
+              "audioAnswer": "/audio/grammatik/als-oder-wenn/als-er-wegging-sagte-niemand-etwas--8wphfh.mp3"
+            }
+          ]
+        },
+        {
+          "label": "2 · immer oder später → wenn",
+          "instruction": "Jetzt geht es um etwas Wiederholtes oder um die Zukunft. Verbinde mit wenn.",
+          "example": {
+            "prompt": "Ich habe Zeit. Ich lese.",
+            "answer": "Wenn ich Zeit habe, lese ich."
+          },
+          "items": [
+            {
+              "prompt": "Es regnet. Wir bleiben zu Hause.",
+              "answer": "Wenn es regnet, bleiben wir zu Hause.",
+              "audioPrompt": "/audio/grammatik/als-oder-wenn/es-regnet-wir-bleiben-zu-hause.mp3",
+              "audioAnswer": "/audio/grammatik/als-oder-wenn/wenn-es-regnet-bleiben-wir-zu-hause--8wphfh.mp3"
+            },
+            {
+              "prompt": "Du kommst morgen. Wir kochen zusammen.",
+              "answer": "Wenn du morgen kommst, kochen wir zusammen.",
+              "audioPrompt": "/audio/grammatik/als-oder-wenn/du-kommst-morgen-wir-kochen-zusammen.mp3",
+              "audioAnswer": "/audio/grammatik/als-oder-wenn/wenn-du-morgen-kommst-kochen-wir-zusammen--8wphfh.mp3"
+            },
+            {
+              "prompt": "Sie ruft an. Ich gehe ran.",
+              "answer": "Wenn sie anruft, gehe ich ran.",
+              "audioPrompt": "/audio/grammatik/als-oder-wenn/sie-ruft-an-ich-gehe-ran.mp3",
+              "audioAnswer": "/audio/grammatik/als-oder-wenn/wenn-sie-anruft-gehe-ich-ran--8wphfh.mp3"
+            },
+            {
+              "prompt": "Das Wetter wird besser. Wir fahren ans Meer.",
+              "answer": "Wenn das Wetter besser wird, fahren wir ans Meer.",
+              "audioPrompt": "/audio/grammatik/als-oder-wenn/das-wetter-wird-besser-wir-fahren-ans-meer.mp3",
+              "audioAnswer": "/audio/grammatik/als-oder-wenn/wenn-das-wetter-besser-wird-fahren-wir-ans-meer--8wphfh.mp3"
+            },
+            {
+              "prompt": "Ich bin müde. Ich trinke Kaffee.",
+              "answer": "Wenn ich müde bin, trinke ich Kaffee.",
+              "audioPrompt": "/audio/grammatik/als-oder-wenn/ich-bin-muede-ich-trinke-kaffee.mp3",
+              "audioAnswer": "/audio/grammatik/als-oder-wenn/wenn-ich-muede-bin-trinke-ich-kaffee--8wphfh.mp3"
+            },
+            {
+              "prompt": "Er kommt nach Hause. Er kocht sofort.",
+              "answer": "Wenn er nach Hause kommt, kocht er sofort.",
+              "audioPrompt": "/audio/grammatik/als-oder-wenn/er-kommt-nach-hause-er-kocht-sofort.mp3",
+              "audioAnswer": "/audio/grammatik/als-oder-wenn/wenn-er-nach-hause-kommt-kocht-er-sofort--8wphfh.mp3"
+            }
           ]
         }
       ]
@@ -68,32 +285,44 @@
         {
           "prompt": "___ ich Schülerin war, bin ich gern auf Faschingspartys gegangen.",
           "hint": "Ein abgeschlossener Zeitabschnitt in der Vergangenheit.",
-          "answer": ["Als"]
+          "answer": [
+            "Als"
+          ]
         },
         {
           "prompt": "Ich werde oft nervös, ___ ich vor einer Gruppe Menschen sprechen soll.",
           "hint": "Das passiert immer wieder.",
-          "answer": ["wenn"]
+          "answer": [
+            "wenn"
+          ]
         },
         {
           "prompt": "___ es gestern geregnet hat, hatte ich wieder einmal keinen Schirm.",
           "hint": "„gestern“ — ein einziger Tag.",
-          "answer": ["Als"]
+          "answer": [
+            "Als"
+          ]
         },
         {
           "prompt": "___ es morgen schön ist, können wir in den Zoo gehen.",
           "hint": "Zukunft und Bedingung.",
-          "answer": ["Wenn"]
+          "answer": [
+            "Wenn"
+          ]
         },
         {
           "prompt": "Ich bin unter der Dusche gestanden, ___ du angerufen hast.",
           "hint": "Ein einziger Moment in der Vergangenheit.",
-          "answer": ["als"]
+          "answer": [
+            "als"
+          ]
         },
         {
           "prompt": "Immer ___ ich vor dem Computer sitze, will meine Katze mit mir spielen.",
           "hint": "Das Signalwort steht schon davor.",
-          "answer": ["wenn"]
+          "answer": [
+            "wenn"
+          ]
         }
       ]
     },
@@ -102,27 +331,66 @@
       "title": "Ordnen Sie zu: Satzanfang und Fortsetzung.",
       "hint": "Klicke erst einen Nebensatz, dann den passenden Hauptsatz.",
       "pairs": [
-        { "q": "Als meine Großmutter noch gelebt hat,", "a": "waren die Weihnachtsfeste wirklich schön." },
-        { "q": "Wenn es regnet,", "a": "bleibe ich gern daheim und lese ein Buch." },
-        { "q": "Als ich nach Österreich gekommen bin,", "a": "habe ich kein Wort Deutsch verstanden." },
-        { "q": "Wenn wir uns wieder sehen,", "a": "werden wir eine große Party machen!" },
-        { "q": "Als meine Tochter gestern um 20 Uhr noch nicht da war,", "a": "habe ich mir wirklich Sorgen gemacht." }
+        {
+          "q": "Als meine Großmutter noch gelebt hat,",
+          "a": "waren die Weihnachtsfeste wirklich schön."
+        },
+        {
+          "q": "Wenn es regnet,",
+          "a": "bleibe ich gern daheim und lese ein Buch."
+        },
+        {
+          "q": "Als ich nach Österreich gekommen bin,",
+          "a": "habe ich kein Wort Deutsch verstanden."
+        },
+        {
+          "q": "Wenn wir uns wieder sehen,",
+          "a": "werden wir eine große Party machen!"
+        },
+        {
+          "q": "Als meine Tochter gestern um 20 Uhr noch nicht da war,",
+          "a": "habe ich mir wirklich Sorgen gemacht."
+        }
       ]
     },
     {
       "type": "table",
       "title": "Welches Signalwort verlangt was?",
       "hint": "Tippen Sie „als“ oder „wenn“.",
-      "columns": ["Signal im Satz", "als / wenn"],
+      "columns": [
+        "Signal im Satz",
+        "als / wenn"
+      ],
       "placeholder": "als / wenn",
       "rows": [
-        { "term": "gestern", "answer": "als" },
-        { "term": "jedes Mal", "answer": "wenn" },
-        { "term": "letzte Woche", "answer": "als" },
-        { "term": "morgen", "answer": "wenn" },
-        { "term": "damals, 1998", "answer": "als" },
-        { "term": "immer", "answer": "wenn" },
-        { "term": "falls (Bedingung)", "answer": "wenn" }
+        {
+          "term": "gestern",
+          "answer": "als"
+        },
+        {
+          "term": "jedes Mal",
+          "answer": "wenn"
+        },
+        {
+          "term": "letzte Woche",
+          "answer": "als"
+        },
+        {
+          "term": "morgen",
+          "answer": "wenn"
+        },
+        {
+          "term": "damals, 1998",
+          "answer": "als"
+        },
+        {
+          "term": "immer",
+          "answer": "wenn"
+        },
+        {
+          "term": "falls (Bedingung)",
+          "answer": "wenn"
+        }
       ]
     },
     {
@@ -130,17 +398,54 @@
       "title": "Lückentext: Erinnerungen.",
       "hint": "Setzen Sie „als“ oder „wenn“ ein.",
       "segments": [
-        { "text": "" },
-        { "blank": 0, "answer": ["Als"] },
-        { "text": " meine Mutter noch ein kleines Mädchen war, hat ihr Vater oft zu ihr gesagt: „" },
-        { "blank": 1, "answer": ["Wenn"] },
-        { "text": " du die Suppe brav aufisst, dann wird das Wetter morgen schön.“ Heute lacht sie darüber — aber immer " },
-        { "blank": 2, "answer": ["wenn"] },
-        { "text": " ich als Kind keine Suppe wollte, hat sie denselben Satz gesagt. " },
-        { "blank": 3, "answer": ["Als"] },
-        { "text": " ich sie letzte Woche besucht habe, stand wieder Suppe auf dem Tisch. Und " },
-        { "blank": 4, "answer": ["wenn"] },
-        { "text": " ich sie das nächste Mal besuche, wird es bestimmt wieder so sein." }
+        {
+          "text": ""
+        },
+        {
+          "blank": 0,
+          "answer": [
+            "Als"
+          ]
+        },
+        {
+          "text": " meine Mutter noch ein kleines Mädchen war, hat ihr Vater oft zu ihr gesagt: „"
+        },
+        {
+          "blank": 1,
+          "answer": [
+            "Wenn"
+          ]
+        },
+        {
+          "text": " du die Suppe brav aufisst, dann wird das Wetter morgen schön.“ Heute lacht sie darüber — aber immer "
+        },
+        {
+          "blank": 2,
+          "answer": [
+            "wenn"
+          ]
+        },
+        {
+          "text": " ich als Kind keine Suppe wollte, hat sie denselben Satz gesagt. "
+        },
+        {
+          "blank": 3,
+          "answer": [
+            "Als"
+          ]
+        },
+        {
+          "text": " ich sie letzte Woche besucht habe, stand wieder Suppe auf dem Tisch. Und "
+        },
+        {
+          "blank": 4,
+          "answer": [
+            "wenn"
+          ]
+        },
+        {
+          "text": " ich sie das nächste Mal besuche, wird es bestimmt wieder so sein."
+        }
       ]
     },
     {
@@ -150,20 +455,92 @@
         {
           "id": "w1",
           "hint": "Nebensatz zuerst, dann der Hauptsatz.",
-          "correct": ["Als", "ich", "ein", "Kind", "war", ",", "hatten", "wir", "einen", "Hund", "."],
-          "shuffled": ["war", "Als", "Hund", "ich", "hatten", ",", "einen", "ein", "wir", ".", "Kind"]
+          "correct": [
+            "Als",
+            "ich",
+            "ein",
+            "Kind",
+            "war",
+            ",",
+            "hatten",
+            "wir",
+            "einen",
+            "Hund",
+            "."
+          ],
+          "shuffled": [
+            "war",
+            "Als",
+            "Hund",
+            "ich",
+            "hatten",
+            ",",
+            "einen",
+            "ein",
+            "wir",
+            ".",
+            "Kind"
+          ]
         },
         {
           "id": "w2",
           "hint": "Bedingung in der Zukunft.",
-          "correct": ["Wenn", "du", "Zeit", "hast", ",", "können", "wir", "morgen", "spazieren", "gehen", "."],
-          "shuffled": ["hast", "Wenn", "gehen", "wir", "Zeit", ",", "morgen", "du", "können", ".", "spazieren"]
+          "correct": [
+            "Wenn",
+            "du",
+            "Zeit",
+            "hast",
+            ",",
+            "können",
+            "wir",
+            "morgen",
+            "spazieren",
+            "gehen",
+            "."
+          ],
+          "shuffled": [
+            "hast",
+            "Wenn",
+            "gehen",
+            "wir",
+            "Zeit",
+            ",",
+            "morgen",
+            "du",
+            "können",
+            ".",
+            "spazieren"
+          ]
         },
         {
           "id": "w3",
           "hint": "Hauptsatz zuerst — der Nebensatz hängt hinten dran.",
-          "correct": ["Rufst", "du", "mich", "an", ",", "wenn", "du", "wieder", "zurück", "bist", "?"],
-          "shuffled": ["an", "Rufst", "bist", "mich", "wenn", ",", "zurück", "du", "wieder", "?", "du"]
+          "correct": [
+            "Rufst",
+            "du",
+            "mich",
+            "an",
+            ",",
+            "wenn",
+            "du",
+            "wieder",
+            "zurück",
+            "bist",
+            "?"
+          ],
+          "shuffled": [
+            "an",
+            "Rufst",
+            "bist",
+            "mich",
+            "wenn",
+            ",",
+            "zurück",
+            "du",
+            "wieder",
+            "?",
+            "du"
+          ]
         }
       ]
     }

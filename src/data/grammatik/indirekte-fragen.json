@@ -6,17 +6,39 @@
   "source": "Indirekte Fragen.pdf (Kapitel 67)",
   "concept": {
     "flow": [
-      { "text": "Einleitung", "variant": "verb" },
-      { "text": "," },
-      { "text": "w-Wort / ob", "variant": "prep" },
-      { "text": "Subjekt … Verb · Ende" }
+      {
+        "text": "Einleitung",
+        "variant": "verb"
+      },
+      {
+        "text": ","
+      },
+      {
+        "text": "w-Wort / ob",
+        "variant": "prep"
+      },
+      {
+        "text": "Subjekt … Verb · Ende"
+      }
     ],
     "exampleHtml": "Wissen Sie, <span class=\"vp-prep\">wo</span> der Bahnhof <span class=\"vp-verb\">ist</span>? — Können Sie mir sagen, <span class=\"vp-prep\">ob</span> es noch weit <span class=\"vp-verb\">ist</span>?",
     "qa": [
-      { "html": "Aus einer <strong>W-Frage</strong> wird die indirekte Frage mit demselben Fragewort: <em>Wo ist der Bahnhof? → Wissen Sie, wo der Bahnhof ist?</em>", "tag": "w-Wort" },
-      { "html": "Aus einer <strong>Ja/Nein-Frage</strong> wird sie mit <em>ob</em>: <em>Ist es noch weit? → Wissen Sie, ob es noch weit ist?</em>", "tag": "ob" },
-      { "html": "Die indirekte Frage ist ein <strong>Nebensatz</strong> — das konjugierte Verb steht am Ende, davor ein Komma.", "tag": "Verb am Ende" },
-      { "html": "Auch <strong>Fragewort + Präposition oder Nomen</strong> bleibt zusammen vorn: <em>Hast du eine Idee, <strong>auf welchem Gleis</strong> der Zug heute abfährt?</em>", "tag": "auf welchem" }
+      {
+        "html": "Aus einer <strong>W-Frage</strong> wird die indirekte Frage mit demselben Fragewort: <em>Wo ist der Bahnhof? → Wissen Sie, wo der Bahnhof ist?</em>",
+        "tag": "w-Wort"
+      },
+      {
+        "html": "Aus einer <strong>Ja/Nein-Frage</strong> wird sie mit <em>ob</em>: <em>Ist es noch weit? → Wissen Sie, ob es noch weit ist?</em>",
+        "tag": "ob"
+      },
+      {
+        "html": "Die indirekte Frage ist ein <strong>Nebensatz</strong> — das konjugierte Verb steht am Ende, davor ein Komma.",
+        "tag": "Verb am Ende"
+      },
+      {
+        "html": "Auch <strong>Fragewort + Präposition oder Nomen</strong> bleibt zusammen vorn: <em>Hast du eine Idee, <strong>auf welchem Gleis</strong> der Zug heute abfährt?</em>",
+        "tag": "auf welchem"
+      }
     ],
     "noteHtml": "Indirekte Fragen sind vor allem <strong>höfliche</strong> Fragen. Typische Einleitungen: <em>Wissen Sie, … · Können Sie mir sagen, … · Ich möchte gerne wissen, … · Ich habe keine Ahnung, … · Hast du dich informiert, … · Weißt du schon, …</em> Endet die Einleitung selbst mit einem Fragezeichen-Satz, steht am Ende ein <strong>Fragezeichen</strong>; bei <em>Ich möchte wissen, …</em> steht ein Punkt.",
     "reference": {
@@ -25,23 +47,71 @@
       "tables": [
         {
           "caption": "Direkt und indirekt",
-          "head": ["Direkte Frage", "Indirekte Frage"],
+          "head": [
+            "Direkte Frage",
+            "Indirekte Frage"
+          ],
           "rows": [
-            ["Wo ist der Bahnhof?", "Wissen Sie, wo der Bahnhof ist?"],
-            ["Ist es noch weit zum Bahnhof?", "Können Sie mir sagen, ob es noch weit zum Bahnhof ist?"],
-            ["Warum ist das Taxi nicht gekommen?", "Ich möchte gerne wissen, warum das Taxi nicht gekommen ist."],
-            ["Auf welchem Gleis fährt der Zug ab?", "Hast du eine Idee, auf welchem Gleis der Zug heute abfährt?"],
-            ["Erreichen wir den Zug noch?", "Ich habe keine Ahnung, ob wir den Zug noch erreichen."]
+            [
+              "Wo ist der Bahnhof?",
+              "Wissen Sie, wo der Bahnhof ist?"
+            ],
+            [
+              "Ist es noch weit zum Bahnhof?",
+              "Können Sie mir sagen, ob es noch weit zum Bahnhof ist?"
+            ],
+            [
+              "Warum ist das Taxi nicht gekommen?",
+              "Ich möchte gerne wissen, warum das Taxi nicht gekommen ist."
+            ],
+            [
+              "Auf welchem Gleis fährt der Zug ab?",
+              "Hast du eine Idee, auf welchem Gleis der Zug heute abfährt?"
+            ],
+            [
+              "Erreichen wir den Zug noch?",
+              "Ich habe keine Ahnung, ob wir den Zug noch erreichen."
+            ]
           ]
         },
         {
           "caption": "Der Bauplan des Nebensatzes",
-          "head": ["Hauptsatz", "Konjunktion", "Subjekt", "Mittelfeld", "Verb"],
+          "head": [
+            "Hauptsatz",
+            "Konjunktion",
+            "Subjekt",
+            "Mittelfeld",
+            "Verb"
+          ],
           "rows": [
-            ["Können Sie mir sagen,", "wo", "der Bahnhof", "—", "ist?"],
-            ["Ich möchte gerne wissen,", "warum", "das Taxi", "nicht", "gekommen ist."],
-            ["Wissen Sie,", "ob", "es", "noch weit zum Bahnhof", "ist?"],
-            ["Ich habe keine Ahnung,", "ob", "wir", "den Zug", "noch erreichen."]
+            [
+              "Können Sie mir sagen,",
+              "wo",
+              "der Bahnhof",
+              "—",
+              "ist?"
+            ],
+            [
+              "Ich möchte gerne wissen,",
+              "warum",
+              "das Taxi",
+              "nicht",
+              "gekommen ist."
+            ],
+            [
+              "Wissen Sie,",
+              "ob",
+              "es",
+              "noch weit zum Bahnhof",
+              "ist?"
+            ],
+            [
+              "Ich habe keine Ahnung,",
+              "ob",
+              "wir",
+              "den Zug",
+              "noch erreichen."
+            ]
           ]
         }
       ],
@@ -70,6 +140,186 @@
       ]
     }
   },
+  "aktiv": {
+    "listen": [
+      {
+        "text": "Wissen Sie, wo der Bahnhof ist?",
+        "note": "Das Fragewort bleibt — das Verb geht ans Ende.",
+        "audio": "/audio/grammatik/indirekte-fragen/wissen-sie-wo-der-bahnhof-ist.mp3"
+      },
+      {
+        "text": "Können Sie mir sagen, ob es noch weit ist?",
+        "note": "Aus einer Ja/Nein-Frage wird ob.",
+        "audio": "/audio/grammatik/indirekte-fragen/koennen-sie-mir-sagen-ob-es-noch-weit-ist.mp3"
+      },
+      {
+        "text": "Hast du eine Idee, auf welchem Gleis der Zug abfährt?",
+        "note": "Präposition und Fragewort bleiben zusammen vorn.",
+        "audio": "/audio/grammatik/indirekte-fragen/hast-du-eine-idee-auf-welchem-gleis-der-zug-abfaehrt.mp3"
+      }
+    ],
+    "hoeren": {
+      "instruction": "Hör zu und wähle das Einleitungswort des Nebensatzes.",
+      "items": [
+        {
+          "text": "Wissen Sie, ob der Zug pünktlich ist?",
+          "choices": [
+            "wo",
+            "ob",
+            "wann"
+          ],
+          "correct": 1,
+          "audio": "/audio/grammatik/indirekte-fragen/wissen-sie-ob-der-zug-puenktlich-ist.mp3"
+        },
+        {
+          "text": "Können Sie mir sagen, wann der Bus kommt?",
+          "choices": [
+            "ob",
+            "wo",
+            "wann"
+          ],
+          "correct": 2,
+          "audio": "/audio/grammatik/indirekte-fragen/koennen-sie-mir-sagen-wann-der-bus-kommt.mp3"
+        },
+        {
+          "text": "Ich weiß nicht, wo er wohnt.",
+          "choices": [
+            "wo",
+            "ob",
+            "wie"
+          ],
+          "correct": 0,
+          "audio": "/audio/grammatik/indirekte-fragen/ich-weiss-nicht-wo-er-wohnt.mp3"
+        },
+        {
+          "text": "Sie fragt, ob wir mitkommen.",
+          "choices": [
+            "wer",
+            "ob",
+            "wohin"
+          ],
+          "correct": 1,
+          "audio": "/audio/grammatik/indirekte-fragen/sie-fragt-ob-wir-mitkommen.mp3"
+        },
+        {
+          "text": "Weißt du, wie das heißt?",
+          "choices": [
+            "wie",
+            "was",
+            "ob"
+          ],
+          "correct": 0,
+          "audio": "/audio/grammatik/indirekte-fragen/weisst-du-wie-das-heisst.mp3"
+        },
+        {
+          "text": "Er möchte wissen, warum du nicht gekommen bist.",
+          "choices": [
+            "wann",
+            "wie",
+            "warum"
+          ],
+          "correct": 2,
+          "audio": "/audio/grammatik/indirekte-fragen/er-moechte-wissen-warum-du-nicht-gekommen-bist.mp3"
+        }
+      ]
+    },
+    "sprechen": {
+      "rounds": [
+        {
+          "label": "1 · W-Frage → höflich",
+          "instruction": "Du hörst eine direkte W-Frage. Mach sie höflich: „Können Sie mir sagen, …“",
+          "example": {
+            "prompt": "Wo ist der Bahnhof?",
+            "answer": "Können Sie mir sagen, wo der Bahnhof ist?"
+          },
+          "items": [
+            {
+              "prompt": "Wann kommt der Bus?",
+              "answer": "Können Sie mir sagen, wann der Bus kommt?",
+              "audioPrompt": "/audio/grammatik/indirekte-fragen/wann-kommt-der-bus.mp3",
+              "audioAnswer": "/audio/grammatik/indirekte-fragen/koennen-sie-mir-sagen-wann-der-bus-kommt--8wphfh.mp3"
+            },
+            {
+              "prompt": "Wie viel kostet das?",
+              "answer": "Können Sie mir sagen, wie viel das kostet?",
+              "audioPrompt": "/audio/grammatik/indirekte-fragen/wie-viel-kostet-das.mp3",
+              "audioAnswer": "/audio/grammatik/indirekte-fragen/koennen-sie-mir-sagen-wie-viel-das-kostet--8wphfh.mp3"
+            },
+            {
+              "prompt": "Wo finde ich den Ausgang?",
+              "answer": "Können Sie mir sagen, wo ich den Ausgang finde?",
+              "audioPrompt": "/audio/grammatik/indirekte-fragen/wo-finde-ich-den-ausgang.mp3",
+              "audioAnswer": "/audio/grammatik/indirekte-fragen/koennen-sie-mir-sagen-wo-ich-den-ausgang-finde--8wphfh.mp3"
+            },
+            {
+              "prompt": "Wann schließt das Museum?",
+              "answer": "Können Sie mir sagen, wann das Museum schließt?",
+              "audioPrompt": "/audio/grammatik/indirekte-fragen/wann-schliesst-das-museum.mp3",
+              "audioAnswer": "/audio/grammatik/indirekte-fragen/koennen-sie-mir-sagen-wann-das-museum-schliesst--8wphfh.mp3"
+            },
+            {
+              "prompt": "Wie komme ich zum Markt?",
+              "answer": "Können Sie mir sagen, wie ich zum Markt komme?",
+              "audioPrompt": "/audio/grammatik/indirekte-fragen/wie-komme-ich-zum-markt.mp3",
+              "audioAnswer": "/audio/grammatik/indirekte-fragen/koennen-sie-mir-sagen-wie-ich-zum-markt-komme--8wphfh.mp3"
+            },
+            {
+              "prompt": "Wo ist die Toilette?",
+              "answer": "Können Sie mir sagen, wo die Toilette ist?",
+              "audioPrompt": "/audio/grammatik/indirekte-fragen/wo-ist-die-toilette.mp3",
+              "audioAnswer": "/audio/grammatik/indirekte-fragen/koennen-sie-mir-sagen-wo-die-toilette-ist--8wphfh.mp3"
+            }
+          ]
+        },
+        {
+          "label": "2 · Ja/Nein-Frage → ob",
+          "instruction": "Jetzt ohne Fragewort. Beginne den Nebensatz mit ob: „Wissen Sie, ob …“",
+          "example": {
+            "prompt": "Ist es noch weit?",
+            "answer": "Wissen Sie, ob es noch weit ist?"
+          },
+          "items": [
+            {
+              "prompt": "Hat das Geschäft heute offen?",
+              "answer": "Wissen Sie, ob das Geschäft heute offen hat?",
+              "audioPrompt": "/audio/grammatik/indirekte-fragen/hat-das-geschaeft-heute-offen.mp3",
+              "audioAnswer": "/audio/grammatik/indirekte-fragen/wissen-sie-ob-das-geschaeft-heute-offen-hat--8wphfh.mp3"
+            },
+            {
+              "prompt": "Kommt der Zug pünktlich?",
+              "answer": "Wissen Sie, ob der Zug pünktlich kommt?",
+              "audioPrompt": "/audio/grammatik/indirekte-fragen/kommt-der-zug-puenktlich.mp3",
+              "audioAnswer": "/audio/grammatik/indirekte-fragen/wissen-sie-ob-der-zug-puenktlich-kommt--8wphfh.mp3"
+            },
+            {
+              "prompt": "Gibt es hier ein Café?",
+              "answer": "Wissen Sie, ob es hier ein Café gibt?",
+              "audioPrompt": "/audio/grammatik/indirekte-fragen/gibt-es-hier-ein-caf.mp3",
+              "audioAnswer": "/audio/grammatik/indirekte-fragen/wissen-sie-ob-es-hier-ein-caf-gibt--8wphfh.mp3"
+            },
+            {
+              "prompt": "Fährt der Bus am Sonntag?",
+              "answer": "Wissen Sie, ob der Bus am Sonntag fährt?",
+              "audioPrompt": "/audio/grammatik/indirekte-fragen/faehrt-der-bus-am-sonntag.mp3",
+              "audioAnswer": "/audio/grammatik/indirekte-fragen/wissen-sie-ob-der-bus-am-sonntag-faehrt--8wphfh.mp3"
+            },
+            {
+              "prompt": "Ist der Platz noch frei?",
+              "answer": "Wissen Sie, ob der Platz noch frei ist?",
+              "audioPrompt": "/audio/grammatik/indirekte-fragen/ist-der-platz-noch-frei.mp3",
+              "audioAnswer": "/audio/grammatik/indirekte-fragen/wissen-sie-ob-der-platz-noch-frei-ist--8wphfh.mp3"
+            },
+            {
+              "prompt": "Kann man hier parken?",
+              "answer": "Wissen Sie, ob man hier parken kann?",
+              "audioPrompt": "/audio/grammatik/indirekte-fragen/kann-man-hier-parken.mp3",
+              "audioAnswer": "/audio/grammatik/indirekte-fragen/wissen-sie-ob-man-hier-parken-kann--8wphfh.mp3"
+            }
+          ]
+        }
+      ]
+    }
+  },
   "exercises": [
     {
       "type": "fill",
@@ -77,12 +327,48 @@
       "hint": "Steckt eine W-Frage dahinter oder eine Ja/Nein-Frage?",
       "placeholder": "w-Wort / ob",
       "items": [
-        { "prompt": "Liegt das Hotel zentral? → Können Sie mir sagen, ___ das Hotel zentral liegt?", "hint": "Ja/Nein-Frage.", "answer": ["ob"] },
-        { "prompt": "Wie viel kostet das Frühstück? → Können Sie mir sagen, ___ viel das Frühstück kostet?", "hint": "W-Frage.", "answer": ["wie"] },
-        { "prompt": "Gibt es einen Swimmingpool? → Wissen Sie, ___ es einen Swimmingpool gibt?", "hint": "Ja/Nein-Frage.", "answer": ["ob"] },
-        { "prompt": "Wo kann ich parken? → Ich möchte wissen, ___ ich parken kann.", "hint": "Ort.", "answer": ["wo"] },
-        { "prompt": "Kann ich meinen Hund mitbringen? → Können Sie mir sagen, ___ ich meinen Hund mitbringen kann?", "hint": "Ja/Nein-Frage.", "answer": ["ob"] },
-        { "prompt": "Von wann bis wann kann man frühstücken? → Wissen Sie, ___ wann bis wann man frühstücken kann?", "hint": "Die Präposition bleibt vorn.", "answer": ["von"] }
+        {
+          "prompt": "Liegt das Hotel zentral? → Können Sie mir sagen, ___ das Hotel zentral liegt?",
+          "hint": "Ja/Nein-Frage.",
+          "answer": [
+            "ob"
+          ]
+        },
+        {
+          "prompt": "Wie viel kostet das Frühstück? → Können Sie mir sagen, ___ viel das Frühstück kostet?",
+          "hint": "W-Frage.",
+          "answer": [
+            "wie"
+          ]
+        },
+        {
+          "prompt": "Gibt es einen Swimmingpool? → Wissen Sie, ___ es einen Swimmingpool gibt?",
+          "hint": "Ja/Nein-Frage.",
+          "answer": [
+            "ob"
+          ]
+        },
+        {
+          "prompt": "Wo kann ich parken? → Ich möchte wissen, ___ ich parken kann.",
+          "hint": "Ort.",
+          "answer": [
+            "wo"
+          ]
+        },
+        {
+          "prompt": "Kann ich meinen Hund mitbringen? → Können Sie mir sagen, ___ ich meinen Hund mitbringen kann?",
+          "hint": "Ja/Nein-Frage.",
+          "answer": [
+            "ob"
+          ]
+        },
+        {
+          "prompt": "Von wann bis wann kann man frühstücken? → Wissen Sie, ___ wann bis wann man frühstücken kann?",
+          "hint": "Die Präposition bleibt vorn.",
+          "answer": [
+            "von"
+          ]
+        }
       ]
     },
     {
@@ -92,26 +378,108 @@
         {
           "id": "if1",
           "hint": "„Wo ist der Frühstücksraum?“",
-          "correct": ["Können", "Sie", "mir", "sagen", ",", "wo", "der", "Frühstücksraum", "ist", "?"],
-          "shuffled": ["der", "wo", "Können", "ist", "mir", "Frühstücksraum", "Sie", ",", "sagen", "?"]
+          "correct": [
+            "Können",
+            "Sie",
+            "mir",
+            "sagen",
+            ",",
+            "wo",
+            "der",
+            "Frühstücksraum",
+            "ist",
+            "?"
+          ],
+          "shuffled": [
+            "der",
+            "wo",
+            "Können",
+            "ist",
+            "mir",
+            "Frühstücksraum",
+            "Sie",
+            ",",
+            "sagen",
+            "?"
+          ]
         },
         {
           "id": "if2",
           "hint": "„Akzeptieren Sie Kreditkarten?“",
-          "correct": ["Ich", "möchte", "wissen", ",", "ob", "Sie", "Kreditkarten", "akzeptieren", "."],
-          "shuffled": ["ob", "Ich", "akzeptieren", "wissen", "Sie", "möchte", ",", "Kreditkarten", "."]
+          "correct": [
+            "Ich",
+            "möchte",
+            "wissen",
+            ",",
+            "ob",
+            "Sie",
+            "Kreditkarten",
+            "akzeptieren",
+            "."
+          ],
+          "shuffled": [
+            "ob",
+            "Ich",
+            "akzeptieren",
+            "wissen",
+            "Sie",
+            "möchte",
+            ",",
+            "Kreditkarten",
+            "."
+          ]
         },
         {
           "id": "if3",
           "hint": "„Wie viel kostet ein Doppelzimmer?“",
-          "correct": ["Wissen", "Sie", ",", "wie", "viel", "ein", "Doppelzimmer", "kostet", "?"],
-          "shuffled": ["viel", "Wissen", "kostet", "wie", "Doppelzimmer", "Sie", "ein", ",", "?"]
+          "correct": [
+            "Wissen",
+            "Sie",
+            ",",
+            "wie",
+            "viel",
+            "ein",
+            "Doppelzimmer",
+            "kostet",
+            "?"
+          ],
+          "shuffled": [
+            "viel",
+            "Wissen",
+            "kostet",
+            "wie",
+            "Doppelzimmer",
+            "Sie",
+            "ein",
+            ",",
+            "?"
+          ]
         },
         {
           "id": "if4",
           "hint": "„Ist Peter auch eingeladen?“",
-          "correct": ["Weißt", "du", ",", "ob", "Peter", "auch", "eingeladen", "ist", "?"],
-          "shuffled": ["auch", "ob", "Weißt", "ist", "Peter", "du", "eingeladen", ",", "?"]
+          "correct": [
+            "Weißt",
+            "du",
+            ",",
+            "ob",
+            "Peter",
+            "auch",
+            "eingeladen",
+            "ist",
+            "?"
+          ],
+          "shuffled": [
+            "auch",
+            "ob",
+            "Weißt",
+            "ist",
+            "Peter",
+            "du",
+            "eingeladen",
+            ",",
+            "?"
+          ]
         }
       ]
     },
@@ -120,12 +488,30 @@
       "title": "Zurück zur direkten Frage.",
       "hint": "Party, Party — welche direkte Frage steckt drin?",
       "pairs": [
-        { "q": "Weißt du, wann die Party beginnt?", "a": "Wann beginnt die Party?" },
-        { "q": "Hast du gehört, wie viele Gäste kommen?", "a": "Wie viele Gäste kommen?" },
-        { "q": "Weißt du, ob Peter auch eingeladen ist?", "a": "Ist Peter auch eingeladen?" },
-        { "q": "Hast du eine Ahnung, was es zu essen gibt?", "a": "Was gibt es zu essen?" },
-        { "q": "Hast du dich informiert, wo die Party stattfindet?", "a": "Wo findet die Party statt?" },
-        { "q": "Weißt du schon, ob du zu der Party gehst?", "a": "Gehst du zu der Party?" }
+        {
+          "q": "Weißt du, wann die Party beginnt?",
+          "a": "Wann beginnt die Party?"
+        },
+        {
+          "q": "Hast du gehört, wie viele Gäste kommen?",
+          "a": "Wie viele Gäste kommen?"
+        },
+        {
+          "q": "Weißt du, ob Peter auch eingeladen ist?",
+          "a": "Ist Peter auch eingeladen?"
+        },
+        {
+          "q": "Hast du eine Ahnung, was es zu essen gibt?",
+          "a": "Was gibt es zu essen?"
+        },
+        {
+          "q": "Hast du dich informiert, wo die Party stattfindet?",
+          "a": "Wo findet die Party statt?"
+        },
+        {
+          "q": "Weißt du schon, ob du zu der Party gehst?",
+          "a": "Gehst du zu der Party?"
+        }
       ]
     },
     {
@@ -133,19 +519,63 @@
       "title": "Lückentext: Am Hotelempfang.",
       "hint": "Ergänzen Sie das Fragewort oder „ob“ — und achten Sie darauf, dass das Verb am Ende steht.",
       "segments": [
-        { "text": "Guten Tag! Können Sie mir sagen, " },
-        { "blank": 0, "answer": ["wie"] },
-        { "text": " viel ein Doppelzimmer kostet? Und wissen Sie, " },
-        { "blank": 1, "answer": ["ob"] },
-        { "text": " das Frühstück inklusive ist? Ich möchte außerdem gerne wissen, " },
-        { "blank": 2, "answer": ["wo"] },
-        { "text": " ich parken kann. Haben Sie eine Idee, " },
-        { "blank": 3, "answer": ["von"] },
-        { "text": " wann bis wann man frühstücken kann? Und könnten Sie mir noch sagen, " },
-        { "blank": 4, "answer": ["ob"] },
-        { "text": " ich meinen Hund mitbringen darf? Ich habe nämlich keine Ahnung, " },
-        { "blank": 5, "answer": ["wie"] },
-        { "text": " lange wir bleiben werden." }
+        {
+          "text": "Guten Tag! Können Sie mir sagen, "
+        },
+        {
+          "blank": 0,
+          "answer": [
+            "wie"
+          ]
+        },
+        {
+          "text": " viel ein Doppelzimmer kostet? Und wissen Sie, "
+        },
+        {
+          "blank": 1,
+          "answer": [
+            "ob"
+          ]
+        },
+        {
+          "text": " das Frühstück inklusive ist? Ich möchte außerdem gerne wissen, "
+        },
+        {
+          "blank": 2,
+          "answer": [
+            "wo"
+          ]
+        },
+        {
+          "text": " ich parken kann. Haben Sie eine Idee, "
+        },
+        {
+          "blank": 3,
+          "answer": [
+            "von"
+          ]
+        },
+        {
+          "text": " wann bis wann man frühstücken kann? Und könnten Sie mir noch sagen, "
+        },
+        {
+          "blank": 4,
+          "answer": [
+            "ob"
+          ]
+        },
+        {
+          "text": " ich meinen Hund mitbringen darf? Ich habe nämlich keine Ahnung, "
+        },
+        {
+          "blank": 5,
+          "answer": [
+            "wie"
+          ]
+        },
+        {
+          "text": " lange wir bleiben werden."
+        }
       ]
     }
   ]

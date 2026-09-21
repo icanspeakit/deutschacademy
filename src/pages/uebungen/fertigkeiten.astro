@@ -75,8 +75,10 @@ const views = skills.map((skill) => {
   return {
     ...skill,
     lead: LEAD[skill.id],
+    leadKey: `fertigkeiten.lead.${skill.id}`,
     href,
     linkLabel: `Alle ${skill.total} ansehen`,
+    linkLabelVars: { n: skill.total },
     cols: skill.levels
       .filter((lv) => lv.items.length > 0)
       .map((lv) => ({ ...lv, items: foldDtz(lv.items, skill.id) })),
@@ -118,9 +120,9 @@ const opening = views.reduce((best, s) => (s.total > best.total ? s : best), vie
           <span class="fk-card-head">
             <span class="fk-card-ic"><Icon name={skill.icon} size={20} /></span>
             <b data-i18n={skill.nameKey}>{skill.name}</b>
-            <span class="fk-card-count">{skill.total}&nbsp;Übungen</span>
+            <span class="fk-card-count" data-i18n="nav.skill.count" data-i18n-vars={JSON.stringify({ n: skill.total })}>{skill.total}&nbsp;Übungen</span>
           </span>
-          <span class="fk-card-lead">{skill.lead}</span>
+          <span class="fk-card-lead" data-i18n={skill.leadKey}>{skill.lead}</span>
           <!-- Coverage, not navigation: a level with nothing behind it stays visible and
                greyed rather than disappearing, because "B2 kommt noch" is the honest
                answer to "was gibt es hier für mich". -->
@@ -138,8 +140,8 @@ const opening = views.reduce((best, s) => (s.total > best.total ? s : best), vie
          tab here. It is still the other half of "listen to German", which is how the
          landing grid now offers it, so it gets a line of its own rather than a tab. -->
     <p class="fk-aside">
-      Einzelne Wörter statt ganzer Texte?
-      <a href="/uebungen/aussprache">Zum Aussprache-Training →</a>
+      <span data-i18n="fertigkeiten.aside">Einzelne Wörter statt ganzer Texte?</span>
+      <a href="/uebungen/aussprache" data-i18n="fertigkeiten.toAussprache">Zum Aussprache-Training →</a>
     </p>
 
     {views.map((skill) => (
@@ -154,10 +156,10 @@ const opening = views.reduce((best, s) => (s.total > best.total ? s : best), vie
         <div class="fk-panel-head">
           <h2>
             <span data-i18n={skill.nameKey}>{skill.name}</span>
-            <span class="fk-panel-count">{skill.total} Übungen</span>
+            <span class="fk-panel-count" data-i18n="nav.skill.count" data-i18n-vars={JSON.stringify({ n: skill.total })}>{skill.total} Übungen</span>
           </h2>
           <a class="fk-panel-all" href={skill.href}>
-            <span>{skill.linkLabel}</span>
+            <span data-i18n="fertigkeiten.seeAll" data-i18n-vars={JSON.stringify(skill.linkLabelVars)}>{skill.linkLabel}</span>
             <span aria-hidden="true">→</span>
           </a>
         </div>
@@ -177,7 +179,17 @@ const opening = views.reduce((best, s) => (s.total > best.total ? s : best), vie
                     <li>
                       <a href={item.href}>
                         <b>{item.title}</b>
-                        {item.count && <i>{item.count}</i>}
+                        {item.count && (
+                          <i>
+                            {item.meta
+                              ? <>
+                                  <span data-i18n={item.meta.typeKey}>{item.meta.typeText}</span>
+                                  {" · "}
+                                  <span data-i18n={item.meta.countKey} data-i18n-vars={JSON.stringify(item.meta.countVars)}>{item.meta.countText}</span>
+                                </>
+                              : item.count}
+                          </i>
+                        )}
                       </a>
                     </li>
                   ))}

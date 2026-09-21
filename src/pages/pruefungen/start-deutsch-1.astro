@@ -24,11 +24,11 @@ import satz from "../../data/pruefungen/start-deutsch-1/uebungssatz-1.json";
 >
   <PracticeHeader title="Start Deutsch 1" />
   <main class="practice-main practice-main--wide practice-main--trainer">
-    <a href="/pruefungen" class="vp-back-link">← Zurück zur Übersicht</a>
+    <a href="/pruefungen" class="vp-back-link" data-i18n="exam.backToOverview">← Zurück zur Übersicht</a>
 
     <div class="practice-hero">
       <p class="eyebrow">Goethe A1 · telc A1</p>
-      <h1><span class="hero-exam">Start Deutsch 1</span> Übungssatz</h1>
+      <h1><span class="hero-exam">Start Deutsch 1</span> <span data-i18n="exam.h1.set">Übungssatz</span></h1>
       <p>
         Goethe A1 und telc A1 sind dieselbe Prüfung — wer hier übt, übt für beide. Hören, Lesen und
         Schreiben im Prüfungsformat. Die Einzelheiten stehen im Teil „Start“.
@@ -44,6 +44,17 @@ import satz from "../../data/pruefungen/start-deutsch-1/uebungssatz-1.json";
     import { choiceCard, el, sectionHeader, escapeHtml, practiceToggle } from "../../lib/exam/renderHelpers.js";
     import { countAnswered, countCorrect, percent } from "../../lib/exam/scoring.js";
     import { recordAttempt } from "../../lib/progress.js";
+    import { getLang, loadDict, translate } from "../../lib/i18n.js";
+
+    /* Resolved once, before the app mounts, rather than re-rendered on every language
+       change like the other surfaces. This page is a running exam: its sections are built
+       from one config array at mount and hold answers the learner has already typed, so
+       rebuilding them mid-sitting to change a table header would be a poor trade. The
+       surrounding page (header, drawer, footer) still re-translates instantly via
+       data-i18n; the simulator's own chrome follows on the next visit.
+       Exam CONTENT is untouched here — prompts, options and transcripts stay German. */
+    const dict = await loadDict(getLang());
+    const t = (key, vars) => translate(dict, key, vars);
 
     const data = JSON.parse(document.getElementById("sd1-data").textContent);
     const { hoeren, lesen, schreiben } = data;
@@ -90,7 +101,7 @@ import satz from "../../data/pruefungen/start-deutsch-1/uebungssatz-1.json";
        is not listening — the section says so plainly rather than pretending. */
     function hoerText(item) {
       const wrap = el("div", "hoer-text");
-      const btn = el("button", "quiz-btn quiz-btn--ghost", "Text anzeigen");
+      const btn = el("button", "quiz-btn quiz-btn--ghost", t("exam.showText"));
       btn.type = "button";
       const body = el("p", "hoer-transcript", escapeHtml(item.transcript));
       body.hidden = true;
@@ -132,24 +143,23 @@ import satz from "../../data/pruefungen/start-deutsch-1/uebungssatz-1.json";
         render(main, ctx) {
           sectionHeader(main, {
             eyebrow: "Übungssatz",
-            title: "Start Deutsch 1 — Goethe A1 und telc A1",
-            instruction:
-              "Die Prüfung hat vier Teile: Hören, Lesen, Schreiben und Sprechen. Hier übst du die ersten drei; Sprechen geht nur mündlich mit einer Prüferin oder einem Prüfer.",
+            title: t("sd1.title"),
+            instruction: t("sd1.instruction"),
           });
 
           const facts = el("table", "exam-breakdown");
           facts.innerHTML =
-            "<thead><tr><th>Teil</th><th>Umfang</th></tr></thead><tbody>" +
-            "<tr><td>Hören</td><td>15 Aufgaben · ca. 20 Min.</td></tr>" +
-            "<tr><td>Lesen</td><td>15 Aufgaben · ca. 25 Min.</td></tr>" +
-            "<tr><td>Schreiben</td><td>Formular + Nachricht · ca. 20 Min.</td></tr>" +
-            "<tr><td>Bestanden ab</td><td>36 von 60 Punkten</td></tr>" +
+            "<thead><tr><th>" + escapeHtml(t("format.th.part")) + "</th><th>" + escapeHtml(t("exam.th.scope")) + "</th></tr></thead><tbody>" +
+            "<tr><td>" + escapeHtml(t("skill.hoeren")) + "</td><td>" + escapeHtml(t("sd1.row.hoeren")) + "</td></tr>" +
+            "<tr><td>" + escapeHtml(t("skill.lesen")) + "</td><td>" + escapeHtml(t("sd1.row.lesen")) + "</td></tr>" +
+            "<tr><td>" + escapeHtml(t("skill.schreiben")) + "</td><td>" + escapeHtml(t("sd1.row.schreiben")) + "</td></tr>" +
+            "<tr><td>" + escapeHtml(t("sd1.row.passLabel")) + "</td><td>" + escapeHtml(t("sd1.row.pass")) + "</td></tr>" +
             "</tbody>";
           main.appendChild(el("div", "exam-result")).appendChild(facts);
 
           main.appendChild(el("p", "format-note", escapeHtml(data.sourcing)));
 
-          const go = el("button", "quiz-btn quiz-btn--primary", "Übungssatz starten →");
+          const go = el("button", "quiz-btn quiz-btn--primary", t("exam.startSet"));
           go.type = "button";
           go.addEventListener("click", () => ctx.goTo("hoeren1"));
           main.appendChild(el("div", "exam-actions")).appendChild(go);
@@ -257,11 +267,11 @@ import satz from "../../data/pruefungen/start-deutsch-1/uebungssatz-1.json";
           }
           main.appendChild(table);
 
-          const reveal = el("button", "quiz-btn quiz-btn--ghost", "Lösung zeigen");
+          const reveal = el("button", "quiz-btn quiz-btn--ghost", t("exam.showSolution"));
           reveal.type = "button";
           reveal.addEventListener("click", () => {
             const on = table.classList.toggle("show-answers");
-            reveal.textContent = on ? "Lösung verbergen" : "Lösung zeigen";
+            reveal.textContent = t(on ? "exam.hideSolution" : "exam.showSolution");
           });
           main.appendChild(el("div", "exam-actions")).appendChild(reveal);
           main.appendChild(
@@ -300,7 +310,7 @@ import satz from "../../data/pruefungen/start-deutsch-1/uebungssatz-1.json";
           box.addEventListener("input", paintWords);
           main.appendChild(words);
 
-          const modelBtn = el("button", "quiz-btn quiz-btn--ghost", "Beispiellösung zeigen");
+          const modelBtn = el("button", "quiz-btn quiz-btn--ghost", t("exam.showModel"));
           modelBtn.type = "button";
           const model = el("div", "model-answer");
           model.hidden = true;
@@ -311,7 +321,7 @@ import satz from "../../data/pruefungen/start-deutsch-1/uebungssatz-1.json";
           model.appendChild(check);
           modelBtn.addEventListener("click", () => {
             model.hidden = !model.hidden;
-            modelBtn.textContent = model.hidden ? "Beispiellösung zeigen" : "Beispiellösung verbergen";
+            modelBtn.textContent = t(model.hidden ? "exam.showModel" : "exam.hideModel");
           });
           main.appendChild(el("div", "exam-actions")).appendChild(modelBtn);
           main.appendChild(model);
@@ -354,9 +364,9 @@ import satz from "../../data/pruefungen/start-deutsch-1/uebungssatz-1.json";
 
             const table = el("table", "exam-breakdown");
             table.innerHTML =
-              "<thead><tr><th>Teil</th><th>Richtig</th></tr></thead><tbody>" +
-              "<tr><td>Hören</td><td>" + countCorrect(hoerIds, ctx.state) + " / " + hoerIds.length + "</td></tr>" +
-              "<tr><td>Lesen</td><td>" + countCorrect(leseIds, ctx.state) + " / " + leseIds.length + "</td></tr>" +
+              "<thead><tr><th>" + escapeHtml(t("format.th.part")) + "</th><th>" + escapeHtml(t("exam.th.correct")) + "</th></tr></thead><tbody>" +
+              "<tr><td>" + escapeHtml(t("skill.hoeren")) + "</td><td>" + countCorrect(hoerIds, ctx.state) + " / " + hoerIds.length + "</td></tr>" +
+              "<tr><td>" + escapeHtml(t("skill.lesen")) + "</td><td>" + countCorrect(leseIds, ctx.state) + " / " + leseIds.length + "</td></tr>" +
               "</tbody>";
             card.appendChild(table);
 

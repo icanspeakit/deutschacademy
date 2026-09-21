@@ -61,9 +61,16 @@ const rendered = texts.filter((t) => hasClip(t.id)).length;
               <span class="ho-card-ic"><Icon name={TYPE_ICON[t.type] ?? "volume"} size={20} /></span>
               <span class="ho-card-txt">
                 <b>{t.title}</b>
-                <i>{t.blurb}</i>
+                {/* Scenario titles stay German — they name the situation in the language
+                    being learnt. The line under each says what to listen for. */}
+                <i data-i18n={`hoeren.${t.id}.blurb`}>{t.blurb}</i>
+                {/* Two spans, not one: the task type and the counts translate from
+                    separate keys, so the "Sek. · Fragen" template is written once per
+                    shape instead of being baked into all 24 type names. */}
                 <span class="ho-card-meta">
-                  {types[t.type]} · {clipSeconds(t)} Sek. · {t.questions.length} Fragen
+                  <span data-i18n={`type.hoeren.${t.type}`}>{types[t.type]}</span>
+                  {" · "}
+                  <span data-i18n="meta.secQ" data-i18n-vars={JSON.stringify({ s: clipSeconds(t), q: t.questions.length })}>{clipSeconds(t)} Sek. · {t.questions.length} Fragen</span>
                 </span>
               </span>
               <span class="ho-card-go" aria-hidden="true">→</span>

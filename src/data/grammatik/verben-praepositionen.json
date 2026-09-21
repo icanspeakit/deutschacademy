@@ -69,6 +69,186 @@
       ]
     }
   },
+  "aktiv": {
+    "listen": [
+      {
+        "text": "Sie ärgert sich über den Verkehr.",
+        "note": "sich ärgern verlangt über + Akkusativ — das Paar lernt man zusammen.",
+        "audio": "/audio/grammatik/praepositionen/sie-aergert-sich-ueber-den-verkehr.mp3"
+      },
+      {
+        "text": "Ich warte auf den Bus.",
+        "note": "warten auf + Akkusativ, auch wenn nichts sich bewegt.",
+        "audio": "/audio/grammatik/praepositionen/ich-warte-auf-den-bus.mp3"
+      },
+      {
+        "text": "Worüber ärgert sie sich?",
+        "note": "Bei Sachen: wo + r + Präposition. Bei Personen: Präposition + wen.",
+        "audio": "/audio/grammatik/praepositionen/worueber-aergert-sie-sich.mp3"
+      }
+    ],
+    "hoeren": {
+      "instruction": "Hör zu und wähle die Präposition mit ihrem Kasus.",
+      "items": [
+        {
+          "text": "Ich warte auf den Bus.",
+          "choices": [
+            "auf den Bus",
+            "auf dem Bus",
+            "an den Bus"
+          ],
+          "correct": 0,
+          "audio": "/audio/grammatik/praepositionen/ich-warte-auf-den-bus.mp3"
+        },
+        {
+          "text": "Sie ärgert sich über den Verkehr.",
+          "choices": [
+            "über dem Verkehr",
+            "über den Verkehr",
+            "um den Verkehr"
+          ],
+          "correct": 1,
+          "audio": "/audio/grammatik/praepositionen/sie-aergert-sich-ueber-den-verkehr.mp3"
+        },
+        {
+          "text": "Wir freuen uns auf das Wochenende.",
+          "choices": [
+            "über das Wochenende",
+            "an das Wochenende",
+            "auf das Wochenende"
+          ],
+          "correct": 2,
+          "audio": "/audio/grammatik/praepositionen/wir-freuen-uns-auf-das-wochenende.mp3"
+        },
+        {
+          "text": "Er hat Angst vor dem Hund.",
+          "choices": [
+            "vor dem Hund",
+            "vor den Hund",
+            "von dem Hund"
+          ],
+          "correct": 0,
+          "audio": "/audio/grammatik/praepositionen/er-hat-angst-vor-dem-hund.mp3"
+        },
+        {
+          "text": "Sie interessiert sich für Musik.",
+          "choices": [
+            "an Musik",
+            "für Musik",
+            "über Musik"
+          ],
+          "correct": 1,
+          "audio": "/audio/grammatik/praepositionen/sie-interessiert-sich-fuer-musik.mp3"
+        },
+        {
+          "text": "Ich denke oft an meine Familie.",
+          "choices": [
+            "über meine Familie",
+            "auf meine Familie",
+            "an meine Familie"
+          ],
+          "correct": 2,
+          "audio": "/audio/grammatik/praepositionen/ich-denke-oft-an-meine-familie.mp3"
+        }
+      ]
+    },
+    "sprechen": {
+      "rounds": [
+        {
+          "label": "1 · Verb + Präposition",
+          "instruction": "Du hörst ein Verb und ein Objekt. Bau den Satz mit der festen Präposition — Ich …",
+          "example": {
+            "prompt": "sich ärgern — der Verkehr",
+            "answer": "Ich ärgere mich über den Verkehr."
+          },
+          "items": [
+            {
+              "prompt": "warten — der Bus",
+              "answer": "Ich warte auf den Bus.",
+              "audioPrompt": "/audio/grammatik/praepositionen/warten-der-bus.mp3",
+              "audioAnswer": "/audio/grammatik/praepositionen/ich-warte-auf-den-bus--8wphfh.mp3"
+            },
+            {
+              "prompt": "sich freuen — das Wochenende",
+              "answer": "Ich freue mich auf das Wochenende.",
+              "audioPrompt": "/audio/grammatik/praepositionen/sich-freuen-das-wochenende.mp3",
+              "audioAnswer": "/audio/grammatik/praepositionen/ich-freue-mich-auf-das-wochenende--8wphfh.mp3"
+            },
+            {
+              "prompt": "denken — die Prüfung",
+              "answer": "Ich denke an die Prüfung.",
+              "audioPrompt": "/audio/grammatik/praepositionen/denken-die-pruefung.mp3",
+              "audioAnswer": "/audio/grammatik/praepositionen/ich-denke-an-die-pruefung--8wphfh.mp3"
+            },
+            {
+              "prompt": "sich interessieren — Musik",
+              "answer": "Ich interessiere mich für Musik.",
+              "audioPrompt": "/audio/grammatik/praepositionen/sich-interessieren-musik.mp3",
+              "audioAnswer": "/audio/grammatik/praepositionen/ich-interessiere-mich-fuer-musik--8wphfh.mp3"
+            },
+            {
+              "prompt": "Angst haben — die Zukunft",
+              "answer": "Ich habe Angst vor der Zukunft.",
+              "audioPrompt": "/audio/grammatik/praepositionen/angst-haben-die-zukunft.mp3",
+              "audioAnswer": "/audio/grammatik/praepositionen/ich-habe-angst-vor-der-zukunft--8wphfh.mp3"
+            },
+            {
+              "prompt": "sich kümmern — die Kinder",
+              "answer": "Ich kümmere mich um die Kinder.",
+              "audioPrompt": "/audio/grammatik/praepositionen/sich-kuemmern-die-kinder.mp3",
+              "audioAnswer": "/audio/grammatik/praepositionen/ich-kuemmere-mich-um-die-kinder--8wphfh.mp3"
+            }
+          ]
+        },
+        {
+          "label": "2 · Frag danach",
+          "instruction": "Du hörst einen Satz. Frag nach dem Objekt — bei Sachen mit wo(r)…, bei Personen mit der Präposition.",
+          "example": {
+            "prompt": "Sie ärgert sich über den Verkehr.",
+            "answer": "Worüber ärgert sie sich?"
+          },
+          "items": [
+            {
+              "prompt": "Er wartet auf den Bus.",
+              "answer": "Worauf wartet er?",
+              "audioPrompt": "/audio/grammatik/praepositionen/er-wartet-auf-den-bus.mp3",
+              "audioAnswer": "/audio/grammatik/praepositionen/worauf-wartet-er--8wphfh.mp3"
+            },
+            {
+              "prompt": "Sie freut sich auf das Wochenende.",
+              "answer": "Worauf freut sie sich?",
+              "audioPrompt": "/audio/grammatik/praepositionen/sie-freut-sich-auf-das-wochenende.mp3",
+              "audioAnswer": "/audio/grammatik/praepositionen/worauf-freut-sie-sich--8wphfh.mp3"
+            },
+            {
+              "prompt": "Er denkt an seine Frau.",
+              "answer": "An wen denkt er?",
+              "audioPrompt": "/audio/grammatik/praepositionen/er-denkt-an-seine-frau.mp3",
+              "audioAnswer": "/audio/grammatik/praepositionen/an-wen-denkt-er--8wphfh.mp3"
+            },
+            {
+              "prompt": "Sie interessiert sich für Musik.",
+              "answer": "Wofür interessiert sie sich?",
+              "audioPrompt": "/audio/grammatik/praepositionen/sie-interessiert-sich-fuer-musik.mp3",
+              "audioAnswer": "/audio/grammatik/praepositionen/wofuer-interessiert-sie-sich--8wphfh.mp3"
+            },
+            {
+              "prompt": "Er hat Angst vor dem Hund.",
+              "answer": "Wovor hat er Angst?",
+              "audioPrompt": "/audio/grammatik/praepositionen/er-hat-angst-vor-dem-hund.mp3",
+              "audioAnswer": "/audio/grammatik/praepositionen/wovor-hat-er-angst--8wphfh.mp3"
+            },
+            {
+              "prompt": "Sie kümmert sich um ihren Bruder.",
+              "answer": "Um wen kümmert sie sich?",
+              "audioPrompt": "/audio/grammatik/praepositionen/sie-kuemmert-sich-um-ihren-bruder.mp3",
+              "audioAnswer": "/audio/grammatik/praepositionen/um-wen-kuemmert-sie-sich--8wphfh.mp3"
+            }
+          ]
+        }
+      ]
+    }
+  },
   "exercises": [
     {
       "type": "fill",

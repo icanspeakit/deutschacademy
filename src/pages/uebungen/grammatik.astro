@@ -2,6 +2,7 @@
 import Layout from "../../layouts/Layout.astro";
 import PracticeHeader from "../../components/PracticeHeader.astro";
 import "../../styles/practice.css";
+import "../../styles/aktiv.css";
 import grammatik from "../../data/grammatik.json";
 // The icons are shared with /uebungen's Grammatik-Werkstatt — two surfaces drawing the
 // same topic with two different pictures is how one catalogue becomes two.
@@ -22,9 +23,18 @@ const topics = [
     name: w.name,
     level: w.level,
     intro: w.subtitle,
+    // Titles stay German — "Wechselpräpositionen" is the term being taught. The
+    // sentence under it is what a learner needs in their own language.
+    introKey: `grammatik.${w.id}.intro`,
     href: "/uebungen/grammatik/" + (w.slug ?? w.id),
     badge: w.exercises.length + " Aufgabentypen",
+    badgeKey: "grammatik.card.taskTypes",
+    badgeVars: { n: w.exercises.length },
     isWorkspace: true,
+    // Carries the Aktiv mode — hearing and speaking, not just reading and typing. Worth a
+    // mark on the card: a learner with ten minutes and headphones is looking for exactly
+    // these, and they are otherwise indistinguishable from the silent ones.
+    aktiv: !!w.aktiv,
   })),
   ...grammatik
     .filter((t) => !covered.has(t.id))
@@ -33,8 +43,11 @@ const topics = [
       name: t.name,
       level: t.level,
       intro: t.intro,
+      introKey: `grammatik.${t.id}.intro`,
       href: "/uebungen/grammatik/" + t.id,
       badge: t.questions.length + " Fragen",
+      badgeKey: "grammatik.card.questions",
+      badgeVars: { n: t.questions.length },
       isWorkspace: t.id === "akkusativ",
     })),
 ];
@@ -97,8 +110,9 @@ const ROW_WIDTH = 4;
             <a class="tool-card" href={t.href}>
               <div class="tool-card-icon">{GRAMMAR_ICON[t.id] || "📚"}</div>
               <h3>{t.name}</h3>
-              <p>{t.intro}</p>
-              <span class={`tool-card-count ${t.isWorkspace ? "tool-card-count--workspace" : ""}`}>{t.badge}</span>
+              <p data-i18n={t.introKey}>{t.intro}</p>
+              <span class={`tool-card-count ${t.isWorkspace ? "tool-card-count--workspace" : ""}`} data-i18n={t.badgeKey} data-i18n-vars={JSON.stringify(t.badgeVars)}>{t.badge}</span>
+              {t.aktiv && <span class="tool-card-aktiv" data-i18n="grammatik.card.aktiv" data-i18n-attr="title:grammatik.card.aktivTitle" title="Mit Hör- und Sprechübungen">Hören &amp; Sprechen</span>}
             </a>
           ))}
           {Array.from({ length: Math.max(0, ROW_WIDTH - topics.filter((t) => t.level === level).length) }).map(() => (

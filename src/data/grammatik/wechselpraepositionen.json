@@ -6,15 +6,33 @@
   "source": "Wechselpräp.pdf (Kapitel 34) · Präp erklärt.pdf (Kapitel 35) · Präp m Akk.pdf · Prä m Dat.pdf · WEchselprä Partner A/B.pdf · f 12 05 C11 Rauf und Runter(2).pdf (Kapitel 76)",
   "concept": {
     "flow": [
-      { "text": "Wohin? → Akkusativ", "variant": "verb" },
-      { "text": "Wo? → Dativ", "variant": "prep" }
+      {
+        "text": "Wohin? → Akkusativ",
+        "variant": "verb"
+      },
+      {
+        "text": "Wo? → Dativ",
+        "variant": "prep"
+      }
     ],
     "exampleHtml": "Ich gehe <span class=\"vp-verb\">ins</span> Kino. — Ich war gestern schon <span class=\"vp-prep\">im</span> Kino.",
     "qa": [
-      { "html": "<strong>Wohin?</strong> nennt die Richtung (direktiv): Präposition + <em>Akkusativ</em>. <em>Der Löwe springt auf <strong>den</strong> Boden.</em>", "tag": "Richtung" },
-      { "html": "<strong>Wo?</strong> nennt den Ort (situativ): Präposition + <em>Dativ</em>. <em>Der Löwe sitzt auf <strong>dem</strong> Boden.</em>", "tag": "Ort" },
-      { "html": "Nur diese neun sind Wechselpräpositionen: <strong>in, an, auf, über, unter, vor, hinter, neben, zwischen</strong>.", "tag": "die Neun" },
-      { "html": "Verschmelzungen: <em>in + das = ins, an + das = ans</em> (Akkusativ) — <em>in + dem = im, an + dem = am</em> (Dativ).", "tag": "im / ins" }
+      {
+        "html": "<strong>Wohin?</strong> nennt die Richtung (direktiv): Präposition + <em>Akkusativ</em>. <em>Der Löwe springt auf <strong>den</strong> Boden.</em>",
+        "tag": "Richtung"
+      },
+      {
+        "html": "<strong>Wo?</strong> nennt den Ort (situativ): Präposition + <em>Dativ</em>. <em>Der Löwe sitzt auf <strong>dem</strong> Boden.</em>",
+        "tag": "Ort"
+      },
+      {
+        "html": "Nur diese neun sind Wechselpräpositionen: <strong>in, an, auf, über, unter, vor, hinter, neben, zwischen</strong>.",
+        "tag": "die Neun"
+      },
+      {
+        "html": "Verschmelzungen: <em>in + das = ins, an + das = ans</em> (Akkusativ) — <em>in + dem = im, an + dem = am</em> (Dativ).",
+        "tag": "im / ins"
+      }
     ],
     "noteHtml": "Das Verb verrät die Frage: <strong>Bewegungsverben</strong> (gehen, fahren, bringen, steigen, legen, stellen, setzen, hängen) fragen nach <em>wohin</em> → Akkusativ. <strong>Zustandsverben</strong> (sein, sitzen, stehen, liegen, wohnen, studieren, hängen) fragen nach <em>wo</em> → Dativ. Ein klassisches Paar: <em>Sie <strong>legt</strong> die Decke auf <strong>das</strong> Bett.</em> — <em>Die Decke <strong>liegt</strong> auf <strong>dem</strong> Bett.</em>",
     "reference": {
@@ -23,39 +41,128 @@
       "tables": [
         {
           "caption": "Die neun Wechselpräpositionen",
-          "head": ["Präposition", "Wohin? (Akkusativ)", "Wo? (Dativ)"],
+          "head": [
+            "Präposition",
+            "Wohin? (Akkusativ)",
+            "Wo? (Dativ)"
+          ],
           "rows": [
-            ["in", "Der Lolly fällt in die Tasche.", "Der Lolly ist in der Tasche."],
-            ["an", "Der Schmetterling fliegt an den Baum.", "Der Schmetterling sitzt an dem Baum."],
-            ["auf", "Der Löwe springt auf den Boden.", "Der Löwe liegt auf dem Boden."],
-            ["über", "Der Vogel fliegt über den Baum.", "Der Vogel kreist über dem Baum."],
-            ["unter", "Der Hase läuft unter den Hut.", "Der Hase sitzt unter dem Hut."],
-            ["vor", "Der Hut fällt vor den Löwen.", "Der Hut liegt vor dem Löwen."],
-            ["hinter", "Das Mädchen läuft hinter den Baum.", "Das Mädchen steht hinter dem Baum."],
-            ["neben", "Der Hut fällt neben die Tasche.", "Der Hut liegt neben der Tasche."],
-            ["zwischen", "Der Löwe springt zwischen die Bäume.", "Der Löwe steht zwischen den Bäumen."]
+            [
+              "in",
+              "Der Lolly fällt in die Tasche.",
+              "Der Lolly ist in der Tasche."
+            ],
+            [
+              "an",
+              "Der Schmetterling fliegt an den Baum.",
+              "Der Schmetterling sitzt an dem Baum."
+            ],
+            [
+              "auf",
+              "Der Löwe springt auf den Boden.",
+              "Der Löwe liegt auf dem Boden."
+            ],
+            [
+              "über",
+              "Der Vogel fliegt über den Baum.",
+              "Der Vogel kreist über dem Baum."
+            ],
+            [
+              "unter",
+              "Der Hase läuft unter den Hut.",
+              "Der Hase sitzt unter dem Hut."
+            ],
+            [
+              "vor",
+              "Der Hut fällt vor den Löwen.",
+              "Der Hut liegt vor dem Löwen."
+            ],
+            [
+              "hinter",
+              "Das Mädchen läuft hinter den Baum.",
+              "Das Mädchen steht hinter dem Baum."
+            ],
+            [
+              "neben",
+              "Der Hut fällt neben die Tasche.",
+              "Der Hut liegt neben der Tasche."
+            ],
+            [
+              "zwischen",
+              "Der Löwe springt zwischen die Bäume.",
+              "Der Löwe steht zwischen den Bäumen."
+            ]
           ]
         },
         {
           "caption": "Verbpaare: Aktion und Zustand",
           "note": "Links die regelmäßigen Aktionsverben (Akkusativ), rechts die unregelmäßigen Zustandsverben (Dativ).",
-          "head": ["Wohin? — Aktion", "Formen", "Wo? — Zustand", "Formen"],
+          "head": [
+            "Wohin? — Aktion",
+            "Formen",
+            "Wo? — Zustand",
+            "Formen"
+          ],
           "rows": [
-            ["stellen", "stellte, gestellt", "stehen", "stand, gestanden"],
-            ["legen", "legte, gelegt", "liegen", "lag, gelegen"],
-            ["setzen", "setzte, gesetzt", "sitzen", "saß, gesessen"],
-            ["hängen", "hängte, gehängt", "hängen", "hing, gehangen"]
+            [
+              "stellen",
+              "stellte, gestellt",
+              "stehen",
+              "stand, gestanden"
+            ],
+            [
+              "legen",
+              "legte, gelegt",
+              "liegen",
+              "lag, gelegen"
+            ],
+            [
+              "setzen",
+              "setzte, gesetzt",
+              "sitzen",
+              "saß, gesessen"
+            ],
+            [
+              "hängen",
+              "hängte, gehängt",
+              "hängen",
+              "hing, gehangen"
+            ]
           ]
         },
         {
           "caption": "Lokale Präpositionen, die nicht wechseln",
-          "head": ["Frage", "Präposition", "Beispiele"],
+          "head": [
+            "Frage",
+            "Präposition",
+            "Beispiele"
+          ],
           "rows": [
-            ["Wo? (immer Dativ)", "bei", "bei Lisa, beim Arzt, beim Picknick"],
-            ["Wohin? (immer Dativ)", "zu", "zu Lisa, zum Arzt, zum Picknick"],
-            ["Wohin? (ohne Artikel)", "nach", "nach Paris, nach Japan, nach Hause"],
-            ["Woher? (immer Dativ)", "aus", "aus Paris, aus dem Haus"],
-            ["Woher? (immer Dativ)", "von", "vom Strand, von Lisa, von zu Hause"]
+            [
+              "Wo? (immer Dativ)",
+              "bei",
+              "bei Lisa, beim Arzt, beim Picknick"
+            ],
+            [
+              "Wohin? (immer Dativ)",
+              "zu",
+              "zu Lisa, zum Arzt, zum Picknick"
+            ],
+            [
+              "Wohin? (ohne Artikel)",
+              "nach",
+              "nach Paris, nach Japan, nach Hause"
+            ],
+            [
+              "Woher? (immer Dativ)",
+              "aus",
+              "aus Paris, aus dem Haus"
+            ],
+            [
+              "Woher? (immer Dativ)",
+              "von",
+              "vom Strand, von Lisa, von zu Hause"
+            ]
           ]
         }
       ],
@@ -85,24 +192,237 @@
       ]
     }
   },
+  "aktiv": {
+    "listen": [
+      {
+        "text": "Ich gehe ins Kino.",
+        "note": "Wohin? Richtung — Akkusativ. in das wird zu ins.",
+        "audio": "/audio/grammatik/wechselpraepositionen/ich-gehe-ins-kino.mp3"
+      },
+      {
+        "text": "Ich war gestern schon im Kino.",
+        "note": "Wo? Ort — Dativ. in dem wird zu im.",
+        "audio": "/audio/grammatik/wechselpraepositionen/ich-war-gestern-schon-im-kino.mp3"
+      },
+      {
+        "text": "Der Löwe springt auf den Boden.",
+        "note": "springen ist Bewegung, also auf + Akkusativ.",
+        "audio": "/audio/grammatik/wechselpraepositionen/der-loewe-springt-auf-den-boden.mp3"
+      }
+    ],
+    "hoeren": {
+      "instruction": "Hör zu und wähle die Form, die du gehört hast. Der Unterschied ist oft nur eine Silbe.",
+      "items": [
+        {
+          "text": "Die Kinder laufen in den Garten.",
+          "choices": [
+            "in den Garten",
+            "in dem Garten",
+            "im Garten"
+          ],
+          "correct": 0,
+          "audio": "/audio/grammatik/wechselpraepositionen/die-kinder-laufen-in-den-garten.mp3"
+        },
+        {
+          "text": "Das Buch liegt auf dem Tisch.",
+          "choices": [
+            "auf den Tisch",
+            "auf dem Tisch",
+            "aufs Tisch"
+          ],
+          "correct": 1,
+          "audio": "/audio/grammatik/wechselpraepositionen/das-buch-liegt-auf-dem-tisch.mp3"
+        },
+        {
+          "text": "Wir fahren morgen ans Meer.",
+          "choices": [
+            "am Meer",
+            "an dem Meer",
+            "ans Meer"
+          ],
+          "correct": 2,
+          "audio": "/audio/grammatik/wechselpraepositionen/wir-fahren-morgen-ans-meer.mp3"
+        },
+        {
+          "text": "Sie hängt das Bild über das Sofa.",
+          "choices": [
+            "über dem Sofa",
+            "über das Sofa",
+            "überm Sofa"
+          ],
+          "correct": 1,
+          "audio": "/audio/grammatik/wechselpraepositionen/sie-haengt-das-bild-ueber-das-sofa.mp3"
+        },
+        {
+          "text": "Der Schlüssel steckt im Schloss.",
+          "choices": [
+            "im Schloss",
+            "ins Schloss",
+            "in das Schloss"
+          ],
+          "correct": 0,
+          "audio": "/audio/grammatik/wechselpraepositionen/der-schluessel-steckt-im-schloss.mp3"
+        },
+        {
+          "text": "Stell die Flasche bitte neben den Kühlschrank.",
+          "choices": [
+            "neben dem Kühlschrank",
+            "nebem Kühlschrank",
+            "neben den Kühlschrank"
+          ],
+          "correct": 2,
+          "audio": "/audio/grammatik/wechselpraepositionen/stell-die-flasche-bitte-neben-den-kuehlschrank.mp3"
+        }
+      ]
+    },
+    "sprechen": {
+      "rounds": [
+        {
+          "label": "1 · Wo? → Wohin?",
+          "instruction": "Du hörst, wo jemand ist. Sag, dass er dorthin geht — also im Akkusativ.",
+          "example": {
+            "prompt": "Ich bin im Kino.",
+            "answer": "Ich gehe ins Kino."
+          },
+          "items": [
+            {
+              "prompt": "Ich bin im Büro.",
+              "answer": "Ich gehe ins Büro.",
+              "audioPrompt": "/audio/grammatik/wechselpraepositionen/ich-bin-im-buero.mp3",
+              "audioAnswer": "/audio/grammatik/wechselpraepositionen/ich-gehe-ins-buero--8wphfh.mp3"
+            },
+            {
+              "prompt": "Ich bin in der Schule.",
+              "answer": "Ich gehe in die Schule.",
+              "audioPrompt": "/audio/grammatik/wechselpraepositionen/ich-bin-in-der-schule.mp3",
+              "audioAnswer": "/audio/grammatik/wechselpraepositionen/ich-gehe-in-die-schule--8wphfh.mp3"
+            },
+            {
+              "prompt": "Ich bin auf dem Markt.",
+              "answer": "Ich gehe auf den Markt.",
+              "audioPrompt": "/audio/grammatik/wechselpraepositionen/ich-bin-auf-dem-markt.mp3",
+              "audioAnswer": "/audio/grammatik/wechselpraepositionen/ich-gehe-auf-den-markt--8wphfh.mp3"
+            },
+            {
+              "prompt": "Ich bin am Strand.",
+              "answer": "Ich gehe an den Strand.",
+              "audioPrompt": "/audio/grammatik/wechselpraepositionen/ich-bin-am-strand.mp3",
+              "audioAnswer": "/audio/grammatik/wechselpraepositionen/ich-gehe-an-den-strand--8wphfh.mp3"
+            },
+            {
+              "prompt": "Ich bin im Park.",
+              "answer": "Ich gehe in den Park.",
+              "audioPrompt": "/audio/grammatik/wechselpraepositionen/ich-bin-im-park.mp3",
+              "audioAnswer": "/audio/grammatik/wechselpraepositionen/ich-gehe-in-den-park--8wphfh.mp3"
+            },
+            {
+              "prompt": "Ich bin vor dem Haus.",
+              "answer": "Ich gehe vor das Haus.",
+              "audioPrompt": "/audio/grammatik/wechselpraepositionen/ich-bin-vor-dem-haus.mp3",
+              "audioAnswer": "/audio/grammatik/wechselpraepositionen/ich-gehe-vor-das-haus--8wphfh.mp3"
+            }
+          ]
+        },
+        {
+          "label": "2 · liegen → legen",
+          "instruction": "Du hörst, wo etwas liegt oder steht. Sag, dass du es dorthin legst oder stellst.",
+          "example": {
+            "prompt": "Das Buch liegt auf dem Tisch.",
+            "answer": "Ich lege das Buch auf den Tisch."
+          },
+          "items": [
+            {
+              "prompt": "Die Flasche steht neben dem Kühlschrank.",
+              "answer": "Ich stelle die Flasche neben den Kühlschrank.",
+              "audioPrompt": "/audio/grammatik/wechselpraepositionen/die-flasche-steht-neben-dem-kuehlschrank.mp3",
+              "audioAnswer": "/audio/grammatik/wechselpraepositionen/ich-stelle-die-flasche-neben-den-kuehlschrank--8wphfh.mp3"
+            },
+            {
+              "prompt": "Das Bild hängt über dem Sofa.",
+              "answer": "Ich hänge das Bild über das Sofa.",
+              "audioPrompt": "/audio/grammatik/wechselpraepositionen/das-bild-haengt-ueber-dem-sofa.mp3",
+              "audioAnswer": "/audio/grammatik/wechselpraepositionen/ich-haenge-das-bild-ueber-das-sofa--8wphfh.mp3"
+            },
+            {
+              "prompt": "Die Schuhe stehen vor der Tür.",
+              "answer": "Ich stelle die Schuhe vor die Tür.",
+              "audioPrompt": "/audio/grammatik/wechselpraepositionen/die-schuhe-stehen-vor-der-tuer.mp3",
+              "audioAnswer": "/audio/grammatik/wechselpraepositionen/ich-stelle-die-schuhe-vor-die-tuer--8wphfh.mp3"
+            },
+            {
+              "prompt": "Der Teppich liegt unter dem Tisch.",
+              "answer": "Ich lege den Teppich unter den Tisch.",
+              "audioPrompt": "/audio/grammatik/wechselpraepositionen/der-teppich-liegt-unter-dem-tisch.mp3",
+              "audioAnswer": "/audio/grammatik/wechselpraepositionen/ich-lege-den-teppich-unter-den-tisch--8wphfh.mp3"
+            },
+            {
+              "prompt": "Die Tasche steht hinter dem Stuhl.",
+              "answer": "Ich stelle die Tasche hinter den Stuhl.",
+              "audioPrompt": "/audio/grammatik/wechselpraepositionen/die-tasche-steht-hinter-dem-stuhl.mp3",
+              "audioAnswer": "/audio/grammatik/wechselpraepositionen/ich-stelle-die-tasche-hinter-den-stuhl--8wphfh.mp3"
+            },
+            {
+              "prompt": "Das Handy liegt zwischen den Büchern.",
+              "answer": "Ich lege das Handy zwischen die Bücher.",
+              "audioPrompt": "/audio/grammatik/wechselpraepositionen/das-handy-liegt-zwischen-den-buechern.mp3",
+              "audioAnswer": "/audio/grammatik/wechselpraepositionen/ich-lege-das-handy-zwischen-die-buecher--8wphfh.mp3"
+            }
+          ]
+        }
+      ]
+    }
+  },
   "exercises": [
     {
       "type": "table",
       "title": "Wo? oder Wohin? Welches Verb verlangt was?",
       "hint": "Tippen Sie „wo“ oder „wohin“.",
-      "columns": ["Verb", "wo / wohin"],
+      "columns": [
+        "Verb",
+        "wo / wohin"
+      ],
       "placeholder": "wo / wohin",
       "rows": [
-        { "term": "gehen", "answer": "wohin" },
-        { "term": "studieren", "answer": "wo" },
-        { "term": "sein", "answer": "wo" },
-        { "term": "sitzen", "answer": "wo" },
-        { "term": "stehen", "answer": "wo" },
-        { "term": "bringen", "answer": "wohin" },
-        { "term": "fahren", "answer": "wohin" },
-        { "term": "steigen", "answer": "wohin" },
-        { "term": "spielen", "answer": "wo" },
-        { "term": "fliegen", "answer": "wohin" }
+        {
+          "term": "gehen",
+          "answer": "wohin"
+        },
+        {
+          "term": "studieren",
+          "answer": "wo"
+        },
+        {
+          "term": "sein",
+          "answer": "wo"
+        },
+        {
+          "term": "sitzen",
+          "answer": "wo"
+        },
+        {
+          "term": "stehen",
+          "answer": "wo"
+        },
+        {
+          "term": "bringen",
+          "answer": "wohin"
+        },
+        {
+          "term": "fahren",
+          "answer": "wohin"
+        },
+        {
+          "term": "steigen",
+          "answer": "wohin"
+        },
+        {
+          "term": "spielen",
+          "answer": "wo"
+        },
+        {
+          "term": "fliegen",
+          "answer": "wohin"
+        }
       ]
     },
     {
@@ -111,13 +431,58 @@
       "hint": "Erst die Frage stellen: Wo? oder Wohin?",
       "placeholder": "Artikel",
       "items": [
-        { "prompt": "Sollen wir an ___ Meer fahren?", "hint": "Richtung — an + das", "answer": ["das", "ans"] },
-        { "prompt": "Nein, an ___ Meer waren wir doch schon letztes Jahr.", "hint": "Ort — an + dem", "answer": ["dem", "am"] },
-        { "prompt": "Dieses Jahr möchte ich lieber in ___ Berge.", "hint": "Richtung, Plural Akkusativ", "answer": ["die"] },
-        { "prompt": "Ich möchte auf ___ hohen Berg steigen.", "hint": "Richtung, maskulin Akkusativ", "answer": ["einen"] },
-        { "prompt": "Warst du schon in ___ Alpen?", "hint": "Ort, Plural Dativ", "answer": ["den"] },
-        { "prompt": "Heute Abend gehe ich in ___ Kino.", "hint": "Richtung — in + das", "answer": ["das", "ins"] },
-        { "prompt": "Nein, ich war gestern schon i___ Kino.", "hint": "Ort — die Verschmelzung, ohne „in“ davor.", "answer": ["m"] }
+        {
+          "prompt": "Sollen wir an ___ Meer fahren?",
+          "hint": "Richtung — an + das",
+          "answer": [
+            "das",
+            "ans"
+          ]
+        },
+        {
+          "prompt": "Nein, an ___ Meer waren wir doch schon letztes Jahr.",
+          "hint": "Ort — an + dem",
+          "answer": [
+            "dem",
+            "am"
+          ]
+        },
+        {
+          "prompt": "Dieses Jahr möchte ich lieber in ___ Berge.",
+          "hint": "Richtung, Plural Akkusativ",
+          "answer": [
+            "die"
+          ]
+        },
+        {
+          "prompt": "Ich möchte auf ___ hohen Berg steigen.",
+          "hint": "Richtung, maskulin Akkusativ",
+          "answer": [
+            "einen"
+          ]
+        },
+        {
+          "prompt": "Warst du schon in ___ Alpen?",
+          "hint": "Ort, Plural Dativ",
+          "answer": [
+            "den"
+          ]
+        },
+        {
+          "prompt": "Heute Abend gehe ich in ___ Kino.",
+          "hint": "Richtung — in + das",
+          "answer": [
+            "das",
+            "ins"
+          ]
+        },
+        {
+          "prompt": "Nein, ich war gestern schon i___ Kino.",
+          "hint": "Ort — die Verschmelzung, ohne „in“ davor.",
+          "answer": [
+            "m"
+          ]
+        }
       ]
     },
     {
@@ -125,13 +490,34 @@
       "title": "Frage und Antwort zusammenbringen.",
       "hint": "Wohin verlangt Akkusativ, wo verlangt Dativ.",
       "pairs": [
-        { "q": "Wohin gehst du heute Abend?", "a": "In die Disko." },
-        { "q": "Wo möchtest du studieren?", "a": "In Berlin." },
-        { "q": "Wo ist das Bad?", "a": "Neben der Haustür." },
-        { "q": "Wohin bringst du die Kinder?", "a": "In die Schule." },
-        { "q": "Wohin fahrt ihr im Sommer?", "a": "Ans Meer." },
-        { "q": "Wo kann man gut Fisch essen?", "a": "Am Meer." },
-        { "q": "Wohin fliegt ihr nächstes Jahr?", "a": "In die USA." }
+        {
+          "q": "Wohin gehst du heute Abend?",
+          "a": "In die Disko."
+        },
+        {
+          "q": "Wo möchtest du studieren?",
+          "a": "In Berlin."
+        },
+        {
+          "q": "Wo ist das Bad?",
+          "a": "Neben der Haustür."
+        },
+        {
+          "q": "Wohin bringst du die Kinder?",
+          "a": "In die Schule."
+        },
+        {
+          "q": "Wohin fahrt ihr im Sommer?",
+          "a": "Ans Meer."
+        },
+        {
+          "q": "Wo kann man gut Fisch essen?",
+          "a": "Am Meer."
+        },
+        {
+          "q": "Wohin fliegt ihr nächstes Jahr?",
+          "a": "In die USA."
+        }
       ]
     },
     {
@@ -139,27 +525,99 @@
       "title": "Lückentext: Sabine räumt auf.",
       "hint": "Erst liegt etwas irgendwo (Dativ), dann legt Sabine es woandershin (Akkusativ).",
       "segments": [
-        { "text": "Die Decke liegt unter " },
-        { "blank": 0, "answer": ["dem"] },
-        { "text": " Tisch. Sabine legt die Decke auf " },
-        { "blank": 1, "answer": ["das"] },
-        { "text": " Bett. Die Stifte liegen auf " },
-        { "blank": 2, "answer": ["dem"] },
-        { "text": " Bett. Sie legt die Stifte in " },
-        { "blank": 3, "answer": ["die"] },
-        { "text": " Schublade. Der Kuchen steht auf " },
-        { "blank": 4, "answer": ["dem"] },
-        { "text": " Stuhl. Sie stellt den Kuchen auf " },
-        { "blank": 5, "answer": ["den"] },
-        { "text": " Tisch. Die Socken liegen auf " },
-        { "blank": 6, "answer": ["dem"] },
-        { "text": " Tisch. Sie hängt die Socken in " },
-        { "blank": 7, "answer": ["den"] },
-        { "text": " Schrank. Die Vase steht auf " },
-        { "blank": 8, "answer": ["dem"] },
-        { "text": " Herd. Sie stellt die Vase neben " },
-        { "blank": 9, "answer": ["das"] },
-        { "text": " Sofa." }
+        {
+          "text": "Die Decke liegt unter "
+        },
+        {
+          "blank": 0,
+          "answer": [
+            "dem"
+          ]
+        },
+        {
+          "text": " Tisch. Sabine legt die Decke auf "
+        },
+        {
+          "blank": 1,
+          "answer": [
+            "das"
+          ]
+        },
+        {
+          "text": " Bett. Die Stifte liegen auf "
+        },
+        {
+          "blank": 2,
+          "answer": [
+            "dem"
+          ]
+        },
+        {
+          "text": " Bett. Sie legt die Stifte in "
+        },
+        {
+          "blank": 3,
+          "answer": [
+            "die"
+          ]
+        },
+        {
+          "text": " Schublade. Der Kuchen steht auf "
+        },
+        {
+          "blank": 4,
+          "answer": [
+            "dem"
+          ]
+        },
+        {
+          "text": " Stuhl. Sie stellt den Kuchen auf "
+        },
+        {
+          "blank": 5,
+          "answer": [
+            "den"
+          ]
+        },
+        {
+          "text": " Tisch. Die Socken liegen auf "
+        },
+        {
+          "blank": 6,
+          "answer": [
+            "dem"
+          ]
+        },
+        {
+          "text": " Tisch. Sie hängt die Socken in "
+        },
+        {
+          "blank": 7,
+          "answer": [
+            "den"
+          ]
+        },
+        {
+          "text": " Schrank. Die Vase steht auf "
+        },
+        {
+          "blank": 8,
+          "answer": [
+            "dem"
+          ]
+        },
+        {
+          "text": " Herd. Sie stellt die Vase neben "
+        },
+        {
+          "blank": 9,
+          "answer": [
+            "das"
+          ]
+        },
+        {
+          "text": " Sofa."
+        }
       ]
     },
     {
@@ -169,20 +627,84 @@
         {
           "id": "wp1",
           "hint": "Richtung: Akkusativ.",
-          "correct": ["Sie", "bringt", "den", "Müll", "in", "die", "Mülltonne", "."],
-          "shuffled": ["die", "Sie", "in", "Müll", "Mülltonne", "bringt", "den", "."]
+          "correct": [
+            "Sie",
+            "bringt",
+            "den",
+            "Müll",
+            "in",
+            "die",
+            "Mülltonne",
+            "."
+          ],
+          "shuffled": [
+            "die",
+            "Sie",
+            "in",
+            "Müll",
+            "Mülltonne",
+            "bringt",
+            "den",
+            "."
+          ]
         },
         {
           "id": "wp2",
           "hint": "Ort: Dativ.",
-          "correct": ["Die", "Kinder", "spielen", "auf", "dem", "Spielplatz", "."],
-          "shuffled": ["auf", "Die", "Spielplatz", "spielen", "dem", "Kinder", "."]
+          "correct": [
+            "Die",
+            "Kinder",
+            "spielen",
+            "auf",
+            "dem",
+            "Spielplatz",
+            "."
+          ],
+          "shuffled": [
+            "auf",
+            "Die",
+            "Spielplatz",
+            "spielen",
+            "dem",
+            "Kinder",
+            "."
+          ]
         },
         {
           "id": "wp3",
           "hint": "Zwei Kasus in einem Satz.",
-          "correct": ["Ich", "gehe", "in", "die", "Küche", ",", "denn", "der", "Kaffee", "steht", "in", "der", "Küche", "."],
-          "shuffled": ["der", "Ich", "Küche", "in", "steht", "die", "gehe", ",", "Kaffee", "denn", "der", "in", "Küche", "."]
+          "correct": [
+            "Ich",
+            "gehe",
+            "in",
+            "die",
+            "Küche",
+            ",",
+            "denn",
+            "der",
+            "Kaffee",
+            "steht",
+            "in",
+            "der",
+            "Küche",
+            "."
+          ],
+          "shuffled": [
+            "der",
+            "Ich",
+            "Küche",
+            "in",
+            "steht",
+            "die",
+            "gehe",
+            ",",
+            "Kaffee",
+            "denn",
+            "der",
+            "in",
+            "Küche",
+            "."
+          ]
         }
       ]
     }

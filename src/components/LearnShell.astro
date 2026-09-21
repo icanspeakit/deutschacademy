@@ -430,7 +430,7 @@ const sections: Section[] = [
       ...grammarAt("B1"),
       { id: "sprechen", label: "Sprechen: Bildbeschreibung", icon: "mic", href: "/uebungen/sprechen", level: "A2/B1", levelSource: "abgeleitet", eyebrow: "Übung · B1", lead: "Bildbeschreibung mit echten DTZ-Prüferfragen und 90-Sekunden-Timer — dieselbe Aufgabenform wie im Prüfungsteil Sprechen.", tasks: sprechen.length, done: 0, minutes: 15, practice: "speak" },
       { id: "lesen", label: "Lesen & Schreiben", icon: "pencil", href: "/uebungen/lesen-schreiben", level: "A2/B1", levelSource: "abgeleitet", eyebrow: "Übung · B1", lead: `DTZ-Leseverstehen-Simulation mit ${readingQuestionCount} Aufgaben in vier Teilen, dazu Schreibaufgaben.`, tasks: readingQuestionCount, done: 0, minutes: 25, practice: "choice" },
-      { id: "kultur", label: "Kulturwissen", icon: "map-pin", href: "/uebungen/kultur", level: "B1", levelSource: "abgeleitet", eyebrow: "Übung · B1", lead: "Diskussionsthemen aus echten Unterrichtsgesprächen — mit Pro- und Kontra-Argumenten zum Nachsprechen.", tasks: kultur.length, done: 0, minutes: 10, practice: "read" },
+      { id: "kultur", label: "Kulturwissen", icon: "map-pin", href: "/uebungen/kultur", level: "B1", levelSource: "abgeleitet", eyebrow: "Übung · B1", lead: "Diskussionsthemen aus echten Unterrichtsgesprächen — mit Pro- und Kontra-Argumenten zum Nachsprechen.", tasks: kultur.topics.length, done: 0, minutes: 10, practice: "read" },
     ],
   },
   {
@@ -574,7 +574,7 @@ const defaultVariant = variants[0];
   <div class:list={["nv", study && "nv--study", topicLayout === "focus" && "nv--focus"]}>
     {study && (
       <div class="nv-banner">
-        🧪 <strong>Navigations-Studie</strong> — dieselbe Seite wie <a href="/dashboard">/dashboard</a>, hier mit allen drei Navigationsvarianten zum Vergleichen.
+        🧪 <strong>Navigations-Studie</strong> — dieselbe Seite wie <a href="/fortschritt">/fortschritt</a>, hier mit allen drei Navigationsvarianten zum Vergleichen.
       </div>
     )}
 
@@ -737,20 +737,6 @@ const defaultVariant = variants[0];
 
       <!-- ── Inhalt ────────────────────────────────────────────────────── -->
       <main class="nv-main">
-        <!-- How much is here, before the first exercise. Scrolls sideways on a phone and
-             wraps on a desktop; every chip is a link to that part of the site. -->
-        <nav class="nv-scale" aria-label="Was diese Seite enthält">
-          {scaleChips.map((chip) => (
-            <a class="nv-scale-chip" href={chip.href}>
-              <span class="nv-scale-ic"><Icon name={chip.icon} size={15} /></span>
-              <span class="nv-scale-txt">
-                <b>{chip.value}</b>
-                <i>{chip.label}</i>
-              </span>
-            </a>
-          ))}
-        </nav>
-
         <!-- Stufenübersicht: eine pro Gruppe, serverseitig gerendert. -->
         {sections.map((section) => {
           const st = sectionStats[section.id];
@@ -772,6 +758,7 @@ const defaultVariant = variants[0];
                     </button>
                   </div>
                 </div>
+                {st.pct !== null && (
                 <div class="nv-ring-card" data-ringcard={section.id}>
                   <div class="nv-ring">
                     <svg width="96" height="96" viewBox="0 0 96 96">
@@ -782,9 +769,10 @@ const defaultVariant = variants[0];
                     <span class="nv-ring-value" data-secringvalue={section.id}>{st.pct === null ? "–" : "0%"}</span>
                   </div>
                   <span class="nv-ring-label" data-secringlabel={section.id}>
-                    {st.pct === null ? "Kein Fortschritt zu zählen" : `${st.done} von ${st.tasks} Aufgaben`}
+                    {`${st.done} von ${st.tasks} Aufgaben`}
                   </span>
                 </div>
+                )}
               </section>
 
               {sectionQuick[section.id] && (
@@ -944,7 +932,19 @@ const defaultVariant = variants[0];
           </section>
         </div>
 
-
+        <!-- How much else is here, at the foot of the page. Scrolls sideways on a phone
+             and wraps on a desktop; every chip is a link to that part of the site. -->
+        <nav class="nv-scale nv-scale--foot" aria-label="Was diese Seite enthält">
+          {scaleChips.map((chip) => (
+            <a class="nv-scale-chip" href={chip.href}>
+              <span class="nv-scale-ic"><Icon name={chip.icon} size={15} /></span>
+              <span class="nv-scale-txt">
+                <b>{chip.value}</b>
+                <i>{chip.label}</i>
+              </span>
+            </a>
+          ))}
+        </nav>
       </main>
     </div>
 
@@ -963,6 +963,20 @@ const defaultVariant = variants[0];
 
     <div class="nv-toast" data-toast hidden role="status" aria-live="polite"></div>
   </div>
+
+  {/* Dev only — see src/lib/devSeed.js. Every number here is derived from real recorded
+      activity, so a fresh browser is 0 % everywhere; this fills the store so the full
+      state can actually be looked at. Not rendered in a production build. */}
+  {import.meta.env.DEV && (
+    <div class="nv-dev-seed">
+      <button type="button" class="vp-dev-reset" id="nv-seed-fill" title="Dummy-Fortschritt schreiben und neu laden">
+        ✱ Demo-Daten
+      </button>
+      <button type="button" class="vp-dev-reset" id="nv-seed-clear" title="Fortschritt löschen und neu laden">
+        ↻ Leer
+      </button>
+    </div>
+  )}
 
   <script type="application/json" id="nv-layout" set:html={JSON.stringify(topicLayout)}></script>
   <script type="application/json" id="nv-variants" set:html={JSON.stringify(variants)}></script>
@@ -1365,7 +1379,12 @@ const defaultVariant = variants[0];
       const label = $("[data-detail-ringlabel]");
       if (label) label.textContent = it.tasks
         ? `${progress[id]} von ${it.tasks} Aufgaben` + (it.minutes ? ` · ca. ${it.minutes} Min.` : "")
-        : "Keine Aufgaben zu zählen";
+        : "";
+      // An item with no countable tasks (an overview, the Ergebnis page) hides the ring
+      // instead of showing an empty one. This card is shared by every item, so it is
+      // toggled rather than skipped at render time.
+      const card = $("[data-itemringcard]");
+      if (card) (card as HTMLElement).hidden = !it.tasks;
     }
 
     // ── The inline exercise ───────────────────────────────────────────
@@ -1754,5 +1773,23 @@ const defaultVariant = variants[0];
       // replace, not push: the restored view is where this page load started, so Back
       // belongs to whatever the learner was on before /dashboard.
       syncUrl(true);
+    }
+
+    // Dev only. ITEMS is what the page is already rendering, so the seed fills the bars
+    // that exist rather than inventing slugs — a renamed topic stays empty instead of
+    // becoming a phantom row. Vite drops the whole branch from a production build.
+    if (import.meta.env.DEV) {
+      const fill = document.getElementById("nv-seed-fill");
+      const clear = document.getElementById("nv-seed-clear");
+      fill?.addEventListener("click", async () => {
+        const { seedProgress } = await import("../lib/devSeed.js");
+        seedProgress(ITEMS);
+        location.reload();
+      });
+      clear?.addEventListener("click", async () => {
+        const { clearSeed } = await import("../lib/devSeed.js");
+        clearSeed();
+        location.reload();
+      });
     }
   </script>

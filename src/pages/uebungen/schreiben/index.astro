@@ -25,7 +25,7 @@ const minutes = tasks.reduce((n, t) => n + t.minutes, 0);
   <main class="practice-main practice-main--wide">
     <div class="practice-hero">
       <p class="eyebrow">Schreiben</p>
-      <h1>Schreiben üben</h1>
+      <h1 data-i18n="skill.schreiben.h1">Schreiben üben</h1>
       <p>
         {tasks.length} Schreibaufgaben von A1 bis B2 — Formulare, Nachrichten, E-Mails und
         Briefe in den Formaten aus DTZ und telc. Mit Leitpunkten, Redemitteln und einem
@@ -45,8 +45,12 @@ const minutes = tasks.reduce((n, t) => n + t.minutes, 0);
               <span class="sk-card-ic"><Icon name={SCHREIBEN_ICON[t.type] ?? "pencil"} size={20} /></span>
               <span class="sk-card-txt">
                 <b>{t.title}</b>
-                <i>{t.blurb}</i>
-                <span class="sk-card-meta">{types[t.type]} · ca. {t.minutes} Min.</span>
+                <i data-i18n={`schreiben.${t.id}.blurb`}>{t.blurb}</i>
+                <span class="sk-card-meta">
+                  <span data-i18n={`type.schreiben.${t.type}`}>{types[t.type]}</span>
+                  {" · "}
+                  <span data-i18n="meta.min" data-i18n-vars={JSON.stringify({ m: t.minutes })}>ca. {t.minutes} Min.</span>
+                </span>
               </span>
               <span class="sk-card-go" aria-hidden="true">→</span>
             </a>
@@ -55,7 +59,7 @@ const minutes = tasks.reduce((n, t) => n + t.minutes, 0);
       </section>
     ))}
 
-    <p class="sk-foot">
+    <p class="sk-foot" data-i18n="schreiben.foot" data-i18n-vars={JSON.stringify({ n: tasks.length, m: minutes })}>
       {tasks.length} Aufgaben · zusammen rund {minutes} Minuten Schreibzeit. Schreiben lässt
       sich nicht automatisch bewerten — deshalb endet hier keine Aufgabe mit einer Punktzahl,
       sondern mit einem Modelltext und der Liste, die eine Prüferin abhakt.

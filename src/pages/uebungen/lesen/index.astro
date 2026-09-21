@@ -26,7 +26,7 @@ const groups = byLevel(texts);
   <main class="practice-main practice-main--wide">
     <div class="practice-hero">
       <p class="eyebrow">Leseverstehen</p>
-      <h1>Lesen üben</h1>
+      <h1 data-i18n="skill.lesen.h1">Lesen üben</h1>
       <p>
         {texts.length} Lesetexte von A1 bis B2 — Schilder, Anzeigen, E-Mails, Artikel und
         Forumsbeiträge in den Aufgabenformen aus DTZ und telc. Mit Fragen und Erklärungen.
@@ -45,9 +45,11 @@ const groups = byLevel(texts);
               <span class="sk-card-ic"><Icon name={LESEN_ICON[t.type] ?? "book-open"} size={20} /></span>
               <span class="sk-card-txt">
                 <b>{t.title}</b>
-                <i>{t.blurb}</i>
+                <i data-i18n={`lesen.${t.id}.blurb`}>{t.blurb}</i>
                 <span class="sk-card-meta">
-                  {types[t.type]} · ca. {t.minutes} Min. · {t.questions?.length ?? 0} Fragen
+                  <span data-i18n={`type.lesen.${t.type}`}>{types[t.type]}</span>
+                  {" · "}
+                  <span data-i18n="meta.minQ" data-i18n-vars={JSON.stringify({ m: t.minutes, q: t.questions?.length ?? 0 })}>ca. {t.minutes} Min. · {t.questions?.length ?? 0} Fragen</span>
                 </span>
               </span>
               <span class="sk-card-go" aria-hidden="true">→</span>
@@ -57,7 +59,7 @@ const groups = byLevel(texts);
       </section>
     ))}
 
-    <p class="sk-foot">
+    <p class="sk-foot" data-i18n-html="lesen.foot" data-i18n-vars={JSON.stringify({ n: texts.length, q: questionCount })}>
       {texts.length} Lesetexte · {questionCount} Fragen · alle Texte für diese Seite geschrieben.
       Die fünf B1-Aufgaben lassen sich unter <a href="/uebungen/lesen-schreiben">DTZ-Simulation</a>
       auch am Stück durchlaufen — so, wie sie in der Prüfung nacheinander kommen.

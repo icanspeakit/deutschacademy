@@ -6,17 +6,39 @@
   "source": "N Deklination.pdf (Kapitel 50) · Nr 5 und 6 N Deklination.pdf",
   "concept": {
     "flow": [
-      { "text": "Nominativ", "variant": "verb" },
-      { "text": "der Herr" },
-      { "text": "alle anderen Kasus", "variant": "prep" },
-      { "text": "den / dem / des Herrn" }
+      {
+        "text": "Nominativ",
+        "variant": "verb"
+      },
+      {
+        "text": "der Herr"
+      },
+      {
+        "text": "alle anderen Kasus",
+        "variant": "prep"
+      },
+      {
+        "text": "den / dem / des Herrn"
+      }
     ],
     "exampleHtml": "An <span class=\"vp-verb\">Herrn</span> und Frau Schneider. — Ich gehe mit dem <span class=\"vp-prep\">Kollegen</span> spazieren.",
     "qa": [
-      { "html": "Alle Nomen der n-Deklination sind <strong>maskulin</strong>. Im Plural endet die Form immer auf <em>-(e)n</em>.", "tag": "maskulin" },
-      { "html": "Das <strong>Genitiv-s entfällt</strong>: <em>des Mannes</em>, aber <em>des Herrn</em>, <em>des Studenten</em>.", "tag": "kein -s" },
-      { "html": "Typisch sind <strong>männliche Personen und Tiere auf -e</strong>: <em>der Junge, der Kollege, der Türke, der Löwe, der Rabe</em>.", "tag": "-e" },
-      { "html": "Dazu die Endungen <strong>-and, -ant, -ent, -at, -ist, -graf</strong>: <em>der Doktorand, der Praktikant, der Student, der Automat, der Christ, der Geograf</em>.", "tag": "-ent, -ist" }
+      {
+        "html": "Alle Nomen der n-Deklination sind <strong>maskulin</strong>. Im Plural endet die Form immer auf <em>-(e)n</em>.",
+        "tag": "maskulin"
+      },
+      {
+        "html": "Das <strong>Genitiv-s entfällt</strong>: <em>des Mannes</em>, aber <em>des Herrn</em>, <em>des Studenten</em>.",
+        "tag": "kein -s"
+      },
+      {
+        "html": "Typisch sind <strong>männliche Personen und Tiere auf -e</strong>: <em>der Junge, der Kollege, der Türke, der Löwe, der Rabe</em>.",
+        "tag": "-e"
+      },
+      {
+        "html": "Dazu die Endungen <strong>-and, -ant, -ent, -at, -ist, -graf</strong>: <em>der Doktorand, der Praktikant, der Student, der Automat, der Christ, der Geograf</em>.",
+        "tag": "-ent, -ist"
+      }
     ],
     "noteHtml": "Zwei Sonderfälle: Die <strong>abstrakten Nomen auf -e</strong> (<em>der Name, der Friede, der Buchstabe, der Glaube, der Gedanke</em>) bekommen im Genitiv zusätzlich ein <em>s</em>: <em>des Namens, des Gedankens</em>. Und <strong>das Herz</strong> ist im Akkusativ regelmäßig (<em>das Herz</em>), im Dativ <em>dem Herzen</em>, im Genitiv <em>des Herzens</em>. In der gesprochenen Sprache lässt man das <em>-(e)n</em> übrigens immer öfter weg — im schriftlichen Deutsch gilt die Regel aber weiter.",
     "reference": {
@@ -25,24 +47,65 @@
       "tables": [
         {
           "caption": "Normale Deklination und n-Deklination",
-          "head": ["Kasus", "normal", "n-Deklination"],
+          "head": [
+            "Kasus",
+            "normal",
+            "n-Deklination"
+          ],
           "rows": [
-            ["Nominativ", "der Mann", "der Herr"],
-            ["Akkusativ", "den Mann", "den Herrn"],
-            ["Dativ", "dem Mann", "dem Herrn"],
-            ["Genitiv", "des Mannes", "des Herrn"]
+            [
+              "Nominativ",
+              "der Mann",
+              "der Herr"
+            ],
+            [
+              "Akkusativ",
+              "den Mann",
+              "den Herrn"
+            ],
+            [
+              "Dativ",
+              "dem Mann",
+              "dem Herrn"
+            ],
+            [
+              "Genitiv",
+              "des Mannes",
+              "des Herrn"
+            ]
           ]
         },
         {
           "caption": "Welche Nomen gehören dazu?",
-          "head": ["Gruppe", "Beispiele"],
+          "head": [
+            "Gruppe",
+            "Beispiele"
+          ],
           "rows": [
-            ["männliche Personen auf -e", "der Junge, der Kollege, der Türke, der Chinese, der Franzose"],
-            ["männliche Tiere auf -e", "der Löwe, der Rabe, der Affe, der Bär, der Ochse"],
-            ["-and, -ant, -ent", "der Doktorand, der Praktikant, der Student, der Assistent, der Präsident"],
-            ["-at, -ist, -graf", "der Automat, der Demokrat, der Christ, der Pianist, der Fotograf, der Geograf"],
-            ["ohne Gruppe", "der Architekt, der Astronaut, der Bauer, der Fürst, der Graf, der Held, der Mensch, der Nachbar, der Prinz, der Herr"],
-            ["abstrakt auf -e (Genitiv + s)", "der Name/des Namens, der Friede/des Friedens, der Buchstabe/des Buchstabens, der Glaube/des Glaubens, der Gedanke/des Gedankens"]
+            [
+              "männliche Personen auf -e",
+              "der Junge, der Kollege, der Türke, der Chinese, der Franzose"
+            ],
+            [
+              "männliche Tiere auf -e",
+              "der Löwe, der Rabe, der Affe, der Bär, der Ochse"
+            ],
+            [
+              "-and, -ant, -ent",
+              "der Doktorand, der Praktikant, der Student, der Assistent, der Präsident"
+            ],
+            [
+              "-at, -ist, -graf",
+              "der Automat, der Demokrat, der Christ, der Pianist, der Fotograf, der Geograf"
+            ],
+            [
+              "ohne Gruppe",
+              "der Architekt, der Astronaut, der Bauer, der Fürst, der Graf, der Held, der Mensch, der Nachbar, der Prinz, der Herr"
+            ],
+            [
+              "abstrakt auf -e (Genitiv + s)",
+              "der Name/des Namens, der Friede/des Friedens, der Buchstabe/des Buchstabens, der Glaube/des Glaubens, der Gedanke/des Gedankens"
+            ]
           ]
         }
       ],
@@ -70,26 +133,245 @@
       ]
     }
   },
+  "aktiv": {
+    "listen": [
+      {
+        "text": "An Herrn und Frau Schneider.",
+        "note": "Herr gehört dazu: außer im Nominativ immer Herrn.",
+        "audio": "/audio/grammatik/n-deklination/an-herrn-und-frau-schneider.mp3"
+      },
+      {
+        "text": "Ich gehe mit dem Kollegen spazieren.",
+        "note": "Dativ — also Kollegen, nicht Kollege.",
+        "audio": "/audio/grammatik/n-deklination/ich-gehe-mit-dem-kollegen-spazieren.mp3"
+      },
+      {
+        "text": "Der Name des Studenten steht oben.",
+        "note": "Genitiv ohne -s: des Studenten.",
+        "audio": "/audio/grammatik/n-deklination/der-name-des-studenten-steht-oben.mp3"
+      }
+    ],
+    "hoeren": {
+      "instruction": "Hör zu und wähle die Form, die du gehört hast. Das -n am Ende ist leise, aber es ist da.",
+      "items": [
+        {
+          "text": "Ich habe den Kollegen gestern getroffen.",
+          "choices": [
+            "den Kollege",
+            "den Kollegen",
+            "dem Kollegen"
+          ],
+          "correct": 1,
+          "audio": "/audio/grammatik/n-deklination/ich-habe-den-kollegen-gestern-getroffen.mp3"
+        },
+        {
+          "text": "Der Praktikant kommt morgen um neun.",
+          "choices": [
+            "Der Praktikant",
+            "Den Praktikanten",
+            "Dem Praktikanten"
+          ],
+          "correct": 0,
+          "audio": "/audio/grammatik/n-deklination/der-praktikant-kommt-morgen-um-neun.mp3"
+        },
+        {
+          "text": "Wir sprechen morgen mit dem Studenten.",
+          "choices": [
+            "dem Student",
+            "den Studenten",
+            "dem Studenten"
+          ],
+          "correct": 2,
+          "audio": "/audio/grammatik/n-deklination/wir-sprechen-morgen-mit-dem-studenten.mp3"
+        },
+        {
+          "text": "Das ist das Auto des Nachbarn.",
+          "choices": [
+            "des Nachbars",
+            "des Nachbarn",
+            "dem Nachbarn"
+          ],
+          "correct": 1,
+          "audio": "/audio/grammatik/n-deklination/das-ist-das-auto-des-nachbarn.mp3"
+        },
+        {
+          "text": "Kennst du diesen Jungen?",
+          "choices": [
+            "diesen Junge",
+            "diesem Jungen",
+            "diesen Jungen"
+          ],
+          "correct": 2,
+          "audio": "/audio/grammatik/n-deklination/kennst-du-diesen-jungen.mp3"
+        },
+        {
+          "text": "Ich schreibe an Herrn Meier.",
+          "choices": [
+            "Herr Meier",
+            "Herrn Meier",
+            "Herren Meier"
+          ],
+          "correct": 1,
+          "audio": "/audio/grammatik/n-deklination/ich-schreibe-an-herrn-meier.mp3"
+        }
+      ]
+    },
+    "sprechen": {
+      "rounds": [
+        {
+          "label": "1 · Nominativ → Akkusativ",
+          "instruction": "Du hörst ein Nomen im Nominativ. Sag „Ich sehe …“ — also im Akkusativ.",
+          "example": {
+            "prompt": "der Kollege",
+            "answer": "Ich sehe den Kollegen."
+          },
+          "items": [
+            {
+              "prompt": "der Junge",
+              "answer": "Ich sehe den Jungen.",
+              "audioPrompt": "/audio/grammatik/n-deklination/der-junge.mp3",
+              "audioAnswer": "/audio/grammatik/n-deklination/ich-sehe-den-jungen--8wphfh.mp3"
+            },
+            {
+              "prompt": "der Student",
+              "answer": "Ich sehe den Studenten.",
+              "audioPrompt": "/audio/grammatik/n-deklination/der-student.mp3",
+              "audioAnswer": "/audio/grammatik/n-deklination/ich-sehe-den-studenten--8wphfh.mp3"
+            },
+            {
+              "prompt": "der Praktikant",
+              "answer": "Ich sehe den Praktikanten.",
+              "audioPrompt": "/audio/grammatik/n-deklination/der-praktikant.mp3",
+              "audioAnswer": "/audio/grammatik/n-deklination/ich-sehe-den-praktikanten--8wphfh.mp3"
+            },
+            {
+              "prompt": "der Nachbar",
+              "answer": "Ich sehe den Nachbarn.",
+              "audioPrompt": "/audio/grammatik/n-deklination/der-nachbar.mp3",
+              "audioAnswer": "/audio/grammatik/n-deklination/ich-sehe-den-nachbarn--8wphfh.mp3"
+            },
+            {
+              "prompt": "der Herr",
+              "answer": "Ich sehe den Herrn.",
+              "audioPrompt": "/audio/grammatik/n-deklination/der-herr.mp3",
+              "audioAnswer": "/audio/grammatik/n-deklination/ich-sehe-den-herrn--8wphfh.mp3"
+            },
+            {
+              "prompt": "der Löwe",
+              "answer": "Ich sehe den Löwen.",
+              "audioPrompt": "/audio/grammatik/n-deklination/der-loewe.mp3",
+              "audioAnswer": "/audio/grammatik/n-deklination/ich-sehe-den-loewen--8wphfh.mp3"
+            }
+          ]
+        },
+        {
+          "label": "2 · Nominativ → Dativ",
+          "instruction": "Du hörst ein Nomen im Nominativ. Sag es im Dativ — mit „mit“.",
+          "example": {
+            "prompt": "der Kollege",
+            "answer": "mit dem Kollegen"
+          },
+          "items": [
+            {
+              "prompt": "der Journalist",
+              "answer": "mit dem Journalisten",
+              "audioPrompt": "/audio/grammatik/n-deklination/der-journalist.mp3",
+              "audioAnswer": "/audio/grammatik/n-deklination/mit-dem-journalisten--8wphfh.mp3"
+            },
+            {
+              "prompt": "der Kunde",
+              "answer": "mit dem Kunden",
+              "audioPrompt": "/audio/grammatik/n-deklination/der-kunde.mp3",
+              "audioAnswer": "/audio/grammatik/n-deklination/mit-dem-kunden--8wphfh.mp3"
+            },
+            {
+              "prompt": "der Franzose",
+              "answer": "mit dem Franzosen",
+              "audioPrompt": "/audio/grammatik/n-deklination/der-franzose.mp3",
+              "audioAnswer": "/audio/grammatik/n-deklination/mit-dem-franzosen--8wphfh.mp3"
+            },
+            {
+              "prompt": "der Mensch",
+              "answer": "mit dem Menschen",
+              "audioPrompt": "/audio/grammatik/n-deklination/der-mensch.mp3",
+              "audioAnswer": "/audio/grammatik/n-deklination/mit-dem-menschen--8wphfh.mp3"
+            },
+            {
+              "prompt": "der Automat",
+              "answer": "mit dem Automaten",
+              "audioPrompt": "/audio/grammatik/n-deklination/der-automat.mp3",
+              "audioAnswer": "/audio/grammatik/n-deklination/mit-dem-automaten--8wphfh.mp3"
+            },
+            {
+              "prompt": "der Experte",
+              "answer": "mit dem Experten",
+              "audioPrompt": "/audio/grammatik/n-deklination/der-experte.mp3",
+              "audioAnswer": "/audio/grammatik/n-deklination/mit-dem-experten--8wphfh.mp3"
+            }
+          ]
+        }
+      ]
+    }
+  },
   "exercises": [
     {
       "type": "table",
       "title": "Gehört das Nomen zur n-Deklination?",
       "hint": "Tippen Sie „ja“ oder „nein“.",
-      "columns": ["Nomen", "n-Deklination?"],
+      "columns": [
+        "Nomen",
+        "n-Deklination?"
+      ],
       "placeholder": "ja / nein",
       "rows": [
-        { "term": "der Finne", "answer": "ja" },
-        { "term": "der Norweger", "answer": "nein" },
-        { "term": "der Assistent", "answer": "ja" },
-        { "term": "der Physiker", "answer": "nein" },
-        { "term": "der Automat", "answer": "ja" },
-        { "term": "die Maschine", "answer": "nein" },
-        { "term": "der Affe", "answer": "ja" },
-        { "term": "der Löwe", "answer": "ja" },
-        { "term": "der Tiger", "answer": "nein" },
-        { "term": "der Mensch", "answer": "ja" },
-        { "term": "die Person", "answer": "nein" },
-        { "term": "der Student", "answer": "ja" }
+        {
+          "term": "der Finne",
+          "answer": "ja"
+        },
+        {
+          "term": "der Norweger",
+          "answer": "nein"
+        },
+        {
+          "term": "der Assistent",
+          "answer": "ja"
+        },
+        {
+          "term": "der Physiker",
+          "answer": "nein"
+        },
+        {
+          "term": "der Automat",
+          "answer": "ja"
+        },
+        {
+          "term": "die Maschine",
+          "answer": "nein"
+        },
+        {
+          "term": "der Affe",
+          "answer": "ja"
+        },
+        {
+          "term": "der Löwe",
+          "answer": "ja"
+        },
+        {
+          "term": "der Tiger",
+          "answer": "nein"
+        },
+        {
+          "term": "der Mensch",
+          "answer": "ja"
+        },
+        {
+          "term": "die Person",
+          "answer": "nein"
+        },
+        {
+          "term": "der Student",
+          "answer": "ja"
+        }
       ]
     },
     {
@@ -98,32 +380,139 @@
       "hint": "Schreiben Sie das ganze Wort — mit -(e)n, wenn nötig.",
       "placeholder": "Nomen",
       "items": [
-        { "prompt": "Ich kenne einen ___ . (der Finne)", "hint": "Akkusativ.", "answer": ["Finnen"] },
-        { "prompt": "Ich gehe mit dem ___ Hakkunen spazieren. (der Herr)", "hint": "Dativ.", "answer": ["Herrn"] },
-        { "prompt": "Im Zoo gibt es einen ___ und einen Bären. (der Löwe)", "hint": "Akkusativ.", "answer": ["Löwen"] },
-        { "prompt": "An der Uni arbeite ich mit einem ___ zusammen. (der Doktorand)", "hint": "Dativ.", "answer": ["Doktoranden"] },
-        { "prompt": "Unser Lehrer ist ein junger Mann mit dem ___ Scheibe. (der Name)", "hint": "Dativ, abstraktes Nomen auf -e.", "answer": ["Namen"] },
-        { "prompt": "Aber einer der ___ ist der Mann meines Herzens. (der Chinese, Genitiv Plural)", "hint": "Plural endet immer auf -(e)n.", "answer": ["Chinesen"] },
-        { "prompt": "Ich mag jeden meiner ___ . (der Kollege)", "hint": "Genitiv Plural.", "answer": ["Kollegen"] }
+        {
+          "prompt": "Ich kenne einen ___ . (der Finne)",
+          "hint": "Akkusativ.",
+          "answer": [
+            "Finnen"
+          ]
+        },
+        {
+          "prompt": "Ich gehe mit dem ___ Hakkunen spazieren. (der Herr)",
+          "hint": "Dativ.",
+          "answer": [
+            "Herrn"
+          ]
+        },
+        {
+          "prompt": "Im Zoo gibt es einen ___ und einen Bären. (der Löwe)",
+          "hint": "Akkusativ.",
+          "answer": [
+            "Löwen"
+          ]
+        },
+        {
+          "prompt": "An der Uni arbeite ich mit einem ___ zusammen. (der Doktorand)",
+          "hint": "Dativ.",
+          "answer": [
+            "Doktoranden"
+          ]
+        },
+        {
+          "prompt": "Unser Lehrer ist ein junger Mann mit dem ___ Scheibe. (der Name)",
+          "hint": "Dativ, abstraktes Nomen auf -e.",
+          "answer": [
+            "Namen"
+          ]
+        },
+        {
+          "prompt": "Aber einer der ___ ist der Mann meines Herzens. (der Chinese, Genitiv Plural)",
+          "hint": "Plural endet immer auf -(e)n.",
+          "answer": [
+            "Chinesen"
+          ]
+        },
+        {
+          "prompt": "Ich mag jeden meiner ___ . (der Kollege)",
+          "hint": "Genitiv Plural.",
+          "answer": [
+            "Kollegen"
+          ]
+        }
       ]
     },
     {
       "type": "table",
       "title": "Bilden Sie den Genitiv.",
       "hint": "Schreiben Sie die vollständige Form mit „des“ oder „der“.",
-      "columns": ["Nomen", "Genitiv"],
+      "columns": [
+        "Nomen",
+        "Genitiv"
+      ],
       "placeholder": "des …",
       "rows": [
-        { "term": "der Automat", "answer": ["des Automaten", "Automaten"] },
-        { "term": "die Maschine", "answer": ["der Maschine", "Maschine"] },
-        { "term": "das Gerät", "answer": ["des Geräts", "des Gerätes", "Geräts", "Gerätes"] },
-        { "term": "das Herz", "answer": ["des Herzens", "Herzens"] },
-        { "term": "der Architekt", "answer": ["des Architekten", "Architekten"] },
-        { "term": "der Ingenieur", "answer": ["des Ingenieurs", "Ingenieurs"] },
-        { "term": "der Name", "answer": ["des Namens", "Namens"] },
-        { "term": "der Buchstabe", "answer": ["des Buchstabens", "Buchstabens"] },
-        { "term": "der Held", "answer": ["des Helden", "Helden"] },
-        { "term": "der Gedanke", "answer": ["des Gedankens", "Gedankens"] }
+        {
+          "term": "der Automat",
+          "answer": [
+            "des Automaten",
+            "Automaten"
+          ]
+        },
+        {
+          "term": "die Maschine",
+          "answer": [
+            "der Maschine",
+            "Maschine"
+          ]
+        },
+        {
+          "term": "das Gerät",
+          "answer": [
+            "des Geräts",
+            "des Gerätes",
+            "Geräts",
+            "Gerätes"
+          ]
+        },
+        {
+          "term": "das Herz",
+          "answer": [
+            "des Herzens",
+            "Herzens"
+          ]
+        },
+        {
+          "term": "der Architekt",
+          "answer": [
+            "des Architekten",
+            "Architekten"
+          ]
+        },
+        {
+          "term": "der Ingenieur",
+          "answer": [
+            "des Ingenieurs",
+            "Ingenieurs"
+          ]
+        },
+        {
+          "term": "der Name",
+          "answer": [
+            "des Namens",
+            "Namens"
+          ]
+        },
+        {
+          "term": "der Buchstabe",
+          "answer": [
+            "des Buchstabens",
+            "Buchstabens"
+          ]
+        },
+        {
+          "term": "der Held",
+          "answer": [
+            "des Helden",
+            "Helden"
+          ]
+        },
+        {
+          "term": "der Gedanke",
+          "answer": [
+            "des Gedankens",
+            "Gedankens"
+          ]
+        }
       ]
     },
     {
@@ -131,21 +520,72 @@
       "title": "Lückentext: Ein Geschäftsbrief.",
       "hint": "Schreiben Sie jeweils das ganze Wort — mit -(e)n, wenn nötig.",
       "segments": [
-        { "text": "Sehr geehrter " },
-        { "blank": 0, "answer": ["Herr"] },
-        { "text": " Seifert,\n\nwir freuen uns, Sie im nächsten Monat im Kreise der " },
-        { "blank": 1, "answer": ["Kollegen"] },
-        { "text": " begrüßen zu dürfen. An Ihrem ersten Arbeitstag werden wir Ihnen einen " },
-        { "blank": 2, "answer": ["Praktikanten"] },
-        { "text": " als Ihren persönlichen " },
-        { "blank": 3, "answer": ["Assistenten"] },
-        { "text": " an die Seite stellen. Er wird Sie zum Betriebs-" },
-        { "blank": 4, "answer": ["Fotografen"] },
-        { "text": " begleiten, der für Sie einen Dienstausweis anfertigen wird. Danach erfolgt die Vorstellung beim " },
-        { "blank": 5, "answer": ["Präsidenten"] },
-        { "text": " des Unternehmens.\n\nIm " },
-        { "blank": 6, "answer": ["Namen"] },
-        { "text": " der gesamten Abteilung\nH. Schmidt" }
+        {
+          "text": "Sehr geehrter "
+        },
+        {
+          "blank": 0,
+          "answer": [
+            "Herr"
+          ]
+        },
+        {
+          "text": " Seifert,\n\nwir freuen uns, Sie im nächsten Monat im Kreise der "
+        },
+        {
+          "blank": 1,
+          "answer": [
+            "Kollegen"
+          ]
+        },
+        {
+          "text": " begrüßen zu dürfen. An Ihrem ersten Arbeitstag werden wir Ihnen einen "
+        },
+        {
+          "blank": 2,
+          "answer": [
+            "Praktikanten"
+          ]
+        },
+        {
+          "text": " als Ihren persönlichen "
+        },
+        {
+          "blank": 3,
+          "answer": [
+            "Assistenten"
+          ]
+        },
+        {
+          "text": " an die Seite stellen. Er wird Sie zum Betriebs-"
+        },
+        {
+          "blank": 4,
+          "answer": [
+            "Fotografen"
+          ]
+        },
+        {
+          "text": " begleiten, der für Sie einen Dienstausweis anfertigen wird. Danach erfolgt die Vorstellung beim "
+        },
+        {
+          "blank": 5,
+          "answer": [
+            "Präsidenten"
+          ]
+        },
+        {
+          "text": " des Unternehmens.\n\nIm "
+        },
+        {
+          "blank": 6,
+          "answer": [
+            "Namen"
+          ]
+        },
+        {
+          "text": " der gesamten Abteilung\nH. Schmidt"
+        }
       ]
     },
     {
@@ -153,12 +593,30 @@
       "title": "Nominativ und Akkusativ verbinden.",
       "hint": "Welche Form steht nach „Ich sehe …“?",
       "pairs": [
-        { "q": "der Herr", "a": "Ich sehe den Herrn." },
-        { "q": "der Student", "a": "Ich sehe den Studenten." },
-        { "q": "der Nachbar", "a": "Ich sehe den Nachbarn." },
-        { "q": "der Mann", "a": "Ich sehe den Mann." },
-        { "q": "der Mensch", "a": "Ich sehe den Menschen." },
-        { "q": "der Lehrer", "a": "Ich sehe den Lehrer." }
+        {
+          "q": "der Herr",
+          "a": "Ich sehe den Herrn."
+        },
+        {
+          "q": "der Student",
+          "a": "Ich sehe den Studenten."
+        },
+        {
+          "q": "der Nachbar",
+          "a": "Ich sehe den Nachbarn."
+        },
+        {
+          "q": "der Mann",
+          "a": "Ich sehe den Mann."
+        },
+        {
+          "q": "der Mensch",
+          "a": "Ich sehe den Menschen."
+        },
+        {
+          "q": "der Lehrer",
+          "a": "Ich sehe den Lehrer."
+        }
       ]
     }
   ]

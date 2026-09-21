@@ -83,6 +83,15 @@ const openBlock = isFreq
   : blocks[0];
 ---
 <div class="nvb ls-nvb" data-nvb data-current={current}>
+  <!-- The fold tab, on the panel's right edge, where a Karteiordner carries its own: the
+       list pivots away to the left and the tab stays behind, still attached to the rail,
+       so the way back is exactly the thing that put it away. It replaces the chevron that
+       used to sit in the panel head — the same act, but a control you can find without
+       first reading the head, and one that survives the fold instead of going with it. -->
+  <button type="button" class="ls-foldtab" data-nvb-collapse aria-label="Liste einklappen" aria-controls="ls-pane">
+    <span class="ls-foldtab-txt">Lernsets</span>
+    <svg class="ls-foldtab-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>
+  </button>
   <!-- The rail. A level is its own badge, exactly as on the dashboard; the two entries
        that are not a level get an icon. Weiterlernen and Redemittel are links — they go
        to a page — and the rest are tabs that switch the panel beside them, which is why
@@ -101,12 +110,20 @@ const openBlock = isFreq
       <span class="nvb-tip">Liste ausklappen</span>
     </button>
 
-    <!-- Filled by the script from this browser's own history, removed when there is
-         none. Never server-rendered: there is no account, so the server cannot know. -->
-    <a class="nvb-railbtn" id="ls-resume" href="/uebungen/wortschatz" hidden aria-label="Weiterlernen">
-      <Icon name="sparkle" size={20} />
-      <span class="nvb-tip">Weiterlernen</span>
-    </a>
+    <!-- Its pane is written by the script from this browser's own record. Never
+         server-rendered: there is no account, so the server cannot know. -->
+    <button
+      type="button"
+      role="tab"
+      class="nvb-railbtn"
+      data-rail="fortschritt"
+      aria-selected="false"
+      aria-controls="ls-pane-fortschritt"
+      aria-label="Dein Fortschritt"
+    >
+      <Icon name="target" size={20} />
+      <span class="nvb-tip">Dein Fortschritt · Weiterlernen</span>
+    </button>
 
     {liveLevels.map((level) => (
       <button
@@ -133,9 +150,10 @@ const openBlock = isFreq
       aria-selected={isFreq ? "true" : "false"}
       aria-controls="ls-pane-haeufigkeit"
       aria-label="Nach Häufigkeit"
+      data-i18n-attr="aria-label:sets.byFrequency"
     >
       <Icon name="bars" size={20} />
-      <span class="nvb-tip">Nach Häufigkeit · {freq.cohorts} Portionen</span>
+      <span class="nvb-tip" data-i18n="sets.byFrequency.tip" data-i18n-vars={JSON.stringify({ n: freq.cohorts })}>Nach Häufigkeit · {freq.cohorts} Portionen</span>
     </button>
 
     <a
@@ -159,7 +177,7 @@ const openBlock = isFreq
         hidden={isFreq || level !== openLevel}
       >
         <div class="nvb-panelhead">
-          <h3>Stufe {level}</h3>
+          <h3>Stufe {level}<span class="ls-head-where" data-ls-where>{openGroup(level)?.title ? ` · ${openGroup(level).title}` : ""}</span></h3>
           <!-- The dashboard's own fold control, doing the dashboard's own job: the panel
                goes, the rail stays, and a level icon brings it back. A different act from
                "Lernsets ausblenden" in the tab row, which takes the whole column away —
@@ -169,16 +187,10 @@ const openBlock = isFreq
           </button>
         </div>
 
-        <a
-          class="nvb-overview"
-          href={`/uebungen/wortschatz/${level.toLowerCase()}`}
-          aria-current={current === level.toLowerCase() ? "page" : undefined}
-        >Alle {c[level].sets} Lernsets öffnen →</a>
-
         <!-- Two grains of the same level: the topic a word belongs to, or the place it
              sits in the list. Picking a theme and working straight through are different
              intentions, and neither is a sub-case of the other. -->
-        <div class="ls-cuts" role="tablist" aria-label="Einteilung wählen">
+        <div class="ls-cuts" role="tablist" aria-label="Einteilung wählen" data-i18n-attr="aria-label:sets.chooseCut">
           <button
             type="button"
             role="tab"
@@ -278,14 +290,25 @@ const openBlock = isFreq
       </div>
     ))}
 
+    <!-- Everything inside is written by the script: it all comes from localStorage, so a
+         server-rendered number here would be a guess about a stranger. -->
+    <div class="nvb-section ls-prog" id="ls-pane-fortschritt" data-pane="fortschritt" hidden>
+      <div class="nvb-panelhead">
+        <h3>Dein Fortschritt <span class="ls-head-where">· Wortschatz</span></h3>
+      </div>
+      <div data-ls-prog></div>
+    </div>
+
     <div class="nvb-section" id="ls-pane-haeufigkeit" data-pane="haeufigkeit" hidden={!isFreq}>
       <div class="nvb-panelhead">
-        <h3>Nach Häufigkeit</h3>
-        <button type="button" class="nvb-collapse" data-nvb-collapse aria-label="Liste einklappen">
+        {/* The heading's own words sit in a span of their own: data-i18n replaces
+            textContent, which would take the "· <block>" suffix with it. */}
+        <h3><span data-i18n="sets.byFrequency">Nach Häufigkeit</span><span class="ls-head-where" data-ls-where>{openBlock?.title ? ` · ${openBlock.title}` : ""}</span></h3>
+        <button type="button" class="nvb-collapse" data-nvb-collapse aria-label="Liste einklappen" data-i18n-attr="aria-label:sets.collapseList">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>
         </button>
       </div>
-      <p class="ls-lead">
+      <p class="ls-lead" data-i18n="sets.byFrequency.lead" data-i18n-vars={JSON.stringify({ n: freq.words, c: freq.cohorts, s: freq.size })}>
         {freq.words} Wörter nach Korpushäufigkeit, in {freq.cohorts} Portionen zu je {freq.size}.
         Gemischt — Verben, Nomen und Funktionswörter zusammen, so wie sie in der Liste stehen.
       </p>
@@ -339,7 +362,8 @@ const openBlock = isFreq
 </div>
 
 <script>
-  import { getResume } from "../lib/progress.js";
+  import { getResume, getProgress } from "../lib/progress.js";
+  import { slide, replay } from "../lib/fold.js";
 
   const root = document.querySelector(".ls-nvb");
   const FOLD_KEY = "da-wortschatz-lernsets-fold";
@@ -354,10 +378,11 @@ const openBlock = isFreq
   // from --rule-w, and a panel that shrank inside a track that did not would just leave a
   // hole where it used to be. .vt-split reads [data-fold] for that.
   const page = document.getElementById("vp-page");
+  const foldBtns = () => [...root.querySelectorAll("[data-nvb-collapse]")];
   function setFold(on, persist = true) {
     root.classList.toggle("collapsed", on);
     if (page) page.dataset.fold = on ? "1" : "";
-    root.querySelectorAll("[data-nvb-collapse]").forEach((b) => {
+    foldBtns().forEach((b) => {
       b.setAttribute("aria-expanded", on ? "false" : "true");
       b.setAttribute("aria-label", on ? "Liste ausklappen" : "Liste einklappen");
     });
@@ -371,7 +396,7 @@ const openBlock = isFreq
   setFold(folded, false);
   requestAnimationFrame(() => requestAnimationFrame(() => root.classList.remove("no-anim")));
 
-  root.querySelectorAll("[data-nvb-collapse]").forEach((b) =>
+  foldBtns().forEach((b) =>
     b.addEventListener("click", (e) => {
       e.stopPropagation();
       setFold(!root.classList.contains("collapsed"));
@@ -380,6 +405,16 @@ const openBlock = isFreq
   // ── The rail ──────────────────────────────────────────────────────────────────
   // One handler for the whole rail: A1–B2 and "Nach Häufigkeit" are five views of the
   // same lexicon, not a level switch nested inside a mode switch.
+  // Asking for the picker is asking for the list. The fold is remembered per browser, so
+  // without this "Lernset wechseln" could open a sheet showing only the level rail — the
+  // one thing the learner did not tap for. Not persisted: it answers this opening, it
+  // does not overwrite the preference the fold button set.
+  if (page) {
+    new MutationObserver(() => {
+      if (page.dataset.rule !== "hidden" && root.classList.contains("collapsed")) setFold(false, false);
+    }).observe(page, { attributes: true, attributeFilter: ["data-rule"] });
+  }
+
   root.querySelectorAll("[data-rail]").forEach((tab) => {
     tab.addEventListener("click", () => {
       const pane = tab.dataset.rail;
@@ -403,6 +438,18 @@ const openBlock = isFreq
     });
   });
 
+  const motionOk = () => !matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /** The nearest ancestor that actually scrolls: .nvb-panel on a desktop, the sheet body
+   *  on a phone — the picker gives its own scroll up inside the sheet. */
+  function scrollerOf(el) {
+    for (let n = el?.parentElement; n; n = n.parentElement) {
+      const oy = getComputedStyle(n).overflowY;
+      if ((oy === "auto" || oy === "scroll") && n.scrollHeight > n.clientHeight + 1) return n;
+    }
+    return null;
+  }
+
   // ── Groups ────────────────────────────────────────────────────────────────────
   // One open at a time: 123 cohorts listed flat is a scroll, not a menu. Scoped to the
   // list the button sits in — the Bereiche, the Portionen blocks and the frequency blocks
@@ -412,16 +459,39 @@ const openBlock = isFreq
       const scope = btn.closest(".ls-cut-panel") ?? btn.closest(".nvb-section") ?? root;
       const panel = document.getElementById(`ls-block-${btn.dataset.block}`);
       const open = panel.hidden;
+      // The same pivot as the exam rail on /fortschritt: the one that was open slides
+      // shut while this one slides open, and its rows arrive staggered — so the two
+      // movements read as one list being replaced rather than as the page jumping.
       scope.querySelectorAll(".ls-block-toggle").forEach((b) => {
+        if (b === btn && open) return;
+        const other = document.getElementById(`ls-block-${b.dataset.block}`);
         b.classList.remove("is-open");
         b.setAttribute("aria-expanded", "false");
-        document.getElementById(`ls-block-${b.dataset.block}`).hidden = true;
+        if (!other.hidden) slide(other, false);
       });
       if (open) {
         btn.classList.add("is-open");
         btn.setAttribute("aria-expanded", "true");
-        panel.hidden = false;
+        slide(panel, true);
+        replay(panel, "ls-grouplist--enter");
+        // Opening a block near the bottom of the list unfolds it below the fold: the
+        // rows are there, the learner sees nothing move. So once the height has landed,
+        // the block's own head is pulled to the top of whatever is scrolling — the panel
+        // on a desktop, the sheet body on a phone — and its rows come with it.
+        const group = btn.closest(".ls-group");
+        const scroller = scrollerOf(group);
+        if (group && scroller) {
+          setTimeout(() => {
+            const top = group.getBoundingClientRect().top - scroller.getBoundingClientRect().top + scroller.scrollTop;
+            scroller.scrollTo({ top: Math.max(0, top - 8), behavior: motionOk() ? "smooth" : "auto" });
+          }, 260);
+        }
       }
+      // The panel head names the open group — the rail then says where you are
+      // ("Stufe A1 · Wohnen") without a breadcrumb above the list. Closing the last
+      // open group empties it rather than leaving a stale name.
+      const where = btn.closest(".nvb-section")?.querySelector("[data-ls-where]");
+      if (where) where.textContent = open ? ` · ${btn.textContent.trim()}` : "";
     });
   });
 
@@ -436,22 +506,67 @@ const openBlock = isFreq
       });
       scope.querySelectorAll(".ls-cut-panel").forEach((pnl) => {
         pnl.hidden = pnl.dataset.cut !== tab.dataset.cut;
+        // Thema and Reihe are two cuts of one level, so switching them gets the same
+        // arrival as opening a group — the list is replaced, not redrawn.
+        if (!pnl.hidden) replay(pnl, "ls-cut-panel--enter");
       });
     });
   });
 
-  // ── Weiterlernen ──────────────────────────────────────────────────────────────
-  // Whatever Wortschatz deck this browser last opened — progress.js already records every
-  // /uebungen/* page it lands on, so this needs no new store. It stays hidden when there
-  // is nothing to resume, rather than guessing a deck.
-  const resume = getResume();
-  const last = (resume ? [resume.last, ...resume.recents] : []).find(
-    (r) => r && r.path.startsWith("/uebungen/wortschatz") && r.path !== location.pathname.replace(/\/+$/, "")
-  );
-  if (last) {
-    const link = document.getElementById("ls-resume");
-    link.querySelector(".nvb-tip").textContent = `Weiterlernen · ${last.title}`;
-    link.href = last.path;
-    link.hidden = false;
+  // ── Dein Fortschritt ──────────────────────────────────────────────────────────
+  // The same question /dashboard answers, asked about this one tool: what have I done
+  // here, and where do I carry on? Every number is read from progress.js, which only ever
+  // writes from a real graded answer — so a first visit says "noch nichts" rather than
+  // drawing an empty ring and calling it 0 %.
+  const esc = (t) => String(t ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+
+  function progressHtml() {
+    const resume = getResume();
+    const data = getProgress();
+    const here = location.pathname.replace(/\/+$/, "");
+    const mine = (resume ? [resume.last, ...resume.recents] : []).filter(
+      (r) => r && r.path.startsWith("/uebungen/wortschatz")
+    );
+    const next = mine.find((r) => r.path !== here);
+    const words = (data.vocabMastered || []).filter((k) => k.startsWith("wortschatz:")).length;
+    const skill = data.skills?.wortschatz ?? { attempts: 0, sessions: 0 };
+    const week = resume?.week ?? { count: 0, goal: 0 };
+    const pct = week.goal ? Math.min(100, Math.round((week.count / week.goal) * 100)) : 0;
+
+    if (!words && !skill.attempts && !mine.length) {
+      return `<p class="ls-lead">Noch nichts geübt. Sobald du Karten umdrehst, steht hier,
+        wie viele Wörter du schon kannst und wo du weitermachst.</p>`;
+    }
+
+    return `
+      ${next ? `<a class="ls-prog-next" href="${esc(next.path)}">
+        <span class="ls-prog-next-label">Weiterlernen</span>
+        <b>${esc(next.title)}</b>
+        <span class="ls-prog-next-go">Öffnen →</span>
+      </a>` : ""}
+
+      <div class="ls-prog-stats">
+        <div class="ls-prog-stat"><b>${words}</b><i>Wörter gekonnt</i></div>
+        <div class="ls-prog-stat"><b>${skill.attempts}</b><i>Karten geprüft</i></div>
+        <div class="ls-prog-stat"><b>${data.streak || 0}</b><i>Tage in Folge</i></div>
+      </div>
+
+      ${week.goal ? `<div class="ls-prog-week">
+        <p><span>Diese Woche</span><span>${week.count} / ${week.goal}</span></p>
+        <span class="ls-prog-bar"><span style="width:${pct}%"></span></span>
+      </div>` : ""}
+
+      ${mine.length ? `<p class="ls-group-head ls-prog-head">Zuletzt geübt</p>
+      <div class="ls-grouplist">${mine
+        .slice(0, 4)
+        .map((r) => `<a class="nvb-item${r.path === here ? " active" : ""}" href="${esc(r.path)}">
+          <span class="nv-icon ls-prog-dot"></span><span>${esc(r.title)}</span>
+        </a>`)
+        .join("")}</div>` : ""}
+
+      <a class="ls-prog-more" href="/fortschritt">Alles im Fortschritt ansehen &rarr;</a>`;
   }
+
+  const progEl = root.querySelector("[data-ls-prog]");
+  if (progEl) progEl.innerHTML = progressHtml();
 </script>

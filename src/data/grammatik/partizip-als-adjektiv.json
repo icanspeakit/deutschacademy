@@ -181,6 +181,186 @@
       ]
     }
   },
+  "aktiv": {
+    "listen": [
+      {
+        "text": "der einfahrende Zug",
+        "note": "Partizip I: Infinitiv + d. Es läuft gerade.",
+        "audio": "/audio/grammatik/partizip-als-adjektiv/der-einfahrende-zug.mp3"
+      },
+      {
+        "text": "der eingebaute Motor",
+        "note": "Partizip II: fertig — hier passiv, jemand hat ihn eingebaut.",
+        "audio": "/audio/grammatik/partizip-als-adjektiv/der-eingebaute-motor.mp3"
+      },
+      {
+        "text": "ein lächelnder Verkäufer",
+        "note": "Das Partizip wird ganz normal dekliniert wie jedes Adjektiv.",
+        "audio": "/audio/grammatik/partizip-als-adjektiv/ein-laechelnder-verkaeufer.mp3"
+      }
+    ],
+    "hoeren": {
+      "instruction": "Hör zu und wähle das Partizip, das du gehört hast.",
+      "items": [
+        {
+          "text": "Der einfahrende Zug ist pünktlich.",
+          "choices": [
+            "einfahrende",
+            "eingefahrene",
+            "gefahrene"
+          ],
+          "correct": 0,
+          "audio": "/audio/grammatik/partizip-als-adjektiv/der-einfahrende-zug-ist-puenktlich.mp3"
+        },
+        {
+          "text": "Der eingebaute Motor läuft leise.",
+          "choices": [
+            "einbauende",
+            "eingebaute",
+            "bauende"
+          ],
+          "correct": 1,
+          "audio": "/audio/grammatik/partizip-als-adjektiv/der-eingebaute-motor-laeuft-leise.mp3"
+        },
+        {
+          "text": "Die spielenden Kinder sind laut.",
+          "choices": [
+            "gespielten",
+            "spielende",
+            "spielenden"
+          ],
+          "correct": 2,
+          "audio": "/audio/grammatik/partizip-als-adjektiv/die-spielenden-kinder-sind-laut.mp3"
+        },
+        {
+          "text": "Der geschriebene Brief liegt hier.",
+          "choices": [
+            "schreibende",
+            "geschriebene",
+            "geschriebenen"
+          ],
+          "correct": 1,
+          "audio": "/audio/grammatik/partizip-als-adjektiv/der-geschriebene-brief-liegt-hier.mp3"
+        },
+        {
+          "text": "Ein lächelnder Verkäufer half mir.",
+          "choices": [
+            "lächelnder",
+            "gelächelter",
+            "lächelnden"
+          ],
+          "correct": 0,
+          "audio": "/audio/grammatik/partizip-als-adjektiv/ein-laechelnder-verkaeufer-half-mir.mp3"
+        },
+        {
+          "text": "Die gelöste Aufgabe war schwer.",
+          "choices": [
+            "lösende",
+            "gelöste",
+            "gelösten"
+          ],
+          "correct": 1,
+          "audio": "/audio/grammatik/partizip-als-adjektiv/die-geloeste-aufgabe-war-schwer.mp3"
+        }
+      ]
+    },
+    "sprechen": {
+      "rounds": [
+        {
+          "label": "1 · Relativsatz → Partizip I",
+          "instruction": "Du hörst einen Relativsatz. Sag ihn als Partizip I — die Handlung läuft gerade.",
+          "example": {
+            "prompt": "der Zug, der einfährt",
+            "answer": "der einfahrende Zug"
+          },
+          "items": [
+            {
+              "prompt": "die Kinder, die spielen",
+              "answer": "die spielenden Kinder",
+              "audioPrompt": "/audio/grammatik/partizip-als-adjektiv/die-kinder-die-spielen.mp3",
+              "audioAnswer": "/audio/grammatik/partizip-als-adjektiv/die-spielenden-kinder--8wphfh.mp3"
+            },
+            {
+              "prompt": "der Mann, der lächelt",
+              "answer": "der lächelnde Mann",
+              "audioPrompt": "/audio/grammatik/partizip-als-adjektiv/der-mann-der-laechelt.mp3",
+              "audioAnswer": "/audio/grammatik/partizip-als-adjektiv/der-laechelnde-mann--8wphfh.mp3"
+            },
+            {
+              "prompt": "das Kind, das schläft",
+              "answer": "das schlafende Kind",
+              "audioPrompt": "/audio/grammatik/partizip-als-adjektiv/das-kind-das-schlaeft.mp3",
+              "audioAnswer": "/audio/grammatik/partizip-als-adjektiv/das-schlafende-kind--8wphfh.mp3"
+            },
+            {
+              "prompt": "der Hund, der bellt",
+              "answer": "der bellende Hund",
+              "audioPrompt": "/audio/grammatik/partizip-als-adjektiv/der-hund-der-bellt.mp3",
+              "audioAnswer": "/audio/grammatik/partizip-als-adjektiv/der-bellende-hund--8wphfh.mp3"
+            },
+            {
+              "prompt": "die Frau, die wartet",
+              "answer": "die wartende Frau",
+              "audioPrompt": "/audio/grammatik/partizip-als-adjektiv/die-frau-die-wartet.mp3",
+              "audioAnswer": "/audio/grammatik/partizip-als-adjektiv/die-wartende-frau--8wphfh.mp3"
+            },
+            {
+              "prompt": "die Zeit, die vergeht",
+              "answer": "die vergehende Zeit",
+              "audioPrompt": "/audio/grammatik/partizip-als-adjektiv/die-zeit-die-vergeht.mp3",
+              "audioAnswer": "/audio/grammatik/partizip-als-adjektiv/die-vergehende-zeit--8wphfh.mp3"
+            }
+          ]
+        },
+        {
+          "label": "2 · Passivsatz → Partizip II",
+          "instruction": "Jetzt ist die Handlung fertig. Sag den Relativsatz als Partizip II.",
+          "example": {
+            "prompt": "der Motor, der eingebaut wurde",
+            "answer": "der eingebaute Motor"
+          },
+          "items": [
+            {
+              "prompt": "das Auto, das repariert wurde",
+              "answer": "das reparierte Auto",
+              "audioPrompt": "/audio/grammatik/partizip-als-adjektiv/das-auto-das-repariert-wurde.mp3",
+              "audioAnswer": "/audio/grammatik/partizip-als-adjektiv/das-reparierte-auto--8wphfh.mp3"
+            },
+            {
+              "prompt": "der Brief, der geschrieben wurde",
+              "answer": "der geschriebene Brief",
+              "audioPrompt": "/audio/grammatik/partizip-als-adjektiv/der-brief-der-geschrieben-wurde.mp3",
+              "audioAnswer": "/audio/grammatik/partizip-als-adjektiv/der-geschriebene-brief--8wphfh.mp3"
+            },
+            {
+              "prompt": "die Tür, die geschlossen wurde",
+              "answer": "die geschlossene Tür",
+              "audioPrompt": "/audio/grammatik/partizip-als-adjektiv/die-tuer-die-geschlossen-wurde.mp3",
+              "audioAnswer": "/audio/grammatik/partizip-als-adjektiv/die-geschlossene-tuer--8wphfh.mp3"
+            },
+            {
+              "prompt": "das Fenster, das geöffnet wurde",
+              "answer": "das geöffnete Fenster",
+              "audioPrompt": "/audio/grammatik/partizip-als-adjektiv/das-fenster-das-geoeffnet-wurde.mp3",
+              "audioAnswer": "/audio/grammatik/partizip-als-adjektiv/das-geoeffnete-fenster--8wphfh.mp3"
+            },
+            {
+              "prompt": "die Aufgabe, die gelöst wurde",
+              "answer": "die gelöste Aufgabe",
+              "audioPrompt": "/audio/grammatik/partizip-als-adjektiv/die-aufgabe-die-geloest-wurde.mp3",
+              "audioAnswer": "/audio/grammatik/partizip-als-adjektiv/die-geloeste-aufgabe--8wphfh.mp3"
+            },
+            {
+              "prompt": "der Kuchen, der gebacken wurde",
+              "answer": "der gebackene Kuchen",
+              "audioPrompt": "/audio/grammatik/partizip-als-adjektiv/der-kuchen-der-gebacken-wurde.mp3",
+              "audioAnswer": "/audio/grammatik/partizip-als-adjektiv/der-gebackene-kuchen--8wphfh.mp3"
+            }
+          ]
+        }
+      ]
+    }
+  },
   "exercises": [
     {
       "type": "table",

@@ -415,7 +415,11 @@
      Both halves of the motion read the same knob so they never drift apart. */
   --vp-slide: .85s;
   --vp-peek-h: 150px;
-  max-width: calc(var(--ex-w) + var(--vp-pad));
+  /* Published as a variable, not just spent on max-width: the topic rail has to know
+     how much viewport is left beside the page to decide whether it is about to sit on
+     top of it. See topic-rail.css. */
+  --vp-w: calc(var(--ex-w) + var(--vp-pad));
+  max-width: var(--vp-w);
 }
 /* Set by the page script around the first, state-restoring paint so a remembered
    "rule hidden" doesn't play as an animation on every load. */
@@ -443,7 +447,14 @@
   /* The page grows and shrinks with the rule column; the exercise column is what
      is left over, which the max-width above keeps at --ex-w on a wide screen and
      lets shrink on a narrow one. */
-  .vp-page--split { max-width: calc(var(--ex-w) + var(--rule-gap) + var(--rule-w) + var(--vp-pad)); transition: max-width var(--vp-slide) var(--vp-ease); }
+  .vp-page--split {
+    --vp-w: calc(var(--ex-w) + var(--rule-gap) + var(--rule-w) + var(--vp-pad));
+    max-width: var(--vp-w);
+    /* padding-left rides along because the rail gutter below is derived from --vp-w:
+       when the rule column opens the page widens, its auto margins shrink, and the
+       gutter has to grow in step rather than snapping at the start of the motion. */
+    transition: max-width var(--vp-slide) var(--vp-ease), padding-left var(--vp-slide) var(--vp-ease);
+  }
   .vp-workspace {
     display: grid;
     grid-template-columns: minmax(0, 1fr) var(--rule-w);
@@ -571,6 +582,23 @@
       visibility 0s linear calc(var(--vp-slide) * .5),
       color .15s ease, border-color .15s ease, padding-right .15s ease;
   }
+  @keyframes vp-pivot-nudge {
+    0%   { transform: translate(0, -50%); }
+    16%  { transform: translate(calc(var(--pivot-lean, -1) * 8px), -50%); }
+    34%  { transform: translate(calc(var(--pivot-lean, -1) * -2px), -50%); }
+    54%  { transform: translate(calc(var(--pivot-lean, -1) * 6px), -50%); }
+    74%  { transform: translate(calc(var(--pivot-lean, -1) * -1px), -50%); }
+    100% { transform: translate(0, -50%); }
+  }
+  .vp-page--split[data-rule="hidden"] .vp-rule-pivot.is-nudge {
+    animation: vp-pivot-nudge 1s var(--vp-ease, ease) both;
+    color: var(--brand-blue-dark);
+    border-color: var(--blue-300);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .vp-page--split[data-rule="hidden"] .vp-rule-pivot.is-nudge { animation: none; }
+  }
+
   .vp-page--split[data-rule="hidden"] .vp-rule-pivot:hover,
   .vp-page--split[data-rule="hidden"] .vp-rule-pivot:focus-visible {
     color: var(--brand-blue-dark);
@@ -694,7 +722,7 @@
 
    The selectors carry both page classes so they outrank the accordion rules above, which
    would otherwise win or lose on file order alone. */
-.vp-sheet-scrim, .vp-sheet-x { display: none; }
+.vp-sheet-scrim, .vp-sheet-x, .vp-sheet-fold { display: none; }
 
 @media (max-width: 1000px) {
   .vp-page--split.vp-page--sheet .vp-rule-card {
@@ -753,6 +781,33 @@
     cursor: pointer;
   }
   .vp-page--sheet .vp-sheet-x svg { width: 20px; height: 20px; }
+
+  /* The sheet's own fold: a word and a chevron, centred in the head between the label and
+     the ✕ — absolutely, because with flex those two unequal neighbours would centre it
+     against the leftover space rather than against the sheet. Inside this media query, so
+     it is a phone control only; on a desktop the toggle in the toolbar is the way out. */
+  .vp-page--sheet .vp-sheet-head { position: relative; }
+  .vp-page--sheet .vp-sheet-fold {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    height: 34px;
+    padding: 0 14px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-pill);
+    background: var(--surface-card);
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: var(--fw-semibold);
+    color: var(--brand-blue-dark);
+    white-space: nowrap;
+    cursor: pointer;
+  }
+  .vp-page--sheet .vp-sheet-fold:active { background: var(--surface); }
+  .vp-page--sheet .vp-sheet-fold svg { width: 16px; height: 16px; }
 
   /* The sheet scrolls, the page behind it does not — `contain` is what stops a flick at
      the end of the list from handing the rest of the gesture to the document. */

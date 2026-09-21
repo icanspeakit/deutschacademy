@@ -4,6 +4,8 @@
 // from Wortliste into Testen. Kept page-local (not the shared quiz.js/flashcards.js engines)
 // because those are reused by other practice pages with a different, simpler visual language.
 
+import { getLang, loadDict, translate, onLangChange } from "./i18n.js";
+
 const PUNCT_RE = new RegExp("[.!?,;:„“”\"']", "g");
 
 function norm(s) {
@@ -21,7 +23,24 @@ function norm(s) {
 export function mountWortschatzApp(els, cards, languages, { onAnswer, onSessionStart } = {}) {
   const { tabsEl, langTabsEl, dirSwitch, dirLabel, deckChip, counterEl, contentEl, eyebrowEl } = els;
 
-  const eyebrows = { cards: "Karteikarten", learn: "Lernen", test: "Testen", list: "Wortliste" };
+  /* Two different "languages" meet on this page and must not be confused. `state.lang` is
+     the language of the VOCABULARY — which column of card.translations the deck quizzes
+     against — and the learner picks it from the toolbar tabs. `uiDict` is the language of
+     the INTERFACE, the site-wide choice in the header. A Turkish speaker studying the
+     Arabic column is a legitimate combination, so the two are kept apart.
+
+     Everything this engine paints goes through render(), so keeping the dict in a
+     variable and re-rendering on a UI language change is the whole integration. The dict
+     starts as the German base rather than empty: mountWortschatzApp() paints immediately
+     and the fetch has not landed yet, so without a seed the first frame would show raw
+     key names. loadDict() layers the chosen language over German (see mergedDict in
+     i18n.js), so an untranslated key falls back to German rather than to a key. */
+  let uiDict = {};
+  const t = (key, vars) => translate(uiDict, key, vars);
+
+  /* The eyebrow names the tab you are on, so it reuses the tab buttons' own keys
+     (wortschatz.tab.*) rather than a parallel set that could drift out of step with them. */
+  const eyebrowKeys = { cards: "wortschatz.tab.cards", learn: "wortschatz.tab.learn", test: "wortschatz.tab.test", list: "wortschatz.tab.list" };
 
   const state = {
     mode: "cards",
@@ -127,14 +146,69 @@ export function mountWortschatzApp(els, cards, languages, { onAnswer, onSessionS
   }
 
   function foreignText(card) {
-    const t = state.lang ? card.translations?.[state.lang] : null;
-    return t && t.trim() ? t : "Übersetzung folgt";
+    const tr = state.lang ? card.translations?.[state.lang] : null;
+    return tr && tr.trim() ? tr : t("vt.translationPending");
   }
 
   // front()/back() follow the toolbar direction switch: "toDe" quizzes the foreign phrase
   // and expects German back; "fromDe" is the reverse.
   function front(card) { return state.dir === "toDe" ? foreignText(card) : card.front; }
   function back(card) { return state.dir === "toDe" ? card.front : foreignText(card); }
+
+  /* ---- Der, die, das ------------------------------------------------------
+     A noun is shown with its article, because that is what has to be learnt: nobody
+     needs "Name", everybody needs "der Name". The article keeps its own element and its
+     own colour (the palette the Aussprache page already uses: der blue, die amber, das
+     grey), so the gender can be seen rather than read — and so sorting and grading go on
+     working off the bare lemma underneath it.
+
+     Only nouns have one; verbs, adjectives and phrases render exactly as before. */
+  const isDeSide = (which) => (which === "front" ? state.dir !== "toDe" : state.dir === "toDe");
+
+  /** The colour class for an article: gender, except that a Pluraletantum's "die" is a
+   *  plural article wearing the feminine's clothes and gets the plural colour. */
+  const artClass = (card) => (card.pluralOnly ? "plural" : card.gender);
+
+  /** The German side of a card, with the article and (on request) the plural. */
+  function deHtml(card, { plural = false } = {}) {
+    const word = escapeHtml(card.front);
+    if (!card.gender) return word;
+    const art = `<span class="vt-art vt-art--${escapeHtml(artClass(card))}">${escapeHtml(card.gender)}</span> `;
+    const pl = plural && card.plural && !card.pluralOnly
+      ? `<span class="vt-plural"><span class="vt-art vt-art--plural">die</span> ${escapeHtml(card.plural)}</span>`
+      : "";
+    return art + word + pl;
+  }
+
+  /** Whichever side was asked for, ready to drop into innerHTML. */
+  function sideHtml(card, which, opts) {
+    if (isDeSide(which)) return deHtml(card, opts);
+    return escapeHtml(which === "front" ? front(card) : back(card));
+  }
+
+  /** The article a label belongs to, for the multiple-choice options — they are compared
+   *  as plain strings, so the gender is looked up rather than carried. */
+  const genderOf = new Map(cards.filter((c) => c.gender).map((c) => [c.front, [c.gender, artClass(c)]]));
+  function labelHtml(label) {
+    const g = isDeSide("back") ? genderOf.get(label) : null;
+    return g
+      ? `<span class="vt-art vt-art--${escapeHtml(g[1])}">${escapeHtml(g[0])}</span> ${escapeHtml(label)}`
+      : escapeHtml(label);
+  }
+
+  /** The full form to name in feedback: "der Name", not "Name". */
+  const fullDe = (card) => (card.gender ? `${card.gender} ${card.front}` : card.front);
+
+  /* A typed answer is right when the WORD is right. The article may be left off or got
+     wrong without costing the point — it was never asked for, and a learner who is
+     punished for a rule the exercise did not announce stops trusting the score. The
+     feedback names the full form either way, so the gender is still taught. */
+  const stripArt = (t) => norm(t).replace(/^(der|die|das)\s+/, "");
+  function answerOk(card, input) {
+    const expected = back(card);
+    if (isDeSide("back") && card.gender) return stripArt(input) === stripArt(expected);
+    return norm(input) === norm(expected);
+  }
 
   function record(ok) {
     state.results[`${state.mode}:${state.idx}`] = ok;
@@ -189,7 +263,7 @@ export function mountWortschatzApp(els, cards, languages, { onAnswer, onSessionS
 
   function check() {
     if (state.checked) { go(1); return; }
-    const ok = norm(state.input) === norm(back(cards[state.idx]));
+    const ok = answerOk(cards[state.idx], state.input);
     state.checked = true;
     record(ok);
     render();
@@ -228,8 +302,8 @@ export function mountWortschatzApp(els, cards, languages, { onAnswer, onSessionS
     const label = contentEl.querySelector(".vt-sel-label");
     if (label) {
       label.textContent = selIds.length
-        ? `${selIds.length} von ${cards.length} Wörtern ausgewählt`
-        : "Tippe Wörter an, um eine eigene Runde zusammenzustellen.";
+        ? t("vt.sel.count", { n: selIds.length, total: cards.length })
+        : t("vt.sel.empty");
     }
     const bar = contentEl.querySelector(".vt-sel-bar");
     if (bar) bar.classList.toggle("has-selection", !!selIds.length);
@@ -237,15 +311,15 @@ export function mountWortschatzApp(els, cards, languages, { onAnswer, onSessionS
     if (startBtn) {
       startBtn.classList.toggle("is-active", !!selIds.length);
       startBtn.disabled = !selIds.length;
-      startBtn.textContent = !selIds.length ? "Auswahl testen"
-        : selIds.length === 1 ? "1 Wort testen"
-        : `${selIds.length} Wörter testen`;
+      startBtn.textContent = !selIds.length ? t("vt.sel.test")
+        : selIds.length === 1 ? t("vt.sel.testOne")
+        : t("vt.sel.testMany", { n: selIds.length });
     }
     const allBtn = contentEl.querySelector("#vt-sel-all");
     if (allBtn) {
       const on = allVisibleSelected();
-      allBtn.textContent = on ? "Keine" : "Alle";
-      allBtn.setAttribute("aria-label", on ? "Auswahl aufheben" : "Alle sichtbaren Wörter auswählen");
+      allBtn.textContent = on ? t("vt.sel.none") : t("vt.sel.all");
+      allBtn.setAttribute("aria-label", on ? t("vt.sel.allAriaOff") : t("vt.sel.allAriaOn"));
     }
   }
 
@@ -358,7 +432,7 @@ export function mountWortschatzApp(els, cards, languages, { onAnswer, onSessionS
   /** The button, or a spacer that keeps the column aligned for words with no file yet. */
   function audioBtnHtml(card, cls) {
     if (!card.audioSrc) return `<span class="vt-audio-gap ${cls}"></span>`;
-    const label = `„${escapeHtml(card.spoken || card.front)}“ anhören`;
+    const label = escapeHtml(t("vt.audio.play", { word: card.spoken || card.front }));
     return `<button type="button" class="vt-audio ${cls}" data-audio="${escapeHtml(card.audioSrc)}" aria-label="${label}" title="${label}">${SPEAKER_SVG}</button>`;
   }
 
@@ -372,6 +446,14 @@ export function mountWortschatzApp(els, cards, languages, { onAnswer, onSessionS
   }
 
   const deckHasAudio = cards.some((c) => c.audioSrc);
+
+  /* "Continue here" is drawn as an arrow, and an arrow is the one glyph that carries a
+     direction in its shape rather than in its position. postcss-rtlcss moves the button to
+     the mirrored edge but cannot rewrite the character inside it, so in Arabic a
+     right-pointing arrow would sit on the left and point back out of the row. Read the
+     live direction instead of the language: dir is what the layout actually flipped on,
+     and Layout.astro has already set it before the first paint. */
+  const forward = () => (document.documentElement.dir === "rtl" ? "←" : "→");
 
   function escapeHtml(s) {
     return String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
@@ -393,19 +475,27 @@ export function mountWortschatzApp(els, cards, languages, { onAnswer, onSessionS
     const meta = langMeta();
     const deName = meta.deName ?? meta.label ?? "";
     dirSwitch.checked = state.dir === "toDe";
-    dirLabel.textContent = state.dir === "toDe" ? `${deName} → Deutsch` : `Deutsch → ${deName}`;
+    dirLabel.textContent = t(state.dir === "toDe" ? "vt.dir.toDe" : "vt.dir.fromDe", { lang: deName });
 
     const isFiltered = filtered();
-    deckChip.textContent = isFiltered ? `Auswahl: ${state.filter.length} · alle zeigen`
-      : chunked ? `Runde ${state.part + 1} von ${partCount} ›`
-      : `Alle ${cards.length} Wörter`;
-    deckChip.classList.toggle("is-filtered", isFiltered);
+    // The chip is a control, so it is only here when there is something to control: drop a
+    // selection, or step to the next part. On a single-part deck with nothing selected it
+    // said "Alle 25 Wörter" and did nothing — a button that swallowed the click, took a tab
+    // stop, and only repeated the count the head ("· 25 Wörter") and the counter ("01 / 25")
+    // already carry. So that state renders no chip at all.
+    const hasAction = isFiltered || chunked;
+    deckChip.hidden = !hasAction;
+    if (hasAction) {
+      deckChip.textContent = isFiltered ? t("vt.deck.filtered", { n: state.filter.length })
+        : t("vt.deck.part", { n: state.part + 1, total: partCount });
+      deckChip.classList.toggle("is-filtered", isFiltered);
+    }
 
     const dk = deck();
     const pos = Math.max(0, dk.indexOf(state.idx));
     counterEl.textContent = `${String(pos + 1).padStart(2, "0")} / ${String(dk.length).padStart(2, "0")}`;
 
-    eyebrowEl.textContent = eyebrows[state.mode];
+    eyebrowEl.textContent = t(eyebrowKeys[state.mode]);
     [...tabsEl.children].forEach((btn) => btn.classList.toggle("active", btn.dataset.tab === state.mode));
   }
 
@@ -414,12 +504,14 @@ export function mountWortschatzApp(els, cards, languages, { onAnswer, onSessionS
     const meta = langMeta();
     const isRtl = !!meta.rtl;
     const toDe = state.dir === "toDe";
-    const deLabel = card.cat ? `Deutsch · ${card.cat}` : "Deutsch";
+    const deLabel = card.cat ? t("vt.card.deCat", { cat: card.cat }) : t("vt.card.de");
     const frontLabel = toDe ? meta.deName ?? meta.label : deLabel;
     const backLabel = toDe ? deLabel : meta.deName ?? meta.label;
     const frontRtl = toDe && isRtl;
     const backRtl = !toDe && isRtl;
-    const flipHint = state.flipped ? "Zurück zur Vorderseite" : `Umdrehen für ${toDe ? "Deutsch" : meta.deName ?? meta.label}`;
+    const flipHint = state.flipped
+      ? t("vt.card.flipBack")
+      : t("vt.card.flipTo", { lang: toDe ? t("vt.card.de") : meta.deName ?? meta.label });
 
     contentEl.innerHTML = `
       <div class="vt-content ${swapClass()}">
@@ -427,26 +519,26 @@ export function mountWortschatzApp(els, cards, languages, { onAnswer, onSessionS
           <div class="vt-flip-inner ${state.flipped ? "is-flipped" : ""}">
             <div class="vt-face">
               <span class="vt-face-eyebrow">${escapeHtml(frontLabel)}</span>
-              <span class="vt-prompt ${frontRtl ? "vt-rtl" : ""}">${escapeHtml(front(card))}</span>
+              <span class="vt-prompt ${frontRtl ? "vt-rtl" : ""}">${sideHtml(card, "front", { plural: true })}</span>
               ${toDe ? "" : audioBtnHtml(card, "vt-audio--face")}
               <span class="vt-hint">${escapeHtml(flipHint)}</span>
             </div>
             <div class="vt-face vt-face--back">
               <span class="vt-face-eyebrow">${escapeHtml(backLabel)}</span>
-              <span class="vt-answer ${backRtl ? "vt-rtl" : ""}">${escapeHtml(back(card))}</span>
+              <span class="vt-answer ${backRtl ? "vt-rtl" : ""}">${sideHtml(card, "back", { plural: true })}</span>
               ${toDe ? audioBtnHtml(card, "vt-audio--face") : ""}
-              <span class="vt-hint">Zurück zur Vorderseite</span>
+              <span class="vt-hint">${escapeHtml(t("vt.card.flipBack"))}</span>
             </div>
           </div>
         </div>
         <div class="vt-nav-row">
-          <button type="button" class="vt-nav-link" id="vt-prev">Zurück</button>
-          <button type="button" class="vt-nav-flip" id="vt-flip-btn">Umdrehen</button>
-          <button type="button" class="vt-nav-next" id="vt-next">Weiter →</button>
+          <button type="button" class="vt-nav-link" id="vt-prev">${escapeHtml(t("vt.card.prev"))}</button>
+          <button type="button" class="vt-nav-flip" id="vt-flip-btn">${escapeHtml(t("vt.card.flip"))}</button>
+          <button type="button" class="vt-nav-next" id="vt-next">${escapeHtml(t("vt.card.next"))}</button>
         </div>
         <p class="vt-kbd-hint">
-          <span class="vt-hint-touch">Tippen zum Umdrehen · wischen zum Blättern</span>
-          <span class="vt-hint-keys">Leertaste umdrehen · ← → blättern</span>
+          <span class="vt-hint-touch">${escapeHtml(t("vt.card.hintTouch"))}</span>
+          <span class="vt-hint-keys">${escapeHtml(t("vt.card.hintKeys"))}</span>
         </p>
       </div>`;
 
@@ -555,8 +647,9 @@ export function mountWortschatzApp(els, cards, languages, { onAnswer, onSessionS
 
     let feedbackHtml = "";
     if (answered) {
-      const title = ok ? "Richtig!" : "Nicht ganz.";
-      const text = ok ? card.note || "" : `Erwartet war „${tr}“. ${card.note || ""}`;
+      const title = ok ? t("vt.learn.right") : t("vt.learn.wrong");
+      const expected = isDeSide("back") ? fullDe(card) : tr;
+      const text = ok ? card.note || "" : `${t("vt.feedback.expected", { answer: expected })} ${card.note || ""}`.trim();
       feedbackHtml = `
         <div class="vt-feedback ${ok ? "is-ok" : "is-no"}">
           <div class="vt-feedback-title">${escapeHtml(title)}</div>
@@ -566,8 +659,8 @@ export function mountWortschatzApp(els, cards, languages, { onAnswer, onSessionS
 
     contentEl.innerHTML = `
       <div class="vt-content ${swapClass()}">
-        <div class="vt-learn-hint">${toDe ? "Wähle die passende deutsche Entsprechung." : "Wähle die passende Übersetzung."}</div>
-        <div class="vt-learn-prompt">${escapeHtml(front(card))}</div>
+        <div class="vt-learn-hint">${escapeHtml(t(toDe ? "vt.learn.hintToDe" : "vt.learn.hintFromDe"))}</div>
+        <div class="vt-learn-prompt">${sideHtml(card, "front")}</div>
         <div class="vt-options">
           ${options
             .map((label, i) => {
@@ -576,17 +669,17 @@ export function mountWortschatzApp(els, cards, languages, { onAnswer, onSessionS
               let cls = "vt-option";
               let mark = "";
               if (answered) {
-                if (correct) { cls += " is-correct"; mark = "Richtig"; }
-                else if (chosen) { cls += " is-wrong"; mark = "Falsch"; }
+                if (correct) { cls += " is-correct"; mark = t("vt.mark.right"); }
+                else if (chosen) { cls += " is-wrong"; mark = t("vt.mark.wrong"); }
                 else cls += " is-dim";
               }
-              return `<button type="button" class="${cls}" data-i="${i}" ${answered ? "disabled" : ""}><span>${escapeHtml(label)}</span><span class="vt-option-mark">${mark}</span></button>`;
+              return `<button type="button" class="${cls}" data-i="${i}" ${answered ? "disabled" : ""}><span>${labelHtml(label)}</span><span class="vt-option-mark">${mark}</span></button>`;
             })
             .join("")}
         </div>
         ${feedbackHtml}
         <div class="vt-primary-row">
-          <button type="button" class="vt-primary-btn" id="vt-next-card">Nächste Karte</button>
+          <button type="button" class="vt-primary-btn" id="vt-next-card">${escapeHtml(t("vt.learn.nextCard"))}</button>
         </div>
       </div>`;
 
@@ -604,7 +697,7 @@ export function mountWortschatzApp(els, cards, languages, { onAnswer, onSessionS
     const dk = deck();
     const pos = Math.max(0, dk.indexOf(state.idx));
     const answered = state.checked;
-    const ok = norm(state.input) === norm(tr);
+    const ok = answerOk(card, state.input);
 
     const values = Object.keys(state.results)
       .filter((k) => k.indexOf("test:") === 0)
@@ -614,8 +707,16 @@ export function mountWortschatzApp(els, cards, languages, { onAnswer, onSessionS
 
     let feedbackHtml = "";
     if (answered) {
-      const title = ok ? "Richtig!" : "Fast geschafft.";
-      const text = ok ? card.note || "" : `Erwartet war „${tr}“. ${card.note || ""}`;
+      const title = ok ? t("vt.learn.right") : t("vt.test.wrong");
+      // Right answer, article missing or wrong: the point stands and the full form is
+      // named anyway — that is the whole teaching moment for gender.
+      const full = isDeSide("back") ? fullDe(card) : tr;
+      // Shown whenever the word was right but the article was left off OR got wrong —
+      // both are the moment to name the full form.
+      const taughtArticle = ok && isDeSide("back") && card.gender && norm(state.input) !== norm(full);
+      const text = ok
+        ? [taughtArticle ? full : "", card.note || ""].filter(Boolean).join(" · ")
+        : `${t("vt.feedback.expected", { answer: full })} ${card.note || ""}`.trim();
       feedbackHtml = `
         <div class="vt-feedback ${ok ? "is-ok" : "is-no"}">
           <div class="vt-feedback-title">${escapeHtml(title)}</div>
@@ -626,19 +727,19 @@ export function mountWortschatzApp(els, cards, languages, { onAnswer, onSessionS
     contentEl.innerHTML = `
       <div class="vt-content ${swapClass()}">
         <div class="vt-test-head">
-          <span>Frage ${pos + 1} von ${dk.length}</span>
-          <span class="vt-score-mono">${right} richtig · ${wrong} falsch</span>
+          <span>${escapeHtml(t("vt.test.question", { n: pos + 1, total: dk.length }))}</span>
+          <span class="vt-score-mono">${escapeHtml(t("vt.test.score", { right, wrong }))}</span>
         </div>
         <div class="vt-progress-track"><div class="vt-progress-fill" style="width:${Math.round(((pos + 1) / dk.length) * 100)}%"></div></div>
-        <div class="vt-test-label">Übersetze ins ${toDe ? "Deutsche" : meta.deInto ?? meta.label ?? ""}</div>
-        <div class="vt-test-prompt">${escapeHtml(front(card))}</div>
-        <input type="text" class="vt-input" id="vt-input" placeholder="Antwort eingeben" value="${escapeHtml(state.input)}" ${answered ? "disabled" : ""} autocomplete="off">
+        <div class="vt-test-label">${escapeHtml(t("vt.test.translateInto", { lang: toDe ? t("vt.test.intoDe") : meta.deInto ?? meta.label ?? "" }))}</div>
+        <div class="vt-test-prompt">${sideHtml(card, "front")}</div>
+        <input type="text" class="vt-input" id="vt-input" placeholder="${escapeHtml(t("vt.test.placeholder"))}" value="${escapeHtml(state.input)}" ${answered ? "disabled" : ""} autocomplete="off">
         ${feedbackHtml}
         <div class="vt-nav-row">
-          <button type="button" class="vt-nav-link" id="vt-skip">Überspringen</button>
-          <button type="button" class="vt-primary-btn" id="vt-primary">${answered ? "Weiter" : "Prüfen"}</button>
+          <button type="button" class="vt-nav-link" id="vt-skip">${escapeHtml(t("vt.test.skip"))}</button>
+          <button type="button" class="vt-primary-btn" id="vt-primary">${escapeHtml(t(answered ? "vt.test.continue" : "vt.test.check"))}</button>
         </div>
-        <p class="vt-kbd-hint">Enter prüfen · ae/oe/ue werden akzeptiert</p>
+        <p class="vt-kbd-hint">${escapeHtml(t("vt.test.kbdHint"))}</p>
       </div>`;
 
     const input = contentEl.querySelector("#vt-input");
@@ -656,10 +757,10 @@ export function mountWortschatzApp(els, cards, languages, { onAnswer, onSessionS
      deck the other tabs run, which is what "Auswahl testen" is for. */
 
   const LIST_SORTS = [
-    ["deck", "Reihenfolge"],
-    ["az", "A–Z"],
-    ["wrong", "Fehler zuerst"],
-    ["open", "Noch offen"],
+    ["deck", "vt.sort.deck"],
+    ["az", "vt.sort.az"],
+    ["wrong", "vt.sort.wrong"],
+    ["open", "vt.sort.open"],
   ];
 
   /** Latest verdict for a card, from whichever mode answered it last. */
@@ -673,7 +774,9 @@ export function mountWortschatzApp(els, cards, languages, { onAnswer, onSessionS
 
   function searchHit(card, q) {
     if (!q) return true;
-    return norm(card.front).includes(q) || norm(foreignText(card)).includes(q);
+    // "der name" has to find it as surely as "name" does.
+    const de = card.gender ? card.gender + " " + card.front : card.front;
+    return norm(de).includes(q) || norm(card.front).includes(q) || norm(foreignText(card)).includes(q);
   }
 
   /** Card indices the list currently shows, in display order. */
@@ -700,20 +803,20 @@ export function mountWortschatzApp(els, cards, languages, { onAnswer, onSessionS
     const seen = res !== undefined;
     const selected = !!state.selected[i];
     const active = i === state.idx;
-    const dotLabel = seen ? (res ? "zuletzt richtig" : "zuletzt falsch") : "noch offen";
+    const dotLabel = escapeHtml(t(seen ? (res ? "vt.list.dotRight" : "vt.list.dotWrong") : "vt.list.dotOpen"));
     return `
       <div class="vt-list-row ${selected ? "is-selected" : ""} ${active && !selected ? "is-active" : ""}" data-i="${i}">
         <button type="button" class="vt-list-pick" role="checkbox" aria-checked="${selected ? "true" : "false"}" data-i="${i}">
           <span class="vt-list-box ${selected ? "is-selected" : ""}"></span>
           <span class="vt-list-word">
-            <span class="vt-list-de">${escapeHtml(card.front)}</span>
+            <span class="vt-list-de">${deHtml(card)}</span>
             <span class="vt-list-tr ${isRtl ? "vt-rtl" : ""}">${escapeHtml(foreignText(card))}</span>
           </span>
           <span class="vt-list-dot ${seen ? (res ? "is-right" : "is-wrong") : ""}" title="${dotLabel}"></span>
         </button>
         ${audioBtnHtml(card, "vt-audio--row")}
         <button type="button" class="vt-list-jump ${active ? "is-active" : ""}" data-jump="${i}"
-                aria-label="Bei „${escapeHtml(card.front)}“ weitermachen">→</button>
+                aria-label="${escapeHtml(t("vt.list.jumpAria", { word: card.front }))}">${forward()}</button>
       </div>`;
   }
 
@@ -726,12 +829,12 @@ export function mountWortschatzApp(els, cards, languages, { onAnswer, onSessionS
     grid.classList.toggle("has-audio", deckHasAudio);
     grid.innerHTML = rows.length
       ? rows.map(listRowHtml).join("")
-      : `<p class="vt-list-empty">Kein Wort passt zu „${escapeHtml(state.listQuery)}“.</p>`;
+      : `<p class="vt-list-empty">${escapeHtml(t("vt.list.empty", { q: state.listQuery }))}</p>`;
     const count = contentEl.querySelector(".vt-list-count");
     if (count) {
       count.textContent = rows.length === cards.length
-        ? `${cards.length} Wörter`
-        : `${rows.length} von ${cards.length} Wörtern`;
+        ? t("vt.list.count", { n: cards.length })
+        : t("vt.list.countFiltered", { n: rows.length, total: cards.length });
     }
     updateSelBar();
   }
@@ -742,34 +845,34 @@ export function mountWortschatzApp(els, cards, languages, { onAnswer, onSessionS
     contentEl.innerHTML = `
       <div class="vt-content ${swapClass()}">
         <div class="vt-list-head">
-          <div class="vt-list-hint">Antippen wählt aus · <span class="vt-list-hint-arrow">→</span> macht dort weiter</div>
+          <div class="vt-list-hint">${t("vt.list.hint", { arrow: `<span class="vt-list-hint-arrow">${forward()}</span>` })}</div>
           <div class="vt-list-legend">
-            <span class="vt-legend-item"><span class="vt-legend-dot vt-legend-dot--richtig"></span>richtig</span>
-            <span class="vt-legend-item"><span class="vt-legend-dot vt-legend-dot--falsch"></span>falsch</span>
-            <span class="vt-legend-item"><span class="vt-legend-dot vt-legend-dot--offen"></span>offen</span>
-            <span class="vt-list-count">${cards.length} Wörter</span>
+            <span class="vt-legend-item"><span class="vt-legend-dot vt-legend-dot--richtig"></span>${escapeHtml(t("vt.list.legendRight"))}</span>
+            <span class="vt-legend-item"><span class="vt-legend-dot vt-legend-dot--falsch"></span>${escapeHtml(t("vt.list.legendWrong"))}</span>
+            <span class="vt-legend-item"><span class="vt-legend-dot vt-legend-dot--offen"></span>${escapeHtml(t("vt.list.legendOpen"))}</span>
+            <span class="vt-list-count">${escapeHtml(t("vt.list.count", { n: cards.length }))}</span>
           </div>
         </div>
         <div class="vt-list-tools">
           <div class="vt-list-search">
-            <input type="search" id="vt-list-q" class="vt-list-input" placeholder="Wort suchen"
-                   aria-label="Wort suchen" value="${escapeHtml(state.listQuery)}" autocomplete="off" />
-            <button type="button" class="vt-list-qclear ${state.listQuery ? "is-on" : ""}" id="vt-list-qclear" aria-label="Suche leeren">✕</button>
+            <input type="search" id="vt-list-q" class="vt-list-input" placeholder="${escapeHtml(t("vt.list.search"))}"
+                   aria-label="${escapeHtml(t("vt.list.search"))}" value="${escapeHtml(state.listQuery)}" autocomplete="off" />
+            <button type="button" class="vt-list-qclear ${state.listQuery ? "is-on" : ""}" id="vt-list-qclear" aria-label="${escapeHtml(t("vt.list.clearSearch"))}">✕</button>
           </div>
           <label class="vt-list-sortwrap">
-            <span class="vt-list-sortlabel">Sortieren</span>
-            <select class="vt-list-sort" id="vt-list-sort" aria-label="Liste sortieren">
-              ${LIST_SORTS.map(([v, l]) => `<option value="${v}" ${state.listSort === v ? "selected" : ""}>${l}</option>`).join("")}
+            <span class="vt-list-sortlabel">${escapeHtml(t("vt.list.sort"))}</span>
+            <select class="vt-list-sort" id="vt-list-sort" aria-label="${escapeHtml(t("vt.list.sortAria"))}">
+              ${LIST_SORTS.map(([v, k]) => `<option value="${v}" ${state.listSort === v ? "selected" : ""}>${escapeHtml(t(k))}</option>`).join("")}
             </select>
           </label>
         </div>
         <div class="vt-list-grid"></div>
         <div class="vt-sel-bar ${selIds.length ? "has-selection" : ""}">
-          <span class="vt-sel-label">${selIds.length ? `${selIds.length} von ${cards.length} Wörtern ausgewählt` : "Tippe Wörter an, um eine eigene Runde zusammenzustellen."}</span>
+          <span class="vt-sel-label">${escapeHtml(selIds.length ? t("vt.sel.count", { n: selIds.length, total: cards.length }) : t("vt.sel.empty"))}</span>
           <div class="vt-sel-actions">
-            <button type="button" class="vt-sel-clear" id="vt-sel-clear" aria-label="Auswahl leeren">Leeren</button>
-            <button type="button" class="vt-sel-all" id="vt-sel-all">Alle</button>
-            <button type="button" class="vt-sel-start ${selIds.length ? "is-active" : ""}" id="vt-sel-start" ${selIds.length ? "" : "disabled"}>Auswahl testen</button>
+            <button type="button" class="vt-sel-clear" id="vt-sel-clear" aria-label="${escapeHtml(t("vt.sel.clearAria"))}">${escapeHtml(t("vt.sel.clear"))}</button>
+            <button type="button" class="vt-sel-all" id="vt-sel-all">${escapeHtml(t("vt.sel.all"))}</button>
+            <button type="button" class="vt-sel-start ${selIds.length ? "is-active" : ""}" id="vt-sel-start" ${selIds.length ? "" : "disabled"}>${escapeHtml(t("vt.sel.test"))}</button>
           </div>
         </div>
       </div>`;
@@ -841,6 +944,14 @@ export function mountWortschatzApp(els, cards, languages, { onAnswer, onSessionS
   });
 
   render();
+
+  /* The first paint above runs with an empty dict, so every t() falls through to its key.
+     That is invisible in practice — the fetch resolves in the same tick for a cached file
+     — but the repaint is what makes it correct rather than lucky, so it is unconditional.
+     onLangChange then re-renders on every later switch: this engine paints with innerHTML
+     after i18n's applyToDom() pass has run, so nothing here can be reached by data-i18n. */
+  loadDict(getLang()).then((d) => { uiDict = d; render(); });
+  onLangChange((code, d) => { uiDict = d; render(); });
 
   return {
     setLang(code) { reset({ lang: code }); render(); },

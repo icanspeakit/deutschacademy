@@ -26,7 +26,7 @@ const mb = (totals.bytes / 1024 / 1024).toFixed(1).replace(".", ",");
   <main class="practice-main practice-main--wide">
     <div class="practice-hero">
       <p class="eyebrow">Wissensdatenbank</p>
-      <h1>Bücher und Listen zum Herunterladen</h1>
+      <h1 data-i18n="wissen.h1">Bücher und Listen zum Herunterladen</h1>
       <p>
         {totals.files} PDFs, {totals.pages} Seiten, alles kostenlos und ohne Konto. Zum Ausdrucken,
         Mitnehmen und im Unterricht Weitergeben.
@@ -56,7 +56,7 @@ const mb = (totals.bytes / 1024 / 1024).toFixed(1).replace(".", ",");
           <span>{cat.name}</span>
           <span class="wi-group-n">{cat.items.length}</span>
         </h2>
-        <p class="wi-group-blurb">{cat.blurb}</p>
+        <p class="wi-group-blurb" data-i18n={`wissen.cat.${cat.id}.blurb`}>{cat.blurb}</p>
         <div class="wi-grid">
           {/* A button, not a link: the card opens the sheet that says what is in
               the file, and the download happens from there. A 210 KB PDF that
@@ -66,7 +66,9 @@ const mb = (totals.bytes / 1024 / 1024).toFixed(1).replace(".", ",");
             <button class="wi-card" type="button" data-file={f.id}>
               <span class="wi-badge">{f.level}</span>
               <b>{f.title}</b>
-              <i>{f.desc}</i>
+              {/* File titles stay German — they name a German-language PDF. The line
+                  under each says what is inside it, which is the part worth translating. */}
+              <i data-i18n={`wissen.file.${f.id}.desc`}>{f.desc}</i>
               <span class="wi-card-foot">
                 <span class="wi-meta">PDF{f.pages ? ` · ${f.pages} Seiten` : ""} · {f.size}</span>
                 <span class="wi-dl" aria-hidden="true">↓</span>
@@ -83,16 +85,16 @@ const mb = (totals.bytes / 1024 / 1024).toFixed(1).replace(".", ",");
         <span>Offizielle Materialien</span>
         <span class="wi-group-n">{links.length}</span>
       </h2>
-      <p class="wi-group-blurb">
+      <p class="wi-group-blurb" data-i18n="wissen.official.blurb">
         Modellsätze und Fragenkataloge der Prüfungsstellen. Die sind kostenlos, aber nicht unsere —
         deshalb verlinken wir sie dort, wo sie herausgegeben werden. Dort sind sie auch immer aktuell.
       </p>
       <ul class="wi-links">
-        {links.map((l) => (
+        {links.map((l, i) => (
           <li>
             <a href={l.href} target="_blank" rel="noopener noreferrer">
               <b>{l.title}</b>
-              <i>{l.note}</i>
+              <i data-i18n={`wissen.link.${i}.note`}>{l.note}</i>
               <span class="wi-source">{l.source} ↗</span>
             </a>
           </li>
@@ -101,8 +103,8 @@ const mb = (totals.bytes / 1024 / 1024).toFixed(1).replace(".", ",");
     </section>
 
     <section class="wi-rights">
-      <h2>Woher das alles kommt</h2>
-      {rightsNote.split("\n\n").map((p) => <p>{p}</p>)}
+      <h2 data-i18n="wissen.h2.sources">Woher das alles kommt</h2>
+      {rightsNote.split("\n\n").map((p, i) => <p data-i18n={`wissen.rights.p${i + 1}`}>{p}</p>)}
       <p class="wi-rights-meta">
         Zusammen {totals.files} Dateien, {mb} MB. Erzeugt aus den Daten dieser Seite mit
         <code>pnpm generate:pdfs</code>.

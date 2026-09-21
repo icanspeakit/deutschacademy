@@ -6,17 +6,39 @@
   "source": "Negation.pdf (Kapitel 6, Position von nicht) · Negationswörter.pdf (Kapitel 74)",
   "concept": {
     "flow": [
-      { "text": "Nomen mit ein / ohne Artikel", "variant": "verb" },
-      { "text": "→ kein" },
-      { "text": "alles andere", "variant": "prep" },
-      { "text": "→ nicht" }
+      {
+        "text": "Nomen mit ein / ohne Artikel",
+        "variant": "verb"
+      },
+      {
+        "text": "→ kein"
+      },
+      {
+        "text": "alles andere",
+        "variant": "prep"
+      },
+      {
+        "text": "→ nicht"
+      }
     ],
     "exampleHtml": "Ich habe <span class=\"vp-verb\">eine</span> Karte. → Ich habe <span class=\"vp-verb\">keine</span> Karte. · Ich kann weiterfahren. → Ich kann <span class=\"vp-prep\">nicht</span> weiterfahren.",
     "qa": [
-      { "html": "<strong>kein</strong> steht vor Nomen mit <em>ein/eine</em> und vor Nomen ganz ohne Artikel: <em>kein Geld, keine Zeit, keine Karte</em>. Es wird wie <em>ein</em> dekliniert.", "tag": "kein" },
-      { "html": "<strong>nicht</strong> verneint Verben, Adjektive, Adverbien und Nomen mit bestimmtem Artikel: <em>Ich kenne den neuen Kollegen nicht.</em>", "tag": "nicht" },
-      { "html": "<strong>Satznegation</strong>: <em>nicht</em> steht möglichst weit rechts — aber immer <em>vor</em> Modalangabe, Ortsangabe und zweitem Verbteil.", "tag": "Position" },
-      { "html": "<strong>Teilnegation</strong>: <em>nicht</em> steht direkt vor dem Satzteil, den es verneint. Danach folgt oft <em>sondern</em>. <em>Ich schenke ihr <strong>nicht heute</strong> den Ring, sondern morgen.</em>", "tag": "sondern" }
+      {
+        "html": "<strong>kein</strong> steht vor Nomen mit <em>ein/eine</em> und vor Nomen ganz ohne Artikel: <em>kein Geld, keine Zeit, keine Karte</em>. Es wird wie <em>ein</em> dekliniert.",
+        "tag": "kein"
+      },
+      {
+        "html": "<strong>nicht</strong> verneint Verben, Adjektive, Adverbien und Nomen mit bestimmtem Artikel: <em>Ich kenne den neuen Kollegen nicht.</em>",
+        "tag": "nicht"
+      },
+      {
+        "html": "<strong>Satznegation</strong>: <em>nicht</em> steht möglichst weit rechts — aber immer <em>vor</em> Modalangabe, Ortsangabe und zweitem Verbteil.",
+        "tag": "Position"
+      },
+      {
+        "html": "<strong>Teilnegation</strong>: <em>nicht</em> steht direkt vor dem Satzteil, den es verneint. Danach folgt oft <em>sondern</em>. <em>Ich schenke ihr <strong>nicht heute</strong> den Ring, sondern morgen.</em>",
+        "tag": "sondern"
+      }
     ],
     "noteHtml": "Die Merkhilfe für die Position von <em>nicht</em> heißt <strong>te-ka-<span class=\"vp-verb\">nicht</span>-mo-lo</strong>: <em>temporal – kausal – <strong>nicht</strong> – modal – lokal</em>. Alles, was vor <em>nicht</em> steht (Zeit, Grund, Pronomen, Objekte), bleibt links; Art und Weise, Ort und der zweite Verbteil kommen danach: <em>Ich konnte meinen Vater gestern wegen eines Termins <strong>nicht</strong> pünktlich am Bahnhof abholen.</em>",
     "reference": {
@@ -25,20 +47,76 @@
       "tables": [
         {
           "caption": "te-ka-nicht-mo-lo",
-          "head": ["links von nicht", "", "", "nicht", "rechts von nicht", "", ""],
+          "head": [
+            "links von nicht",
+            "",
+            "",
+            "nicht",
+            "rechts von nicht",
+            "",
+            ""
+          ],
           "rows": [
-            ["Subjekt", "Verb 1", "Objekte / temporal / kausal", "nicht", "modal", "lokal", "Verb 2"],
-            ["Ich", "konnte", "meinen Vater · gestern · wegen eines Termins", "nicht", "pünktlich", "am Bahnhof", "abholen."],
-            ["Ich", "kann", "mich · heute · wegen einer Konferenz", "nicht", "um meinen Kollegen", "—", "kümmern."]
+            [
+              "Subjekt",
+              "Verb 1",
+              "Objekte / temporal / kausal",
+              "nicht",
+              "modal",
+              "lokal",
+              "Verb 2"
+            ],
+            [
+              "Ich",
+              "konnte",
+              "meinen Vater · gestern · wegen eines Termins",
+              "nicht",
+              "pünktlich",
+              "am Bahnhof",
+              "abholen."
+            ],
+            [
+              "Ich",
+              "kann",
+              "mich · heute · wegen einer Konferenz",
+              "nicht",
+              "um meinen Kollegen",
+              "—",
+              "kümmern."
+            ]
           ]
         },
         {
           "caption": "kein — dekliniert wie ein",
-          "head": ["", "maskulin", "feminin", "neutral", "Plural"],
+          "head": [
+            "",
+            "maskulin",
+            "feminin",
+            "neutral",
+            "Plural"
+          ],
           "rows": [
-            ["Nominativ", "kein Mann", "keine Frau", "kein Kind", "keine Kinder"],
-            ["Akkusativ", "keinen Mann", "keine Frau", "kein Kind", "keine Kinder"],
-            ["Dativ", "keinem Mann", "keiner Frau", "keinem Kind", "keinen Kindern"]
+            [
+              "Nominativ",
+              "kein Mann",
+              "keine Frau",
+              "kein Kind",
+              "keine Kinder"
+            ],
+            [
+              "Akkusativ",
+              "keinen Mann",
+              "keine Frau",
+              "kein Kind",
+              "keine Kinder"
+            ],
+            [
+              "Dativ",
+              "keinem Mann",
+              "keiner Frau",
+              "keinem Kind",
+              "keinen Kindern"
+            ]
           ]
         }
       ],
@@ -68,6 +146,186 @@
       ]
     }
   },
+  "aktiv": {
+    "listen": [
+      {
+        "text": "Ich habe keine Karte.",
+        "note": "Vor einem Nomen mit ein steht kein.",
+        "audio": "/audio/grammatik/negation/ich-habe-keine-karte.mp3"
+      },
+      {
+        "text": "Ich kenne den neuen Kollegen nicht.",
+        "note": "Nomen mit bestimmtem Artikel verneint nicht — ganz hinten.",
+        "audio": "/audio/grammatik/negation/ich-kenne-den-neuen-kollegen-nicht.mp3"
+      },
+      {
+        "text": "Ich kann nicht weiterfahren.",
+        "note": "nicht steht vor dem zweiten Verbteil, nicht dahinter.",
+        "audio": "/audio/grammatik/negation/ich-kann-nicht-weiterfahren.mp3"
+      }
+    ],
+    "hoeren": {
+      "instruction": "Hör zu und wähle die Verneinung, die du gehört hast.",
+      "items": [
+        {
+          "text": "Ich habe keine Zeit.",
+          "choices": [
+            "keine Zeit",
+            "nicht Zeit",
+            "kein Zeit"
+          ],
+          "correct": 0,
+          "audio": "/audio/grammatik/negation/ich-habe-keine-zeit.mp3"
+        },
+        {
+          "text": "Er kommt heute nicht.",
+          "choices": [
+            "kommt kein heute",
+            "kommt heute nicht",
+            "kommt nicht heute"
+          ],
+          "correct": 1,
+          "audio": "/audio/grammatik/negation/er-kommt-heute-nicht.mp3"
+        },
+        {
+          "text": "Sie trinkt keinen Kaffee.",
+          "choices": [
+            "keinen Kaffee",
+            "kein Kaffee",
+            "nicht Kaffee"
+          ],
+          "correct": 0,
+          "audio": "/audio/grammatik/negation/sie-trinkt-keinen-kaffee.mp3"
+        },
+        {
+          "text": "Wir müssen heute nicht arbeiten.",
+          "choices": [
+            "nicht arbeiten",
+            "arbeiten nicht",
+            "kein arbeiten"
+          ],
+          "correct": 0,
+          "audio": "/audio/grammatik/negation/wir-muessen-heute-nicht-arbeiten.mp3"
+        },
+        {
+          "text": "Das Auto ist nicht neu.",
+          "choices": [
+            "ist kein neu",
+            "ist nicht neu",
+            "ist neu nicht"
+          ],
+          "correct": 1,
+          "audio": "/audio/grammatik/negation/das-auto-ist-nicht-neu.mp3"
+        },
+        {
+          "text": "Ich kenne den Kollegen nicht.",
+          "choices": [
+            "kenne keinen Kollegen",
+            "kenne nicht den Kollegen",
+            "kenne den Kollegen nicht"
+          ],
+          "correct": 2,
+          "audio": "/audio/grammatik/negation/ich-kenne-den-kollegen-nicht.mp3"
+        }
+      ]
+    },
+    "sprechen": {
+      "rounds": [
+        {
+          "label": "1 · kein oder nicht?",
+          "instruction": "Du hörst einen positiven Satz. Verneine ihn — mit kein oder mit nicht.",
+          "example": {
+            "prompt": "Ich habe eine Karte.",
+            "answer": "Ich habe keine Karte."
+          },
+          "items": [
+            {
+              "prompt": "Ich kenne den Kollegen.",
+              "answer": "Ich kenne den Kollegen nicht.",
+              "audioPrompt": "/audio/grammatik/negation/ich-kenne-den-kollegen.mp3",
+              "audioAnswer": "/audio/grammatik/negation/ich-kenne-den-kollegen-nicht--8wphfh.mp3"
+            },
+            {
+              "prompt": "Wir haben Zeit.",
+              "answer": "Wir haben keine Zeit.",
+              "audioPrompt": "/audio/grammatik/negation/wir-haben-zeit.mp3",
+              "audioAnswer": "/audio/grammatik/negation/wir-haben-keine-zeit--8wphfh.mp3"
+            },
+            {
+              "prompt": "Das Auto ist neu.",
+              "answer": "Das Auto ist nicht neu.",
+              "audioPrompt": "/audio/grammatik/negation/das-auto-ist-neu.mp3",
+              "audioAnswer": "/audio/grammatik/negation/das-auto-ist-nicht-neu--8wphfh.mp3"
+            },
+            {
+              "prompt": "Sie trinkt Kaffee.",
+              "answer": "Sie trinkt keinen Kaffee.",
+              "audioPrompt": "/audio/grammatik/negation/sie-trinkt-kaffee.mp3",
+              "audioAnswer": "/audio/grammatik/negation/sie-trinkt-keinen-kaffee--8wphfh.mp3"
+            },
+            {
+              "prompt": "Er kommt heute.",
+              "answer": "Er kommt heute nicht.",
+              "audioPrompt": "/audio/grammatik/negation/er-kommt-heute.mp3",
+              "audioAnswer": "/audio/grammatik/negation/er-kommt-heute-nicht--8wphfh.mp3"
+            },
+            {
+              "prompt": "Ich habe einen Hund.",
+              "answer": "Ich habe keinen Hund.",
+              "audioPrompt": "/audio/grammatik/negation/ich-habe-einen-hund.mp3",
+              "audioAnswer": "/audio/grammatik/negation/ich-habe-keinen-hund--8wphfh.mp3"
+            }
+          ]
+        },
+        {
+          "label": "2 · Wo steht nicht?",
+          "instruction": "Jetzt hat der Satz zwei Verbteile. Verneine ihn — nicht steht vor dem letzten Teil.",
+          "example": {
+            "prompt": "Ich kann weiterfahren.",
+            "answer": "Ich kann nicht weiterfahren."
+          },
+          "items": [
+            {
+              "prompt": "Wir müssen heute arbeiten.",
+              "answer": "Wir müssen heute nicht arbeiten.",
+              "audioPrompt": "/audio/grammatik/negation/wir-muessen-heute-arbeiten.mp3",
+              "audioAnswer": "/audio/grammatik/negation/wir-muessen-heute-nicht-arbeiten--8wphfh.mp3"
+            },
+            {
+              "prompt": "Sie hat angerufen.",
+              "answer": "Sie hat nicht angerufen.",
+              "audioPrompt": "/audio/grammatik/negation/sie-hat-angerufen.mp3",
+              "audioAnswer": "/audio/grammatik/negation/sie-hat-nicht-angerufen--8wphfh.mp3"
+            },
+            {
+              "prompt": "Ich fahre morgen nach Berlin.",
+              "answer": "Ich fahre morgen nicht nach Berlin.",
+              "audioPrompt": "/audio/grammatik/negation/ich-fahre-morgen-nach-berlin.mp3",
+              "audioAnswer": "/audio/grammatik/negation/ich-fahre-morgen-nicht-nach-berlin--8wphfh.mp3"
+            },
+            {
+              "prompt": "Er will das Buch lesen.",
+              "answer": "Er will das Buch nicht lesen.",
+              "audioPrompt": "/audio/grammatik/negation/er-will-das-buch-lesen.mp3",
+              "audioAnswer": "/audio/grammatik/negation/er-will-das-buch-nicht-lesen--8wphfh.mp3"
+            },
+            {
+              "prompt": "Das Kind ist eingeschlafen.",
+              "answer": "Das Kind ist nicht eingeschlafen.",
+              "audioPrompt": "/audio/grammatik/negation/das-kind-ist-eingeschlafen.mp3",
+              "audioAnswer": "/audio/grammatik/negation/das-kind-ist-nicht-eingeschlafen--8wphfh.mp3"
+            },
+            {
+              "prompt": "Wir können heute kommen.",
+              "answer": "Wir können heute nicht kommen.",
+              "audioPrompt": "/audio/grammatik/negation/wir-koennen-heute-kommen.mp3",
+              "audioAnswer": "/audio/grammatik/negation/wir-koennen-heute-nicht-kommen--8wphfh.mp3"
+            }
+          ]
+        }
+      ]
+    }
+  },
   "exercises": [
     {
       "type": "fill",
@@ -75,32 +333,107 @@
       "hint": "Steht ein Nomen mit ein/ohne Artikel dahinter? Dann kein-. Achten Sie auf die Endung.",
       "placeholder": "nicht / kein…",
       "items": [
-        { "prompt": "Ich habe ___ Geld dabei.", "hint": "Nomen ohne Artikel, neutral.", "answer": ["kein"] },
-        { "prompt": "Ich habe ___ Zeit für dich.", "hint": "Nomen ohne Artikel, feminin.", "answer": ["keine"] },
-        { "prompt": "Ich kann heute ___ weiterfahren.", "hint": "Ein Verb wird verneint.", "answer": ["nicht"] },
-        { "prompt": "Ich kenne den neuen Kollegen ___.", "hint": "Bestimmter Artikel — also nicht.", "answer": ["nicht"] },
-        { "prompt": "Wir haben ___ Karten mehr.", "hint": "Plural.", "answer": ["keine"] },
-        { "prompt": "Das Buch ist ___ interessant.", "hint": "Adjektiv.", "answer": ["nicht"] },
-        { "prompt": "Er ist ___ Lehrer, er ist Ingenieur.", "hint": "Beruf ohne Artikel, maskulin.", "answer": ["kein"] }
+        {
+          "prompt": "Ich habe ___ Geld dabei.",
+          "hint": "Nomen ohne Artikel, neutral.",
+          "answer": [
+            "kein"
+          ]
+        },
+        {
+          "prompt": "Ich habe ___ Zeit für dich.",
+          "hint": "Nomen ohne Artikel, feminin.",
+          "answer": [
+            "keine"
+          ]
+        },
+        {
+          "prompt": "Ich kann heute ___ weiterfahren.",
+          "hint": "Ein Verb wird verneint.",
+          "answer": [
+            "nicht"
+          ]
+        },
+        {
+          "prompt": "Ich kenne den neuen Kollegen ___.",
+          "hint": "Bestimmter Artikel — also nicht.",
+          "answer": [
+            "nicht"
+          ]
+        },
+        {
+          "prompt": "Wir haben ___ Karten mehr.",
+          "hint": "Plural.",
+          "answer": [
+            "keine"
+          ]
+        },
+        {
+          "prompt": "Das Buch ist ___ interessant.",
+          "hint": "Adjektiv.",
+          "answer": [
+            "nicht"
+          ]
+        },
+        {
+          "prompt": "Er ist ___ Lehrer, er ist Ingenieur.",
+          "hint": "Beruf ohne Artikel, maskulin.",
+          "answer": [
+            "kein"
+          ]
+        }
       ]
     },
     {
       "type": "table",
       "title": "Steht das Satzteil links oder rechts von „nicht“?",
       "hint": "te-ka-nicht-mo-lo. Tippen Sie „links“ oder „rechts“.",
-      "columns": ["Satzteil", "links / rechts"],
+      "columns": [
+        "Satzteil",
+        "links / rechts"
+      ],
       "placeholder": "links / rechts",
       "rows": [
-        { "term": "gestern (temporal)", "answer": "links" },
-        { "term": "wegen der Nachbarn (kausal)", "answer": "links" },
-        { "term": "sich (Pronomen)", "answer": "links" },
-        { "term": "meiner Frau (Dativobjekt)", "answer": "links" },
-        { "term": "das Klavier (Akkusativobjekt)", "answer": "links" },
-        { "term": "mit Mühe (modal)", "answer": "rechts" },
-        { "term": "ungern (modal)", "answer": "rechts" },
-        { "term": "zu Hause (lokal)", "answer": "rechts" },
-        { "term": "oben (lokal)", "answer": "rechts" },
-        { "term": "Klavier (spielen) (Verbgefährte)", "answer": "rechts" }
+        {
+          "term": "gestern (temporal)",
+          "answer": "links"
+        },
+        {
+          "term": "wegen der Nachbarn (kausal)",
+          "answer": "links"
+        },
+        {
+          "term": "sich (Pronomen)",
+          "answer": "links"
+        },
+        {
+          "term": "meiner Frau (Dativobjekt)",
+          "answer": "links"
+        },
+        {
+          "term": "das Klavier (Akkusativobjekt)",
+          "answer": "links"
+        },
+        {
+          "term": "mit Mühe (modal)",
+          "answer": "rechts"
+        },
+        {
+          "term": "ungern (modal)",
+          "answer": "rechts"
+        },
+        {
+          "term": "zu Hause (lokal)",
+          "answer": "rechts"
+        },
+        {
+          "term": "oben (lokal)",
+          "answer": "rechts"
+        },
+        {
+          "term": "Klavier (spielen) (Verbgefährte)",
+          "answer": "rechts"
+        }
       ]
     },
     {
@@ -110,32 +443,108 @@
         {
           "id": "ng1",
           "hint": "„Er versteht mich.“",
-          "correct": ["Er", "versteht", "mich", "nicht", "."],
-          "shuffled": ["mich", "Er", "nicht", ".", "versteht"]
+          "correct": [
+            "Er",
+            "versteht",
+            "mich",
+            "nicht",
+            "."
+          ],
+          "shuffled": [
+            "mich",
+            "Er",
+            "nicht",
+            ".",
+            "versteht"
+          ]
         },
         {
           "id": "ng2",
           "hint": "„Er versteht mich gut.“ — gut ist modal.",
-          "correct": ["Er", "versteht", "mich", "nicht", "gut", "."],
-          "shuffled": ["gut", "mich", "nicht", "Er", ".", "versteht"]
+          "correct": [
+            "Er",
+            "versteht",
+            "mich",
+            "nicht",
+            "gut",
+            "."
+          ],
+          "shuffled": [
+            "gut",
+            "mich",
+            "nicht",
+            "Er",
+            ".",
+            "versteht"
+          ]
         },
         {
           "id": "ng3",
           "hint": "„Sie geht auf den Balkon.“ — der Balkon ist lokal.",
-          "correct": ["Sie", "geht", "nicht", "auf", "den", "Balkon", "."],
-          "shuffled": ["den", "geht", "auf", "Sie", "Balkon", "nicht", "."]
+          "correct": [
+            "Sie",
+            "geht",
+            "nicht",
+            "auf",
+            "den",
+            "Balkon",
+            "."
+          ],
+          "shuffled": [
+            "den",
+            "geht",
+            "auf",
+            "Sie",
+            "Balkon",
+            "nicht",
+            "."
+          ]
         },
         {
           "id": "ng4",
           "hint": "„Ich kann heute Abend kommen.“ — das zweite Verb schließt den Satz.",
-          "correct": ["Ich", "kann", "heute", "Abend", "nicht", "kommen", "."],
-          "shuffled": ["Abend", "nicht", "Ich", "kommen", "heute", "kann", "."]
+          "correct": [
+            "Ich",
+            "kann",
+            "heute",
+            "Abend",
+            "nicht",
+            "kommen",
+            "."
+          ],
+          "shuffled": [
+            "Abend",
+            "nicht",
+            "Ich",
+            "kommen",
+            "heute",
+            "kann",
+            "."
+          ]
         },
         {
           "id": "ng5",
           "hint": "„Sie verabredet sich heute im Café.“",
-          "correct": ["Sie", "verabredet", "sich", "heute", "nicht", "im", "Café", "."],
-          "shuffled": ["heute", "sich", "im", "Sie", "nicht", "Café", "verabredet", "."]
+          "correct": [
+            "Sie",
+            "verabredet",
+            "sich",
+            "heute",
+            "nicht",
+            "im",
+            "Café",
+            "."
+          ],
+          "shuffled": [
+            "heute",
+            "sich",
+            "im",
+            "Sie",
+            "nicht",
+            "Café",
+            "verabredet",
+            "."
+          ]
         }
       ]
     },
@@ -144,11 +553,26 @@
       "title": "Teilnegation: Was wird verneint?",
       "hint": "Der Satzteil direkt nach „nicht“ ist gemeint.",
       "pairs": [
-        { "q": "Nicht ich schenke ihr den Ring,", "a": "sondern er." },
-        { "q": "Ich schenke nicht ihr den Ring,", "a": "sondern ihm." },
-        { "q": "Ich schenke ihr nicht heute den Ring,", "a": "sondern morgen." },
-        { "q": "Ich schenke ihr heute nicht den Ring,", "a": "sondern die Blumen." },
-        { "q": "Ich schenke ihr den Ring nicht zur Verlobung,", "a": "sondern zum Geburtstag." }
+        {
+          "q": "Nicht ich schenke ihr den Ring,",
+          "a": "sondern er."
+        },
+        {
+          "q": "Ich schenke nicht ihr den Ring,",
+          "a": "sondern ihm."
+        },
+        {
+          "q": "Ich schenke ihr nicht heute den Ring,",
+          "a": "sondern morgen."
+        },
+        {
+          "q": "Ich schenke ihr heute nicht den Ring,",
+          "a": "sondern die Blumen."
+        },
+        {
+          "q": "Ich schenke ihr den Ring nicht zur Verlobung,",
+          "a": "sondern zum Geburtstag."
+        }
       ]
     }
   ]

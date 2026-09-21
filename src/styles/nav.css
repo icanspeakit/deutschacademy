@@ -186,6 +186,22 @@
 /* Two stages: a permanent icon column for the sections, and a panel that only
    ever lists the section you are in. Collapses to 60px when space is tight. */
 .nvb { display: flex; gap: 0; border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; background: var(--surface-card); }
+/* One height for every level. A2 has 7 topics and B1 has 14, so a card sized to its
+   content was 402px on one tab and 654px on the next: the switch moved everything below
+   it and the rail's own buttons jumped under the pointer that had just pressed one.
+   Sizing to the largest level would fix the jump and leave 250px of nothing on the
+   smallest, so the height comes from the viewport instead — the rail is furniture, it
+   should be as tall as the room allows and scroll inside itself. clamp keeps it sane on
+   a laptop and on a 4K screen, and the panel keeps its own scrollbar.
+   Scoped to .nv-aside: the Wortschatz picker uses .nvb too and is sized by its page. */
+.nv-aside .nvb { height: clamp(420px, calc(100vh - 210px), 720px); }
+.nv-aside .nvb-panel { overflow-y: auto; overscroll-behavior: contain; }
+/* On a phone the aside is a block in the flow, not a column beside anything, and a fixed
+   height there would be a scroller inside a scroller. */
+@media (max-width: 900px) {
+  .nv-aside .nvb { height: auto; }
+  .nv-aside .nvb-panel { overflow-y: visible; }
+}
 .nvb-rail {
   width: 64px; flex-shrink: 0; background: var(--inverse-surface);
   display: flex; flex-direction: column; align-items: center; gap: var(--space-2);
@@ -429,23 +445,27 @@
 .nv-view { display: flex; flex-direction: column; gap: var(--space-5); }
 .nv-view[hidden] { display: none; }
 
-.nv-focus { margin: var(--space-4) 0 0; padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: var(--space-2); }
+.nv-focus { margin: var(--space-3) 0 0; padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: var(--space-2); }
 .nv-focus li {
   font-size: var(--text-xs); color: var(--muted);
   background: var(--surface); border: 1px solid var(--border);
   border-radius: var(--radius-pill); padding: 5px 12px;
 }
 
+/* This header sits above the thing the learner actually came to do. At 28px padding, a
+   30px h1 and a 163px ring tile it measured 425px, and with the 152px of topbar and strip
+   above it that is 64% of a 900px-tall viewport spent before the first exercise is on
+   screen. Every number below is smaller for that one reason; nothing is hidden. */
 .nv-detail {
   background: var(--surface-card); border: 1px solid var(--border); border-radius: var(--radius-lg);
-  padding: var(--space-7); display: grid; grid-template-columns: minmax(0, 1fr) 240px; gap: var(--space-6); align-items: start;
+  padding: var(--space-5) var(--space-6); display: grid; grid-template-columns: minmax(0, 1fr) 232px; gap: var(--space-5); align-items: start;
 }
 .nv-detail-eyebrow { font-family: var(--font-label); font-size: var(--text-xs); font-weight: var(--fw-bold); letter-spacing: .1em; text-transform: uppercase; color: var(--muted-soft); }
-.nv-detail h1 { margin: var(--space-2) 0 var(--space-3); font-family: var(--font-body); font-size: var(--text-3xl); color: var(--ink); letter-spacing: -.02em; font-weight: var(--fw-regular); }
-.nv-detail-level { display: flex; align-items: center; gap: var(--space-2); margin: 0 0 var(--space-3) !important; flex-wrap: wrap; }
+.nv-detail h1 { margin: var(--space-1) 0 var(--space-2); font-family: var(--font-body); font-size: var(--text-2xl); color: var(--ink); letter-spacing: -.02em; font-weight: var(--fw-regular); }
+.nv-detail-level { display: flex; align-items: center; gap: var(--space-2); margin: 0 0 var(--space-2) !important; flex-wrap: wrap; }
 .nv-detail-levelsrc { font-size: var(--text-xs); color: var(--muted-soft); }
-.nv-detail p { margin: 0; color: var(--muted); font-size: var(--text-sm); line-height: 1.6; max-width: 52ch; }
-.nv-detail-actions { display: flex; gap: var(--space-3); margin-top: var(--space-5); flex-wrap: wrap; }
+.nv-detail p { margin: 0; color: var(--muted); font-size: var(--text-sm); line-height: 1.55; max-width: 60ch; }
+.nv-detail-actions { display: flex; gap: var(--space-3); margin-top: var(--space-4); flex-wrap: wrap; }
 .nv-btn {
   display: inline-flex; align-items: center; gap: 6px; padding: 10px 18px; border-radius: var(--radius-pill);
   font-size: var(--text-sm); font-weight: var(--fw-bold); text-decoration: none; border: 1px solid transparent; cursor: pointer;
@@ -456,17 +476,29 @@
 .nv-btn--ghost { background: transparent; border-color: var(--border-strong); color: var(--ink); }
 .nv-btn--ghost:hover { border-color: var(--brand-blue); color: var(--brand-blue-dark); }
 
+/* A row, not a stacked column: the ring and its label side by side is 88px tall where the
+   column was 163px, and the label reads better on one or two lines next to the number than
+   centred under it. The svg keeps its 0 0 96 96 viewBox, so the dash offsets that drive the
+   sweep are unchanged — only the rendered box shrinks. A section or item with nothing to
+   count renders no card at all rather than an empty one (see LearnShell.astro). */
 .nv-ring-card {
-  background: var(--gradient-brand); border-radius: var(--radius); padding: var(--space-5);
-  display: flex; flex-direction: column; align-items: center; gap: var(--space-2); color: #fff;
+  background: var(--gradient-brand); border-radius: var(--radius); padding: var(--space-4);
+  display: flex; align-items: center; gap: var(--space-3); color: #fff;
 }
-.nv-ring { position: relative; width: 96px; height: 96px; }
-.nv-ring svg { transform: rotate(-90deg); }
+/* `display: flex` above outranks the UA stylesheet's [hidden] { display: none }, so the
+   hidden attribute paintItemRing() sets would otherwise do nothing at all. */
+.nv-ring-card[hidden] { display: none; }
+/* No ring to show — the text takes the whole card rather than sitting in 1fr next to a
+   232px hole. Covers both cases: the section card that is never rendered, and the shared
+   item card that is hidden. */
+.nv-detail:not(:has(.nv-ring-card:not([hidden]))) { grid-template-columns: minmax(0, 1fr); }
+.nv-ring { position: relative; width: 56px; height: 56px; flex: none; }
+.nv-ring svg { width: 100%; height: 100%; transform: rotate(-90deg); }
 .nv-ring-value {
   position: absolute; inset: 0; display: grid; place-items: center;
-  font-family: var(--font-display); font-size: var(--text-2xl); color: #fff;
+  font-family: var(--font-display); font-size: var(--text-base); color: #fff;
 }
-.nv-ring-label { font-family: var(--font-label); font-size: var(--text-xs); color: rgba(255,255,255,.88); text-align: center; }
+.nv-ring-label { font-family: var(--font-label); font-size: var(--text-xs); line-height: 1.35; color: rgba(255,255,255,.88); }
 
 .nv-panel { background: var(--surface-card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: var(--space-6); }
 .nv-panel h2 { margin: 0 0 var(--space-4); font-family: var(--font-body); font-size: var(--text-xl); color: var(--ink); font-weight: var(--fw-regular); }
@@ -998,6 +1030,18 @@
   color: var(--muted);
 }
 
+/* At the foot of the page rather than above the first exercise. Read on the way in it
+   answered a question the learner had not asked yet and pushed the course below the
+   fold; read on the way out it is what else is here, once they are done with what they
+   came for. A rule above it separates it from the exercise it now follows — the space
+   it used to get for free from being at the top of a column. */
+.nv-scale--foot {
+  margin-top: var(--space-6);
+  margin-bottom: 0;
+  padding-top: var(--space-5);
+  border-top: 1px solid var(--border);
+}
+
 @media (max-width: 820px) {
   /* One swipeable line rather than three wrapped rows: on a phone this strip has to cost
      the first screen as little height as possible, because the exercise card below it is
@@ -1029,6 +1073,26 @@
     margin-bottom: var(--space-4);
     scrollbar-width: none;
   }
+  /* The negative inline margins above let the strip bleed to both screen edges; the rule
+     is the page's own width, so it keeps the padding rather than the bleed. */
+  .nv-scale--foot {
+    margin-top: var(--space-5);
+    margin-bottom: 0;
+    padding-top: var(--space-4);
+  }
   .nv-scale::-webkit-scrollbar { display: none; }
   .nv-scale-chip { flex-shrink: 0; scroll-snap-align: start; }
 }
+
+/* Dev only — the two seed buttons from LearnShell.astro. .vp-dev-reset positions itself
+   fixed in the corner, so a second one would land exactly on top of the first; this makes
+   the pair one fixed row and lets them sit static inside it. */
+.nv-dev-seed {
+  position: fixed;
+  right: 12px;
+  bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+  z-index: 9100;
+  display: flex;
+  gap: 8px;
+}
+.nv-dev-seed .vp-dev-reset { position: static; }

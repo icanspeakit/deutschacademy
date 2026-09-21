@@ -16,8 +16,10 @@
     "generate:pdfs": "pnpm generate:grammatik-pdf && pnpm generate:wortschatz-pdf && pnpm generate:fakten-pdf",
     "generate:audio": "node --env-file=.env.local scripts/generate-audio.mjs",
     "generate:hoeren": "node --env-file=.env.local scripts/generate-hoeren-audio.mjs",
+    "generate:grammatik-audio": "node --env-file=.env.local scripts/generate-grammatik-audio.mjs",
     "generate:wortschatz-audio": "node --env-file=.env.local scripts/generate-wortschatz-audio.mjs",
     "validate:lexicon": "node scripts/validate-lexicon.mjs",
+    "validate:i18n": "node scripts/validate-i18n.mjs",
     "sprechen:bilder": "node scripts/list-sprechen-bilder.mjs",
     "sprechen:fetch": "node --env-file=.env.local scripts/fetch-sprechen-bilder.mjs",
     "lexicon:ranks": "node scripts/attach-ranks.mjs",
@@ -31,6 +33,8 @@
   "devDependencies": {
     "@playwright/test": "^1.63.0",
     "@types/pdfkit": "^0.17.6",
-    "pdfkit": "^0.20.2"
+    "pdfkit": "^0.20.2",
+    "postcss": "^8.5.28",
+    "postcss-rtlcss": "^6.0.0"
   }
 }

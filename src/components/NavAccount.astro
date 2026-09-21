@@ -14,15 +14,25 @@
 // the menu holds the two pages that exist. No "Einstellungen" row: /einstellungen does
 // not exist, and the dark-mode row below is the only setting there is today. Add the row
 // when the page does.
+//
+// The two rows used to read "Profil — dein Lernstand und deine Woche" and "Fortschritt —
+// was du geübt hast, Woche für Woche", which is the same promise twice, and neither page
+// has a week in it. They are one split, not two overlapping ones: the dashboard is the
+// ÜBUNGEN view (levels, topics, what to practise next), /fortschritt is the PRÜFUNGEN
+// view (points per sitting, which parts are still open). Each row now names its own half,
+// and the titles match the page you land on — "Profil" pointed at a page headed
+// "Dein Dashboard". When one of them absorbs the other, this list loses a row rather
+// than being rewritten.
 import Icon from "./Icon.astro";
 import ThemeToggle from "./ThemeToggle.astro";
 import "../styles/site-nav.css";
 
+// One entry, not two. These used to be "Dashboard" (/dashboard) and "Mein Fortschritt"
+// (/fortschritt): two names for the same promise, side by side, with nothing to tell a
+// learner which held their progress. The pages are now one page.
 const LINKS = [
-  { href: "/dashboard", icon: "grid", titleKey: "nav.subject.profil", title: "Profil",
-    descKey: "nav.subject.profil.blurb", desc: "Dein Lernstand und deine Woche" },
-  { href: "/fortschritt", icon: "target", titleKey: "nav.account.progress", title: "Fortschritt",
-    descKey: "nav.account.progress.blurb", desc: "Was du geübt hast, Woche für Woche" },
+  { href: "/fortschritt", icon: "target", titleKey: "nav.account.progress", title: "Mein Fortschritt",
+    descKey: "nav.account.progress.blurb", desc: "Dein Lernstand und deine Prüfungen" },
 ];
 ---
 <div class="lp-acct" data-acct>

@@ -9,6 +9,15 @@
 // The content is *not* ported: the Übungssätze here are our own, written to the
 // official format. See that folder's files for their own source notes.
 
+import { getLang, loadDict, translate, onLangChange } from "./i18n.js";
+
+/* Module-level because the renderers here are module functions, not closures inside the
+   mount. Everything this trainer paints goes through render(), so filling the dict and
+   re-rendering is the whole integration. The exam CONTENT — transcripts, questions,
+   options, statements, the writing prompts — stays German: that is the exam being sat. */
+let dict = {};
+const t = (key, vars) => translate(dict, key, vars);
+
 const STORAGE_PREFIX = "da-dtz-v1:";
 
 function escapeHtml(s) {
@@ -59,9 +68,9 @@ export function allQids(data) {
  * 45, and the total decides which level the certificate states.
  */
 export function stufeFor(score) {
-  if (score >= 33) return { stufe: "Stufe B1", cls: "is-b1" };
-  if (score >= 20) return { stufe: "Stufe A2", cls: "is-a2" };
-  return { stufe: "unter A2", cls: "is-low" };
+  if (score >= 33) return { stufe: t("dtz.stufe.b1"), cls: "is-b1" };
+  if (score >= 20) return { stufe: t("dtz.stufe.a2"), cls: "is-a2" };
+  return { stufe: t("dtz.stufe.low"), cls: "is-low" };
 }
 
 export function wordCount(s) {
@@ -99,14 +108,26 @@ function tfRow(qid, given, solved, correct) {
     .join("");
 }
 
+/* The JSON stores each part as one string, "Hören · Teil 1", because that is what the
+   exam calls it. Rather than restructure the data — which several people are editing —
+   the two words that are chrome are recovered here and translated; anything that does not
+   match the shape is left exactly as authored. */
+const PART_LABEL_RE = /^(Hören|Lesen|Schreiben) *· *Teil *([0-9]+)$/;
+const SKILL_KEY = { "Hören": "skill.hoeren", "Lesen": "skill.lesen", "Schreiben": "skill.schreiben" };
+function partLabel(label) {
+  const m = PART_LABEL_RE.exec(label || "");
+  if (!m) return label;
+  return t("dtz.tab.part", { skill: t(SKILL_KEY[m[1]]), n: m[2] });
+}
+
 function transcriptBlock(text, label) {
-  return `<details class="dtz-transcript"><summary>${label || "Hörtext lesen"}</summary><p>${escapeHtml(text)}</p></details>`;
+  return `<details class="dtz-transcript"><summary>${label || t("exam.readTranscript")}</summary><p>${escapeHtml(text)}</p></details>`;
 }
 
 function renderMcAudio(part, state, solved) {
   const ex = part.example
     ? `<div class="dtz-example">
-         <span class="badge badge-neutral">Beispiel</span>
+         <span class="badge badge-neutral">${escapeHtml(t("dtz.example"))}</span>
          ${transcriptBlock(part.example.transcript)}
          <p class="dtz-q">${escapeHtml(part.example.question)}</p>
          <div class="dtz-opts">${part.example.options.map((o, i) => `<span class="dtz-opt ${i === part.example.correct ? "is-solved" : ""}"><strong>${"abc"[i]}</strong>${escapeHtml(o)}</span>`).join("")}</div>
@@ -157,9 +178,9 @@ function renderStatementMatch(part, state, solved) {
     .join("");
   const ex = part.example
     ? `<div class="dtz-example">
-         <span class="badge badge-neutral">Beispiel</span>
+         <span class="badge badge-neutral">${escapeHtml(t("dtz.example"))}</span>
          ${transcriptBlock(part.example.transcript)}
-         <p class="dtz-q">Lösung: <strong>${part.example.answer}</strong></p>
+         <p class="dtz-q">${escapeHtml(t("dtz.solution"))} <strong>${part.example.answer}</strong></p>
        </div>`
     : "";
   const items = part.items
@@ -177,7 +198,7 @@ function renderStatementMatch(part, state, solved) {
         })
         .join("");
       return `<div class="dtz-item">
-        <div class="dtz-item-head"><span class="dtz-num">${it.id}</span>${transcriptBlock(it.transcript, "Was die Person sagt")}</div>
+        <div class="dtz-item-head"><span class="dtz-num">${it.id}</span>${transcriptBlock(it.transcript, escapeHtml(t("dtz.whatSaid")))}</div>
         <div class="dtz-opts dtz-opts--letters">${opts}</div>
       </div>`;
     })
@@ -187,10 +208,12 @@ function renderStatementMatch(part, state, solved) {
 
 function renderToc(part, state, solved) {
   const toc = part.toc
-    .map((t) => `<li><strong>${t.label ?? `Kapitel ${t.n}`} — ${escapeHtml(t.title)}</strong><span>${escapeHtml(t.desc)}</span></li>`)
+    // `c`, not `t`: the module-level t() is the translator, and a map parameter named
+    // `t` would shadow it inside this template.
+    .map((c) => `<li><strong>${c.label ?? t("dtz.chapter", { n: c.n })} — ${escapeHtml(c.title)}</strong><span>${escapeHtml(c.desc)}</span></li>`)
     .join("");
   const ex = part.example
-    ? `<div class="dtz-example"><span class="badge badge-neutral">Beispiel</span><p class="dtz-q">${escapeHtml(part.example.question)}</p>
+    ? `<div class="dtz-example"><span class="badge badge-neutral">${escapeHtml(t("dtz.example"))}</span><p class="dtz-q">${escapeHtml(part.example.question)}</p>
          <div class="dtz-opts">${part.example.options.map((o, i) => `<span class="dtz-opt ${i === part.example.correct ? "is-solved" : ""}"><strong>${"abc"[i]}</strong>${escapeHtml(o)}</span>`).join("")}</div></div>`
     : "";
   const items = part.items
@@ -356,12 +379,12 @@ export function mountDtzTrainer(root, data, { onAnswer } = {}) {
       const pids = qidsOfPart(p);
       const done = answeredCount(pids);
       return `<button type="button" class="dtz-tab ${i === current ? "is-active" : ""} ${done === pids.length ? "is-done" : ""}" data-tab="${i}">
-        <span class="dtz-tab-label">${escapeHtml(p.label)}</span>
+        <span class="dtz-tab-label">${escapeHtml(partLabel(p.label))}</span>
         <span class="dtz-tab-count">${done}/${pids.length}</span>
       </button>`;
     });
     tabs.push(`<button type="button" class="dtz-tab ${current === data.parts.length ? "is-active" : ""}" data-tab="${data.parts.length}">
-      <span class="dtz-tab-label">Schreiben</span>
+      <span class="dtz-tab-label">${escapeHtml(t("skill.schreiben"))}</span>
       <span class="dtz-tab-count">${state.schreiben.task ? "1/1" : "0/1"}</span>
     </button>`);
     nav.innerHTML = tabs.join("");
@@ -392,8 +415,8 @@ export function mountDtzTrainer(root, data, { onAnswer } = {}) {
         task
           ? `<div class="dtz-reading"><h4>${escapeHtml(task.label)}</h4><p>${escapeHtml(task.prompt)}</p>
                <ul class="dtz-points">${task.points.map((p) => `<li>${escapeHtml(p)}</li>`).join("")}</ul></div>
-             <textarea class="dtz-textarea" data-schreiben placeholder="Schreiben Sie hier…">${escapeHtml(state.schreiben.text)}</textarea>
-             <div class="dtz-wordcount ${wc >= 40 ? "is-ok" : ""}">${wc} Wörter${wc < 40 ? " — Ziel: etwa 40" : " ✓"}</div>
+             <textarea class="dtz-textarea" data-schreiben placeholder="${escapeHtml(t("dtz.writePlaceholder"))}">${escapeHtml(state.schreiben.text)}</textarea>
+             <div class="dtz-wordcount ${wc >= 40 ? "is-ok" : ""}">${escapeHtml(t(wc < 40 ? "dtz.wordcount.under" : "dtz.wordcount.ok", { n: wc }))}</div>
              <p class="dtz-note">${escapeHtml(s.selfRateNote)}</p>`
           : ""
       }`;
@@ -416,7 +439,7 @@ export function mountDtzTrainer(root, data, { onAnswer } = {}) {
         const el = body.querySelector(".dtz-wordcount");
         const n = wordCount(e.target.value);
         if (el) {
-          el.textContent = `${n} Wörter${n < 40 ? " — Ziel: etwa 40" : " ✓"}`;
+          el.textContent = t(n < 40 ? "dtz.wordcount.under" : "dtz.wordcount.ok", { n });
           el.classList.toggle("is-ok", n >= 40);
         }
         persist();
@@ -459,11 +482,11 @@ export function mountDtzTrainer(root, data, { onAnswer } = {}) {
       summary.innerHTML = `
         <div class="dtz-progress">
           <div class="dtz-progress-bar"><span style="width:${(answered / total) * 100}%"></span></div>
-          <span class="dtz-progress-label">${answered} von ${total} Aufgaben bearbeitet</span>
+          <span class="dtz-progress-label">${escapeHtml(t("dtz.progress", { n: answered, t: total }))}</span>
         </div>
         <div class="dtz-actions">
-          <button type="button" class="quiz-btn quiz-btn--primary" data-dtz-check ${answered === 0 ? "disabled" : ""}>Auswerten</button>
-          <button type="button" class="vp-link-btn" data-dtz-reset>Zurücksetzen</button>
+          <button type="button" class="quiz-btn quiz-btn--primary" data-dtz-check ${answered === 0 ? "disabled" : ""}>${escapeHtml(t("dtz.check"))}</button>
+          <button type="button" class="vp-link-btn" data-dtz-reset>${escapeHtml(t("dtz.reset"))}</button>
         </div>`;
     } else {
       const h = correctCount(hoerenIds);
@@ -473,21 +496,21 @@ export function mountDtzTrainer(root, data, { onAnswer } = {}) {
       const rows = data.parts
         .map((p) => {
           const pids = qidsOfPart(p);
-          return `<tr><td>${escapeHtml(p.label)}</td><td>${correctCount(pids)} / ${pids.length}</td></tr>`;
+          return `<tr><td>${escapeHtml(partLabel(p.label))}</td><td>${correctCount(pids)} / ${pids.length}</td></tr>`;
         })
         .join("");
       summary.innerHTML = `
         <div class="dtz-result ${cls}">
           <div class="dtz-result-score"><strong>${score}</strong> / ${total}</div>
           <div class="dtz-result-stufe">${stufe}</div>
-          <div class="dtz-result-split">Hören ${h}/${hoerenIds.length} · Lesen ${l}/${lesenIds.length}</div>
+          <div class="dtz-result-split">${escapeHtml(t("dtz.split", { h, ht: hoerenIds.length, l, lt: lesenIds.length }))}</div>
         </div>
-        <p class="dtz-note">Die DTZ-Auswertung zählt Hören und Lesen zusammen: ab 33 Punkten wird B1 bescheinigt, ab 20 Punkten A2. Der Schreib- und der Sprechteil werden getrennt bewertet und fließen hier nicht ein.</p>
+        <p class="dtz-note">${escapeHtml(t("dtz.scoringNote"))}</p>
         <div class="format-table-wrap">
-          <table class="format-table"><thead><tr><th>Prüfungsteil</th><th>Richtig</th></tr></thead><tbody>${rows}</tbody></table>
+          <table class="format-table"><thead><tr><th>${escapeHtml(t("dtz.th.part"))}</th><th>${escapeHtml(t("dtz.th.correct"))}</th></tr></thead><tbody>${rows}</tbody></table>
         </div>
         <div class="dtz-actions">
-          <button type="button" class="vp-link-btn" data-dtz-reset>Neu starten</button>
+          <button type="button" class="vp-link-btn" data-dtz-reset>${escapeHtml(t("dtz.restart"))}</button>
         </div>`;
     }
 
@@ -516,4 +539,9 @@ export function mountDtzTrainer(root, data, { onAnswer } = {}) {
   }
 
   render();
+  // The first paint runs before the dictionary lands, so it is repainted once it does and
+  // again on every later switch. Built with innerHTML after i18n's applyToDom() pass, so
+  // nothing here is reachable by data-i18n.
+  loadDict(getLang()).then((d) => { dict = d; render(); });
+  onLangChange((code, d) => { dict = d; render(); });
 }

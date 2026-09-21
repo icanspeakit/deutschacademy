@@ -14,6 +14,7 @@ const exams = [
     level: "A1–C2",
     desc: "The European Language Certificates — modular exams accepted for jobs, visas and some universities.",
     practice: "Sprachbausteine-Trainer · Übungssatz A1",
+    practiceKey: "pruefungen.practice.telc",
   },
   {
     href: "/pruefungen/goethe",
@@ -22,6 +23,7 @@ const exams = [
     level: "A1–C2",
     desc: "The Goethe-Institut's own exams — widely recognized for visas, universities and employers.",
     practice: "Übungssatz Start Deutsch 1 (A1)",
+    practiceKey: "pruefungen.practice.goethe",
   },
   {
     href: "/pruefungen/testdaf",
@@ -30,6 +32,7 @@ const exams = [
     level: "TDN 3–5 (≈ B2–C1)",
     desc: "The standard German-language proof for university admission in Germany.",
     practice: "Leseverstehen-Übungssatz · Schreiben zur Grafik",
+    practiceKey: "pruefungen.practice.testdaf",
   },
   {
     href: "/pruefungen/dtz",
@@ -38,6 +41,7 @@ const exams = [
     level: "A2 / B1",
     desc: "Deutsch-Test für Zuwanderer — the exam at the end of a state-funded Integrationskurs.",
     practice: "Übungssatz im Prüfungsformat · Lesen-Mock-Test",
+    practiceKey: "pruefungen.practice.dtz",
   },
   {
     href: "/pruefungen/leben-in-deutschland",
@@ -46,6 +50,7 @@ const exams = [
     level: "Orientierungskurs / citizenship",
     desc: "The civics test on German society, history and law — required for naturalization.",
     practice: "Fakten-Lernseite · Übungstest",
+    practiceKey: "pruefungen.practice.lid",
   },
 ];
 
@@ -112,18 +117,18 @@ const levels = [
 // Comparison table — every cell restates a claim already made (and sourced-or-flagged)
 // on that exam's own Tier 1 detail page; nothing new is asserted here.
 const comparison = [
-  { exam: "telc", levels: "A1–C2", forWhom: "Job, Aufenthaltstitel, teils Hochschulzulassung", format: "Schriftlich + mündlich, modular je Niveau" },
-  { exam: "Goethe-Zertifikat", levels: "A1–C2", forWhom: "Visa (A1: Familiennachzug), Studium, Beruf, Einbürgerung", format: "Lesen/Hören/Schreiben an einem Termin + separate mündliche Prüfung" },
-  { exam: "TestDaF", levels: "TDN 3–5 (≈ B2–C1)", forWhom: "Internationale Studieninteressierte", format: "Eine Prüfung für alle, jede Fertigkeit einzeln als TDN 3/4/5 bewertet" },
-  { exam: "DTZ", levels: "A2 / B1", forWhom: "Abschluss Integrationskurs, Aufenthaltstitel", format: "Lesen, Hören, Schreiben, Sprechen — Ergebnis A2 oder B1" },
-  { exam: "Leben in Deutschland", levels: "Kein Sprachniveau (Wissenstest)", forWhom: "Einbürgerung", format: "33 Multiple-Choice-Fragen, 60 Minuten" },
+  { id: "telc", exam: "telc", levels: "A1–C2", forWhom: "Job, Aufenthaltstitel, teils Hochschulzulassung", format: "Schriftlich + mündlich, modular je Niveau" },
+  { id: "goethe", exam: "Goethe-Zertifikat", levels: "A1–C2", forWhom: "Visa (A1: Familiennachzug), Studium, Beruf, Einbürgerung", format: "Lesen/Hören/Schreiben an einem Termin + separate mündliche Prüfung" },
+  { id: "testdaf", exam: "TestDaF", levels: "TDN 3–5 (≈ B2–C1)", forWhom: "Internationale Studieninteressierte", format: "Eine Prüfung für alle, jede Fertigkeit einzeln als TDN 3/4/5 bewertet" },
+  { id: "dtz", exam: "DTZ", levels: "A2 / B1", forWhom: "Abschluss Integrationskurs, Aufenthaltstitel", format: "Lesen, Hören, Schreiben, Sprechen — Ergebnis A2 oder B1" },
+  { id: "lid", exam: "Leben in Deutschland", levels: "Kein Sprachniveau (Wissenstest)", forWhom: "Einbürgerung", format: "33 Multiple-Choice-Fragen, 60 Minuten" },
 ];
 ---
 <Layout
   title="Prüfungen – DeutschAcademy"
   description="Vergleiche telc, Goethe-Zertifikat, TestDaF, DTZ und Leben in Deutschland — nach Prüfung oder nach Niveau, mit Format-Vergleich."
 >
-  <PracticeHeader title="Prüfungen" titleKey="nav.exams" />
+  <PracticeHeader title="Prüfungen" titleKey="nav.exams" active="pruefungen" />
   <main class="practice-main">
     <div class="practice-hero">
       <p class="eyebrow" data-i18n="pruefungen.hero.eyebrow">Prüfungsvorbereitung</p>
@@ -134,7 +139,7 @@ const comparison = [
     <a class="fs-entry" href="/fortschritt">
       <span class="fs-entry-txt">
         <b>Mein Fortschritt</b>
-        <i>Punkte, begonnene Teile und der nächste offene Prüfungsteil — für jede Prüfung.</i>
+        <i data-i18n="pruefungen.dashboard.blurb">Punkte, begonnene Teile und der nächste offene Prüfungsteil — für jede Prüfung.</i>
       </span>
       <span class="fs-entry-go" aria-hidden="true">→</span>
     </a>
@@ -151,7 +156,7 @@ const comparison = [
             <div class="exam-card-icon"><Icon name={e.icon} /></div>
             <h3>{e.title}</h3>
             <p>{e.desc}</p>
-            {e.practice && <p class="exam-card-practice">{e.practice}</p>}
+            {e.practice && <p class="exam-card-practice" data-i18n={e.practiceKey}>{e.practice}</p>}
             <span class="exam-card-level">{e.level}</span>
           </a>
         ))}
@@ -185,10 +190,12 @@ const comparison = [
           <tbody>
             {comparison.map((c) => (
               <tr>
+                {/* The exam's name is a proper noun; the level column is codes. Only the
+                    two prose columns carry a key. */}
                 <td>{c.exam}</td>
-                <td>{c.levels}</td>
-                <td>{c.forWhom}</td>
-                <td>{c.format}</td>
+                <td data-i18n={`pruefungen.compare.${c.id}.levels`}>{c.levels}</td>
+                <td data-i18n={`pruefungen.compare.${c.id}.forWhom`}>{c.forWhom}</td>
+                <td data-i18n={`pruefungen.compare.${c.id}.format`}>{c.format}</td>
               </tr>
             ))}
           </tbody>

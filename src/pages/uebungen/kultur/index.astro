@@ -55,7 +55,7 @@ const groups = kulturLevels.map((lv) => ({
     <a class="ku-quiz-cta" href="/uebungen/kultur/quiz">
       <span class="ku-quiz-cta-txt">
         <b>Quiz über alle Themen</b>
-        <i>{quizCount} Fragen aus {topics.length} Themen, gemischt. Du kannst auch ein einzelnes Thema wählen.</i>
+        <i data-i18n="kultur.quiz.blurb" data-i18n-vars={JSON.stringify({ n: quizCount, t: topics.length })}>{quizCount} Fragen aus {topics.length} Themen, gemischt. Du kannst auch ein einzelnes Thema wählen.</i>
       </span>
       <span class="ku-quiz-cta-go" aria-hidden="true">→</span>
     </a>
@@ -72,11 +72,13 @@ const groups = kulturLevels.map((lv) => ({
               <span class="ku-card-ic"><Icon name={t.icon} size={20} /></span>
               <span class="ku-card-txt">
                 <b>{t.title}</b>
-                <i>{t.intro.split(". ")[0]}.</i>
+                {/* Title stays German — "Pfand" is the term being learnt. The sentence
+                    under it is what tells a non-German speaker whether to open the card. */}
+                <i data-i18n={`kultur.${t.id}.cardIntro`}>{t.intro.split(". ")[0]}.</i>
               </span>
               <!-- No level badge: the section heading above the grid already says it. -->
               <span class="ku-card-meta">
-                <span class="ku-card-q">{t.quiz.length} Fragen</span>
+                <span class="ku-card-q" data-i18n="grammatik.card.questions" data-i18n-vars={JSON.stringify({ n: t.quiz.length })}>{t.quiz.length} Fragen</span>
               </span>
             </a>
           ))}
@@ -85,7 +87,7 @@ const groups = kulturLevels.map((lv) => ({
     ))}
 
     <section class="ku-sourcing">
-      <h2>Woher die Themen kommen</h2>
+      <h2 data-i18n="kultur.h2.sources">Woher die Themen kommen</h2>
       <p set:html={kultur.sourcingNote.replace(/\n/g, "<br>")} />
     </section>
   </main>

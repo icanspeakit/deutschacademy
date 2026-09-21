@@ -6,17 +6,39 @@
   "source": "Negationswörter.pdf (Kapitel 74)",
   "concept": {
     "flow": [
-      { "text": "positiv", "variant": "verb" },
-      { "text": "→" },
-      { "text": "Negationswort", "variant": "prep" },
-      { "text": "→ negativ" }
+      {
+        "text": "positiv",
+        "variant": "verb"
+      },
+      {
+        "text": "→"
+      },
+      {
+        "text": "Negationswort",
+        "variant": "prep"
+      },
+      {
+        "text": "→ negativ"
+      }
     ],
     "exampleHtml": "Ich kann <span class=\"vp-verb\">überallhin</span> fahren. → Ohne Fahrkarte kommen Sie <span class=\"vp-prep\">nirgendwohin</span>.",
     "qa": [
-      { "html": "Jedes positive Wort hat sein negatives Gegenstück: <em>jeder → niemand, alles → nichts, immer → nie, überall → nirgends, schon → noch nicht</em>.", "tag": "Paare" },
-      { "html": "<strong>noch</strong> macht aus einer Verneinung eine Zwischenstufe: <em>noch nicht, noch nie, noch kein…</em> — es ist bisher nicht passiert, könnte aber noch.", "tag": "noch nicht" },
-      { "html": "<strong>mehr</strong> markiert das Ende: <em>nicht mehr, kein … mehr</em> — es war einmal so, jetzt nicht mehr.", "tag": "nicht mehr" },
-      { "html": "<strong>ohne + Akkusativ</strong> ersetzt eine ganze Verneinung und steht meist ohne Artikel: <em>mit einer Fahrkarte → ohne Fahrkarte</em>.", "tag": "ohne" }
+      {
+        "html": "Jedes positive Wort hat sein negatives Gegenstück: <em>jeder → niemand, alles → nichts, immer → nie, überall → nirgends, schon → noch nicht</em>.",
+        "tag": "Paare"
+      },
+      {
+        "html": "<strong>noch</strong> macht aus einer Verneinung eine Zwischenstufe: <em>noch nicht, noch nie, noch kein…</em> — es ist bisher nicht passiert, könnte aber noch.",
+        "tag": "noch nicht"
+      },
+      {
+        "html": "<strong>mehr</strong> markiert das Ende: <em>nicht mehr, kein … mehr</em> — es war einmal so, jetzt nicht mehr.",
+        "tag": "nicht mehr"
+      },
+      {
+        "html": "<strong>ohne + Akkusativ</strong> ersetzt eine ganze Verneinung und steht meist ohne Artikel: <em>mit einer Fahrkarte → ohne Fahrkarte</em>.",
+        "tag": "ohne"
+      }
     ],
     "noteHtml": "Drei Wortbildungen verneinen von innen: <strong>un-</strong> passt fast überall (<em>gültig → ungültig, gerecht → ungerecht</em>), <strong>in-</strong> nur bei Fremdwörtern (<em>tolerant → intolerant, akzeptabel → inakzeptabel</em>), und <strong>-los</strong> hängt sich an Nomen — klingt aber abwertend: <em>fantasielos</em> ist schärfer als das neutrale <em>Ich habe keine Fantasie</em>. Was dekliniert werden muss: <em>kein…, noch kein…, kein … mehr</em>. <em>Niemand</em> darf, muss aber nicht.",
     "reference": {
@@ -25,24 +47,92 @@
       "tables": [
         {
           "caption": "Positiv und negativ",
-          "head": ["Negationswort", "positiv", "negativ"],
+          "head": [
+            "Negationswort",
+            "positiv",
+            "negativ"
+          ],
           "rows": [
-            ["nicht", "Ich kann weiterfahren.", "Ich kann nicht weiterfahren."],
-            ["kein …", "Ich habe eine Karte. / Ich habe Geld.", "Ich habe keine Karte. / Ich habe kein Geld."],
-            ["ohne", "mit einer Fahrkarte", "ohne Fahrkarte"],
-            ["niemand / keiner", "Jeder kann die Karte kaufen.", "Niemand / keiner kann die Karte kaufen."],
-            ["nirgends / nirgendwo", "Man findet sie überall.", "Man findet sie nirgends / nirgendwo."],
-            ["nirgendwohin", "Ich kann überallhin fahren.", "Ich kann nirgendwohin fahren."],
-            ["nichts", "Man bezahlt viel / alles.", "Man bezahlt nichts."],
-            ["nie / niemals", "Ich kaufe immer eine Karte.", "Ich kaufe nie / niemals eine Karte."],
-            ["noch kein …", "Ich habe schon eine Karte gekauft.", "Ich habe noch keine Karte gekauft."],
-            ["noch nie", "Ich habe schon immer eine Karte gehabt.", "Ich habe noch nie eine Karte gehabt."],
-            ["noch nicht", "Ich war schon (oft) im Ausland.", "Ich war noch nicht im Ausland."],
-            ["nicht mehr", "Fährst du noch los?", "Ich fahre nicht mehr los."],
-            ["kein … mehr", "Ich habe noch eine Karte.", "Ich habe keine Karte mehr."],
-            ["un-", "Meine Karte ist gültig.", "Meine Karte ist ungültig."],
-            ["in-", "Er ist tolerant.", "Er ist intolerant."],
-            ["-los", "Ich habe Fantasie.", "Ich bin fantasielos."]
+            [
+              "nicht",
+              "Ich kann weiterfahren.",
+              "Ich kann nicht weiterfahren."
+            ],
+            [
+              "kein …",
+              "Ich habe eine Karte. / Ich habe Geld.",
+              "Ich habe keine Karte. / Ich habe kein Geld."
+            ],
+            [
+              "ohne",
+              "mit einer Fahrkarte",
+              "ohne Fahrkarte"
+            ],
+            [
+              "niemand / keiner",
+              "Jeder kann die Karte kaufen.",
+              "Niemand / keiner kann die Karte kaufen."
+            ],
+            [
+              "nirgends / nirgendwo",
+              "Man findet sie überall.",
+              "Man findet sie nirgends / nirgendwo."
+            ],
+            [
+              "nirgendwohin",
+              "Ich kann überallhin fahren.",
+              "Ich kann nirgendwohin fahren."
+            ],
+            [
+              "nichts",
+              "Man bezahlt viel / alles.",
+              "Man bezahlt nichts."
+            ],
+            [
+              "nie / niemals",
+              "Ich kaufe immer eine Karte.",
+              "Ich kaufe nie / niemals eine Karte."
+            ],
+            [
+              "noch kein …",
+              "Ich habe schon eine Karte gekauft.",
+              "Ich habe noch keine Karte gekauft."
+            ],
+            [
+              "noch nie",
+              "Ich habe schon immer eine Karte gehabt.",
+              "Ich habe noch nie eine Karte gehabt."
+            ],
+            [
+              "noch nicht",
+              "Ich war schon (oft) im Ausland.",
+              "Ich war noch nicht im Ausland."
+            ],
+            [
+              "nicht mehr",
+              "Fährst du noch los?",
+              "Ich fahre nicht mehr los."
+            ],
+            [
+              "kein … mehr",
+              "Ich habe noch eine Karte.",
+              "Ich habe keine Karte mehr."
+            ],
+            [
+              "un-",
+              "Meine Karte ist gültig.",
+              "Meine Karte ist ungültig."
+            ],
+            [
+              "in-",
+              "Er ist tolerant.",
+              "Er ist intolerant."
+            ],
+            [
+              "-los",
+              "Ich habe Fantasie.",
+              "Ich bin fantasielos."
+            ]
           ]
         }
       ],
@@ -71,22 +161,241 @@
       ]
     }
   },
+  "aktiv": {
+    "listen": [
+      {
+        "text": "Ich kenne hier niemanden.",
+        "note": "jeder wird zu niemand — ein eigenes Wort, kein nicht.",
+        "audio": "/audio/grammatik/negationswoerter/ich-kenne-hier-niemanden.mp3"
+      },
+      {
+        "text": "Sie hat noch nicht angerufen.",
+        "note": "noch nicht: bisher nicht, könnte aber noch kommen.",
+        "audio": "/audio/grammatik/negationswoerter/sie-hat-noch-nicht-angerufen.mp3"
+      },
+      {
+        "text": "Wir haben keine Zeit mehr.",
+        "note": "mehr markiert das Ende: es war einmal so, jetzt nicht mehr.",
+        "audio": "/audio/grammatik/negationswoerter/wir-haben-keine-zeit-mehr.mp3"
+      }
+    ],
+    "hoeren": {
+      "instruction": "Hör zu und wähle das Negationswort, das du gehört hast.",
+      "items": [
+        {
+          "text": "Ich kenne hier niemanden.",
+          "choices": [
+            "niemanden",
+            "nichts",
+            "nirgends"
+          ],
+          "correct": 0,
+          "audio": "/audio/grammatik/negationswoerter/ich-kenne-hier-niemanden.mp3"
+        },
+        {
+          "text": "Er hat nichts verstanden.",
+          "choices": [
+            "niemanden",
+            "nichts",
+            "nie"
+          ],
+          "correct": 1,
+          "audio": "/audio/grammatik/negationswoerter/er-hat-nichts-verstanden.mp3"
+        },
+        {
+          "text": "Sie kommt nie zu spät.",
+          "choices": [
+            "nichts",
+            "nirgends",
+            "nie"
+          ],
+          "correct": 2,
+          "audio": "/audio/grammatik/negationswoerter/sie-kommt-nie-zu-spaet.mp3"
+        },
+        {
+          "text": "Ich war nirgends so glücklich.",
+          "choices": [
+            "nirgends",
+            "niemals",
+            "niemand"
+          ],
+          "correct": 0,
+          "audio": "/audio/grammatik/negationswoerter/ich-war-nirgends-so-gluecklich.mp3"
+        },
+        {
+          "text": "Sie hat noch nicht angerufen.",
+          "choices": [
+            "nicht mehr",
+            "noch nicht",
+            "gar nicht"
+          ],
+          "correct": 1,
+          "audio": "/audio/grammatik/negationswoerter/sie-hat-noch-nicht-angerufen.mp3"
+        },
+        {
+          "text": "Wir haben keine Zeit mehr.",
+          "choices": [
+            "noch keine Zeit",
+            "keine Zeit mehr",
+            "gar keine Zeit"
+          ],
+          "correct": 1,
+          "audio": "/audio/grammatik/negationswoerter/wir-haben-keine-zeit-mehr.mp3"
+        }
+      ]
+    },
+    "sprechen": {
+      "rounds": [
+        {
+          "label": "1 · positiv → negativ",
+          "instruction": "Du hörst einen positiven Satz. Sag sein Gegenteil — mit dem passenden Negationswort.",
+          "example": {
+            "prompt": "Ich kenne jeden hier.",
+            "answer": "Ich kenne hier niemanden."
+          },
+          "items": [
+            {
+              "prompt": "Ich habe alles verstanden.",
+              "answer": "Ich habe nichts verstanden.",
+              "audioPrompt": "/audio/grammatik/negationswoerter/ich-habe-alles-verstanden.mp3",
+              "audioAnswer": "/audio/grammatik/negationswoerter/ich-habe-nichts-verstanden--8wphfh.mp3"
+            },
+            {
+              "prompt": "Er kommt immer zu spät.",
+              "answer": "Er kommt nie zu spät.",
+              "audioPrompt": "/audio/grammatik/negationswoerter/er-kommt-immer-zu-spaet.mp3",
+              "audioAnswer": "/audio/grammatik/negationswoerter/er-kommt-nie-zu-spaet--8wphfh.mp3"
+            },
+            {
+              "prompt": "Ich war überall.",
+              "answer": "Ich war nirgends.",
+              "audioPrompt": "/audio/grammatik/negationswoerter/ich-war-ueberall.mp3",
+              "audioAnswer": "/audio/grammatik/negationswoerter/ich-war-nirgends--8wphfh.mp3"
+            },
+            {
+              "prompt": "Sie hat schon angerufen.",
+              "answer": "Sie hat noch nicht angerufen.",
+              "audioPrompt": "/audio/grammatik/negationswoerter/sie-hat-schon-angerufen.mp3",
+              "audioAnswer": "/audio/grammatik/negationswoerter/sie-hat-noch-nicht-angerufen--8wphfh.mp3"
+            },
+            {
+              "prompt": "Wir haben noch Zeit.",
+              "answer": "Wir haben keine Zeit mehr.",
+              "audioPrompt": "/audio/grammatik/negationswoerter/wir-haben-noch-zeit.mp3",
+              "audioAnswer": "/audio/grammatik/negationswoerter/wir-haben-keine-zeit-mehr--8wphfh.mp3"
+            },
+            {
+              "prompt": "Jeder hat es gewusst.",
+              "answer": "Niemand hat es gewusst.",
+              "audioPrompt": "/audio/grammatik/negationswoerter/jeder-hat-es-gewusst.mp3",
+              "audioAnswer": "/audio/grammatik/negationswoerter/niemand-hat-es-gewusst--8wphfh.mp3"
+            }
+          ]
+        },
+        {
+          "label": "2 · mit → ohne",
+          "instruction": "Du hörst einen Satz mit einer Ergänzung. Sag ihn mit ohne — die Verneinung steckt dann darin.",
+          "example": {
+            "prompt": "Ich fahre mit einer Fahrkarte.",
+            "answer": "Ich fahre ohne Fahrkarte."
+          },
+          "items": [
+            {
+              "prompt": "Er kam mit einem Geschenk.",
+              "answer": "Er kam ohne Geschenk.",
+              "audioPrompt": "/audio/grammatik/negationswoerter/er-kam-mit-einem-geschenk.mp3",
+              "audioAnswer": "/audio/grammatik/negationswoerter/er-kam-ohne-geschenk--8wphfh.mp3"
+            },
+            {
+              "prompt": "Sie arbeitet mit einer Pause.",
+              "answer": "Sie arbeitet ohne Pause.",
+              "audioPrompt": "/audio/grammatik/negationswoerter/sie-arbeitet-mit-einer-pause.mp3",
+              "audioAnswer": "/audio/grammatik/negationswoerter/sie-arbeitet-ohne-pause--8wphfh.mp3"
+            },
+            {
+              "prompt": "Wir fahren mit dem Auto.",
+              "answer": "Wir fahren ohne Auto.",
+              "audioPrompt": "/audio/grammatik/negationswoerter/wir-fahren-mit-dem-auto.mp3",
+              "audioAnswer": "/audio/grammatik/negationswoerter/wir-fahren-ohne-auto--8wphfh.mp3"
+            },
+            {
+              "prompt": "Ich trinke Kaffee mit Zucker.",
+              "answer": "Ich trinke Kaffee ohne Zucker.",
+              "audioPrompt": "/audio/grammatik/negationswoerter/ich-trinke-kaffee-mit-zucker.mp3",
+              "audioAnswer": "/audio/grammatik/negationswoerter/ich-trinke-kaffee-ohne-zucker--8wphfh.mp3"
+            },
+            {
+              "prompt": "Sie kam mit einer Entschuldigung.",
+              "answer": "Sie kam ohne Entschuldigung.",
+              "audioPrompt": "/audio/grammatik/negationswoerter/sie-kam-mit-einer-entschuldigung.mp3",
+              "audioAnswer": "/audio/grammatik/negationswoerter/sie-kam-ohne-entschuldigung--8wphfh.mp3"
+            },
+            {
+              "prompt": "Sie reist mit Gepäck.",
+              "answer": "Sie reist ohne Gepäck.",
+              "audioPrompt": "/audio/grammatik/negationswoerter/sie-reist-mit-gepaeck.mp3",
+              "audioAnswer": "/audio/grammatik/negationswoerter/sie-reist-ohne-gepaeck--8wphfh.mp3"
+            }
+          ]
+        }
+      ]
+    }
+  },
   "exercises": [
     {
       "type": "table",
       "title": "Wie lautet das Gegenteil?",
       "hint": "Ein Wort genügt.",
-      "columns": ["positiv", "negativ"],
+      "columns": [
+        "positiv",
+        "negativ"
+      ],
       "placeholder": "Negationswort",
       "rows": [
-        { "term": "jeder / alle", "answer": ["niemand", "keiner"] },
-        { "term": "alles / viel", "answer": "nichts" },
-        { "term": "immer", "answer": ["nie", "niemals"] },
-        { "term": "überall", "answer": ["nirgends", "nirgendwo"] },
-        { "term": "überallhin", "answer": "nirgendwohin" },
-        { "term": "mit", "answer": "ohne" },
-        { "term": "schon (Erfahrung)", "answer": ["noch nie", "noch nicht"] },
-        { "term": "noch (Fortsetzung)", "answer": "nicht mehr" }
+        {
+          "term": "jeder / alle",
+          "answer": [
+            "niemand",
+            "keiner"
+          ]
+        },
+        {
+          "term": "alles / viel",
+          "answer": "nichts"
+        },
+        {
+          "term": "immer",
+          "answer": [
+            "nie",
+            "niemals"
+          ]
+        },
+        {
+          "term": "überall",
+          "answer": [
+            "nirgends",
+            "nirgendwo"
+          ]
+        },
+        {
+          "term": "überallhin",
+          "answer": "nirgendwohin"
+        },
+        {
+          "term": "mit",
+          "answer": "ohne"
+        },
+        {
+          "term": "schon (Erfahrung)",
+          "answer": [
+            "noch nie",
+            "noch nicht"
+          ]
+        },
+        {
+          "term": "noch (Fortsetzung)",
+          "answer": "nicht mehr"
+        }
       ]
     },
     {
@@ -95,13 +404,58 @@
       "hint": "noch nie / noch kein… / noch nicht / nicht mehr / kein … mehr",
       "placeholder": "Negationswort",
       "items": [
-        { "prompt": "Glaubst du, dass Thomas noch kommt? — Nein, ich glaube, er kommt ___.", "hint": "Früher ja, jetzt nicht.", "answer": ["nicht mehr"] },
-        { "prompt": "Warst du schon oft in dieser Disco? — Nein, ich war ___ dort.", "hint": "Kein einziges Mal bis jetzt.", "answer": ["noch nie"] },
-        { "prompt": "Hast du schon oft Prosecco getrunken? — Nein, ich habe ___ Prosecco getrunken, nur Sekt.", "hint": "Kein einziges Mal.", "answer": ["noch nie"] },
-        { "prompt": "Hast du noch Lust zu bleiben? — Nein, ich habe ___ Lust.", "hint": "Vorher ja, jetzt nicht.", "answer": ["keine Lust mehr", "keine … mehr"] },
-        { "prompt": "Hast du schon den Führerschein? — Nein, ich habe ___ Führerschein.", "hint": "Bisher nicht, aber vielleicht bald.", "answer": ["noch keinen"] },
-        { "prompt": "Machst du ihn noch dieses Jahr? — Nein, dieses Jahr ___.", "hint": "Nicht mehr in diesem Zeitraum.", "answer": ["nicht mehr"] },
-        { "prompt": "Hattest du danach noch Geld? — Nein, gar ___.", "hint": "Überhaupt nichts.", "answer": ["keins", "kein Geld mehr", "nichts"] }
+        {
+          "prompt": "Glaubst du, dass Thomas noch kommt? — Nein, ich glaube, er kommt ___.",
+          "hint": "Früher ja, jetzt nicht.",
+          "answer": [
+            "nicht mehr"
+          ]
+        },
+        {
+          "prompt": "Warst du schon oft in dieser Disco? — Nein, ich war ___ dort.",
+          "hint": "Kein einziges Mal bis jetzt.",
+          "answer": [
+            "noch nie"
+          ]
+        },
+        {
+          "prompt": "Hast du schon oft Prosecco getrunken? — Nein, ich habe ___ Prosecco getrunken, nur Sekt.",
+          "hint": "Kein einziges Mal.",
+          "answer": [
+            "noch nie"
+          ]
+        },
+        {
+          "prompt": "Hast du noch Lust zu bleiben? — Nein, ich habe ___ Lust.",
+          "hint": "Vorher ja, jetzt nicht.",
+          "answer": [
+            "keine Lust mehr",
+            "keine … mehr"
+          ]
+        },
+        {
+          "prompt": "Hast du schon den Führerschein? — Nein, ich habe ___ Führerschein.",
+          "hint": "Bisher nicht, aber vielleicht bald.",
+          "answer": [
+            "noch keinen"
+          ]
+        },
+        {
+          "prompt": "Machst du ihn noch dieses Jahr? — Nein, dieses Jahr ___.",
+          "hint": "Nicht mehr in diesem Zeitraum.",
+          "answer": [
+            "nicht mehr"
+          ]
+        },
+        {
+          "prompt": "Hattest du danach noch Geld? — Nein, gar ___.",
+          "hint": "Überhaupt nichts.",
+          "answer": [
+            "keins",
+            "kein Geld mehr",
+            "nichts"
+          ]
+        }
       ]
     },
     {
@@ -109,27 +463,99 @@
       "title": "Lückentext: Geld oder Zeit?",
       "hint": "Setzen Sie Negationswörter oder Vorsilben ein.",
       "segments": [
-        { "text": "Man sagt, Geld macht nicht glücklich, aber ohne Geld ist alles " },
-        { "blank": 0, "answer": ["nichts"] },
-        { "text": ". Aber was ist schlimmer — " },
-        { "blank": 1, "answer": ["kein"] },
-        { "text": " Geld oder " },
-        { "blank": 2, "answer": ["keine"] },
-        { "text": " Zeit? Wenn man immer Geld hat, aber " },
-        { "blank": 3, "answer": ["nie"] },
-        { "text": " Zeit, ist das Leben auf jeden Fall " },
-        { "blank": 4, "answer": ["in"] },
-        { "text": "akzeptabel. " },
-        { "blank": 5, "answer": ["Niemand"] },
-        { "text": " wird sagen, dass Geld alleine hilft; das wäre " },
-        { "blank": 6, "answer": ["un"] },
-        { "text": "überlegt. Mit Geld kann man sich schließlich " },
-        { "blank": 7, "answer": ["weder"] },
-        { "text": " Gesundheit noch Liebe kaufen. Aber wer " },
-        { "blank": 8, "answer": ["noch nie"] },
-        { "text": " einen schönen Urlaub gemacht hat, aus Geldmangel " },
-        { "blank": 9, "answer": ["nirgendwo"] },
-        { "text": " war, für den ist Geld sehr erstrebenswert." }
+        {
+          "text": "Man sagt, Geld macht nicht glücklich, aber ohne Geld ist alles "
+        },
+        {
+          "blank": 0,
+          "answer": [
+            "nichts"
+          ]
+        },
+        {
+          "text": ". Aber was ist schlimmer — "
+        },
+        {
+          "blank": 1,
+          "answer": [
+            "kein"
+          ]
+        },
+        {
+          "text": " Geld oder "
+        },
+        {
+          "blank": 2,
+          "answer": [
+            "keine"
+          ]
+        },
+        {
+          "text": " Zeit? Wenn man immer Geld hat, aber "
+        },
+        {
+          "blank": 3,
+          "answer": [
+            "nie"
+          ]
+        },
+        {
+          "text": " Zeit, ist das Leben auf jeden Fall "
+        },
+        {
+          "blank": 4,
+          "answer": [
+            "in"
+          ]
+        },
+        {
+          "text": "akzeptabel. "
+        },
+        {
+          "blank": 5,
+          "answer": [
+            "Niemand"
+          ]
+        },
+        {
+          "text": " wird sagen, dass Geld alleine hilft; das wäre "
+        },
+        {
+          "blank": 6,
+          "answer": [
+            "un"
+          ]
+        },
+        {
+          "text": "überlegt. Mit Geld kann man sich schließlich "
+        },
+        {
+          "blank": 7,
+          "answer": [
+            "weder"
+          ]
+        },
+        {
+          "text": " Gesundheit noch Liebe kaufen. Aber wer "
+        },
+        {
+          "blank": 8,
+          "answer": [
+            "noch nie"
+          ]
+        },
+        {
+          "text": " einen schönen Urlaub gemacht hat, aus Geldmangel "
+        },
+        {
+          "blank": 9,
+          "answer": [
+            "nirgendwo"
+          ]
+        },
+        {
+          "text": " war, für den ist Geld sehr erstrebenswert."
+        }
       ]
     },
     {
@@ -137,13 +563,34 @@
       "title": "Wortbildung: un-, in- oder -los?",
       "hint": "Bei Fremdwörtern steht in-, bei Nomen -los, sonst un-.",
       "pairs": [
-        { "q": "gültig", "a": "ungültig" },
-        { "q": "gerecht", "a": "ungerecht" },
-        { "q": "tolerant", "a": "intolerant" },
-        { "q": "akzeptabel", "a": "inakzeptabel" },
-        { "q": "die Fantasie", "a": "fantasielos" },
-        { "q": "die Arbeit", "a": "arbeitslos" },
-        { "q": "überlegt", "a": "unüberlegt" }
+        {
+          "q": "gültig",
+          "a": "ungültig"
+        },
+        {
+          "q": "gerecht",
+          "a": "ungerecht"
+        },
+        {
+          "q": "tolerant",
+          "a": "intolerant"
+        },
+        {
+          "q": "akzeptabel",
+          "a": "inakzeptabel"
+        },
+        {
+          "q": "die Fantasie",
+          "a": "fantasielos"
+        },
+        {
+          "q": "die Arbeit",
+          "a": "arbeitslos"
+        },
+        {
+          "q": "überlegt",
+          "a": "unüberlegt"
+        }
       ]
     },
     {
@@ -153,32 +600,104 @@
         {
           "id": "nw1",
           "hint": "„Das Leben ist wirklich gerecht.“",
-          "correct": ["Das", "Leben", "ist", "wirklich", "ungerecht", "."],
-          "shuffled": ["ist", "Das", "ungerecht", "wirklich", "Leben", "."]
+          "correct": [
+            "Das",
+            "Leben",
+            "ist",
+            "wirklich",
+            "ungerecht",
+            "."
+          ],
+          "shuffled": [
+            "ist",
+            "Das",
+            "ungerecht",
+            "wirklich",
+            "Leben",
+            "."
+          ]
         },
         {
           "id": "nw2",
           "hint": "„Ich habe alles!“",
-          "correct": ["Ich", "habe", "nichts", "!"],
-          "shuffled": ["nichts", "Ich", "!", "habe"]
+          "correct": [
+            "Ich",
+            "habe",
+            "nichts",
+            "!"
+          ],
+          "shuffled": [
+            "nichts",
+            "Ich",
+            "!",
+            "habe"
+          ]
         },
         {
           "id": "nw3",
           "hint": "„Ich bin beliebt, jeder mag mich.“",
-          "correct": ["Ich", "bin", "unbeliebt", ",", "niemand", "mag", "mich", "."],
-          "shuffled": ["niemand", "bin", "Ich", "mich", "unbeliebt", "mag", ",", "."]
+          "correct": [
+            "Ich",
+            "bin",
+            "unbeliebt",
+            ",",
+            "niemand",
+            "mag",
+            "mich",
+            "."
+          ],
+          "shuffled": [
+            "niemand",
+            "bin",
+            "Ich",
+            "mich",
+            "unbeliebt",
+            "mag",
+            ",",
+            "."
+          ]
         },
         {
           "id": "nw4",
           "hint": "„Ich kann überallhin fahren.“",
-          "correct": ["Ich", "kann", "nirgendwohin", "fahren", "."],
-          "shuffled": ["fahren", "kann", "nirgendwohin", "Ich", "."]
+          "correct": [
+            "Ich",
+            "kann",
+            "nirgendwohin",
+            "fahren",
+            "."
+          ],
+          "shuffled": [
+            "fahren",
+            "kann",
+            "nirgendwohin",
+            "Ich",
+            "."
+          ]
         },
         {
           "id": "nw5",
           "hint": "„Ich war schon oft in fremden Ländern.“",
-          "correct": ["Ich", "war", "noch", "nie", "in", "fremden", "Ländern", "."],
-          "shuffled": ["nie", "in", "Ich", "Ländern", "noch", "fremden", "war", "."]
+          "correct": [
+            "Ich",
+            "war",
+            "noch",
+            "nie",
+            "in",
+            "fremden",
+            "Ländern",
+            "."
+          ],
+          "shuffled": [
+            "nie",
+            "in",
+            "Ich",
+            "Ländern",
+            "noch",
+            "fremden",
+            "war",
+            "."
+          ]
         }
       ]
     }

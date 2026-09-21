@@ -25,3 +25,9 @@ pnpm-debug.log*
 
 .vercel
 .env*
+
+# Diagnostic output from scripts/mobile-sweep.mjs — regenerated on every run, and
+# 23 MB of PNGs that would sit in history forever. The report is a snapshot of a
+# moment, not a source of truth; rerun the sweep rather than reading an old one.
+mobile-sweep-screenshots/
+mobile-sweep-report.json

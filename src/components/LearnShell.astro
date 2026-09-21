@@ -45,6 +45,7 @@ import "../styles/verben-praepositionen.css";
 import "../styles/nav.css";
 import artikel from "../data/artikel.json";
 import { nouns } from "../lib/lexicon.js";
+import { byPlan } from "../lib/lehrplan.js";
 import grammatik from "../data/grammatik.json";
 import wortschatz from "../data/wortschatz.json";
 import sprechen from "../data/sprechen.json";
@@ -211,10 +212,16 @@ const workspaceItem = (w: any): Item => {
 // that already exists in full.
 const workspaceIds = new Set(workspaces.flatMap((w: any) => [w.id, w.slug].filter(Boolean)));
 const workspacesAt = (level: string) =>
-  workspaces.filter((w: any) => w.level === level).sort((a: any, b: any) => a.name.localeCompare(b.name, "de")).map(workspaceItem);
+  workspaces.filter((w: any) => w.level === level).map(workspaceItem);
 const quizTopicsAt = (level: string) =>
   byLevel(level).filter((t) => !workspaceIds.has(t.id)).map((t) => grammarItem(t, level));
-const grammarAt = (level: string) => [...workspacesAt(level), ...quizTopicsAt(level)];
+
+// Curriculum order, not alphabetical, and workspaces no longer jump ahead of quiz-only
+// topics just for being workspaces. Both lists go into one pot and come out in the order
+// the course teaches them — see src/lib/lehrplan.js for why that was two orders before.
+const grammarAt = (level: string) =>
+  [...workspacesAt(level), ...quizTopicsAt(level)]
+    .sort(byPlan((i: any) => [i.id], () => level));
 
 // ── The exercise that sits on every overview ─────────────────────────────
 // Each Stufenübersicht carries one ready-to-use exercise directly under the top
@@ -508,6 +515,23 @@ const ladder = ["a1", "a2", "b1", "b2"].map((id) => {
   return { id, label: s.badge, state: p === 100 ? "done" : p > 0 ? "current" : "todo" };
 });
 
+/**
+ * The module the group's main button leads to: the first one in curriculum order that
+ * still has work in it, falling back to the first practisable entry and then to the
+ * first entry at all — a group of pure reference pages still needs a target.
+ *
+ * On the server every `done` is 0, so this always picks the group's opening module; the
+ * client repaints it against real progress on first paint.
+ */
+const nextOf = (s: Section): Item =>
+  s.items.find((i) => i.practice && i.tasks && (i.done ?? 0) < i.tasks)
+  ?? s.items.find((i) => i.practice)
+  ?? s.items[0];
+
+/** "Fang an mit" on an untouched group, "Weiter mit" once something has been answered. */
+const nextKicker = (s: Section) =>
+  s.items.some((i) => (i.done ?? 0) > 0) ? "Weiter mit" : "Fang an mit";
+
 // Handed to the client: one flat item table plus the questions for every topic
 // that can be practised inline.
 const clientData = {
@@ -647,6 +671,13 @@ const defaultVariant = variants[0];
       {showVariant("b") && (
       <aside class="nv-aside" data-variant-pane="b" aria-label="Seitennavigation, Variante Icon-Rail" hidden>
         <div class="nvb" data-nvb>
+          <!-- Hangs off the right edge of the card, like the tab on a Karteiordner: one
+               control that both folds the list away and brings it back, and the only part
+               of it still on screen once it has. -->
+          <button type="button" class="nvb-foldtab" data-nvb-collapse aria-label="Liste einklappen">
+            <span class="nvb-foldtab-txt">Stufen</span>
+            <svg class="nvb-foldtab-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>
+          </button>
           <div class="nvb-rail" role="tablist" aria-label="Stufe">
             {/* A level chip reads itself — "A1" needs no caption. An icon does not, and
                 the sparkle and the landmark were the only two rail buttons with nothing
@@ -698,7 +729,30 @@ const defaultVariant = variants[0];
                     class="nvb-overview"
                     data-section-btn={section.id}
                     aria-describedby={`nvb-ovtip-${section.id}`}
-                  >Stufenübersicht öffnen →</button>
+                    aria-label={`${
+                      section.kind === "stufe" ? "Stufenübersicht"
+                        : section.kind === "kurs" ? "Kursübersicht"
+                        : "Übersicht"
+                    } ${section.kind === "stufe" ? section.badge : section.label} öffnen`}
+                  >
+                    {/* The label is spelled out above because the two spans below sit on
+                        separate lines with no whitespace between them, so the computed name
+                        would run together as "StufenübersichtA1". */}
+                    <span class="nvb-ov-txt">
+                      {/* The kind decides the noun, so a level reads "Stufenübersicht" and
+                          the two groups that are not levels do not claim to be one. */}
+                      <span class="nvb-ov-kicker">{
+                        section.kind === "stufe" ? "Stufenübersicht"
+                          : section.kind === "kurs" ? "Kursübersicht"
+                          : "Übersicht"
+                      }</span>
+                      {/* A level names itself by its badge (A1, A1–B1) — that is the word
+                          the rail, the card and the chips all use for it. Everything else
+                          carries its own name. */}
+                      <span class="nvb-ov-name">{section.kind === "stufe" ? section.badge : section.label}</span>
+                    </span>
+                    <span class="nvb-ov-go" aria-hidden="true">→</span>
+                  </button>
                   <span class="nvb-tip nvb-tip--wide" id={`nvb-ovtip-${section.id}`} role="tooltip">
                     Zeigt rechts wieder die ganze {section.kind === "stufe" ? "Stufe" : "Gruppe"} statt eines
                     einzelnen Themas — Beschreibung, Umfang, Schwerpunkte und der Startknopf für alles.
@@ -822,9 +876,16 @@ const defaultVariant = variants[0];
                   </p>
                   <p>{section.blurb}</p>
                   <ul class="nv-focus">{section.focus.map((f) => <li>{f}</li>)}</ul>
+                  {/* "Stufe starten" said nothing: every level had the same button, it
+                      did not say what starting would open, and on a level already half
+                      done "starten" was simply wrong. The button now names the module it
+                      leads to — the first one in curriculum order with work left — and
+                      the kicker says whether that is the beginning or the middle. Server
+                      renders the first module; repaint() moves it on as they get done. */}
                   <div class="nv-detail-actions">
-                    <button type="button" class="nv-btn nv-btn--primary" data-nav-item={section.items.find((i) => i.practice)?.id ?? section.items[0].id}>
-                      {st.pct && st.pct > 0 ? "Weitermachen →" : "Stufe starten →"}
+                    <button type="button" class="nv-btn nv-btn--primary nv-btn--next" data-cta={section.id} data-nav-item={nextOf(section).id}>
+                      <span class="nv-btn-kicker" data-cta-kicker={section.id}>{nextKicker(section)}</span>
+                      <span class="nv-btn-main" data-cta-label={section.id}>{nextOf(section).label} →</span>
                     </button>
                   </div>
                 </div>
@@ -843,6 +904,34 @@ const defaultVariant = variants[0];
                   </span>
                 </div>
                 )}
+              </section>
+
+              {/* The list of what this Stufe holds comes before the single exercise below it:
+                  the learner opened the level to see its contents, and a trainer card at the top
+                  pushed that list under the fold. "Direkt üben" stays — one scroll further down. */}
+              <section class="nv-panel">
+                <h2>{section.kind === "kurs" ? "Module" : section.kind === "ziel" ? "Prüfungen" : "Inhalte dieser Stufe"}</h2>
+                {section.items.map((item, n) => (
+                  <div class="nv-modrow" style={`--i:${n}`} data-modrow={item.id}>
+                    <span class="nv-modnum">{n + 1}</span>
+                    <span>
+                      <span class="nv-modname">{item.label}</span><br />
+                      <span class="nv-modmeta">
+                        {item.level}
+                        {item.tasks ? ` · ${item.tasks} Aufgaben` : ""}
+                        {item.minutes ? ` · ca. ${item.minutes} Min.` : ""}
+                        {item.practice === "workspace" ? " · Regel + Übungen hier" : item.practice === "quiz" ? " · hier üben" : ""}
+                      </span>
+                    </span>
+                    {itemPct(item) === null
+                      ? <span class="nv-modmeta">{item.meta}</span>
+                      : <span class="nv-modtrack"><span data-itembar={item.id} style={`width:${itemPct(item)}%`}></span></span>}
+                    <span class="nv-modpoints" data-itempoints={item.id}>{item.tasks ? `${item.done ?? 0} / ${item.tasks}` : ""}</span>
+                    <button type="button" class="nv-modlink" data-nav-item={item.id}>
+                      {item.practice ? "Üben →" : "Öffnen →"}
+                    </button>
+                  </div>
+                ))}
               </section>
 
               {sectionQuick[section.id] && (
@@ -868,31 +957,6 @@ const defaultVariant = variants[0];
                   </button>
                 </section>
               )}
-
-              <section class="nv-panel">
-                <h2>{section.kind === "kurs" ? "Module" : section.kind === "ziel" ? "Prüfungen" : "Inhalte dieser Stufe"}</h2>
-                {section.items.map((item, n) => (
-                  <div class="nv-modrow" style={`--i:${n}`} data-modrow={item.id}>
-                    <span class="nv-modnum">{n + 1}</span>
-                    <span>
-                      <span class="nv-modname">{item.label}</span><br />
-                      <span class="nv-modmeta">
-                        {item.level}
-                        {item.tasks ? ` · ${item.tasks} Aufgaben` : ""}
-                        {item.minutes ? ` · ca. ${item.minutes} Min.` : ""}
-                        {item.practice === "workspace" ? " · Regel + Übungen hier" : item.practice === "quiz" ? " · hier üben" : ""}
-                      </span>
-                    </span>
-                    {itemPct(item) === null
-                      ? <span class="nv-modmeta">{item.meta}</span>
-                      : <span class="nv-modtrack"><span data-itembar={item.id} style={`width:${itemPct(item)}%`}></span></span>}
-                    <span class="nv-modpoints" data-itempoints={item.id}>{item.tasks ? `${item.done ?? 0} / ${item.tasks}` : ""}</span>
-                    <button type="button" class="nv-modlink" data-nav-item={item.id}>
-                      {item.practice ? "Üben →" : "Öffnen →"}
-                    </button>
-                  </div>
-                ))}
-              </section>
             </div>
           );
         })}
@@ -1220,6 +1284,27 @@ const defaultVariant = variants[0];
         .forEach((e) => (e.textContent = cur.label));
     }
 
+    // The group's main button. It names a module, so it has to move when that module is
+    // finished — otherwise it keeps pointing at something with a full bar, which is the
+    // exact complaint "Stufe starten" had.
+    function paintCta() {
+      Object.keys(SECTIONS).forEach((sid) => {
+        const btn = $(`[data-cta="${sid}"]`) as HTMLElement | null;
+        if (!btn) return;
+        const ids: string[] = SECTIONS[sid].items;
+        const open = ids.find((id) => ITEMS[id]?.practice && ITEMS[id].tasks && (progress[id] ?? 0) < ITEMS[id].tasks);
+        const target = open ?? ids.find((id) => ITEMS[id]?.practice) ?? ids[0];
+        const anyDone = ids.some((id) => (progress[id] ?? 0) > 0);
+        btn.dataset.navItem = target;
+        const kicker = $(`[data-cta-kicker="${sid}"]`);
+        const label = $(`[data-cta-label="${sid}"]`);
+        // Nothing left anywhere in the group: say so instead of inviting them into a
+        // module whose bar is already full.
+        if (kicker) kicker.textContent = !open ? "Alles geschafft ·" : anyDone ? "Weiter mit" : "Fang an mit";
+        if (label) label.textContent = `${ITEMS[target]?.label ?? ""} →`;
+      });
+    }
+
     // "Dein Weg" in the left pane. Its four levels have to be counted here rather than in
     // wegPanel.js: sectionTotals() is the one place that knows how a level's topics add
     // up, and a second copy of that arithmetic would disagree the first time a topic moved
@@ -1278,6 +1363,7 @@ const defaultVariant = variants[0];
         else setCount($(`[data-secringvalue="${sid}"]`), st.pct + "%");
       });
 
+      paintCta();
       paintWeg();
 
       mounter.repaintResult();   // keeps the Ergebnis view live while it is open

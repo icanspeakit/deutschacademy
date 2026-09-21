@@ -236,13 +236,31 @@
 .nvb-panelbar { flex: 1; height: 5px; border-radius: var(--radius-pill); background: var(--blue-50); overflow: hidden; }
 .nvb-panelbar span { display: block; height: 100%; background: var(--gradient-brand); border-radius: var(--radius-pill); }
 
+/* This is a navigation layer, not one more row in the list under it — it is how you get
+   back from a topic to the whole level — so it is drawn as a solid tinted bar rather than
+   the dashed ghost it used to be, and it names the level it returns to ("Stufenübersicht
+   A1") instead of saying "öffnen" and leaving you to work out which. It sits above the
+   panel's own rows in weight on purpose: everything below it is one level deep. */
 .nvb-overview {
-  margin: 0 var(--space-2) var(--space-3); padding: 7px var(--space-3);
-  border: 1px dashed var(--border-strong); border-radius: 8px; background: none; cursor: pointer;
-  font-family: var(--font-body); font-size: var(--text-xs); font-weight: var(--fw-semibold);
-  color: var(--muted); text-align: left;
+  display: flex; align-items: center; gap: var(--space-2);
+  width: calc(100% - var(--space-2) * 2);
+  margin: 0 var(--space-2) var(--space-3); padding: 9px var(--space-3);
+  border: 1px solid var(--blue-200); border-radius: 10px;
+  background: var(--blue-50); cursor: pointer;
+  font-family: var(--font-body); text-align: left;
 }
-.nvb-overview:hover { border-color: var(--brand-blue); color: var(--brand-blue-dark); border-style: solid; }
+.nvb-ov-txt { display: flex; flex-direction: column; gap: 1px; min-width: 0; flex: 1; }
+.nvb-ov-kicker {
+  font-family: var(--font-label); font-size: 10px; font-weight: var(--fw-bold);
+  letter-spacing: .08em; text-transform: uppercase; color: var(--muted);
+}
+.nvb-ov-name {
+  font-size: var(--text-sm); font-weight: var(--fw-bold); color: var(--brand-blue-dark);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.nvb-ov-go { flex-shrink: 0; color: var(--brand-blue); font-weight: var(--fw-bold); }
+.nvb-overview:hover { border-color: var(--brand-blue); background: var(--blue-100); }
+.nvb-overview:hover .nvb-ov-kicker { color: var(--brand-blue-dark); }
 .nvb-tip {
   position: absolute; left: calc(100% + 8px); top: 50%; transform: translateY(-50%);
   /* --ink-deep flips with the theme — #0f141c in light, #f7f9fc in dark — so the
@@ -310,13 +328,41 @@
 }
 .nvb-item:hover { background: var(--surface); }
 .nvb-item.active { background: var(--blue-50); border-left-color: var(--brand-blue); color: var(--brand-blue-dark); font-weight: var(--fw-bold); }
-.nvb.collapsed .nvb-panel { display: none; }
+/* ---- The fold ---------------------------------------------------------------------
+   This used to be `display: none`, which cannot tween: the panel was simply gone on the
+   next frame and the fold read as a glitch rather than a movement. So it is a width, the
+   way the Wortschatz picker had already solved it locally — lifted here so the Stufen
+   rail and the Lernset rail fold identically instead of one animating and one blinking.
+
+   The padding animates alongside, or 24px of it survives the fold as a sliver, and the
+   opacity runs shorter than the width so the text is gone before the column is. The panel
+   clips its own content (overflow-y: auto computes overflow-x to auto), so nothing spills
+   while it narrows. */
+.nvb-panel {
+  transition:
+    width var(--nv-fold, .34s) var(--nv-ease-soft),
+    padding var(--nv-fold, .34s) var(--nv-ease-soft),
+    opacity calc(var(--nv-fold, .34s) * .6) ease;
+}
+.nvb.collapsed .nvb-panel {
+  width: 0;
+  padding-left: 0;
+  padding-right: 0;
+  opacity: 0;
+  pointer-events: none;
+}
 /* Folded, the card IS the rail, so a tip 8px to its right lands outside it and the
    `overflow: hidden` above cuts it in half. That clip is also what rounds the rail's
    corners against the card — so releasing it means the rail rounds its own, which it
    should at that width anyway. With the panel open the tip sits over the panel, inside
    the card, and nothing needs releasing. */
 .nvb.collapsed { overflow: visible; }
+/* The rounding waits for the fold to finish. Rounded rail corners against a panel that
+   is still 200px wide is the one frame of this that looks broken — so collapsing delays
+   it to the end, and opening drops it immediately, because there the panel is arriving
+   into a corner that has to be square before it gets there. */
+.nvb-rail { transition: border-radius .01s linear var(--nv-fold, .34s); }
+.nvb:not(.collapsed) .nvb-rail { transition-delay: 0s; }
 .nvb.collapsed .nvb-rail { border-radius: var(--radius); }
 
 /* Switching level replaces the whole panel. Nothing used to mark that: the old
@@ -396,6 +442,10 @@
 .nvb-item--pick { animation: nvb-pick 340ms var(--nv-ease-out) both; }
 
 @media (prefers-reduced-motion: reduce) {
+  /* The fold still happens — it just happens at once. Zeroing the duration rather than
+     the transition keeps one code path for both. */
+  .nvb { --nv-fold: 0s; }
+  .nvb-rail { transition: none; }
   .nvb-section--enter > *,
   .nvb-item,
   .nvb-item--pick,
@@ -856,7 +906,16 @@
   .nvb-rail { width: auto; flex-direction: row; justify-content: flex-start; padding: var(--space-2) var(--space-3); overflow-x: auto; }
   .nvb-tip { display: none; }
   .nvb-panel { width: auto; }
-  .nvb.collapsed .nvb-panel { display: flex; }
+  .nvb.collapsed .nvb-panel {
+    display: flex;
+    /* The desktop fold is a width; down here the panel is a block in the flow that stays
+       open, so every part of that fold is undone rather than inherited. */
+    width: auto;
+    padding-left: var(--space-3);
+    padding-right: var(--space-3);
+    opacity: 1;
+    pointer-events: auto;
+  }
 
   /* … and on a phone the chip row leaves the rail entirely: placeRail() in
      LearnShell.astro moves it to the top of the shell, where it sticks. 58px of
@@ -990,10 +1049,17 @@
   .nv-strip-track { order: 3; flex-basis: 100%; height: 5px; }
 
   /* Navigation follows the task instead of preceding it. The level rail and the
-     topic list are how you choose what to do next — not what you came to do. */
+     topic list are how you choose what to do next — not what you came to do.
+     
+     Except on /fortschritt, where that panel is no longer navigation: it is the answer
+     to the page's own question — Weitermachen, the week, the level bars, the accuracy.
+     On a desktop it is the first thing on the left; sent to the end on a phone the same
+     learner scrolled two thousand pixels past the detail to reach their own progress.
+     The study page (/nav) keeps the old order: there the rail really is a chooser. */
   .nv-shell { display: flex; flex-direction: column; }
   .nv-main { order: 1; }
   .nv-aside { order: 2; }
+  .nv:not(.nv--study) .nv-aside { order: 0; }
   .nv-aside[hidden] { display: none; }
 
   /* And inside the level view, the exercise leads. */
@@ -1275,3 +1341,83 @@
 :root[data-theme="dark"] .wg-day[data-level="3"] i { background: #2dd4bf; border-color: #2dd4bf; }
 :root[data-theme="dark"] .wg-day[data-level="4"] i { background: #5eead4; border-color: #5eead4; }
 :root[data-theme="dark"] .wg-day[data-today="1"] i { box-shadow: 0 0 0 2px var(--surface-card), 0 0 0 3px var(--muted-soft); }
+
+/* The group's main button now carries two lines: a kicker saying where you are in the
+   group, and the module it opens. Left-aligned rather than centred — it is a sentence
+   ("Weiter mit / Perfekt: haben oder sein"), and centring the two halves separately
+   made them read as unrelated. */
+.nv-btn--next {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1px;
+  text-align: left;
+  line-height: 1.25;
+}
+.nv-btn-kicker {
+  font-size: 10px;
+  font-weight: var(--fw-bold);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  opacity: .72;
+}
+.nv-btn-main {
+  font-size: var(--text-base);
+  font-weight: var(--fw-semibold);
+  /* A module name can be long ("Präteritum und Plusquamperfekt"); at 390px it wraps
+     rather than stretching the button past the column. */
+  white-space: normal;
+}
+
+/* ---- The rail's fold tab ------------------------------------------------------------
+ * The Wortschatz picker's tab (lernset-picker.css), on the rail it was copied from. The
+ * panel head's chevron is inside the thing it folds, so once the list was away the only
+ * way back was an icon in a dark strip; this hangs off the card's edge and stays.
+ *
+ * The card has to stop clipping for a tab to hang off it, so the rail draws its own
+ * rounded corners while it is the only thing left.
+ */
+.nv-aside .nvb { position: relative; overflow: visible; }
+.nv-aside .nvb-rail { border-radius: var(--radius) 0 0 var(--radius); }
+.nv-aside .nvb-collapse { display: none; }
+
+.nvb-foldtab {
+  position: absolute;
+  z-index: 3;
+  top: 72px;
+  right: -18px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  width: 18px;
+  padding: 14px 0;
+  border: 1px solid var(--border);
+  border-left: none;
+  border-radius: 0 10px 10px 0;
+  background: var(--surface-card);
+  color: var(--muted);
+  font-family: var(--font-label);
+  cursor: pointer;
+  box-shadow: 10px 0 26px -20px rgb(15 23 42 / 55%);
+  transition: color .2s var(--nv-ease-soft), background .2s var(--nv-ease-soft), padding .2s var(--nv-ease-soft);
+}
+.nvb-foldtab:hover,
+.nvb-foldtab:focus-visible { color: var(--brand-blue-dark); background: var(--surface); padding-right: 3px; }
+.nvb-foldtab-txt {
+  writing-mode: vertical-rl;
+  font-size: 9.5px;
+  font-weight: var(--fw-bold);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+.nvb-foldtab-chev { width: 12px; height: 12px; transition: transform .28s var(--nv-ease-soft); }
+/* Folded, it points at the space the list will come back into. */
+.nvb.collapsed .nvb-foldtab-chev { transform: rotate(180deg); }
+
+/* On a phone the rail is a strip above the panel and there is no edge to hang a tab on;
+   the panel is the page's own block there and folding it buys nothing. */
+@media (max-width: 900px) {
+  .nvb-foldtab { display: none; }
+  .nv-aside .nvb-collapse { display: inline-flex; }
+}

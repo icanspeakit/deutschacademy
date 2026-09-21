@@ -39,8 +39,8 @@
     opacity calc(var(--ls-fold, .34s) * .6) ease;
 }
 .ls-nvb.collapsed .nvb-panel {
-  /* Beats nav.css's `display: none`, which would end the animation before it began. */
-  display: flex;
+  /* nav.css now folds by width too, so this no longer has to beat a `display: none`.
+     What stays local is the picker's own width — its panel is wider than the rail's. */
   width: 0;
   padding-left: 0;
   padding-right: 0;

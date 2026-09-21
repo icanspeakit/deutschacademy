@@ -10,6 +10,7 @@
 // /dashboard reads. See topicKeyOf() in grammarTasks.js for the one topic where they differ.
 import { taskCountOf, topicKeyOf } from "./grammarTasks.js";
 import grammatik from "../data/grammatik.json";
+import { byPlan } from "./lehrplan.js";
 
 const workspaceMods = import.meta.glob("../data/grammatik/*.json", { eager: true });
 const workspaces = Object.values(workspaceMods).map((m) => m.default ?? m);
@@ -27,17 +28,24 @@ const topicOf = (t, kind) => ({
   aktiv: !!t.aktiv,
 });
 
-/** Workspaces first within a level, then the quiz-only topics — same order as the hub. */
+/**
+ * Every topic in the order the course teaches it, level by level.
+ *
+ * This used to be "workspaces alphabetically, then the quiz-only topics", which put
+ * Modalverben before Perfekt in A2 although the syllabus teaches Perfekt first — and
+ * being a workspace rather than a quiz is a fact about how much content a topic has, not
+ * about when a learner should meet it. Both kinds now sort together by the Lehrplan.
+ */
+const LEVELS = ["A1", "A2", "B1", "B2"];
 export const grammarCatalog = [
-  ...workspaces
-    .slice()
-    .sort((a, b) => a.name.localeCompare(b.name, "de"))
-    .map((w) => topicOf(w, "workspace")),
+  ...workspaces.map((w) => topicOf(w, "workspace")),
   // akkusativ keeps its own bespoke page and is not on the [id] route.
   ...grammatik
     .filter((t) => t.id !== "akkusativ" && !covered.has(t.id))
     .map((t) => topicOf(t, "quiz")),
-];
+]
+  .sort(byPlan((t) => [t.key]))
+  .sort((a, b) => LEVELS.indexOf(a.level) - LEVELS.indexOf(b.level));
 
 export const grammarAt = (level) => grammarCatalog.filter((t) => t.level === level);
 

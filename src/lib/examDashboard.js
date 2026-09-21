@@ -356,6 +356,12 @@ export function mountExamDashboard(root) {
 
   // Set by the exam switcher: the next paint is a replacement, not a first render.
   let swap = false;
+  // Which way the main panel should come in. Switching from Start Deutsch 1 down to DTZ
+  // and switching back up are different moves, and animating both the same way loses the
+  // only cue that says which. Same convention as the topic swap in LearnShell: down the
+  // list enters from the right, up from the left.
+  let swapDir = "fwd";
+  const orderOf = (id) => examRegistry.findIndex((e) => e.id === id);
 
   function paint(focusSel) {
     const stats = allExamStats();
@@ -369,10 +375,6 @@ export function mountExamDashboard(root) {
     }
 
     railEl.innerHTML = railHtml(stats, activeId, { railOpen, openGroup });
-    if (swap) {
-      replay(railEl.querySelector(".fs-parts"), "fs-parts--enter");
-      swap = false;
-    }
     mainEl.innerHTML = `
       <div class="fs-viewtabs" role="tablist">
         <button type="button" class="fs-viewtab${view === "karten" ? " is-on" : ""}" data-view="karten" role="tab" aria-selected="${view === "karten"}">${esc(t("fs.viewCards"))}</button>
@@ -381,8 +383,26 @@ export function mountExamDashboard(root) {
       ${headHtml(s)}
       ${view === "liste" ? tableHtml(s) : cardsHtml(s)}`;
 
+    if (swap) {
+      // Rail and main together: the part tree on the left and the panel on the right are
+      // two views of the same change, and staggering them made the switch feel like two
+      // separate events.
+      mainEl.dataset.fsDir = swapDir;
+      replay(railEl.querySelector(".fs-parts"), "fs-parts--enter");
+      replay(mainEl, "fs-main--enter");
+      swap = false;
+    } else {
+      // Every other paint rewrites mainEl.innerHTML too — a Karten/Liste switch, a
+      // language change, another tab finishing a part. Left on, the class would make all
+      // of those replay the 250ms exam-switch stagger, which turns a tab click into a
+      // wait. Only an exam switch is a switch.
+      mainEl.classList.remove("fs-main--enter");
+    }
+
     for (const b of railEl.querySelectorAll("[data-exam]")) {
       b.addEventListener("click", () => {
+        if (b.dataset.exam === activeId) return;
+        swapDir = orderOf(b.dataset.exam) < orderOf(activeId) ? "back" : "fwd";
         activeId = b.dataset.exam;
         openGroup = undefined;
         swap = true;

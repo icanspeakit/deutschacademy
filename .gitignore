@@ -31,3 +31,8 @@ pnpm-debug.log*
 # moment, not a source of truth; rerun the sweep rather than reading an old one.
 mobile-sweep-screenshots/
 mobile-sweep-report.json
+
+# Scratch files left behind by script runs (empty or short-lived). They accumulate in
+# the repo root and have never been part of the source.
+_tmp_*
+.claude/

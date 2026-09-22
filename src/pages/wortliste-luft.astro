@@ -19,12 +19,10 @@ const langs = langsOf(cards);
 const sub = `${LEVEL} · ${Math.ceil(cards.length / 25)} Runden · je 25 Wörter`;
 ---
 <Layout
+  noindex
   title="Wortliste A1 · Luft – DeutschAcademy"
   description="Skizze: dieselbe Wortliste mit mehr Weißraum."
 >
-  <Fragment slot="head">
-    <meta name="robots" content="noindex, nofollow" />
-  </Fragment>
   <div class="luft">
     <VokabelTrainer cards={cards} heading={`Wortschatz ${LEVEL}`} sub={sub} deck={LEVEL.toLowerCase()} langs={langs} />
   </div>

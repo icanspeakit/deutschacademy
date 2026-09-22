@@ -15,9 +15,6 @@
 import Layout from "../layouts/Layout.astro";
 import LearnShell from "../components/LearnShell.astro";
 ---
-<Layout title="Navigation (Studie) – DeutschAcademy" description="Designstudie: drei Varianten der Dashboard-Navigation.">
-  <Fragment slot="head">
-    <meta name="robots" content="noindex, nofollow" />
-  </Fragment>
+<Layout title="Navigation (Studie) – DeutschAcademy" description="Designstudie: drei Varianten der Dashboard-Navigation." noindex>
   <LearnShell variants={["a", "b", "c"]} study />
 </Layout>

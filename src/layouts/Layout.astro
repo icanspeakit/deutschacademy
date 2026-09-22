@@ -5,11 +5,18 @@ import "../styles/components.css";
 interface Props {
   title?: string;
   description?: string;
+  /** Keep this route out of search engines. For the design prototypes under src/pages/
+      that are not reachable from the navigation but still build to a public URL —
+      /former-site most of all, which shows a company address the Impressum contradicts.
+      Mirrored by public/robots.txt; the meta tag is the one that actually removes an
+      already-indexed page, robots.txt only stops the next crawl. */
+  noindex?: boolean;
 }
 
 const {
   title = "Deutsch Academy – Da für Dich!",
   description = "Deutsch lernen mit echtem Unterrichtsmaterial: kostenlose Übungen und Prüfungsvorbereitung für telc, Goethe-Zertifikat, TestDaF, DTZ und Leben in Deutschland.",
+  noindex = false,
 } = Astro.props;
 
 // Open Graph / Twitter. There were none, so every link anyone pasted into WhatsApp,
@@ -31,6 +38,7 @@ const abs = (path) => (Astro.site ? new URL(path, Astro.site).href : path);
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
     <!-- Runs before first paint so a dark-mode reload never flashes white.
          Keep in sync with STORAGE_KEY/THEME_COLOR in src/lib/theme.js. -->
     <script is:inline>

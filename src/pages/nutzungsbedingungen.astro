@@ -1,0 +1,135 @@
+---
+// /nutzungsbedingungen — Terms of use.
+//
+// Adapted from colevitate.com's Terms of Service (same section order: Service, Accounts,
+// Acceptable use, Your content, Our content, Disclaimers, Liability, Changes, Contact),
+// rewritten in German and for what this site actually is: free teaching material, no
+// payment, no subscription, no AI correction promise.
+//
+// Two deliberate differences from the Colevitate original:
+//   1. The liability section follows German law (§§ 276, 309 BGB) rather than the US-style
+//      blanket cap, which is unenforceable against German consumers.
+//   2. There is no payment or refund clause, because nothing here costs anything. If a paid
+//      tier ever appears, this page needs a Widerrufsbelehrung — that is not a small edit.
+//
+// Not legal advice. Have it reviewed before relying on it.
+import Layout from "../layouts/Layout.astro";
+import PracticeHeader from "../components/PracticeHeader.astro";
+import { LEGAL } from "../lib/legal.js";
+import "../styles/practice.css";
+import "../styles/legal.css";
+---
+<Layout
+  title="Nutzungsbedingungen – DeutschAcademy"
+  description="Bedingungen für die Nutzung von DeutschAcademy: kostenlose Übungen, Konten und Inhalte."
+>
+  <PracticeHeader title="Nutzungsbedingungen" />
+  <main class="legal-main">
+    <div class="legal-head">
+      <h1>Nutzungsbedingungen</h1>
+      <p class="legal-updated">Stand: {LEGAL.lastUpdated}</p>
+    </div>
+
+    <div class="legal-body">
+      <h2>Das Angebot</h2>
+      <p>
+        DeutschAcademy stellt kostenlose Materialien zum Deutschlernen bereit: Übungen zu
+        Grammatik und Wortschatz, Übungssätze zur Prüfungsvorbereitung (DTZ, telc, Goethe,
+        TestDaF, Leben in Deutschland) sowie PDFs zum Herunterladen. Die Nutzung ist kostenlos
+        und ohne Konto möglich.
+      </p>
+      <p>
+        Wir entwickeln die Seite laufend weiter. Einzelne Übungen, Seiten oder Funktionen können
+        sich ändern oder wegfallen. Einen Anspruch auf ständige Verfügbarkeit gibt es nicht.
+      </p>
+
+      <h2>Konten</h2>
+      <p>
+        Ein Konto ist freiwillig. Es dient allein dazu, deinen Lernfortschritt auf mehreren
+        Geräten fortzusetzen. Du kannst dich mit Google oder per E-Mail anmelden.
+      </p>
+      <ul>
+        <li>Die Angaben bei der Anmeldung müssen zutreffend sein.</li>
+        <li>Gib deine Zugangsdaten nicht weiter.</li>
+        <li>Ein Konto ist für Personen ab 16 Jahren gedacht.</li>
+        <li>Du kannst dein Konto jederzeit löschen. Damit werden auch die gespeicherten Daten gelöscht.</li>
+      </ul>
+
+      <h2>Zulässige Nutzung</h2>
+      <p>Nicht erlaubt ist insbesondere:</p>
+      <ul>
+        <li>die Seite automatisiert in einem Umfang abzurufen, der den Betrieb beeinträchtigt;</li>
+        <li>Sicherheitsvorkehrungen zu umgehen oder fremde Konten zu nutzen;</li>
+        <li>Inhalte der Seite gewerblich weiterzuverkaufen;</li>
+        <li>die Seite für rechtswidrige Zwecke zu nutzen.</li>
+      </ul>
+
+      <h2>Deine Inhalte</h2>
+      <p>
+        Texte, die du in Schreibaufgaben verfasst, gehören dir. Wir nutzen sie nicht für eigene
+        Zwecke und geben sie nicht weiter. Sie werden gespeichert, damit du an ihnen
+        weiterarbeiten kannst — im Browser und, wenn du angemeldet bist, zusätzlich auf dem
+        Server.
+      </p>
+
+      <h2>Unsere Inhalte</h2>
+      <p>
+        Die von uns erstellten Übungen, Wortlisten und PDFs darfst du kostenlos nutzen,
+        ausdrucken und im eigenen Unterricht weitergeben. Nicht erlaubt ist der Weiterverkauf.
+      </p>
+      <p>
+        Prüfungsnamen und Prüfungsmaterialien Dritter (telc, Goethe-Institut, TestDaF-Institut,
+        BAMF) gehören den jeweiligen Rechteinhabern. Unsere Übungssätze orientieren sich am
+        veröffentlichten Prüfungsformat, sind aber eigene Materialien und <strong>kein
+        offizielles Prüfungsmaterial</strong>. Offizielle Modellsätze verlinken wir dort, wo die
+        Anbieter sie selbst veröffentlichen.
+      </p>
+
+      <h2>Keine Gewähr für Prüfungserfolg</h2>
+      <p>
+        Die Inhalte werden sorgfältig erstellt, ersetzen aber weder einen Kurs noch eine
+        Beratung. Wir sichern kein bestimmtes Prüfungsergebnis und keine bestimmte
+        Niveaustufe zu. Ergebnisse aus dem Einstufungstest sind eine Orientierung, keine
+        Zertifizierung. Verbindlich sind allein die Angaben und Bewertungen der offiziellen
+        Prüfungsanbieter.
+      </p>
+
+      <h2>Haftung</h2>
+      <p>
+        Wir haften unbeschränkt für Vorsatz und grobe Fahrlässigkeit sowie bei Verletzung von
+        Leben, Körper oder Gesundheit. Bei einfacher Fahrlässigkeit haften wir nur bei
+        Verletzung einer wesentlichen Vertragspflicht — also einer Pflicht, deren Erfüllung die
+        ordnungsgemäße Nutzung überhaupt erst ermöglicht und auf deren Einhaltung du vertrauen
+        darfst — und der Höhe nach begrenzt auf den vertragstypischen, vorhersehbaren Schaden.
+        Ansprüche nach dem Produkthaftungsgesetz bleiben unberührt.
+      </p>
+      <p>
+        Für den Verlust von Lernfortschritt, der ausschließlich in deinem Browser gespeichert
+        ist, können wir nicht einstehen: Auf diese Daten haben wir keinen Zugriff, und sie
+        werden gelöscht, sobald du deine Browserdaten löschst. Wer seinen Fortschritt sichern
+        möchte, meldet sich an.
+      </p>
+
+      <h2>Änderungen und Beendigung</h2>
+      <p>
+        Wir können diese Bedingungen ändern, wenn sich das Angebot oder die Rechtslage ändert.
+        Das Datum oben zeigt den Stand. Du kannst dein Konto jederzeit ohne Angabe von Gründen
+        löschen. Wir können ein Konto sperren, wenn es erheblich gegen diese Bedingungen
+        verstößt.
+      </p>
+
+      <h2>Anwendbares Recht</h2>
+      <p>
+        Es gilt deutsches Recht. Zwingende Verbraucherschutzvorschriften des Staates, in dem du
+        deinen gewöhnlichen Aufenthalt hast, bleiben davon unberührt.
+      </p>
+
+      <h2>Kontakt</h2>
+      <p>
+        Fragen zu diesen Bedingungen:{" "}
+        <a href={`mailto:${LEGAL.contactEmail}`}>{LEGAL.contactEmail}</a>. Die vollständigen
+        Anbieterangaben stehen im <a href="/impressum">Impressum</a>.
+      </p>
+    </div>
+  </main>
+</Layout>

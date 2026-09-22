@@ -119,7 +119,7 @@ const at = siblings.findIndex((t) => t.key === demoKey);
 const prev = siblings[at - 1] ?? null;
 const next = siblings[at + 1] ?? null;
 ---
-<Layout title="Nav-Varianten – DeutschAcademy">
+<Layout title="Nav-Varianten – DeutschAcademy" noindex>
   <div class="nn" data-nn data-variant="c">
     <SiteNav active="grammatik" />
     <TopicBar topic={demoKey} kind="Grammatik" title={demo.name} level={demo.level} tasks={demoTasks} />

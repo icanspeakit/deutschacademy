@@ -1,5 +1,5 @@
 /* Leben in Deutschland: Fakten page.
-   Visual design is fixed ("minimal": flat, near-monochrome, Inter + JetBrains Mono) — baked
+   Visual design is fixed ("minimal": flat, near-monochrome) — baked
    into .fk-page below via the same shared custom properties (--ink, --brand-blue-dark,
    --font-display, --radius, …) the rest of the site's components already read, so everything
    re-themes without touching practice.css/pruefungen.css.
@@ -33,8 +33,13 @@
   --brand-blue: #2563eb;
   --brand-blue-dark: #1d4ed8;
   --gradient-brand: #2563eb;
-  --font-display: "Inter", "Segoe UI", Arial, sans-serif;
-  --font-body: "Inter", "Segoe UI", Arial, sans-serif;
+  /* Albert Sans, not the site's Sora: this page keeps its own neutral voice. It used to
+     be Inter pulled from fonts.googleapis.com, which sent every reader's IP to Google
+     from a learner route and made /datenschutz's "no third-party requests" a false
+     claim. Albert Sans is already self-hosted in /public/fonts and fills the same
+     neutral-UI role, so the look survives and nothing leaves the origin. */
+  --font-display: "Albert Sans", "Segoe UI", Arial, sans-serif;
+  --font-body: "Albert Sans", "Segoe UI", Arial, sans-serif;
   --radius-sm: 4px;
   --radius: 6px;
   --radius-lg: 8px;
@@ -51,7 +56,9 @@
 .fk-page .eyebrow,
 .fk-page .fk-fact-card-count,
 .fk-page .format-note {
-  font-family: "JetBrains Mono", "Consolas", monospace;
+  /* The mono here is three letter-spaced labels, not code or aligned columns, so it is
+     decorative: a system monospace carries it without a second webfont download. */
+  font-family: ui-monospace, "Cascadia Mono", "Segoe UI Mono", Consolas, monospace;
   letter-spacing: .01em;
 }
 

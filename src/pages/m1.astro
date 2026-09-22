@@ -17,11 +17,7 @@ import grammatik from "../data/grammatik.json";
 
 const grammarQuestionCount = grammatik.reduce((sum, t) => sum + t.questions.length, 0);
 ---
-<Layout title="Hero Cross (Vorschau) – DeutschAcademy" description="Designvorschau: gekreuzte Hero-Sektion.">
-  <Fragment slot="head">
-    <meta name="robots" content="noindex, nofollow" />
-  </Fragment>
-
+<Layout title="Hero Cross (Vorschau) – DeutschAcademy" description="Designvorschau: gekreuzte Hero-Sektion." noindex>
   <div class="lp">
     <nav class="lp-nav">
       <div class="lp-nav-row">

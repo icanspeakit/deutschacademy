@@ -1,0 +1,36 @@
+# Crawl the learner site; skip the design prototypes.
+#
+# Everything listed below is a route under src/pages/ that builds to a public URL but is
+# not reachable from the site's navigation — layout studies, font tests and old drafts
+# kept for comparison. /former-site is the one that matters: it still renders the old
+# "Deutsch Academy Inc." Manila footer, which the Impressum now contradicts.
+#
+# This file only stops the next crawl. What actually removes an already-indexed page is
+# <meta name="robots" content="noindex, nofollow">, which every route below also carries
+# — via the `noindex` prop on src/layouts/Layout.astro, or inline on /concepts, which does
+# not use the layout. Keep the two lists in step: a page disallowed here but crawlable
+# elsewhere can still be indexed from an inbound link.
+
+User-agent: *
+Disallow: /better
+Disallow: /concepts
+Disallow: /design-system
+Disallow: /font
+Disallow: /former-site
+Disallow: /front
+Disallow: /jetzt
+Disallow: /layout
+Disallow: /m1
+Disallow: /mobile
+Disallow: /mobile2
+Disallow: /mobile3
+Disallow: /nav
+Disallow: /navnew
+Disallow: /no3
+Disallow: /pivot
+Disallow: /sora
+Disallow: /uebungen-vorschau
+Disallow: /v1
+Disallow: /v2
+Disallow: /wortliste-luft
+Disallow: /wortliste-rail

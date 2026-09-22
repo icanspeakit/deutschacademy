@@ -1,0 +1,79 @@
+/* Legal pages (/impressum, /datenschutz, /nutzungsbedingungen).
+   Long-form prose, so this is a reading column and nothing else — the site's own tokens
+   from global.css, no new colours, no new type scale. Dark mode comes for free because
+   every value below is a token that global.css already redefines under [data-theme="dark"]. */
+
+.legal-main {
+  max-width: 46rem;
+  margin: 0 auto;
+  padding: 2rem 1rem 5rem;
+}
+
+.legal-head { margin-bottom: 2.5rem; }
+.legal-head h1 { margin: 0 0 .5rem; font-size: var(--text-4xl); }
+.legal-updated { margin: 0; font-size: var(--text-sm); opacity: .7; }
+
+.legal-body { font-size: var(--text-base); line-height: 1.7; }
+.legal-body h2 {
+  margin: 2.5rem 0 .75rem;
+  font-size: var(--text-xl);
+  padding-bottom: .35rem;
+  border-bottom: 1px solid color-mix(in srgb, currentColor 12%, transparent);
+}
+.legal-body h3 { margin: 1.75rem 0 .5rem; font-size: var(--text-lg); }
+.legal-body p, .legal-body ul, .legal-body ol { margin: 0 0 1rem; }
+.legal-body ul, .legal-body ol { padding-inline-start: 1.25rem; }
+.legal-body li { margin-bottom: .4rem; }
+.legal-body a { color: var(--brand-blue); text-underline-offset: .2em; }
+
+/* Definition rows for the Impressum's name/address/contact block. */
+.legal-rows { display: grid; gap: .6rem .9rem; margin: 0 0 1rem; }
+@media (min-width: 30rem) { .legal-rows { grid-template-columns: max-content 1fr; } }
+.legal-rows dt { font-weight: 600; opacity: .75; }
+.legal-rows dd { margin: 0; }
+
+/* Shown only while src/lib/legal.js still has TODO fields. Deliberately loud: an
+   Impressum with placeholder text in it is worse than none at all, so it must be
+   impossible to ship this by accident. */
+.legal-warn {
+  margin: 0 0 2rem;
+  padding: .9rem 1.1rem;
+  border: 2px solid #b91c1c;
+  border-radius: .6rem;
+  background: color-mix(in srgb, #b91c1c 10%, transparent);
+  font-size: var(--text-sm);
+  line-height: 1.55;
+}
+.legal-warn strong { display: block; margin-bottom: .25rem; }
+
+/* Table of what is stored, in the Datenschutzerklärung. */
+.legal-table { width: 100%; border-collapse: collapse; margin: 0 0 1.25rem; font-size: var(--text-sm); }
+.legal-table th, .legal-table td {
+  text-align: start;
+  padding: .55rem .6rem;
+  border-bottom: 1px solid color-mix(in srgb, currentColor 12%, transparent);
+  vertical-align: top;
+}
+.legal-table th { font-weight: 600; opacity: .8; }
+
+/* Three columns of German prose cannot fit a 390px phone: the cells' min-content width
+   pushed the table to 394px and the page scrolled sideways. Below the breakpoint each
+   row becomes a small stacked card and the column headings move into the cells, so the
+   information survives the loss of the grid instead of being cropped or zoomed away. */
+@media (max-width: 34rem) {
+  .legal-table, .legal-table tbody, .legal-table tr, .legal-table td { display: block; }
+  .legal-table thead { display: none; }
+  .legal-table tr {
+    margin: 0 0 .9rem;
+    padding: .2rem 0 .6rem;
+    border-bottom: 1px solid color-mix(in srgb, currentColor 12%, transparent);
+  }
+  .legal-table td { padding: .3rem 0; border-bottom: 0; }
+  .legal-table td::before {
+    content: attr(data-label);
+    display: block;
+    font-weight: 600;
+    opacity: .7;
+    font-size: var(--text-xs);
+  }
+}

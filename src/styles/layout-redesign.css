@@ -1,5 +1,6 @@
 /* /layout — homepage redesign test. Prefixed .hp- to stay isolated from .lp- (live homepage). */
-@import url('https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&display=swap');
+/* Sora is already self-hosted in global.css (/fonts/sora-latin.woff2); this file used to
+   @import it from fonts.googleapis.com as well, which added a Google request for nothing. */
 
 :root {
   --hp-teal-50:  #f0fdfa;

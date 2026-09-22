@@ -18,12 +18,10 @@ import PracticeHeader from "../components/PracticeHeader.astro";
 import LearnShell from "../components/LearnShell.astro";
 ---
 <Layout
+  noindex
   title="V2 – Dashboard + Themenseite"
   description="Der Merge aus Dashboard und Themenseite: Navigation und Fortschritt links, Übungen in einer Spalte, Regel von der Seite."
 >
-  <Fragment slot="head">
-    <meta name="robots" content="noindex, nofollow" />
-  </Fragment>
   <PracticeHeader title="V2" />
   <LearnShell variants={["b"]} topicLayout="focus" />
 </Layout>

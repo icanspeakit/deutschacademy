@@ -1,0 +1,212 @@
+---
+// /datenschutz — Datenschutzerklärung nach Art. 13 DSGVO.
+//
+// Written from what this codebase actually does, not from a generator. Every claim below
+// traces to real code: the localStorage keys in src/lib/progress.js and src/lib/exam/state.js,
+// the Supabase project in eu-central-1, and the absence of any analytics script anywhere in
+// src/ or public/ (verified by grep — there is no gtag, no Plausible, no Vercel Analytics).
+//
+// If that ever stops being true, this page is wrong and must change in the same commit.
+//
+// Not legal advice. Structure adapted from colevitate.com's privacy policy; have it reviewed.
+import Layout from "../layouts/Layout.astro";
+import PracticeHeader from "../components/PracticeHeader.astro";
+import { LEGAL, legalComplete } from "../lib/legal.js";
+import "../styles/practice.css";
+import "../styles/legal.css";
+
+const ready = legalComplete();
+---
+<Layout
+  title="Datenschutz – DeutschAcademy"
+  description="Welche Daten DeutschAcademy speichert, wo sie liegen und welche Rechte du hast."
+>
+  <PracticeHeader title="Datenschutz" />
+  <main class="legal-main">
+    <div class="legal-head">
+      <h1>Datenschutzerklärung</h1>
+      <p class="legal-updated">Stand: {LEGAL.lastUpdated}</p>
+    </div>
+
+    {!ready && (
+      <div class="legal-warn">
+        <strong>Diese Seite ist noch nicht vollständig.</strong>
+        Der Verantwortliche nach Art. 4 Nr. 7 DSGVO ist in <code>src/lib/legal.js</code> noch
+        nicht eingetragen. Bitte vor dem Veröffentlichen ergänzen.
+      </div>
+    )}
+
+    <div class="legal-body">
+      <h2>Das Wichtigste zuerst</h2>
+      <p>
+        DeutschAcademy funktioniert ohne Konto. Wenn du kein Konto anlegst, verlässt dein
+        Lernfortschritt deinen Browser nicht: Serie, geübte Aufgaben, gelernte Wörter und
+        angefangene Prüfungen liegen ausschließlich im <em>localStorage</em> deines Geräts.
+        Wir sehen sie nicht, und sie sind weg, sobald du deine Browserdaten löschst.
+      </p>
+      <p>
+        Erst wenn du dich anmeldest, wird derselbe Lernstand zusätzlich auf einem Server
+        gespeichert, damit du ihn auf einem anderen Gerät weiterführen kannst. Dieser Server
+        steht in {LEGAL.dataRegion}.
+      </p>
+      <p>
+        Wir setzen keine Analyse- oder Werbedienste ein. Es gibt auf dieser Seite kein Google
+        Analytics, kein Tracking-Pixel und keine Werbe-Cookies.
+      </p>
+
+      <h2>Verantwortlicher</h2>
+      <p>Verantwortlich für die Datenverarbeitung auf dieser Seite ist:</p>
+      <dl class="legal-rows">
+        <dt>Name</dt><dd>{LEGAL.operatorName}</dd>
+        <dt>Anschrift</dt>
+        <dd>
+          {LEGAL.operatorStreet}<br />
+          {LEGAL.operatorPostcode} {LEGAL.operatorCity}<br />
+          {LEGAL.operatorCountry}
+        </dd>
+        <dt>E-Mail</dt>
+        <dd><a href={`mailto:${LEGAL.contactEmail}`}>{LEGAL.contactEmail}</a></dd>
+      </dl>
+
+      <h2>Welche Daten wir verarbeiten</h2>
+      <table class="legal-table">
+        <thead>
+          <tr><th>Daten</th><th>Wann</th><th>Wo gespeichert</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td data-label="Daten">Lernfortschritt: Serie, Anzahl geübter Aufgaben, gelernte Wörter, zuletzt
+                besuchte Übungen</td>
+            <td data-label="Wann">Sobald du eine Aufgabe löst</td>
+            <td data-label="Wo gespeichert">Immer im Browser; zusätzlich auf dem Server, wenn du angemeldet bist</td>
+          </tr>
+          <tr>
+            <td data-label="Daten">Angefangene Prüfungen und Schreib-Entwürfe</td>
+            <td data-label="Wann">Während einer Prüfungssimulation</td>
+            <td data-label="Wo gespeichert">Immer im Browser; zusätzlich auf dem Server, wenn du angemeldet bist</td>
+          </tr>
+          <tr>
+            <td data-label="Daten">Einstellungen: Anzeigename, Wochenziel, Sprache, helles/dunkles Design</td>
+            <td data-label="Wann">Wenn du sie änderst</td>
+            <td data-label="Wo gespeichert">Immer im Browser; zusätzlich auf dem Server, wenn du angemeldet bist</td>
+          </tr>
+          <tr>
+            <td data-label="Daten">Kontodaten: E-Mail-Adresse; bei Google-Anmeldung zusätzlich Name und Profilbild</td>
+            <td data-label="Wann">Nur bei Anmeldung</td>
+            <td data-label="Wo gespeichert">Server ({LEGAL.dataRegion})</td>
+          </tr>
+          <tr>
+            <td data-label="Daten">Server-Logdaten des Hosters (IP-Adresse, Zeitpunkt, abgerufene Seite)</td>
+            <td data-label="Wann">Bei jedem Seitenaufruf</td>
+            <td data-label="Wo gespeichert">Beim Hoster, kurzzeitig</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>
+        Wir fragen keine Adresse, kein Geburtsdatum, keine Ausweisdaten und keine Zahlungsdaten
+        ab. Die Übungen selbst verlangen keinen Klarnamen.
+      </p>
+
+      <h2>Rechtsgrundlagen</h2>
+      <ul>
+        <li>
+          <strong>Art. 6 Abs. 1 lit. b DSGVO</strong> (Vertragserfüllung) — für Konto,
+          Anmeldung und die Synchronisierung deines Lernstands. Ohne diese Daten kann die
+          Funktion „Lernstand auf mehreren Geräten“ nicht angeboten werden.
+        </li>
+        <li>
+          <strong>Art. 6 Abs. 1 lit. f DSGVO</strong> (berechtigtes Interesse) — für den
+          technisch notwendigen Betrieb der Seite, insbesondere die Server-Logdaten des Hosters
+          zur Auslieferung und Absicherung der Seite.
+        </li>
+      </ul>
+      <p>
+        Der Lernfortschritt ohne Konto ist keine Verarbeitung personenbezogener Daten durch uns:
+        Er verlässt dein Gerät nicht und wird uns nicht übermittelt.
+      </p>
+
+      <h2>Cookies und lokale Speicherung</h2>
+      <p>
+        Diese Seite verwendet keine Werbe- oder Analyse-Cookies und zeigt deshalb auch kein
+        Cookie-Banner. Verwendet werden ausschließlich:
+      </p>
+      <ul>
+        <li>
+          <strong>localStorage</strong> für deinen Lernfortschritt und deine Einstellungen.
+          Das ist keine Übertragung an uns, sondern Speicherplatz in deinem eigenen Browser.
+        </li>
+        <li>
+          <strong>Ein technisch notwendiges Anmelde-Cookie</strong>, sobald du angemeldet bist.
+          Es hält deine Sitzung aufrecht. Meldest du dich ab, wird es gelöscht.
+        </li>
+      </ul>
+
+      <h2>Empfänger und Auftragsverarbeiter</h2>
+      <ul>
+        <li>
+          <strong>Supabase</strong> — Anmeldung und Datenbank für angemeldete Nutzerinnen und
+          Nutzer. Die Daten liegen in {LEGAL.dataRegion}.
+        </li>
+        <li>
+          <strong>Vercel</strong> — Hosting und Auslieferung der Seite. Dabei fallen die oben
+          genannten Server-Logdaten an.
+        </li>
+        <li>
+          <strong>Google</strong> — nur wenn du dich für „Mit Google anmelden“ entscheidest.
+          Google übermittelt uns dann Name, E-Mail-Adresse und Profilbild. Die Verarbeitung
+          durch Google richtet sich nach der{" "}
+          <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">
+            Datenschutzerklärung von Google
+          </a>.
+        </li>
+        <li>
+          <strong>Brevo</strong> — Versand der Anmelde-E-Mails (Magic Link, Passwort
+          zurücksetzen). Brevo erhält dafür deine E-Mail-Adresse.
+        </li>
+      </ul>
+      <p>
+        Wir verkaufen keine Daten und geben sie nicht zu Werbezwecken weiter.
+      </p>
+
+      <h2>Speicherdauer</h2>
+      <ul>
+        <li>Daten im Browser bleiben, bis du deine Browserdaten löschst.</li>
+        <li>
+          Kontodaten und synchronisierter Lernstand bleiben, solange dein Konto besteht.
+          Löschst du dein Konto, werden sie mitgelöscht.
+        </li>
+        <li>Server-Logdaten werden beim Hoster nur kurzzeitig vorgehalten.</li>
+      </ul>
+
+      <h2>Deine Rechte</h2>
+      <p>Du hast nach der DSGVO jederzeit das Recht auf:</p>
+      <ul>
+        <li>Auskunft über die zu dir gespeicherten Daten (Art. 15)</li>
+        <li>Berichtigung unrichtiger Daten (Art. 16)</li>
+        <li>Löschung (Art. 17)</li>
+        <li>Einschränkung der Verarbeitung (Art. 18)</li>
+        <li>Datenübertragbarkeit (Art. 20)</li>
+        <li>Widerspruch gegen Verarbeitungen auf Grundlage berechtigter Interessen (Art. 21)</li>
+      </ul>
+      <p>
+        Dafür genügt eine formlose E-Mail an{" "}
+        <a href={`mailto:${LEGAL.contactEmail}`}>{LEGAL.contactEmail}</a>.
+      </p>
+      <p>
+        Außerdem kannst du dich bei einer Datenschutz-Aufsichtsbehörde beschweren (Art. 77 DSGVO).
+        Zuständig ist die Behörde deines Wohnsitzes oder die des Verantwortlichen.
+      </p>
+
+      <h2>Kinder und Jugendliche</h2>
+      <p>
+        Ein Konto ist für Personen ab 16 Jahren gedacht. Jüngere Lernende können die Seite ohne
+        Konto vollständig nutzen — dann werden ohnehin keine Daten an uns übermittelt.
+      </p>
+
+      <h2>Änderungen</h2>
+      <p>
+        Wenn sich die Verarbeitung ändert, ändern wir diese Seite und passen das Datum oben an.
+      </p>
+    </div>
+  </main>
+</Layout>

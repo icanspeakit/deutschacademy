@@ -27,6 +27,7 @@ import LanguageSwitcher from "./LanguageSwitcher.astro";
 import ThemeToggle from "./ThemeToggle.astro";
 import NavMenubar from "./NavMenubar.astro";
 import NavDrawer from "./NavDrawer.astro";
+import AuthStatus from "./auth/AuthStatus.jsx";
 
 interface Props {
   /** Optional. A page whose own head names it a few elements below passes nothing: the bar
@@ -66,7 +67,11 @@ const { title, titleKey, active } = Astro.props;
         <span class="practice-dash-icon" aria-hidden="true"><Icon name="grid" size={20} /></span>
         <span class="practice-dash-label" data-i18n="header.progress">Fortschritt</span>
       </a>
-      <div class="practice-header-utils"><LanguageSwitcher /><ThemeToggle /></div>
+      {/* The account control, matching SiteNav.astro's cluster. This bar is the one on
+          every practice page — the bulk of the site — so leaving it out would mean a
+          learner could sign in from the homepage and then see no sign of it anywhere they
+          actually study. The drawer below carries the same island for narrow screens. */}
+      <div class="practice-header-utils"><LanguageSwitcher /><ThemeToggle /><AuthStatus client:idle /></div>
       <button
         class="lp-nav-toggle"
         type="button"

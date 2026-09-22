@@ -12,8 +12,10 @@
 import Icon from "./Icon.astro";
 import LanguageSwitcher from "./LanguageSwitcher.astro";
 import ThemeToggle from "./ThemeToggle.astro";
+import AuthStatus from "./auth/AuthStatus.jsx";
 import { navSections, levels } from "../lib/catalog.js";
 import "../styles/site-nav.css";
+import "../styles/auth.css";
 
 // B1 has eleven grammar topics and a menu that scrolls is a menu nobody reads to the end
 // of, so the Niveaus pane previews its first few and links to the rest.
@@ -98,6 +100,14 @@ const vars = (v) => (v ? JSON.stringify(v) : undefined);
             <b data-i18n="nav.account.progress.short">Fortschritt</b>
           </a>
         </div>
+
+        {/* Sign in / who you are. This is the only account control most learners will ever
+            see: .lp-acct in the desktop cluster is display:none below 1080px, and this
+            audience is overwhelmingly on phones — so the drawer is the main path here, not
+            the fallback for one.
+            client:idle rather than client:load for the same reason as in SiteNav.astro: it
+            is chrome on every page, and the drawer has to be opened before it is read. */}
+        <AuthStatus client:idle variant="drawer" />
 
         {/* /leicht — the light-flow study. It hangs here rather than on one page so it can
             be opened from wherever the real site currently is, which is the only way the

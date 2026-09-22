@@ -79,6 +79,26 @@ const abs = (path) => (Astro.site ? new URL(path, Astro.site).href : path);
         document.documentElement.dir = DIR[lang];
       })();
     </script>
+    <!-- Signed in or not, also before first paint — the same problem the two scripts above
+         solve, for the nav's account control. AuthStatus.jsx cannot know the answer until
+         its module has loaded and getUser() has returned from the network, so without this
+         every one of the ~670 prerendered pages would paint a signed-out avatar and swap it
+         a moment later, on every navigation.
+         This checks only that a Supabase auth cookie *exists*. It does not parse it, does
+         not trust it and must never start to: the cookie is attacker-controlled, and
+         getUser() in AuthStatus.jsx and src/middleware.js remains the only source of truth
+         about who is signed in. This is a paint hint about layout, nothing more — the worst
+         a forged cookie buys is a reserved circle.
+         Keep the cookie prefix in sync with @supabase/ssr's naming (sb-<project-ref>-auth-token). -->
+    <script is:inline>
+      (function () {
+        var signedIn = false;
+        try {
+          signedIn = /(^|;\s*)sb-[^=]*-auth-token[^=]*=/.test(document.cookie);
+        } catch (e) {}
+        document.documentElement.dataset.auth = signedIn ? "in" : "out";
+      })();
+    </script>
     <!-- Favicons. The `?v=` is load-bearing, not decoration: Chrome caches favicons by
          URL in a store that survives a hard reload, so replacing the file at the same
          path leaves returning visitors on the old icon indefinitely. That is exactly what

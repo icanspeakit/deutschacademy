@@ -125,6 +125,10 @@ ship English strings into the UI.
 > 3. Add `src/lib/supabase/browser.js` exporting `createBrowserSupabase()` built on
 >    `createBrowserClient` from `@supabase/ssr`, reading
 >    `import.meta.env.PUBLIC_SUPABASE_URL` and `import.meta.env.PUBLIC_SUPABASE_ANON_KEY`.
+>    Note: this project's key is Supabase's newer **publishable** key
+>    (`sb_publishable_…`), not the classic `anon` JWT. It is the drop-in successor and
+>    works unchanged with `@supabase/ssr`; the env var keeps the `..._ANON_KEY` name so
+>    it matches every Supabase example you will read. Do not swap in the legacy anon key.
 >    Add `src/lib/supabase/server.js` exporting `createServerSupabase(astroContext)`
 >    built on `createServerClient`, wired to Astro's `context.cookies` for get/set.
 >    Both files: JSDoc, no TypeScript (this repo is JS with a `tsconfig.json` for editor
@@ -169,12 +173,23 @@ ship English strings into the UI.
 >    Delete `src/pages/auth/ping.ts`.
 > 3. `src/pages/auth/abmelden.ts` — `prerender = false`, POST only, signs out and
 >    redirects to `/`.
-> 4. `src/components/auth/SignInCard.jsx` — React island. Google button only in this
->    tier; leave a clearly marked seam for the email/magic-link modes that Colevitate's
->    `SignInCard.tsx` has, but do not build them. Calls `signInWithOAuth({ provider:
->    'google', options: { redirectTo: <origin>/auth/callback?next=... } })`. German copy,
->    `data-i18n` keys, brand tokens, new `src/styles/auth.css`. Inline the Google "G"
->    SVG — do not add lucide-react or any icon package.
+> 4. `src/components/auth/SignInCard.jsx` — React island, with **both** sign-in methods:
+>    - **Google**: `signInWithOAuth({ provider: 'google', options: { redirectTo:
+>      <origin>/auth/callback?next=... } })`.
+>    - **E-Mail magic link**: `signInWithOtp({ email, options: { emailRedirectTo } })`.
+>    Port the logic from Colevitate's `src/components/auth/SignInCard.tsx` — including its
+>    "Check your email" confirmation state — but rebuild the chrome in this project's brand
+>    tokens and plain CSS in a new `src/styles/auth.css`. German copy, `data-i18n` keys.
+>    Inline the Google "G" SVG — do not add lucide-react or any icon package.
+>    Leave a marked seam for password + reset modes; those stay in Tier 4.
+>
+>    **Why email is here and not later:** a Google-only wall excludes a real slice of this
+>    audience. GMX, Web.de and Hotmail addresses are common in Germany, particularly among
+>    older learners and on shared family devices where no Google account is signed in. Magic
+>    link covers everyone, costs nothing, and needs no second provider relationship.
+>    Apple and Facebook sign-in were considered and rejected: Apple charges $99/year for a
+>    Services ID and is only mandatory for App Store apps (there is no iOS app), and Meta
+>    requires business verification and app review. Revisit Apple if an iOS app ships.
 > 5. `src/pages/anmelden.astro` — `prerender = false`, uses `Layout.astro`, renders
 >    `<SignInCard client:load />`. If already signed in, redirect to `next` or `/`.
 > 6. `src/components/auth/AuthStatus.jsx` — React island for the nav. Signed out: the
@@ -195,9 +210,18 @@ ship English strings into the UI.
 >    matching how existing components register keys.
 >
 > Do not create any Supabase table in this tier. Do not read or write any learner data.
+>
+> **Prerequisite:** magic link sends real email, so Brevo custom SMTP must be live in
+> Supabase before this tier can be tested (Section 6 of the console checklist).
+> Supabase's built-in mailer is rate-limited and not for production — if Brevo is not
+> ready, ship the Google half and hold the email half rather than testing it through
+> the built-in mailer and declaring it working.
 
 **Definition of Done:**
 - Sign in with Google from `/anmelden` completes and lands back on the page you came from.
+- A magic link sent to a real inbox signs the learner in and lands on the same page.
+  Test with a non-Google address (GMX, Web.de or Hotmail) — that is the whole point of
+  offering this method.
 - The nav avatar reflects real state on both a prerendered page (e.g. `/uebungen`) and an
   on-demand page, with no visible flash on reload.
 - Sign out works and the avatar returns to the monogram without a manual reload.
@@ -359,11 +383,12 @@ ship English strings into the UI.
 >    - A short `docs/auth-datenschutz-v1.md` listing exactly what is stored, where
 >      (Supabase, EU/Frankfurt region), and for how long. Facts only — no invented policy
 >      language, and no legal claims this project cannot stand behind.
-> 3. Email sign-in as the fallback for learners without a Google account: fill the seam
->    left in `SignInCard.jsx` at Tier 1 with magic-link and password modes, porting the
->    logic from Colevitate's `SignInCard.tsx` (including `resetPasswordForEmail` and the
->    `type=recovery` branch its callback route handles) — rebuilt in this project's styles
->    and in German.
+> 3. Password sign-in and reset, for learners who prefer a password to a link in their
+>    inbox: fill the remaining seam in `SignInCard.jsx` with `signInWithPassword`, `signUp`
+>    and `resetPasswordForEmail`, plus the `type=recovery` branch in the callback route and
+>    a `/passwort-neu` page — all present in Colevitate's `SignInCard.tsx`,
+>    `ResetPasswordCard.tsx` and `app/auth/callback/route.ts`. Rebuilt in this project's
+>    styles and in German. (Google and magic link already shipped in Tier 1.)
 > 4. A `<GuestSaveNotice>` equivalent: on `/dashboard` and `/fortschritt`, a signed-out
 >    learner with real local progress sees one honest, dismissible line — their progress
 >    lives only in this browser, and signing in keeps it. Do not nag, do not block
@@ -376,7 +401,7 @@ ship English strings into the UI.
 - Export produces valid JSON containing every synced key.
 - Account deletion removes the auth user and all `user_state` rows; verify in the Supabase
   dashboard and state it.
-- Magic link and password reset both deliver through Brevo and complete.
+- Password sign-up, sign-in and reset all deliver through Brevo and complete.
 - `docs/auth-sso-tier4-v1.md` plus `docs/auth-datenschutz-v1.md`.
 
 ---

@@ -1,0 +1,33 @@
+---
+// /passwort-neu — set a new password after a reset link.
+//
+// On demand, not prerendered, because the only legitimate way to be here is with a session
+// that /auth/callback?type=recovery just created, and checking for one needs the cookie.
+// Anyone else is bounced: without a session there is no account to update, and a form that
+// cannot work is worse than a redirect.
+export const prerender = false;
+
+import Layout from "../layouts/Layout.astro";
+import PracticeHeader from "../components/PracticeHeader.astro";
+import NewPasswordCard from "../components/auth/NewPasswordCard.jsx";
+import "../styles/practice.css";
+import "../styles/auth.css";
+
+// Astro.locals.user is set by src/middleware.js via getUser(), which revalidates against
+// Supabase rather than trusting the cookie.
+if (!Astro.locals.user) {
+  return Astro.redirect("/anmelden");
+}
+---
+<Layout
+  title="Neues Passwort – DeutschAcademy"
+  description="Neues Passwort für dein DeutschAcademy-Konto setzen."
+>
+  <meta slot="head" name="robots" content="noindex, nofollow" />
+
+  <PracticeHeader title="Neues Passwort" />
+  <main class="da-auth-page">
+    {/* client:load, not client:idle — this island is the entire page. */}
+    <NewPasswordCard client:load />
+  </main>
+</Layout>

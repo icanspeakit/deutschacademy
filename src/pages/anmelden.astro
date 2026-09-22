@@ -1,0 +1,45 @@
+---
+// /anmelden — the sign-in page.
+//
+// On demand, not prerendered, for one reason: an already-signed-in learner should never see
+// this page, and answering "are you signed in?" needs the cookie, which a build-time render
+// does not have. That check happens here on the server so the redirect is a real 302 rather
+// than a card that paints and then vanishes.
+export const prerender = false;
+
+import Layout from "../layouts/Layout.astro";
+import PracticeHeader from "../components/PracticeHeader.astro";
+import SignInCard from "../components/auth/SignInCard.jsx";
+import "../styles/practice.css";
+import "../styles/auth.css";
+
+// Same guard as the callback route, for the same reason and against the same attack: `next`
+// arrives in the URL, so it is whatever a link told it to be. One leading slash is a path
+// here; "//evil.example" is another origin that every browser honours.
+const rawNext = Astro.url.searchParams.get("next") ?? "";
+const next = rawNext.startsWith("/") && !rawNext.startsWith("//") ? rawNext : "";
+
+// Set by src/middleware.js, which calls getUser() — revalidated against Supabase, not
+// decoded from the cookie.
+if (Astro.locals.user) {
+  return Astro.redirect(next || "/");
+}
+
+const failed = Astro.url.searchParams.get("fehler") === "auth";
+---
+<Layout
+  title="Anmelden – DeutschAcademy"
+  description="Melde dich bei DeutschAcademy an, damit dein Lernfortschritt auf allen deinen Geräten erhalten bleibt."
+>
+  {/* Nothing here belongs in a search index: it is a form, and the signed-in version of
+      this URL is a redirect. */}
+  <meta slot="head" name="robots" content="noindex, nofollow" />
+
+  <PracticeHeader title="Anmelden" />
+  <main class="da-auth-page">
+    {/* client:load, not client:idle. This island *is* the page — deferring it to idle
+        would leave a visitor looking at an empty card frame on a slow phone, which is
+        exactly the device this audience is on. */}
+    <SignInCard client:load next={next || undefined} initialError={failed} />
+  </main>
+</Layout>

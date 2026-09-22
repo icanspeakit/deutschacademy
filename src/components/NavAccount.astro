@@ -15,8 +15,20 @@
 // it: it is a setting, not a place, so it has no page to be a link to, and putting it in
 // the navbar would sit a colour scheme at the same altitude as the whole content tree.
 //
-// There is no account system yet, so the avatar is a monogram rather than a photo. No
-// "Einstellungen" row: /einstellungen does not exist. Add rows when the pages do.
+// **Nothing renders this file.** The avatar was taken out of SiteNav.astro when the account
+// system did not exist — its menu held one thing, a theme toggle, and a monogram is a poor
+// sign for "light or dark" — and the toggle took the slot directly. This component was left
+// behind unimported.
+//
+// As of Tier 1 there *is* an account system, and the slot is filled again by
+// src/components/auth/AuthStatus.jsx, which does what the comments below describe plus the
+// part they could not: a real identity, a photo when Google returns one, and a way out.
+// The drawer gets the same island with variant="drawer".
+//
+// This file is kept, not deleted, only because the menu markup and its keyboard handling
+// are worth reading before Tier 4 adds the "Einstellungen" and account rows that /konto
+// will want. If Tier 4 builds those in the island instead — which is the likely shape —
+// delete this file rather than leaving a second, dead answer to the same question.
 import ThemeToggle from "./ThemeToggle.astro";
 import "../styles/site-nav.css";
 

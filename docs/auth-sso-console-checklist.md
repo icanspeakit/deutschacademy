@@ -166,3 +166,131 @@ to be public — RLS is what protects the data, not key secrecy.
 - **Free-tier ceilings that actually bind:** Supabase 2 active projects, 500 MB database,
   and a pause after 1 week of inactivity. The 50,000 MAU allowance is not a real
   constraint at this stage and should be ignored when planning.
+
+
+---
+
+## Status — 21. September 2026 (done in a live session)
+
+### Live values
+
+| Value | Actual |
+|---|---|
+| Supabase project ref | `putrkafrcpqosqxrgttp` |
+| Supabase URL | `https://putrkafrcpqosqxrgttp.supabase.co` |
+| Supabase region | `eu-central-1` — Central EU (Frankfurt) ✅ |
+| Publishable key | `sb_publishable_hubmE7PkUjjMbgTXo70qFQ_z95q0dse` |
+| Google OAuth client ID | `275259116185-ui85tfjnivl9j8s0htl20v8omi328720.apps.googleusercontent.com` |
+| Registered redirect URI | `https://putrkafrcpqosqxrgttp.supabase.co/auth/v1/callback` |
+| Google project number | `275259116185` |
+
+### Done
+
+- [x] Supabase project created in Frankfurt (an earlier project in West EU / Ireland was
+      replaced before anything depended on it — region is permanent, so it had to be now)
+- [x] "Enable automatic RLS" switched on at project creation: an event trigger turns RLS on
+      for every new table in `public`, so a table created without a policy fails closed
+      instead of exposing learner data
+- [x] Google Auth Platform configured — app name `DeutschAcademy`, audience **External**,
+      support and developer contact `hello@deutschacademy.com`
+- [x] OAuth client `deutschacademy-web` created (Web application), redirect URI verified
+      against the DOM rather than the accessibility tree, which reports placeholders
+
+### Corrections to the sections above
+
+- **Supabase now issues `sb_publishable_…` keys, not the classic `anon` JWT.** Sections 4
+  and 7 say "anon key"; read that as the publishable key. It is the drop-in successor, is
+  safe in the browser, and works with `@supabase/ssr`. The legacy anon key still exists on
+  a second tab of the API Keys page if anything ever needs it.
+- The Google console has been reorganised into **Google Auth Platform** (Overview /
+  Branding / Audience / Clients / Data Access), so Section 3's "APIs & Services → OAuth
+  consent screen" is now **Google Auth Platform → Branding + Audience + Clients**.
+
+### Blocked
+
+- [ ] **Publish the Google app.** It is in **Testing**: 100-user lifetime cap, and every
+      consent expires after 7 days. The Audience page refuses to publish with: *"To publish
+      your app, you must complete your configuration on the Branding page"* — which wants a
+      privacy-policy URL on an authorised domain. `/datenschutz` now exists in the repo but
+      has not been deployed yet. **Deploy first, then publish.**
+- [ ] Supabase → Authentication → Google provider: paste client ID + secret
+- [ ] Supabase → Authentication → URL Configuration: Site URL + the three redirect URLs
+- [ ] Brevo (only needed for magic link / password reset)
+- [ ] `PUBLIC_SUPABASE_URL` and `PUBLIC_SUPABASE_ANON_KEY` in Vercel and `.env.local`
+
+### Security note
+
+The OAuth **client secret was displayed in an automated browser session** and therefore
+passed through a chat transcript. Google shows it exactly once. If that is not acceptable,
+delete the client under Google Auth Platform → Clients and create a new one — the consent
+screen is already configured, so it is a two-minute redo, and only the Supabase provider
+config would need the new values.
+
+
+---
+
+## Status — 22. September 2026
+
+### Also done
+
+- [x] `/datenschutz`, `/impressum`, `/nutzungsbedingungen` deployed and live
+- [x] **Google Auth Platform → Branding** — home page `https://deutschacademy.com`,
+      privacy `https://deutschacademy.com/datenschutz`, terms
+      `https://deutschacademy.com/nutzungsbedingungen`; authorised domains are now
+      `putrkafrcpqosqxrgttp.supabase.co` **and** `deutschacademy.com`. Saved and verified
+      across a reload. The Branding block on publishing is cleared — the Audience page now
+      offers "Publish app".
+- [x] **Supabase → Authentication → URL Configuration**
+      - Site URL: `https://deutschacademy.com`
+      - Redirect URLs: `https://deutschacademy.com/auth/callback`,
+        `https://*.vercel.app/auth/callback`, `http://localhost:4321/auth/callback`
+      - Verified after a clean reload.
+
+### Still to do — both need Edgar personally
+
+- [ ] **Audience → Publish app.** Blocked for the assistant: publishing is a public-facing
+      change and needs a human. One click, then confirm the status reads *In production*.
+      Until then: 100-user lifetime cap and consents expiring after 7 days.
+- [ ] **Authentication → Sign In / Providers → Google** — enable, paste client ID and
+      client secret. The assistant does not type credentials into forms, by policy. Client
+      ID is in the Live values table above; the secret is the `GOCSPX-…` value Google showed
+      once at creation.
+
+### Notes from the session
+
+- The Branding email field is a chip input, and an existing chip is invisible to an
+  input's `.value`. Setting it programmatically produced a duplicate and a
+  "Duplicate emails are not allowed" error; the extra chip was removed before saving.
+- Supabase's "Add new redirect URLs" dialog looks like it accepts one URL per line, but the
+  control is a single-line `<input>` that strips newlines — the URLs concatenate into one
+  invalid entry. Add them as separate rows via the dialog's own "Add URL" button. The
+  dialog also resets to an empty field after saving, which reads like a failure but is not;
+  check the list on the page, not the dialog.
+
+
+---
+
+## Status — 22. September 2026, later: console setup COMPLETE
+
+- [x] **Google app published** — Audience reads *In production*; the page now offers
+      "Back to testing" instead of "Publish app". The 100-user lifetime cap and the 7-day
+      consent expiry no longer apply.
+- [x] **Supabase Google provider enabled** — client ID and secret saved. The providers list
+      reads `Google — Enabled` and `Email — Enabled` (Email is on by Supabase's default).
+
+Everything in this checklist is done except Brevo and the env vars:
+
+- [ ] **Brevo** — only needed for magic link and password reset (Tier 1's email half and
+      Tier 4). This is the long pole: SPF, DKIM and DMARC have to propagate and verify
+      before it works, which can take hours and is outside anyone's control. Start it
+      early rather than when Tier 1 needs it.
+- [ ] **Env vars** — `PUBLIC_SUPABASE_URL` and `PUBLIC_SUPABASE_ANON_KEY` in Vercel
+      (Production + Preview + Development) and in local `.env.local`. Tier 0 cannot run
+      without these.
+
+### Gotcha worth remembering
+
+This Chrome has 16 profiles. Twice tonight a console page failed with "You need additional
+access to the project: deutschacademy" — that was Chrome defaulting to the
+**Michael (Unit.Cloud)** profile instead of **Thomas · hello@deutschacademy.com**. It reads
+like a broken permission setup and is not one. Check the profile avatar first.

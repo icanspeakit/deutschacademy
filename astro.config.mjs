@@ -1,8 +1,26 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
+import vercel from '@astrojs/vercel';
+import react from '@astrojs/react';
 import postcssRTLCSS from 'postcss-rtlcss';
 
 export default defineConfig({
+  // Static stays the default: every one of the ~670 content pages is still prerendered
+  // to HTML at build time and served from the CDN with no server involved. The adapter
+  // does not change that — it only makes it *possible* for an individual route to opt
+  // out with `export const prerender = false`, which the handful of auth routes do and
+  // nothing else should. If the prerendered page count ever drops after a change here,
+  // the change is wrong: the build will still succeed and the site will still work, it
+  // will just be rendering on demand what it used to serve from the edge.
+  output: 'static',
+  adapter: vercel(),
+
+  // React is here for the auth islands only (sign-in card, nav account state). The rest
+  // of the site is vanilla .astro plus the JS modules in src/lib/ — the zero-JS default
+  // on content pages is load-bearing and adding an island to a page that does not need
+  // one gives it a runtime it was deliberately built without.
+  integrations: [react()],
+
   // /dashboard and /fortschritt were two pages answering the same question under two
   // names. They are now one page at /fortschritt; this keeps old links, bookmarks and
   // anything already shared working instead of 404ing.

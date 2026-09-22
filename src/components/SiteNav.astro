@@ -21,7 +21,9 @@ import ThemeToggle from "./ThemeToggle.astro";
 import Icon from "./Icon.astro";
 import NavDrawer from "./NavDrawer.astro";
 import NavMenubar from "./NavMenubar.astro";
+import AuthStatus from "./auth/AuthStatus.jsx";
 import "../styles/site-nav.css";
+import "../styles/auth.css";
 
 interface Props {
   /**
@@ -78,12 +80,18 @@ const { active } = Astro.props;
           <Icon name="grid" size={17} />
         </a>
 
-        {/* The "DA" monogram that used to sit here was an account button for an account
-            system that does not exist, and its menu had one thing in it: this toggle. A
-            monogram is a poor sign for "light or dark" — you had to open it to find out
-            what it held — so the toggle takes the slot directly, the same way Fortschritt
-            did when the menu's last link moved out into the cluster above. */}
         <span class="lp-nav-theme"><ThemeToggle /></span>
+
+        {/* The account control. A "DA" monogram sat here once, was removed because it
+            fronted an account system that did not exist, and is back now that one does —
+            with the difference that it holds a real identity rather than a theme toggle.
+            The toggle keeps its own slot above: it is a display preference, and burying it
+            under an avatar meant you had to open the avatar to find out what it held.
+
+            client:idle, not client:load. This is chrome on ~670 pages, and none of them is
+            waiting on it to be readable; the pre-paint script in Layout.astro has already
+            reserved the right shape from the cookie, so there is nothing to race. */}
+        <AuthStatus client:idle />
         <LanguageSwitcher />
       </div>
 

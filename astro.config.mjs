@@ -1,8 +1,11 @@
 // @ts-check
+import { createRequire } from 'node:module';
 import { defineConfig } from 'astro/config';
 import vercel from '@astrojs/vercel';
 import react from '@astrojs/react';
 import postcssRTLCSS from 'postcss-rtlcss';
+
+const require = createRequire(import.meta.url);
 
 export default defineConfig({
   // Static stays the default: every one of the ~670 content pages is still prerendered
@@ -38,6 +41,24 @@ export default defineConfig({
     allowedHosts: true,
   },
   vite: {
+    resolve: {
+      alias: {
+        // @supabase/auth-js does `import { __rest } from "tslib"`. It declares tslib as a
+        // dependency and pnpm links it correctly here, but the Vercel build resolves it
+        // from a restored build cache and failed twice with
+        //   Rolldown failed to resolve import "tslib" from .../auth-js/dist/module/GoTrueAdminApi.js
+        // which took the whole deploy down while the local build never got that far (it
+        // dies earlier on Windows, see docs/auth-sso-tier1-v1.md).
+        //
+        // tslib is a declared dependency of this project too, so pointing the bare
+        // specifier at that one resolved copy makes the outcome the same everywhere
+        // instead of depending on what the build cache happens to contain.
+        //
+        // The ESM build, not require.resolve('tslib') — that returns tslib.js, the CJS
+        // entry, and the import that fails is a named ESM one (`{ __rest }`).
+        tslib: require.resolve('tslib/tslib.es6.mjs'),
+      },
+    },
     css: {
       // Arabic is the only RTL language we ship (see LANGUAGES in src/lib/i18n.js), and
       // the stylesheets are written left-to-right: ~340 physical direction declarations

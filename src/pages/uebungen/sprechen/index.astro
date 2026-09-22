@@ -14,6 +14,7 @@ import PracticeHeader from "../../../components/PracticeHeader.astro";
 import Icon from "../../../components/Icon.astro";
 import { sprechen, sprechenSets, sprechenLoose, SPRECHEN_ICON } from "../../../lib/fertigkeiten.js";
 import { levels as siteLevels } from "../../../lib/catalog.js";
+import { photoSources } from "../../../lib/sprechenBilder.js";
 import "../../../styles/practice.css";
 import "../../../styles/skills.css";
 
@@ -23,6 +24,9 @@ const sets = sprechenSets().filter((s) => s.items.length);
 const loose = sprechenLoose();
 const pictures = tasks.filter((t) => t.type === "bild").length;
 const pending = tasks.filter((t) => t.imageNeeded && !t.image).length;
+// Rendered from provenance.json, so the line names the libraries the photos on this page
+// really came from — and says nothing at all while there are none. See sprechenBilder.js.
+const credits = photoSources();
 ---
 <Layout
   title="Sprechen – DeutschAcademy"
@@ -99,5 +103,17 @@ const pending = tasks.filter((t) => t.imageNeeded && !t.image).length;
       </span>
       {pending > 0 && <span data-i18n="sprechen.foot.pending" data-i18n-vars={JSON.stringify({ n: pending })}>{` Zu ${pending} Aufgaben fehlt noch das Foto; solange steht die beschriebene Szene an seiner Stelle und die Aufgabe funktioniert trotzdem.`}</span>}
     </p>
+
+    {credits.length > 0 && (
+      <p class="sk-foot sk-credit">
+        <span data-i18n="sprechen.foot.photos">Fotos von</span>{" "}
+        {credits.map((c, i) => (
+          <>
+            {i > 0 && ", "}
+            <a href={c.href} rel="noopener">{c.label}</a>
+          </>
+        ))}.
+      </p>
+    )}
   </main>
 </Layout>

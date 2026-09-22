@@ -248,6 +248,18 @@
 }
 .sk-photo-pending b { color: var(--ink); }
 
+/* The photo credit — under the picture on a task page, and once in the hub footer. Quiet
+   on purpose: Pexels' API guidelines ask for the link, not for it to compete with the
+   exercise. The hub copy sits inside .sk-foot, so it only needs its spacing reset. */
+.sk-credit {
+  margin: 8px 0 0;
+  font-size: .75rem;
+  color: var(--muted-soft, var(--muted));
+}
+.sk-credit a { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
+.sk-credit a:hover { color: var(--brand-blue-dark); }
+.sk-foot.sk-credit { margin-top: 0; padding-top: 6px; border-top: none; }
+
 .sk-timer {
   display: flex;
   align-items: center;

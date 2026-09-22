@@ -13,6 +13,7 @@ import Layout from "../../../layouts/Layout.astro";
 import PracticeHeader from "../../../components/PracticeHeader.astro";
 import Icon from "../../../components/Icon.astro";
 import { sprechen, neighbours, sprechenSets, SPRECHEN_ICON } from "../../../lib/fertigkeiten.js";
+import { photoSourceOf } from "../../../lib/sprechenBilder.js";
 import "../../../styles/practice.css";
 import "../../../styles/skills.css";
 
@@ -26,6 +27,9 @@ export function getStaticPaths() {
 
 const { task, set, prev, next } = Astro.props;
 const { types } = sprechen;
+// null unless this photo was fetched by scripts/fetch-sprechen-bilder.mjs AND its library
+// asks to be named — the three borrowed from the older trainers are in neither case.
+const credit = photoSourceOf(task);
 // Inside a set the way back is to the set, not to the whole library: that is where the
 // learner came from and where the other three pictures are.
 const back = set
@@ -55,6 +59,16 @@ const back = set
       {task.image ? (
         <section class="sk-block">
           <img class="sk-photo" src={task.image} alt={task.title} loading="lazy" />
+          {/* Only the fetched photos carry a credit, and only where their library asks for
+              one — the three borrowed from the older trainers are not in provenance.json
+              and get nothing. See src/lib/sprechenBilder.js. */}
+          {credit && (
+            <p class="sk-credit">
+              {credit.photographer}
+              {" · "}
+              <a href={credit.href} rel="noopener">{credit.label}</a>
+            </p>
+          )}
         </section>
       ) : task.imageNeeded ? (
         <section class="sk-block">

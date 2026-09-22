@@ -613,10 +613,22 @@
 
 .nv-panel { background: var(--surface-card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: var(--space-6); }
 .nv-panel h2 { margin: 0 0 var(--space-4); font-family: var(--font-body); font-size: var(--text-xl); color: var(--ink); font-weight: var(--fw-regular); }
+/* The whole row is the button. The reset below is what turns a <button> back into a
+   table row: browsers give it a centred, middle-aligned, font-inheriting-nothing box, and
+   without this the numbers and the bar stop lining up with the rows above. */
 .nv-modrow {
   display: grid; grid-template-columns: 28px minmax(0, 1.6fr) 1fr auto auto; gap: var(--space-4);
-  align-items: center; padding: var(--space-3) 0; border-bottom: 1px solid var(--border);
+  align-items: center; padding: var(--space-3) var(--space-2);
+  border: 0; border-bottom: 1px solid var(--border); border-radius: var(--radius-sm);
+  width: 100%; margin: 0 calc(var(--space-2) * -1);
+  background: none; font: inherit; color: inherit; text-align: left; cursor: pointer;
+  transition: background var(--duration-fast) var(--ease-standard);
 }
+/* Padding and a negative margin rather than a plain hover colour on a flush row: the tint
+   has to reach past the text on both sides or it reads as a highlighted word, not a row. */
+.nv-modrow:hover { background: var(--surface); }
+.nv-modrow:hover .nv-modlink { text-decoration: underline; }
+.nv-modrow:focus-visible { outline: 2px solid var(--brand-blue); outline-offset: -2px; }
 .nv-modrow:last-child { border-bottom: none; }
 .nv-modnum { width: 28px; height: 28px; border-radius: 8px; background: var(--blue-50); color: var(--brand-blue-dark); display: grid; place-items: center; font-size: var(--text-xs); font-weight: var(--fw-bold); }
 .nv-modname { font-size: var(--text-sm); font-weight: var(--fw-semibold); }
@@ -627,9 +639,8 @@
 .nv-modlink {
   font-size: var(--text-sm); font-weight: var(--fw-bold); color: var(--brand-blue-dark);
   text-decoration: none; white-space: nowrap;
-  background: none; border: none; cursor: pointer; font-family: var(--font-body); padding: 4px 0;
+  font-family: var(--font-body); padding: 4px 0; pointer-events: none;
 }
-.nv-modlink:hover { text-decoration: underline; }
 
 .nv-notes { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-4); }
 .nv-note { background: var(--surface-card); border: 1px solid var(--border); border-radius: var(--radius); padding: var(--space-5); }

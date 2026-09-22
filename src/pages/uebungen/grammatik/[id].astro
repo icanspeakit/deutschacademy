@@ -88,7 +88,7 @@ const BEATS = [
        Collapsed is the more common state — the side column slides away on desktop,
        the rule card crops to a preview on a phone — so starting here means no
        visible re-layout on load. -->
-  <main class="vp-page vp-page--split" id="vp-page" data-rule="hidden" data-anim="off" data-topic-key={topicKey} data-mode="ueben">
+  <main class="vp-page vp-page--split vp-page--sheet" id="vp-page" data-rule="hidden" data-anim="off" data-topic-key={topicKey} data-mode="ueben">
     {aktiv && (
       <div class="ak-modes" role="tablist" aria-label="Ansicht">
         <button type="button" class="ak-mode" data-mode-btn="ueben" role="tab" aria-selected="true" title="Lesen &amp; schreiben">
@@ -208,7 +208,38 @@ const BEATS = [
 
     {concept && (
       <div class="vp-card vp-rule-card" id="vp-rule-card">
-        <div class="vp-card-label" data-i18n="vp.howItWorks">Wie funktioniert das?</div>
+        <!-- On a desktop this head is just the card's label. On a phone the card is a
+             bottom sheet and the head is its handle: pinned to the top with the ✕, so the
+             way out is never a scroll away. A rule with a flow, a table and its examples
+             is several screens tall, and the only control that closed it used to sit
+             under all of them — the same reason the Artikel-Trainer and the Wortschatz
+             picker grew this head. -->
+        <div class="vp-sheet-head">
+          <div class="vp-card-label" data-i18n="vp.howItWorks">Wie funktioniert das?</div>
+          <button
+            type="button"
+            class="vp-sheet-fold"
+            data-sheet-close
+            aria-label="Regel einklappen"
+            data-i18n-attr="aria-label:vp.rule.collapse"
+            aria-controls="vp-rule-card"
+          >
+            <span data-i18n="vp.rule.collapseShort">Einklappen</span>
+            {/* Down, because that is where the sheet goes. */}
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </button>
+          <button
+            type="button"
+            class="vp-sheet-x"
+            data-sheet-close
+            aria-label="Regel schließen"
+            data-i18n-attr="aria-label:vp.rule.close"
+            aria-controls="vp-rule-card"
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="6" y1="6" x2="18" y2="18"></line><line x1="18" y1="6" x2="6" y2="18"></line></svg>
+          </button>
+        </div>
+        <div class="vp-sheet-body">
 
         {concept.flow && (
           <div class="vp-flow">
@@ -279,6 +310,7 @@ const BEATS = [
             </div>
           </>
         )}
+        </div>
       </div>
     )}
 
@@ -298,6 +330,10 @@ const BEATS = [
     )}
 
     </aside>
+
+    <!-- The sheet's backdrop. Outside .vp-col--rule, because that column goes inert when
+         the rule collapses and a control inside it would go inert with it. -->
+    <div class="vp-sheet-scrim" data-sheet-close aria-hidden="true"></div>
 
     <section class="vp-col vp-col--ex">
     <div class="vp-ex-toolbar">
@@ -431,6 +467,10 @@ const BEATS = [
     mountRuleColumn(document.getElementById("vp-page"), {
       storageKey: "da-grammatik-rule",
       seenKey: "da-grammatik-rule-peek",
+      // Below 1001px the rule is a bottom sheet rather than an accordion, matching the
+      // Artikel-Trainer and the Wortschatz picker. Expanded in place it pushed the
+      // exercise off the screen and carried its own way out down with it.
+      sheet: true,
     });
 
     mountRefToggle(document.getElementById("vp-toggle-ref"), document.getElementById("vp-ref-panel"));

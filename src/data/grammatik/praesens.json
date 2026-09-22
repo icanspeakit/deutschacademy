@@ -1,0 +1,548 @@
+{
+  "id": "praesens",
+  "name": "Verben im Präsens: ich lerne, du lernst",
+  "level": "A1",
+  "subtitle": "Das Verb passt sich der Person an: ich lern-e, du lern-st, er lern-t. Der Stamm bleibt, nur die Endung wechselt — und sein und haben gehen ihren eigenen Weg.",
+  "source": "Eigenes Material, A1-Lehrplan",
+  "concept": {
+    "flow": [
+      {
+        "text": "Stamm · lern-",
+        "variant": "prep"
+      },
+      {
+        "text": "Endung · -e, -st, -t …",
+        "variant": "verb"
+      },
+      {
+        "text": "ich lerne"
+      }
+    ],
+    "exampleHtml": "lernen → ich lern<span class=\"vp-verb\">e</span>, du lern<span class=\"vp-verb\">st</span>, er lern<span class=\"vp-verb\">t</span>, wir lern<span class=\"vp-verb\">en</span>, ihr lern<span class=\"vp-verb\">t</span>, sie lern<span class=\"vp-verb\">en</span>",
+    "qa": [
+      {
+        "html": "Die Endungen: <strong>ich -e, du -st, er/sie/es -t, wir -en, ihr -t, sie/Sie -en</strong>. Sie gelten für fast alle Verben.",
+        "tag": "Endungen"
+      },
+      {
+        "html": "Endet der Stamm auf <strong>-t oder -d</strong>, kommt ein <em>e</em> dazwischen: <em>du arbeit<strong>e</strong>st, er find<strong>e</strong>t, ihr wart<strong>e</strong>t</em>.",
+        "tag": "arbeiten"
+      },
+      {
+        "html": "Manche Verben ändern bei <strong>du</strong> und <strong>er/sie/es</strong> den Vokal: <em>fahren → du fährst, sprechen → er spricht, lesen → sie liest</em>. Bei wir, ihr, sie bleibt alles normal.",
+        "tag": "a → ä, e → i"
+      },
+      {
+        "html": "<strong>sein</strong> und <strong>haben</strong> sind unregelmäßig: <em>ich bin, du bist, er ist, wir sind, ihr seid, sie sind</em> — <em>ich habe, du hast, er hat, wir haben, ihr habt, sie haben</em>.",
+        "tag": "sein / haben"
+      }
+    ],
+    "noteHtml": "Endet der Stamm auf <strong>-s, -ß oder -z</strong>, bekommt <em>du</em> nur ein <em>-t</em>: <em>du heißt, du tanzt, du isst</em>. Und <em>Sie</em> (höflich) hat immer dieselbe Form wie <em>sie</em> (Plural): <em>Kommen Sie aus Berlin?</em>",
+    "reference": {
+      "showLabel": "Übersicht anzeigen ▼",
+      "hideLabel": "Übersicht ausblenden ▲",
+      "tables": [
+        {
+          "caption": "Fünf Verben im Präsens",
+          "head": [
+            "Person",
+            "lernen",
+            "arbeiten",
+            "fahren",
+            "sein",
+            "haben"
+          ],
+          "rows": [
+            [
+              "ich",
+              "lerne",
+              "arbeite",
+              "fahre",
+              "bin",
+              "habe"
+            ],
+            [
+              "du",
+              "lernst",
+              "arbeitest",
+              "fährst",
+              "bist",
+              "hast"
+            ],
+            [
+              "er/sie/es",
+              "lernt",
+              "arbeitet",
+              "fährt",
+              "ist",
+              "hat"
+            ],
+            [
+              "wir",
+              "lernen",
+              "arbeiten",
+              "fahren",
+              "sind",
+              "haben"
+            ],
+            [
+              "ihr",
+              "lernt",
+              "arbeitet",
+              "fahrt",
+              "seid",
+              "habt"
+            ],
+            [
+              "sie/Sie",
+              "lernen",
+              "arbeiten",
+              "fahren",
+              "sind",
+              "haben"
+            ]
+          ]
+        }
+      ]
+    }
+  },
+  "aktiv": {
+    "listen": [
+      {
+        "text": "Ich lerne Deutsch.",
+        "note": "ich: Endung -e."
+      },
+      {
+        "text": "Du lernst Deutsch.",
+        "note": "du: Endung -st."
+      },
+      {
+        "text": "Er fährt nach Hause.",
+        "note": "er: -t, und aus a wird ä."
+      }
+    ],
+    "hoeren": {
+      "instruction": "Hör die Frage und wähle die Antwort, die richtig ist.",
+      "items": [
+        {
+          "text": "Wo wohnst du?",
+          "choices": [
+            "Ich wohne in Köln.",
+            "Ich wohnst in Köln.",
+            "Ich wohnt in Köln."
+          ],
+          "correct": 0
+        },
+        {
+          "text": "Was machst du beruflich?",
+          "choices": [
+            "Ich arbeitet als Koch.",
+            "Ich arbeite als Koch.",
+            "Ich arbeiten als Koch."
+          ],
+          "correct": 1
+        },
+        {
+          "text": "Sprichst du Englisch?",
+          "choices": [
+            "Ja, ich sprichst Englisch.",
+            "Ja, ich spricht Englisch.",
+            "Ja, ich spreche Englisch."
+          ],
+          "correct": 2
+        },
+        {
+          "text": "Habt ihr Kinder?",
+          "choices": [
+            "Ja, wir haben zwei Kinder.",
+            "Ja, wir habt zwei Kinder.",
+            "Ja, wir hat zwei Kinder."
+          ],
+          "correct": 0
+        },
+        {
+          "text": "Wie alt ist dein Bruder?",
+          "choices": [
+            "Er bin zwanzig.",
+            "Er ist zwanzig.",
+            "Er sind zwanzig."
+          ],
+          "correct": 1
+        },
+        {
+          "text": "Fahrt ihr mit dem Bus?",
+          "choices": [
+            "Nein, wir fährt mit dem Zug.",
+            "Nein, wir fahrt mit dem Zug.",
+            "Nein, wir fahren mit dem Zug."
+          ],
+          "correct": 2
+        }
+      ]
+    },
+    "sprechen": {
+      "rounds": [
+        {
+          "label": "1 · ich → du",
+          "instruction": "Du hörst einen Satz mit ich. Sag ihn mit du.",
+          "example": {
+            "prompt": "Ich wohne in Berlin.",
+            "answer": "Du wohnst in Berlin."
+          },
+          "items": [
+            {
+              "prompt": "Ich komme aus Polen.",
+              "answer": "Du kommst aus Polen."
+            },
+            {
+              "prompt": "Ich lerne Deutsch.",
+              "answer": "Du lernst Deutsch."
+            },
+            {
+              "prompt": "Ich arbeite viel.",
+              "answer": "Du arbeitest viel."
+            },
+            {
+              "prompt": "Ich fahre nach Hause.",
+              "answer": "Du fährst nach Hause."
+            },
+            {
+              "prompt": "Ich spreche Arabisch.",
+              "answer": "Du sprichst Arabisch."
+            },
+            {
+              "prompt": "Ich bin müde.",
+              "answer": "Du bist müde."
+            }
+          ]
+        },
+        {
+          "label": "2 · ich → er",
+          "instruction": "Du hörst einen Satz mit ich. Sag ihn mit er.",
+          "example": {
+            "prompt": "Ich spiele Fußball.",
+            "answer": "Er spielt Fußball."
+          },
+          "items": [
+            {
+              "prompt": "Ich trinke Kaffee.",
+              "answer": "Er trinkt Kaffee."
+            },
+            {
+              "prompt": "Ich habe Zeit.",
+              "answer": "Er hat Zeit."
+            },
+            {
+              "prompt": "Ich lese ein Buch.",
+              "answer": "Er liest ein Buch."
+            },
+            {
+              "prompt": "Ich schlafe lange.",
+              "answer": "Er schläft lange."
+            },
+            {
+              "prompt": "Ich heiße Tom.",
+              "answer": "Er heißt Tom."
+            },
+            {
+              "prompt": "Ich esse Brot.",
+              "answer": "Er isst Brot."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "exercises": [
+    {
+      "type": "table",
+      "title": "Die richtige Endung.",
+      "hint": "Stamm + Endung. Denken Sie an das e bei arbeiten und finden.",
+      "columns": [
+        "Person · Verb",
+        "Form"
+      ],
+      "placeholder": "Verbform",
+      "rows": [
+        {
+          "term": "ich · wohnen",
+          "answer": "wohne"
+        },
+        {
+          "term": "du · kommen",
+          "answer": "kommst"
+        },
+        {
+          "term": "er · spielen",
+          "answer": "spielt"
+        },
+        {
+          "term": "wir · machen",
+          "answer": "machen"
+        },
+        {
+          "term": "ihr · lernen",
+          "answer": "lernt"
+        },
+        {
+          "term": "Sie · trinken",
+          "answer": "trinken"
+        },
+        {
+          "term": "du · arbeiten",
+          "answer": "arbeitest"
+        },
+        {
+          "term": "sie (Sg.) · finden",
+          "answer": "findet"
+        }
+      ]
+    },
+    {
+      "type": "fill",
+      "title": "sein oder haben?",
+      "hint": "Beide sind unregelmäßig — die Formen muss man einfach kennen.",
+      "placeholder": "Form von sein / haben",
+      "items": [
+        {
+          "prompt": "Ich ___ Lehrerin von Beruf.",
+          "hint": "sein",
+          "answer": [
+            "bin"
+          ]
+        },
+        {
+          "prompt": "___ du Hunger?",
+          "hint": "haben",
+          "answer": [
+            "Hast"
+          ]
+        },
+        {
+          "prompt": "Wir ___ zwei Kinder.",
+          "hint": "haben",
+          "answer": [
+            "haben"
+          ]
+        },
+        {
+          "prompt": "Das ___ mein Bruder.",
+          "hint": "sein",
+          "answer": [
+            "ist"
+          ]
+        },
+        {
+          "prompt": "Ihr ___ sehr nett.",
+          "hint": "sein",
+          "answer": [
+            "seid"
+          ]
+        },
+        {
+          "prompt": "Er ___ heute keine Zeit.",
+          "hint": "haben",
+          "answer": [
+            "hat"
+          ]
+        },
+        {
+          "prompt": "___ Sie Frau Müller?",
+          "hint": "sein",
+          "answer": [
+            "Sind"
+          ]
+        },
+        {
+          "prompt": "Habt ihr Durst? — Nein, wir ___ keinen Durst.",
+          "hint": "haben",
+          "answer": [
+            "haben"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "fill",
+      "title": "Der Vokal wechselt — aber nur bei du und er/sie/es.",
+      "hint": "fahren → fährst, sprechen → spricht, lesen → liest. Bei wir bleibt alles normal.",
+      "placeholder": "Verbform",
+      "items": [
+        {
+          "prompt": "Du ___ sehr schnell.",
+          "hint": "fahren",
+          "answer": [
+            "fährst"
+          ]
+        },
+        {
+          "prompt": "Er ___ gut Deutsch.",
+          "hint": "sprechen",
+          "answer": [
+            "spricht"
+          ]
+        },
+        {
+          "prompt": "Sie ___ gern Bücher.",
+          "hint": "lesen",
+          "answer": [
+            "liest"
+          ]
+        },
+        {
+          "prompt": "___ du auch Pizza?",
+          "hint": "essen",
+          "answer": [
+            "Isst"
+          ]
+        },
+        {
+          "prompt": "Mein Sohn ___ noch.",
+          "hint": "schlafen",
+          "answer": [
+            "schläft"
+          ]
+        },
+        {
+          "prompt": "Was ___ du da?",
+          "hint": "sehen",
+          "answer": [
+            "siehst"
+          ]
+        },
+        {
+          "prompt": "Er ___ mir das Buch.",
+          "hint": "geben",
+          "answer": [
+            "gibt"
+          ]
+        },
+        {
+          "prompt": "Wir ___ morgen nach Berlin.",
+          "hint": "fahren — Vorsicht, wir!",
+          "answer": [
+            "fahren"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "match",
+      "title": "Wer passt zu welchem Satz?",
+      "hint": "Die Endung verrät die Person.",
+      "pairs": [
+        {
+          "q": "Ich",
+          "a": "bin neu hier."
+        },
+        {
+          "q": "Du",
+          "a": "arbeitest viel."
+        },
+        {
+          "q": "Er",
+          "a": "liest die Zeitung."
+        },
+        {
+          "q": "Wir",
+          "a": "haben keine Zeit."
+        },
+        {
+          "q": "Ihr",
+          "a": "seid pünktlich."
+        }
+      ]
+    },
+    {
+      "type": "story",
+      "title": "Lückentext: Saras Tag.",
+      "hint": "Das Verb in Klammern steht hinter der Lücke.",
+      "segments": [
+        {
+          "text": "Ich "
+        },
+        {
+          "blank": 0,
+          "answer": [
+            "heiße"
+          ]
+        },
+        {
+          "text": " (heißen) Sara und "
+        },
+        {
+          "blank": 1,
+          "answer": [
+            "komme"
+          ]
+        },
+        {
+          "text": " (kommen) aus Syrien. Jetzt "
+        },
+        {
+          "blank": 2,
+          "answer": [
+            "wohne"
+          ]
+        },
+        {
+          "text": " (wohnen) ich in Köln. Mein Mann "
+        },
+        {
+          "blank": 3,
+          "answer": [
+            "arbeitet"
+          ]
+        },
+        {
+          "text": " (arbeiten) bei der Post, und ich "
+        },
+        {
+          "blank": 4,
+          "answer": [
+            "lerne"
+          ]
+        },
+        {
+          "text": " (lernen) Deutsch. Wir "
+        },
+        {
+          "blank": 5,
+          "answer": [
+            "haben"
+          ]
+        },
+        {
+          "text": " (haben) zwei Kinder. Sie "
+        },
+        {
+          "blank": 6,
+          "answer": [
+            "spielen"
+          ]
+        },
+        {
+          "text": " (spielen) gern Fußball. Mein Sohn "
+        },
+        {
+          "blank": 7,
+          "answer": [
+            "liest"
+          ]
+        },
+        {
+          "text": " (lesen) auch viel. Am Abend "
+        },
+        {
+          "blank": 8,
+          "answer": [
+            "kochen"
+          ]
+        },
+        {
+          "text": " (kochen) wir zusammen."
+        }
+      ]
+    }
+  ]
+}

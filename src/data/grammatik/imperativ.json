@@ -1,0 +1,479 @@
+{
+  "id": "imperativ",
+  "name": "Imperativ: Komm! Kommen Sie!",
+  "level": "A1",
+  "subtitle": "Bitten, Anweisungen, Tipps: Der Imperativ stellt das Verb an den Anfang. Bei du fällt das Pronomen weg, bei Sie bleibt es — und ein bitte macht alles freundlicher.",
+  "source": "Eigenes Material, A1-Lehrplan",
+  "concept": {
+    "flow": [
+      {
+        "text": "Verb · Position 1",
+        "variant": "verb"
+      },
+      {
+        "text": "(Sie)",
+        "variant": "prep"
+      },
+      {
+        "text": "Rest!"
+      }
+    ],
+    "exampleHtml": "du kommst → <span class=\"vp-verb\">Komm</span>! · ihr kommt → <span class=\"vp-verb\">Kommt</span>! · Sie kommen → <span class=\"vp-verb\">Kommen</span> <span class=\"vp-prep\">Sie</span>!",
+    "qa": [
+      {
+        "html": "<strong>du</strong>: die du-Form ohne <em>du</em> und ohne <em>-st</em>: <em>du trinkst → Trink! du nimmst → Nimm!</em>",
+        "tag": "du"
+      },
+      {
+        "html": "<strong>ihr</strong>: die ihr-Form ohne <em>ihr</em>: <em>ihr trinkt → Trinkt! ihr nehmt → Nehmt!</em>",
+        "tag": "ihr"
+      },
+      {
+        "html": "<strong>Sie</strong>: Verb + <em>Sie</em>, das Pronomen bleibt: <em>Trinken Sie! Nehmen Sie Platz!</em>",
+        "tag": "Sie"
+      },
+      {
+        "html": "Der Umlaut <strong>a → ä fällt weg</strong>: <em>du fährst → Fahr! du schläfst → Schlaf!</em> Der Wechsel <strong>e → i bleibt</strong>: <em>Lies! Gib! Iss! Sprich!</em>",
+        "tag": "Fahr! / Lies!"
+      },
+      {
+        "html": "<strong>sein</strong> ist wieder anders: <em>Sei ruhig! Seid ruhig! Seien Sie ruhig!</em>",
+        "tag": "sein"
+      }
+    ],
+    "noteHtml": "Bei <strong>trennbaren Verben</strong> wandert das Präfix ans Ende: <em>Mach das Fenster <strong>auf</strong>! Steh <strong>auf</strong>!</em> Und mit <em>bitte</em>, <em>doch</em> oder <em>mal</em> klingt ein Imperativ nicht wie ein Befehl: <em>Komm doch mal vorbei! Setzen Sie sich bitte.</em>",
+    "reference": {
+      "showLabel": "Übersicht anzeigen ▼",
+      "hideLabel": "Übersicht ausblenden ▲",
+      "tables": [
+        {
+          "caption": "Imperativ: du, ihr, Sie",
+          "head": [
+            "Infinitiv",
+            "du",
+            "ihr",
+            "Sie"
+          ],
+          "rows": [
+            [
+              "kommen",
+              "Komm!",
+              "Kommt!",
+              "Kommen Sie!"
+            ],
+            [
+              "arbeiten",
+              "Arbeite!",
+              "Arbeitet!",
+              "Arbeiten Sie!"
+            ],
+            [
+              "fahren",
+              "Fahr!",
+              "Fahrt!",
+              "Fahren Sie!"
+            ],
+            [
+              "nehmen",
+              "Nimm!",
+              "Nehmt!",
+              "Nehmen Sie!"
+            ],
+            [
+              "lesen",
+              "Lies!",
+              "Lest!",
+              "Lesen Sie!"
+            ],
+            [
+              "sein",
+              "Sei!",
+              "Seid!",
+              "Seien Sie!"
+            ],
+            [
+              "aufstehen",
+              "Steh auf!",
+              "Steht auf!",
+              "Stehen Sie auf!"
+            ]
+          ]
+        }
+      ]
+    }
+  },
+  "aktiv": {
+    "listen": [
+      {
+        "text": "Komm bitte!",
+        "note": "Zu einer Person, die man duzt."
+      },
+      {
+        "text": "Kommt bitte!",
+        "note": "Zu mehreren Personen, die man duzt."
+      },
+      {
+        "text": "Kommen Sie bitte!",
+        "note": "Höflich — das Sie bleibt."
+      }
+    ],
+    "hoeren": {
+      "instruction": "Hör die Aufforderung. Mit wem spricht man?",
+      "items": [
+        {
+          "text": "Nimm Platz!",
+          "choices": [
+            "mit einer Person (du)",
+            "mit mehreren (ihr)",
+            "höflich (Sie)"
+          ],
+          "correct": 0
+        },
+        {
+          "text": "Nehmen Sie Platz!",
+          "choices": [
+            "mit einer Person (du)",
+            "mit mehreren (ihr)",
+            "höflich (Sie)"
+          ],
+          "correct": 2
+        },
+        {
+          "text": "Seid bitte leise!",
+          "choices": [
+            "mit einer Person (du)",
+            "mit mehreren (ihr)",
+            "höflich (Sie)"
+          ],
+          "correct": 1
+        },
+        {
+          "text": "Fahr vorsichtig!",
+          "choices": [
+            "mit einer Person (du)",
+            "mit mehreren (ihr)",
+            "höflich (Sie)"
+          ],
+          "correct": 0
+        },
+        {
+          "text": "Lest den Text!",
+          "choices": [
+            "mit einer Person (du)",
+            "mit mehreren (ihr)",
+            "höflich (Sie)"
+          ],
+          "correct": 1
+        },
+        {
+          "text": "Warten Sie bitte hier!",
+          "choices": [
+            "mit einer Person (du)",
+            "mit mehreren (ihr)",
+            "höflich (Sie)"
+          ],
+          "correct": 2
+        }
+      ]
+    },
+    "sprechen": {
+      "rounds": [
+        {
+          "label": "1 · du-Form → Imperativ",
+          "instruction": "Du hörst eine Aussage mit du. Mach eine Aufforderung daraus.",
+          "example": {
+            "prompt": "Du kommst morgen.",
+            "answer": "Komm morgen!"
+          },
+          "items": [
+            {
+              "prompt": "Du trinkst Wasser.",
+              "answer": "Trink Wasser!"
+            },
+            {
+              "prompt": "Du nimmst den Bus.",
+              "answer": "Nimm den Bus!"
+            },
+            {
+              "prompt": "Du fährst langsam.",
+              "answer": "Fahr langsam!"
+            },
+            {
+              "prompt": "Du liest den Brief.",
+              "answer": "Lies den Brief!"
+            },
+            {
+              "prompt": "Du bist pünktlich.",
+              "answer": "Sei pünktlich!"
+            },
+            {
+              "prompt": "Du machst das Fenster auf.",
+              "answer": "Mach das Fenster auf!"
+            }
+          ]
+        },
+        {
+          "label": "2 · Höflich mit Sie",
+          "instruction": "Du hörst eine Bitte mit du. Sag sie höflich mit Sie.",
+          "example": {
+            "prompt": "Komm bitte!",
+            "answer": "Kommen Sie bitte!"
+          },
+          "items": [
+            {
+              "prompt": "Warte bitte hier!",
+              "answer": "Warten Sie bitte hier!"
+            },
+            {
+              "prompt": "Nimm Platz!",
+              "answer": "Nehmen Sie Platz!"
+            },
+            {
+              "prompt": "Sprich bitte langsam!",
+              "answer": "Sprechen Sie bitte langsam!"
+            },
+            {
+              "prompt": "Sei bitte leise!",
+              "answer": "Seien Sie bitte leise!"
+            },
+            {
+              "prompt": "Gib mir das Formular!",
+              "answer": "Geben Sie mir das Formular!"
+            },
+            {
+              "prompt": "Ruf mich an!",
+              "answer": "Rufen Sie mich an!"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "exercises": [
+    {
+      "type": "table",
+      "title": "Von der du-Form zum Imperativ.",
+      "hint": "du und -st fallen weg. a → ä kommt nicht mit, e → i schon.",
+      "columns": [
+        "du-Form",
+        "Imperativ"
+      ],
+      "placeholder": "Imperativ (ohne !)",
+      "rows": [
+        {
+          "term": "du kommst",
+          "answer": "Komm"
+        },
+        {
+          "term": "du trinkst",
+          "answer": "Trink"
+        },
+        {
+          "term": "du nimmst",
+          "answer": "Nimm"
+        },
+        {
+          "term": "du fährst",
+          "answer": [
+            "Fahr",
+            "Fahre"
+          ]
+        },
+        {
+          "term": "du liest",
+          "answer": "Lies"
+        },
+        {
+          "term": "du isst",
+          "answer": "Iss"
+        },
+        {
+          "term": "du gibst",
+          "answer": "Gib"
+        },
+        {
+          "term": "du wartest",
+          "answer": "Warte"
+        },
+        {
+          "term": "du bist",
+          "answer": "Sei"
+        }
+      ]
+    },
+    {
+      "type": "fill",
+      "title": "du, ihr oder Sie?",
+      "hint": "Mit wem spricht man? Die Anrede am Anfang verrät es.",
+      "placeholder": "Imperativ",
+      "items": [
+        {
+          "prompt": "Herr Braun, ___ Sie bitte Platz!",
+          "hint": "nehmen",
+          "answer": [
+            "nehmen"
+          ]
+        },
+        {
+          "prompt": "Kinder, ___ bitte leise!",
+          "hint": "sein",
+          "answer": [
+            "seid"
+          ]
+        },
+        {
+          "prompt": "Lisa, ___ bitte das Fenster zu!",
+          "hint": "zumachen",
+          "answer": [
+            "mach",
+            "mache"
+          ]
+        },
+        {
+          "prompt": "Max und Tim, ___ eure Hausaufgaben!",
+          "hint": "machen",
+          "answer": [
+            "macht"
+          ]
+        },
+        {
+          "prompt": "Anna, ___ nicht so laut!",
+          "hint": "sprechen",
+          "answer": [
+            "sprich"
+          ]
+        },
+        {
+          "prompt": "Frau Schmidt, ___ Sie bitte hier!",
+          "hint": "unterschreiben",
+          "answer": [
+            "unterschreiben"
+          ]
+        },
+        {
+          "prompt": "Paul, ___ bitte pünktlich!",
+          "hint": "sein",
+          "answer": [
+            "sei"
+          ]
+        },
+        {
+          "prompt": "Leute, ___ doch mal zu uns!",
+          "hint": "kommen",
+          "answer": [
+            "kommt"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "build",
+      "title": "Bauen Sie die Aufforderung.",
+      "sentences": [
+        {
+          "id": "im1",
+          "hint": "aufstehen · du",
+          "correct": [
+            "Steh",
+            "morgen",
+            "früh",
+            "auf",
+            "!"
+          ],
+          "shuffled": [
+            "auf",
+            "früh",
+            "Steh",
+            "!",
+            "morgen"
+          ]
+        },
+        {
+          "id": "im2",
+          "hint": "warten · Sie",
+          "correct": [
+            "Warten",
+            "Sie",
+            "bitte",
+            "hier",
+            "!"
+          ],
+          "shuffled": [
+            "hier",
+            "bitte",
+            "!",
+            "Sie",
+            "Warten"
+          ]
+        },
+        {
+          "id": "im3",
+          "hint": "anrufen · du",
+          "correct": [
+            "Ruf",
+            "mich",
+            "heute",
+            "Abend",
+            "an",
+            "!"
+          ],
+          "shuffled": [
+            "an",
+            "Abend",
+            "mich",
+            "!",
+            "Ruf",
+            "heute"
+          ]
+        },
+        {
+          "id": "im4",
+          "hint": "lesen · ihr",
+          "correct": [
+            "Lest",
+            "den",
+            "Text",
+            "noch",
+            "einmal",
+            "!"
+          ],
+          "shuffled": [
+            "einmal",
+            "Text",
+            "Lest",
+            "noch",
+            "!",
+            "den"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "match",
+      "title": "Welcher Tipp passt?",
+      "hint": "Erst die Situation lesen, dann die passende Aufforderung wählen.",
+      "pairs": [
+        {
+          "q": "Es ist so kalt hier.",
+          "a": "Mach bitte das Fenster zu!"
+        },
+        {
+          "q": "Ich habe Kopfschmerzen.",
+          "a": "Nimm eine Tablette!"
+        },
+        {
+          "q": "Die Ärztin zum Patienten:",
+          "a": "Machen Sie bitte den Mund auf!"
+        },
+        {
+          "q": "Die Kinder sind sehr laut.",
+          "a": "Seid bitte leise!"
+        },
+        {
+          "q": "Ich bin so müde.",
+          "a": "Schlaf ein bisschen!"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,188 @@
+---
+// The level navigation that fills the side column of the Artikel-Trainer.
+//
+// Same shape as the Wortschatz side column (LernsetPicker.astro): nav.css's `.nvb` —
+// variant B of the dashboard rail — a rail of level badges beside a panel that lists what
+// is in the chosen level. Everything shared with the dashboard and with Wortschatz comes
+// from nav.css under `nvb-*`; only the two things that are ours wear `ap-*`.
+//
+// What the panel lists is Runden, because that is this trainer's unit: a session is
+// ARTIKEL_SESSION nouns drawn from the level, so a level of 386 nouns is 16 of them. It is
+// the same idea as a Wortschatz Lernset — a sitting you can finish — over a pool that has
+// no topics attached to it.
+//
+// The trainer used to offer A1, A2 and "Alle" in a thin inline row above the card. The
+// lexicon has gendered nouns to B2 (386 / 478 / 762 / 951), so three quarters of the pool
+// was unreachable; the row could not have carried four levels plus their sizes anyway.
+//
+// The Regel sits on the rail as its own entry rather than in a column of its own, the way
+// Redemittel does in the Wortschatz rail: it is one more thing the side can show, not a
+// second side.
+import Icon from "./Icon.astro";
+// The rail, the panel, the rows and the tooltips are nav.css's (variant B of the
+// dashboard rail); the fold tab and the unfold button are lernset-picker.css's. Same two
+// stylesheets LernsetPicker.astro pulls in, for the same reason.
+import "../styles/nav.css";
+import "../styles/lernset-picker.css";
+
+interface Props {
+  /** Nouns per level, `{ A1: 386, … }` — counted from the lexicon by the page. */
+  counts: Record<string, number>;
+  /** How many nouns one round draws. */
+  session: number;
+  /** The level the page opens on. */
+  current: string;
+}
+const { counts, session, current } = Astro.props;
+
+const LEVELS = ["A1", "A2", "B1", "B2"].filter((l) => (counts[l] ?? 0) > 0);
+const total = LEVELS.reduce((n, l) => n + counts[l], 0);
+const roundsIn = (level: string) => Math.ceil((counts[level] ?? 0) / session);
+const openLevel = LEVELS.includes(current) ? current : LEVELS[0];
+// A round is a draw, not a fixed slice: the pool is shuffled every round. So the last one is
+// the same size as the rest rather than a remainder — it is "how many sittings this level
+// is", not "which 25 nouns".
+const roundLabel = (level: string, i: number) => `Runde ${i + 1}`;
+---
+<div class="nvb ap-nvb" data-nvb data-current={current}>
+  <!-- The fold tab on the panel's right edge, exactly as the Lernset column carries one:
+       the list pivots away and the tab stays attached to the rail, so the way back is the
+       thing that put it away. -->
+  <button type="button" class="ls-foldtab" data-nvb-collapse aria-label="Liste einklappen" aria-controls="ap-pane">
+    <span class="ls-foldtab-txt">Stufen</span>
+    <svg class="ls-foldtab-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>
+  </button>
+
+  <div class="nvb-rail" role="tablist" aria-label="Stufe wählen">
+    <!-- Only one of this and the fold tab is ever on screen; both carry data-nvb-collapse
+         so one handler toggles either way. -->
+    <button type="button" class="nvb-railbtn ls-unfold" data-nvb-collapse aria-label="Liste ausklappen">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+      <span class="nvb-tip">Liste ausklappen</span>
+    </button>
+
+    {LEVELS.map((level) => (
+      <button
+        type="button"
+        role="tab"
+        class:list={["nvb-railbtn", level === openLevel && "active"]}
+        data-rail={level}
+        data-level={level}
+        aria-selected={level === openLevel ? "true" : "false"}
+        aria-controls={`ap-pane-${level}`}
+        aria-label={`Stufe ${level}`}
+      >
+        <span class="nvb-railbadge">{level}</span>
+        <span class="nvb-tip">Stufe {level} · {counts[level]} Nomen</span>
+      </button>
+    ))}
+
+    <span class="ls-raildiv" aria-hidden="true"></span>
+
+    <!-- The whole pool at once, for a learner who is past picking a level. Its own entry
+         rather than a fifth badge: "Alle" is not a level, and a chip reading "∑" beside
+         A1…B2 would claim it is. -->
+    <button
+      type="button"
+      role="tab"
+      class:list={["nvb-railbtn", current === "alle" && "active"]}
+      data-rail="alle"
+      data-level="alle"
+      aria-selected={current === "alle" ? "true" : "false"}
+      aria-controls="ap-pane-alle"
+      aria-label="Alle Stufen"
+    >
+      <Icon name="bars" size={20} />
+      <span class="nvb-tip">Alle Stufen · {total} Nomen</span>
+    </button>
+
+    <!-- The Regel, as one more thing the side can show. -->
+    <button
+      type="button"
+      role="tab"
+      class="nvb-railbtn"
+      data-rail="regel"
+      aria-selected="false"
+      aria-controls="ap-pane-regel"
+      aria-label="Regel"
+    >
+      <Icon name="book" size={20} />
+      <span class="nvb-tip">Regel · woran man den Artikel erkennt</span>
+    </button>
+  </div>
+
+  <div class="nvb-panel" id="ap-pane">
+    {[...LEVELS, "alle"].map((level) => {
+      const n = level === "alle" ? total : counts[level];
+      const rounds = Math.ceil(n / session);
+      return (
+        <div
+          class="nvb-section ap-sets"
+          id={`ap-pane-${level}`}
+          data-pane={level}
+          data-level={level}
+          hidden={level !== openLevel}
+        >
+          <div class="nvb-panelhead">
+            <h3>{level === "alle" ? "Alle Stufen" : `Stufe ${level}`}</h3>
+            <button type="button" class="nvb-collapse" data-nvb-collapse aria-label="Liste einklappen">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>
+            </button>
+          </div>
+
+          <p class="ls-lead">
+            {n} Nomen mit Artikel, in {rounds} Runden zu je {session}. Jede Runde wird neu
+            gemischt — die Zahl sagt, wie viele Sitzungen die Stufe ist.
+          </p>
+
+          <div class="ap-rounds">
+            {Array.from({ length: rounds }).map((_, i) => (
+              <button
+                type="button"
+                class:list={["nvb-item", "ap-round", level === openLevel && i === 0 && "active"]}
+                data-round={i}
+                data-round-level={level}
+              >
+                <span class="nv-icon ls-num">{i + 1}</span>
+                <span>{roundLabel(level, i)}</span>
+                <span class="nv-count">{session}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+      );
+    })}
+
+    <!-- The Regel pane. Same panel, same rail — the column does not change shape to show
+         it, because it is one of the things the column shows. -->
+    <div class="nvb-section ap-regel" id="ap-pane-regel" data-pane="regel" hidden>
+      <div class="nvb-panelhead">
+        <h3>Regel</h3>
+        <button type="button" class="nvb-collapse" data-nvb-collapse aria-label="Liste einklappen">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>
+        </button>
+      </div>
+      <p class="akk-regel-intro">
+        Der Artikel eines deutschen Nomens ist meist nicht am Genus der Sache erkennbar – aber manche
+        Wortendungen geben einen zuverlässigen Hinweis. Die folgenden Muster helfen beim Raten, wenn
+        das Wort noch unbekannt ist.
+      </p>
+      <table class="akk-decl-table">
+        <thead>
+          <tr><th>Endung</th><th>meist</th><th>Beispiel</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>-e</td><td>feminin</td><td>die Tasche, die Sonne</td></tr>
+          <tr><td>-in</td><td>feminin</td><td>die Ärztin, die Kollegin</td></tr>
+          <tr><td>-chen / -lein</td><td>neutrum</td><td>das Mädchen, das Kaninchen</td></tr>
+          <tr><td>-er</td><td>maskulin</td><td>der Computer, der Lehrer</td></tr>
+          <tr><td>-el</td><td>maskulin</td><td>der Schlüssel, der Apfel</td></tr>
+        </tbody>
+      </table>
+      <p class="akk-regel-note">
+        Männliche Personenbezeichnungen bleiben maskulin, auch wenn sie auf -e enden (z. B. der Kollege,
+        der Junge). Bei vielen Wörtern gibt es kein Muster – der Artikel muss einfach mitgelernt werden.
+      </p>
+    </div>
+  </div>
+</div>

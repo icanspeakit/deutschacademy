@@ -1,0 +1,499 @@
+{
+  "id": "plural",
+  "name": "Plural: ein Buch, zwei Bücher",
+  "level": "A1",
+  "subtitle": "Im Plural heißt der Artikel immer die — aber das Nomen hat fünf Arten, mehr zu werden: -e, -er, -(e)n, -s oder gar keine Endung, oft mit Umlaut.",
+  "source": "Eigenes Material, A1-Lehrplan",
+  "concept": {
+    "flow": [
+      {
+        "text": "der / die / das",
+        "variant": "prep"
+      },
+      {
+        "text": "Plural · immer die",
+        "variant": "verb"
+      },
+      {
+        "text": "Nomen + Endung"
+      }
+    ],
+    "exampleHtml": "der Tisch → die Tisch<span class=\"vp-verb\">e</span> · das Buch → die B<span class=\"vp-verb\">ü</span>ch<span class=\"vp-verb\">er</span> · die Lampe → die Lampe<span class=\"vp-verb\">n</span> · das Auto → die Auto<span class=\"vp-verb\">s</span>",
+    "qa": [
+      {
+        "html": "Der Artikel im Plural ist <strong>immer die</strong> — egal ob das Wort im Singular <em>der</em>, <em>die</em> oder <em>das</em> hat.",
+        "tag": "die"
+      },
+      {
+        "html": "Feminine Nomen bekommen meistens <strong>-(e)n</strong>: <em>die Frau → die Frauen, die Lampe → die Lampen, die Lehrerin → die Lehrerinnen</em>.",
+        "tag": "-(e)n"
+      },
+      {
+        "html": "Maskuline und neutrale Nomen auf <strong>-er, -el, -en</strong> bekommen <strong>keine Endung</strong>, manchmal einen Umlaut: <em>der Lehrer → die Lehrer, das Zimmer → die Zimmer, der Apfel → die Äpfel</em>.",
+        "tag": "—"
+      },
+      {
+        "html": "Kurze maskuline Nomen bekommen oft <strong>-e</strong>, kurze neutrale oft <strong>-er</strong> — beide gern mit Umlaut: <em>der Tisch → die Tische, der Stuhl → die Stühle, das Buch → die Bücher, das Kind → die Kinder</em>.",
+        "tag": "-e / -er"
+      },
+      {
+        "html": "Wörter aus anderen Sprachen und Wörter auf Vokal bekommen oft <strong>-s</strong>: <em>das Auto → die Autos, das Handy → die Handys, das Hotel → die Hotels</em>.",
+        "tag": "-s"
+      }
+    ],
+    "noteHtml": "Die Regeln helfen, aber sie sind keine Garantie. Lernen Sie den Plural deshalb wie den Artikel: immer mit dem Wort. Im Wörterbuch steht er so: <em>der Tisch, -e</em> · <em>das Buch, ¨-er</em> · <em>der Lehrer, -</em>.",
+    "reference": {
+      "showLabel": "Übersicht anzeigen ▼",
+      "hideLabel": "Übersicht ausblenden ▲",
+      "tables": [
+        {
+          "caption": "Die fünf Pluralendungen",
+          "head": [
+            "Endung",
+            "Singular",
+            "Plural",
+            "typisch für"
+          ],
+          "rows": [
+            [
+              "-e (¨-e)",
+              "der Tisch / der Stuhl",
+              "die Tische / die Stühle",
+              "kurze maskuline Nomen"
+            ],
+            [
+              "-er (¨-er)",
+              "das Kind / das Buch",
+              "die Kinder / die Bücher",
+              "kurze neutrale Nomen"
+            ],
+            [
+              "-(e)n",
+              "die Frau / die Lampe",
+              "die Frauen / die Lampen",
+              "feminine Nomen"
+            ],
+            [
+              "-s",
+              "das Auto / das Handy",
+              "die Autos / die Handys",
+              "Fremdwörter, Wörter auf Vokal"
+            ],
+            [
+              "— (¨)",
+              "der Lehrer / der Apfel",
+              "die Lehrer / die Äpfel",
+              "maskulin/neutral auf -er, -el, -en"
+            ]
+          ]
+        }
+      ]
+    }
+  },
+  "aktiv": {
+    "listen": [
+      {
+        "text": "der Tisch — die Tische",
+        "note": "maskulin, kurz: -e."
+      },
+      {
+        "text": "das Buch — die Bücher",
+        "note": "neutral, kurz: -er mit Umlaut."
+      },
+      {
+        "text": "der Lehrer — die Lehrer",
+        "note": "Endung -er: im Plural gleich. Nur der Artikel ändert sich."
+      }
+    ],
+    "hoeren": {
+      "instruction": "Hör den Satz. Ist es einer — oder sind es mehrere?",
+      "items": [
+        {
+          "text": "Der Lehrer ist nett.",
+          "choices": [
+            "ein Lehrer",
+            "mehrere Lehrer"
+          ],
+          "correct": 0
+        },
+        {
+          "text": "Die Zimmer sind groß.",
+          "choices": [
+            "ein Zimmer",
+            "mehrere Zimmer"
+          ],
+          "correct": 1
+        },
+        {
+          "text": "Die Äpfel sind rot.",
+          "choices": [
+            "ein Apfel",
+            "mehrere Äpfel"
+          ],
+          "correct": 1
+        },
+        {
+          "text": "Das Zimmer ist groß.",
+          "choices": [
+            "ein Zimmer",
+            "mehrere Zimmer"
+          ],
+          "correct": 0
+        },
+        {
+          "text": "Die Lehrer sind nett.",
+          "choices": [
+            "ein Lehrer",
+            "mehrere Lehrer"
+          ],
+          "correct": 1
+        },
+        {
+          "text": "Der Apfel ist rot.",
+          "choices": [
+            "ein Apfel",
+            "mehrere Äpfel"
+          ],
+          "correct": 0
+        }
+      ]
+    },
+    "sprechen": {
+      "rounds": [
+        {
+          "label": "1 · eins → zwei",
+          "instruction": "Du hörst ein Nomen im Singular. Sag: zwei …",
+          "example": {
+            "prompt": "ein Buch",
+            "answer": "zwei Bücher"
+          },
+          "items": [
+            {
+              "prompt": "ein Tisch",
+              "answer": "zwei Tische"
+            },
+            {
+              "prompt": "eine Lampe",
+              "answer": "zwei Lampen"
+            },
+            {
+              "prompt": "ein Kind",
+              "answer": "zwei Kinder"
+            },
+            {
+              "prompt": "ein Auto",
+              "answer": "zwei Autos"
+            },
+            {
+              "prompt": "ein Stuhl",
+              "answer": "zwei Stühle"
+            },
+            {
+              "prompt": "ein Apfel",
+              "answer": "zwei Äpfel"
+            }
+          ]
+        },
+        {
+          "label": "2 · Der ganze Satz in den Plural",
+          "instruction": "Du hörst einen Satz im Singular. Sag ihn im Plural — Artikel, Nomen und Verb.",
+          "example": {
+            "prompt": "Das Kind spielt.",
+            "answer": "Die Kinder spielen."
+          },
+          "items": [
+            {
+              "prompt": "Der Mann arbeitet.",
+              "answer": "Die Männer arbeiten."
+            },
+            {
+              "prompt": "Die Frau lacht.",
+              "answer": "Die Frauen lachen."
+            },
+            {
+              "prompt": "Das Haus ist alt.",
+              "answer": "Die Häuser sind alt."
+            },
+            {
+              "prompt": "Der Lehrer ist nett.",
+              "answer": "Die Lehrer sind nett."
+            },
+            {
+              "prompt": "Das Auto ist neu.",
+              "answer": "Die Autos sind neu."
+            },
+            {
+              "prompt": "Die Stadt ist schön.",
+              "answer": "Die Städte sind schön."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "exercises": [
+    {
+      "type": "table",
+      "title": "Wie heißt der Plural?",
+      "hint": "Nur das Nomen, ohne Artikel — der ist im Plural ja immer die.",
+      "columns": [
+        "Singular",
+        "Plural"
+      ],
+      "placeholder": "Plural",
+      "rows": [
+        {
+          "term": "die Frau",
+          "answer": "Frauen"
+        },
+        {
+          "term": "der Tisch",
+          "answer": "Tische"
+        },
+        {
+          "term": "das Kind",
+          "answer": "Kinder"
+        },
+        {
+          "term": "das Auto",
+          "answer": "Autos"
+        },
+        {
+          "term": "der Lehrer",
+          "answer": "Lehrer"
+        },
+        {
+          "term": "die Lampe",
+          "answer": "Lampen"
+        },
+        {
+          "term": "das Buch",
+          "answer": "Bücher"
+        },
+        {
+          "term": "der Stuhl",
+          "answer": "Stühle"
+        },
+        {
+          "term": "die Tomate",
+          "answer": "Tomaten"
+        },
+        {
+          "term": "das Foto",
+          "answer": "Fotos"
+        },
+        {
+          "term": "der Apfel",
+          "answer": "Äpfel"
+        },
+        {
+          "term": "das Zimmer",
+          "answer": "Zimmer"
+        }
+      ]
+    },
+    {
+      "type": "fill",
+      "title": "Einer oder mehrere? Der Artikel entscheidet.",
+      "hint": "Schauen Sie auf das Verb: ist → Singular, sind → Plural.",
+      "placeholder": "der / die / das",
+      "items": [
+        {
+          "prompt": "___ Kinder spielen im Park.",
+          "answer": [
+            "Die"
+          ]
+        },
+        {
+          "prompt": "___ Kind spielt im Park.",
+          "answer": [
+            "Das"
+          ]
+        },
+        {
+          "prompt": "___ Tisch ist neu.",
+          "answer": [
+            "Der"
+          ]
+        },
+        {
+          "prompt": "___ Tische sind neu.",
+          "answer": [
+            "Die"
+          ]
+        },
+        {
+          "prompt": "___ Lehrer ist krank.",
+          "hint": "Das Nomen sieht gleich aus — das Verb nicht.",
+          "answer": [
+            "Der"
+          ]
+        },
+        {
+          "prompt": "___ Lehrer sind krank.",
+          "hint": "Das Nomen sieht gleich aus — das Verb nicht.",
+          "answer": [
+            "Die"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "fill",
+      "title": "Zwei, drei, viele.",
+      "hint": "Das Wort in Klammern steht im Singular. Denken Sie an den Umlaut.",
+      "placeholder": "Plural",
+      "items": [
+        {
+          "prompt": "Ich habe zwei ___.",
+          "hint": "der Bruder",
+          "answer": [
+            "Brüder"
+          ]
+        },
+        {
+          "prompt": "Wir kaufen drei ___.",
+          "hint": "der Apfel",
+          "answer": [
+            "Äpfel"
+          ]
+        },
+        {
+          "prompt": "Im Zimmer stehen vier ___.",
+          "hint": "der Stuhl",
+          "answer": [
+            "Stühle"
+          ]
+        },
+        {
+          "prompt": "Sie hat zwei ___.",
+          "hint": "das Kind",
+          "answer": [
+            "Kinder"
+          ]
+        },
+        {
+          "prompt": "Wie viele ___ hast du?",
+          "hint": "das Handy",
+          "answer": [
+            "Handys"
+          ]
+        },
+        {
+          "prompt": "Ich brauche sechs ___.",
+          "hint": "das Ei",
+          "answer": [
+            "Eier"
+          ]
+        },
+        {
+          "prompt": "Die ___ sind sehr nett.",
+          "hint": "die Nachbarin",
+          "answer": [
+            "Nachbarinnen"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "match",
+      "title": "Singular und Plural finden sich.",
+      "hint": "Achten Sie auf den Umlaut.",
+      "pairs": [
+        {
+          "q": "der Mann",
+          "a": "die Männer"
+        },
+        {
+          "q": "die Stadt",
+          "a": "die Städte"
+        },
+        {
+          "q": "das Haus",
+          "a": "die Häuser"
+        },
+        {
+          "q": "der Name",
+          "a": "die Namen"
+        },
+        {
+          "q": "das Hotel",
+          "a": "die Hotels"
+        }
+      ]
+    },
+    {
+      "type": "story",
+      "title": "Lückentext: Auf dem Markt.",
+      "hint": "Das Nomen in Klammern steht im Singular — Sie schreiben den Plural.",
+      "segments": [
+        {
+          "text": "Auf dem Markt kaufe ich zwei Kilo "
+        },
+        {
+          "blank": 0,
+          "answer": [
+            "Tomaten"
+          ]
+        },
+        {
+          "text": " (Tomate), drei "
+        },
+        {
+          "blank": 1,
+          "answer": [
+            "Gurken"
+          ]
+        },
+        {
+          "text": " (Gurke) und sechs "
+        },
+        {
+          "blank": 2,
+          "answer": [
+            "Eier"
+          ]
+        },
+        {
+          "text": " (Ei). Für die "
+        },
+        {
+          "blank": 3,
+          "answer": [
+            "Kinder"
+          ]
+        },
+        {
+          "text": " (Kind) nehme ich noch vier "
+        },
+        {
+          "blank": 4,
+          "answer": [
+            "Bananen"
+          ]
+        },
+        {
+          "text": " (Banane) mit. Die "
+        },
+        {
+          "blank": 5,
+          "answer": [
+            "Äpfel"
+          ]
+        },
+        {
+          "text": " (Apfel) sind heute leider teuer, aber die "
+        },
+        {
+          "blank": 6,
+          "answer": [
+            "Kartoffeln"
+          ]
+        },
+        {
+          "text": " (Kartoffel) sind billig."
+        }
+      ]
+    }
+  ]
+}

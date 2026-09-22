@@ -758,15 +758,29 @@
   .vp-page--sheet .vp-sheet-head {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    /* Not space-between: the fold pill's own `margin-inline-start: auto` does the
+       spacing, and the two together would put a gap between the pill and the ✕. */
+    justify-content: flex-start;
     gap: 12px;
     flex: 0 0 auto;
     padding: 14px 18px;
     border-bottom: 1px solid var(--border);
     background: var(--surface-card);
   }
-  .vp-page--sheet .vp-sheet-head .vp-card-label { margin: 0; }
+  /* The label takes the room it needs and gives way when it runs out. "LERNSETS" fits
+     with space to spare; "Was ist das für eine Prüfung?" does not, and in Ukrainian or
+     Arabic no label's length can be assumed. Shrinking with an ellipsis is what keeps
+     the row a row at every length, in every locale. */
+  .vp-page--sheet .vp-sheet-head .vp-card-label {
+    margin: 0;
+    min-width: 0;
+    flex: 0 1 auto;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
   .vp-page--sheet .vp-sheet-x {
+    flex: 0 0 auto;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -782,15 +796,16 @@
   }
   .vp-page--sheet .vp-sheet-x svg { width: 20px; height: 20px; }
 
-  /* The sheet's own fold: a word and a chevron, centred in the head between the label and
-     the ✕ — absolutely, because with flex those two unequal neighbours would centre it
-     against the leftover space rather than against the sheet. Inside this media query, so
-     it is a phone control only; on a desktop the toggle in the toolbar is the way out. */
-  .vp-page--sheet .vp-sheet-head { position: relative; }
+  /* The sheet's own fold: a word and a chevron, sitting after the label and before the ✕.
+     It used to be absolutely centred in the head, which looked right only while the label
+     was as short as "LERNSETS" — "Wie funktioniert das?" and "Was ist das für eine
+     Prüfung?" ran straight underneath the pill. In the flow it cannot collide with
+     anything, and `margin-left: auto` keeps it and the ✕ together at the end of the row
+     however short the label turns out to be. Inside this media query, so it is a phone
+     control only; on a desktop the toggle in the toolbar is the way out. */
   .vp-page--sheet .vp-sheet-fold {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
+    margin-inline-start: auto;
+    flex: 0 0 auto;
     display: inline-flex;
     align-items: center;
     gap: 6px;
@@ -950,24 +965,52 @@
 /* Inside prose the slot must sit on the text baseline, not float as a block. */
 .vp-story-text .vp-slot { display: inline-block; vertical-align: baseline; margin: 0 2px; }
 
-/* The Wortschatz column lives on the left (vokabeltrainer.css), so the tab it folds to
-   has to as well — a pivot on the far edge from the space that just closed is exactly
-   the disconnected control the pivot was invented to avoid. */
+/* Rule column on the left.
+   ---------------------------------------------------------------------------
+   .vt-split (the Wortschatz trainer) put its column there first, because that column is
+   navigation rather than an aside and navigation belongs at the edge the reading starts
+   from. .vp-page--rule-left is the same arrangement offered to any page that wants it —
+   the Artikel-Trainer is the second — so the two surfaces cannot drift apart the way two
+   copies of this block would.
+
+   The tab moves with the column, always: a pivot on the far edge from the space that just
+   closed is exactly the disconnected control the pivot was invented to avoid. */
+@media (min-width: 1001px) {
+  .vp-page--rule-left .vp-workspace { grid-template-columns: var(--rule-w) minmax(0, 1fr); }
+  .vp-page--rule-left .vp-col--ex { grid-column: 2; }
+  .vp-page--rule-left .vp-col--rule { grid-column: 1; padding-right: 0; padding-left: 2px; }
+  /* Away in the direction it lives in — the default slides right, off the other edge. */
+  .vp-page--rule-left[data-rule="hidden"] .vp-col--rule { transform: translateX(-28px); }
+}
 @media (min-width: 1180px) {
-  .vt-split[data-rule="hidden"] .vp-rule-pivot {
+  /* Which edge it belongs to is a property of the PAGE, not of the collapsed state: scoped
+     to [data-rule="hidden"] the tab kept its right-hand geometry while open and shot
+     across the viewport on its way out instead of retracting into the edge it came from.
+     So the side is set here and only the transform below differs by state. */
+  .vt-split .vp-rule-pivot,
+  .vp-page--rule-left .vp-rule-pivot {
     right: auto;
     left: 0;
     border-right: 1px solid var(--border);
     border-left: none;
     border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
     box-shadow: 8px 0 24px -16px rgb(15 23 42 / 50%);
+    /* Parked outside the LEFT edge, the one it will come from. */
+    transform: translate(-100%, -50%);
+  }
+  .vt-split[data-rule="hidden"] .vp-rule-pivot,
+  .vp-page--rule-left[data-rule="hidden"] .vp-rule-pivot {
+    transform: translate(0, -50%);
   }
   .vt-split[data-rule="hidden"] .vp-rule-pivot:hover,
-  .vt-split[data-rule="hidden"] .vp-rule-pivot:focus-visible {
+  .vt-split[data-rule="hidden"] .vp-rule-pivot:focus-visible,
+  .vp-page--rule-left[data-rule="hidden"] .vp-rule-pivot:hover,
+  .vp-page--rule-left[data-rule="hidden"] .vp-rule-pivot:focus-visible {
     padding-right: 10px;
     padding-left: 14px;
   }
   /* Base is rotate(45deg) — a left-pointing corner. Half a turn on makes it point right,
      which is again "the column comes back over there". */
-  .vt-split[data-rule="hidden"] .vp-rule-pivot .vp-rule-pivot-chevron { transform: rotate(-135deg); }
+  .vt-split[data-rule="hidden"] .vp-rule-pivot .vp-rule-pivot-chevron,
+  .vp-page--rule-left[data-rule="hidden"] .vp-rule-pivot .vp-rule-pivot-chevron { transform: rotate(-135deg); }
 }

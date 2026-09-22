@@ -51,7 +51,7 @@ const {
 <!-- Rendered collapsed, then opened by the script if this learner asked for it.
      Collapsed is the more common state, so starting here means no visible re-layout
      on load. -->
-<main class="vp-page vp-page--split" id="vp-page" data-rule="hidden" data-anim="off">
+<main class="vp-page vp-page--split vp-page--sheet" id="vp-page" data-rule="hidden" data-anim="off">
   <a href="/pruefungen" class="vp-back-link" data-i18n="exam.backToAll">← Alle Prüfungen</a>
 
   <div class="vp-workspace">
@@ -69,8 +69,39 @@ const {
       </div>
 
       <div class="vp-card vp-rule-card" id="vp-rule-card">
-        <div class="vp-card-label" data-i18n="exam.whatIsThis">Was ist das für eine Prüfung?</div>
-        <slot name="info" />
+        <!-- On a desktop this head is just the card's label. On a phone the card is a
+             bottom sheet and the head is its handle: pinned to the top with the ✕, so the
+             way out is never a scroll away. What an exam consists of runs to a list of
+             parts, timings and scoring — several screens on a phone, with the control
+             that closed it at the bottom of all of them. -->
+        <div class="vp-sheet-head">
+          <div class="vp-card-label" data-i18n="exam.whatIsThis">Was ist das für eine Prüfung?</div>
+          <button
+            type="button"
+            class="vp-sheet-fold"
+            data-sheet-close
+            aria-label="Infos einklappen"
+            data-i18n-attr="aria-label:vp.rule.collapse"
+            aria-controls="vp-rule-card"
+          >
+            <span data-i18n="vp.rule.collapseShort">Einklappen</span>
+            {/* Down, because that is where the sheet goes. */}
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </button>
+          <button
+            type="button"
+            class="vp-sheet-x"
+            data-sheet-close
+            aria-label="Infos schließen"
+            data-i18n-attr="aria-label:vp.rule.close"
+            aria-controls="vp-rule-card"
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="6" y1="6" x2="18" y2="18"></line><line x1="18" y1="6" x2="6" y2="18"></line></svg>
+          </button>
+        </div>
+        <div class="vp-sheet-body">
+          <slot name="info" />
+        </div>
       </div>
 
       <!-- Phone counterpart of .vp-rule-toggle: there is no side column to slide
@@ -85,6 +116,10 @@ const {
         aria-controls="vp-rule-card"
       >Was ist das für eine Prüfung?</button>
     </aside>
+
+    <!-- The sheet's backdrop. Outside .vp-col--rule, because that column goes inert when
+         the rule collapses and a control inside it would go inert with it. -->
+    <div class="vp-sheet-scrim" data-sheet-close aria-hidden="true"></div>
 
     <section class="vp-col vp-col--ex">
       <div class="vp-ex-toolbar">
@@ -122,6 +157,10 @@ const {
   mountRuleColumn(document.getElementById("vp-page"), {
     storageKey: "da-pruefung-info",
     seenKey: "da-pruefung-info-seen",
+    // Below 1001px the info card is a bottom sheet rather than an accordion, matching
+    // the drill pages. Expanded in place it pushed the exam parts off the screen and
+    // carried its own way out down with it.
+    sheet: true,
     coach: [
       ["intro.exam.title", "intro.exam.text"],
       ["intro.toggle.title", "intro.exam.toggleText"],

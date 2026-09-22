@@ -928,8 +928,12 @@ const defaultVariant = variants[0];
                   pushed that list under the fold. "Direkt üben" stays — one scroll further down. */}
               <section class="nv-panel">
                 <h2>{section.kind === "kurs" ? "Module" : section.kind === "ziel" ? "Prüfungen" : section.kind === "uebergreifend" ? "Diese Übungen" : "Inhalte dieser Stufe"}</h2>
+                {/* Each row IS the control, rather than a div with a button in its last
+                    cell: the only hit target used to be a 60px word three quarters of the
+                    way across a 1000px row. As a <button> the whole row also takes keyboard
+                    focus and carries one accessible name, which the old markup never had. */}
                 {section.items.map((item, n) => (
-                  <div class="nv-modrow" style={`--i:${n}`} data-modrow={item.id}>
+                  <button type="button" class="nv-modrow" style={`--i:${n}`} data-modrow={item.id} data-nav-item={item.id}>
                     <span class="nv-modnum">{n + 1}</span>
                     <span>
                       <span class="nv-modname">{item.label}</span><br />
@@ -944,10 +948,12 @@ const defaultVariant = variants[0];
                       ? <span class="nv-modmeta">{item.meta}</span>
                       : <span class="nv-modtrack"><span data-itembar={item.id} style={`width:${itemPct(item)}%`}></span></span>}
                     <span class="nv-modpoints" data-itempoints={item.id}>{item.tasks ? `${item.done ?? 0} / ${item.tasks}` : ""}</span>
-                    <button type="button" class="nv-modlink" data-nav-item={item.id}>
+                    {/* A label now, not a control: the row around it is the button. Kept
+                        because it is the only thing that says what a click will do. */}
+                    <span class="nv-modlink" aria-hidden="true">
                       {item.practice ? "Üben →" : "Öffnen →"}
-                    </button>
-                  </div>
+                    </span>
+                  </button>
                 ))}
               </section>
 

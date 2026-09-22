@@ -1,6 +1,8 @@
 // Shared "practice workspace" engine: Fokus-Modus (one question at a time) and
 // Testmodus (compact list), sharing per-question progress within the session.
-// Question shape: { id, difficulty?, prompt, options, answer, explain, change }.
+// Question shape: { id, difficulty?, prompt, options, answer, explain, explainLeicht?, change }.
+// `explainLeicht` is the Leichte-Sprache register of `explain`; optional, and absent means
+// the switch leaves that question's explanation as it is.
 // `difficulty` is optional — when absent, all questions form a single implicit group.
 
 const KNOWN_DIFFICULTY_ORDER = ["leicht", "mittel", "schwer"];
@@ -12,11 +14,21 @@ function sentenceHtml(prompt) {
   return prompt.replace("___", '<span class="akk-blank">___</span>');
 }
 
+const attr = (s) => String(s).replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;");
+
+/* The "warum" line is the one the Leichte-Sprache switch matters most for: it is the
+   sentence a learner reads precisely because they did not know the answer, and it was
+   written at a level well above the question. A question that carries `explainLeicht` gets
+   both registers on the element; one that does not keeps its single text and the switch
+   leaves it alone. See src/lib/leichteSprache.js. */
 function whyHtml(question) {
+  const leicht = question.explainLeicht
+    ? ` data-ls-leicht="${attr(question.explainLeicht)}"`
+    : "";
   return `
     <div class="akk-why">
       <span class="akk-tag">WARUM?</span>
-      <p class="akk-why-text">${question.explain}</p>
+      <p class="akk-why-text" data-ls="${attr(question.explain)}"${leicht}>${question.explain}</p>
       <span class="akk-why-chip">${question.change}</span>
     </div>`;
 }
@@ -111,7 +123,7 @@ export function mountPracticeWorkspace(root, allQuestions, { onSessionUpdate, on
               })
               .join("")}
           </div>
-          <p class="akk-focus-instruction">Wähle den passenden Artikel.</p>
+          <p class="akk-focus-instruction" data-ls="Wähle den passenden Artikel." data-ls-leicht="Was passt: der, die oder das? Klicke auf ein Wort.">Wähle den passenden Artikel.</p>
           <div class="akk-feedback" id="akk-focus-feedback">
             ${
               revealed

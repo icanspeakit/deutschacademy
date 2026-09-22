@@ -1,0 +1,26 @@
+---
+// The Leichte-Sprache switch. Prototype — see src/lib/leichteSprache.js for what it does
+// and, more importantly, for what it deliberately does not do.
+//
+// It sits in the exercise toolbar rather than in the site nav on purpose: this is not a
+// site-wide language setting like DE/EN, it is a property of the exercise you are looking
+// at, and only the pages that have written both registers should offer it. A switch in the
+// nav would promise it everywhere.
+//
+// Labelled, not an icon. "Leichte Sprache" is the term the audience for it already knows
+// from Behörden and news sites; a lightbulb or an "A" would be a puzzle in front of the
+// thing that exists to remove puzzles.
+---
+<button
+  type="button"
+  class="ls-switch"
+  data-ls-toggle
+  aria-pressed="false"
+  title="Zwischen normalem Deutsch und Leichter Sprache wechseln"
+>
+  <span class="ls-switch-track" aria-hidden="true"><span class="ls-switch-knob"></span></span>
+  <span class="ls-switch-txt">
+    <span class="ls-switch-kicker">Sprache der Erklärungen</span>
+    <span class="ls-switch-state" data-ls-toggle-state>Normal</span>
+  </span>
+</button>

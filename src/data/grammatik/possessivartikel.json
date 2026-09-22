@@ -1,0 +1,547 @@
+{
+  "id": "possessivartikel",
+  "name": "Possessivartikel: mein, dein, sein, ihr",
+  "level": "A1",
+  "subtitle": "Wem gehört das? mein Buch, dein Auto, ihre Tasche. Der Possessivartikel bekommt dieselben Endungen wie ein/eine — er sagt nur zusätzlich, wem etwas gehört.",
+  "source": "Eigenes Material, A1-Lehrplan",
+  "concept": {
+    "flow": [
+      {
+        "text": "Wem? · ich",
+        "variant": "prep"
+      },
+      {
+        "text": "mein-"
+      },
+      {
+        "text": "Endung wie ein/eine",
+        "variant": "verb"
+      }
+    ],
+    "exampleHtml": "Das ist <span class=\"vp-prep\">mein</span> Bruder. Das ist <span class=\"vp-prep\">mein</span><span class=\"vp-verb\">e</span> Schwester. Ich suche <span class=\"vp-prep\">mein</span><span class=\"vp-verb\">en</span> Schlüssel.",
+    "qa": [
+      {
+        "html": "<strong>ich → mein, du → dein, er/es → sein, sie → ihr, wir → unser, ihr → euer, sie (Pl.) → ihr, Sie → Ihr</strong>.",
+        "tag": "Wer?"
+      },
+      {
+        "html": "Die Endung kommt vom Nomen, genau wie bei <em>ein/eine</em>: <em>der/das</em> → <strong>mein</strong>, <em>die</em> und Plural → <strong>meine</strong>.",
+        "tag": "Nominativ"
+      },
+      {
+        "html": "Im <strong>Akkusativ</strong> ändert sich nur maskulin: <em>Ich suche mein<strong>en</strong> Schlüssel.</em> Feminin, neutral und Plural bleiben gleich.",
+        "tag": "Akkusativ"
+      },
+      {
+        "html": "<em>euer</em> verliert sein zweites <em>e</em>, sobald eine Endung kommt: <em>euer Haus</em>, aber <em>eure Kinder</em>.",
+        "tag": "euer → eure"
+      }
+    ],
+    "noteHtml": "<strong>sein</strong> oder <strong>ihr</strong>? Das hängt vom <em>Besitzer</em> ab, nicht vom Ding: <em>Tom und <strong>seine</strong> Schwester</em>, <em>Anna und <strong>ihr</strong> Bruder</em>. Die Endung dagegen kommt vom Ding: <em>seine</em> Schwester, weil <em>die</em> Schwester.",
+    "reference": {
+      "showLabel": "Übersicht anzeigen ▼",
+      "hideLabel": "Übersicht ausblenden ▲",
+      "tables": [
+        {
+          "caption": "Possessivartikel im Nominativ",
+          "head": [
+            "Person",
+            "der / das",
+            "die",
+            "Plural"
+          ],
+          "rows": [
+            [
+              "ich",
+              "mein",
+              "meine",
+              "meine"
+            ],
+            [
+              "du",
+              "dein",
+              "deine",
+              "deine"
+            ],
+            [
+              "er / es",
+              "sein",
+              "seine",
+              "seine"
+            ],
+            [
+              "sie",
+              "ihr",
+              "ihre",
+              "ihre"
+            ],
+            [
+              "wir",
+              "unser",
+              "unsere",
+              "unsere"
+            ],
+            [
+              "ihr",
+              "euer",
+              "eure",
+              "eure"
+            ],
+            [
+              "sie / Sie",
+              "ihr / Ihr",
+              "ihre / Ihre",
+              "ihre / Ihre"
+            ]
+          ]
+        },
+        {
+          "caption": "Nominativ und Akkusativ",
+          "head": [
+            "",
+            "maskulin",
+            "neutral",
+            "feminin",
+            "Plural"
+          ],
+          "rows": [
+            [
+              "Nominativ",
+              "mein Schlüssel",
+              "mein Handy",
+              "meine Tasche",
+              "meine Bücher"
+            ],
+            [
+              "Akkusativ",
+              "meinen Schlüssel",
+              "mein Handy",
+              "meine Tasche",
+              "meine Bücher"
+            ]
+          ]
+        }
+      ]
+    }
+  },
+  "aktiv": {
+    "listen": [
+      {
+        "text": "Das ist mein Bruder.",
+        "note": "der Bruder → mein."
+      },
+      {
+        "text": "Das ist meine Schwester.",
+        "note": "die Schwester → meine."
+      },
+      {
+        "text": "Tom und seine Schwester. Anna und ihr Bruder.",
+        "note": "Der Besitzer entscheidet: Tom → sein, Anna → ihr."
+      }
+    ],
+    "hoeren": {
+      "instruction": "Hör die Frage und wähle die Antwort, die richtig ist.",
+      "items": [
+        {
+          "text": "Ist das dein Handy?",
+          "choices": [
+            "Ja, das ist mein Handy.",
+            "Ja, das ist dein Handy.",
+            "Ja, das ist meine Handy."
+          ],
+          "correct": 0
+        },
+        {
+          "text": "Wie heißt deine Schwester?",
+          "choices": [
+            "Mein Schwester heißt Lara.",
+            "Meine Schwester heißt Lara.",
+            "Deine Schwester heißt Lara."
+          ],
+          "correct": 1
+        },
+        {
+          "text": "Wo wohnen eure Eltern?",
+          "choices": [
+            "Unser Eltern wohnen in Bonn.",
+            "Eure Eltern wohnen in Bonn.",
+            "Unsere Eltern wohnen in Bonn."
+          ],
+          "correct": 2
+        },
+        {
+          "text": "Was sucht Tom?",
+          "choices": [
+            "Er sucht seinen Schlüssel.",
+            "Er sucht ihren Schlüssel.",
+            "Er sucht sein Schlüssel."
+          ],
+          "correct": 0
+        },
+        {
+          "text": "Ist das Ihr Koffer, Frau Weber?",
+          "choices": [
+            "Ja, das ist Ihr Koffer.",
+            "Ja, das ist mein Koffer.",
+            "Ja, das ist meinen Koffer."
+          ],
+          "correct": 1
+        },
+        {
+          "text": "Kennst du Annas Bruder?",
+          "choices": [
+            "Ja, ich kenne seinen Bruder.",
+            "Ja, ich kenne ihr Bruder.",
+            "Ja, ich kenne ihren Bruder."
+          ],
+          "correct": 2
+        }
+      ]
+    },
+    "sprechen": {
+      "rounds": [
+        {
+          "label": "1 · dein → mein",
+          "instruction": "Du hörst eine Frage. Antworte mit Ja und mein oder meine.",
+          "example": {
+            "prompt": "Ist das dein Buch?",
+            "answer": "Ja, das ist mein Buch."
+          },
+          "items": [
+            {
+              "prompt": "Ist das dein Auto?",
+              "answer": "Ja, das ist mein Auto."
+            },
+            {
+              "prompt": "Ist das deine Tasche?",
+              "answer": "Ja, das ist meine Tasche."
+            },
+            {
+              "prompt": "Ist das dein Schlüssel?",
+              "answer": "Ja, das ist mein Schlüssel."
+            },
+            {
+              "prompt": "Sind das deine Kinder?",
+              "answer": "Ja, das sind meine Kinder."
+            },
+            {
+              "prompt": "Ist das deine Jacke?",
+              "answer": "Ja, das ist meine Jacke."
+            },
+            {
+              "prompt": "Ist das dein Hund?",
+              "answer": "Ja, das ist mein Hund."
+            }
+          ]
+        },
+        {
+          "label": "2 · sein oder ihr",
+          "instruction": "Du hörst, wem etwas gehört. Sag: Das ist sein … oder Das ist ihr …",
+          "example": {
+            "prompt": "Das Auto gehört Tom.",
+            "answer": "Das ist sein Auto."
+          },
+          "items": [
+            {
+              "prompt": "Die Tasche gehört Anna.",
+              "answer": "Das ist ihre Tasche."
+            },
+            {
+              "prompt": "Der Hund gehört Paul.",
+              "answer": "Das ist sein Hund."
+            },
+            {
+              "prompt": "Das Handy gehört Maria.",
+              "answer": "Das ist ihr Handy."
+            },
+            {
+              "prompt": "Die Brille gehört Opa.",
+              "answer": "Das ist seine Brille."
+            },
+            {
+              "prompt": "Der Schlüssel gehört Lisa.",
+              "answer": "Das ist ihr Schlüssel."
+            },
+            {
+              "prompt": "Die Bücher gehören Max.",
+              "answer": "Das sind seine Bücher."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "exercises": [
+    {
+      "type": "table",
+      "title": "Wer — welcher Possessivartikel?",
+      "hint": "Die Grundform, ohne Endung.",
+      "columns": [
+        "Person",
+        "Possessivartikel"
+      ],
+      "placeholder": "mein, dein …",
+      "rows": [
+        {
+          "term": "ich",
+          "answer": "mein"
+        },
+        {
+          "term": "du",
+          "answer": "dein"
+        },
+        {
+          "term": "er",
+          "answer": "sein"
+        },
+        {
+          "term": "sie (eine Frau)",
+          "answer": "ihr"
+        },
+        {
+          "term": "es",
+          "answer": "sein"
+        },
+        {
+          "term": "wir",
+          "answer": "unser"
+        },
+        {
+          "term": "ihr",
+          "answer": "euer"
+        },
+        {
+          "term": "Sie (höflich)",
+          "answer": "Ihr"
+        }
+      ]
+    },
+    {
+      "type": "fill",
+      "title": "mein oder meine? sein oder ihr?",
+      "hint": "Erst: wem gehört es? Dann: der, die, das oder Plural?",
+      "placeholder": "Possessivartikel",
+      "items": [
+        {
+          "prompt": "Das ist ___ Bruder.",
+          "hint": "ich",
+          "answer": [
+            "mein"
+          ]
+        },
+        {
+          "prompt": "Das ist ___ Schwester.",
+          "hint": "ich",
+          "answer": [
+            "meine"
+          ]
+        },
+        {
+          "prompt": "Wo ist ___ Handy?",
+          "hint": "du",
+          "answer": [
+            "dein"
+          ]
+        },
+        {
+          "prompt": "Sind das ___ Kinder?",
+          "hint": "du",
+          "answer": [
+            "deine"
+          ]
+        },
+        {
+          "prompt": "Anna sucht ___ Tasche.",
+          "hint": "die Tasche gehört Anna",
+          "answer": [
+            "ihre"
+          ]
+        },
+        {
+          "prompt": "Tom sucht ___ Tasche.",
+          "hint": "die Tasche gehört Tom",
+          "answer": [
+            "seine"
+          ]
+        },
+        {
+          "prompt": "Das ist ___ Wohnung. Wir wohnen seit zwei Jahren hier.",
+          "hint": "wir",
+          "answer": [
+            "unsere"
+          ]
+        },
+        {
+          "prompt": "Ist das ___ Auto, Herr Klein?",
+          "hint": "Sie, höflich",
+          "answer": [
+            "Ihr"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "fill",
+      "title": "Im Akkusativ: meinen, deinen, seinen …",
+      "hint": "Nur maskuline Nomen bekommen -en. Die anderen bleiben, wie sie sind.",
+      "placeholder": "Possessivartikel",
+      "items": [
+        {
+          "prompt": "Ich suche ___ Schlüssel.",
+          "hint": "ich · der Schlüssel",
+          "answer": [
+            "meinen"
+          ]
+        },
+        {
+          "prompt": "Hast du ___ Pass dabei?",
+          "hint": "du · der Pass",
+          "answer": [
+            "deinen"
+          ]
+        },
+        {
+          "prompt": "Er ruft ___ Vater an.",
+          "hint": "er · der Vater",
+          "answer": [
+            "seinen"
+          ]
+        },
+        {
+          "prompt": "Sie liebt ___ Hund.",
+          "hint": "sie · der Hund",
+          "answer": [
+            "ihren"
+          ]
+        },
+        {
+          "prompt": "Ich finde ___ Brille nicht.",
+          "hint": "ich · die Brille",
+          "answer": [
+            "meine"
+          ]
+        },
+        {
+          "prompt": "Wir besuchen ___ Eltern.",
+          "hint": "wir · die Eltern (Pl.)",
+          "answer": [
+            "unsere"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "match",
+      "title": "Wem gehört was?",
+      "hint": "Der Besitzer bestimmt das Wort, das Nomen die Endung.",
+      "pairs": [
+        {
+          "q": "Maria hat einen Sohn.",
+          "a": "Das ist ihr Sohn."
+        },
+        {
+          "q": "Peter hat eine Tochter.",
+          "a": "Das ist seine Tochter."
+        },
+        {
+          "q": "Wir haben ein Haus.",
+          "a": "Das ist unser Haus."
+        },
+        {
+          "q": "Du hast eine Katze.",
+          "a": "Das ist deine Katze."
+        },
+        {
+          "q": "Ihr habt zwei Kinder.",
+          "a": "Das sind eure Kinder."
+        },
+        {
+          "q": "Ich habe einen Hund.",
+          "a": "Das ist mein Hund."
+        }
+      ]
+    },
+    {
+      "type": "story",
+      "title": "Lückentext: Leylas Familie.",
+      "hint": "Leyla erzählt. Wer gehört zu wem?",
+      "segments": [
+        {
+          "text": "Hallo, ich bin Leyla. Das ist "
+        },
+        {
+          "blank": 0,
+          "answer": [
+            "meine"
+          ]
+        },
+        {
+          "text": " Familie. "
+        },
+        {
+          "blank": 1,
+          "answer": [
+            "Mein"
+          ]
+        },
+        {
+          "text": " Vater heißt Ali und "
+        },
+        {
+          "blank": 2,
+          "answer": [
+            "meine"
+          ]
+        },
+        {
+          "text": " Mutter heißt Hatice. "
+        },
+        {
+          "blank": 3,
+          "answer": [
+            "Mein"
+          ]
+        },
+        {
+          "text": " Bruder Emre ist 20. "
+        },
+        {
+          "blank": 4,
+          "answer": [
+            "Seine"
+          ]
+        },
+        {
+          "text": " Freundin kommt aus Polen. "
+        },
+        {
+          "blank": 5,
+          "answer": [
+            "Meine"
+          ]
+        },
+        {
+          "text": " Schwester Aylin hat einen Hund — "
+        },
+        {
+          "blank": 6,
+          "answer": [
+            "ihr"
+          ]
+        },
+        {
+          "text": " Hund heißt Bello. Und du? Wie heißen "
+        },
+        {
+          "blank": 7,
+          "answer": [
+            "deine"
+          ]
+        },
+        {
+          "text": " Eltern?"
+        }
+      ]
+    }
+  ]
+}

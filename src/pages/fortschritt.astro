@@ -79,6 +79,36 @@ import "../styles/exam-dashboard.css";
     </main>
   </div>
 
+  {/* Before first paint, and before any component module runs.
+
+      Astro renders the practice panel visible, because that is the default and the page
+      is static — it cannot know which tab the URL asked for. If the switch happened in
+      the module below instead, LearnShell's own deferred script would already have run
+      against a VISIBLE panel: it would play its once-per-browser Stufen tour into a
+      panel this script is about to hide, and spend the flag on a tour nobody saw. Every
+      "back to the overview" link from a sitting arrives with ?pruefung=, so that was the
+      common path, not an edge case.
+
+      Inline and blocking, like the theme and dir scripts in Layout.astro, for the same
+      reason: it has to win the race against the modules. */}
+  <script is:inline>
+    (function () {
+      try {
+        var q = new URLSearchParams(location.search);
+        var want = q.get("ansicht") || (q.get("pruefung") ? "pruefungen" : "uebungen");
+        if (want !== "pruefungen") return;
+        document.querySelectorAll("[data-view-panel]").forEach(function (el) {
+          el.hidden = el.dataset.viewPanel !== "pruefungen";
+        });
+        document.querySelectorAll("[data-ansicht]").forEach(function (t) {
+          var on = t.dataset.ansicht === "pruefungen";
+          t.classList.toggle("is-on", on);
+          t.setAttribute("aria-selected", String(on));
+        });
+      } catch (e) {}
+    })();
+  </script>
+
   <noscript>
     {/* The tabs are script-driven, so with JS off both panels are shown rather than one
         being permanently unreachable behind a button that does nothing. */}
@@ -130,8 +160,10 @@ import "../styles/exam-dashboard.css";
     // Back and forward move between the tabs, which is what a URL per view promises.
     addEventListener("popstate", () => show(new URLSearchParams(location.search).get("ansicht")));
 
-    /* A ?pruefung= without an ?ansicht= still means "show me that exam" — that is what
-       the back links from a sitting send, and honouring it saves them a second param. */
+    /* The inline script above has already applied this, so the panels do not move here;
+       this call is what mounts the dashboard and normalises the URL. A ?pruefung= with
+       no ?ansicht= still means "show me that exam" — that is what the back links from a
+       sitting send, and honouring it saves them a second param. */
     const p = new URLSearchParams(location.search);
     show(p.get("ansicht") ?? (p.get("pruefung") ? "pruefungen" : "uebungen"));
   </script>

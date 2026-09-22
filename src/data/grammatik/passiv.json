@@ -1,0 +1,581 @@
+{
+  "id": "passiv",
+  "name": "Passiv mit Modalverben",
+  "level": "B2",
+  "subtitle": "Im Passiv zählt, was geschieht — nicht, wer es tut. Mit einem Modalverb daneben wandert werden als Infinitiv ans Satzende und rührt sich nicht mehr: „Das Hotel muss gebucht werden.“",
+  "source": "Aufgewertet aus dem Kurzquiz in grammatik.json",
+  "concept": {
+    "flow": [
+      {
+        "text": "Subjekt (= Akkusativobjekt)"
+      },
+      {
+        "text": "Modalverb · Position 2",
+        "variant": "verb"
+      },
+      {
+        "text": "Partizip II + werden · Ende",
+        "variant": "prep"
+      }
+    ],
+    "exampleHtml": "Ich buche das Hotel. → Das Hotel <span class=\"vp-verb\">muss</span> heute <span class=\"vp-prep\">gebucht werden</span>.",
+    "qa": [
+      {
+        "html": "<strong>Ohne Modalverb</strong> — <em>werden</em> wird konjugiert, das Partizip II steht am Ende: <em>Das Hotel <strong>wird</strong> gebucht.</em>",
+        "tag": "Grundform"
+      },
+      {
+        "html": "<strong>Mit Modalverb</strong> — jetzt wird das <em>Modalverb</em> konjugiert, und <em>werden</em> rutscht als Infinitiv ganz nach hinten: <em>Das Hotel <strong>muss</strong> gebucht <strong>werden</strong>.</em>",
+        "tag": "zwei Teile"
+      },
+      {
+        "html": "Das <strong>Akkusativobjekt</strong> des Aktivsatzes wird zum Subjekt des Passivsatzes: <em>Ich buche <strong>das Hotel</strong></em> → <em><strong>Das Hotel</strong> wird gebucht.</em>",
+        "tag": "Wer wird Subjekt?"
+      },
+      {
+        "html": "Wer es tut, darf fehlen — das ist der Sinn des Passivs. Wenn doch: <em>von</em> + Person, <em>durch</em> + Mittel oder Ursache. <em>Das Hotel wird <strong>von der Firma</strong> gebucht.</em>",
+        "tag": "von / durch"
+      }
+    ],
+    "noteHtml": "Für die Vergangenheit nimmt man das <em>Präteritum</em>: <em>Das Hotel <strong>musste</strong> gebucht werden.</em> Ein Perfekt mit Modalverb im Passiv („hat gebucht werden müssen“) ist zwar bildbar, aber niemand sagt es — im Zweifel Präteritum.",
+    "reference": {
+      "showLabel": "Formentabelle anzeigen ▼",
+      "hideLabel": "Formentabelle ausblenden ▲",
+      "tables": [
+        {
+          "caption": "Passiv ohne und mit Modalverb",
+          "note": "Das Partizip II ändert sich nie. Konjugiert wird immer nur das erste Verb.",
+          "head": [
+            "",
+            "ohne Modalverb",
+            "mit Modalverb"
+          ],
+          "rows": [
+            [
+              "Präsens",
+              "Das Hotel wird gebucht.",
+              "Das Hotel muss gebucht werden."
+            ],
+            [
+              "Präteritum",
+              "Das Hotel wurde gebucht.",
+              "Das Hotel musste gebucht werden."
+            ],
+            [
+              "Perfekt",
+              "Das Hotel ist gebucht worden.",
+              "— (stattdessen Präteritum)"
+            ],
+            [
+              "Nebensatz",
+              "…, dass das Hotel gebucht wird.",
+              "…, dass das Hotel gebucht werden muss."
+            ]
+          ]
+        },
+        {
+          "caption": "Aktiv → Passiv, Schritt für Schritt",
+          "head": [
+            "Aktiv",
+            "Passiv"
+          ],
+          "rows": [
+            [
+              "Man muss die Koffer packen.",
+              "Die Koffer müssen gepackt werden."
+            ],
+            [
+              "Wir können das Zimmer reservieren.",
+              "Das Zimmer kann reserviert werden."
+            ],
+            [
+              "Du sollst die Rechnung bezahlen.",
+              "Die Rechnung soll bezahlt werden."
+            ],
+            [
+              "Niemand darf die Tür öffnen.",
+              "Die Tür darf nicht geöffnet werden."
+            ]
+          ]
+        }
+      ],
+      "boxes": [
+        {
+          "badge": "von + Dativ",
+          "variant": "dat",
+          "items": [
+            "von der Firma",
+            "von meinem Chef",
+            "von den Kollegen",
+            "von einem Arzt"
+          ]
+        },
+        {
+          "badge": "durch + Akkusativ",
+          "variant": "akk",
+          "items": [
+            "durch den Sturm",
+            "durch einen Fehler",
+            "durch das Feuer",
+            "durch eine E-Mail"
+          ]
+        }
+      ]
+    }
+  },
+  "aktiv": {
+    "listen": [
+      {
+        "text": "Das Hotel wird gebucht.",
+        "note": "Passiv ohne Modalverb: werden konjugiert, Partizip am Ende."
+      },
+      {
+        "text": "Das Hotel muss gebucht werden.",
+        "note": "Mit Modalverb: muss konjugiert, werden als Infinitiv ganz hinten."
+      },
+      {
+        "text": "Das Hotel musste gebucht werden.",
+        "note": "Vergangenheit — Präteritum, nicht Perfekt."
+      }
+    ],
+    "hoeren": {
+      "instruction": "Hör zu und wähle die Form, die du gehört hast. Der Unterschied steckt am Satzende.",
+      "items": [
+        {
+          "text": "Das Zimmer muss reserviert werden.",
+          "choices": [
+            "wird reserviert",
+            "muss reserviert werden",
+            "musste reserviert werden"
+          ],
+          "correct": 1
+        },
+        {
+          "text": "Die Rechnung wurde gestern bezahlt.",
+          "choices": [
+            "wird bezahlt",
+            "wurde bezahlt",
+            "ist bezahlt worden"
+          ],
+          "correct": 1
+        },
+        {
+          "text": "Die Koffer mussten gepackt werden.",
+          "choices": [
+            "müssen gepackt werden",
+            "mussten gepackt werden",
+            "werden gepackt"
+          ],
+          "correct": 1
+        },
+        {
+          "text": "Hier darf nicht geraucht werden.",
+          "choices": [
+            "darf nicht geraucht werden",
+            "wird nicht geraucht",
+            "durfte nicht geraucht werden"
+          ],
+          "correct": 0
+        },
+        {
+          "text": "Der Vertrag ist schon unterschrieben worden.",
+          "choices": [
+            "wird unterschrieben",
+            "muss unterschrieben werden",
+            "ist unterschrieben worden"
+          ],
+          "correct": 2
+        },
+        {
+          "text": "Das Paket kann morgen abgeholt werden.",
+          "choices": [
+            "wird abgeholt",
+            "konnte abgeholt werden",
+            "kann abgeholt werden"
+          ],
+          "correct": 2
+        }
+      ]
+    },
+    "sprechen": {
+      "rounds": [
+        {
+          "label": "1 · Aktiv → Passiv",
+          "instruction": "Du hörst einen Aktivsatz mit man. Sag ihn im Passiv — ohne Modalverb.",
+          "example": {
+            "prompt": "Man bucht das Hotel.",
+            "answer": "Das Hotel wird gebucht."
+          },
+          "items": [
+            {
+              "prompt": "Man packt die Koffer.",
+              "answer": "Die Koffer werden gepackt."
+            },
+            {
+              "prompt": "Man reserviert das Zimmer.",
+              "answer": "Das Zimmer wird reserviert."
+            },
+            {
+              "prompt": "Man bezahlt die Rechnung.",
+              "answer": "Die Rechnung wird bezahlt."
+            },
+            {
+              "prompt": "Man repariert das Auto.",
+              "answer": "Das Auto wird repariert."
+            },
+            {
+              "prompt": "Man schreibt den Brief.",
+              "answer": "Der Brief wird geschrieben."
+            },
+            {
+              "prompt": "Man holt das Paket ab.",
+              "answer": "Das Paket wird abgeholt."
+            }
+          ]
+        },
+        {
+          "label": "2 · Modalverb dazu",
+          "instruction": "Jetzt kommt ein Modalverb dazu. werden rutscht als Infinitiv ans Ende.",
+          "example": {
+            "prompt": "Das Hotel wird gebucht. — müssen",
+            "answer": "Das Hotel muss gebucht werden."
+          },
+          "items": [
+            {
+              "prompt": "Die Koffer werden gepackt. — müssen",
+              "answer": "Die Koffer müssen gepackt werden."
+            },
+            {
+              "prompt": "Das Zimmer wird reserviert. — können",
+              "answer": "Das Zimmer kann reserviert werden."
+            },
+            {
+              "prompt": "Die Rechnung wird bezahlt. — sollen",
+              "answer": "Die Rechnung soll bezahlt werden."
+            },
+            {
+              "prompt": "Die Tür wird geöffnet. — dürfen",
+              "answer": "Die Tür darf geöffnet werden."
+            },
+            {
+              "prompt": "Das Formular wird unterschrieben. — müssen",
+              "answer": "Das Formular muss unterschrieben werden."
+            },
+            {
+              "prompt": "Das Paket wird abgeholt. — können",
+              "answer": "Das Paket kann abgeholt werden."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "exercises": [
+    {
+      "type": "fill",
+      "title": "Ergänzen Sie die fehlende Form.",
+      "hint": "Das Modalverb steht auf Position 2, werden ganz am Ende.",
+      "items": [
+        {
+          "prompt": "Das Hotel ___ gebucht werden.",
+          "hint": "müssen · Präsens",
+          "answer": "muss"
+        },
+        {
+          "prompt": "Die Koffer müssen ___ werden.",
+          "hint": "packen · Partizip II",
+          "answer": "gepackt"
+        },
+        {
+          "prompt": "Das Hotel ___ gebucht.",
+          "hint": "Passiv ohne Modalverb",
+          "answer": "wird"
+        },
+        {
+          "prompt": "Die Instrumente müssen ___ werden.",
+          "hint": "einpacken · trennbar",
+          "answer": "eingepackt"
+        },
+        {
+          "prompt": "Das Zimmer musste gestern reserviert ___.",
+          "hint": "Infinitiv am Ende",
+          "answer": "werden"
+        },
+        {
+          "prompt": "Hier ___ nicht geraucht werden.",
+          "hint": "dürfen · Verbot",
+          "answer": "darf"
+        },
+        {
+          "prompt": "Die Rechnung ___ gestern bezahlt.",
+          "hint": "Präteritum ohne Modalverb",
+          "answer": "wurde"
+        },
+        {
+          "prompt": "Der Vertrag ist schon unterschrieben ___.",
+          "hint": "Perfekt Passiv",
+          "answer": "worden"
+        }
+      ]
+    },
+    {
+      "type": "table",
+      "title": "Wie heißt das Partizip II?",
+      "hint": "Nur das Partizip — es ändert sich im Passiv nie.",
+      "columns": [
+        "Infinitiv",
+        "Partizip II"
+      ],
+      "placeholder": "Partizip II",
+      "rows": [
+        {
+          "term": "buchen",
+          "answer": "gebucht"
+        },
+        {
+          "term": "packen",
+          "answer": "gepackt"
+        },
+        {
+          "term": "einpacken",
+          "answer": "eingepackt"
+        },
+        {
+          "term": "reservieren",
+          "answer": "reserviert"
+        },
+        {
+          "term": "schreiben",
+          "answer": "geschrieben"
+        },
+        {
+          "term": "abholen",
+          "answer": "abgeholt"
+        },
+        {
+          "term": "unterschreiben",
+          "answer": "unterschrieben"
+        },
+        {
+          "term": "schließen",
+          "answer": "geschlossen"
+        }
+      ]
+    },
+    {
+      "type": "match",
+      "title": "Aktiv und Passiv verbinden.",
+      "hint": "Klicke erst den Aktivsatz, dann seinen Passivsatz.",
+      "pairs": [
+        {
+          "q": "Man muss die Koffer packen.",
+          "a": "Die Koffer müssen gepackt werden."
+        },
+        {
+          "q": "Man packt die Koffer.",
+          "a": "Die Koffer werden gepackt."
+        },
+        {
+          "q": "Man packte die Koffer.",
+          "a": "Die Koffer wurden gepackt."
+        },
+        {
+          "q": "Wir können das Zimmer reservieren.",
+          "a": "Das Zimmer kann reserviert werden."
+        },
+        {
+          "q": "Niemand darf die Tür öffnen.",
+          "a": "Die Tür darf nicht geöffnet werden."
+        },
+        {
+          "q": "Der Sturm hat das Dach zerstört.",
+          "a": "Das Dach wurde durch den Sturm zerstört."
+        },
+        {
+          "q": "Die Firma bucht das Hotel.",
+          "a": "Das Hotel wird von der Firma gebucht."
+        }
+      ]
+    },
+    {
+      "type": "story",
+      "title": "Lückentext: Vor dem Umzug.",
+      "hint": "Ergänzen Sie das Modalverb, das Partizip oder werden.",
+      "segments": [
+        {
+          "text": "Bis Freitag muss noch einiges erledigt "
+        },
+        {
+          "blank": 0,
+          "answer": [
+            "werden"
+          ]
+        },
+        {
+          "text": ". Zuerst müssen die Kartons "
+        },
+        {
+          "blank": 1,
+          "answer": [
+            "gepackt"
+          ]
+        },
+        {
+          "text": " werden. Der Transporter "
+        },
+        {
+          "blank": 2,
+          "answer": [
+            "muss",
+            "sollte"
+          ]
+        },
+        {
+          "text": " spätestens morgen reserviert werden. Die alte Wohnung "
+        },
+        {
+          "blank": 3,
+          "answer": [
+            "wird"
+          ]
+        },
+        {
+          "text": " am Samstag geputzt. Der Vertrag ist gestern schon unterschrieben "
+        },
+        {
+          "blank": 4,
+          "answer": [
+            "worden"
+          ]
+        },
+        {
+          "text": ". Und die Nachbarn "
+        },
+        {
+          "blank": 5,
+          "answer": [
+            "sollen",
+            "müssen"
+          ]
+        },
+        {
+          "text": " rechtzeitig informiert werden — sonst gibt es Ärger."
+        }
+      ]
+    },
+    {
+      "type": "build",
+      "title": "Bauen Sie den Satz — werden ganz ans Ende.",
+      "sentences": [
+        {
+          "id": "pa1",
+          "hint": "Modalverb auf Position 2.",
+          "correct": [
+            "Das",
+            "Hotel",
+            "muss",
+            "heute",
+            "gebucht",
+            "werden",
+            "."
+          ],
+          "shuffled": [
+            "gebucht",
+            "Das",
+            "werden",
+            "muss",
+            "Hotel",
+            "heute",
+            "."
+          ]
+        },
+        {
+          "id": "pa2",
+          "hint": "Trennbares Verb im Partizip.",
+          "correct": [
+            "Die",
+            "Instrumente",
+            "müssen",
+            "eingepackt",
+            "werden",
+            "."
+          ],
+          "shuffled": [
+            "werden",
+            "müssen",
+            "Die",
+            "eingepackt",
+            "Instrumente",
+            "."
+          ]
+        },
+        {
+          "id": "pa3",
+          "hint": "Präteritum.",
+          "correct": [
+            "Das",
+            "Zimmer",
+            "musste",
+            "gestern",
+            "reserviert",
+            "werden",
+            "."
+          ],
+          "shuffled": [
+            "reserviert",
+            "musste",
+            "Das",
+            "gestern",
+            "werden",
+            "Zimmer",
+            "."
+          ]
+        },
+        {
+          "id": "pa4",
+          "hint": "Verbot mit dürfen.",
+          "correct": [
+            "Hier",
+            "darf",
+            "nicht",
+            "geraucht",
+            "werden",
+            "."
+          ],
+          "shuffled": [
+            "geraucht",
+            "nicht",
+            "Hier",
+            "werden",
+            "darf",
+            "."
+          ]
+        },
+        {
+          "id": "pa5",
+          "hint": "Wer es tut: von + Dativ.",
+          "correct": [
+            "Das",
+            "Hotel",
+            "wird",
+            "von",
+            "der",
+            "Firma",
+            "gebucht",
+            "."
+          ],
+          "shuffled": [
+            "der",
+            "wird",
+            "Das",
+            "gebucht",
+            "von",
+            "Hotel",
+            "Firma",
+            "."
+          ]
+        }
+      ]
+    }
+  ]
+}

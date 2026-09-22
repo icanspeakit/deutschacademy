@@ -1,11 +1,29 @@
 // @ts-check
 import { createRequire } from 'node:module';
+import path from 'node:path';
 import { defineConfig } from 'astro/config';
 import vercel from '@astrojs/vercel';
 import react from '@astrojs/react';
 import postcssRTLCSS from 'postcss-rtlcss';
 
 const require = createRequire(import.meta.url);
+
+/* The ESM entry of tslib, as an absolute path.
+ *
+ * Derived from the package's main entry rather than resolved as a subpath:
+ * require.resolve('tslib/tslib.es6.mjs') works locally but threw "Cannot find module" on
+ * the Vercel builder, which took a deploy down. require.resolve('tslib') hits the plain
+ * "." export that every Node version agrees on, and the file sits next to it.
+ *
+ * Wrapped because a config that throws takes the whole build with it: if tslib cannot be
+ * found at all, the alias is simply dropped and resolution falls back to normal. */
+const tslibEsm = (() => {
+  try {
+    return path.join(path.dirname(require.resolve('tslib')), 'tslib.es6.mjs');
+  } catch {
+    return null;
+  }
+})();
 
 export default defineConfig({
   // Static stays the default: every one of the ~670 content pages is still prerendered
@@ -54,9 +72,9 @@ export default defineConfig({
         // specifier at that one resolved copy makes the outcome the same everywhere
         // instead of depending on what the build cache happens to contain.
         //
-        // The ESM build, not require.resolve('tslib') — that returns tslib.js, the CJS
-        // entry, and the import that fails is a named ESM one (`{ __rest }`).
-        tslib: require.resolve('tslib/tslib.es6.mjs'),
+        // The ESM build (see tslibEsm above), not the CJS entry: the import that fails is
+        // a named ESM one, `import { __rest } from "tslib"`.
+        ...(tslibEsm ? { tslib: tslibEsm } : {}),
       },
     },
     css: {

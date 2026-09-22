@@ -49,3 +49,23 @@ export function photoSourceOf(task) {
   const lib = rec && LIBRARIES[rec.source];
   return lib ? { id: rec.source, ...lib, photographer: rec.photographer } : null;
 }
+
+/* The card thumbnails, written by scripts/generate-sprechen-thumbs.mjs.
+
+   The card grids show each picture task's photo, and the source photos are 1200-1880px
+   wide: pointing a 38px card straight at one meant the Sprechen hub downloaded ~1.3MB of
+   JPEG to paint six small squares. The thumbs are 240px WebP, 3-12KB each.
+
+   Falls back to the original when no thumb is on disk, so a photo added without running the
+   script still shows up — heavier than it should be, but never missing. */
+const THUMB_DIR = path.join(process.cwd(), "public", "assets", "sprechen", "thumbs");
+
+/**
+ * @param {string} image - the public path of the full-size photo, e.g. "/assets/sprechen/a1-bild-bahnhof.jpg"
+ * @returns {string} the thumbnail's public path, or `image` unchanged if there is none
+ */
+export function thumbFor(image) {
+  if (!image) return image;
+  const base = image.split("/").pop().replace(/\.[^.]+$/, ".webp");
+  return existsSync(path.join(THUMB_DIR, base)) ? `/assets/sprechen/thumbs/${base}` : image;
+}

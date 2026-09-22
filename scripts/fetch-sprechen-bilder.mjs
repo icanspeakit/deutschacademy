@@ -6,6 +6,15 @@
 //   pnpm sprechen:fetch --only a1-bild-kueche --pick 3   take the 3rd hit instead
 //   pnpm sprechen:fetch --force      re-fetch tasks that already have an image
 //   pnpm sprechen:fetch --source pixabay                 the other library
+//   pnpm sprechen:fetch --dtz       the three older DTZ pictures in src/data/sprechen.json
+//
+// --dtz exists because those three predate this script: they were dropped into
+// public/assets/ by hand, with no record of where they came from, so the pages that show
+// them credit nothing and their licence cannot be checked. Unknown provenance on a public
+// page is not defensible, so they get replaced like any other picture and land under the
+// same provenance.json. They are used twice over - by /uebungen/sprechen/dtz-bildbeschreibung
+// and, through `from: "sprechen-dtz"`, by three tasks in the Fertigkeiten index - so
+// replacing the file both of them point at fixes both at once.
 //
 // TWO SOURCES, one interface. Pexels is the default when PEXELS_API_KEY is set, because
 // Pixabay's 100-requests-per-60-seconds is easy to walk into while iterating on queries
@@ -37,6 +46,7 @@ import { readFileSync, writeFileSync, mkdirSync, existsSync } from "node:fs";
 import path from "node:path";
 
 const DATA = "src/data/fertigkeiten/sprechen.json";
+const DTZ_DATA = "src/data/sprechen.json";
 const OUT_DIR = path.join("public", "assets", "sprechen");
 const PROV = path.join(OUT_DIR, "provenance.json");
 
@@ -47,6 +57,7 @@ const DRY = has("--dry");
 const FORCE = has("--force");
 const ONLY = val("--only");
 const PICK = Number(val("--pick") ?? 1);
+const DTZ = has("--dtz");
 
 // Landscape only, and wide enough that the picture still carries on a desktop; the learner
 // is meant to read a scene off it, not squint at a thumbnail.
@@ -143,13 +154,28 @@ if (!KEY) {
   process.exit(1);
 }
 
-const data = JSON.parse(readFileSync(DATA, "utf8"));
+/* One list of jobs, whichever file it came from, so the download loop below does not have
+ * to know that the two files have different shapes. */
+const dataFile = DTZ ? DTZ_DATA : DATA;
+const data = JSON.parse(readFileSync(dataFile, "utf8"));
+const entries = DTZ ? data : data.tasks;
 
-const wanted = data.tasks.filter((t) => {
-  if (ONLY) return t.id === ONLY;
-  if (!t.imageQuery) return false;
-  return FORCE || !t.image;
-});
+const wanted = entries
+  .map((e) => ({
+    entry: e,
+    // The DTZ file never needed ids of its own; `slug` was added for exactly this.
+    id: DTZ ? e.slug : e.id,
+    title: e.title,
+    imageNeeded: e.imageNeeded,
+    imageQuery: e.imageQuery,
+  }))
+  .filter((j) => {
+    if (ONLY) return j.id === ONLY;
+    if (!j.imageQuery) return false;
+    // With --dtz all three are being replaced on purpose: they all have an image already,
+    // and that image is the problem.
+    return FORCE || DTZ || !j.entry.image;
+  });
 
 if (!wanted.length) {
   console.log("Nichts zu holen. (Mit --force auch schon belegte Aufgaben neu suchen.)");
@@ -234,7 +260,7 @@ for (const task of wanted) {
     continue;
   }
 
-  task.image = `/assets/sprechen/${file}`;
+  task.entry.image = `/assets/sprechen/${file}`;
   provenance[file] = {
     task: task.id,
     source: name,
@@ -253,8 +279,9 @@ for (const task of wanted) {
 
 if (!DRY && taken) {
   writeFileSync(PROV, JSON.stringify(provenance, null, 2) + "\n");
-  writeFileSync(DATA, JSON.stringify(data, null, 2) + "\n");
-  console.log(`\n${taken} Bilder geholt, ${DATA} und ${PROV} aktualisiert.`);
+  writeFileSync(dataFile, JSON.stringify(data, null, 2) + "\n");
+  console.log(`\n${taken} Bilder geholt, ${dataFile} und ${PROV} aktualisiert.`);
+  console.log("Danach: pnpm generate:sprechen-thumbs - die Karten zeigen die Thumbnails.");
   console.log("Jetzt anschauen: pnpm dev, dann /uebungen/sprechen — ein Foto, das die Szene");
   console.log("nicht zeigt, ist schlechter als die Beschreibung. Mit --only <id> --pick N neu wählen.");
 }

@@ -64,6 +64,30 @@
   background: var(--blue-50);
   color: var(--brand-blue-dark);
 }
+
+/* A Bildbeschreibung card shows its picture where every other card shows an icon.
+   The hub and the Bildserie pages used to list picture tasks behind the same generic map
+   pin as everything else — four cards saying "Bildbeschreibung" with no picture on them,
+   on pages whose whole subject is the picture. The photos were always there; nothing was
+   showing them.
+   Same 38px box as .sk-card-ic so the grid does not move, just filled rather than tinted. */
+.sk-card-thumb {
+  display: block;
+  width: 38px;
+  height: 38px;
+  border-radius: var(--radius-sm);
+  object-fit: cover;
+  /* A tinted placeholder while it decodes, so the row does not flash white. */
+  background: var(--blue-50);
+}
+
+/* Roomier on the series page, where four pictures are the content rather than a hint:
+   a thumbnail you can actually recognise the scene in is worth the extra column. */
+.sk-grid--bilder .sk-card-thumb { width: 72px; height: 54px; }
+@media (max-width: 480px) {
+  .sk-grid--bilder .sk-card-thumb { width: 56px; height: 44px; }
+}
+
 .sk-card-txt { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
 .sk-card-txt b { font-weight: var(--fw-semibold); color: var(--ink); }
 .sk-card-txt i { font-style: normal; font-size: .875rem; line-height: 1.5; color: var(--muted); }

@@ -12,6 +12,7 @@ import Layout from "../../../../layouts/Layout.astro";
 import PracticeHeader from "../../../../components/PracticeHeader.astro";
 import Icon from "../../../../components/Icon.astro";
 import { sprechenSets, sprechen } from "../../../../lib/fertigkeiten.js";
+import { thumbFor } from "../../../../lib/sprechenBilder.js";
 import "../../../../styles/practice.css";
 import "../../../../styles/skills.css";
 
@@ -58,10 +59,16 @@ const pending = set.items.filter((t) => t.imageNeeded && !t.image).length;
 
       <section class="sk-block">
         <h2>Die {set.items.length} Bilder</h2>
-        <div class="sk-grid">
+        <div class="sk-grid sk-grid--bilder">
           {set.items.map((t, i) => (
             <a class="sk-card" href={`/uebungen/sprechen/${t.id}`}>
-              <span class="sk-card-ic"><Icon name="map-pin" size={20} /></span>
+              {/* The picture, not a pin. This is a list of pictures; showing four identical
+                  map-pin glyphs above the word "Bildbeschreibung" told a learner nothing and
+                  hid the one thing that distinguishes the four cards. Falls back to the icon
+                  for a task whose photo is not in yet — see `pending` below. */}
+              {t.image
+                ? <img class="sk-card-thumb" src={thumbFor(t.image)} alt="" loading="lazy" decoding="async" width="72" height="54" />
+                : <span class="sk-card-ic"><Icon name="map-pin" size={20} /></span>}
               <span class="sk-card-txt">
                 <b>{i + 1}. {t.title}</b>
                 <i data-i18n={`sprechen.${t.id}.blurb`}>{t.blurb}</i>

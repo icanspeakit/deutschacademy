@@ -1,7 +1,7 @@
 [
   {
     "title": "Bild 1: Gartenarbeit in der Gruppe",
-    "image": "/assets/sprechen-gartenarbeit.jpg",
+    "image": "/assets/sprechen/dtz-gartenarbeit.jpg",
     "beschreibung": [
       "Was machen diese Menschen zusammen? Welche Geräte benutzen sie?",
       "Wer könnte diese Personen sein? Warum arbeiten sie zusammen?"
@@ -11,11 +11,14 @@
       "Helfen Sie gerne bei Gartenarbeit? Warum ja oder nein?",
       "Machen Sie gerne Arbeiten zusammen mit anderen? Welche Arbeiten?",
       "In Ihrer Heimat – arbeitet man dort oft im Garten? Wie ist das?"
-    ]
+    ],
+    "slug": "dtz-gartenarbeit",
+    "imageNeeded": "Mehrere Menschen arbeiten zusammen in einem Garten oder Gemeinschaftsbeet, mit Spaten und Gießkanne. Tageslicht.",
+    "imageQuery": "people gardening together community garden"
   },
   {
-    "title": "Bild 2: Menschen im Bus (müde)",
-    "image": "/assets/sprechen-bus-muede.jpg",
+    "title": "Bild 2: Menschen im Bus",
+    "image": "/assets/sprechen/dtz-bus.jpg",
     "beschreibung": [
       "Beschreiben Sie, wie die Menschen sitzen. Wie sehen sie aus?",
       "Was ist das Thema dieses Bildes? Was drücken die Gesichter aus?"
@@ -25,20 +28,26 @@
       "Ist eine lange Busfahrt anstrengend für Sie? Warum?",
       "Wie kommen Sie zur Arbeit oder zur Schule?",
       "Was machen Sie gerne während einer langen Fahrt?"
-    ]
+    ],
+    "slug": "dtz-bus",
+    "imageNeeded": "Fahrgäste in einem Bus oder einer Bahn, müde, einige schauen aus dem Fenster oder aufs Handy.",
+    "imageQuery": "tired passengers bus public transport commute"
   },
   {
-    "title": "Bild 3: Junger Mann hilft älterer Frau an der Rolltreppe",
-    "image": "/assets/sprechen-rolltreppe-hilfe.jpg",
+    "title": "Bild 3: Junger Mann hilft einer älteren Frau",
+    "image": "/assets/sprechen/dtz-rolltreppe.jpg",
     "beschreibung": [
       "Was ist die Situation hier? Was macht der junge Mann für die Frau?",
-      "Wo könnte das sein? Beschreiben Sie den Ort."
+      "Wo könnte das sein? Beschreiben Sie den Ort und die Jahreszeit."
     ],
     "persoenlich": [
       "Helfen Sie fremden Menschen im Bus oder in der Bahn? Geben Sie Platz ab?",
       "Ist es wichtig, älteren Menschen zu helfen? Warum?",
       "Respektieren junge Menschen bei Ihnen zu Hause die älteren?",
       "Haben Sie schon mal jemandem geholfen, der fremd in der Stadt war? Wie war das?"
-    ]
+    ],
+    "slug": "dtz-rolltreppe",
+    "imageNeeded": "Ein jüngerer Mensch stützt eine ältere Person am Arm, beide unterwegs. Tageslicht.",
+    "imageQuery": "young man helping senior woman walk holding arm"
   }
 ]

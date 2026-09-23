@@ -1,0 +1,19 @@
+/* The language chips and the draft notice of every "Hilfe in der eigenen Sprache" widget:
+   TextWithTranslation and VocabList on Lesen/Schreiben, GrammarHelp on the grammar topics.
+   One file so the three stay one control — lifted out of skills.css when the grammar
+   pages, which do not load that sheet, needed the same chips. */
+.help-langs { display: flex; flex-wrap: wrap; gap: 6px; }
+.help-lang {
+  min-height: 36px;
+  padding: 6px 12px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface-card);
+  color: var(--muted);
+  font: inherit;
+  font-size: .875rem;
+  cursor: pointer;
+}
+.help-lang:hover { color: var(--ink); border-color: var(--border-strong); }
+.help-lang[aria-pressed="true"] { color: var(--brand-blue-dark); border-color: var(--brand-blue); background: var(--surface); font-weight: var(--fw-semibold); }
+.help-draft { margin: 8px 0 0; font-size: .8125rem; color: var(--muted); }

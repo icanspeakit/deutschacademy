@@ -89,6 +89,13 @@ export function createRuleIntro({
   restHidden = true,
   /** Edge tab the collapsed column leaves behind; lit instead of `ruleBtn` in beat 2. */
   pivot = null,
+  /** Extra beats played while the column is open, between "this is the panel" and
+      "this is its switch" — for a column with something in it worth naming on its own.
+      Each is `{ title, text, target: () => el, point?: () => el, enter?, act?, leave? }`:
+      `enter` gets the page into the state the beat shows, `act` (optional) is the click
+      the cursor then makes on `point`, `leave` puts it all back, and `leave` runs on
+      cancel too. Desktop only; the phone tellings have no room for them. */
+  beats = [],
 }) {
   // Two beats either way; `coach` lets a page that is collapsing something other
   // than a grammar rule say so in its own words.
@@ -99,6 +106,8 @@ export function createRuleIntro({
   let coach = null;
   let cursor = null;
   let running = false;
+  // The extra beats that have entered and not yet left, so a cancel can undo them.
+  let entered = [];
 
   const at = (ms, fn) => timers.push(setTimeout(fn, ms));
 
@@ -152,9 +161,13 @@ export function createRuleIntro({
 
   // Beside a tall target (the panel), below a short one (the toggle).
   function showCoach(step, r, below) {
+    showCoachText(script[step], r, below);
+  }
+  function showCoachText([title, text], r, below) {
+    if (!coach) return;
     const gap = 20;
-    coach.querySelector(".ri-coach-title").textContent = say(script[step][0]);
-    coach.querySelector(".ri-coach-text").textContent = say(script[step][1]);
+    coach.querySelector(".ri-coach-title").textContent = say(title);
+    coach.querySelector(".ri-coach-text").textContent = say(text);
     // The card is narrower than 300px on a small phone, so ask it rather than
     // assume — every clamp below is in terms of its real width.
     const w = coach.offsetWidth;
@@ -223,12 +236,66 @@ export function createRuleIntro({
     window[fn]("resize", onResize);
   }
 
+  function leaveBeats() {
+    entered.forEach((b) => b.leave?.());
+    entered = [];
+  }
+
+  // Schedules the extra beats from `t0`, and returns how long they take, which is how far
+  // everything after them has to move. The panel is already open and still; each beat
+  // enters its state, waits a breath for it to paint, then lights it.
+  const BEAT_MS = 3400;
+  // A beat with `act` shows the control being used, not just named: it lights the
+  // target, the cursor presses `point`, `act` changes the page, and the frame follows
+  // the new shape. That takes longer to read, so such a beat gets ACT_MS more.
+  const ACT_MS = 1800;
+  const lengthOf = (b) => BEAT_MS + (b.act ? ACT_MS : 0);
+  function playBeats(t0) {
+    if (!beats.length) return 0;
+    let t = t0;
+    beats.forEach((b) => {
+      const start = t;
+      t += lengthOf(b);
+      if (b.act) {
+        at(start + 1900, () => {
+          if (cursor) click();
+          b.act();
+        });
+        // After the fold has moved: frame what is left of the target.
+        at(start + 2400, () => {
+          const el = b.target();
+          if (el && hole) showCoachText([b.title, b.text], frame(el, 10, 16), false);
+        });
+      }
+      at(start, () => {
+        coach?.classList.remove("is-on");
+        b.enter?.();
+        entered.push(b);
+      });
+      at(start + 350, () => {
+        const el = b.target();
+        if (!el || !hole) return;
+        const r = frame(el, 10, 16);
+        const p = b.point?.() ?? null;
+        if (p && cursor) {
+          const [cx, cy] = centerOf(p);
+          cursor.classList.add("is-on");
+          placeCursor(cx, cy);
+        }
+        showCoachText([b.title, b.text], r, false);
+      });
+    });
+    at(t, () => { coach?.classList.remove("is-on"); leaveBeats(); });
+    return t - t0;
+  }
+
   function cancel() {
     if (!running) return;
     running = false;
     clearTimers();
     listen(false);
     removeOverlay();
+    leaveBeats();
     ruleBtn?.removeAttribute("data-peek");
     pivot?.removeAttribute("data-peek");
     setRule(restHidden);
@@ -264,13 +331,15 @@ export function createRuleIntro({
     // toggle moves with it, so every later beat re-measures rather than reusing bx/by.
     // 900ms after the click is --vp-slide plus a breath; keep the two in step.
     at(2400, () => showCoach(0, frame(ruleEl, 12, 22), false));
-    at(4700, () => {
+    // Anything in the column worth its own beat, while the column is still open.
+    const d = playBeats(4700);
+    at(4700 + d, () => {
       coach?.classList.remove("is-on");
       const r = frame(ruleBtn, 8, 999);
       placeCursor(r.left + r.width / 2, r.top + r.height / 2);
     });
-    at(5300, () => showCoach(1, ruleBtn.getBoundingClientRect(), true));
-    at(7100, () => {
+    at(5300 + d, () => showCoach(1, ruleBtn.getBoundingClientRect(), true));
+    at(7100 + d, () => {
       coach?.classList.remove("is-on");
       click();
       setRule(true);
@@ -278,17 +347,17 @@ export function createRuleIntro({
     // The panel is away by now, so on a page with an edge tab the tab is what the eye
     // should be left on — following the light back to the toolbar pill would point at
     // the wrong one of the two ways back.
-    at(8000, () => {
+    at(8000 + d, () => {
       const r = frame(backControl(), 8, 999);
       placeCursor(r.left + r.width / 2, r.top + r.height / 2);
     });
-    at(8500, () => {
+    at(8500 + d, () => {
       overlay?.classList.remove("is-on");
       cursor?.classList.remove("is-on");
       backControl().setAttribute("data-peek", "");
     });
-    at(9100, removeOverlay);
-    at(11600, () => {
+    at(9100 + d, removeOverlay);
+    at(11600 + d, () => {
       ruleBtn?.removeAttribute("data-peek");
       pivot?.removeAttribute("data-peek");
       finish();
@@ -382,18 +451,19 @@ export function createRuleIntro({
 
     // Beat 1 — name what is already there.
     at(500, () => showCoach(0, frame(ruleEl, 12, 22), false));
+    const d = playBeats(3200);
 
     // Beat 2 — put it away, and show what is left behind.
-    at(3200, () => {
+    at(3200 + d, () => {
       coach?.classList.remove("is-on");
       cursor?.classList.add("is-on");
       placeCursor(bx, by);
     });
-    at(3900, () => {
+    at(3900 + d, () => {
       click();
       setRule(true);
     });
-    at(4900, () => {
+    at(4900 + d, () => {
       const target = backControl();
       const r = frame(target, 8, 14);
       showCoach(1, r, false);
@@ -402,18 +472,18 @@ export function createRuleIntro({
     });
 
     // And give the page back the way it was found.
-    at(7600, () => {
+    at(7600 + d, () => {
       coach?.classList.remove("is-on");
       click();
       setRule(false);
     });
-    at(8500, () => {
+    at(8500 + d, () => {
       overlay?.classList.remove("is-on");
       cursor?.classList.remove("is-on");
       ruleBtn?.setAttribute("data-peek", "");
     });
-    at(9100, removeOverlay);
-    at(11600, () => {
+    at(9100 + d, removeOverlay);
+    at(11600 + d, () => {
       ruleBtn?.removeAttribute("data-peek");
       finish();
     });

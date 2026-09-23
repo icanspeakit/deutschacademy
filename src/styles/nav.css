@@ -203,7 +203,7 @@
   .nv-aside .nvb-panel { overflow-y: visible; }
 }
 .nvb-rail {
-  width: 64px; flex-shrink: 0; background: var(--inverse-surface);
+  width: 64px; flex-shrink: 0; background: var(--rail-surface);
   display: flex; flex-direction: column; align-items: center; gap: var(--space-2);
   padding: var(--space-3) 0;
 }
@@ -1221,19 +1221,6 @@
   .nv-scale::-webkit-scrollbar { display: none; }
   .nv-scale-chip { flex-shrink: 0; scroll-snap-align: start; }
 }
-
-/* Dev only — the two seed buttons from LearnShell.astro. .vp-dev-reset positions itself
-   fixed in the corner, so a second one would land exactly on top of the first; this makes
-   the pair one fixed row and lets them sit static inside it. */
-.nv-dev-seed {
-  position: fixed;
-  right: 12px;
-  bottom: calc(12px + env(safe-area-inset-bottom, 0px));
-  z-index: 9100;
-  display: flex;
-  gap: 8px;
-}
-.nv-dev-seed .vp-dev-reset { position: static; }
 
 /* ─────────────────────────────────────────────────────────────── Dein Weg ──
  * The left pane of /fortschritt, as a record instead of a menu. Sits inside

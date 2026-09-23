@@ -16,7 +16,7 @@ const grammarQuestionCount = grammatik.reduce((sum, t) => sum + t.questions.leng
 const readingQuestionCount = lesen.groups.reduce((sum, g) => sum + g.questions.length, 0);
 
 const tools = [
-  { href: "/uebungen/artikel-trainer", icon: "🎯", title: "der/die/das-Trainer", desc: "Artikel gezielt üben, mit sofortigem Feedback.", count: `${artikel.length} Nomen` },
+  { href: "/uebungen/grammatik/artikel", icon: "🎯", title: "der/die/das-Trainer", desc: "Artikel gezielt üben, mit sofortigem Feedback.", count: `${artikel.length} Nomen` },
   { href: "/uebungen/grammatik", icon: "📚", title: "Grammatik-Quiz", desc: "Lückentext-Übungen zu Akkusativ, Dativ, Passiv und mehr.", count: `${grammatik.length} Themen · ${grammarQuestionCount} Fragen` },
   { href: "/uebungen/wortschatz", icon: "🗂️", title: "Wortschatz & Redemittel", desc: "Karteikarten zum Umdrehen und Wiederholen.", count: `${wortschatz.length} Karten` },
   { href: "/uebungen/aussprache", icon: "🔊", title: "Aussprache-Training", desc: "Wörter anhören und im Langsam-Modus üben.", count: `${wortschatz.length + artikel.length} Wörter` },
@@ -42,7 +42,7 @@ const stats = [
 
 const byHref = (hrefs: string[]) => tools.filter((t) => hrefs.includes(t.href));
 const journey = [
-  { title: "Grammatik", desc: "Der Kern zuerst: Fälle, Zeiten, Sätze — mit durchdachten Übungen statt schnellen Tipps.", items: byHref(["/uebungen/grammatik", "/uebungen/artikel-trainer"]) },
+  { title: "Grammatik", desc: "Der Kern zuerst: Fälle, Zeiten, Sätze — mit durchdachten Übungen statt schnellen Tipps.", items: byHref(["/uebungen/grammatik", "/uebungen/grammatik/artikel"]) },
   { title: "Alltagsdeutsch", desc: "Echte Szenarien statt Lehrbuchdialoge: Ämter, Wohnungssuche, der Alltag.", items: byHref(["/uebungen/wortschatz", "/uebungen/aussprache", "/uebungen/lesen-schreiben", "/uebungen/kultur"]) },
   { title: "Sprechpraxis", desc: "Der Teil, der sonst nur im Präsenzunterricht geübt wird.", items: byHref(["/uebungen/sprechen"]) },
 ];

@@ -1,0 +1,413 @@
+---
+// /t1 study — the der/die/das trainer without the dark level rail, the exercise given most
+// of the screen. A copy, not the live trainer: ArtikelTrainer.astro is being reworked in
+// another session (rail kept, packs inside), and this page exists so the two directions can
+// be compared side by side. Shares the logic — lexicon, artikelPacks.js, artikelVerlauf.js,
+// practiceWorkspace.js — and has its own markup and styles (ArtikelPanelT1, artikel-t1.css).
+import ArtikelPanelT1 from "./ArtikelPanelT1.astro";
+import LeichtToggle from "./LeichtToggle.astro";
+import "../styles/akkusativ.css";
+import "../styles/verben-praepositionen.css";
+import "../styles/artikel-t1.css";
+import { buildArtikelPacks, PACK_CONFIG } from "../lib/artikelPacks.js";
+import { nouns } from "../lib/lexicon.js";
+import haeufigkeit from "../data/artikel-haeufigkeit.json";
+
+// One session is SESSION_SIZE questions drawn from the chosen level — the pool is now
+// ~860 nouns (was 31 hand-listed ones), far too many for a single sitting.
+const SESSION_SIZE = 25;
+
+function explainArtikel(word, gender) {
+  const lower = word.toLowerCase();
+  if (word === "Mann" || word === "Arzt") return `„${word}“ bezeichnet eine männliche Person – solche Wörter sind maskulin.`;
+  if (word === "Frau") return `„${word}“ bezeichnet eine weibliche Person – solche Wörter sind feminin.`;
+  if (word === "Kind") return `„Kind“ ist ein Sonderfall: Es bezieht sich auf Jungen und Mädchen, ist aber grammatisch neutrum.`;
+  if (word === "Kollege") return `„Kollege“ endet zwar auf -e, bezeichnet aber eine männliche Person – solche Personenbezeichnungen bleiben maskulin.`;
+  if (lower.endsWith("in")) return `Die Endung -in kennzeichnet die weibliche Form (z. B. Ärztin, Kollegin) – solche Wörter sind feminin.`;
+  if (lower.endsWith("chen") || lower.endsWith("lein")) return `Verkleinerungsformen auf -chen oder -lein sind immer neutrum.`;
+  if (lower.endsWith("e")) return `Viele zweisilbige Wörter auf -e sind feminin (z. B. Tasche, Sonne, Katze).`;
+  if (lower.endsWith("er")) return `Viele Wörter auf -er – Werkzeuge, Geräte und männliche Personenbezeichnungen – sind maskulin.`;
+  if (lower.endsWith("el")) return `Viele Wörter auf -el sind maskulin (z. B. Schlüssel, Apfel).`;
+  return `Für „${word}“ gibt es keine feste Regel – der Artikel wird mit dem Wort zusammen gelernt.`;
+}
+
+/* The same explanations in Leichte Sprache — see src/lib/leichteSprache.js.
+ *
+ * Every one of the sentences above is harder than the question it explains: "Verkleinerungs-
+ * formen", "Personenbezeichnungen", "kennzeichnet die weibliche Form" are B2 vocabulary in
+ * front of an A1 task, read by the learner who just got it wrong. These say the same thing
+ * in short main clauses, one statement each, with the grammatical term either dropped or
+ * restated in plain words right after it.
+ *
+ * Written by hand beside the originals on purpose: nothing here is generated, so a case
+ * without an easy version keeps its normal text instead of an unchecked simplification. */
+function explainArtikelLeicht(word, gender) {
+  const lower = word.toLowerCase();
+  if (word === "Mann" || word === "Arzt") return `Ein ${word} ist ein Mann. Wörter für Männer haben „der“.`;
+  if (word === "Frau") return `Eine Frau ist kein Mann. Wörter für Frauen haben „die“.`;
+  if (word === "Kind") return `Ein Kind kann ein Junge sein. Oder ein Mädchen. Trotzdem sagt man immer „das Kind“.`;
+  if (word === "Kollege") return `„Kollege“ endet auf -e. Aber ein Kollege ist ein Mann. Darum sagt man „der Kollege“.`;
+  if (lower.endsWith("in")) return `Das Wort endet auf -in. Das ist die Form für eine Frau. Solche Wörter haben „die“.`;
+  if (lower.endsWith("chen") || lower.endsWith("lein")) return `Das Wort endet auf -chen oder -lein. Das heißt: Es ist etwas Kleines. Solche Wörter haben immer „das“.`;
+  if (lower.endsWith("e")) return `Das Wort endet auf -e. Sehr viele kurze Wörter auf -e haben „die“. Zum Beispiel: die Tasche, die Sonne.`;
+  if (lower.endsWith("er")) return `Das Wort endet auf -er. Sehr viele Wörter auf -er haben „der“. Zum Beispiel: der Computer.`;
+  if (lower.endsWith("el")) return `Das Wort endet auf -el. Sehr viele Wörter auf -el haben „der“. Zum Beispiel: der Schlüssel.`;
+  return `Für „${word}“ gibt es keine Regel. Lerne das Wort immer zusammen mit „${gender}“.`;
+}
+
+// `id` is the lexicon's stable slug, not an array index, so a learner's progress for
+// "haus" survives every future addition to the pool.
+// A1–B2: the lexicon carries gendered nouns at every one of them (386 / 478 / 762 /
+// 951), and the old two-level filter put three quarters of them out of reach.
+const lexNouns = nouns({ level: ["A1", "A2", "B1", "B2"], has: "gender" });
+
+// "Nach Häufigkeit": the nouns that have a corpus count, most frequent first. `freqPos` is
+// the place in that order (1 = most frequent), which is what a round slices on.
+const ranked = lexNouns
+  .filter((n) => n.rank != null && haeufigkeit[n.id])
+  .sort((a, b) => a.rank - b.rank);
+const freqPos = new Map(ranked.map((n, i) => [n.id, i + 1]));
+const freqTotal = ranked.reduce((sum, n) => sum + haeufigkeit[n.id], 0);
+
+const pool = lexNouns.map((n) => ({
+  id: n.id,
+  level: n.level,
+  freqPos: freqPos.get(n.id) ?? null,
+  // For the "Wie oft hört man das?" chart. `freq` is null for the nouns the corpus list
+  // does not reach — the rarities.
+  lemma: n.lemma,
+  freq: freqPos.has(n.id) ? haeufigkeit[n.id] : null,
+  prompt: `___ ${n.lemma}?`,
+  options: ["der", "die", "das"],
+  answer: n.gender,
+  explain: explainArtikel(n.lemma, n.gender),
+  explainLeicht: explainArtikelLeicht(n.lemma, n.gender),
+  change: `${n.gender} ${n.lemma}`,
+  // "der Tisch", spoken — only for nouns that have a file (see generate-wortschatz-audio
+  // --nouns). Played once the answer is settled, never before: it says the article.
+  ...(n.audio ? { audioSrc: `/audio/wortschatz/${n.audio}.mp3` } : {}),
+}));
+
+const AP_LEVELS = ["A1", "A2", "B1", "B2"];
+const levelCounts = Object.fromEntries(AP_LEVELS.map((l) => [l, pool.filter((q) => q.level === l).length]));
+
+// Topic and rule packs per level — see src/lib/artikelPacks.js for how nouns are assigned
+// and src/data/artikel-packs.json for the packs themselves.
+const { byLevel: packs, exceptions } = buildArtikelPacks(lexNouns);
+// What a rule-pack session says after a wrong answer: the rule, or for an exception, why
+// it is one. Keyed by noun id; the client picks the one for the pack being played.
+const exceptionText = Object.fromEntries(exceptions.map((e) => [e.id, {
+  explain: `„${e.lemma}“ sieht aus wie „${PACK_CONFIG.rules.find((r) => r.id === e.rule)?.name}“ (${e.why}) — hat aber „${e.gender}“. Eine Ausnahme.`,
+  explainLeicht: `„${e.lemma}“ passt nicht zur Regel. Man sagt „${e.gender} ${e.lemma}“.`,
+}]));
+const clientPacks = Object.fromEntries(AP_LEVELS.map((l) => [l, {
+  topics: packs[l].topics.map(({ id, name, ids }) => ({ id, name, ids })),
+  rules: packs[l].rules.map(({ id, name, rule, ruleLeicht, ids }) => ({ id, name, rule, ruleLeicht, ids })),
+}]));
+
+// The curve under the frequency chart, thinned: every point would be 1 621 path segments for
+// a line 480px wide. The first 50 stay whole, because that is where it bends.
+const curve = ranked
+  .map((n, i) => [i + 1, haeufigkeit[n.id]])
+  .filter(([p], i, all) => p <= 50 || p % 12 === 0 || i === all.length - 1);
+const freqChart = {
+  curve,
+  total: ranked.length,
+  maxCount: Math.max(...ranked.map((n) => haeufigkeit[n.id])),
+  minCount: Math.min(...ranked.map((n) => haeufigkeit[n.id])),
+};
+---
+
+  <div class="ak-layout">
+    {/* The panel: level switch, "Weiter üben", the packs. First in the DOM, so on a phone
+        it is the first thing met — with the packs folded, so the exercise is not pushed
+        a screen down. See ArtikelPanelT1.astro. */}
+    <aside class="vp-card ak-side" aria-label="Was üben?">
+      <ArtikelPanelT1 counts={levelCounts} current="A1" packs={packs} />
+    </aside>
+
+    <section class="ak-main" id="ak-main">
+      <div class="vp-card">
+      <div class="akk-mode-row">
+        <div class="akk-mode" role="group" aria-label="Übungsmodus" data-i18n-attr="aria-label:akk.mode.ariaLabel">
+          <button class="akk-mode-btn active" data-mode="fokus" type="button" data-i18n="akk.mode.fokus">Fokus-Modus</button>
+          <span class="akk-mode-sep">·</span>
+          <button class="akk-mode-btn" data-mode="test" type="button" data-i18n="akk.mode.test">Testmodus</button>
+        </div>
+        {/* Sound on/off for "der Tisch" after each answer. Same switch as Leichte Sprache beside
+            it; the state lives in practiceWorkspace.js, remembered per browser. */}
+        <button type="button" class="ls-switch ls-switch--sound" data-sound-switch aria-pressed="true" title="Aussprache nach der Antwort an- oder ausschalten">
+          <span class="ls-switch-track" aria-hidden="true"><span class="ls-switch-knob"></span></span>
+          <span class="ls-switch-txt">
+            <span class="ls-switch-kicker">Aussprache</span>
+            <span class="ls-switch-state" data-sound-switch-state>Ton an</span>
+          </span>
+        </button>
+        <LeichtToggle />
+      </div>
+      <p class="ak-now" data-ak-now aria-live="polite"></p>
+      <div id="akk-exercise-root"></div>
+      </div>
+
+      {/* How common the words of this session are in real life — see artikelFreqChart.js. */}
+      <figure class="vp-card afc" id="akk-freq">
+        <figcaption class="afc-title">Wie oft hört man das?</figcaption>
+        <p class="afc-head" data-freq-head aria-live="polite"></p>
+        <div class="afc-plot">
+          <svg role="img" aria-label="Häufigkeit der Wörter dieser Übung im Alltag"></svg>
+          <div class="afc-tip" data-freq-tip hidden></div>
+        </div>
+        <p class="afc-note">Wie oft ein Wort in deutschen Film-Untertiteln vorkommt (OpenSubtitles). Rechts: Wörter, die dort zu selten sind, um gezählt zu werden.</p>
+        <details class="afc-table">
+          <summary>Alle Wörter dieser Übung</summary>
+          <ol data-freq-list></ol>
+        </details>
+      </figure>
+
+      <footer class="akk-footer">
+        <div class="akk-session-ring">
+          <svg viewBox="0 0 56 56">
+            <circle class="akk-ring-track" cx="28" cy="28" r="24" />
+            <circle class="akk-ring-fill" id="akk-ring-fill" cx="28" cy="28" r="24" stroke-dasharray="150.8" stroke-dashoffset="150.8" />
+          </svg>
+          <span class="akk-ring-num" id="akk-ring-num">0%</span>
+        </div>
+        <div class="akk-session-text">
+          <span class="akk-session-label" data-i18n="akk.session.label">Diese Sitzung</span>
+          <p class="akk-session-stats" id="akk-session-stats">0 von {SESSION_SIZE} beantwortet · 0 richtig · 0 Hinweise</p>
+        </div>
+        <span class="akk-session-badge" data-i18n="akk.session.badge">lokal · ohne Konto</span>
+      </footer>
+    </section>
+  </div>
+
+  <script type="application/json" id="akk-data" set:html={JSON.stringify(pool)}></script>
+  <script type="application/json" id="akk-packs" set:html={JSON.stringify(clientPacks)}></script>
+  <script type="application/json" id="akk-exceptions" set:html={JSON.stringify(exceptionText)}></script>
+  <script type="application/json" id="akk-freq-data" set:html={JSON.stringify(freqChart)}></script>
+  <script type="application/json" id="akk-session-size" set:html={JSON.stringify(SESSION_SIZE)}></script>
+  <script type="module">
+    import { mountPracticeWorkspace, isSoundOn, setSoundOn } from "../lib/practiceWorkspace.js";
+    import { mountLeichteSprache } from "../lib/leichteSprache.js";
+    import { recordAttempt } from "../lib/progress.js";
+    import { mountFreqChart } from "../lib/artikelFreqChart.js";
+    import { getLang, loadDict, onLangChange } from "../lib/i18n.js";
+    import { record, stats, isFehler, buildSession, buildFehlerSession } from "../lib/artikelVerlauf.js";
+
+    let dict = {};
+    function tr(key, vars) {
+      const str = dict[key];
+      if (str == null) return key;
+      if (!vars) return str;
+      return str.replace(/\{(\w+)\}/g, (m, k) => (k in vars ? String(vars[k]) : m));
+    }
+
+    const read = (id) => JSON.parse(document.getElementById(id).textContent);
+    const pool = read("akk-data");
+    const PACKS = read("akk-packs");
+    const EXCEPTIONS = read("akk-exceptions");
+    const SESSION_SIZE = read("akk-session-size");
+    const byId = new Map(pool.map((q) => [q.id, q]));
+    const exerciseRoot = document.getElementById("akk-exercise-root");
+    const nowLine = document.querySelector("[data-ak-now]");
+
+    const ringFill = document.getElementById("akk-ring-fill");
+    const ringNum = document.getElementById("akk-ring-num");
+    const statsText = document.getElementById("akk-session-stats");
+    const RING_CIRCUMFERENCE = 150.8;
+
+    let lastStats = { answered: 0, correct: 0, hints: 0, total: SESSION_SIZE };
+    function renderStats() {
+      const { answered, correct, hints, total } = lastStats;
+      const pct = total ? Math.round((correct / total) * 100) : 0;
+      ringFill.style.strokeDashoffset = String(RING_CIRCUMFERENCE * (1 - pct / 100));
+      ringNum.textContent = `${pct}%`;
+      statsText.textContent = tr("akk.session.stats", { answered, total, correct, hints });
+    }
+    function onSessionUpdate(s) {
+      lastStats = s;
+      renderStats();
+    }
+    loadDict(getLang()).then((d) => { dict = d; renderStats(); });
+    onLangChange((code, newDict) => { dict = newDict; renderStats(); });
+
+    /* ── Level: ?stufe=a1, linkable and kept across a reload. ?niveau= is what older
+       links (and the nav's per-level rows) carry, so it is read too, then rewritten. ── */
+    const LEVELS = Object.keys(PACKS);
+    const params = new URLSearchParams(location.search);
+    const wanted = (params.get("stufe") || params.get("niveau") || "").toUpperCase();
+    let level = LEVELS.includes(wanted) ? wanted : "A1";
+    let mode = "fokus";
+    let practice = null;
+    let current = { kind: "weiter", id: null };
+
+    const levelPool = () => pool.filter((q) => q.level === level);
+
+    function writeUrl() {
+      const url = new URL(location.href);
+      url.searchParams.delete("niveau");
+      url.searchParams.set("stufe", level.toLowerCase());
+      history.replaceState(history.state, "", url);
+    }
+
+    /* ── The panel ─────────────────────────────────────────────────────────────── */
+    const panel = document.querySelector("[data-akp]");
+    const levelBtns = [...panel.querySelectorAll("[data-akp-level-btn]")];
+    const more = panel.querySelector("[data-akp-more]");
+    const fehlerBtn = panel.querySelector("[data-akp-fehler]");
+    const compact = matchMedia("(max-width: 1000px)");
+    // On a phone the packs start folded: open, they are two screens of rows between the
+    // learner and the exercise. On a desktop they are a column beside it, so they stay open.
+    if (compact.matches) more.open = false;
+
+    function packOf(key) {
+      const [kind, id] = key.split(":");
+      const list = kind === "topic" ? PACKS[level].topics : PACKS[level].rules;
+      return { kind, pack: list.find((p) => p.id === id) };
+    }
+
+    function refresh() {
+      const ids = levelPool().map((q) => q.id);
+      const s = stats(ids);
+      panel.querySelector("[data-akp-lead]").textContent =
+        `${ids.length} Nomen auf Stufe ${level}. Übe alle gemischt oder wähle ein Thema.`;
+      panel.querySelector("[data-akp-sicher]").textContent = `${s.sicher} von ${s.total} Nomen sicher`;
+      panel.querySelector("[data-akp-bar]").style.width = `${s.total ? (s.sicher / s.total) * 100 : 0}%`;
+      fehlerBtn.hidden = s.fehler === 0;
+      fehlerBtn.textContent = `Fehler wiederholen (${s.fehler})`;
+
+      levelBtns.forEach((b) => {
+        const on = b.dataset.akpLevelBtn === level;
+        b.classList.toggle("is-on", on);
+        b.setAttribute("aria-checked", String(on));
+      });
+      panel.querySelectorAll("[data-akp-packs]").forEach((el) => { el.hidden = el.dataset.akpPacks !== level; });
+      panel.querySelectorAll(`[data-akp-packs="${level}"] [data-akp-pack]`).forEach((btn) => {
+        const { pack } = packOf(btn.dataset.akpPack);
+        if (!pack) return;
+        const p = stats(pack.ids);
+        const filled = Math.round((p.sicher / p.total) * 5);
+        btn.querySelectorAll(".akp-dots i").forEach((dot, i) => dot.classList.toggle("on", i < filled));
+        btn.querySelector("[data-akp-state]").textContent = p.gesehen === 0 ? "neu" : `${p.sicher}/${p.total} sicher`;
+        btn.classList.toggle("is-on", `${current.kind}:${current.id}` === btn.dataset.akpPack);
+      });
+      panel.querySelector("[data-akp-go]").classList.toggle("is-on", current.kind === "weiter");
+    }
+
+    /* ── Sessions ───────────────────────────────────────────────────────────────── */
+    const freqChart = mountFreqChart(document.getElementById("akk-freq"), read("akk-freq-data"));
+    // The card on screen is the word the chart picks out. The workspace re-renders on every
+    // step, so watch for the card rather than hook each path that changes it.
+    new MutationObserver(() => {
+      freqChart.setCurrent(exerciseRoot.querySelector(".akk-focus-card")?.dataset.qid ?? null);
+    }).observe(exerciseRoot, { childList: true, subtree: true });
+
+    function mount(questions) {
+      exerciseRoot.innerHTML = "";
+      freqChart.setRound(questions);
+      practice = mountPracticeWorkspace(exerciseRoot, questions, {
+        onSessionUpdate,
+        onAnswer: (ok, id, info) => {
+          // "Sicher" counts first tries only; a second tap among three options is half a guess.
+          record(id, ok && info?.firstTry !== false);
+          // `topic` too, so the topic bar above and /fortschritt count the answer for Artikel.
+          recordAttempt({ skill: "grammatik", correct: ok, id, trackVocab: true, topic: "artikel" });
+          dispatchEvent(new CustomEvent("da:progress", { detail: { topic: "artikel", correct: ok } }));
+          refresh();
+        },
+      });
+      practice.setMode(mode);
+    }
+
+    const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+
+    // A rule pack is taught before it is drilled: the rule and a few real examples, then
+    // the session — in which a wrong answer shows the rule again, not the generic hint.
+    function ruleIntro(pack, questions) {
+      const examples = pack.ids.slice(0, 3).map((id) => byId.get(id)).filter(Boolean).map((q) => `${q.answer} ${q.lemma}`);
+      exerciseRoot.innerHTML = `
+        <div class="akp-intro akk-anim-in">
+          <p class="akp-intro-kicker">Regel</p>
+          <h3 class="akp-intro-title">${esc(pack.name)}</h3>
+          <p class="akp-intro-rule" data-ls="${esc(pack.rule)}" data-ls-leicht="${esc(pack.ruleLeicht)}">${esc(pack.rule)}</p>
+          <ul class="akp-intro-ex">${examples.map((e) => `<li>${esc(e)}</li>`).join("")}</ul>
+          <button type="button" class="akk-btn akk-btn-primary" data-akp-start>Los geht's</button>
+        </div>`;
+      exerciseRoot.querySelector("[data-akp-start]").addEventListener("click", () => mount(questions));
+    }
+
+    function start(kind, id = null) {
+      current = { kind, id };
+      let questions;
+      let label = "";
+      if (kind === "fehler") {
+        questions = buildFehlerSession(levelPool(), SESSION_SIZE);
+        label = "Fehler wiederholen";
+      } else if (kind === "topic" || kind === "rule") {
+        const { pack } = packOf(`${kind}:${id}`);
+        const qs = pack.ids.map((x) => byId.get(x)).filter(Boolean);
+        questions = buildSession(qs, SESSION_SIZE);
+        label = pack.name;
+        if (kind === "rule") {
+          questions = questions.map((q) => {
+            const ex = EXCEPTIONS[q.id];
+            return pack.id === "ausnahmen" && ex
+              ? { ...q, explain: ex.explain, explainLeicht: ex.explainLeicht }
+              : { ...q, explain: pack.rule, explainLeicht: pack.ruleLeicht };
+          });
+        }
+      } else {
+        questions = buildSession(levelPool(), SESSION_SIZE);
+        label = `Stufe ${level} gemischt`;
+      }
+      nowLine.textContent = label;
+      refresh();
+      if (kind === "rule") ruleIntro(packOf(`rule:${id}`).pack, questions);
+      else mount(questions);
+    }
+
+    const toExercise = () => {
+      if (!compact.matches) return;
+      more.open = false;
+      document.getElementById("ak-main").scrollIntoView({ behavior: "smooth", block: "start" });
+    };
+
+    levelBtns.forEach((b) => b.addEventListener("click", () => {
+      if (b.dataset.akpLevelBtn === level) return;
+      level = b.dataset.akpLevelBtn;
+      writeUrl();
+      start("weiter");
+    }));
+    panel.querySelector("[data-akp-go]").addEventListener("click", () => { start("weiter"); toExercise(); });
+    fehlerBtn.addEventListener("click", () => { start("fehler"); toExercise(); });
+    panel.querySelectorAll("[data-akp-pack]").forEach((btn) => btn.addEventListener("click", () => {
+      const [kind, id] = btn.dataset.akpPack.split(":");
+      start(kind, id);
+      toExercise();
+    }));
+
+    // The workspace rebuilds its DOM on every answer, so the switch watches for what
+    // arrives rather than painting once — see the MutationObserver note in leichteSprache.js.
+    mountLeichteSprache(document.getElementById("vp-page"));
+
+    const soundSwitch = document.querySelector("[data-sound-switch]");
+    const syncSoundSwitch = () => {
+      soundSwitch.setAttribute("aria-pressed", String(isSoundOn()));
+      soundSwitch.querySelector("[data-sound-switch-state]").textContent = isSoundOn() ? "Ton an" : "Ton aus";
+    };
+    soundSwitch.addEventListener("click", () => setSoundOn(!isSoundOn()));
+    document.addEventListener("practice:sound", syncSoundSwitch);
+    syncSoundSwitch();
+
+    document.querySelectorAll(".akk-mode-btn").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        document.querySelectorAll(".akk-mode-btn").forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+        mode = btn.dataset.mode;
+        practice?.setMode(mode);
+      });
+    });
+
+    if (params.has("niveau") || params.has("stufe")) writeUrl();
+    start("weiter");
+  </script>

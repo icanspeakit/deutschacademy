@@ -32,7 +32,7 @@ const lexiconCounts = counts();
 const artikelNounCount = asArtikelRows({ level: ["A1", "A2"] }).length;
 
 const tools = [
-  { id: "artikel", href: "/uebungen/artikel-trainer", icon: "target", title: "der/die/das-Trainer", short: "Artikel", desc: "Artikel gezielt üben, mit sofortigem Feedback.", count: `${artikelNounCount} Nomen` },
+  { id: "artikel", href: "/uebungen/grammatik/artikel", icon: "target", title: "der/die/das-Trainer", short: "Artikel", desc: "Artikel gezielt üben, mit sofortigem Feedback.", count: `${artikelNounCount} Nomen` },
   { id: "grammatik", href: "/uebungen/grammatik", icon: "book", title: "Grammatik", short: "Grammatik", desc: "Themen nach Niveau: Akkusativ, Dativ, Passiv und mehr.", count: `${grammatik.length} Themen` },
   { id: "praep", href: "/uebungen/grammatik/verben-praepositionen", icon: "link", title: "Verben mit Präpositionen", short: "Präpositionen", desc: "Feste Präpositionen in fünf Aufgabentypen üben.", count: `${prepositionVerbCount} Verben` },
   { id: "wortschatz", href: "/uebungen/wortschatz", icon: "folder", title: "Wortschatz & Redemittel", short: "Wortschatz", desc: "Karteikarten zum Umdrehen und Wiederholen.", count: `${wortschatz.length} Karten` },

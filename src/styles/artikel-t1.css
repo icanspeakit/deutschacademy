@@ -1,0 +1,149 @@
+/* /t1 study — the der/die/das trainer with the exercise given most of the screen.
+   See ArtikelTrainerT1.astro. Tokens only, so dark mode follows. */
+
+/* One bar above the work (TopicBar), then straight into it: no lesson toggle, no
+   "Übungen" heading, and the page's top padding cut to a breath. */
+.vp-page.ak-t1 { max-width: 1320px; padding-top: 14px; }
+
+.ak-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 272px;
+  grid-template-areas: "main side";
+  gap: 20px;
+  align-items: start;
+}
+.ak-main { grid-area: main; min-width: 0; display: grid; gap: 16px; }
+.ak-side { grid-area: side; position: sticky; top: 12px; padding: 16px; }
+
+/* The exercise card is the page: at least three quarters of the window below the bars. */
+.ak-main > .vp-card:first-child {
+  min-height: calc(100vh - 190px);
+  display: flex;
+  flex-direction: column;
+}
+.ak-main > .vp-card:first-child #akk-exercise-root { flex: 1; display: flex; flex-direction: column; justify-content: center; }
+.ak-t1 .akk-focus-sentence { font-size: clamp(28px, 3.2vw, 40px); }
+.ak-t1 .akk-pill { font-size: 20px; padding: 14px 30px; }
+
+/* Phone: the exercise first, the panel after it — a learner lands on a question, not on a menu. */
+@media (max-width: 1000px) {
+  .ak-layout { grid-template-columns: minmax(0, 1fr); grid-template-areas: "main" "side"; gap: 14px; }
+  .ak-side { position: static; padding: 14px; }
+  .ak-main > .vp-card:first-child { min-height: calc(100svh - 170px); }
+  .vp-page.ak-t1 { padding-left: 12px; padding-right: 12px; }
+}
+
+.ak-now {
+  margin: 0 0 8px;
+  font-family: var(--font-label);
+  font-size: 11px;
+  font-weight: var(--fw-bold);
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.ak-now:empty { display: none; }
+
+/* --- Panel ------------------------------------------------------------------ */
+.akp { display: grid; gap: 10px; text-align: left; }
+.akp-levels {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 4px;
+  padding: 4px;
+  border-radius: var(--radius-pill);
+  background: var(--surface-sunken, rgba(0, 0, 0, .05));
+}
+.akp-level {
+  min-height: 34px;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: transparent;
+  font-family: var(--font-label);
+  font-size: 13px;
+  font-weight: var(--fw-bold);
+  color: var(--muted);
+  cursor: pointer;
+}
+.akp-level:hover { color: var(--ink); }
+.akp-level.is-on { background: var(--surface-card); color: var(--brand-blue); box-shadow: 0 1px 4px rgba(8, 20, 34, .12); }
+.akp-lead { margin: 0; font-size: 13px; line-height: 1.45; color: var(--muted); }
+.akp-go { width: 100%; min-height: 44px; font-size: 15px; }
+.akp-progress { display: grid; gap: 6px; }
+.akp-progress-text { margin: 0; font-size: 13px; color: var(--ink); }
+.akp-bar { display: block; height: 6px; border-radius: var(--radius-pill); background: var(--blue-50); overflow: hidden; }
+.akp-bar > span { display: block; height: 100%; background: var(--gradient-brand); border-radius: var(--radius-pill); transition: width .3s ease; }
+.akp-fehler {
+  justify-self: start;
+  padding: 2px 0;
+  border: 0;
+  background: none;
+  font-size: 13.5px;
+  font-weight: var(--fw-semibold);
+  color: var(--brand-blue);
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.akp-more { border-top: 1px solid var(--border); padding-top: 8px; }
+.akp-more-sum { cursor: pointer; list-style: none; font-size: 13.5px; font-weight: var(--fw-semibold); color: var(--ink); padding: 4px 0; }
+.akp-more-sum::-webkit-details-marker { display: none; }
+.akp-more-sum::after { content: "▾"; margin-left: 6px; color: var(--muted); }
+details[open] > .akp-more-sum::after { content: "▴"; }
+@media (min-width: 1001px) {
+  .akp-more > .akp-more-sum { display: none; }
+  .akp-more { border-top: 0; padding-top: 0; }
+}
+.akp-head {
+  text-align: left;
+  margin: 10px 0 4px;
+  font-family: var(--font-label);
+  font-size: 11px;
+  font-weight: var(--fw-bold);
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.akp-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 1px; }
+.akp-pack {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 24px minmax(0, 1fr) auto;
+  grid-template-areas: "ic name dots" "ic state state";
+  align-items: center;
+  column-gap: 8px;
+  padding: 6px 8px;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  background: none;
+  text-align: left;
+  cursor: pointer;
+  color: var(--ink);
+}
+.akp-pack:hover { background: var(--surface-sunken, rgba(0, 0, 0, .04)); }
+.akp-pack.is-on { border-color: var(--brand-blue); background: var(--blue-50); }
+.akp-pack-ic { grid-area: ic; font-size: 17px; line-height: 1; text-align: center; }
+.akp-pack-name { grid-area: name; font-size: 13.5px; font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.akp-pack-state { grid-area: state; font-size: 11.5px; color: var(--muted); }
+.akp-dots { grid-area: dots; display: inline-flex; gap: 3px; }
+.akp-dots i { width: 6px; height: 6px; border-radius: 50%; background: var(--border-strong); }
+.akp-dots i.on { background: var(--brand-blue); }
+.akp-pack-art {
+  font-family: var(--font-label);
+  font-size: 10.5px;
+  font-weight: var(--fw-bold);
+  padding: 3px 0;
+  border-radius: 6px;
+  border: 1px solid var(--border-strong);
+  color: var(--muted);
+}
+.akp-art--der { color: #2f6fd6; border-color: currentColor; }
+.akp-art--die { color: #c2415a; border-color: currentColor; }
+.akp-art--das { color: #2e9a62; border-color: currentColor; }
+
+.akp-intro { padding: 8px 4px 4px; }
+.akp-intro-kicker { margin: 0 0 4px; font-family: var(--font-label); font-size: 11px; font-weight: var(--fw-bold); letter-spacing: .06em; text-transform: uppercase; color: var(--brand-blue); }
+.akp-intro-title { margin: 0 0 8px; font-size: 24px; font-weight: 500; }
+.akp-intro-rule { margin: 0 0 12px; font-size: 17px; line-height: 1.5; }
+.akp-intro-ex { margin: 0 0 18px; padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: 8px; }
+.akp-intro-ex li { padding: 6px 12px; border-radius: var(--radius-pill); border: 1px solid var(--border); font-size: 15px; }

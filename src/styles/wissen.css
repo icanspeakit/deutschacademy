@@ -337,6 +337,17 @@ body.wi-sheet-open { overflow: hidden; }
   box-shadow: 0 10px 24px -14px rgba(13, 148, 136, .8);
 }
 .wi-sheet-dl:hover { filter: brightness(1.05); }
+/* The translated editions: secondary to the main button, one tap each. */
+.wi-sheet-eds { margin-top: 16px; }
+.wi-sheet-eds-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(96px, 1fr)); gap: 8px; }
+.wi-sheet-ed {
+  display: flex; flex-direction: column; align-items: center; gap: 2px;
+  min-height: 44px; padding: 8px 10px;
+  border: 1px solid var(--border); border-radius: var(--radius);
+  color: var(--ink, inherit); font-weight: 600; text-decoration: none;
+}
+.wi-sheet-ed small { font-size: .75rem; font-weight: 400; color: var(--muted); }
+.wi-sheet-ed:hover { border-color: var(--brand-blue); }
 .wi-sheet-foot { margin: 10px 0 0; text-align: center; font-size: .8rem; color: var(--muted-soft); }
 
 /* Phone: a sheet from the bottom edge, where the thumb is, rather than a box

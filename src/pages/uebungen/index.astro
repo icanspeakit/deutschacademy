@@ -26,20 +26,6 @@ const workspaceCount = grammarWorkspaceLevels.reduce((n, row) => n + row.topics.
   <div class="uv">
     <PracticeHeader active="ueben" />
 
-    <header class="uv-hero">
-      <div class="uv-hero-inner">
-        <div>
-          <h1 data-i18n="hub.hero.title">Bereit zu üben?</h1>
-          <p data-i18n="hub.hero.subtitle">Wähle eine Übung oder starte direkt mit deiner nächsten Prüfungsvorbereitung.</p>
-        </div>
-        <div class="uv-hero-pills">
-          <span class="uv-pill uv-pill--ghost" data-i18n="hub.pill.exercises" data-i18n-vars={JSON.stringify({ n: exerciseCount })}>{exerciseCount} Übungen</span>
-          <span class="uv-pill uv-pill--ghost" data-i18n="hub.pill.exams" data-i18n-vars={JSON.stringify({ n: examCount })}>{examCount} Prüfungen</span>
-          <span class="uv-pill uv-pill--ghost" data-i18n="hub.pill.words" data-i18n-vars={JSON.stringify({ n: lexiconCounts.total })}>{lexiconCounts.total} Wörter A1–A2</span>
-        </div>
-      </div>
-    </header>
-
     <main class="uv-main">
       <div class="topic-tabs uv-mode-tabs" id="hub-mode-tabs">
         <button class="topic-tab active" type="button" data-mode="grid" data-i18n="hub.mode.grid">Übungen &amp; Prüfungen</button>

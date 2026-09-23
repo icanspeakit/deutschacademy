@@ -1,0 +1,1016 @@
+{
+  "id": "konjugation",
+  "name": "Konjugation: ein Verb in fünf Zeiten",
+  "level": "A2",
+  "subtitle": "Die Konjugationstabellen für die wichtigsten Verben — Präsens, Präteritum, Perfekt, Plusquamperfekt und Futur I. Zum Nachschlagen und zum Üben.",
+  "source": "Eigenes Material, A1–B1-Lehrplan",
+  "concept": {
+    "flow": [
+      {
+        "text": "Person · ich, du, er …",
+        "variant": "prep"
+      },
+      {
+        "text": "Zeit · jetzt, früher, später",
+        "variant": "verb"
+      },
+      {
+        "text": "Verbform"
+      }
+    ],
+    "exampleHtml": "Ich <span class=\"vp-verb\">fahre</span> heute. — Ich <span class=\"vp-verb\">bin</span> gestern <span class=\"vp-prep\">gefahren</span>. — Ich <span class=\"vp-verb\">werde</span> morgen <span class=\"vp-prep\">fahren</span>.",
+    "qa": [
+      {
+        "html": "<strong>Präsens</strong>: Stamm + Endung. <em>ich lern-e, du lern-st, er lern-t, wir lern-en, ihr lern-t, sie lern-en</em>. Auch für die Zukunft: <em>Morgen fahre ich.</em>",
+        "tag": "jetzt"
+      },
+      {
+        "html": "<strong>Präteritum</strong>: regelmäßig Stamm + <em>-te</em> (<em>lernte</em>), unregelmäßig mit neuem Vokal (<em>fuhr, ging, sprach</em>). <em>ich</em> und <em>er</em> sind immer gleich: <em>ich fuhr, er fuhr</em>.",
+        "tag": "geschrieben"
+      },
+      {
+        "html": "<strong>Perfekt</strong>: <em>haben</em> oder <em>sein</em> + Partizip II. <em>Ich habe gelernt. Ich bin gefahren.</em> So erzählt man mündlich von gestern.",
+        "tag": "gesprochen"
+      },
+      {
+        "html": "<strong>Plusquamperfekt</strong>: <em>hatte</em> oder <em>war</em> + Partizip II — für das, was noch <em>vor</em> der Vergangenheit war: <em>Ich hatte schon gegessen.</em>",
+        "tag": "davor"
+      },
+      {
+        "html": "<strong>Futur I</strong>: <em>werden</em> + Infinitiv. <em>Ich werde anrufen.</em> Für Pläne, Versprechen und Vermutungen.",
+        "tag": "später"
+      }
+    ],
+    "noteHtml": "Die meisten Verben muss man nicht auswendig lernen — sie folgen dem Muster von <strong>lernen</strong>. Auswendig lernen muss man <strong>sein, haben, werden</strong>, die Modalverben und die unregelmäßigen Verben wie <em>fahren, sprechen, gehen</em>.",
+    "reference": {
+      "open": true,
+      "showLabel": "Konjugationstabellen anzeigen ▼",
+      "hideLabel": "Konjugationstabellen ausblenden ▲",
+      "tables": [
+        {
+          "caption": "Fünf Zeiten, ein Verb: lernen",
+          "compact": true,
+          "head": [
+            "Zeit",
+            "ich",
+            "er/sie/es"
+          ],
+          "rows": [
+            [
+              "Präsens",
+              "lerne",
+              "lernt"
+            ],
+            [
+              "Präteritum",
+              "lernte",
+              "lernte"
+            ],
+            [
+              "Perfekt",
+              "habe gelernt",
+              "hat gelernt"
+            ],
+            [
+              "Plusquamperfekt",
+              "hatte gelernt",
+              "hatte gelernt"
+            ],
+            [
+              "Futur I",
+              "werde lernen",
+              "wird lernen"
+            ]
+          ],
+          "note": "Präsens und Präteritum sind ein Wort. Perfekt, Plusquamperfekt und Futur I sind zwei: ein Hilfsverb an Position 2, das Partizip II oder der Infinitiv am Satzende."
+        },
+        {
+          "caption": "Plusquamperfekt und Futur I — nur das Hilfsverb wechselt",
+          "compact": true,
+          "head": [
+            "Person",
+            "mit haben",
+            "mit sein",
+            "Futur I"
+          ],
+          "rows": [
+            [
+              "ich",
+              "hatte gelernt",
+              "war gefahren",
+              "werde lernen"
+            ],
+            [
+              "du",
+              "hattest gelernt",
+              "warst gefahren",
+              "wirst lernen"
+            ],
+            [
+              "er/sie/es",
+              "hatte gelernt",
+              "war gefahren",
+              "wird lernen"
+            ],
+            [
+              "wir",
+              "hatten gelernt",
+              "waren gefahren",
+              "werden lernen"
+            ],
+            [
+              "ihr",
+              "hattet gelernt",
+              "wart gefahren",
+              "werdet lernen"
+            ],
+            [
+              "sie/Sie",
+              "hatten gelernt",
+              "waren gefahren",
+              "werden lernen"
+            ]
+          ],
+          "note": "Wer im Perfekt haben nimmt, nimmt im Plusquamperfekt hatte; wer sein nimmt, nimmt war. Das Futur I ist immer werden + Infinitiv."
+        },
+        {
+          "caption": "sein — unregelmäßig in jeder Zeit",
+          "compact": true,
+          "head": [
+            "Person",
+            "Präsens",
+            "Präteritum",
+            "Perfekt"
+          ],
+          "rows": [
+            [
+              "ich",
+              "bin",
+              "war",
+              "bin gewesen"
+            ],
+            [
+              "du",
+              "bist",
+              "warst",
+              "bist gewesen"
+            ],
+            [
+              "er/sie/es",
+              "ist",
+              "war",
+              "ist gewesen"
+            ],
+            [
+              "wir",
+              "sind",
+              "waren",
+              "sind gewesen"
+            ],
+            [
+              "ihr",
+              "seid",
+              "wart",
+              "seid gewesen"
+            ],
+            [
+              "sie/Sie",
+              "sind",
+              "waren",
+              "sind gewesen"
+            ]
+          ]
+        },
+        {
+          "caption": "haben — unregelmäßig — und selbst Hilfsverb",
+          "compact": true,
+          "head": [
+            "Person",
+            "Präsens",
+            "Präteritum",
+            "Perfekt"
+          ],
+          "rows": [
+            [
+              "ich",
+              "habe",
+              "hatte",
+              "habe gehabt"
+            ],
+            [
+              "du",
+              "hast",
+              "hattest",
+              "hast gehabt"
+            ],
+            [
+              "er/sie/es",
+              "hat",
+              "hatte",
+              "hat gehabt"
+            ],
+            [
+              "wir",
+              "haben",
+              "hatten",
+              "haben gehabt"
+            ],
+            [
+              "ihr",
+              "habt",
+              "hattet",
+              "habt gehabt"
+            ],
+            [
+              "sie/Sie",
+              "haben",
+              "hatten",
+              "haben gehabt"
+            ]
+          ]
+        },
+        {
+          "caption": "werden — Hilfsverb für das Futur",
+          "compact": true,
+          "head": [
+            "Person",
+            "Präsens",
+            "Präteritum",
+            "Perfekt"
+          ],
+          "rows": [
+            [
+              "ich",
+              "werde",
+              "wurde",
+              "bin geworden"
+            ],
+            [
+              "du",
+              "wirst",
+              "wurdest",
+              "bist geworden"
+            ],
+            [
+              "er/sie/es",
+              "wird",
+              "wurde",
+              "ist geworden"
+            ],
+            [
+              "wir",
+              "werden",
+              "wurden",
+              "sind geworden"
+            ],
+            [
+              "ihr",
+              "werdet",
+              "wurdet",
+              "seid geworden"
+            ],
+            [
+              "sie/Sie",
+              "werden",
+              "wurden",
+              "sind geworden"
+            ]
+          ]
+        },
+        {
+          "caption": "lernen — regelmäßig: das Muster für fast alle Verben",
+          "compact": true,
+          "head": [
+            "Person",
+            "Präsens",
+            "Präteritum",
+            "Perfekt"
+          ],
+          "rows": [
+            [
+              "ich",
+              "lerne",
+              "lernte",
+              "habe gelernt"
+            ],
+            [
+              "du",
+              "lernst",
+              "lerntest",
+              "hast gelernt"
+            ],
+            [
+              "er/sie/es",
+              "lernt",
+              "lernte",
+              "hat gelernt"
+            ],
+            [
+              "wir",
+              "lernen",
+              "lernten",
+              "haben gelernt"
+            ],
+            [
+              "ihr",
+              "lernt",
+              "lerntet",
+              "habt gelernt"
+            ],
+            [
+              "sie/Sie",
+              "lernen",
+              "lernten",
+              "haben gelernt"
+            ]
+          ]
+        },
+        {
+          "caption": "arbeiten — Stamm auf -t: ein e dazwischen",
+          "compact": true,
+          "head": [
+            "Person",
+            "Präsens",
+            "Präteritum",
+            "Perfekt"
+          ],
+          "rows": [
+            [
+              "ich",
+              "arbeite",
+              "arbeitete",
+              "habe gearbeitet"
+            ],
+            [
+              "du",
+              "arbeitest",
+              "arbeitetest",
+              "hast gearbeitet"
+            ],
+            [
+              "er/sie/es",
+              "arbeitet",
+              "arbeitete",
+              "hat gearbeitet"
+            ],
+            [
+              "wir",
+              "arbeiten",
+              "arbeiteten",
+              "haben gearbeitet"
+            ],
+            [
+              "ihr",
+              "arbeitet",
+              "arbeitetet",
+              "habt gearbeitet"
+            ],
+            [
+              "sie/Sie",
+              "arbeiten",
+              "arbeiteten",
+              "haben gearbeitet"
+            ]
+          ]
+        },
+        {
+          "caption": "fahren — a → ä bei du und er",
+          "compact": true,
+          "head": [
+            "Person",
+            "Präsens",
+            "Präteritum",
+            "Perfekt"
+          ],
+          "rows": [
+            [
+              "ich",
+              "fahre",
+              "fuhr",
+              "bin gefahren"
+            ],
+            [
+              "du",
+              "fährst",
+              "fuhrst",
+              "bist gefahren"
+            ],
+            [
+              "er/sie/es",
+              "fährt",
+              "fuhr",
+              "ist gefahren"
+            ],
+            [
+              "wir",
+              "fahren",
+              "fuhren",
+              "sind gefahren"
+            ],
+            [
+              "ihr",
+              "fahrt",
+              "fuhrt",
+              "seid gefahren"
+            ],
+            [
+              "sie/Sie",
+              "fahren",
+              "fuhren",
+              "sind gefahren"
+            ]
+          ]
+        },
+        {
+          "caption": "sprechen — e → i bei du und er",
+          "compact": true,
+          "head": [
+            "Person",
+            "Präsens",
+            "Präteritum",
+            "Perfekt"
+          ],
+          "rows": [
+            [
+              "ich",
+              "spreche",
+              "sprach",
+              "habe gesprochen"
+            ],
+            [
+              "du",
+              "sprichst",
+              "sprachst",
+              "hast gesprochen"
+            ],
+            [
+              "er/sie/es",
+              "spricht",
+              "sprach",
+              "hat gesprochen"
+            ],
+            [
+              "wir",
+              "sprechen",
+              "sprachen",
+              "haben gesprochen"
+            ],
+            [
+              "ihr",
+              "sprecht",
+              "spracht",
+              "habt gesprochen"
+            ],
+            [
+              "sie/Sie",
+              "sprechen",
+              "sprachen",
+              "haben gesprochen"
+            ]
+          ]
+        },
+        {
+          "caption": "gehen — unregelmäßig, Perfekt mit sein",
+          "compact": true,
+          "head": [
+            "Person",
+            "Präsens",
+            "Präteritum",
+            "Perfekt"
+          ],
+          "rows": [
+            [
+              "ich",
+              "gehe",
+              "ging",
+              "bin gegangen"
+            ],
+            [
+              "du",
+              "gehst",
+              "gingst",
+              "bist gegangen"
+            ],
+            [
+              "er/sie/es",
+              "geht",
+              "ging",
+              "ist gegangen"
+            ],
+            [
+              "wir",
+              "gehen",
+              "gingen",
+              "sind gegangen"
+            ],
+            [
+              "ihr",
+              "geht",
+              "gingt",
+              "seid gegangen"
+            ],
+            [
+              "sie/Sie",
+              "gehen",
+              "gingen",
+              "sind gegangen"
+            ]
+          ]
+        },
+        {
+          "caption": "können — Modalverb: ich und er ohne Endung",
+          "compact": true,
+          "head": [
+            "Person",
+            "Präsens",
+            "Präteritum",
+            "Perfekt"
+          ],
+          "rows": [
+            [
+              "ich",
+              "kann",
+              "konnte",
+              "habe gekonnt"
+            ],
+            [
+              "du",
+              "kannst",
+              "konntest",
+              "hast gekonnt"
+            ],
+            [
+              "er/sie/es",
+              "kann",
+              "konnte",
+              "hat gekonnt"
+            ],
+            [
+              "wir",
+              "können",
+              "konnten",
+              "haben gekonnt"
+            ],
+            [
+              "ihr",
+              "könnt",
+              "konntet",
+              "habt gekonnt"
+            ],
+            [
+              "sie/Sie",
+              "können",
+              "konnten",
+              "haben gekonnt"
+            ]
+          ],
+          "note": "Mit einem zweiten Verb steht im Perfekt der Infinitiv: Ich habe nicht kommen können. Im Alltag sagt man lieber: Ich konnte nicht kommen."
+        },
+        {
+          "caption": "aufstehen — trennbar: auf geht ans Satzende",
+          "compact": true,
+          "head": [
+            "Person",
+            "Präsens",
+            "Präteritum",
+            "Perfekt"
+          ],
+          "rows": [
+            [
+              "ich",
+              "stehe auf",
+              "stand auf",
+              "bin aufgestanden"
+            ],
+            [
+              "du",
+              "stehst auf",
+              "standst auf",
+              "bist aufgestanden"
+            ],
+            [
+              "er/sie/es",
+              "steht auf",
+              "stand auf",
+              "ist aufgestanden"
+            ],
+            [
+              "wir",
+              "stehen auf",
+              "standen auf",
+              "sind aufgestanden"
+            ],
+            [
+              "ihr",
+              "steht auf",
+              "standet auf",
+              "seid aufgestanden"
+            ],
+            [
+              "sie/Sie",
+              "stehen auf",
+              "standen auf",
+              "sind aufgestanden"
+            ]
+          ],
+          "note": "Im Präsens und Präteritum steht auf am Satzende: Ich stehe um sieben auf. Im Perfekt rutscht ge- in die Mitte: aufgestanden."
+        }
+      ]
+    }
+  },
+  "aktiv": {
+    "listen": [
+      {
+        "text": "Ich lerne jeden Tag Deutsch.",
+        "note": "Präsens — jetzt, immer."
+      },
+      {
+        "text": "Früher lernte ich Englisch.",
+        "note": "Präteritum — so schreibt man."
+      },
+      {
+        "text": "Gestern habe ich zwei Stunden gelernt.",
+        "note": "Perfekt — so spricht man."
+      },
+      {
+        "text": "Ich hatte schon viel gelernt.",
+        "note": "Plusquamperfekt — noch davor."
+      },
+      {
+        "text": "Morgen werde ich weiterlernen.",
+        "note": "Futur I — später."
+      }
+    ],
+    "hoeren": {
+      "instruction": "Hör zu und wähle die Zeit, die du gehört hast.",
+      "items": [
+        {
+          "text": "Wir fahren nach Hamburg.",
+          "choices": [
+            "Präsens",
+            "Präteritum",
+            "Perfekt"
+          ],
+          "correct": 0
+        },
+        {
+          "text": "Er ist nach Hause gegangen.",
+          "choices": [
+            "Präteritum",
+            "Perfekt",
+            "Plusquamperfekt"
+          ],
+          "correct": 1
+        },
+        {
+          "text": "Sie sprach sehr leise.",
+          "choices": [
+            "Präsens",
+            "Präteritum",
+            "Futur I"
+          ],
+          "correct": 1
+        },
+        {
+          "text": "Ich werde dich anrufen.",
+          "choices": [
+            "Präsens",
+            "Perfekt",
+            "Futur I"
+          ],
+          "correct": 2
+        },
+        {
+          "text": "Der Zug war schon abgefahren.",
+          "choices": [
+            "Perfekt",
+            "Plusquamperfekt",
+            "Präteritum"
+          ],
+          "correct": 1
+        },
+        {
+          "text": "Du hast Glück gehabt.",
+          "choices": [
+            "Perfekt",
+            "Präsens",
+            "Plusquamperfekt"
+          ],
+          "correct": 0
+        }
+      ]
+    },
+    "sprechen": {
+      "rounds": [
+        {
+          "label": "1 · Präsens → Perfekt",
+          "instruction": "Du hörst einen Satz im Präsens. Sag ihn im Perfekt.",
+          "example": {
+            "prompt": "Ich lerne Deutsch.",
+            "answer": "Ich habe Deutsch gelernt."
+          },
+          "items": [
+            {
+              "prompt": "Er arbeitet viel.",
+              "answer": "Er hat viel gearbeitet."
+            },
+            {
+              "prompt": "Wir fahren nach Berlin.",
+              "answer": "Wir sind nach Berlin gefahren."
+            },
+            {
+              "prompt": "Du sprichst gut Deutsch.",
+              "answer": "Du hast gut Deutsch gesprochen."
+            },
+            {
+              "prompt": "Sie geht ins Kino.",
+              "answer": "Sie ist ins Kino gegangen."
+            },
+            {
+              "prompt": "Ich stehe früh auf.",
+              "answer": "Ich bin früh aufgestanden."
+            }
+          ]
+        },
+        {
+          "label": "2 · Präsens → Präteritum",
+          "instruction": "Du hörst einen Satz im Präsens. Sag ihn im Präteritum.",
+          "example": {
+            "prompt": "Ich bin müde.",
+            "answer": "Ich war müde."
+          },
+          "items": [
+            {
+              "prompt": "Wir haben keine Zeit.",
+              "answer": "Wir hatten keine Zeit."
+            },
+            {
+              "prompt": "Er kann nicht kommen.",
+              "answer": "Er konnte nicht kommen."
+            },
+            {
+              "prompt": "Es wird kalt.",
+              "answer": "Es wurde kalt."
+            },
+            {
+              "prompt": "Ihr seid zu Hause.",
+              "answer": "Ihr wart zu Hause."
+            },
+            {
+              "prompt": "Sie fährt mit dem Bus.",
+              "answer": "Sie fuhr mit dem Bus."
+            }
+          ]
+        },
+        {
+          "label": "3 · Präsens → Futur I",
+          "instruction": "Du hörst einen Satz im Präsens. Sag ihn im Futur I.",
+          "example": {
+            "prompt": "Ich rufe dich an.",
+            "answer": "Ich werde dich anrufen."
+          },
+          "items": [
+            {
+              "prompt": "Du lernst viel.",
+              "answer": "Du wirst viel lernen."
+            },
+            {
+              "prompt": "Er kommt morgen.",
+              "answer": "Er wird morgen kommen."
+            },
+            {
+              "prompt": "Wir helfen dir.",
+              "answer": "Wir werden dir helfen."
+            },
+            {
+              "prompt": "Ihr seht das Meer.",
+              "answer": "Ihr werdet das Meer sehen."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "exercises": [
+    {
+      "type": "table",
+      "title": "Präsens: die richtige Form.",
+      "hint": "Achten Sie auf den Vokalwechsel bei du und er — und auf sein, haben, werden.",
+      "columns": [
+        "Person · Verb",
+        "Präsens"
+      ],
+      "rows": [
+        {
+          "term": "du · sein",
+          "answer": "bist"
+        },
+        {
+          "term": "er · haben",
+          "answer": "hat"
+        },
+        {
+          "term": "du · werden",
+          "answer": "wirst"
+        },
+        {
+          "term": "ihr · arbeiten",
+          "answer": "arbeitet"
+        },
+        {
+          "term": "sie (Sg.) · fahren",
+          "answer": "fährt"
+        },
+        {
+          "term": "du · sprechen",
+          "answer": "sprichst"
+        },
+        {
+          "term": "ich · können",
+          "answer": "kann"
+        },
+        {
+          "term": "wir · lernen",
+          "answer": "lernen"
+        }
+      ]
+    },
+    {
+      "type": "table",
+      "title": "Präteritum: die richtige Form.",
+      "hint": "Regelmäßig: -te. Unregelmäßig: neuer Vokal, und ich / er ohne Endung.",
+      "columns": [
+        "Person · Verb",
+        "Präteritum"
+      ],
+      "rows": [
+        {
+          "term": "ich · sein",
+          "answer": "war"
+        },
+        {
+          "term": "wir · haben",
+          "answer": "hatten"
+        },
+        {
+          "term": "es · werden",
+          "answer": "wurde"
+        },
+        {
+          "term": "du · lernen",
+          "answer": "lerntest"
+        },
+        {
+          "term": "er · arbeiten",
+          "answer": "arbeitete"
+        },
+        {
+          "term": "sie (Pl.) · fahren",
+          "answer": "fuhren"
+        },
+        {
+          "term": "ich · gehen",
+          "answer": "ging"
+        },
+        {
+          "term": "ihr · können",
+          "answer": "konntet"
+        }
+      ]
+    },
+    {
+      "type": "table",
+      "title": "Perfekt: haben oder sein?",
+      "hint": "Bewegung von A nach B und Veränderung nehmen sein — alles andere haben.",
+      "columns": [
+        "Person · Verb",
+        "Perfekt"
+      ],
+      "rows": [
+        {
+          "term": "ich · lernen",
+          "answer": "habe gelernt"
+        },
+        {
+          "term": "du · fahren",
+          "answer": "bist gefahren"
+        },
+        {
+          "term": "er · sprechen",
+          "answer": "hat gesprochen"
+        },
+        {
+          "term": "wir · gehen",
+          "answer": "sind gegangen"
+        },
+        {
+          "term": "ihr · sein",
+          "answer": "seid gewesen"
+        },
+        {
+          "term": "sie (Pl.) · haben",
+          "answer": "haben gehabt"
+        },
+        {
+          "term": "ich · aufstehen",
+          "answer": "bin aufgestanden"
+        },
+        {
+          "term": "es · werden",
+          "answer": "ist geworden"
+        }
+      ]
+    },
+    {
+      "type": "fill",
+      "title": "Plusquamperfekt und Futur I: das Hilfsverb.",
+      "hint": "Plusquamperfekt: hatte / war. Futur I: werden.",
+      "placeholder": "Hilfsverb",
+      "items": [
+        {
+          "prompt": "Als ich ankam, ___ der Zug schon abgefahren.",
+          "hint": "Plusquamperfekt",
+          "answer": [
+            "war"
+          ]
+        },
+        {
+          "prompt": "Wir ___ vorher schon gegessen.",
+          "hint": "Plusquamperfekt",
+          "answer": [
+            "hatten"
+          ]
+        },
+        {
+          "prompt": "Du ___ das nie vergessen.",
+          "hint": "Futur I",
+          "answer": [
+            "wirst"
+          ]
+        },
+        {
+          "prompt": "Nachdem sie gegangen ___, war es still.",
+          "hint": "Plusquamperfekt",
+          "answer": [
+            "war"
+          ]
+        },
+        {
+          "prompt": "Ich ___ dich morgen anrufen.",
+          "hint": "Futur I",
+          "answer": [
+            "werde"
+          ]
+        },
+        {
+          "prompt": "___ ihr das Buch schon gelesen, bevor der Film kam?",
+          "hint": "Plusquamperfekt",
+          "answer": [
+            "Hattet"
+          ]
+        },
+        {
+          "prompt": "Es ___ morgen regnen.",
+          "hint": "Futur I",
+          "answer": [
+            "wird"
+          ]
+        },
+        {
+          "prompt": "Ihr ___ das schaffen!",
+          "hint": "Futur I",
+          "answer": [
+            "werdet"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "match",
+      "title": "Welche Zeit ist das?",
+      "hint": "Ein Wort: Präsens oder Präteritum. Zwei Wörter: eine der drei anderen.",
+      "pairs": [
+        {
+          "q": "ich fahre",
+          "a": "Präsens"
+        },
+        {
+          "q": "ich fuhr",
+          "a": "Präteritum"
+        },
+        {
+          "q": "ich bin gefahren",
+          "a": "Perfekt"
+        },
+        {
+          "q": "ich war gefahren",
+          "a": "Plusquamperfekt"
+        },
+        {
+          "q": "ich werde fahren",
+          "a": "Futur I"
+        }
+      ]
+    }
+  ]
+}

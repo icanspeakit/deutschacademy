@@ -1,0 +1,124 @@
+---
+// One share control for every exercise. It is a quiet round icon, not a button with a
+// border: sharing is something a learner does now and then, and it should not compete
+// with "Weiter" or an answer option for the thumb.
+//
+// The glyph is the box-with-arrow, not a chain link. A link says "copy an address",
+// which on a phone is a dead end: the learner then has to open WhatsApp and paste. On a
+// touch device the button opens the system share sheet, and WhatsApp and Telegram are
+// right there. That is how this audience passes things on. With a mouse, the desktop
+// share sheets are clumsy, so there it copies the link and says so in place.
+//
+// `url` defaults to the current path without its query. A trainer's ?stufe=a2 is the
+// sender's state, not the page. Pages that embed an exercise somewhere else
+// (/fortschritt) pass the exercise's own URL instead.
+interface Props {
+  url?: string;
+  title?: string;
+  /** Show "Teilen" next to the icon from 640px up. Off for tight bars. */
+  label?: boolean;
+  size?: "sm" | "md";
+}
+const { url, title, label = false, size = "md" } = Astro.props;
+const href = url ?? Astro.url.pathname;
+---
+<button
+  type="button"
+  class:list={["share-btn", `share-btn--${size}`, { "share-btn--label": label }]}
+  data-share
+  data-share-url={href}
+  data-share-title={title}
+  aria-label="Teilen"
+  title="Teilen"
+>
+  <svg class="share-btn-icon share-btn-icon--share" viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M12 3.5v11" />
+    <path d="M8 7.3 12 3.5l4 3.8" />
+    <path d="M8.5 10.5H7a2 2 0 0 0-2 2V18a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-5.5a2 2 0 0 0-2-2h-1.5" />
+  </svg>
+  <svg class="share-btn-icon share-btn-icon--done" viewBox="0 0 24 24" aria-hidden="true">
+    <path d="m5.5 12.5 4 4 9-9" />
+  </svg>
+  <span class="share-btn-text" data-share-text>Teilen</span>
+  <span class="share-btn-live" aria-live="polite"></span>
+</button>
+
+<script>
+  // Delegated once, so any number of buttons (and ones rendered later) share it.
+  const w = window as any;
+  if (!w.__daShare) {
+    w.__daShare = true;
+    const touch = matchMedia("(pointer: coarse)").matches;
+
+    document.addEventListener("click", async (e) => {
+      const btn = (e.target as Element).closest<HTMLButtonElement>("[data-share]");
+      if (!btn) return;
+      const url = new URL(btn.dataset.shareUrl || location.pathname, location.origin).href;
+      const title = btn.dataset.shareTitle || document.title;
+
+      if (touch && navigator.share) {
+        try { await navigator.share({ title, url }); } catch { /* dismissed */ }
+        return;
+      }
+      try {
+        await navigator.clipboard.writeText(url);
+      } catch {
+        prompt("Link kopieren:", url);
+        return;
+      }
+      const text = btn.querySelector("[data-share-text]");
+      const live = btn.querySelector(".share-btn-live");
+      btn.classList.add("is-done");
+      if (text) text.textContent = "Kopiert";
+      if (live) live.textContent = "Link kopiert";
+      clearTimeout((btn as any)._t);
+      (btn as any)._t = setTimeout(() => {
+        btn.classList.remove("is-done");
+        if (text) text.textContent = "Teilen";
+        if (live) live.textContent = "";
+      }, 1800);
+    });
+  }
+</script>
+
+<style>
+  .share-btn {
+    --share-size: 40px;
+    flex: none;
+    display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+    min-width: var(--share-size); height: var(--share-size);
+    padding: 0; border: 0; border-radius: var(--radius-pill);
+    background: transparent; color: var(--muted);
+    font: inherit; font-size: var(--text-sm); font-weight: 600;
+    cursor: pointer;
+    transition: background-color .15s, color .15s;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .share-btn--sm { --share-size: 36px; }
+  .share-btn:hover { background: var(--surface); color: var(--ink); }
+  .share-btn:focus-visible { outline: 2px solid var(--brand-blue); outline-offset: 2px; }
+  .share-btn:active { transform: scale(.94); }
+
+  .share-btn-icon {
+    width: 20px; height: 20px;
+    fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round;
+  }
+  .share-btn--sm .share-btn-icon { width: 18px; height: 18px; }
+  .share-btn-icon--done { display: none; }
+  .share-btn.is-done { color: var(--success); }
+  .share-btn.is-done .share-btn-icon--share { display: none; }
+  .share-btn.is-done .share-btn-icon--done { display: block; animation: share-pop .25s ease; }
+
+  .share-btn-text { display: none; }
+  @media (min-width: 640px) {
+    .share-btn--label { padding: 0 14px 0 11px; }
+    .share-btn--label .share-btn-text { display: inline; }
+  }
+
+  .share-btn-live { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+
+  @keyframes share-pop { from { transform: scale(.6); opacity: 0; } }
+  @media (prefers-reduced-motion: reduce) {
+    .share-btn, .share-btn-icon--done { transition: none; animation: none; }
+  }
+</style>

@@ -67,10 +67,8 @@ const railSections = [
 // row. A topic the catalogue does not know falls back to the course section.
 const openSection = grammarByKey(current)?.level?.toLowerCase() ?? "weg";
 ---
-<div class="tr-scrim" data-rail-scrim hidden></div>
-
-<aside class="tr-wrap" data-rail>
-  <div class="nvb collapsed" data-nvb>
+<aside class="tr-wrap" data-rail data-tr-state="open">
+  <div class="nvb" data-nvb>
     <div class="nvb-rail" role="tablist" aria-label="Bereich">
       {railSections.map((sec) => (
         <button
@@ -92,7 +90,7 @@ const openSection = grammarByKey(current)?.level?.toLowerCase() ?? "weg";
         <div class="nvb-section" data-rail-secview={sec.id} hidden={sec.id !== openSection}>
           <div class="nvb-panelhead">
             <h3>{sec.label}</h3>
-            <button type="button" class="nvb-collapse" data-rail-collapse aria-label="Liste einklappen">
+            <button type="button" class="nvb-collapse" data-rail-collapse aria-label="Liste einklappen" title="Einklappen">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>
             </button>
           </div>
@@ -148,6 +146,37 @@ const openSection = grammarByKey(current)?.level?.toLowerCase() ?? "weg";
       ))}
     </div>
   </div>
+
+  {/* The pivot: hangs on the rail's edge and takes the whole rail away, and is what is
+      left at the viewport's edge to bring it back. Outside .nvb, which clips. */}
+  <button
+    type="button"
+    class="tr-pivot"
+    data-rail-pivot
+    aria-expanded="true"
+    aria-label="Themen ausblenden"
+    title="Themen ausblenden"
+  >
+    <span class="tr-pivot-label">Themen</span>
+    <span class="tr-pivot-chevron" aria-hidden="true"></span>
+  </button>
+
+  {/* Restored before first paint, so a learner who folded or hid the rail does not
+      watch it open and then close again on every page. Same three states the
+      Wortschatz column has: open, folded to its strip, or away with only the tab. */}
+  <script is:inline>
+    (function () {
+      var w = document.currentScript.parentElement;
+      var n = w.querySelector("[data-nvb]");
+      var s = "open";
+      try { s = localStorage.getItem("da-topic-rail") || "open"; } catch (e) {}
+      if (s !== "fold" && s !== "hidden") s = "open";
+      w.dataset.trState = s;
+      n.classList.toggle("collapsed", s === "fold");
+      if (s === "hidden") n.inert = true;
+      w.classList.add("no-anim");
+    })();
+  </script>
 </aside>
 
 <script>
@@ -156,7 +185,6 @@ const openSection = grammarByKey(current)?.level?.toLowerCase() ?? "weg";
   import { getTopicProgress, getProgress, getResume } from "../lib/progress.js";
 
   const rail = document.querySelector<HTMLElement>("[data-rail]");
-  const scrim = document.querySelector<HTMLElement>("[data-rail-scrim]");
   const nvb = rail?.querySelector<HTMLElement>("[data-nvb]");
 
   if (rail && nvb) {
@@ -271,18 +299,46 @@ const openSection = grammarByKey(current)?.level?.toLowerCase() ?? "weg";
       releaseHeight = window.setTimeout(() => { nvb.style.height = ""; }, 320);
     }
 
+    // Three states, remembered: "open", "fold" (the strip only) and "hidden" (the tab at
+    // the viewport's edge). The page makes room for whichever it is — see the gutter in
+    // topic-rail.css — so the rail sits beside the work rather than over it.
+    const KEY = "da-topic-rail";
+    const pivot = rail.querySelector<HTMLButtonElement>("[data-rail-pivot]");
+    const state = () => rail.dataset.trState || "open";
+    function setState(next: string) {
+      rail.dataset.trState = next;
+      nvb.inert = next === "hidden";
+      if (pivot) {
+        const away = next === "hidden";
+        pivot.setAttribute("aria-expanded", String(!away));
+        const label = away ? "Themen einblenden" : "Themen ausblenden";
+        pivot.setAttribute("aria-label", label);
+        pivot.title = label;
+      }
+      try { localStorage.setItem(KEY, next); } catch {}
+    }
+
     function setFolded(on: boolean, from = nvb.getBoundingClientRect().height) {
-      if (nvb.classList.contains("collapsed") === on) { syncScrim(); return; }
+      if (nvb.classList.contains("collapsed") === on) return;
       nvb.classList.toggle("collapsed", on);
       // Measured after the flip: the folded panel is out of flow, so this is the strip.
       animateHeight(from);
-      syncScrim();
+      setState(on ? "fold" : "open");
     }
 
     const fold = () => setFolded(true);
-    function syncScrim() {
-      if (scrim) scrim.hidden = nvb.classList.contains("collapsed");
-    }
+
+    // The tab: away if the rail is showing (folded or open), back to how it was if not.
+    let before = state() === "hidden" ? "open" : state();
+    pivot?.addEventListener("click", () => {
+      if (state() === "hidden") {
+        nvb.classList.toggle("collapsed", before === "fold");
+        setState(before);
+      } else {
+        before = state();
+        setState("hidden");
+      }
+    });
 
     for (const b of $$<HTMLElement>("[data-rail-sec]")) {
       b.addEventListener("click", () => {
@@ -312,14 +368,31 @@ const openSection = grammarByKey(current)?.level?.toLowerCase() ?? "weg";
     }
 
     for (const b of $$<HTMLElement>("[data-rail-collapse]")) b.addEventListener("click", fold);
-    scrim?.addEventListener("click", fold);
-    // It behaves like an overlay, so it closes like one.
-    document.addEventListener("keydown", (e) => { if (e.key === "Escape") fold(); });
 
     // Answers land while the rail is open, so its own row has to move with them.
     addEventListener("da:progress", () => paint());
 
+    // Starts level with the page (below the site nav, the topic bar and the course bar,
+    // whichever of them this page has) and rises with the scroll until it meets the
+    // sticky site nav, like the sticky column on a Wortschatz page.
+    const page = document.getElementById("vp-page");
+    let topQueued = false;
+    function placeTop() {
+      topQueued = false;
+      const start = page ? page.getBoundingClientRect().top + 16 : 96;
+      // The site nav is sticky, so the floor is its bottom edge, not the viewport's.
+      const nav = document.querySelector<HTMLElement>(".lp-nav, .practice-header");
+      const floor = (nav ? Math.max(0, nav.getBoundingClientRect().bottom) : 0) + 16;
+      rail.style.setProperty("--tr-top", Math.max(floor, start) + "px");
+    }
+    placeTop();
+    const queueTop = () => { if (!topQueued) { topQueued = true; requestAnimationFrame(placeTop); } };
+    addEventListener("scroll", queueTop, { passive: true });
+    addEventListener("resize", queueTop);
+
     paint();
-    syncScrim();
+    setState(state());
+    // Restored without animating: nobody took an action.
+    requestAnimationFrame(() => requestAnimationFrame(() => rail.classList.remove("no-anim")));
   }
 </script>

@@ -1,0 +1,627 @@
+---
+// UX study: what happens to the topic view on /fortschritt when the same content can
+// also be opened as its own page ("Eigene Seite öffnen ↗" above an embedded copy).
+//
+// One clickable mock, switched between the variants discussed:
+//   heute     — the current state, both entry points side by side
+//   fokus     — (1) a Fokus toggle collapses the chrome in place
+//   auto      — (2) the first answered exercise collapses the chrome by itself
+//   hero      — (3) the hero card shrinks to one line once the learner has started
+//   teilen    — (4) the standalone page survives only as a share/link icon
+//   karte     — (5) Fortschritt is a map only; the topic lives on its own page
+//   empfehlung — 1+2+3+4 combined
+//
+// Everything is fake data and inline; nothing here touches the real Fortschritt page.
+// Internal; noindex, not linked from the nav.
+import Layout from "../layouts/Layout.astro";
+import ShareButton from "../components/ShareButton.astro";
+
+const topics = [
+  { t: "Artikel: der, die, das", n: 42 },
+  { t: "Verben im Präsens", n: 38, active: true },
+  { t: "W-Fragen: wer, was, wo", n: 28 },
+  { t: "Ja/Nein-Fragen", n: 21 },
+  { t: "Plural: ein Buch, zwei Bücher", n: 37 },
+  { t: "Akkusativ", n: 7 },
+  { t: "Possessivartikel", n: 36 },
+  { t: "Imperativ: Komm!", n: 26 },
+  { t: "der/die/das-Trainer", n: 25 },
+];
+
+const items = [
+  { q: "ich ___ Deutsch.", verb: "lernen", opts: ["lerne", "lernst", "lernt"], ok: 0 },
+  { q: "du ___ viel.", verb: "arbeiten", opts: ["arbeitst", "arbeitest", "arbeitet"], ok: 1 },
+  { q: "er ___ nach Berlin.", verb: "fahren", opts: ["fahrt", "fährst", "fährt"], ok: 2 },
+  { q: "wir ___ in Köln.", verb: "wohnen", opts: ["wohnen", "wohnt", "wohnst"], ok: 0 },
+  { q: "ihr ___ Fußball.", verb: "spielen", opts: ["spielen", "spielt", "spielst"], ok: 1 },
+  { q: "sie ___ aus Syrien.", verb: "kommen", opts: ["kommt", "kommst", "kommen"], ok: 2 },
+];
+
+const variants = [
+  { id: "heute", label: "Heute" },
+  { id: "fokus", label: "1 · Fokus-Toggle" },
+  { id: "auto", label: "2 · Auto-Fokus" },
+  { id: "hero", label: "3 · Hero schrumpft" },
+  { id: "teilen", label: "4 · Nur Teilen" },
+  { id: "karte", label: "5 · Karte → Seite" },
+  { id: "empfehlung", label: "★ 1+2+3+4" },
+];
+---
+<Layout title="UX: Fokus-Varianten – Deutsch Academy" noindex>
+  <div class="ux">
+    <header class="ux-top">
+      <div class="ux-row">
+        <strong class="ux-title">/uxfocus</strong>
+        <div class="ux-device" role="group" aria-label="Gerät">
+          <button type="button" data-device="phone" aria-pressed="true">Handy 390</button>
+          <button type="button" data-device="desktop" aria-pressed="false">Desktop</button>
+        </div>
+        <button type="button" class="ux-reset" id="ux-reset">↺ Zurücksetzen</button>
+      </div>
+      <div class="ux-variants" role="tablist" aria-label="Variante">
+        {variants.map((v) => (
+          <button type="button" role="tab" data-variant={v.id} aria-selected="false">{v.label}</button>
+        ))}
+      </div>
+      <div class="ux-note" id="ux-note" aria-live="polite"></div>
+      <p class="ux-meter">Erste Übung beginnt bei <b id="ux-px">–</b> px Scrolltiefe <span id="ux-screens"></span></p>
+    </header>
+
+    <div class="ux-stage">
+      <div class="ux-frame" id="frame" data-device="phone">
+        <!-- Sticky bars: focus mode and the standalone page's breadcrumb -->
+        <div class="m-bar m-bar--focus">
+          <button type="button" class="m-icon" data-act="exit" aria-label="Zurück zur Stufe">‹</button>
+          <div class="m-bar-mid">
+            <span class="m-bar-eyebrow">A1 · Grammatik</span>
+            <span class="m-bar-title">Verben im Präsens</span>
+          </div>
+          <span class="m-count"><b data-done>0</b>/38</span>
+          <ShareButton url="/uebungen/grammatik/praesens" title="Verben im Präsens – Deutsch Academy" size="sm" />
+          <button type="button" class="m-icon" data-act="exit" aria-label="Fokus beenden">✕</button>
+        </div>
+        <header class="m-header">
+          <span class="m-logo">da <em>für Dich</em></span>
+          <nav class="m-nav"><span>Üben ▾</span><span>Prüfungen ▾</span><span>Wissen</span></nav>
+          <span class="m-header-right">
+            <span class="m-fort">Fortschritt</span>
+            <span class="m-burger" aria-hidden="true">☰</span>
+          </span>
+        </header>
+
+        <div class="m-bar m-bar--page">
+          <button type="button" class="m-link" data-act="back">← Dein Kurs A1</button>
+          <span class="m-bar-mid m-bar-small">Thema 2 von 9</span>
+          <ShareButton url="/uebungen/grammatik/praesens" title="Verben im Präsens – Deutsch Academy" size="sm" />
+          <button type="button" class="m-icon" aria-label="Vorheriges Thema">‹</button>
+          <button type="button" class="m-icon" aria-label="Nächstes Thema">›</button>
+        </div>
+
+        <div class="m-kurs">
+          <span class="m-kurs-name">Dein Kurs</span>
+          <span class="m-kurs-sub">DTZ</span>
+          <span class="m-kurs-track"><span></span></span>
+          <span class="m-kurs-meta">0 % · Portion 1 von 47</span>
+        </div>
+
+        <div class="m-body">
+          <aside class="m-side">
+            <div class="m-side-pill">
+              <b>A1</b> <span>Verben im Präsens</span> <span class="m-dim">0/38 ▾</span>
+            </div>
+            <div class="m-side-full">
+              <h3>Stufe A1</h3>
+              <ul>
+                {topics.map((t) => (
+                  <li class={t.active ? "is-active" : ""}>
+                    <button type="button" data-act="topic">
+                      <span>{t.t}</span><span class="m-dim">0/{t.n}</span>
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </aside>
+
+          <main class="m-main">
+            <section class="m-hero m-hero--full">
+              <div class="m-hero-top">
+                <p class="m-eyebrow">Grammatik · A1</p>
+                <ShareButton url="/uebungen/grammatik/praesens" title="Verben im Präsens – Deutsch Academy" label />
+              </div>
+              <h1>Verben im Präsens: ich lerne, du lernst</h1>
+              <p class="m-desc">Das Verb passt sich der Person an: ich lern-e, du lern-st, er lern-t. Der Stamm bleibt, nur die Endung wechselt.</p>
+              <div class="m-progress">
+                <span class="m-ring"><b data-pct>0%</b></span>
+                <span><b data-done>0</b> von 38 Aufgaben · ca. 30 Min.</span>
+              </div>
+              <div class="m-actions">
+                <button type="button" class="m-btn m-btn--outline" data-act="own" data-only="heute">Eigene Seite öffnen ↗</button>
+                <button type="button" class="m-btn m-btn--primary" data-act="focus" data-only="fokus empfehlung">⤢ Fokus</button>
+                <button type="button" class="m-btn m-btn--primary" data-act="start" data-only="karte">Übungen starten →</button>
+                <button type="button" class="m-btn" data-only="heute fokus auto hero teilen empfehlung">Zurück zur Stufe</button>
+              </div>
+            </section>
+
+            <section class="m-hero m-hero--line">
+              <span class="m-ring m-ring--sm"><b data-pct>0%</b></span>
+              <span class="m-line-title">Verben im Präsens</span>
+              <span class="m-count"><b data-done>0</b>/38</span>
+              <button type="button" class="m-icon m-icon--ghost" data-act="focus" data-only="empfehlung" aria-label="Fokus">⤢</button>
+              <ShareButton url="/uebungen/grammatik/praesens" title="Verben im Präsens – Deutsch Academy" size="sm" />
+            </section>
+
+            <section class="m-content" id="content">
+              <h2 class="m-h2">
+                Regel &amp; Übungen
+                <span class="m-badge" data-only="heute">Läuft in dieser Ansicht</span>
+              </h2>
+              <div class="m-card">
+                <p class="m-eyebrow m-eyebrow--brand">Wie funktioniert das?</p>
+                <div class="m-chips">
+                  <span class="m-chip m-chip--stem">Stamm · lern-</span>
+                  <span class="m-arrow">→</span>
+                  <span class="m-chip m-chip--end">Endung · -e, -st, -t</span>
+                  <span class="m-arrow">→</span>
+                  <span class="m-chip">ich lerne</span>
+                </div>
+                <p class="m-conj">lernen → ich lern<i>e</i>, du lern<i>st</i>, er lern<i>t</i>, wir lern<i>en</i>, ihr lern<i>t</i>, sie lern<i>en</i></p>
+                <div class="m-tips">
+                  <p>Die Endungen: <b>ich -e, du -st, er/sie/es -t, wir -en, ihr -t, sie/Sie -en</b>.</p>
+                  <p>Endet der Stamm auf <b>-t oder -d</b>, kommt ein <i>e</i> dazwischen: du arbeit<b>e</b>st.</p>
+                  <p>Manche Verben ändern bei <b>du</b> und <b>er/sie/es</b> den Vokal: fahren → du f<b>ä</b>hrst.</p>
+                </div>
+              </div>
+
+              <div class="m-card" id="first-ex">
+                <p class="m-eyebrow m-eyebrow--brand">Übung 1 · Welche Form passt?</p>
+                <ol class="m-ex">
+                  {items.map((it, i) => (
+                    <li data-ok={it.ok}>
+                      <p><span class="m-dim">{i + 1}.</span> {it.q} <span class="m-dim">({it.verb})</span></p>
+                      <div class="m-opts">
+                        {it.opts.map((o, j) => (
+                          <button type="button" data-opt={j}>{o}</button>
+                        ))}
+                      </div>
+                    </li>
+                  ))}
+                </ol>
+              </div>
+            </section>
+          </main>
+        </div>
+
+        <div class="m-toast" id="toast" role="status"></div>
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<script>
+  const NOTES = {
+    heute: {
+      t: "Heute",
+      d: "Zwei Wege zum gleichen Inhalt. Der Badge muss erklären, wo der Inhalt läuft, und das ist schon das Warnsignal.",
+      pro: "Nichts zu bauen.",
+      con: "Die Entscheidung kommt vor dem Lernen. ↗ öffnet am Handy einen neuen Tab.",
+    },
+    fokus: {
+      t: "1 · Fokus-Toggle",
+      d: "„⤢ Fokus“ blendet Kopf, Kursleiste, Seitenliste und Hero aus. Oben bleibt eine schmale Leiste. ✕ oder Esc bringt alles zurück.",
+      pro: "Gleiche URL, gleicher Zustand, nur eine Stelle zum Lernen.",
+      con: "Man muss den Knopf entdecken und drücken.",
+    },
+    auto: {
+      t: "2 · Auto-Fokus",
+      d: "Beantworte eine Übung: Die Umgebung klappt von selbst weg. Mit ✕ kommt sie wieder und bleibt dann auch da.",
+      pro: "Niemand muss etwas entscheiden. Mehr Platz genau dann, wenn gelernt wird.",
+      con: "Das Layout springt beim ersten Tipp. Das braucht eine ruhige Animation.",
+    },
+    hero: {
+      t: "3 · Hero schrumpft",
+      d: "Nach der ersten Antwort wird die große Titelkarte zu einer Zeile (Ring · Titel · Zähler). Die Seitenliste bleibt.",
+      pro: "Am wenigsten Umbau, gewinnt aber ca. 250 px.",
+      con: "Am Handy bleiben Kopf und Kursleiste stehen.",
+    },
+    teilen: {
+      t: "4 · Nur Teilen",
+      d: "„Eigene Seite öffnen ↗“ und der Badge fallen weg. Übrig bleibt das Teilen-Icon, das es in jeder Variante gibt: am Handy das Teilen-Menü (WhatsApp), mit Maus „Link kopiert“.",
+      pro: "Die URL bleibt, die Entscheidung verschwindet.",
+      con: "Löst das Platzproblem allein nicht.",
+    },
+    karte: {
+      t: "5 · Karte → Seite",
+      d: "Fortschritt zeigt nur die Übersicht. „Übungen starten“ oder ein Thema links führt auf die Themen-Seite mit Kurs-Brotkrumen und ‹ ›.",
+      pro: "Klare Rollen, einfach zu bauen, eine URL pro Thema.",
+      con: "Ein Klick mehr. Die Übersicht ist beim Lernen weg.",
+    },
+    empfehlung: {
+      t: "★ Empfehlung: 1+2+3+4",
+      d: "Auto-Fokus beim ersten Tipp, ⤢ für alle, die früher wollen. Nach ✕ bleibt der Hero eine Zeile. Die eigene Seite erreicht man nur noch über Teilen.",
+      pro: "Ein Ort zum Lernen. Das Layout macht Platz, sobald gelernt wird.",
+      con: "Die meiste Logik: drei Zustände, die sauber zusammenspielen müssen.",
+    },
+  };
+
+  const frame = document.getElementById("frame");
+  const note = document.getElementById("ux-note");
+  const pxOut = document.getElementById("ux-px");
+  const screensOut = document.getElementById("ux-screens");
+  const toast = document.getElementById("toast");
+  const params = new URLSearchParams(location.search);
+
+  const state = {
+    variant: NOTES[params.get("v")] ? params.get("v") : "heute",
+    device: params.get("d") === "desktop" ? "desktop" : "phone",
+    started: false,
+    focus: false,
+    autoUsed: false,
+    page: false,
+    done: 0,
+  };
+
+  function derive() {
+    const { variant: v, started, focus, page } = state;
+    let chrome = "on", hero = "full", bar = "none", content = "on";
+    if ((v === "fokus" || v === "auto" || v === "empfehlung") && focus) {
+      chrome = "off"; hero = "none"; bar = "focus";
+    } else if ((v === "hero" || v === "empfehlung") && started) {
+      hero = "line";
+    }
+    if (v === "karte") {
+      if (page) { chrome = "page"; hero = "full"; bar = "page"; }
+      else content = "off";
+    }
+    return { chrome, hero, bar, content };
+  }
+
+  function render() {
+    const d = derive();
+    Object.assign(frame.dataset, d, { variant: state.variant, device: state.device });
+    frame.querySelectorAll("[data-only]").forEach((el) => {
+      el.hidden = !el.dataset.only.split(" ").includes(state.variant);
+    });
+    document.querySelectorAll("[data-variant]").forEach((b) => {
+      if (b === frame) return;
+      b.setAttribute("aria-selected", String(b.dataset.variant === state.variant));
+    });
+    document.querySelectorAll("[data-device]").forEach((b) => {
+      if (b === frame) return;
+      b.setAttribute("aria-pressed", String(b.dataset.device === state.device));
+    });
+    const n = NOTES[state.variant];
+    note.innerHTML = `<p><b>${n.t}</b>: ${n.d}</p><p class="ux-pc"><span>＋ ${n.pro}</span><span>− ${n.con}</span></p>`;
+    frame.querySelectorAll("[data-done]").forEach((el) => (el.textContent = state.done));
+    frame.querySelectorAll("[data-pct]").forEach((el) => (el.textContent = Math.round((state.done / 38) * 100) + "%"));
+    frame.style.setProperty("--pct", (state.done / 38) * 100);
+    const url = new URL(location.href);
+    url.searchParams.set("v", state.variant);
+    url.searchParams.set("d", state.device);
+    history.replaceState(null, "", url);
+    requestAnimationFrame(measure);
+  }
+
+  // How far down the first exercise sits, measured from the top of the mock.
+  function measure() {
+    const ex = document.getElementById("first-ex");
+    if (!ex || !ex.offsetParent) { pxOut.textContent = "–"; screensOut.textContent = "(Übungen nicht auf dieser Seite)"; return; }
+    const scroller = getComputedStyle(frame).overflowY === "auto";
+    const top = scroller
+      ? ex.getBoundingClientRect().top - frame.getBoundingClientRect().top + frame.scrollTop
+      : ex.getBoundingClientRect().top - frame.getBoundingClientRect().top;
+    pxOut.textContent = Math.round(top);
+    const vh = scroller ? frame.clientHeight : innerHeight;
+    screensOut.textContent = `· ${(top / vh).toFixed(2)} Bildschirme`;
+  }
+
+  function showToast(msg) {
+    toast.textContent = msg;
+    toast.classList.add("is-on");
+    clearTimeout(showToast.t);
+    showToast.t = setTimeout(() => toast.classList.remove("is-on"), 1800);
+  }
+
+  function reset() {
+    Object.assign(state, { started: false, focus: false, autoUsed: false, page: false, done: 0 });
+    frame.querySelectorAll(".m-ex li").forEach((li) => {
+      li.removeAttribute("data-state");
+      li.querySelectorAll("button").forEach((b) => b.removeAttribute("data-res"));
+    });
+    frame.scrollTop = 0;
+    render();
+  }
+
+  document.querySelectorAll(".ux-variants [data-variant]").forEach((b) =>
+    b.addEventListener("click", () => { state.variant = b.dataset.variant; reset(); })
+  );
+  document.querySelectorAll(".ux-device [data-device]").forEach((b) =>
+    b.addEventListener("click", () => { state.device = b.dataset.device; render(); })
+  );
+  document.getElementById("ux-reset").addEventListener("click", reset);
+
+  frame.addEventListener("click", (e) => {
+    const opt = e.target.closest("[data-opt]");
+    if (opt) {
+      const li = opt.closest("li");
+      if (li.dataset.state) return;
+      const right = Number(opt.dataset.opt) === Number(li.dataset.ok);
+      opt.dataset.res = right ? "ok" : "no";
+      if (!right) li.querySelector(`[data-opt="${li.dataset.ok}"]`).dataset.res = "ok";
+      li.dataset.state = "done";
+      state.done += 1;
+      if (!state.started) {
+        state.started = true;
+        if ((state.variant === "auto" || state.variant === "empfehlung") && !state.autoUsed) {
+          state.focus = true; state.autoUsed = true;
+          // keep the answered question in view when everything above collapses
+          render();
+          requestAnimationFrame(() => {
+            if (getComputedStyle(frame).overflowY !== "auto") return li.scrollIntoView({ block: "center" });
+            const y = li.getBoundingClientRect().top - frame.getBoundingClientRect().top + frame.scrollTop;
+            frame.scrollTop = y - frame.clientHeight / 3;
+          });
+          return;
+        }
+      }
+      render();
+      return;
+    }
+    const act = e.target.closest("[data-act]")?.dataset.act;
+    if (!act) return;
+    if (act === "focus") { state.focus = true; state.autoUsed = true; frame.scrollTop = 0; }
+    if (act === "exit") { state.focus = false; state.autoUsed = true; }
+    if (act === "own") showToast("Öffnet einen neuen Tab. Gleicher Inhalt, andere Umgebung.");
+    if ((act === "start" || act === "topic") && state.variant === "karte") { state.page = true; frame.scrollTop = 0; }
+    if (act === "back") { state.page = false; frame.scrollTop = 0; }
+    render();
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && state.focus) { state.focus = false; render(); }
+  });
+  addEventListener("resize", measure);
+
+  render();
+</script>
+
+<style>
+  .ux {
+    min-height: 100vh;
+    background: var(--surface);
+    color: var(--ink);
+    font-family: var(--font-body);
+  }
+
+  /* ---------- controls ---------- */
+  .ux-top {
+    position: sticky; top: 0; z-index: 20;
+    background: var(--page-bg);
+    border-bottom: 1px solid var(--border);
+    padding: 10px 16px;
+    display: grid; gap: 8px;
+  }
+  .ux-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .ux-title { font-family: var(--font-label); font-size: var(--text-sm); color: var(--muted); }
+  .ux-device { display: inline-flex; border: 1px solid var(--border); border-radius: var(--radius-pill); padding: 2px; }
+  .ux-device button, .ux-reset, .ux-variants button {
+    font: inherit; font-size: var(--text-xs); cursor: pointer;
+    border: 0; background: none; color: var(--muted);
+    padding: 6px 12px; border-radius: var(--radius-pill);
+  }
+  .ux-device [aria-pressed="true"] { background: var(--ink); color: var(--page-bg); }
+  .ux-reset { margin-left: auto; border: 1px solid var(--border); }
+  .ux-variants {
+    display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none;
+    margin: 0 -16px; padding: 0 16px;
+  }
+  .ux-variants button { flex: none; border: 1px solid var(--border); white-space: nowrap; }
+  .ux-variants [aria-selected="true"] { background: var(--brand-blue); border-color: var(--brand-blue); color: #fff; }
+  .ux-note { font-size: var(--text-sm); line-height: 1.45; max-width: 70ch; }
+  .ux-note :global(p) { margin: 0; }
+  .ux-note :global(.ux-pc) { display: flex; flex-wrap: wrap; gap: 4px 16px; margin-top: 4px; font-size: var(--text-xs); color: var(--muted); }
+  .ux-meter { margin: 0; font-size: var(--text-xs); color: var(--muted); }
+  .ux-meter b { color: var(--accent-dark); font-size: var(--text-sm); }
+
+  .ux-stage { display: flex; justify-content: center; padding: 20px 16px 60px; }
+
+  /* ---------- device frame ---------- */
+  .ux-frame {
+    --pct: 0;
+    position: relative;
+    container-type: inline-size;
+    background: var(--surface);
+    border: 1px solid var(--border-strong);
+    box-shadow: var(--shadow-raised);
+    overflow-y: auto; overflow-x: hidden;
+    scroll-behavior: smooth;
+  }
+  .ux-frame[data-device="phone"] { width: 390px; height: min(780px, 75vh); border-radius: 32px; }
+  .ux-frame[data-device="desktop"] { width: 100%; max-width: 1280px; height: 76vh; border-radius: var(--radius); }
+
+  /* A real phone: the page itself is the phone, so the frame dissolves. */
+  @media (max-width: 700px) {
+    .ux-device { display: none; }
+    .ux-stage { padding: 0; }
+    .ux-frame, .ux-frame[data-device] {
+      width: 100%; height: auto; max-width: none;
+      border: 0; border-radius: 0; box-shadow: none; overflow: visible;
+    }
+    /* controls scroll away, so the mock's sticky bars own the top of the screen */
+    .ux-top { position: static; }
+  }
+
+  /* ---------- mock app ---------- */
+  .ux-frame [hidden] { display: none !important; }
+  .ux-frame button { font: inherit; color: inherit; cursor: pointer; }
+  .m-dim { color: var(--muted-soft); font-weight: 400; }
+
+  .m-header {
+    display: flex; align-items: center; gap: 16px;
+    padding: 12px 16px; background: var(--page-bg); border-bottom: 1px solid var(--border);
+  }
+  .m-logo { font-weight: 700; color: var(--brand-blue); }
+  .m-logo em { font-style: normal; font-weight: 400; }
+  .m-nav { display: none; gap: 20px; font-size: var(--text-sm); }
+  .m-header-right { margin-left: auto; display: flex; gap: 14px; align-items: center; font-size: var(--text-sm); }
+  .m-fort { color: var(--brand-blue); }
+
+  .m-kurs {
+    display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+    padding: 10px 16px; background: var(--page-bg); border-bottom: 1px solid var(--border);
+    font-size: var(--text-xs);
+  }
+  .m-kurs-name { font-family: var(--font-display); font-size: var(--text-xl); color: var(--brand-blue-dark); }
+  .m-kurs-sub { color: var(--muted); }
+  .m-kurs-track { flex: 1 1 80px; height: 4px; border-radius: 4px; background: var(--blue-100); }
+  .m-kurs-meta { color: var(--muted); }
+
+  .m-body { display: grid; gap: 12px; padding: 12px; }
+
+  .m-side-pill {
+    display: flex; gap: 8px; align-items: center;
+    background: var(--page-bg); border: 1px solid var(--border); border-radius: var(--radius-pill);
+    padding: 8px 14px; font-size: var(--text-sm);
+  }
+  .m-side-pill b { background: var(--brand-blue); color: #fff; border-radius: 6px; padding: 1px 6px; font-size: var(--text-xs); }
+  .m-side-pill .m-dim { margin-left: auto; }
+  .m-side-full { display: none; }
+  .m-side-full h3 { margin: 0 0 10px; font-weight: 500; font-size: var(--text-lg); }
+  .m-side-full ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
+  .m-side-full li button {
+    width: 100%; display: flex; justify-content: space-between; gap: 8px; text-align: left;
+    background: none; border: 1px solid transparent; border-radius: 10px; padding: 8px 10px; font-size: var(--text-sm);
+  }
+  .m-side-full li button span:first-child { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .m-side-full li.is-active button { border-color: var(--ink); color: var(--brand-blue-dark); font-weight: 600; }
+
+  .m-main { display: grid; gap: 12px; min-width: 0; align-content: start; }
+
+  .m-hero {
+    background: var(--page-bg); border: 1px solid var(--border); border-radius: var(--radius-lg);
+  }
+  .m-hero--full { padding: 18px; display: grid; gap: 10px; }
+  .m-hero--full h1 { margin: 0; font-size: 1.35rem; font-weight: 500; line-height: 1.25; }
+  .m-hero-top { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin: -8px -8px -6px 0; }
+  .m-eyebrow { margin: 0; font-family: var(--font-label); font-size: var(--text-xs); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+  .m-eyebrow--brand { color: var(--brand-blue); }
+  .m-desc { margin: 0; color: var(--muted); font-size: var(--text-sm); line-height: 1.5; }
+  .m-progress {
+    display: flex; gap: 12px; align-items: center; font-size: var(--text-sm);
+    background: var(--gradient-brand); color: #fff; border-radius: var(--radius); padding: 10px 14px;
+  }
+  .m-ring {
+    flex: none; width: 46px; height: 46px; border-radius: 50%; display: grid; place-items: center;
+    background: conic-gradient(#fff calc(var(--pct) * 1%), rgba(255,255,255,.3) 0);
+    font-size: var(--text-xs);
+  }
+  .m-ring b { width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; background: var(--brand-blue); color: #fff; }
+  .m-ring--sm { width: 34px; height: 34px; background: conic-gradient(var(--brand-blue) calc(var(--pct) * 1%), var(--blue-100) 0); }
+  .m-ring--sm b { width: 26px; height: 26px; font-size: 9px; background: var(--page-bg); color: var(--brand-blue-dark); }
+
+  .m-actions { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+  .m-btn {
+    border: 1px solid var(--border-strong); background: var(--page-bg);
+    border-radius: var(--radius-pill); padding: 9px 16px; font-size: var(--text-sm); font-weight: 600;
+  }
+  .m-btn--outline { border-color: var(--brand-blue); color: var(--brand-blue-dark) !important; }
+  .m-btn--primary { background: var(--brand-blue); border-color: var(--brand-blue); color: #fff !important; }
+  .m-icon {
+    flex: none; width: 38px; height: 38px; display: grid; place-items: center;
+    border: 1px solid var(--border); background: var(--page-bg); border-radius: 50%; font-size: 1rem;
+  }
+  .m-icon--ghost { border-color: transparent; background: none; }
+  .m-link { border: 0; background: none; color: var(--brand-blue-dark) !important; font-weight: 600; font-size: var(--text-sm); padding: 0; }
+
+  .m-hero--line {
+    display: none; align-items: center; gap: 10px; padding: 8px 12px; border-radius: var(--radius);
+    animation: m-in .25s ease;
+  }
+  .m-line-title { font-weight: 600; font-size: var(--text-sm); flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .m-count { font-size: var(--text-xs); color: var(--muted); white-space: nowrap; }
+  .m-count b { color: var(--ink); }
+
+  .m-h2 { margin: 4px 4px 10px; font-size: var(--text-xl); font-weight: 500; display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+  .m-badge {
+    font-family: var(--font-label); font-size: 10px; letter-spacing: .08em; text-transform: uppercase; font-weight: 700;
+    color: var(--brand-blue-dark); background: var(--success-soft); border: 1px solid var(--success-border);
+    border-radius: var(--radius-pill); padding: 3px 10px;
+  }
+  .m-content { display: grid; gap: 12px; }
+  .m-card { background: var(--page-bg); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 18px; display: grid; gap: 12px; }
+  .m-chips { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+  .m-chip { border: 1px solid var(--border-strong); border-radius: 10px; padding: 6px 10px; font-size: var(--text-sm); font-weight: 600; }
+  .m-chip--stem { background: var(--blue-50); border-color: var(--blue-300); color: var(--brand-blue-dark); }
+  .m-chip--end { background: #fff7ed; border-color: #fdba74; color: var(--accent-dark); }
+  .m-arrow { color: var(--muted-soft); }
+  .m-conj { margin: 0; font-size: var(--text-base); line-height: 1.5; }
+  .m-conj i { font-style: normal; font-weight: 700; color: var(--accent-dark); }
+  .m-tips { display: grid; gap: 8px; }
+  .m-tips p { margin: 0; background: var(--surface); border-radius: var(--radius-sm); padding: 10px 12px; font-size: var(--text-sm); line-height: 1.45; }
+  .m-tips b { color: var(--brand-blue-dark); }
+
+  .m-ex { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; }
+  .m-ex p { margin: 0 0 8px; font-size: var(--text-base); }
+  .m-opts { display: flex; flex-wrap: wrap; gap: 8px; }
+  .m-opts button {
+    min-height: 44px; padding: 8px 16px; border-radius: var(--radius-sm);
+    border: 1px solid var(--border-strong); background: var(--page-bg); font-weight: 600;
+  }
+  .m-opts [data-res="ok"] { background: var(--success-soft); border-color: var(--success); color: var(--success) !important; }
+  .m-opts [data-res="no"] { background: var(--danger-soft); border-color: var(--danger); color: var(--danger) !important; }
+
+  /* sticky bars */
+  .m-bar {
+    position: sticky; top: 0; z-index: 5;
+    display: none; align-items: center; gap: 8px;
+    padding: 8px 12px; background: var(--page-bg); border-bottom: 1px solid var(--border);
+    box-shadow: var(--shadow-sm);
+    animation: m-in .25s ease;
+  }
+  .m-bar-mid { flex: 1; min-width: 0; display: grid; }
+  .m-bar-eyebrow { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; font-family: var(--font-label); font-weight: 600; }
+  .m-bar-title { font-weight: 600; font-size: var(--text-sm); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .m-bar-small { font-size: var(--text-xs); color: var(--muted); text-align: center; }
+
+  .m-toast {
+    position: sticky; bottom: 16px; margin: 0 auto; width: max-content; max-width: calc(100% - 32px);
+    background: var(--inverse-surface); color: #fff; font-size: var(--text-sm);
+    padding: 10px 16px; border-radius: var(--radius-pill);
+    opacity: 0; transform: translateY(8px); transition: .2s; pointer-events: none;
+  }
+  .m-toast.is-on { opacity: 1; transform: none; }
+
+  @keyframes m-in { from { opacity: 0; transform: translateY(-6px); } }
+
+  /* ---------- state → layout ---------- */
+  .ux-frame[data-bar="focus"] .m-bar--focus,
+  .ux-frame[data-bar="page"] .m-bar--page { display: flex; }
+  .ux-frame[data-chrome="off"] :is(.m-header, .m-kurs, .m-side) { display: none; }
+  .ux-frame[data-chrome="page"] :is(.m-kurs, .m-side) { display: none; }
+  .ux-frame[data-hero="line"] .m-hero--full,
+  .ux-frame[data-hero="none"] .m-hero { display: none; }
+  .ux-frame[data-hero="line"] .m-hero--line { display: flex; }
+  .ux-frame[data-content="off"] .m-content { display: none; }
+  .ux-frame[data-chrome="page"] [data-act="start"] { display: none !important; }
+  .ux-frame[data-chrome="page"] .m-main { max-width: 760px; margin: 0 auto; width: 100%; }
+  .ux-frame[data-chrome="off"] .m-main { max-width: 820px; margin: 0 auto; width: 100%; }
+
+  /* ---------- the mock's own desktop layout ---------- */
+  @container (min-width: 900px) {
+    .m-nav { display: flex; }
+    .m-burger { display: none; }
+    .m-body { grid-template-columns: 280px 1fr; gap: 24px; padding: 24px 32px; }
+    .ux-frame[data-chrome="off"] .m-body,
+    .ux-frame[data-chrome="page"] .m-body { grid-template-columns: 1fr; }
+    .m-side-pill { display: none; }
+    .m-side-full {
+      display: block; position: sticky; top: 16px;
+      background: var(--page-bg); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 18px;
+    }
+    .m-hero--full { grid-template-columns: 1fr 260px; column-gap: 24px; padding: 24px; }
+    .m-hero--full > :not(.m-progress) { grid-column: 1; }
+    .m-hero--full .m-progress { grid-column: 2; grid-row: 1 / span 3; align-self: start; }
+    .m-hero--full h1 { font-size: 1.8rem; }
+    .m-tips { grid-template-columns: repeat(3, 1fr); }
+  }
+</style>

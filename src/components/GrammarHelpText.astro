@@ -1,0 +1,19 @@
+---
+// One German block's translation, in every help language, all hidden until the page root
+// says which one to show (grammar-help.css). Server-rendered rather than filled in by
+// script: the text is ours, it is small, and the page then works the same before and
+// after its JS has run.
+import { HELP_LANGS } from "../lib/textHelp.js";
+
+interface Props {
+  /** `{ en, ar, uk, tr }` — HTML, with the German examples left German inside it. */
+  text?: Record<string, string | null> | null;
+}
+const { text } = Astro.props;
+const langs = text ? HELP_LANGS.filter((l) => text[l.code]) : [];
+---
+{langs.length > 0 && (
+  <div class="gx-tr">
+    {langs.map((l) => <p class="gx-tr-l" lang={l.code} dir={l.dir} set:html={text![l.code]} />)}
+  </div>
+)}

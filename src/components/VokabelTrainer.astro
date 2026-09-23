@@ -219,12 +219,10 @@ const languages = ALL_LANGUAGES.filter((l) => langs.includes(l.code));
        no way to un-see it, so there has to be a way to un-remember it. A reload rather
        than intro.play(), because the interesting part is everything that happens BEFORE
        the tour decides to run — the restored preference, the collapsed first paint. This
-       wipes both stored flags and reloads clean. Stripped from the built site. -->
-  {import.meta.env.DEV && (
-    <button type="button" class="vp-dev-reset" id="vp-dev-reset" title="Tour-Flags löschen und neu laden">
-      ↻ Tour neu
-    </button>
-  )}
+       wipes both stored flags and reloads clean. Shown on the live site too. -->
+  <button type="button" class="vp-dev-reset" id="vp-dev-reset" title="Tour-Flags löschen und neu laden">
+    ↻ Tour neu
+  </button>
 </main>
 
 <script type="application/json" id="fc-data" set:html={JSON.stringify(cards)}></script>

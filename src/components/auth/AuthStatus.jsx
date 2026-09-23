@@ -110,38 +110,41 @@ export default function AuthStatus({ variant = "nav" }) {
   const monogram = (label || "DA").trim().charAt(0).toUpperCase() || "DA";
 
   if (variant === "drawer") {
-    // The drawer is the mobile path, and on this site that is the main path. It gets plain
-    // rows rather than a popup: a menu inside a menu is a tap too many on a phone.
-    if (signedOut) {
-      return (
-        <a
-          className={`lp-drawer-row da-auth-drawer-row${guessing ? " da-auth-guess" : ""}`}
-          href={`/anmelden${nextParam}`}
-        >
-          <span className="lp-drawer-ic" aria-hidden="true">
-            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4" />
-              <path d="m10 17 5-5-5-5" />
-              <path d="M15 12H3" />
-            </svg>
-          </span>
+    // One card for the whole Konto group: progress on the left, the account action on the
+    // right. They were two rows — a "Fortschritt" tile and an "Anmelden" row — but signing
+    // in is only *for* the progress (it syncs it across devices), so it reads as one thing.
+    // Two siblings rather than one link, because a sign-in link cannot sit inside the
+    // /fortschritt link. The whole left side is the tap target for the progress page.
+    return (
+      <div className="da-acct-card">
+        <a className="da-acct-card-main" href="/fortschritt">
+          {signedOut ? (
+            <span className="lp-drawer-ic" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+                <path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm0 14a4 4 0 1 1 0-8 4 4 0 0 1 0 8Z" fillRule="evenodd" />
+                <circle cx="12" cy="12" r="1.4" />
+              </svg>
+            </span>
+          ) : (
+            <span className="da-acct-card-av">
+              <Avatar url={avatarUrl} monogram={monogram} />
+            </span>
+          )}
           <span className="lp-drawer-txt">
-            <b>{t("auth.nav.signIn", "Anmelden")}</b>
-            <i>{t("auth.nav.signIn.sub", "Fortschritt auf allen Geräten")}</i>
+            <b>{t("nav.account.progress.short", "Fortschritt")}</b>
+            <i>{signedOut ? t("auth.nav.localOnly", "Nur lokal") : label}</i>
           </span>
         </a>
-      );
-    }
-    return (
-      <div className="da-auth-drawer-me">
-        <div className="da-auth-drawer-id">
-          <Avatar url={avatarUrl} monogram={monogram} />
-          <span className="lp-drawer-txt">
-            <b>{label}</b>
-            <i>{t("auth.nav.signedIn", "Angemeldet")}</i>
-          </span>
-        </div>
-        <SignOutForm t={t} className="da-auth-drawer-out" />
+        {signedOut ? (
+          <a
+            className={`da-acct-card-act da-acct-card-act--in${guessing ? " da-auth-guess" : ""}`}
+            href={`/anmelden${nextParam}`}
+          >
+            {t("auth.nav.signIn", "Anmelden")}
+          </a>
+        ) : (
+          <SignOutForm t={t} className="da-acct-card-out" />
+        )}
       </div>
     );
   }

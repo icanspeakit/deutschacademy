@@ -140,12 +140,10 @@ const {
 
   <!-- Dev only, same as the grammar pages: the tour is once per browser, so once you
        have seen it you can no longer see it the way a learner does. This wipes both
-       stored flags and reloads clean. Stripped from the built site. -->
-  {import.meta.env.DEV && (
-    <button type="button" class="vp-dev-reset" id="vp-dev-reset" title="Tour-Flags löschen und neu laden">
-      ↻ Tour neu
-    </button>
-  )}
+       stored flags and reloads clean. Shown on the live site too. -->
+  <button type="button" class="vp-dev-reset" id="vp-dev-reset" title="Tour-Flags löschen und neu laden">
+    ↻ Tour neu
+  </button>
 </main>
 
 <script>

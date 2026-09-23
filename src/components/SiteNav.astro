@@ -21,6 +21,7 @@ import ThemeToggle from "./ThemeToggle.astro";
 import Icon from "./Icon.astro";
 import NavDrawer from "./NavDrawer.astro";
 import NavMenubar from "./NavMenubar.astro";
+import NextStepCta from "./NextStepCta.astro";
 import AuthStatus from "./auth/AuthStatus.jsx";
 import "../styles/site-nav.css";
 import "../styles/auth.css";
@@ -43,7 +44,8 @@ const { active } = Astro.props;
     </div>
 
     <div class="lp-nav-right">
-      <a href="/uebungen" class="lp-btn lp-btn--primary" data-i18n="nav.cta">Kostenlos üben</a>
+      {/* One next step from what this browser knows — see NextStepCta.astro. */}
+      <NextStepCta variant="header" />
 
       <div class="lp-nav-utils">
         {/* TODO: there is no site-wide search yet. The button is here because the

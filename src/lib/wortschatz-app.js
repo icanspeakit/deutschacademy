@@ -446,6 +446,9 @@ export function mountWortschatzApp(els, cards, languages, { onAnswer, onSessionS
   }
 
   const deckHasAudio = cards.some((c) => c.audioSrc);
+  /* The face without the button holds an empty slot of the same size, so both faces stack
+     the same heights and the word and its reveal land on one line as the card turns. */
+  const faceAudioGap = deckHasAudio ? `<span class="vt-audio-gap vt-audio--face" aria-hidden="true"></span>` : "";
 
   /* "Continue here" is drawn as an arrow, and an arrow is the one glyph that carries a
      direction in its shape rather than in its position. postcss-rtlcss moves the button to
@@ -519,15 +522,19 @@ export function mountWortschatzApp(els, cards, languages, { onAnswer, onSessionS
           <div class="vt-flip-inner ${state.flipped ? "is-flipped" : ""}">
             <div class="vt-face">
               <span class="vt-face-eyebrow">${escapeHtml(frontLabel)}</span>
-              <span class="vt-prompt ${frontRtl ? "vt-rtl" : ""}">${sideHtml(card, "front", { plural: true })}</span>
-              ${toDe ? "" : audioBtnHtml(card, "vt-audio--face")}
-              <span class="vt-hint">${escapeHtml(flipHint)}</span>
+              <span class="vt-prompt ${frontRtl ? "vt-rtl" : ""}"><span class="vt-face-word">${sideHtml(card, "front", { plural: true })}</span></span>
+              <span class="vt-face-foot">
+                ${toDe ? faceAudioGap : audioBtnHtml(card, "vt-audio--face")}
+                <span class="vt-hint">${escapeHtml(flipHint)}</span>
+              </span>
             </div>
             <div class="vt-face vt-face--back">
               <span class="vt-face-eyebrow">${escapeHtml(backLabel)}</span>
-              <span class="vt-answer ${backRtl ? "vt-rtl" : ""}">${sideHtml(card, "back", { plural: true })}</span>
-              ${toDe ? audioBtnHtml(card, "vt-audio--face") : ""}
-              <span class="vt-hint">${escapeHtml(t("vt.card.flipBack"))}</span>
+              <span class="vt-answer ${backRtl ? "vt-rtl" : ""}"><span class="vt-face-word">${sideHtml(card, "back", { plural: true })}</span></span>
+              <span class="vt-face-foot">
+                ${toDe ? audioBtnHtml(card, "vt-audio--face") : faceAudioGap}
+                <span class="vt-hint">${escapeHtml(t("vt.card.flipBack"))}</span>
+              </span>
             </div>
           </div>
         </div>

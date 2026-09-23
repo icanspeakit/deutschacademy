@@ -7,33 +7,35 @@ import Layout from "../../layouts/Layout.astro";
 import PracticeHeader from "../../components/PracticeHeader.astro";
 import "../../styles/practice.css";
 import "../../styles/aussprache.css";
-import wortschatz from "../../data/wortschatz.json";
-import artikel from "../../data/artikel.json";
+import phrases from "../../data/wortschatz.json";
 import { slugify } from "../../lib/audioSlug.js";
+import { LEVELS, units, asAudioItems } from "../../lib/lexicon.js";
 
-const audioFor = (text: string) => `/audio/aussprache/${slugify(text)}.mp3`;
+// Every voiced lexicon word, one set per unit (≈15 words each), so the rail stays short
+// and the progress bar means something. Levels appear here as soon as
+// scripts/generate-wortschatz-audio.mjs voices them — nothing to wire by hand.
+const unitSets = units()
+  .map((u) => ({ ...u, items: asAudioItems({ unit: u.id }) }))
+  .filter((u) => u.items.length);
 
-const sets = {
-  wortschatz: wortschatz.map((w) => ({
+// The hand-picked phrases keep their own set: whole sentences, voiced by scripts/generate-audio.mjs.
+const PHRASES = "saetze";
+const sets: Record<string, { text: string; audioSrc: string; note: string; translations: Record<string, string> }[]> = {
+  ...Object.fromEntries(unitSets.map((u) => [u.id, u.items])),
+  [PHRASES]: phrases.map((w) => ({
     text: w.front,
-    audioSrc: audioFor(w.front),
+    audioSrc: `/audio/aussprache/${slugify(w.front)}.mp3`,
     note: w.note ?? "",
     translations: w.translations ?? {},
   })),
-  artikel: artikel.map((a) => ({
-    text: `${a.gender} ${a.word}`,
-    audioSrc: audioFor(`${a.gender} ${a.word}`),
-    note: "",
-    translations: {},
-  })),
 };
 
-const railSets = [
-  { key: "wortschatz", labelKey: "dash.skill.wortschatz", label: "Wortschatz" },
-  { key: "artikel", labelKey: "aussprache.tab.artikel", label: "Artikel" },
-];
+const groups = LEVELS.map((level) => ({ level, units: unitSets.filter((u) => u.level === level) }))
+  .filter((g) => g.units.length);
+const firstSet = unitSets[0]?.id ?? PHRASES;
+const totalWords = unitSets.reduce((n, u) => n + u.items.length, 0);
 ---
-<Layout title="Aussprache-Training – DeutschAcademy" description="Hören, nachsprechen und sich selbst aufnehmen — Aussprachetraining für Wortschatz und Artikel.">
+<Layout title="Aussprache-Training – DeutschAcademy" description="Hören, nachsprechen und sich selbst aufnehmen — Aussprachetraining mit dem ganzen vertonten Wortschatz, nach Themen.">
   <PracticeHeader title="Aussprache-Training" titleKey="aussprache.hero.title" />
 
   <main class="pr-shell" id="pron-root">
@@ -41,18 +43,20 @@ const railSets = [
       <div class="pr-rail-head">
         <p class="pr-rail-eyebrow" data-i18n="aussprache.hero.eyebrow">Hören & nachsprechen</p>
         <h1 class="pr-rail-title" data-i18n="aussprache.hero.title">Aussprache trainieren</h1>
-        <div class="pr-set-switch" role="tablist" aria-label="Übungsset" data-i18n-attr="aria-label:aussprache.set.ariaLabel">
-          {railSets.map((s, i) => (
-            <button
-              type="button"
-              role="tab"
-              class="pr-set-btn"
-              data-set-btn={s.key}
-              aria-selected={i === 0 ? "true" : "false"}
-              data-i18n={s.labelKey}
-            >{s.label}</button>
-          ))}
-        </div>
+        <label class="pr-set-pick">
+          <span class="pr-set-pick-label" data-i18n="aussprache.set.label">Thema</span>
+          <select class="pr-set-select" data-set-select>
+            {groups.map((g) => (
+              <optgroup label={g.level}>
+                {g.units.map((u) => (
+                  <option value={u.id} selected={u.id === firstSet}>{u.title ?? u.id} · {u.items.length}</option>
+                ))}
+              </optgroup>
+            ))}
+            <option value={PHRASES} data-i18n="aussprache.set.phrases">Sätze & Redemittel</option>
+          </select>
+        </label>
+        <p class="pr-set-total"><span data-i18n="aussprache.set.total">Wörter mit Audio</span>: {totalWords}</p>
       </div>
 
       <div class="pr-rail-progress">
@@ -64,9 +68,9 @@ const railSets = [
       </div>
 
       <div class="pr-rail-scroll">
-        {railSets.map((s) => (
-          <div data-rail-list={s.key} hidden={s.key !== "wortschatz"}>
-            {sets[s.key as keyof typeof sets].map((item, i) => (
+        {Object.entries(sets).map(([key, items]) => (
+          <div data-rail-list={key} hidden={key !== firstSet}>
+            {items.map((item, i) => (
               <button type="button" class="pr-row" data-row-index={i} aria-current="false" data-heard="false">
                 <span class="pr-row-bar"></span>
                 <span class="pr-row-text">{item.text}</span>
@@ -140,14 +144,18 @@ const railSets = [
     const raw = JSON.parse(document.getElementById("pron-data").textContent);
     const root = document.getElementById("pron-root");
 
-    // The vocab set carries per-language glosses; the article set does not.
+    // Glosses exist for en/ar/ru/tr; any other UI language simply shows none.
     function buildSets(lang) {
       const pick = (item) => ({
         ...item,
         translation: lang === "de" ? "" : item.translations?.[lang] || "",
       });
-      return { wortschatz: raw.wortschatz.map(pick), artikel: raw.artikel.map(pick) };
+      return Object.fromEntries(Object.entries(raw).map(([k, items]) => [k, items.map(pick)]));
     }
+
+    const LAST_KEY = "aussprache.set";
+    let lastSet = null;
+    try { lastSet = localStorage.getItem(LAST_KEY); } catch {}
 
     const FALLBACK = {
       position: "{i} / {n}",
@@ -177,12 +185,15 @@ const railSets = [
       sets,
       strings: stringsFrom(dict),
       onHeard: () => recordSession("hoeren"),
+      onSetChange: (key) => { try { localStorage.setItem(LAST_KEY, key); } catch {} },
     });
+    if (lastSet && raw[lastSet]) app.switchSet(lastSet);
 
     onLangChange((code, nextDict) => {
       const next = buildSets(code);
-      sets.wortschatz.forEach((item, i) => (item.translation = next.wortschatz[i].translation));
-      sets.artikel.forEach((item, i) => (item.translation = next.artikel[i].translation));
+      for (const [k, items] of Object.entries(sets)) {
+        items.forEach((item, i) => (item.translation = next[k][i].translation));
+      }
       app.refresh(stringsFrom(nextDict));
     });
   </script>

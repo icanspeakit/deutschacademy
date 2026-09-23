@@ -143,7 +143,9 @@ export function mountBeats(root, { onLeave, onExit, anchor } = {}) {
       c.setAttribute("aria-selected", String(on));
     });
     panels.forEach((p) => { p.hidden = p.dataset.beatPanel !== beat; });
-    if (history.replaceState) history.replaceState(null, "", "#" + beat);
+    // Only while Aktiv is what is on screen. The first show() runs on load in Üben too,
+    // and writing #sehen then made every reload or shared link open in Aktiv.
+    if (history.replaceState && root.dataset.mode === "aktiv") history.replaceState(null, "", "#" + beat);
 
     // scrollIntoView on the page root puts the top of the page under the site nav and
     // leaves the new panel's first rows hidden behind the sticky bar. Scroll to the point

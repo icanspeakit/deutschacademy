@@ -1,0 +1,34 @@
+/* The demo controls from DemoDock.astro, one fixed row in the bottom-right corner.
+   Dashed and monospace so they never read as something a learner is meant to press,
+   and above the tours' scrim (z-index 9000) so they stay reachable while one runs. */
+.demo-dock {
+  position: fixed;
+  right: 12px;
+  bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+  z-index: 9100;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 8px;
+  max-width: calc(100vw - 24px);
+  pointer-events: none;
+}
+.demo-dock .vp-dev-reset {
+  position: static;
+  pointer-events: auto;
+  border: 1px dashed var(--border-strong);
+  border-radius: var(--radius-pill);
+  background: var(--surface-card);
+  color: var(--muted);
+  padding: 8px 14px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 12px;
+  cursor: pointer;
+  opacity: .75;
+  box-shadow: 0 4px 14px rgba(8, 20, 34, .18);
+}
+.demo-dock .vp-dev-reset:hover { opacity: 1; color: var(--ink); }
+
+/* The phone drawer's primary button sits in the same bottom-right corner; while the drawer
+   is open the dock would cover it. */
+body:has(.lp-drawer:not([hidden])) .demo-dock { display: none; }

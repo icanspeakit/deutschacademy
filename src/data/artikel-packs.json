@@ -1,0 +1,50 @@
+{
+  "_comment": "Packs for the der/die/das trainer — see src/lib/artikelPacks.js. `topics` groups the lexicon's own unit topics (src/content/lexicon/*.json) into everyday packs; a noun belongs to the pack of its FIRST topic, so every tagged noun is in exactly one. `rules` are article patterns; a noun joins a rule pack only if it matches the pattern AND its real article is the pack's article — the ones that match and break it are the exceptions.",
+  "minPack": 8,
+  "topics": [
+    { "id": "wohnen", "name": "Wohnung & Haus", "icon": "🏠", "topics": ["wohnen"] },
+    { "id": "essen", "name": "Essen & Trinken", "icon": "🍞", "topics": ["essen"] },
+    { "id": "menschen", "name": "Familie & Menschen", "icon": "👪", "topics": ["person", "familie", "gefuehle", "psychologie"] },
+    { "id": "koerper", "name": "Körper & Gesundheit", "icon": "🩺", "topics": ["koerper", "gesundheit"] },
+    { "id": "kleidung", "name": "Kleidung", "icon": "👕", "topics": ["kleidung"] },
+    { "id": "stadt", "name": "Stadt & Verkehr", "icon": "🚌", "topics": ["stadt", "verkehr"] },
+    { "id": "arbeit", "name": "Arbeit & Schule", "icon": "💼", "topics": ["arbeit", "bildung", "sprache", "wissenschaft", "wirtschaft"] },
+    { "id": "freizeit", "name": "Freizeit & Reisen", "icon": "🧳", "topics": ["freizeit", "reisen", "kultur"] },
+    { "id": "zeit", "name": "Zeit, Wetter & Natur", "icon": "🌦️", "topics": ["zeit", "wetter", "natur", "umwelt"] },
+    { "id": "einkaufen", "name": "Einkaufen & Geld", "icon": "🛒", "topics": ["einkaufen", "geld"] },
+    { "id": "aemter", "name": "Ämter & Gesellschaft", "icon": "🏛️", "topics": ["aemter", "gesellschaft", "politik", "recht", "migration"] },
+    { "id": "medien", "name": "Medien & Technik", "icon": "📱", "topics": ["medien", "kommunikation", "technik"] }
+  ],
+  "rules": [
+    {
+      "id": "immer-die",
+      "article": "die",
+      "name": "Immer die",
+      "rule": "Wörter auf -ung, -heit, -keit, -schaft, -ion, -tät, -ie und -ik haben „die“.",
+      "ruleLeicht": "Das Wort endet auf -ung, -heit, -keit, -schaft, -ion, -tät, -ie oder -ik? Dann sagt man „die“.",
+      "suffixes": ["ung", "heit", "keit", "schaft", "ion", "tät", "ie", "ik"],
+      "notSuffixes": ["eik"]
+    },
+    {
+      "id": "immer-das",
+      "article": "das",
+      "name": "Immer das",
+      "rule": "Kleine Dinge auf -chen und -lein, Wörter auf -um und -ment und Verben als Nomen (das Essen) haben „das“.",
+      "ruleLeicht": "Das Wort endet auf -chen, -lein, -um oder -ment? Oder es ist ein Verb als Nomen, wie „das Essen“? Dann sagt man „das“.",
+      "suffixes": ["chen", "lein", "um", "ment"],
+      "notSuffixes": ["aum"],
+      "diminutiveCheck": true,
+      "infinitives": true
+    },
+    {
+      "id": "meistens-der",
+      "article": "der",
+      "name": "Meistens der",
+      "rule": "Männer auf -er (der Lehrer), Wörter auf -ling und -ismus, Tage, Monate und Jahreszeiten haben „der“.",
+      "ruleLeicht": "Ein Mann mit einem Beruf auf -er, wie „der Lehrer“? Ein Tag, ein Monat oder eine Jahreszeit? Dann sagt man „der“.",
+      "suffixes": ["ling", "ismus"],
+      "maleEr": true,
+      "names": ["Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag", "Sonntag", "Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember", "Frühling", "Sommer", "Herbst", "Winter"]
+    }
+  ]
+}

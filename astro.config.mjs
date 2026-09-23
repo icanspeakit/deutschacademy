@@ -47,6 +47,11 @@ export default defineConfig({
   // anything already shared working instead of 404ing.
   redirects: {
     '/dashboard': '/fortschritt',
+    // The der/die/das trainer is now the Üben view of the Artikel topic (ArtikelTrainer.astro).
+    '/uebungen/artikel-trainer': '/uebungen/grammatik/artikel',
+    // /v2 tested practising inside the dashboard (the focus layout). Retired with the
+    // inline exercises — see FORTSCHRITT-KARTE-PROMPT.md.
+    '/v2': '/fortschritt',
   },
   server: {
     // Listen on every interface, not just 127.0.0.1, so the dev server is reachable

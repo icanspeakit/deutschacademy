@@ -7,8 +7,8 @@
  * and no "Weitermachen" card tell you nothing about whether the page works when it is full.
  *
  * So this writes a plausible record straight into the store progress.js reads. It is a
- * development tool: nothing imports it outside an `import.meta.env.DEV` branch, and the
- * button that calls it is not rendered in a production build.
+ * demo tool, and its buttons (DemoDock.astro, on every page) are ungated — every visitor,
+ * live site included, sees them.
  *
  * It deliberately does NOT invent topic slugs. The caller passes the real items the page is
  * already rendering ({ id: { tasks } }), so every bar that fills is a bar that exists, and a
@@ -114,7 +114,7 @@ export function seedProgress(items = {}, { streak = 6, days = 24, seed = 7 } = {
     recents: [
       { path: "/uebungen/grammatik/dativ", title: "Dativ", n: 3, at: today },
       { path: "/uebungen/wortschatz/a1-01", title: "Person & Vorstellung", n: 2, at: daysAgoStr(1) },
-      { path: "/uebungen/artikel-trainer", title: "Artikel-Trainer", n: 5, at: daysAgoStr(2) },
+      { path: "/uebungen/grammatik/artikel", title: "Artikel-Trainer", n: 5, at: daysAgoStr(2) },
     ],
   };
 
@@ -191,7 +191,7 @@ export function fillProgress(items = {}, { accuracy = 0.8, streak = 12, days = 3
     recents: [
       { path: "/uebungen/grammatik/dativ", title: "Dativ", n: 9, at: today },
       { path: "/uebungen/wortschatz/a1-01", title: "Person & Vorstellung", n: 7, at: today },
-      { path: "/uebungen/artikel-trainer", title: "Artikel-Trainer", n: 12, at: daysAgoStr(1) },
+      { path: "/uebungen/grammatik/artikel", title: "Artikel-Trainer", n: 12, at: daysAgoStr(1) },
     ],
   };
 
@@ -200,8 +200,11 @@ export function fillProgress(items = {}, { accuracy = 0.8, streak = 12, days = 3
   return data;
 }
 
-/** Back to the honest empty state, including the display name the seed set. */
+/** Back to the honest empty state, including the display name the seed set and the
+    Artikel-Trainer's "sicher" record. */
 export function clearSeed() {
   localStorage.removeItem(STORE_KEY);
   localStorage.removeItem(NAME_KEY);
+  // The der/die/das trainer keeps its own per-noun history (artikelVerlauf.js).
+  localStorage.removeItem("da-artikel-verlauf-v1");
 }

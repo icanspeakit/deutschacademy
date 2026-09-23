@@ -1,0 +1,36 @@
+/* A grammar topic's rule in the learner's language (GrammarHelp.astro).
+   The German leads: the translation sits under the block it belongs to, smaller and set
+   off by a rule on its leading edge, so the eye can take it or skip it. */
+
+.gx-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 10px; margin: 14px 0 4px; }
+.gx-toggle {
+  display: inline-flex; align-items: center; gap: 8px;
+  min-height: 40px; padding: 8px 14px;
+  border: 1px solid var(--brand-blue); border-radius: 999px;
+  background: none; color: var(--brand-blue-dark);
+  font: inherit; font-size: .875rem; font-weight: var(--fw-semibold); cursor: pointer;
+}
+.gx-toggle-dot { width: 10px; height: 10px; border-radius: 50%; border: 1.5px solid currentColor; }
+.gx-toggle[aria-pressed="true"] { background: var(--brand-blue); color: #fff; }
+.gx-toggle[aria-pressed="true"] .gx-toggle-dot { background: currentColor; }
+.gx-draft { flex-basis: 100%; margin: 0; }
+
+/* The chips and the draft line only matter while there is a translation to steer. */
+[data-gx="off"] .gx-bar .help-langs,
+[data-gx="off"] .gx-bar .gx-draft { display: none; }
+
+.gx-tr { display: none; }
+[data-gx="on"] .gx-tr { display: block; }
+.gx-tr-l {
+  display: none;
+  margin: 6px 0 0; padding-inline-start: 10px;
+  border-inline-start: 2px solid var(--brand-blue);
+  font-size: .875rem; line-height: 1.55; color: var(--muted);
+}
+.gx-tr-l[dir="rtl"] { font-family: "Noto Sans Arabic", "Segoe UI", Tahoma, Arial, sans-serif; font-size: .95rem; line-height: 1.7; }
+[data-gx-lang="en"] .gx-tr-l[lang="en"],
+[data-gx-lang="ar"] .gx-tr-l[lang="ar"],
+[data-gx-lang="uk"] .gx-tr-l[lang="uk"],
+[data-gx-lang="tr"] .gx-tr-l[lang="tr"] { display: block; }
+/* German examples keep their German look inside the translation. */
+.gx-tr-l em, .gx-tr-l strong { color: var(--ink); }

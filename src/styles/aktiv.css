@@ -104,6 +104,8 @@
 .vp-page[data-mode="aktiv"] .vp-workspace,
 .vp-page[data-mode="aktiv"] .vp-hero,
 .vp-page[data-mode="ueben"] .ak-aktiv { display: none; }
+/* The Artikel trainer's fold tab sits outside its .vp-workspace, so it needs saying twice. */
+.vp-page[data-mode="aktiv"] .vp-rule-pivot { display: none; }
 
 /* --------------------------------------------------------------- beats ---- */
 

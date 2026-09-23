@@ -323,3 +323,95 @@
   .sk-field { grid-template-columns: minmax(0, 1fr); gap: 5px; }
   .sk-field-answer { grid-column: 1; }
 }
+
+/* --- Hilfe in der eigenen Sprache (TextWithTranslation, VocabList) -------------------
+   The German always leads: the translation is quieter, smaller and off until asked for.
+   Phone first — under each paragraph; beside it only where there is room for two
+   readable measures. */
+
+/* .help-langs / .help-lang / .help-draft: src/styles/help-langs.css — the grammar pages use
+   them too, and do not load this sheet. */
+
+.tt-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; margin-bottom: 12px; }
+.tt-toggle {
+  min-height: 40px;
+  padding: 8px 16px;
+  border: 1px solid var(--brand-blue);
+  border-radius: 999px;
+  background: none;
+  color: var(--brand-blue-dark);
+  font: inherit;
+  font-weight: var(--fw-semibold);
+  cursor: pointer;
+}
+.tt-toggle[aria-pressed="true"] { background: var(--brand-blue); color: #fff; }
+.tt-toggle-on { display: none; }
+.tt[data-translation="on"] .tt-toggle-on { display: inline; }
+.tt[data-translation="on"] .tt-toggle-off { display: none; }
+/* The chips only matter while there is a translation to steer. */
+.tt[data-translation="off"] .tt-bar .help-langs,
+.tt[data-translation="off"] .help-draft { display: none; }
+
+.tt-text { white-space: normal; }
+.tt-row + .tt-row { margin-top: .15em; }
+.tt-row--para { margin-top: 1.1em !important; }
+.tt[data-translation="on"] .tt-row + .tt-row { margin-top: .6em; }
+.tt-de, .tt-tr { margin: 0; white-space: pre-wrap; }
+.tt-tr { display: none; }
+.tt[data-translation="on"] .tt-tr {
+  display: block;
+  margin-top: 6px;
+  padding-inline-start: 12px;
+  border-inline-start: 2px solid var(--border);
+  font-size: .9375rem;
+  line-height: 1.65;
+  color: var(--muted);
+}
+.tt-tr[dir="rtl"] { text-align: right; }
+
+@media (min-width: 900px) {
+  .tt[data-translation="on"] .tt-text { max-width: none; }
+  .tt[data-translation="on"] .tt-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 28px;
+  }
+  .tt[data-translation="on"] .tt-tr { margin-top: 0; font-size: .9375rem; line-height: 1.85; }
+}
+
+.vl { margin: 0 0 30px; }
+.vl-bar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 12px; }
+.vl-cover {
+  min-height: 36px;
+  padding: 6px 14px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: none;
+  color: var(--brand-blue-dark);
+  font: inherit;
+  font-size: .875rem;
+  font-weight: var(--fw-semibold);
+  cursor: pointer;
+}
+.vl-cover[aria-pressed="true"] { border-color: var(--brand-blue); background: var(--surface); }
+.vl-list { margin: 0; padding: 0; list-style: none; }
+.vl-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 14px;
+  padding: 9px 4px;
+  border-bottom: 1px solid var(--border);
+  line-height: 1.45;
+}
+.vl-row:last-child { border-bottom: none; }
+.vl-de { font-weight: var(--fw-semibold); color: var(--ink); }
+.vl-tr { color: var(--muted); }
+.vl-tr[dir="rtl"] { text-align: right; }
+/* Abgedeckt: the meaning is there, just not readable until the row is tapped. */
+.vl[data-cover="on"] .vl-row { cursor: pointer; }
+.vl[data-cover="on"] .vl-tr { color: transparent; background: var(--surface); border-radius: 6px; user-select: none; }
+.vl[data-cover="on"] .vl-row.is-open .vl-tr { color: var(--muted); background: none; user-select: auto; }
+@media (max-width: 480px) {
+  .help-langs { gap: 4px; }
+  .help-lang { padding: 5px 9px; font-size: .8125rem; }
+}

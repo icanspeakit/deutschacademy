@@ -13,13 +13,16 @@
 // type, with the current course path pinned above it and the exams — which are
 // targets rather than a level — kept in their own group at the end.
 //
-// THREE CONTENT VIEWS. Picking a Stufe shows that level's OVERVIEW (own hero,
-// own ring, own content table). Picking an entry shows the ITEM view. And a
-// grammar entry ALSO mounts the real exercise inline — the same mountQuiz() the
-// live /uebungen/grammatik pages use — so you can answer questions without ever
-// leaving the shell, and watch the ring, the level bar and the strip move while
-// you do. That is the open question this page exists to answer: can a learner
-// stay in this view, or does practice need its own page?
+// TWO CONTENT VIEWS. Picking a Stufe shows that level's OVERVIEW (own hero, own
+// ring, own content table). Picking an entry shows the ITEM card: what it is, how
+// far along the learner is, and one link to where it is practised.
+//
+// This is the map, not a second place to learn. It used to mount every exercise
+// inline as well, beside a button that opened the same exercise on its own page
+// in a new tab — two homes for one piece of content, and the learner had to pick.
+// Decided in FORTSCHRITT-KARTE-PROMPT.md (the /uxfocus study, "Karte → Seite"):
+// the topic page is the one place to practise; this page shows where you are and
+// sends you there. See docs/fortschritt-karte-tier1-v1.md.
 //
 // LEVELS: grammatik.json carries a real `level` per topic (source: "data").
 // The other exercise data files have no level field, so those entries are
@@ -46,7 +49,7 @@ import "../styles/nav.css";
 import "../styles/rule-intro.css";
 import artikel from "../data/artikel.json";
 import { nouns } from "../lib/lexicon.js";
-import { byPlan } from "../lib/lehrplan.js";
+import { kursTopicsAt, workspaces as kursWorkspaces } from "../lib/kursOrder.js";
 import grammatik from "../data/grammatik.json";
 import wortschatz from "../data/wortschatz.json";
 import sprechen from "../data/sprechen.json";
@@ -114,44 +117,10 @@ type Section = {
 // getTopicProgress() in src/lib/progress.js. The server render is the empty state.
 const doneOf = (_id: string) => 0;
 
-// ── The Artikel-Trainer, embedded ────────────────────────────────────────
-// Same pool and same question shape as /uebungen/artikel-trainer, driven by the
-// same practiceWorkspace.js. The live page ships the whole ~860-noun lexicon;
-// this study page caps it at PER_LEVEL per level, which is still several rounds
-// deep and keeps the HTML from doubling.
+// The der/die/das trainer is a row on the map like any other: a round is
+// ARTIKEL_SESSION nouns, drawn from every gendered noun in the lexicon.
 const ARTIKEL_SESSION = 25;
-const ARTIKEL_PER_LEVEL = 60;
-
-function explainArtikel(word: string, gender: string) {
-  const lower = word.toLowerCase();
-  if (lower.endsWith("in")) return "Die Endung -in kennzeichnet die weibliche Form — solche Wörter sind feminin.";
-  if (lower.endsWith("chen") || lower.endsWith("lein")) return "Verkleinerungsformen auf -chen oder -lein sind immer neutrum.";
-  if (lower.endsWith("e")) return "Viele zweisilbige Wörter auf -e sind feminin (z. B. Tasche, Sonne, Katze).";
-  if (lower.endsWith("er")) return "Viele Wörter auf -er — Werkzeuge, Geräte, männliche Personen — sind maskulin.";
-  if (lower.endsWith("el")) return "Viele Wörter auf -el sind maskulin (z. B. Schlüssel, Apfel).";
-  return `Für „${word}" gibt es keine feste Regel — der Artikel wird mit dem Wort zusammen gelernt.`;
-}
-
-const artikelQuestion = (n: any) => ({
-  id: n.id,
-  level: n.level,
-  prompt: `___ ${n.lemma}?`,
-  options: ["der", "die", "das"],
-  answer: n.gender,
-  explain: explainArtikel(n.lemma, n.gender),
-  change: `${n.gender} ${n.lemma}`,
-});
-
-const ARTIKEL_POOL = [
-  ...nouns({ level: "A1", has: "gender" }).slice(0, ARTIKEL_PER_LEVEL),
-  ...nouns({ level: "A2", has: "gender" }).slice(0, ARTIKEL_PER_LEVEL),
-].map(artikelQuestion);
-
-const ARTIKEL_LEVELS = [
-  { key: "A1", label: "A1", count: ARTIKEL_POOL.filter((q) => q.level === "A1").length },
-  { key: "A2", label: "A2", count: ARTIKEL_POOL.filter((q) => q.level === "A2").length },
-  { key: "all", label: "Alle", count: ARTIKEL_POOL.length },
-];
+const ARTIKEL_NOUNS = nouns({ level: ["A1", "A2", "B1", "B2"], has: "gender" }).length;
 
 const grammarItem = (t: (typeof grammatik)[number], level: string): Item => ({
   id: t.id,
@@ -171,11 +140,10 @@ const grammarItem = (t: (typeof grammatik)[number], level: string): Item => ({
 // ── The full grammar workspaces ──────────────────────────────────────────
 // src/data/grammatik/*.json each describe a complete Kursbuchseite: the
 // "Wie funktioniert das?" rule card plus four or five exercises. The live
-// /uebungen/grammatik/<topic> route renders exactly these. Here they are
-// globbed for their metadata only — the JSON itself is loaded lazily in the
-// browser, one topic at a time, so this page does not ship all 180 KB of them.
-const workspaceMods = import.meta.glob("../data/grammatik/*.json", { eager: true });
-const workspaces = Object.values(workspaceMods).map((m: any) => m.default ?? m);
+// /uebungen/grammatik/<topic> route renders exactly these. The map reads their
+// metadata only — which topics a level has and in what order comes from
+// src/lib/kursOrder.js, the same list the topic page's course bar walks.
+const workspaces = kursWorkspaces;
 
 // One "Slot" is one thing the learner has to get right, counted the same way
 // the five exercise renderers in grammarWorkspace.js consume their data.
@@ -208,46 +176,14 @@ const workspaceItem = (w: any): Item => {
   };
 };
 
-// A workspace always beats a bare quiz topic of the same id — same rule the
-// live [id].astro route uses, so /nav never offers a thinner version of a page
-// that already exists in full.
-const workspaceIds = new Set(workspaces.flatMap((w: any) => [w.id, w.slug].filter(Boolean)));
-const workspacesAt = (level: string) =>
-  workspaces.filter((w: any) => w.level === level).map(workspaceItem);
-const quizTopicsAt = (level: string) =>
-  byLevel(level).filter((t) => !workspaceIds.has(t.id)).map((t) => grammarItem(t, level));
-
-// Curriculum order, not alphabetical, and workspaces no longer jump ahead of quiz-only
-// topics just for being workspaces. Both lists go into one pot and come out in the order
-// the course teaches them — see src/lib/lehrplan.js for why that was two orders before.
+// Which topics a level holds, in course order: kursTopicsAt() in src/lib/kursOrder.js.
+// One list for this map and for the topic page's "Thema x von y" and ‹ ›.
 const grammarAt = (level: string) =>
-  [...workspacesAt(level), ...quizTopicsAt(level)]
-    .sort(byPlan((i: any) => [i.id], () => level));
+  kursTopicsAt(level).map((t: any) => (t.kind === "workspace" ? workspaceItem(t.data) : grammarItem(t.data, level)));
 
-// ── The exercise that sits on every overview ─────────────────────────────
-// Each Stufenübersicht carries one ready-to-use exercise directly under the top
-// card, so /nav always has something to actually do without drilling into a
-// topic first. Preference: that level's first workspace, and within it the first
-// "fill" exercise (the most self-explanatory of the five widgets).
+// The portions below split a topic on its exercise boundaries, so they need the
+// workspace behind an id.
 const workspaceById = Object.fromEntries(workspaces.map((w: any) => [w.slug ?? w.id, w]));
-const quickIndexOf = (w: any) => {
-  const i = (w.exercises ?? []).findIndex((e: any) => e.type === "fill");
-  return i >= 0 ? i : 0;
-};
-const quickFor = (items: Item[], fallbackId: string) => {
-  // A1 and the course get the Artikel-Trainer itself — it is the most
-  // immediately usable thing on the site and needs no rule read first.
-  if (items.some((i) => i.practice === "trainer")) {
-    return { kind: "trainer" as const, topicId: "artikel-trainer", topicLabel: "der/die/das-Trainer", level: "A1", index: 0, title: "der, die oder das?", hint: "Wähle den passenden Artikel — Fokus- oder Testmodus." };
-  }
-  const item = items.find((i) => i.practice === "workspace");
-  const id = item ? item.id : fallbackId;
-  const w = workspaceById[id];
-  if (!w) return null;
-  const idx = quickIndexOf(w);
-  const ex = w.exercises[idx];
-  return { kind: "workspace" as const, topicId: id, topicLabel: w.name, level: w.level, index: idx, title: ex.title, hint: ex.hint ?? "" };
-};
 
 // Every grammar entry, in one list — the course module "Grammatik-Basis" is
 // their sum, so practising any single topic moves the course strip too.
@@ -413,7 +349,7 @@ const sections: Section[] = [
     focus: ["Artikel: der, die, das", "Akkusativ nach Verben", "Grundwortschatz"],
     items: [
       ...grammarAt("A1"),
-      { id: "artikel-trainer", label: "der/die/das-Trainer", icon: "target", href: "/uebungen/artikel-trainer", level: "A1", levelSource: "abgeleitet", eyebrow: "Übung · A1", lead: `Artikel gezielt trainieren — ${ARTIKEL_POOL.length} Nomen aus dem Lexikon, Fokus- oder Testmodus, mit sofortigem Feedback nach jeder Antwort.`, tasks: ARTIKEL_SESSION, done: doneOf("artikel-trainer"), minutes: 8, practice: "trainer" },
+      { id: "artikel-trainer", label: "der/die/das-Trainer", icon: "target", href: "/uebungen/grammatik/artikel", level: "A1", levelSource: "abgeleitet", eyebrow: "Übung · A1", lead: `Artikel gezielt trainieren — ${ARTIKEL_NOUNS} Nomen aus dem Lexikon, Fokus- oder Testmodus, mit sofortigem Feedback nach jeder Antwort.`, tasks: ARTIKEL_SESSION, done: doneOf("artikel-trainer"), minutes: 8, practice: "trainer" },
     ],
   },
   {
@@ -507,19 +443,6 @@ const stats = (s: Section) => {
   return { tasks, done, minutes: sum(s.items.map((i) => i.minutes ?? 0)), pct: tasks ? Math.round((done / tasks) * 100) : null };
 };
 const sectionStats = Object.fromEntries(sections.map((s) => [s.id, stats(s)]));
-// "artikel" is the fallback for the groups with no grammar of their own
-// (Dein Weg, Alle Stufen, Prüfungen) — A1, concrete, and nobody is too advanced
-// to benefit from a der/die/das drill.
-// Which groups get the Artikel-Trainer as their exercise rather than a grammar
-// workspace: the landing view and A1, plus the two groups with no grammar of
-// their own — nobody is too advanced for a der/die/das drill.
-const TRAINER_SECTIONS = new Set(["weg", "a1", "alle", "pruefungen"]);
-const sectionQuick = Object.fromEntries(sections.map((s) => [
-  s.id,
-  TRAINER_SECTIONS.has(s.id)
-    ? quickFor([{ practice: "trainer" } as Item], "artikel")
-    : quickFor(s.items, "artikel"),
-]));
 const itemPct = (i: Item) => (i.tasks ? Math.round(((i.done ?? 0) / i.tasks) * 100) : null);
 const sectionOf = Object.fromEntries(sections.flatMap((s) => s.items.map((i) => [i.id, s])));
 const courseStats = sectionStats.weg;
@@ -547,8 +470,9 @@ const nextOf = (s: Section): Item =>
 const nextKicker = (s: Section) =>
   s.items.some((i) => (i.done ?? 0) > 0) ? "Weiter mit" : "Fang an mit";
 
-// Handed to the client: one flat item table plus the questions for every topic
-// that can be practised inline.
+// Handed to the client: one flat item table, the sections, and what the course
+// strip and the portions are counted from. No exercise content — nothing is
+// practised on the map.
 const clientData = {
   items: Object.fromEntries(sections.flatMap((s) => s.items.map((i) => [i.id, {
     label: i.label, eyebrow: i.eyebrow, lead: i.lead, href: i.href,
@@ -567,23 +491,10 @@ const clientData = {
     : i.practice === "choice" || i.practice === "read" ? "lesen"
     : i.practice === "dtz" || i.practice === "bausteine" ? "pruefungen"
     : "grammatik"]))),
-  topics: Object.fromEntries(grammatik.map((t) => [t.id, { name: t.name, intro: t.intro, questions: t.questions }])),
-  // Content for the non-grammar exercises. All real, from the same files the
-  // live pages read; the DTZ Übungssatz is the only one loaded lazily.
-  choice: {
-    lesen: lesen.groups.map((g) => ({ id: g.id, title: g.title, level: g.level, text: g.text, questions: g.questions })),
-    lid: [{ id: "lid", title: "Einbürgerungstest", level: "kein GER", text: "", questions: lid.questions }],
-  },
-  cards: wortschatz.map((c) => ({ front: c.front, note: c.note ?? "", back: c.translations?.en ?? Object.values(c.translations ?? {})[0] ?? "" })),
-  audio: [...wortschatz.map((c) => c.front), ...artikel.map((a) => `${a.gender} ${a.word}`)],
-  speak: sprechen,
-  read: kultur,
   picker: allGrammarItems.map((i) => ({ id: i.id, label: i.label, level: i.level, tasks: i.tasks })),
   // The grammar module's portions, in order. `parts` is a window over a topic's
   // ordered slots, so a portion's progress is what that topic has done inside it.
   portions,
-  // Which levels a picker row should offer. Anything not listed shows all of them.
-  pickerScope: { testdaf: ["B2"], goethe: ["A1", "A2", "B1", "B2"] } as Record<string, string[]>,
 };
 
 
@@ -594,23 +505,13 @@ interface Props {
   variants?: ("a" | "b" | "c")[];
   /** Study mode: the test banner and the A/B/C toggle. Off for the real page. */
   study?: boolean;
-  /**
-   * How an open topic is presented in the content column.
-   *   "cards" — /dashboard: a hero card with the topic's own progress ring, then
-   *             the rule and the exercises stacked underneath it.
-   *   "focus" — /v2, merged with /v1: no hero, just the topic name and its level,
-   *             a loud trigger that slides the rule in from the side, and the
-   *             exercises immediately. The level overviews are unchanged, so the
-   *             dashboard is still the dashboard until you open something.
-   */
-  topicLayout?: "cards" | "focus";
 }
-const { variants = ["b"], study = false, topicLayout = "cards" } = Astro.props;
+const { variants = ["b"], study = false } = Astro.props;
 const showVariant = (id: string) => variants.includes(id as any);
 const defaultVariant = variants[0];
 
 ---
-  <div class:list={["nv", study && "nv--study", topicLayout === "focus" && "nv--focus"]}>
+  <div class:list={["nv", study && "nv--study"]}>
     {study && (
       <div class="nv-banner">
         🧪 <strong>Navigations-Studie</strong> — dieselbe Seite wie <a href="/fortschritt">/fortschritt</a>, hier mit allen drei Navigationsvarianten zum Vergleichen.
@@ -941,7 +842,6 @@ const defaultVariant = variants[0];
                         {item.level}
                         {item.tasks ? ` · ${item.tasks} Aufgaben` : ""}
                         {item.minutes ? ` · ca. ${item.minutes} Min.` : ""}
-                        {item.practice === "workspace" ? " · Regel + Übungen hier" : item.practice === "quiz" ? " · hier üben" : ""}
                       </span>
                     </span>
                     {itemPct(item) === null
@@ -950,69 +850,17 @@ const defaultVariant = variants[0];
                     <span class="nv-modpoints" data-itempoints={item.id}>{item.tasks ? `${item.done ?? 0} / ${item.tasks}` : ""}</span>
                     {/* A label now, not a control: the row around it is the button. Kept
                         because it is the only thing that says what a click will do. */}
-                    <span class="nv-modlink" aria-hidden="true">
-                      {item.practice ? "Üben →" : "Öffnen →"}
-                    </span>
+                    <span class="nv-modlink" aria-hidden="true">Ansehen →</span>
                   </button>
                 ))}
               </section>
 
-              {sectionQuick[section.id] && (
-                <section class="nv-panel nv-quickex" data-quickex={section.id} data-quick-kind={sectionQuick[section.id]!.kind} data-quick-topic={sectionQuick[section.id]!.topicId} data-quick-index={sectionQuick[section.id]!.index}>
-                  <div class="nv-quickex-head">
-                    <div>
-                      <p class="nv-detail-eyebrow">Übung · {sectionQuick[section.id]!.level}</p>
-                      <h2>{sectionQuick[section.id]!.title}</h2>
-                      <p class="nv-quickex-sub">
-                        aus <strong>{sectionQuick[section.id]!.topicLabel}</strong>
-                        {sectionQuick[section.id]!.hint ? ` — ${sectionQuick[section.id]!.hint}` : ""}
-                      </p>
-                    </div>
-                    <span class="nv-learn-badge">direkt üben</span>
-                  </div>
-                  {sectionQuick[section.id]!.kind === "trainer"
-                    ? <div class="nv-quickex-body akk" data-trainer-root><p class="nv-ws-loading">Trainer wird geladen …</p></div>
-                    : <div class="nv-quickex-body" data-ex-index={sectionQuick[section.id]!.index}><p class="nv-ws-loading">Übung wird geladen …</p></div>}
-                  <button type="button" class="nv-quickex-more" data-nav-item={sectionQuick[section.id]!.topicId}>
-                    {sectionQuick[section.id]!.kind === "trainer"
-                      ? "Trainer mit voller Sitzung öffnen →"
-                      : `Regel und alle Übungen zu „${sectionQuick[section.id]!.topicLabel}" →`}
-                  </button>
-                </section>
-              )}
             </div>
           );
         })}
 
         <!-- Einzelansicht: eine Hülle, aus den Daten des geklickten Eintrags gefüllt. -->
         <div class="nv-view" data-item-view hidden>
-          {topicLayout === "focus" && (
-            <>
-              {/* The /v1 head: the topic, its level, its progress as one line —
-                  no hero card, because the exercises are what you came for. */}
-              <div class="nvf-head">
-                <h1 data-detail-title></h1>
-                <span class="nv-levelchip nv-levelchip--lg" data-detail-level></span>
-                <span class="nvf-progress">
-                  <span class="nvf-bar"><span data-focus-bar></span></span>
-                  <span data-focus-count></span>
-                </span>
-              </div>
-              <p class="nvf-lead" data-detail-lead></p>
-
-              {/* Loud on purpose: it is what a learner reaches for mid-exercise,
-                  and a quiet control in a bar was being missed. */}
-              <button class="nvf-rulecta" type="button" data-rule-open aria-controls="nvf-rule" aria-expanded="false" hidden>
-                <span class="nvf-rulecta-icon" aria-hidden="true">?</span>
-                <span class="nvf-rulecta-text">
-                  <span class="nvf-rulecta-title">Regel ansehen</span>
-                  <span class="nvf-rulecta-sub" data-rule-teaser>Wie funktioniert das?</span>
-                </span>
-                <span class="nvf-rulecta-arrow" aria-hidden="true">→</span>
-              </button>
-            </>
-          )}
-
           <section class="nv-detail">
             <div>
               <p class="nv-detail-eyebrow" data-detail-eyebrow></p>
@@ -1022,8 +870,10 @@ const defaultVariant = variants[0];
                 <span class="nv-detail-levelsrc" data-detail-levelsrc></span>
               </p>
               <p data-detail-lead></p>
+              {/* The one way on: a plain same-tab link to where this is practised.
+                  The label follows progress — see paintStart(). */}
               <div class="nv-detail-actions">
-                <a class="nv-btn nv-btn--ghost" href="#" data-detail-href target="_blank" rel="noopener">Eigene Seite öffnen ↗</a>
+                <a class="nv-btn nv-btn--primary" href="#" data-detail-start>Übungen starten →</a>
                 <button type="button" class="nv-btn nv-btn--ghost" data-back>Zurück zur Stufe</button>
               </div>
             </div>
@@ -1040,53 +890,6 @@ const defaultVariant = variants[0];
             </div>
           </section>
 
-          <!-- Der eigentliche Test: Regel und Übungen komplett in dieser Ansicht.
-               Die Regelkarte und die vier bis fünf Übungsblöcke werden hier zur
-               Laufzeit aus src/data/grammatik/<thema>.json gebaut und dann von
-               grammarWorkspace.js bespielt — derselbe Motor wie auf der echten
-               Themenseite. Nur das eine geöffnete Thema wird geladen. -->
-          <div class="nv-ws" data-ws-root hidden></div>
-
-          <!-- Jede andere Übungsart: Karteikarten, Auswahlfragen, Aussprache,
-               Bildbeschreibung, Kulturkarte, DTZ-Übungssatz, Themenwahl. -->
-          <section class="nv-panel nv-quickex" data-inline-panel hidden>
-            <div class="nv-quickex-head">
-              <div>
-                <p class="nv-detail-eyebrow" data-inline-eyebrow></p>
-                <h2 data-inline-title></h2>
-                <p class="nv-quickex-sub" data-inline-sub></p>
-              </div>
-              <span class="nv-learn-badge">direkt üben</span>
-            </div>
-            <div class="nv-inline-body" data-inline-root></div>
-          </section>
-
-          <!-- Der Artikel-Trainer, komplett in dieser Ansicht. -->
-          <section class="nv-panel nv-quickex" data-trainer-panel hidden>
-            <div class="nv-quickex-head">
-              <div>
-                <p class="nv-detail-eyebrow">Übung · A1</p>
-                <h2>der, die oder das?</h2>
-                <p class="nv-quickex-sub">Wähle den passenden Artikel — Fokus- oder Testmodus, {ARTIKEL_SESSION} Nomen pro Runde.</p>
-              </div>
-              <span class="nv-learn-badge">direkt üben</span>
-            </div>
-            <div class="akk" data-trainer-root><p class="nv-ws-loading">Trainer wird geladen …</p></div>
-          </section>
-
-          <!-- Themen ohne Workspace: der einfache Lückentext aus grammatik.json. -->
-          <section class="nv-panel nv-learn" data-learn hidden>
-            <div class="nv-learn-head">
-              <h2>Üben</h2>
-              <span class="nv-learn-badge">läuft in dieser Ansicht</span>
-            </div>
-            <p class="nv-learn-intro" data-learn-intro></p>
-            <div class="nv-quiz" data-quiz-root></div>
-          </section>
-
-          <section class="nv-panel nv-learn-empty" data-learn-empty hidden>
-            <p>Diese Übung hat noch keine Inline-Fassung — sie läuft auf ihrer eigenen Seite. Verkabelt sind alle Grammatikthemen: die Workspace-Themen mit Regelkarte und allen Übungen, der Rest mit dem Lückentext.</p>
-          </section>
         </div>
 
         <!-- How much else is here, at the foot of the page. Scrolls sideways on a phone
@@ -1105,71 +908,25 @@ const defaultVariant = variants[0];
       </main>
     </div>
 
-    {topicLayout === "focus" && (
-      <>
-        <div class="nvf-scrim" data-rule-close hidden></div>
-        <aside class="nvf-drawer" id="nvf-rule" aria-label="Regel" aria-hidden="true">
-          <div class="nvf-drawer-head">
-            <p class="nv-detail-eyebrow" data-rule-title>Regel</p>
-            <button class="nvf-drawer-x" type="button" data-rule-close aria-label="Regel schließen">×</button>
-          </div>
-          <div class="vp-card nvf-drawer-card" data-rule-panel></div>
-        </aside>
-      </>
-    )}
-
     <div class="nv-toast" data-toast hidden role="status" aria-live="polite"></div>
   </div>
 
-  {/* Dev only — see src/lib/devSeed.js. Every number here is derived from real recorded
-      activity, so a fresh browser is 0 % everywhere; this fills the store so the full
-      state can actually be looked at. Not rendered in a production build. */}
-  {import.meta.env.DEV && (
-    <div class="nv-dev-seed">
-      <button type="button" class="vp-dev-reset" id="nv-seed-fill" title="Dummy-Fortschritt schreiben und neu laden">
-        ✱ Demo-Daten
-      </button>
-      <button type="button" class="vp-dev-reset" id="nv-seed-fill-all" title="Jede Aufgabe auf dieser Seite als erledigt schreiben und neu laden">
-        ⚡ Autofill
-      </button>
-      <button type="button" class="vp-dev-reset" id="nv-seed-clear" title="Fortschritt löschen und neu laden">
-        ↻ Leer
-      </button>
-      {/* Every intro runs once per browser and there is no way to un-see one, so there
-          has to be a way to un-remember them. This page has no tour of its own — it
-          clears the flags for all of them, so the next trainer, deck or exam opened
-          plays its introduction again. */}
-      <button type="button" class="vp-dev-reset" id="nv-seed-tour" title="Alle Tour-Flags löschen — die nächste Übungsseite zeigt ihre Einführung wieder">
-        ✦ Tour neu
-      </button>
-    </div>
-  )}
-
-  <script type="application/json" id="nv-layout" set:html={JSON.stringify(topicLayout)}></script>
   <script type="application/json" id="nv-variants" set:html={JSON.stringify(variants)}></script>
   <script type="application/json" id="nv-data" set:html={JSON.stringify(clientData)}></script>
-  <script type="application/json" id="nv-artikel" set:html={JSON.stringify({ pool: ARTIKEL_POOL, levels: ARTIKEL_LEVELS, session: ARTIKEL_SESSION })}></script>
 
   <script>
-    import { getTopicProgress, recordAttempt, resetProgress } from "../lib/progress.js";
+    import { getTopicProgress, resetProgress } from "../lib/progress.js";
     import { mountWegPanel, paintWegPanel } from "../lib/wegPanel.js";
-    import { createExerciseMounter, INLINE_TITLES, loaderFor } from "../lib/inlineExercises.js";
     import { createRuleIntro } from "../lib/ruleIntro.js";
-    import { mountQuiz, withChoices } from "../lib/quiz.js";
-    import { mountGrammarWorkspace } from "../lib/grammarWorkspace.js";
-    import { mountPracticeWorkspace } from "../lib/practiceWorkspace.js";
 
     const DATA = JSON.parse(document.getElementById("nv-data")!.textContent!);
     const ITEMS: Record<string, any> = DATA.items;
     const SECTIONS: Record<string, any> = DATA.sections;
     const PORTIONS: any[] = DATA.portions ?? [];
     const SECTION_IDS = new Set(Object.keys(SECTIONS));
-    const TOPICS: Record<string, any> = DATA.topics;
     const RING = 2 * Math.PI * 42;
     const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-    // Live progress. Starts from the server's mock values; the inline quiz
-    // writes into it, and every bar/ring/label on the page reads from it.
     // Real progress, read back from localStorage. The server rendered zeros; this
     // is where the page learns what the learner has already done.
     const progress: Record<string, number> = {};
@@ -1397,8 +1154,6 @@ const defaultVariant = variants[0];
       paintCta();
       paintWeg();
 
-      mounter.repaintResult();   // keeps the Ergebnis view live while it is open
-
       // The strip carries both numbers, because neither alone is honest. The bar
       // and the percentage are the whole course — all 27 grammar topics, the
       // cards and the Probelauf — so finishing a portion visibly moves it. The
@@ -1550,10 +1305,8 @@ const defaultVariant = variants[0];
 
       if (!current.item) {
         itemShown = null;
-        stopQuiz();
         $$("[data-nav-item]").forEach((el) => { el.classList.remove("active"); el.setAttribute("aria-current", "false"); });
         repaint(true);
-        mountQuickExercise(id);
       }
       try { localStorage.setItem("nv-view", JSON.stringify(current)); } catch (e) {}
     }
@@ -1582,11 +1335,8 @@ const defaultVariant = variants[0];
       set("[data-detail-level]", it.level);
       set("[data-detail-levelsrc]", LEVEL_SOURCE_TEXT[it.levelSource] || "");
       set("[data-detail-lead]", it.lead);
-      const href = $<HTMLAnchorElement>("[data-detail-href]");
-      if (href) href.href = it.href;
-
+      paintStart(id);
       paintItemRing(id, true);
-      paintFocusHead(id);
       // The list rows, the level bar and the course strip only repainted when a LEVEL was
       // picked, so landing straight on a topic — now possible by link, ?thema=artikel — left
       // the sidebar reading "0 / 42" next to a ring that said "4 von 42". Same numbers, same
@@ -1599,8 +1349,18 @@ const defaultVariant = variants[0];
       if (itemView) itemView.hidden = false;
       playItemSwap(id, it.section);
 
-      mountPractice(id);
       try { localStorage.setItem("nv-view", JSON.stringify(current)); } catch (e) {}
+    }
+
+    // The item card's one action. Where it goes never changes; what it says follows the
+    // learner — "starten" on an untouched topic, "Weiter üben" once anything is answered,
+    // and "Öffnen" for an entry with nothing to count (an overview, an exam page).
+    function paintStart(id: string) {
+      const it = ITEMS[id];
+      const start = $<HTMLAnchorElement>("[data-detail-start]");
+      if (!start) return;
+      start.href = it.href;
+      start.textContent = !it.tasks ? "Öffnen →" : (progress[id] ?? 0) > 0 ? "Weiter üben →" : "Übungen starten →";
     }
 
     function paintItemRing(id: string, sweep = false) {
@@ -1622,303 +1382,6 @@ const defaultVariant = variants[0];
       // toggled rather than skipped at render time.
       const card = $("[data-itemringcard]");
       if (card) (card as HTMLElement).hidden = !it.tasks;
-    }
-
-    // ── The inline exercise ───────────────────────────────────────────
-    let mountedTopic: string | null = null;
-
-    function stopQuiz() {
-      const root = $("[data-quiz-root]");
-      if (root) root.innerHTML = "";
-      const ws = $("[data-ws-root]");
-      if (ws) { ws.hidden = true; ws.innerHTML = ""; }
-      const trainerPanel = $("[data-trainer-panel]");
-      if (trainerPanel) trainerPanel.hidden = true;
-      const inlinePanel = $("[data-inline-panel]");
-      if (inlinePanel) inlinePanel.hidden = true;
-      mountedTopic = null;
-    }
-
-    // One correct answer, wherever it came from, moves every number on the page.
-    function creditAnswer(id: string, ok: boolean) {
-      // Wrong answers are recorded too — they count toward the streak and the
-      // per-skill accuracy, they just do not advance the topic.
-      try {
-        recordAttempt({
-          skill: DATA.skillOf[id] ?? "grammatik",
-          correct: ok,
-          topic: id,
-          id,
-          trackVocab: id === "artikel-trainer" || DATA.skillOf[id] === "wortschatz",
-        });
-      } catch (e) {}
-      if (!ok) return;
-      const before = pctOf(id);
-      progress[id] = Math.min(progress[id] + 1, ITEMS[id].tasks);
-      repaint();
-      paintItemRing(id);
-      paintFocusHead(id);
-      flash($("[data-itemringcard]"), "nv-pop");
-      if (pctOf(id) === 100 && before !== 100) {
-        flash($("[data-itemringcard]"), "nv-celebrate");
-        toast(`✓ ${ITEMS[id].label} abgeschlossen`);
-        if (sectionTotals(ITEMS[id].section).pct === 100) toast(`🎉 ${ITEMS[id].sectionLabel} komplett`);
-      }
-    }
-
-    const esc = (s: any) => String(s ?? "").replace(/[&<>"']/g, (c) =>
-      ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c] as string));
-
-    // The same rule card and exercise shells [id].astro renders server-side —
-    // rebuilt here so /nav can show any of the 21 topics without shipping them all.
-    function ruleCardHtml(w: any): string | null {
-      const c = w.concept;
-      if (!c) return null;
-      const ref = c?.reference;
-      return `
-        <div class="vp-card">
-          <div class="vp-card-label">Wie funktioniert das?</div>
-          ${c.flow ? `<div class="vp-flow">${c.flow
-            .map((s: any, i: number) =>
-              `${i > 0 ? '<span class="vp-flow-arrow">→</span>' : ""}<div class="vp-flow-step${s.variant ? ` vp-flow-step--${esc(s.variant)}` : ""}">${esc(s.text)}</div>`)
-            .join("")}</div>` : ""}
-          ${c.exampleHtml ? `<p class="vp-example">${c.exampleHtml}</p>` : ""}
-          ${c.qa ? `<div class="vp-qa-grid">${c.qa
-            .map((q: any) => `<div class="vp-qa-item"><span>${q.html}</span>${q.tag ? `<span class="vp-qa-tag">${esc(q.tag)}</span>` : ""}</div>`)
-            .join("")}</div>` : ""}
-          ${c.noteHtml ? `<p class="vp-note">${c.noteHtml}</p>` : ""}
-          ${ref ? `
-            <button type="button" class="vp-toggle-ref" data-ws-ref
-              data-show="${esc(ref.showLabel ?? "Referenzliste anzeigen ▼")}"
-              data-hide="${esc(ref.hideLabel ?? "Referenzliste ausblenden ▲")}"
-            >${esc(ref.showLabel ?? "Referenzliste anzeigen ▼")}</button>
-            <div data-ws-refpanel hidden>
-              ${(ref.tables ?? []).map((t: any) => `
-                <div class="vp-ref-table-wrap">
-                  ${t.caption ? `<p class="vp-ref-table-caption">${esc(t.caption)}</p>` : ""}
-                  <div class="vp-ref-table-scroll">
-                    <table class="vp-ref-table">
-                      <thead><tr>${t.head.map((h: string) => `<th>${esc(h)}</th>`).join("")}</tr></thead>
-                      <tbody>${t.rows.map((r: string[]) =>
-                        `<tr>${r.map((cell, i) => i === 0 ? `<th scope="row">${esc(cell)}</th>` : `<td>${esc(cell)}</td>`).join("")}</tr>`).join("")}</tbody>
-                    </table>
-                  </div>
-                  ${t.note ? `<p class="vp-ref-table-note">${esc(t.note)}</p>` : ""}
-                </div>`).join("")}
-              ${ref.boxes ? `<div class="vp-ref-grid">${ref.boxes.map((b: any) => `
-                <div class="vp-ref-box vp-ref-box--${esc(b.variant ?? "akk")}">
-                  <span class="badge ${b.variant === "dat" ? "badge-info" : "badge-brand"}">${esc(b.badge)}</span>
-                  <ul>${b.items.map((i: string) => `<li>${esc(i)}</li>`).join("")}</ul>
-                </div>`).join("")}</div>` : ""}
-            </div>` : ""}
-        </div>`;
-
-    }
-
-    function exerciseCardsHtml(w: any) {
-      return (w.exercises ?? []).map((ex: any, i: number) => `
-        <div class="vp-card">
-          <div class="vp-ex-head"><span class="badge badge-neutral">${i + 1}</span><h3>${esc(ex.title)}</h3></div>
-          ${ex.hint ? `<p class="vp-ex-hint">${esc(ex.hint)}</p>` : ""}
-          <div data-ex-index="${i}"></div>
-        </div>`).join("");
-    }
-
-    // /dashboard stacks the rule above the exercises; /v2 puts it in the drawer
-    // and starts the column at the exercises.
-    function workspaceHtml(w: any, withRule = true) {
-      const rule = withRule ? ruleCardHtml(w) : null;
-      return `
-        ${withRule ? `<div class="nv-ws-head">
-          <h2>Regel &amp; Übungen</h2>
-          <span class="nv-learn-badge">läuft in dieser Ansicht</span>
-        </div>` : ""}
-        ${rule ?? ""}
-        <h3 class="nv-ws-subhead">Übungen <span>${(w.exercises ?? []).length}</span></h3>
-        ${exerciseCardsHtml(w)}`;
-    }
-
-    // ── The Artikel-Trainer ───────────────────────────────────────────
-    // Every exercise kind lives in src/lib/inlineExercises.js so the topic pages
-    // mount the identical widgets from the identical data. This shell only says
-    // what an answer means here: it moves this page's numbers, and it persists.
-    const ARTIKEL = JSON.parse(document.getElementById("nv-artikel")!.textContent!);
-    const mounter = createExerciseMounter({
-      DATA,
-      ARTIKEL,
-      credit: (id: string, ok: boolean) => creditAnswer(id, ok),
-      onPick: (id: string) => selectItem(id),
-      totals: (sid: string) => (SECTIONS[sid] ? sectionTotals(sid) : null),
-      sections: SECTIONS,
-    });
-    const mountInline = mounter.mountInline;
-    const mountTrainer = mounter.mountTrainer;
-
-    // ── Focus mode (/v2): the rule lives in a drawer, not above the exercises ──
-    const LAYOUT = JSON.parse(document.getElementById("nv-layout")!.textContent!);
-    const focusMode = LAYOUT === "focus";
-    const drawer = {
-      panel: $("[data-rule-panel]"),
-      title: $("[data-rule-title]"),
-      teaser: $("[data-rule-teaser]"),
-      cta: $("[data-rule-open]"),
-      scrim: $(".nvf-scrim"),
-      aside: $(".nvf-drawer"),
-    };
-
-    function openRule(open: boolean) {
-      if (!drawer.aside) return;
-      drawer.aside.classList.toggle("open", open);
-      drawer.aside.setAttribute("aria-hidden", String(!open));
-      drawer.cta?.setAttribute("aria-expanded", String(open));
-      if (drawer.scrim) drawer.scrim.hidden = !open;
-      if (open) ($(".nvf-drawer-x") as HTMLElement | null)?.focus();
-      else (drawer.cta as HTMLElement | null)?.focus();
-    }
-    drawer.cta?.addEventListener("click", () => openRule(true));
-    $$("[data-rule-close]").forEach((b) => b.addEventListener("click", () => openRule(false)));
-    addEventListener("keydown", (e) => {
-      if (e.key === "Escape" && drawer.aside?.classList.contains("open")) openRule(false);
-    });
-
-    // Fills the drawer for the open topic, and hides the trigger when there is no
-    // rule to show — a Karteikarten deck has none, and an empty drawer is worse
-    // than no button.
-    function setRule(html: string | null, name: string, teaser: string) {
-      if (!focusMode || !drawer.cta) return;
-      const has = !!html;
-      (drawer.cta as HTMLElement).hidden = !has;
-      if (!has) { openRule(false); return; }
-      if (drawer.panel) drawer.panel.innerHTML = html!;
-      if (drawer.title) drawer.title.textContent = `Regel — ${name}`;
-      if (drawer.teaser) drawer.teaser.textContent = teaser || "Wie funktioniert das?";
-    }
-
-    // The focus head carries the progress the hero card carries elsewhere.
-    function paintFocusHead(id: string) {
-      if (!focusMode) return;
-      const it = ITEMS[id];
-      const pct = pctOf(id);
-      const bar = $("[data-focus-bar]") as HTMLElement | null;
-      if (bar) bar.style.width = (pct ?? 0) + "%";
-      const count = $("[data-focus-count]");
-      if (count) count.textContent = it.tasks ? `${progress[id]} / ${it.tasks}` : "";
-    }
-
-    const mountedQuick = new Set<string>();
-
-    async function mountQuickExercise(sectionId: string) {
-      const card = $(`[data-quickex="${sectionId}"]`);
-      if (!card || mountedQuick.has(sectionId)) return;
-      const topicId = (card as HTMLElement).dataset.quickTopic!;
-
-      if ((card as HTMLElement).dataset.quickKind === "trainer") {
-        mountedQuick.add(sectionId);
-        mountTrainer(card.querySelector("[data-trainer-root]") as HTMLElement);
-        return;
-      }
-
-      const loader = loaderFor(topicId);
-      if (!loader) return;
-
-      mountedQuick.add(sectionId);
-      const mod: any = await loader();
-      const w = mod.default ?? mod;
-      const slot = card.querySelector("[data-ex-index]") as HTMLElement | null;
-      if (slot) slot.innerHTML = "";
-      mountGrammarWorkspace(card, w, { onAnswer: (ok: boolean) => creditAnswer(topicId, ok) });
-    }
-
-    async function mountWorkspace(id: string) {
-      const root = $("[data-ws-root]");
-      const loader = loaderFor(id);
-      if (!root || !loader) return false;
-      if (mountedTopic === id) { root.hidden = false; return true; }
-
-      root.hidden = false;
-      root.innerHTML = `<p class="nv-ws-loading">Übungen werden geladen …</p>`;
-      const mod: any = await loader();
-      // The learner may have clicked on to something else while this loaded.
-      if (current.item !== id) return true;
-
-      const w = mod.default ?? mod;
-      root.innerHTML = workspaceHtml(w, !focusMode);
-      if (focusMode) setRule(ruleCardHtml(w), w.name, w.subtitle ?? "");
-      mountedTopic = id;
-
-      root.querySelector("[data-ws-ref]")?.addEventListener("click", (e) => {
-        const btn = e.currentTarget as HTMLElement;
-        const panel = root.querySelector("[data-ws-refpanel]") as HTMLElement | null;
-        if (!panel) return;
-        panel.hidden = !panel.hidden;
-        btn.textContent = panel.hidden ? btn.dataset.show! : btn.dataset.hide!;
-      });
-
-      mountGrammarWorkspace(root, w, { onAnswer: (ok: boolean) => creditAnswer(id, ok) });
-      return true;
-    }
-
-    function mountPractice(id: string) {
-      if (focusMode && ITEMS[id].practice !== "workspace") setRule(null, "", "");
-      const learn = $("[data-learn]");
-      const empty = $("[data-learn-empty]");
-      const ws = $("[data-ws-root]");
-      const root = $("[data-quiz-root]");
-      const trainerPanel = $("[data-trainer-panel]");
-      const kind = ITEMS[id].practice;
-
-      if (kind !== "workspace" && ws) { ws.hidden = true; ws.innerHTML = ""; }
-      if (trainerPanel) trainerPanel.hidden = kind !== "trainer";
-
-      if (kind === "trainer") {
-        if (learn) learn.hidden = true;
-        if (empty) empty.hidden = true;
-        if (root) root.innerHTML = "";
-        mountTrainer(trainerPanel!.querySelector("[data-trainer-root]") as HTMLElement);
-        return;
-      }
-
-      const INLINE_KINDS = ["choice", "cards", "audio", "speak", "read", "dtz", "picker", "result", "bausteine"];
-      const inlinePanel = $("[data-inline-panel]");
-      if (inlinePanel) inlinePanel.hidden = !INLINE_KINDS.includes(kind as string);
-      if (kind && INLINE_KINDS.includes(kind)) {
-        if (learn) learn.hidden = true;
-        if (empty) empty.hidden = true;
-        if (root) root.innerHTML = "";
-        const it = ITEMS[id];
-        const set = (sel: string, t: string) => { const el = inlinePanel!.querySelector(sel); if (el) el.textContent = t; };
-        set("[data-inline-eyebrow]", it.eyebrow);
-        set("[data-inline-title]", INLINE_TITLES[kind] ?? it.label);
-        set("[data-inline-sub]", it.lead);
-        mountInline(inlinePanel!.querySelector("[data-inline-root]") as HTMLElement, id, kind);
-        return;
-      }
-
-      if (kind === "workspace") {
-        if (learn) learn.hidden = true;
-        if (empty) empty.hidden = true;
-        if (root) root.innerHTML = "";
-        mountWorkspace(id);
-        return;
-      }
-
-      const topic = TOPICS[id];
-      if (kind !== "quiz" || !topic) {
-        stopQuiz();
-        if (learn) learn.hidden = true;
-        if (empty) empty.hidden = false;
-        return;
-      }
-
-      if (learn) learn.hidden = false;
-      if (empty) empty.hidden = true;
-      const intro = $("[data-learn-intro]");
-      if (intro) intro.textContent = topic.intro;
-
-      if (mountedTopic === id || !root) return;
-      root.innerHTML = "";
-      mountedTopic = id;
-      mountQuiz(root, withChoices(topic.questions), { mode: "choice", onAnswer: (ok: boolean) => creditAnswer(id, ok) });
     }
 
     // ── The URL ───────────────────────────────────────────────────────
@@ -2087,41 +1550,8 @@ const defaultVariant = variants[0];
       }
     }
 
-    // Dev only. ITEMS is what the page is already rendering, so the seed fills the bars
-    // that exist rather than inventing slugs — a renamed topic stays empty instead of
-    // becoming a phantom row. Vite drops the whole branch from a production build.
-    if (import.meta.env.DEV) {
-      const fill = document.getElementById("nv-seed-fill");
-      const fillAll = document.getElementById("nv-seed-fill-all");
-      const clear = document.getElementById("nv-seed-clear");
-      fill?.addEventListener("click", async () => {
-        const { seedProgress } = await import("../lib/devSeed.js");
-        seedProgress(ITEMS);
-        location.reload();
-      });
-      // Demo-Daten spreads the items across five phases; this puts every one of them at
-      // 100 %, which is the state the spread never produces and the one the finished
-      // course has to be looked at in. Same ITEMS, so it fills the bars that exist.
-      fillAll?.addEventListener("click", async () => {
-        const { fillProgress } = await import("../lib/devSeed.js");
-        fillProgress(ITEMS);
-        location.reload();
-      });
-      clear?.addEventListener("click", async () => {
-        const { clearSeed } = await import("../lib/devSeed.js");
-        clearSeed();
-        location.reload();
-      });
-      // The tours live on the trainers, one flag each ("…-seen", "…-peek", and the
-      // nudge's "…-seen-used"). Matched by shape rather than listed by name: a page that
-      // gains an intro tomorrow is covered without anyone remembering this button.
-      document.getElementById("nv-seed-tour")?.addEventListener("click", () => {
-        try {
-          for (const k of Object.keys(localStorage)) {
-            if (/^da-.*(seen|peek)/.test(k)) localStorage.removeItem(k);
-          }
-        } catch (e) {}
-        location.reload();
-      });
-    }
+    // The demo dock (DemoDock.astro, rendered by Layout) seeds whatever the page publishes
+    // here — the items already on screen, so it fills bars that exist rather than inventing
+    // slugs, and a renamed topic stays empty instead of becoming a phantom row.
+    (window as any).__daDemoItems = ITEMS;
   </script>

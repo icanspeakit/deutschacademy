@@ -27,10 +27,11 @@ function seededBars(seed, count) {
 }
 
 export function mountPronunciation(root, options = {}) {
-  const { sets, onHeard, strings = {} } = options;
+  const { sets, onHeard, onSetChange, strings = {} } = options;
 
   const el = {
     setBtns: [...root.querySelectorAll("[data-set-btn]")],
+    setSelect: root.querySelector("[data-set-select]"),
     lists: [...root.querySelectorAll("[data-rail-list]")],
     heardCount: root.querySelector("[data-heard-count]"),
     heardTotal: root.querySelector("[data-heard-total]"),
@@ -56,11 +57,14 @@ export function mountPronunciation(root, options = {}) {
   const ICON_PLAY = '<path d="M8 5v14l11-7z"/>';
   const ICON_STOP = '<path d="M7 7h10v10H7z"/>';
 
-  let set = el.setBtns[0]?.dataset.setBtn || "wortschatz";
+  let set = el.setSelect?.value || el.setBtns[0]?.dataset.setBtn || Object.keys(sets)[0];
   let index = 0;
   let rate = 1;
   let looping = false;
-  const heard = { wortschatz: new Set(), artikel: new Set() };
+  // One Set per practice set, created on first visit — the sets come from the lexicon, so
+  // their keys are not known here.
+  const heard = {};
+  const heardIn = (key) => (heard[key] ??= new Set());
 
   const audio = new Audio();
   audio.preload = "none";
@@ -104,13 +108,13 @@ export function mountPronunciation(root, options = {}) {
       [...list.children].forEach((row, i) => {
         const isCurrent = listSet === set && i === index;
         row.setAttribute("aria-current", String(isCurrent));
-        row.dataset.heard = String(heard[listSet]?.has(i) ?? false);
+        row.dataset.heard = String(heardIn(listSet).has(i));
         if (isCurrent) row.scrollIntoView({ block: "nearest", inline: "nearest" });
       });
     });
 
     const total = items().length;
-    const done = heard[set].size;
+    const done = heardIn(set).size;
     el.heardCount.textContent = String(done);
     el.heardTotal.textContent = String(total);
     el.railBar.style.width = total ? `${(done / total) * 100}%` : "0%";
@@ -165,8 +169,8 @@ export function mountPronunciation(root, options = {}) {
   audio.addEventListener("playing", () => {
     setPlayIcon(true);
     el.status.textContent = "";
-    if (!heard[set].has(index)) {
-      heard[set].add(index);
+    if (!heardIn(set).has(index)) {
+      heardIn(set).add(index);
       onHeard?.();
       renderRail();
     }
@@ -285,15 +289,19 @@ export function mountPronunciation(root, options = {}) {
     });
   });
 
-  el.setBtns.forEach((btn) => {
-    btn.addEventListener("click", () => {
-      set = btn.dataset.setBtn;
-      index = 0;
-      el.setBtns.forEach((b) => b.setAttribute("aria-selected", String(b === btn)));
-      stop();
-      render();
-    });
-  });
+  function switchSet(key) {
+    if (!sets[key]) return;
+    set = key;
+    index = 0;
+    el.setBtns.forEach((b) => b.setAttribute("aria-selected", String(b.dataset.setBtn === key)));
+    if (el.setSelect) el.setSelect.value = key;
+    stop();
+    render();
+    onSetChange?.(key);
+  }
+
+  el.setBtns.forEach((btn) => btn.addEventListener("click", () => switchSet(btn.dataset.setBtn)));
+  el.setSelect?.addEventListener("change", () => switchSet(el.setSelect.value));
 
   // Keyboard: only when focus is not on a control the keys would fight over.
   document.addEventListener("keydown", (e) => {
@@ -311,6 +319,7 @@ export function mountPronunciation(root, options = {}) {
   render();
 
   return {
+    switchSet,
     refresh: (nextStrings) => {
       if (nextStrings) Object.assign(strings, nextStrings);
       render();

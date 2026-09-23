@@ -8,6 +8,7 @@
 //
 //   ELEVENLABS_API_KEY=...  pnpm generate:wortschatz-audio
 //   pnpm generate:wortschatz-audio --level a1      one level
+//   pnpm generate:wortschatz-audio --level a1 --nouns   only the gendered nouns (the Artikel-Trainer's pool)
 //   pnpm generate:wortschatz-audio --limit 20      a taste test before committing
 //   pnpm generate:wortschatz-audio --dry-run       what it would cost, no API calls
 //   pnpm generate:wortschatz-audio --stamp-only    re-sync the lexicon with the files on disk
@@ -32,6 +33,9 @@ const DRY_RUN = argv.includes("--dry-run");
 const STAMP_ONLY = argv.includes("--stamp-only");
 const ONLY_LEVEL = flag("level")?.toUpperCase?.() ?? null;
 const LIMIT = Number(flag("limit")) || null;
+// Gendered nouns only — what the Artikel-Trainer draws from — so its audio can be bought a
+// level at a time without spending the credits on the verbs and adjectives beside them.
+const ONLY_NOUNS = argv.includes("--nouns");
 
 const API_KEY = process.env.ELEVENLABS_API_KEY;
 if (!API_KEY && !DRY_RUN && !STAMP_ONLY) {
@@ -47,16 +51,18 @@ const MODEL_ID = process.env.ELEVENLABS_MODEL_ID || "eleven_multilingual_v2";
 // and average 19.7 KB each; at 4,000 words that is 79 MB in the repo for a single spoken
 // word, which no learner can hear the benefit of. This is ~5 KB and ~20 MB all in.
 const OUTPUT_FORMAT = process.env.ELEVENLABS_OUTPUT_FORMAT || "mp3_22050_32";
-// Four at a time: enough to finish 4,000 words in ~20 minutes, low enough that a Creator
-// plan's concurrency (and the 429 handler below) never becomes the story.
-const CONCURRENCY = Number(process.env.ELEVENLABS_CONCURRENCY) || 4;
+// Three at a time: the Starter plan's concurrency cap (Creator allows five). At four, a
+// Starter run loses words to 429s faster than the retry below can back off.
+const CONCURRENCY = Number(process.env.ELEVENLABS_CONCURRENCY) || 3;
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const outDir = path.join(__dirname, "..", "public", "audio", "wortschatz");
 const lexiconDir = path.join(__dirname, "..", "src", "content", "lexicon");
 mkdirSync(outDir, { recursive: true });
 
-const rows = all().filter((e) => (ONLY_LEVEL ? e.level === ONLY_LEVEL : true));
+const rows = all()
+  .filter((e) => (ONLY_LEVEL ? e.level === ONLY_LEVEL : true))
+  .filter((e) => (ONLY_NOUNS ? e.pos === "noun" && e.gender : true));
 
 /* Two words can share a slug — "der See" and "die See" both slugify to "see", and the
    lexicon carries both. The spoken text is what the file contains, so the text is what

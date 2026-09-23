@@ -1,0 +1,86 @@
+---
+// The demo controls, bottom right, on every page — rendered once by Layout.astro.
+//
+// Every number on the site is derived from real recorded activity, so a fresh browser is
+// 0 % everywhere; these write (or wipe) a plausible record so the filled-in state can be
+// looked at, and un-remember the one-time tours. Ungated on purpose: they show on the
+// live site too.
+//
+// Which items get seeded: a page that renders its own list (LearnShell) publishes it as
+// `window.__daDemoItems`, so the bars it fills are the bars on screen. Every other page
+// falls back to the grammar workspaces from the catalog.
+//
+// A page with its own tour button (`#vp-dev-reset`, `#no3-dev-reset`) keeps it: the dock
+// adopts that button in place of its generic one, so its page-specific handler still runs
+// and the corner never shows two "Tour neu". Where the page has none, the dock's button
+// carries the id itself, so a page that mounts ruleColumn.js without rendering a button
+// (the Artikel-Trainer) still gets its reset — which also forgets the column's saved
+// open/closed choice. The tour only plays when there is none, so clearing the "seen"
+// flag alone was not enough.
+import { grammarWorkspaces } from "../lib/catalog.js";
+import "../styles/demo-dock.css";
+
+const fallbackItems = Object.fromEntries(grammarWorkspaces.map((w) => [w.id, { tasks: w.tasks }]));
+---
+<div class="demo-dock" data-demo-dock>
+  <button type="button" class="vp-dev-reset" data-demo="fill" title="Dummy-Fortschritt schreiben und neu laden">
+    ✱ Demo-Daten
+  </button>
+  <button type="button" class="vp-dev-reset" data-demo="fill-all" title="Jede Aufgabe als erledigt schreiben und neu laden">
+    ⚡ Autofill
+  </button>
+  <button type="button" class="vp-dev-reset" data-demo="clear" title="Fortschritt löschen und neu laden">
+    ↻ Leer
+  </button>
+  <button type="button" class="vp-dev-reset" id="vp-dev-reset" data-demo="tour" title="Alle Tour-Flags löschen — die nächste Übungsseite zeigt ihre Einführung wieder">
+    ✦ Tour neu
+  </button>
+</div>
+<script type="application/json" id="demo-dock-items" set:html={JSON.stringify(fallbackItems)}></script>
+
+<script>
+  import { seedProgress, fillProgress, clearSeed } from "../lib/devSeed.js";
+
+  const dock = document.querySelector("[data-demo-dock]");
+  if (dock) {
+    const items = () => {
+      const own = (window as any).__daDemoItems;
+      if (own && Object.keys(own).length) return own;
+      try { return JSON.parse(document.getElementById("demo-dock-items")?.textContent || "{}"); }
+      catch { return {}; }
+    };
+    const $ = (k: string) => dock.querySelector(`[data-demo="${k}"]`);
+
+    $("fill")?.addEventListener("click", () => { seedProgress(items()); location.reload(); });
+    $("fill-all")?.addEventListener("click", () => { fillProgress(items()); location.reload(); });
+    $("clear")?.addEventListener("click", () => { clearSeed(); location.reload(); });
+
+    // The tours live on the trainers, one flag each ("…-seen", "…-peek", and the nudge's
+    // "…-seen-used"). Matched by shape rather than listed by name, so a page that gains an
+    // intro tomorrow is covered without anyone remembering this button.
+    const tour = $("tour");
+    const pageTour = [...document.querySelectorAll("#vp-dev-reset, #no3-dev-reset")].find((b) => !dock.contains(b));
+    const clearTours = () => {
+      try {
+        for (const k of Object.keys(localStorage)) {
+          if (/^da-.*(seen|peek)/.test(k)) localStorage.removeItem(k);
+        }
+      } catch {}
+    };
+    if (pageTour && tour) {
+      // The page's handler clears its own flags and reloads; this runs first and clears
+      // the rest, so the adopted button does at least what the generic one did.
+      pageTour.addEventListener("click", clearTours, { capture: true });
+      pageTour.textContent = tour.textContent;
+      tour.replaceWith(pageTour);
+    } else {
+      tour?.addEventListener("click", () => {
+        clearTours();
+        // Same landing as ruleColumn.js's reset: top of the page, no ?intro.
+        history.scrollRestoration = "manual";
+        window.scrollTo(0, 0);
+        location.replace(location.pathname);
+      });
+    }
+  }
+</script>

@@ -16,6 +16,8 @@
 import Layout from "../../../layouts/Layout.astro";
 import PracticeHeader from "../../../components/PracticeHeader.astro";
 import Icon from "../../../components/Icon.astro";
+import VocabList from "../../../components/VocabList.astro";
+import uebersetzungen from "../../../data/uebersetzungen/schreiben.json";
 import { schreiben, neighbours, SCHREIBEN_ICON } from "../../../lib/fertigkeiten.js";
 import "../../../styles/practice.css";
 import "../../../styles/skills.css";
@@ -29,6 +31,7 @@ export function getStaticPaths() {
 
 const { task, prev, next } = Astro.props;
 const { types } = schreiben;
+const help = (uebersetzungen.entries as Record<string, any>)[task.id] ?? null;
 const parts = (task.source ?? "").split(/\*\*(.+?)\*\*/g);
 ---
 <Layout
@@ -64,6 +67,10 @@ const parts = (task.source ?? "").split(/\*\*(.+?)\*\*/g);
           <div class="sk-text">{parts.map((p, i) => (i % 2 ? <b>{p}</b> : p))}</div>
         </section>
       )}
+
+      {/* After the material, before the writing: the words to understand the task and the
+          ones the answer will need. */}
+      {help?.vocab && <VocabList vocab={help.vocab} reviewed={help.reviewed} />}
 
       {task.kind === "form" && (
         <section class="sk-block">

@@ -8,6 +8,9 @@
 import Layout from "../../../layouts/Layout.astro";
 import PracticeHeader from "../../../components/PracticeHeader.astro";
 import Icon from "../../../components/Icon.astro";
+import TextWithTranslation from "../../../components/TextWithTranslation.astro";
+import VocabList from "../../../components/VocabList.astro";
+import uebersetzungen from "../../../data/uebersetzungen/lesen.json";
 import { lesen, neighbours, LESEN_ICON } from "../../../lib/fertigkeiten.js";
 import "../../../styles/practice.css";
 import "../../../styles/skills.css";
@@ -22,9 +25,9 @@ export function getStaticPaths() {
 const { text, prev, next } = Astro.props;
 const { types } = lesen;
 
-// The JSON marks headings with **…** so a Kleinanzeige can have a label without the file
-// carrying HTML. One split, no Markdown dependency: odd pieces were inside the asterisks.
-const parts = (text.text ?? "").split(/\*\*(.+?)\*\*/g);
+// The translation and the word list, where one exists for this text. The German text and
+// its **…** headings are rendered by TextWithTranslation.
+const help = (uebersetzungen.entries as Record<string, any>)[text.id] ?? null;
 ---
 <Layout
   title={`${text.title} – Leseverstehen ${text.level} – DeutschAcademy`}
@@ -48,7 +51,9 @@ const parts = (text.text ?? "").split(/\*\*(.+?)\*\*/g);
 
       <section class="sk-block">
         <h2>Text</h2>
-        <div class="sk-text">{parts.map((p, i) => (i % 2 ? <b>{p}</b> : p))}</div>
+        {/* Before the text, folded: the words are there for whoever needs them first. */}
+        {help?.vocab && <VocabList vocab={help.vocab} reviewed={help.reviewed} />}
+        <TextWithTranslation text={text.text ?? ""} paragraphs={help?.paragraphs} reviewed={help?.reviewed} />
       </section>
 
       <section class="sk-block">

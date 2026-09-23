@@ -11,6 +11,9 @@
 import PDFDocument from "pdfkit";
 import { createWriteStream, mkdirSync, existsSync, readFileSync, writeFileSync, statSync } from "node:fs";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
+
+const FONT_DIR = path.join(path.dirname(fileURLToPath(import.meta.url)), "..", "fonts");
 
 // Matches src/styles/global.css.
 export const TEAL = "#0d9488";
@@ -87,9 +90,93 @@ export function plain(html) {
  * @param {string} opts.outPath   where to write
  * @param {string} opts.runningHead  small caps line at the top of every page but the cover
  */
-export function createDoc({ outPath, runningHead }) {
+export function createDoc({ outPath, runningHead, unicode = false }) {
   mkdirSync(path.dirname(outPath), { recursive: true });
   const doc = new PDFDocument({ size: "A4", margin: MARGIN, bufferPages: true });
+
+  // The translated editions carry Arabic, Cyrillic and Turkish ğ ş ı — none of which the
+  // built-in WinAnsi fonts can draw. They embed Noto instead (scripts/fonts/README.md);
+  // the German-only PDFs stay on Helvetica, and on safe(), exactly as before.
+  let F = { regular: "Helvetica", bold: "Helvetica-Bold", italic: "Helvetica-Oblique" };
+  let S = safe;
+  if (unicode) {
+    doc.registerFont("Noto", path.join(FONT_DIR, "NotoSans-Regular.ttf"));
+    doc.registerFont("Noto-Bold", path.join(FONT_DIR, "NotoSans-Bold.ttf"));
+    doc.registerFont("Noto-Arabic", path.join(FONT_DIR, "NotoSansArabic-Regular.ttf"));
+    F = { regular: "Noto", bold: "Noto-Bold", italic: "Noto" };
+    S = (text) => String(text ?? "");
+  }
+
+  /* Right-to-left text is placed word by word, from the right edge leftwards. Handing
+     pdfkit a whole Arabic line lost the spaces between words ("الاسم الأول" printed as
+     one run), because its line wrapper and fontkit's RTL reordering disagree about which
+     end of a word its trailing space belongs to. One word per call leaves fontkit only
+     the job it does well — joining and ordering the letters inside the word. A Latin
+     token such as "A1" is drawn in the Latin face: Noto Sans Arabic has no "A". */
+  const LATIN = /[A-Za-z0-9]/;
+  const rtlFont = (word) => (LATIN.test(word) && !ARABIC.test(word) ? F.regular : "Noto-Arabic");
+  function rtlWidth(words, size) {
+    let wsum = 0;
+    for (const word of words) wsum += doc.font(rtlFont(word)).fontSize(size).widthOfString(word);
+    doc.font("Noto-Arabic").fontSize(size);
+    return wsum + Math.max(0, words.length - 1) * doc.widthOfString(" ");
+  }
+  // pdfkit places text by the top of the line box, and Noto Sans Arabic's ascender is
+  // taller than Noto Sans's — so each word is nudged onto the Latin face's baseline, the
+  // one the German in the neighbouring cells sits on.
+  const ascender = (name) => doc.font(name)._font.ascender;
+  const drawWord = (word, x, y, size) => {
+    const font = rtlFont(word);
+    doc.font(font).fontSize(size).text(word, x, y + ((ascender(F.regular) - ascender(font)) * size) / 1000, { lineBreak: false });
+  };
+  /* A German phrase inside an Arabic sentence ("… مثل der hohe Baum …") must still read
+     left to right, so a line is cut into runs: consecutive Latin words form one run whose
+     words go left to right, and the runs themselves are placed right to left. A token with
+     neither script (a dash, a bracket) joins the run before it. */
+  const ARABIC = /[\u0600-\u06FF]/;
+  function rtlRuns(words) {
+    const runs = [];
+    for (const word of words) {
+      const kind = ARABIC.test(word) ? "rtl" : LATIN.test(word) ? "ltr" : runs.at(-1)?.kind ?? "rtl";
+      if (runs.at(-1)?.kind === kind) runs.at(-1).words.push(word);
+      else runs.push({ kind, words: [word] });
+    }
+    return runs;
+  }
+  function rtlDraw(words, right, y, size) {
+    doc.font("Noto-Arabic").fontSize(size);
+    const space = doc.widthOfString(" ");
+    let x = right;
+    for (const run of rtlRuns(words)) {
+      if (run.kind === "ltr") {
+        const width = rtlWidth(run.words, size);
+        let lx = x - width;
+        for (const word of run.words) {
+          drawWord(word, lx, y, size);
+          lx += doc.font(rtlFont(word)).fontSize(size).widthOfString(word) + space;
+        }
+        x -= width + space;
+      } else {
+        for (const word of run.words) {
+          x -= doc.font(rtlFont(word)).fontSize(size).widthOfString(word);
+          drawWord(word, x, y, size);
+          x -= space;
+        }
+      }
+    }
+  }
+  /** Greedy wrap of RTL text into lines of words, in reading order. */
+  function rtlWrap(text, width, size) {
+    const lines = [];
+    let line = [];
+    for (const word of String(text ?? "").split(/\s+/).filter(Boolean)) {
+      const next = [...line, word];
+      if (line.length && rtlWidth(next, size) > width) { lines.push(line); line = [word]; }
+      else line = next;
+    }
+    if (line.length) lines.push(line);
+    return lines;
+  }
   const stream = createWriteStream(outPath);
   doc.pipe(stream);
 
@@ -99,8 +186,8 @@ export function createDoc({ outPath, runningHead }) {
   doc.on("pageAdded", () => {
     pageCount += 1;
     if (pageCount === 1) return;
-    doc.fillColor(MUTED).font("Helvetica").fontSize(8)
-      .text(safe(runningHead), MARGIN, 28, { characterSpacing: 0.6 });
+    doc.fillColor(MUTED).font(F.regular).fontSize(8)
+      .text(S(runningHead), MARGIN, 28, { characterSpacing: 0.6 });
     doc.moveTo(MARGIN, 44).lineTo(doc.page.width - MARGIN, 44)
       .strokeColor(BORDER).lineWidth(0.75).stroke();
     doc.x = MARGIN;
@@ -114,29 +201,36 @@ export function createDoc({ outPath, runningHead }) {
     if (doc.y + height > contentBottom()) doc.addPage();
   }
 
-  function cover({ eyebrow, title, subtitle, meta = [], footer }) {
+  function cover({ eyebrow, title, subtitle, subtitleTranslated, subtitleRtl, meta = [], footer }) {
     const w = contentWidth();
     doc.rect(0, 0, doc.page.width, 210).fill(TEAL_SOFT);
-    doc.fillColor(TEAL_DARK).font("Helvetica-Bold").fontSize(9)
-      .text(safe(eyebrow), MARGIN, 64, { characterSpacing: 1.2, width: w });
-    doc.fillColor(INK).font("Helvetica-Bold").fontSize(30)
-      .text(safe(title), MARGIN, 88, { width: w, lineGap: 2 });
+    doc.fillColor(TEAL_DARK).font(F.bold).fontSize(9)
+      .text(S(eyebrow), MARGIN, 64, { characterSpacing: 1.2, width: w });
+    doc.fillColor(INK).font(F.bold).fontSize(30)
+      .text(S(title), MARGIN, 88, { width: w, lineGap: 2 });
     if (subtitle) {
-      doc.fillColor(MUTED).font("Helvetica").fontSize(11)
-        .text(safe(subtitle), MARGIN, doc.y + 8, { width: w, lineGap: 3 });
+      doc.fillColor(MUTED).font(F.regular).fontSize(11)
+        .text(S(subtitle), MARGIN, doc.y + 8, { width: w, lineGap: 3 });
+    }
+    // The same line in the reader's language, for a translated edition. One line, short
+    // enough never to wrap, so an RTL line can be drawn whole and right-aligned.
+    if (subtitleTranslated) {
+      doc.fillColor(TEAL_DARK);
+      if (subtitleRtl) rtlDraw(subtitleTranslated.split(" "), MARGIN + w, doc.y + 6, 11.5);
+      else doc.font(F.regular).fontSize(11.5).text(subtitleTranslated, MARGIN, doc.y + 6, { width: w, lineBreak: false });
     }
     doc.y = 250;
     for (const line of meta) {
-      doc.fillColor(TEAL).font("Helvetica-Bold").fontSize(10)
+      doc.fillColor(TEAL).font(F.bold).fontSize(10)
         .text("•", MARGIN, doc.y, { width: 12, continued: false });
-      doc.fillColor(INK).font("Helvetica").fontSize(10.5)
-        .text(safe(line), MARGIN + 12, doc.y - 12, { width: w - 12, lineGap: 2 });
+      doc.fillColor(INK).font(F.regular).fontSize(10.5)
+        .text(S(line), MARGIN + 12, doc.y - 12, { width: w - 12, lineGap: 2 });
       doc.x = MARGIN;
       doc.moveDown(0.4);
     }
     if (footer) {
-      doc.fillColor(MUTED).font("Helvetica").fontSize(8.5)
-        .text(safe(footer), MARGIN, contentBottom() - 60, { width: w, lineGap: 2 });
+      doc.fillColor(MUTED).font(F.regular).fontSize(8.5)
+        .text(S(footer), MARGIN, contentBottom() - 60, { width: w, lineGap: 2 });
     }
     doc.x = MARGIN;
   }
@@ -146,16 +240,16 @@ export function createDoc({ outPath, runningHead }) {
     doc.addPage();
     const w = contentWidth();
     if (badge) {
-      badge = safe(badge);
+      badge = S(badge);
       const bw = doc.widthOfString(badge, { size: 9 }) + 16;
       doc.roundedRect(MARGIN, doc.y, bw, 16, 8).fill(TEAL_SOFT);
-      doc.fillColor(TEAL_DARK).font("Helvetica-Bold").fontSize(9)
+      doc.fillColor(TEAL_DARK).font(F.bold).fontSize(9)
         .text(badge, MARGIN + 8, doc.y + 4.5, { width: bw });
       doc.x = MARGIN;
       doc.y += 24;
     }
-    doc.fillColor(INK).font("Helvetica-Bold").fontSize(19)
-      .text(safe(title), MARGIN, doc.y, { width: w, lineGap: 1 });
+    doc.fillColor(INK).font(F.bold).fontSize(19)
+      .text(S(title), MARGIN, doc.y, { width: w, lineGap: 1 });
     doc.x = MARGIN;
     doc.moveDown(0.35);
     doc.moveTo(MARGIN, doc.y).lineTo(doc.page.width - doc.page.margins.right, doc.y)
@@ -172,16 +266,16 @@ export function createDoc({ outPath, runningHead }) {
     const w = contentWidth();
     doc.moveDown(0.8);
     if (badge) {
-      badge = safe(badge);
+      badge = S(badge);
       const bw = doc.widthOfString(badge, { size: 8.5 }) + 14;
       doc.roundedRect(MARGIN, doc.y, bw, 15, 7.5).fill(TEAL_SOFT);
-      doc.fillColor(TEAL_DARK).font("Helvetica-Bold").fontSize(8.5)
+      doc.fillColor(TEAL_DARK).font(F.bold).fontSize(8.5)
         .text(badge, MARGIN + 7, doc.y + 4, { width: bw });
       doc.x = MARGIN;
       doc.y += 20;
     }
-    doc.fillColor(INK).font("Helvetica-Bold").fontSize(14)
-      .text(safe(title), MARGIN, doc.y, { width: w });
+    doc.fillColor(INK).font(F.bold).fontSize(14)
+      .text(S(title), MARGIN, doc.y, { width: w });
     doc.x = MARGIN;
     doc.moveDown(0.3);
     doc.moveTo(MARGIN, doc.y).lineTo(MARGIN + w, doc.y).strokeColor(TEAL).lineWidth(1).stroke();
@@ -194,8 +288,8 @@ export function createDoc({ outPath, runningHead }) {
     doc.moveDown(0.7);
     const y = doc.y;
     doc.rect(MARGIN, y + 2, 3, 13).fill(TEAL);
-    doc.fillColor(TEAL_DARK).font("Helvetica-Bold").fontSize(12)
-      .text(safe(text), MARGIN + 12, y, { width: contentWidth() - 12 });
+    doc.fillColor(TEAL_DARK).font(F.bold).fontSize(12)
+      .text(S(text), MARGIN + 12, y, { width: contentWidth() - 12 });
     doc.x = MARGIN;
     doc.moveDown(0.45);
   }
@@ -204,9 +298,9 @@ export function createDoc({ outPath, runningHead }) {
     if (!text) return;
     ensureSpace(16);
     doc.fillColor(opts.color || INK)
-      .font(opts.bold ? "Helvetica-Bold" : opts.italic ? "Helvetica-Oblique" : "Helvetica")
+      .font(opts.bold ? F.bold : opts.italic ? F.italic : F.regular)
       .fontSize(opts.size || 10.25)
-      .text(safe(text), MARGIN, doc.y, {
+      .text(S(text), MARGIN, doc.y, {
         width: contentWidth(),
         lineGap: opts.lineGap ?? 2,
         paragraphGap: opts.paragraphGap ?? 5,
@@ -218,17 +312,17 @@ export function createDoc({ outPath, runningHead }) {
     const bw = 12;
     ensureSpace(16);
     const y = doc.y;
-    doc.fillColor(opts.markerColor || TEAL).font("Helvetica-Bold").fontSize(10.25)
+    doc.fillColor(opts.markerColor || TEAL).font(F.bold).fontSize(10.25)
       .text(opts.marker ?? "•", MARGIN, y, { width: bw });
-    doc.fillColor(opts.color || INK).font("Helvetica").fontSize(opts.size || 10.25)
-      .text(safe(text), MARGIN + bw, y, { width: contentWidth() - bw, lineGap: 2 });
+    doc.fillColor(opts.color || INK).font(F.regular).fontSize(opts.size || 10.25)
+      .text(S(text), MARGIN + bw, y, { width: contentWidth() - bw, lineGap: 2 });
     doc.x = MARGIN;
     doc.moveDown(0.3);
   }
 
   /** A tinted box — for the one sentence a page should be read around. */
   function callout(text, opts = {}) {
-    text = safe(text);
+    text = S(text);
     const w = contentWidth();
     const inner = w - 24;
     const h = doc.heightOfString(text, { width: inner, lineGap: 2 }) + 20;
@@ -237,11 +331,44 @@ export function createDoc({ outPath, runningHead }) {
     doc.roundedRect(MARGIN, y, w, h, 6).fill(opts.fill || SURFACE);
     doc.rect(MARGIN, y, 3, h).fill(opts.accent || TEAL);
     doc.fillColor(opts.color || INK)
-      .font(opts.bold ? "Helvetica-Bold" : "Helvetica")
+      .font(opts.bold ? F.bold : F.regular)
       .fontSize(opts.size || 10.25)
-      .text(safe(text), MARGIN + 14, y + 10, { width: inner, lineGap: 2 });
+      .text(S(text), MARGIN + 14, y + 10, { width: inner, lineGap: 2 });
     doc.x = MARGIN;
     doc.y = y + h + 8;
+  }
+
+  /** The learner's-language version of the block just drawn: smaller, muted, indented,
+      with a teal rule on its leading edge — so the German above it still leads. */
+  function translation(text, opts = {}) {
+    if (!text) return;
+    const size = opts.size ?? 9.25;
+    const indent = opts.indent ?? 12;
+    const w = contentWidth() - indent - 10;
+    const lineH = () => doc.currentLineHeight(true) + 1.5;
+    doc.fillColor(MUTED);
+    if (opts.rtl) {
+      const lines = rtlWrap(text, w, size);
+      doc.font("Noto-Arabic").fontSize(size);
+      const h = lines.length * lineH();
+      ensureSpace(h + 6);
+      const y = doc.y;
+      const right = MARGIN + indent + 10 + w;
+      doc.rect(right + 6, y, 1.5, h).fill(TEAL);
+      doc.fillColor(MUTED);
+      lines.forEach((line, i) => rtlDraw(line, right, y + i * lineH(), size));
+      doc.y = y + h + 5;
+    } else {
+      doc.font(F.regular).fontSize(size);
+      const h = doc.heightOfString(S(text), { width: w, lineGap: 1.5 });
+      ensureSpace(h + 6);
+      const y = doc.y;
+      doc.rect(MARGIN + indent, y, 1.5, h).fill(TEAL);
+      doc.fillColor(MUTED).font(F.regular).fontSize(size)
+        .text(S(text), MARGIN + indent + 10, y, { width: w, lineGap: 1.5 });
+      doc.y = y + h + 5;
+    }
+    doc.x = MARGIN;
   }
 
   /**
@@ -263,9 +390,13 @@ export function createDoc({ outPath, runningHead }) {
       const y = doc.y;
       doc.rect(MARGIN, y, w, headH).fill(TEAL_SOFT);
       let x = MARGIN;
-      doc.fillColor(TEAL_DARK).font("Helvetica-Bold").fontSize(fontSize - 0.5);
+      doc.fillColor(TEAL_DARK).font(F.bold).fontSize(fontSize - 0.5);
       head.forEach((label, i) => {
-        doc.text(safe(label), x + 7, y + 6, { width: widths[i] - 14, characterSpacing: 0.4 });
+        doc.text(S(label), x + 7, y + 6, {
+          width: widths[i] - 14,
+          characterSpacing: 0.4,
+          align: opts.rtl?.includes(i) ? "right" : "left",
+        });
         x += widths[i];
       });
       doc.y = y + headH;
@@ -278,15 +409,21 @@ export function createDoc({ outPath, runningHead }) {
     // than Helvetica, and measuring "der Nachname, die Nachnamen" in the regular face sized
     // the row for one line while the bold draw took two — the second line was then clipped
     // by the row separator.
-    const cellFont = (i) => (i === 0 && opts.boldFirst !== false ? "Helvetica-Bold" : "Helvetica");
+    const rtl = new Set(opts.rtl ?? []);
+    const cellFont = (i) => (rtl.has(i) ? "Noto-Arabic" : i === 0 && opts.boldFirst !== false ? F.bold : F.regular);
+    const lineGap = 1.5;
+
+    /* Right-to-left cells are wrapped here rather than by pdfkit — see rtlDraw(). */
+    const rtlLines = (text, width) => rtlWrap(text, width, fontSize);
+    const cellHeight = (cell, i) => {
+      doc.font(cellFont(i)).fontSize(fontSize);
+      const width = widths[i] - 14;
+      if (!rtl.has(i)) return doc.heightOfString(S(cell), { width, lineGap });
+      return rtlLines(cell, width).length * (doc.currentLineHeight(true) + lineGap);
+    };
 
     rows.forEach((row, ri) => {
-      const h = Math.max(
-        ...row.map((cell, i) => {
-          doc.font(cellFont(i)).fontSize(fontSize);
-          return doc.heightOfString(safe(cell), { width: widths[i] - 14, lineGap: 1.5 });
-        })
-      ) + pad * 2;
+      const h = Math.max(...row.map(cellHeight)) + pad * 2;
 
       if (doc.y + h > contentBottom()) {
         doc.addPage();
@@ -297,10 +434,19 @@ export function createDoc({ outPath, runningHead }) {
       if (ri % 2 === 1) doc.rect(MARGIN, y, w, h).fill(SURFACE);
       let x = MARGIN;
       row.forEach((cell, i) => {
-        doc.fillColor(i === 0 ? INK : MUTED)
+        doc.fillColor(i === 0 || opts.inkCols?.includes(i) ? INK : MUTED)
           .font(cellFont(i))
-          .fontSize(fontSize)
-          .text(safe(cell), x + 7, y + pad, { width: widths[i] - 14, lineGap: 1.5 });
+          .fontSize(fontSize);
+        const width = widths[i] - 14;
+        if (rtl.has(i)) {
+          let ly = y + pad;
+          for (const line of rtlLines(cell, width)) {
+            rtlDraw(line, x + 7 + width, ly, fontSize);
+            ly += doc.currentLineHeight(true) + lineGap;
+          }
+        } else {
+          doc.text(S(cell), x + 7, y + pad, { width, lineGap });
+        }
         x += widths[i];
       });
       doc.moveTo(MARGIN, y + h).lineTo(MARGIN + w, y + h)
@@ -319,7 +465,7 @@ export function createDoc({ outPath, runningHead }) {
     for (let i = range.start; i < range.start + range.count; i++) {
       if (skipFirst && i === range.start) continue;
       doc.switchToPage(i);
-      doc.fillColor(MUTED).font("Helvetica").fontSize(8).text(
+      doc.fillColor(MUTED).font(F.regular).fontSize(8).text(
         `${i - range.start + 1} / ${range.count}`,
         MARGIN,
         doc.page.height - 38,
@@ -358,5 +504,5 @@ export function createDoc({ outPath, runningHead }) {
     });
   }
 
-  return { doc, cover, chapter, section, h2, paragraph, bullet, callout, table, ensureSpace, contentWidth, finish };
+  return { doc, cover, chapter, section, h2, paragraph, bullet, callout, translation, table, ensureSpace, contentWidth, finish };
 }

@@ -1,0 +1,81 @@
+---
+// A Lesetext with its translation beside it — paragraph by paragraph, so the line you are
+// stuck on sits next to its meaning instead of somewhere in a second text below. Off until
+// the learner asks: reading the German first is the exercise, the translation is the rope.
+//
+// On a phone there is no "beside": the translation goes under each paragraph, set smaller
+// and quieter, so the German still leads.
+import { HELP_LANGS } from "../lib/textHelp.js";
+import "../styles/help-langs.css";
+
+interface Props {
+  /** The German text, paragraphs separated by a blank line, headings as **…**. */
+  text: string;
+  /** `{ en: [...], ar: [...], uk: [...], tr: [...] }`, one entry per German paragraph,
+      with the German's line breaks kept. */
+  paragraphs?: Record<string, string[]> | null;
+  /** False while the translation is a draft nobody has checked. */
+  reviewed?: boolean;
+}
+const { text, paragraphs = null, reviewed = false } = Astro.props;
+
+// Aligned line by line, not paragraph by paragraph: six Kleinanzeigen or four forum posts
+// sit in one paragraph each, and a translation beside the whole block is no better than one
+// below it. The translation keeps the German's line breaks, so the two split the same way.
+// `start` marks the first line of a paragraph, which keeps the paragraph gap.
+const toLines = (paras: string[]) =>
+  paras.flatMap((p) => p.split("\n").filter((l) => l.trim()).map((l, j) => ({ l, start: j === 0 })));
+const german = toLines(text.trim().split(/\n{2,}/));
+const rich = (p: string) => p.split(/\*\*(.+?)\*\*/g);
+// A translation that does not line up with the German is worse than none: it would put the
+// wrong meaning beside a line. Fail the build rather than ship it.
+const lines: Record<string, string[]> | null = paragraphs
+  ? Object.fromEntries(Object.entries(paragraphs).map(([code, list]) => {
+      const flat = toLines(list).map((x) => x.l);
+      if (flat.length !== german.length) {
+        throw new Error(`TextWithTranslation: ${code} hat ${flat.length} Zeilen, der Text ${german.length}`);
+      }
+      return [code, flat];
+    }))
+  : null;
+---
+<div class="tt" data-tt data-translation="off">
+  {paragraphs && (
+    <div class="tt-bar">
+      <button type="button" class="tt-toggle" data-tt-toggle aria-pressed="false">
+        <span class="tt-toggle-on">Übersetzung ausblenden</span>
+        <span class="tt-toggle-off">Übersetzung zeigen</span>
+      </button>
+      <div class="help-langs" role="group" aria-label="Sprache der Übersetzung">
+        {HELP_LANGS.map((l) => (
+          <button type="button" class="help-lang" data-help-lang={l.code} lang={l.code} aria-pressed="false">{l.label}</button>
+        ))}
+      </div>
+    </div>
+  )}
+
+  <div class="sk-text tt-text">
+    {german.map(({ l, start }, i) => (
+      <div class:list={["tt-row", start && i > 0 && "tt-row--para"]}>
+        <p class="tt-de">{rich(l).map((s, j) => (j % 2 ? <b>{s}</b> : s))}</p>
+        {paragraphs && <p class="tt-tr" data-i={i}></p>}
+      </div>
+    ))}
+  </div>
+
+  {paragraphs && !reviewed && (
+    <p class="help-draft">Übersetzung: maschineller Entwurf, noch nicht von einer Lehrkraft geprüft.</p>
+  )}
+
+  {paragraphs && (
+    <script type="application/json" data-tt-data set:html={JSON.stringify(lines)}></script>
+  )}
+</div>
+
+<script>
+  import { mountTextTranslation } from "../lib/textHelp.js";
+  document.querySelectorAll<HTMLElement>("[data-tt]").forEach((root) => {
+    const data = root.querySelector("[data-tt-data]");
+    if (data) mountTextTranslation(root, JSON.parse(data.textContent ?? "{}"));
+  });
+</script>

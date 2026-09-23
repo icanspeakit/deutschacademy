@@ -1,0 +1,93 @@
+---
+// /t1 study — the trainer's panel without the dark rail: a level switch, one "Weiter üben",
+// and the packs by topic and by rule. See ArtikelTrainerT1.astro for why this is a copy.
+//
+// Everything that depends on the learner — "124 von 386 sicher", the pack dots, the Fehler
+// count — is filled in by the trainer's script from localStorage (artikelVerlauf.js). The
+// server renders the neutral state, so a first visit and blocked storage look the same.
+interface Pack {
+  id: string;
+  name: string;
+  icon?: string;
+  article?: string | null;
+  ids: string[];
+}
+interface Props {
+  counts: Record<string, number>;
+  current: string;
+  packs: Record<string, { topics: Pack[]; rules: Pack[] }>;
+}
+const { counts, current, packs } = Astro.props;
+
+const LEVELS = ["A1", "A2", "B1", "B2"].filter((l) => (counts[l] ?? 0) > 0);
+const openLevel = LEVELS.includes(current) ? current : LEVELS[0];
+const DOTS = [0, 1, 2, 3, 4];
+---
+<div class="akp" data-akp>
+  <div class="akp-levels" role="radiogroup" aria-label="Stufe">
+    {LEVELS.map((level) => (
+      <button
+        type="button"
+        role="radio"
+        class:list={["akp-level", level === openLevel && "is-on"]}
+        data-akp-level-btn={level}
+        aria-checked={level === openLevel ? "true" : "false"}
+      >{level}</button>
+    ))}
+  </div>
+
+  <p class="akp-lead" data-akp-lead>
+    {counts[openLevel]} Nomen auf Stufe {openLevel}. Übe alle gemischt oder wähle ein Thema.
+  </p>
+
+  <button type="button" class="akk-btn akk-btn-primary akp-go" data-akp-go>Weiter üben</button>
+
+  <div class="akp-progress">
+    <p class="akp-progress-text" data-akp-sicher>0 von {counts[openLevel]} Nomen sicher</p>
+    <span class="akp-bar" aria-hidden="true"><span data-akp-bar style="width:0%"></span></span>
+  </div>
+
+  <button type="button" class="akp-fehler" data-akp-fehler hidden>Fehler wiederholen</button>
+
+  <details class="akp-more" data-akp-more open>
+    <summary class="akp-more-sum">Thema oder Regel wählen</summary>
+    {LEVELS.map((level) => (
+      <div class="akp-packs" data-akp-packs={level} hidden={level !== openLevel}>
+        {packs[level].topics.length > 0 && (
+          <section>
+            <h3 class="akp-head">Nach Thema</h3>
+            <ul class="akp-list">
+              {packs[level].topics.map((p) => (
+                <li>
+                  <button type="button" class="akp-pack" data-akp-pack={`topic:${p.id}`}>
+                    <span class="akp-pack-ic" aria-hidden="true">{p.icon}</span>
+                    <span class="akp-pack-name">{p.name}</span>
+                    <span class="akp-dots" aria-hidden="true">{DOTS.map(() => <i></i>)}</span>
+                    <span class="akp-pack-state" data-akp-state>neu</span>
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
+        {packs[level].rules.length > 0 && (
+          <section>
+            <h3 class="akp-head">Nach Regel</h3>
+            <ul class="akp-list">
+              {packs[level].rules.map((p) => (
+                <li>
+                  <button type="button" class="akp-pack" data-akp-pack={`rule:${p.id}`}>
+                    <span class:list={["akp-pack-ic akp-pack-art", p.article && `akp-art--${p.article}`]} aria-hidden="true">{p.article ?? "!"}</span>
+                    <span class="akp-pack-name">{p.name}</span>
+                    <span class="akp-dots" aria-hidden="true">{DOTS.map(() => <i></i>)}</span>
+                    <span class="akp-pack-state" data-akp-state>neu</span>
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
+      </div>
+    ))}
+  </details>
+</div>

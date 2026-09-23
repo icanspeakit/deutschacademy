@@ -44,16 +44,51 @@ const topics = [
   ...quizTopics.filter((t) => !wsIds.has(t.id)).map((t) => ({ kind: "quiz", ...t })),
 ];
 
+// The rule in the learner's language — the same file the topic pages read
+// (src/data/uebersetzungen/grammatik.json), so the site and the PDF never disagree.
+const help = JSON.parse(readFileSync(path.join(root, "src", "data", "uebersetzungen", "grammatik.json"), "utf8"));
+
+/* The translated editions: every German explanation is followed by its translation; the
+   examples, tables and exercises stay German, because German is the subject. */
+const EDITIONS = {
+  en: { name: "Englisch", cover: (lv) => `German grammar ${lv} with explanations in English` },
+  ar: { name: "Arabisch", rtl: true, cover: (lv) => `قواعد اللغة الألمانية ${lv} مع الشرح باللغة العربية` },
+  uk: { name: "Ukrainisch", cover: (lv) => `Граматика німецької мови ${lv} з поясненнями українською` },
+  tr: { name: "Türkisch", cover: (lv) => `${lv} Almanca dilbilgisi, Türkçe açıklamalarla` },
+};
+
+/** Whether a topic's every explained block has this language. A book goes out in a
+    language only if all its topics do — half-translated reads as broken. */
+function translatedIn(topic, lang) {
+  const e = help.entries[topic.id];
+  if (!e) return false;
+  const intro = topic.kind === "quiz" ? topic.intro : topic.subtitle;
+  if (intro && !e.intro?.[lang]) return false;
+  const qa = topic.concept?.qa ?? [];
+  if (qa.some((_, i) => !e.qa?.[i]?.[lang])) return false;
+  if (topic.concept?.noteHtml && !e.note?.[lang]) return false;
+  return true;
+}
+
 // --- Render one topic -------------------------------------------------------
 
-function renderTopic(pdf, topic, { withBadge }) {
+function renderTopic(pdf, topic, { withBadge, lang = null }) {
   pdf.chapter(topic.name, withBadge ? topic.level : null);
+  const ed = lang ? EDITIONS[lang] : null;
+  const gx = lang ? help.entries[topic.id] : null;
+  const tr = (block, opts = {}) => { if (block?.[lang]) pdf.translation(plain(block[lang]), { rtl: ed.rtl, ...opts }); };
 
-  if (topic.subtitle) pdf.paragraph(plain(topic.subtitle), { color: MUTED, size: 10 });
+  if (topic.subtitle) {
+    pdf.paragraph(plain(topic.subtitle), { color: MUTED, size: 10 });
+    tr(gx?.intro, { indent: 0 });
+  }
 
   // A quiz-only topic is one paragraph of rule and that is all it has.
   if (topic.kind === "quiz") {
-    if (topic.intro) pdf.callout(plain(topic.intro));
+    if (topic.intro) {
+      pdf.callout(plain(topic.intro));
+      tr(gx?.intro, { indent: 0 });
+    }
     const examples = (topic.questions ?? []).slice(0, 8);
     if (examples.length) {
       pdf.h2("Beispiele");
@@ -85,15 +120,17 @@ function renderTopic(pdf, topic, { withBadge }) {
 
   if (c.qa?.length) {
     pdf.h2("Die Regel");
-    for (const item of c.qa) {
+    c.qa.forEach((item, i) => {
       const tag = item.tag ? `${plain(item.tag)} — ` : "";
       pdf.bullet(tag + plain(item.html ?? item.text));
-    }
+      tr(gx?.qa?.[i]);
+    });
   }
 
   if (c.noteHtml) {
     pdf.doc.moveDown(0.3);
     pdf.callout(plain(c.noteHtml), { fill: SURFACE, size: 10 });
+    tr(gx?.note, { indent: 0 });
   }
 
   // The reason to print this at all.
@@ -128,16 +165,26 @@ function renderTopic(pdf, topic, { withBadge }) {
 
 // --- Build one book ---------------------------------------------------------
 
-async function buildBook({ level, fileName }) {
+async function buildBook({ level, fileName, lang = null }) {
   const list = level ? topics.filter((t) => t.level === level) : topics;
   // A1 first, then A2 … inside the complete edition; a single-level book keeps file order.
   const ordered = level
     ? list
     : LEVELS.flatMap((lv) => list.filter((t) => t.level === lv));
 
-  const title = level ? `Grammatik ${level}` : "Grammatik A1–B2";
+  const ed = lang ? EDITIONS[lang] : null;
+  if (ed) {
+    const missing = ordered.filter((t) => !translatedIn(t, lang));
+    if (missing.length) {
+      console.log(`${fileName.padEnd(34)} übersprungen: ${missing.length} Themen ohne ${ed.name}`);
+      return;
+    }
+  }
+  const baseTitle = level ? `Grammatik ${level}` : "Grammatik A1–B2";
+  const title = ed ? `${baseTitle} · Deutsch–${ed.name}` : baseTitle;
   const outPath = path.join(outDir, fileName);
-  const pdf = createDoc({ outPath, runningHead: `DEUTSCHACADEMY · ${title.toUpperCase()}` });
+  const pdf = createDoc({ outPath, runningHead: `DEUTSCHACADEMY · ${title.toUpperCase()}`, unicode: Boolean(ed) });
+  const unreviewed = ed && ordered.some((t) => !help.entries[t.id]?.reviewed);
 
   const tableCount = ordered.reduce((n, t) => n + (t.concept?.reference?.tables?.length ?? 0), 0);
 
@@ -147,7 +194,11 @@ async function buildBook({ level, fileName }) {
     subtitle: level
       ? `${LEVEL_BLURB[level]} — alle Grammatikthemen dieses Niveaus zum Nachschlagen und Ausdrucken.`
       : "Alle Grammatikthemen von A1 bis B2 in einem Band, zum Nachschlagen und Ausdrucken.",
+    subtitleTranslated: ed?.cover(level ?? "A1–B2"),
+    subtitleRtl: ed?.rtl,
     meta: [
+      ...(ed ? [`Jede Regel mit Erklärung auf ${ed.name}; Beispiele und Tabellen bleiben deutsch`] : []),
+      ...(unreviewed ? [`Die Erklärungen auf ${ed.name} sind ein maschineller Entwurf, noch nicht von einer Lehrkraft geprüft`] : []),
       `${ordered.length} Themen${level ? "" : ` auf vier Niveaus (${LEVELS.join(", ")})`}`,
       `${tableCount} Übersichtstabellen zum Nachschlagen`,
       "Die Übungen dazu stehen kostenlos auf deutschacademy.com/uebungen/grammatik",
@@ -166,14 +217,17 @@ async function buildBook({ level, fileName }) {
     level ? {} : { widths: [70, pdf.contentWidth() - 70] }
   );
 
-  for (const topic of ordered) renderTopic(pdf, topic, { withBadge: !level });
+  for (const topic of ordered) renderTopic(pdf, topic, { withBadge: !level, lang });
 
   await pdf.finish();
   const kb = Math.round(statSync(outPath).size / 1024);
   console.log(`${fileName.padEnd(34)} ${String(ordered.length).padStart(2)} Themen  ${kb} KB`);
 }
 
-for (const level of LEVELS) {
-  await buildBook({ level, fileName: `grammatik-${level.toLowerCase()}.pdf` });
+for (const lang of [null, ...Object.keys(EDITIONS)]) {
+  const suffix = lang ? `-${lang}` : "";
+  for (const level of LEVELS) {
+    await buildBook({ level, lang, fileName: `grammatik-${level.toLowerCase()}${suffix}.pdf` });
+  }
+  await buildBook({ level: null, lang, fileName: `grammatik-a1-b2-komplett${suffix}.pdf` });
 }
-await buildBook({ level: null, fileName: "grammatik-a1-b2-komplett.pdf" });

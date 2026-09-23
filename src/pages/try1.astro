@@ -1,0 +1,27 @@
+---
+// /try1 — design study: the topic rail light instead of dark.
+//
+// The real Wechselpräpositionen page, rendered unchanged; the only difference is the
+// stylesheet below, scoped to .tr-wrap so nothing else on the page moves. The icon strip
+// wears the page's own surface — white fill, one grey stroke on its edge — instead of
+// the near-black --inverse-surface, so the rail reads as part of the page rather than a
+// second app docked beside it.
+import GrammarPage from "./uebungen/grammatik/[id].astro";
+import workspace from "../data/grammatik/wechselpraepositionen.json";
+---
+<GrammarPage workspace={workspace} />
+
+<style is:global>
+  .tr-wrap .nvb-rail {
+    background: var(--surface-card);
+    border-right: 1px solid var(--border);
+  }
+  .tr-wrap .nvb-railbtn { color: var(--muted); }
+  .tr-wrap .nvb-railbtn:hover { color: var(--ink); background: var(--surface); }
+  .tr-wrap .nvb-railbtn.active { color: #fff; background: var(--brand-blue); }
+  .tr-wrap .nvb-raildot { background: var(--border-strong); }
+  .tr-wrap .nvb-railbtn.active .nvb-raildot { background: #fff; }
+  /* Folded, the strip is all there is: it keeps the card's grey outline so it still
+     reads as a panel edge against the white page, not a column of loose icons. */
+  .tr-wrap .nvb.collapsed .nvb-rail { border-right-color: transparent; }
+</style>

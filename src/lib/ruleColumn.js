@@ -63,6 +63,8 @@ export function mountRuleColumn(page, {
   defaultHidden = true,
   intro: withIntro = true,
   sheet = false,
+  /** Extra tour beats for what is inside the column — see `beats` in ruleIntro.js. */
+  beats = [],
 } = {}) {
   if (!page) return null;
   const ruleEl = page.querySelector(".vp-col--rule");
@@ -206,6 +208,7 @@ export function mountRuleColumn(page, {
     // only ever has the button to light (one). A page that overrides one should be able
     // to leave the other alone.
     coach: (compact ? coachCompact : coach) ?? undefined,
+    beats: compact ? [] : beats,
   });
 
   // Once per browser on the learner's first page of this kind. ?intro replays it on

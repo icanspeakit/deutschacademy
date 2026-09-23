@@ -6,10 +6,15 @@
 // is in the chosen level. Everything shared with the dashboard and with Wortschatz comes
 // from nav.css under `nvb-*`; only the two things that are ours wear `ap-*`.
 //
-// What the panel lists is Runden, because that is this trainer's unit: a session is
-// ARTIKEL_SESSION nouns drawn from the level, so a level of 386 nouns is 16 of them. It is
-// the same idea as a Wortschatz Lernset — a sitting you can finish — over a pool that has
-// no topics attached to it.
+// What a level's pane lists is what a learner can name: one "Weiter üben" that builds the
+// session from their own history (artikelVerlauf.js), then packs by topic and by rule
+// (artikelPacks.js). It used to list "Runde 1" … "Runde 16" — 25 nouns each, reshuffled
+// every time, so the numbers named nothing. The rail and the fold are the old ones; only
+// the pane's contents changed.
+//
+// Everything that depends on the learner — "124 von 386 sicher", the dots, the Fehler
+// count — is filled in by ArtikelTrainer's script from localStorage. The server renders
+// the neutral state, so a first visit and blocked storage look the same.
 //
 // The trainer used to offer A1, A2 and "Alle" in a thin inline row above the card. The
 // lexicon has gendered nouns to B2 (386 / 478 / 762 / 951), so three quarters of the pool
@@ -24,27 +29,89 @@ import Icon from "./Icon.astro";
 // stylesheets LernsetPicker.astro pulls in, for the same reason.
 import "../styles/nav.css";
 import "../styles/lernset-picker.css";
+// The pack rows, dots, progress bar and rule intro card.
+import "../styles/artikel-panel.css";
+
+interface Pack {
+  id: string;
+  name: string;
+  icon?: string;
+  article?: string | null;
+  ids: string[];
+}
 
 interface Props {
   /** Nouns per level, `{ A1: 386, … }` — counted from the lexicon by the page. */
   counts: Record<string, number>;
-  /** How many nouns one round draws. */
+  /** How many nouns one session draws. */
   session: number;
+  /** Topic and rule packs per level, from src/lib/artikelPacks.js. */
+  packs: Record<string, { topics: Pack[]; rules: Pack[] }>;
   /** The level the page opens on. */
   current: string;
+  /** The "Nach Häufigkeit" view: the ranked nouns cut into rounds, most frequent first,
+      with the share of everyday noun use each round brings the learner up to. */
+  freq: {
+    words: number;
+    unranked: number;
+    perWeek: number;
+    rounds: { index: number; from: number; to: number; cover: number; preview: string }[];
+  };
 }
-const { counts, session, current } = Astro.props;
+const { counts, session, current, freq, packs } = Astro.props;
 
 const LEVELS = ["A1", "A2", "B1", "B2"].filter((l) => (counts[l] ?? 0) > 0);
-const total = LEVELS.reduce((n, l) => n + counts[l], 0);
-const roundsIn = (level: string) => Math.ceil((counts[level] ?? 0) / session);
-const openLevel = LEVELS.includes(current) ? current : LEVELS[0];
-// A round is a draw, not a fixed slice: the pool is shuffled every round. So the last one is
-// the same size as the rest rather than a remainder — it is "how many sittings this level
-// is", not "which 25 nouns".
-const roundLabel = (level: string, i: number) => `Runde ${i + 1}`;
+const openLevel = LEVELS.includes(current) || current === "haeufigkeit" ? current : LEVELS[0];
+const DOTS = [0, 1, 2, 3, 4];
+
+// --- Nach Häufigkeit --------------------------------------------------------------------
+// "Alle Stufen" was the whole pool shuffled: 2577 nouns in random order, which answers no
+// question a learner has. The question a new arrival has is "which ones first", and the
+// frequency list answers it. Here a Teil is a fixed slice, not a draw: Teil 1 is the 25
+// most frequent nouns, and the order is the point.
+//
+// The timeline assumes one Teil per weekday, which is also what makes the 65 of them come
+// out at three months. The pace is stated on the page, so the months read as a plan, not a
+// promise.
+const PHASES = [
+  { upto: 1, label: "Woche 1" },
+  { upto: 4, label: "Woche 2–4" },
+  { upto: 8, label: "Monat 2" },
+  { upto: 13, label: "Monat 3" },
+  { upto: Infinity, label: "Danach" },
+];
+const weekOf = (round: number) => Math.ceil(round / freq.perWeek);
+const phaseOf = (round: number) => PHASES.findIndex((p) => weekOf(round) <= p.upto);
+const phases = PHASES.map((p, i) => ({ ...p, rounds: freq.rounds.filter((r) => phaseOf(r.index) === i) }))
+  .filter((p) => p.rounds.length);
+
+// The chart, in viewBox units: cumulative share over rounds, the timeline underneath.
+const W = 320, X0 = 30, X1 = 310, Y0 = 14, Y1 = 118;
+const nR = freq.rounds.length;
+// The x axis is square-root, not linear: the curve does all its climbing in the first
+// few weeks, and on a linear axis Woche 1 is a sliver too thin to name. The timeline bands
+// under it keep the stretched axis readable as time.
+const px = (i: number) => X0 + (X1 - X0) * Math.sqrt(i / nR);
+const py = (pct: number) => Y1 - ((Y1 - Y0) * pct) / 100;
+const pts = [[px(0), py(0)], ...freq.rounds.map((r) => [px(r.index), py(r.cover)])];
+const line = pts.map(([x, y], i) => `${i ? "L" : "M"}${x.toFixed(1)} ${y.toFixed(1)}`).join(" ");
+const area = `${line} L${px(nR).toFixed(1)} ${Y1} L${X0} ${Y1} Z`;
+// Milestones at the end of the first two phases and the last one; more would crowd the
+// flat end of the curve, where the labels would sit on top of each other.
+const phaseEnds = phases.map((p) => p.rounds[p.rounds.length - 1]);
+const milestones = phaseEnds
+  .filter((_, i, a) => i < 2 || i === a.length - 1)
+  .map((r) => ({ x: px(r.index), y: py(r.cover), cover: r.cover }));
+const bands = phases.map((p) => ({
+  label: p.label,
+  x: px(p.rounds[0].index - 1),
+  w: px(p.rounds[p.rounds.length - 1].index) - px(p.rounds[0].index - 1),
+}));
+const markerData = JSON.stringify(
+  freq.rounds.map((r) => [+px(r.index).toFixed(1), +py(r.cover).toFixed(1), r.cover, r.to, phaseOf(r.index)])
+);
 ---
-<div class="nvb ap-nvb" data-nvb data-current={current}>
+<div class="nvb ls-nvb ap-nvb" data-nvb data-current={current}>
   <!-- The fold tab on the panel's right edge, exactly as the Lernset column carries one:
        the list pivots away and the tab stays attached to the rail, so the way back is the
        thing that put it away. -->
@@ -79,21 +146,20 @@ const roundLabel = (level: string, i: number) => `Runde ${i + 1}`;
 
     <span class="ls-raildiv" aria-hidden="true"></span>
 
-    <!-- The whole pool at once, for a learner who is past picking a level. Its own entry
-         rather than a fifth badge: "Alle" is not a level, and a chip reading "∑" beside
-         A1…B2 would claim it is. -->
+    <!-- The same pool in the order a learner meets it. Its own entry rather than a fifth
+         badge: frequency is not a level, and it cuts across all four. -->
     <button
       type="button"
       role="tab"
-      class:list={["nvb-railbtn", current === "alle" && "active"]}
-      data-rail="alle"
-      data-level="alle"
-      aria-selected={current === "alle" ? "true" : "false"}
-      aria-controls="ap-pane-alle"
-      aria-label="Alle Stufen"
+      class:list={["nvb-railbtn", current === "haeufigkeit" && "active"]}
+      data-rail="haeufigkeit"
+      data-level="haeufigkeit"
+      aria-selected={current === "haeufigkeit" ? "true" : "false"}
+      aria-controls="ap-pane-haeufigkeit"
+      aria-label="Nach Häufigkeit"
     >
       <Icon name="bars" size={20} />
-      <span class="nvb-tip">Alle Stufen · {total} Nomen</span>
+      <span class="nvb-tip">Nach Häufigkeit · {freq.words} Nomen</span>
     </button>
 
     <!-- The Regel, as one more thing the side can show. -->
@@ -112,46 +178,158 @@ const roundLabel = (level: string, i: number) => `Runde ${i + 1}`;
   </div>
 
   <div class="nvb-panel" id="ap-pane">
-    {[...LEVELS, "alle"].map((level) => {
-      const n = level === "alle" ? total : counts[level];
-      const rounds = Math.ceil(n / session);
-      return (
-        <div
-          class="nvb-section ap-sets"
-          id={`ap-pane-${level}`}
-          data-pane={level}
-          data-level={level}
-          hidden={level !== openLevel}
-        >
-          <div class="nvb-panelhead">
-            <h3>{level === "alle" ? "Alle Stufen" : `Stufe ${level}`}</h3>
-            <button type="button" class="nvb-collapse" data-nvb-collapse aria-label="Liste einklappen">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>
-            </button>
+    {LEVELS.map((level) => (
+      <div
+        class="nvb-section ap-sets"
+        id={`ap-pane-${level}`}
+        data-pane={level}
+        data-level={level}
+        hidden={level !== openLevel}
+      >
+        <div class="nvb-panelhead">
+          <h3>Stufe {level}</h3>
+          <button type="button" class="nvb-collapse" data-nvb-collapse aria-label="Liste einklappen">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>
+          </button>
+        </div>
+
+        <p class="ls-lead">{counts[level]} Nomen. Übe alle gemischt oder wähle ein Thema.</p>
+
+        <div class="akp ap-weiter">
+          <button type="button" class="akk-btn akk-btn-primary akp-go" data-akp-go={level}>Weiter üben</button>
+          <div class="akp-progress">
+            <p class="akp-progress-text" data-akp-sicher>0 von {counts[level]} Nomen sicher</p>
+            <span class="akp-bar" aria-hidden="true"><span data-akp-bar style="width:0%"></span></span>
           </div>
+          <button type="button" class="akp-fehler" data-akp-fehler={level} hidden>Fehler wiederholen</button>
+        </div>
 
-          <p class="ls-lead">
-            {n} Nomen mit Artikel, in {rounds} Runden zu je {session}. Jede Runde wird neu
-            gemischt — die Zahl sagt, wie viele Sitzungen die Stufe ist.
-          </p>
+        {packs[level].topics.length > 0 && (
+          <section class="ap-packs">
+            <h4 class="ap-phase-head"><span>Nach Thema</span></h4>
+            {packs[level].topics.map((p) => (
+              <button type="button" class="nvb-item akp-pack" data-akp-pack={`topic:${p.id}`} data-akp-level={level}>
+                <span class="akp-pack-ic" aria-hidden="true">{p.icon}</span>
+                <span class="akp-pack-name">{p.name}</span>
+                <span class="akp-dots" aria-hidden="true">{DOTS.map(() => <i></i>)}</span>
+                <span class="akp-pack-state" data-akp-state>neu</span>
+              </button>
+            ))}
+          </section>
+        )}
 
+        {packs[level].rules.length > 0 && (
+          <section class="ap-packs">
+            <h4 class="ap-phase-head"><span>Nach Regel</span></h4>
+            {packs[level].rules.map((p) => (
+              <button type="button" class="nvb-item akp-pack" data-akp-pack={`rule:${p.id}`} data-akp-level={level}>
+                <span class:list={["akp-pack-ic akp-pack-art", p.article && `akp-art--${p.article}`]} aria-hidden="true">{p.article ?? "!"}</span>
+                <span class="akp-pack-name">{p.name}</span>
+                <span class="akp-dots" aria-hidden="true">{DOTS.map(() => <i></i>)}</span>
+                <span class="akp-pack-state" data-akp-state>neu</span>
+              </button>
+            ))}
+          </section>
+        )}
+      </div>
+    ))}
+
+    <!-- Nach Häufigkeit: the curve first, because it is the reason to be here, then the
+         rounds under the part of the timeline they belong to. -->
+    <div
+      class="nvb-section ap-sets ap-freq"
+      id="ap-pane-haeufigkeit"
+      data-pane="haeufigkeit"
+      data-level="haeufigkeit"
+      hidden={openLevel !== "haeufigkeit"}
+    >
+      <div class="nvb-panelhead">
+        <h3>Nach Häufigkeit</h3>
+        <button type="button" class="nvb-collapse" data-nvb-collapse aria-label="Liste einklappen">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>
+        </button>
+      </div>
+
+      <p class="ls-lead">
+        Die {freq.words} Nomen, die im Alltag am häufigsten vorkommen, der Reihe nach, in Teilen
+        zu je {session}. Mit einem Teil pro Werktag schaffst du alle in etwa drei Monaten.
+      </p>
+
+      <!-- The curve folds away, the caption does not: once the learner has seen the shape,
+           "where am I" is the sentence under it, and that stays. Open on a first visit —
+           the curve is the reason to be here — then remembered per learner by the page. -->
+      <figure class="ap-chart">
+        <details class="ap-chart-fold" data-freq-fold open>
+        <summary class="ap-chart-sum">
+          <span>Lernkurve</span>
+          <svg class="ap-chart-chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+        </summary>
+        <svg viewBox={`0 0 ${W} 170`} role="img" aria-labelledby="ap-chart-cap" data-freq-points={markerData}>
+          {[0, 50, 100].map((t) => (
+            <g class="ap-chart-grid">
+              <line x1={X0} x2={X1} y1={py(t)} y2={py(t)} />
+              <text x={X0 - 6} y={py(t) + 3.5} text-anchor="end">{t} %</text>
+            </g>
+          ))}
+          <path class="ap-chart-area" d={area} />
+          <path class="ap-chart-line" d={line} />
+          {milestones.map((m) => (
+            <g class="ap-chart-ms">
+              <circle cx={m.x} cy={m.y} r="3" />
+              <text x={m.x + 5} y={m.y + 13}>{m.cover} %</text>
+            </g>
+          ))}
+          <g class="ap-chart-now" data-freq-marker>
+            <line data-freq-marker-line x1={px(1)} x2={px(1)} y1={Y0} y2={Y1} />
+            <circle data-freq-marker-dot cx={px(1)} cy={py(freq.rounds[0].cover)} r="4.5" />
+          </g>
+          {bands.map((b, i) => (
+            <g class="ap-chart-band" data-phase={i}>
+              <rect x={b.x + 1} y="128" width={Math.max(b.w - 2, 1)} height="16" rx="4" />
+              {b.w > 30 && <text x={b.x + b.w / 2} y="139.5" text-anchor="middle">{b.label}</text>}
+            </g>
+          ))}
+          <text class="ap-chart-axis" x={X0} y="162">Teil 1</text>
+          <text class="ap-chart-axis" x={X1} y="162" text-anchor="end">Teil {freq.rounds.length}</text>
+        </svg>
+        </details>
+        <figcaption id="ap-chart-cap" data-freq-caption>
+          Nach Teil 1 kennst du <b>{freq.rounds[0].to} Nomen</b>, etwa <b>{freq.rounds[0].cover} %</b> der Nomen, die du im Alltag hörst.
+        </figcaption>
+      </figure>
+
+      {phases.map((p) => (
+        <section class="ap-phase">
+          <h4 class="ap-phase-head">
+            <span>{p.label}</span>
+            <span class="ap-phase-n">bis {p.rounds[p.rounds.length - 1].cover} %</span>
+          </h4>
           <div class="ap-rounds">
-            {Array.from({ length: rounds }).map((_, i) => (
+            {p.rounds.map((r) => (
               <button
                 type="button"
-                class:list={["nvb-item", "ap-round", level === openLevel && i === 0 && "active"]}
-                data-round={i}
-                data-round-level={level}
+                class:list={["nvb-item", "ap-round", openLevel === "haeufigkeit" && r.index === 1 && "active"]}
+                data-round={r.index - 1}
+                data-round-level="haeufigkeit"
+                title={`Nomen ${r.from}–${r.to}`}
               >
-                <span class="nv-icon ls-num">{i + 1}</span>
-                <span>{roundLabel(level, i)}</span>
-                <span class="nv-count">{session}</span>
+                <span class="nv-icon ls-num">{r.index}</span>
+                <span>{r.preview}</span>
+                <span class="nv-count">{r.cover} %</span>
               </button>
             ))}
           </div>
-        </div>
-      );
-    })}
+        </section>
+      ))}
+
+      <!-- The fine print, said rather than hidden: the counts come from a wordform list,
+           and the nouns it cannot match are left out rather than called rare. -->
+      <p class="ls-plan">
+        Schätzung aus Filmuntertiteln (OpenSubtitles). Wörter wie „bitte“ oder „morgen“
+        zählen dort auch als Adverb mit. {freq.unranked} Nomen stehen nicht in der Liste,
+        meist zusammengesetzte Wörter. Du findest sie unter ihrer Stufe.
+      </p>
+    </div>
 
     <!-- The Regel pane. Same panel, same rail — the column does not change shape to show
          it, because it is one of the things the column shows. -->
@@ -162,6 +340,20 @@ const roundLabel = (level: string, i: number) => `Runde ${i + 1}`;
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>
         </button>
       </div>
+      <!-- Said before the table, not after it: the table is the least useful thing in
+           the column for most learners, and it should be read as the aside it is. -->
+      <aside class="ap-regel-hint">
+        <p class="ap-regel-hint-title">Hinweis</p>
+        <p>
+          Das Genus über Regeln zu lernen, ist oft sehr theoretisch, denn viele Regeln haben
+          Ausnahmen. Die meisten Lernenden lernen den Artikel in der Praxis: Sie lernen jedes
+          Nomen immer zusammen mit seinem Artikel (der Tisch, die Lampe, das Buch) – zum
+          Beispiel im{" "}<a href="/uebungen/wortschatz">Wortschatz</a>{" "}– und begegnen den
+          Wörtern im Alltag. Die Regeln hier sind vor allem interessant als Hintergrundwissen.
+          Nur wenige sind wirklich zuverlässig und im Alltag nützlich, zum Beispiel
+          -ung, -heit, -keit → die und -chen, -lein → das.
+        </p>
+      </aside>
       <p class="akk-regel-intro">
         Der Artikel eines deutschen Nomens ist meist nicht am Genus der Sache erkennbar – aber manche
         Wortendungen geben einen zuverlässigen Hinweis. Die folgenden Muster helfen beim Raten, wenn
@@ -172,6 +364,7 @@ const roundLabel = (level: string, i: number) => `Runde ${i + 1}`;
           <tr><th>Endung</th><th>meist</th><th>Beispiel</th></tr>
         </thead>
         <tbody>
+          <tr><td>-ung / -heit / -keit</td><td>feminin</td><td>die Zeitung, die Freiheit</td></tr>
           <tr><td>-e</td><td>feminin</td><td>die Tasche, die Sonne</td></tr>
           <tr><td>-in</td><td>feminin</td><td>die Ärztin, die Kollegin</td></tr>
           <tr><td>-chen / -lein</td><td>neutrum</td><td>das Mädchen, das Kaninchen</td></tr>

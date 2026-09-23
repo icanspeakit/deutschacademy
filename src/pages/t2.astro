@@ -1,0 +1,373 @@
+---
+// /t2 — design test: the der/die/das trainer with and without the dark level rail.
+//
+// Two layouts over one working quiz, switched by the toggle pinned bottom-left (and ?v=a|b,
+// so each can be linked):
+//   A · "Mit Rail"  — what /uebungen/grammatik/artikel looks like now: two header rows, the
+//                     Üben/Aktiv toggle, the dark A1–B2 rail + panel, "Übungen" heading.
+//   B · "80 %"      — one slim bar that carries the level switch and Üben/Aktiv, no rail, no
+//                     heading; the exercise card gets ~80% of the viewport.
+//   C · "Mix"       — B's slim bar on top, A's rail + panel below, the exercise card at
+//                     B's full height. The rail picks the level, so the bar drops its switch.
+//
+// A mockup, not the trainer: it does not import ArtikelTrainer/ArtikelPicker (another
+// session owns those), stores nothing, and is noindex. Nouns and topic packs are the real
+// ones, from the lexicon and src/data/artikel-packs.json.
+import Layout from "../layouts/Layout.astro";
+import SiteNav from "../components/SiteNav.astro";
+import { nouns } from "../lib/lexicon.js";
+import { buildArtikelPacks } from "../lib/artikelPacks.js";
+
+const LEVELS = ["A1", "A2", "B1", "B2"];
+const pool = nouns({ has: "gender" }).filter((n) => LEVELS.includes(n.level));
+const { byLevel, nounTopic } = buildArtikelPacks(pool);
+const rows = pool.map((n) => ({ id: n.id, w: n.lemma, g: n.gender, l: n.level, t: nounTopic[n.id] ?? null }));
+const counts = Object.fromEntries(LEVELS.map((l) => [l, rows.filter((r) => r.l === l).length]));
+const packs = Object.fromEntries(
+  LEVELS.map((l) => [l, byLevel[l].topics.map((p) => ({ id: p.id, name: p.name, icon: p.icon, n: p.ids.length }))]),
+);
+---
+<Layout title="T2 – Artikel-Layout-Test – DeutschAcademy" noindex>
+  <SiteNav active="grammatik" />
+
+  <div class="t2" data-v="c">
+    <!-- A only: the two rows the live page stacks above the workspace -->
+    <div class="t2-a t2-tb">
+      <div class="t2-in">
+        <span class="t2-crumb"><a href="#">Grammatik</a> <b class="t2-lv" data-lv-label>A1</b> · Artikel: der, die, das</span>
+        <span class="t2-track"><span></span></span>
+        <span class="t2-count"><span data-done>0</span> / 48 Aufgaben</span>
+      </div>
+    </div>
+    <div class="t2-a t2-kb">
+      <div class="t2-in">
+        <a href="#" class="t2-back">← Dein Kurs <b class="t2-lv" data-lv-label>A1</b></a>
+        <span class="t2-pos">Thema 1 von 8 <span class="t2-circ">›</span></span>
+      </div>
+    </div>
+    <div class="t2-a t2-mode-a">
+      <div class="t2-seg t2-seg--big" role="tablist"><button class="is-on">Üben</button><button>Aktiv</button></div>
+    </div>
+
+    <!-- B only: one slim bar with everything that orients the learner -->
+    <div class="t2-b t2-bar">
+      <div class="t2-in">
+        <span class="t2-crumb"><a href="#">Grammatik</a> · <strong>Artikel: der, die, das</strong></span>
+        <div class="t2-seg t2-levels" role="tablist" aria-label="Stufe">
+          {LEVELS.map((l, i) => <button data-level={l} class={i === 0 ? "is-on" : ""}>{l}</button>)}
+        </div>
+        <div class="t2-seg t2-seg--sm" role="tablist"><button class="is-on">Üben</button><button>Aktiv</button></div>
+      </div>
+    </div>
+
+    <div class="t2-work t2-in">
+      <!-- Level rail: A only -->
+      <nav class="t2-a t2-rail" aria-label="Stufe">
+        {LEVELS.map((l, i) => <button data-level={l} class={i === 0 ? "is-on" : ""}>{l}</button>)}
+        <span class="t2-rail-sep"></span>
+        <span class="t2-rail-ic">▮▮</span>
+      </nav>
+
+      <aside class="t2-panel">
+        <div class="t2-a t2-stufe">Stufe <span data-lv-label>A1</span></div>
+        <p class="t2-lead"><span data-count>{counts.A1}</span> Nomen auf Stufe <span data-lv-label>A1</span>. Übe alle gemischt oder wähle ein Thema.</p>
+        <button class="t2-go" data-start="mix">Weiter üben</button>
+        <p class="t2-prog"><span data-safe>0</span> von <span data-count>{counts.A1}</span> Nomen sicher</p>
+        <span class="t2-bar-thin"><span data-safe-bar></span></span>
+        <button class="t2-link" data-start="errors" hidden>Fehler wiederholen (<span data-err>0</span>)</button>
+        <h3 class="t2-h">Nach Thema</h3>
+        <ul class="t2-packs" data-packs></ul>
+      </aside>
+
+      <section class="t2-main">
+        <div class="t2-a t2-head">
+          <h2>Übungen</h2>
+          <button class="t2-ghost">Stufen ausblenden</button>
+        </div>
+        <div class="t2-card">
+          <div class="t2-tools">
+            <span class="t2-tab is-on">Fokus-Modus</span><span class="t2-dot">·</span><span class="t2-tab">Testmodus</span>
+            <span class="t2-tools-r"><span class="t2-pill">Aussprache · Ton an</span><span class="t2-pill">Leichte Sprache</span></span>
+          </div>
+          <p class="t2-kicker" data-kicker>STUFE A1 · GEMISCHT</p>
+          <div class="t2-dots" data-dots></div>
+          <div class="t2-q">
+            <p class="t2-word"><span class="t2-gap" data-gap>______</span> <span data-word>…</span>?</p>
+            <div class="t2-answers">
+              <button data-a="der">der</button><button data-a="die">die</button><button data-a="das">das</button>
+            </div>
+            <p class="t2-fb" data-fb>Was passt: der, die oder das?</p>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <div class="t2-toggle" role="radiogroup" aria-label="Layout-Variante">
+      <span>Test</span>
+      <button data-v="a">A · Mit Rail (jetzt)</button>
+      <button data-v="b">B · Ohne Rail, 80 %</button>
+      <button data-v="c">C · Mix</button>
+    </div>
+  </div>
+
+  <script is:inline type="application/json" id="t2-data" set:html={JSON.stringify({ rows, packs, counts })}></script>
+</Layout>
+
+<script>
+  const root = document.querySelector<HTMLElement>(".t2")!;
+  const data = JSON.parse(document.getElementById("t2-data")!.textContent!);
+  const $ = <T extends Element = HTMLElement>(s: string) => root.querySelector<T>(s)!;
+  const $$ = <T extends Element = HTMLElement>(s: string) => [...root.querySelectorAll<T>(s)];
+
+  // --- Variant toggle, mirrored in ?v= -------------------------------------------------
+  function setV(v: string) {
+    root.dataset.v = v;
+    $$<HTMLButtonElement>(".t2-toggle button").forEach((b) => b.classList.toggle("is-on", b.dataset.v === v));
+    const u = new URL(location.href);
+    u.searchParams.set("v", v);
+    history.replaceState(null, "", u);
+  }
+  const qv = new URL(location.href).searchParams.get("v");
+  setV(qv === "a" || qv === "b" ? qv : "c");
+  $$<HTMLButtonElement>(".t2-toggle button").forEach((b) => b.addEventListener("click", () => setV(b.dataset.v!)));
+
+  // --- Quiz state (in memory only) ---------------------------------------------------------
+  type Row = { id: string; w: string; g: string; l: string; t: string | null };
+  const rows: Row[] = data.rows;
+  let level = "A1";
+  const right = new Map<string, number>(); // consecutive correct answers per noun
+  const wrong = new Set<string>();
+  let session: Row[] = [];
+  let idx = 0;
+  let done = 0;
+  let label = "GEMISCHT";
+
+  const shuffle = <T,>(a: T[]) => { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+  const inLevel = () => rows.filter((r) => r.l === level);
+
+  function start(kind: string, packId?: string) {
+    let src = inLevel();
+    if (kind === "pack") src = src.filter((r) => r.t === packId);
+    if (kind === "errors") src = src.filter((r) => wrong.has(r.id));
+    if (kind === "mix") {
+      const errs = shuffle(src.filter((r) => wrong.has(r.id))).slice(0, 10);
+      const fresh = shuffle(src.filter((r) => !right.has(r.id) && !wrong.has(r.id)));
+      session = [...errs, ...fresh].slice(0, 25);
+    } else session = shuffle(src).slice(0, 25);
+    label = kind === "pack" ? data.packs[level].find((p: any) => p.id === packId)?.name.toUpperCase() : kind === "errors" ? "FEHLER" : "GEMISCHT";
+    idx = 0;
+    render();
+  }
+
+  function render() {
+    const q = session[idx];
+    $("[data-kicker]").textContent = `STUFE ${level} · ${label}`;
+    $("[data-dots]").innerHTML = session.map((_, i) => `<span class="${i < idx ? "d" : i === idx ? "c" : ""}"></span>`).join("") + `<em>${Math.min(idx + 1, session.length)} / ${session.length}</em>`;
+    $("[data-word]").textContent = q ? q.w : "Fertig!";
+    $("[data-gap]").textContent = "______";
+    $("[data-gap]").className = "t2-gap";
+    $("[data-fb]").textContent = q ? "Was passt: der, die oder das?" : "Runde geschafft. Weiter üben oder ein Thema wählen.";
+    $$<HTMLButtonElement>("[data-a]").forEach((b) => { b.disabled = !q; b.className = ""; });
+    const safe = [...right.values()].filter((n) => n >= 2).length;
+    const total = data.counts[level];
+    $$("[data-safe]").forEach((e) => (e.textContent = String(safe)));
+    $("[data-safe-bar]").style.width = `${(100 * safe) / total}%`;
+    $$("[data-count]").forEach((e) => (e.textContent = String(total)));
+    $$("[data-lv-label]").forEach((e) => (e.textContent = level));
+    $$("[data-done]").forEach((e) => (e.textContent = String(done)));
+    const errs = inLevel().filter((r) => wrong.has(r.id)).length;
+    $("[data-err]").textContent = String(errs);
+    $<HTMLButtonElement>("[data-start=errors]").hidden = errs === 0;
+    renderPacks();
+  }
+
+  function renderPacks() {
+    const list = data.packs[level] as { id: string; name: string; icon: string; n: number }[];
+    const ul = $("[data-packs]");
+    ul.closest(".t2-panel")!.querySelector<HTMLElement>(".t2-h")!.hidden = list.length === 0;
+    ul.innerHTML = list.map((p) => {
+      const ids = inLevel().filter((r) => r.t === p.id);
+      const safe = ids.filter((r) => (right.get(r.id) ?? 0) >= 2).length;
+      const seen = ids.some((r) => right.has(r.id) || wrong.has(r.id));
+      const dots = Array.from({ length: 5 }, (_, i) => `<i class="${safe / ids.length > i / 5 && safe ? "on" : ""}"></i>`).join("");
+      return `<li><button data-pack="${p.id}"><span class="ic">${p.icon}</span><span class="nm">${p.name}<small>${seen ? `${safe}/${ids.length} sicher` : "neu"}</small></span><span class="dots">${dots}</span></button></li>`;
+    }).join("");
+    ul.querySelectorAll<HTMLButtonElement>("[data-pack]").forEach((b) => b.addEventListener("click", () => start("pack", b.dataset.pack)));
+  }
+
+  $$<HTMLButtonElement>("[data-a]").forEach((b) =>
+    b.addEventListener("click", () => {
+      const q = session[idx];
+      if (!q) return;
+      const ok = b.dataset.a === q.g;
+      b.className = ok ? "ok" : "no";
+      $("[data-gap]").textContent = q.g;
+      $("[data-gap]").className = `t2-gap ${ok ? "ok" : "no"}`;
+      $("[data-fb]").textContent = ok ? "Richtig!" : `Nicht ganz: ${q.g} ${q.w}.`;
+      if (ok) { right.set(q.id, (right.get(q.id) ?? 0) + 1); if ((right.get(q.id) ?? 0) >= 2) wrong.delete(q.id); }
+      else { right.set(q.id, 0); wrong.add(q.id); }
+      done++;
+      $$<HTMLButtonElement>("[data-a]").forEach((x) => (x.disabled = true));
+      setTimeout(() => { idx++; render(); }, ok ? 650 : 1400);
+    }),
+  );
+
+  $$<HTMLButtonElement>("[data-level]").forEach((b) =>
+    b.addEventListener("click", () => {
+      level = b.dataset.level!;
+      $$<HTMLButtonElement>("[data-level]").forEach((x) => x.classList.toggle("is-on", x.dataset.level === level));
+      start("mix");
+    }),
+  );
+  $$<HTMLButtonElement>("[data-start]").forEach((b) => b.addEventListener("click", () => start(b.dataset.start!)));
+  document.addEventListener("keydown", (e) => {
+    const k = { "1": "der", "2": "die", "3": "das" }[e.key];
+    if (k && !(e.target as HTMLElement).closest("input,textarea")) root.querySelector<HTMLButtonElement>(`[data-a=${k}]`)?.click();
+  });
+
+  start("mix");
+</script>
+
+<style is:global>
+  .t2 { --t2-nav: 69px; padding-bottom: 72px; }
+  .t2-in { max-width: 1240px; margin: 0 auto; padding: 0 24px; }
+  .t2[data-v="a"] .t2-b, .t2[data-v="b"] .t2-a { display: none !important; }
+  /* C: B's bar without its level switch (the rail has it); none of A's rows above the work. */
+  .t2[data-v="c"] :is(.t2-tb, .t2-kb, .t2-mode-a, .t2-head, .t2-levels) { display: none !important; }
+
+  /* ---- A: the rows the live page stacks above the work -------------------------------- */
+  .t2-tb { border-bottom: 1px solid var(--border); }
+  .t2-tb .t2-in { display: flex; align-items: center; gap: 16px; height: 42px; font-size: var(--text-sm); }
+  .t2-crumb a { color: var(--brand-blue); text-decoration: none; }
+  .t2-lv { display: inline-block; padding: 1px 6px; border-radius: 6px; background: color-mix(in srgb, var(--brand-blue) 12%, transparent); color: var(--brand-blue); font-size: 12px; }
+  .t2-track { flex: 1; height: 5px; border-radius: 3px; background: color-mix(in srgb, var(--brand-blue) 10%, transparent); }
+  .t2-count { color: var(--muted); }
+  .t2-kb { border-bottom: 1px solid var(--border); }
+  .t2-kb .t2-in { display: flex; justify-content: space-between; align-items: center; height: 50px; font-size: var(--text-sm); }
+  .t2-back { color: var(--brand-blue); text-decoration: none; font-weight: 600; }
+  .t2-pos { color: var(--muted); display: flex; align-items: center; gap: 14px; }
+  .t2-circ { display: inline-grid; place-items: center; width: 34px; height: 34px; border: 1px solid var(--border); border-radius: 50%; }
+  .t2-mode-a { display: flex; justify-content: center; padding: 56px 0 40px; }
+  .t2-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; }
+  .t2-head h2 { margin: 0; font-size: 1.75rem; font-weight: 500; }
+  .t2-ghost { border: 1px solid var(--border); background: var(--surface-card); color: var(--ink); border-radius: var(--radius-pill); padding: 8px 16px; font-size: var(--text-sm); }
+
+  /* ---- Segmented controls --------------------------------------------------------------- */
+  .t2-seg { display: inline-flex; padding: 4px; gap: 2px; border-radius: var(--radius-pill); background: var(--surface, #f3f5f8); border: 1px solid var(--border); }
+  .t2-seg button { border: 0; background: transparent; color: var(--muted); border-radius: var(--radius-pill); padding: 6px 14px; font: inherit; font-size: var(--text-sm); font-weight: 600; cursor: pointer; min-height: 32px; }
+  .t2-seg button.is-on { background: var(--gradient-brand); color: #fff; }
+  .t2-seg--big button { padding: 12px 64px; font-size: var(--text-base); }
+  .t2-levels button.is-on { background: var(--surface-card); color: var(--ink); box-shadow: var(--shadow-sm); }
+
+  /* ---- B: one slim bar ------------------------------------------------------------------ */
+  .t2-bar { border-bottom: 1px solid var(--border); }
+  .t2-bar .t2-in { display: flex; align-items: center; gap: 16px; min-height: 52px; padding-top: 6px; padding-bottom: 6px; font-size: var(--text-sm); flex-wrap: wrap; }
+  .t2-bar .t2-crumb { margin-right: auto; }
+  .t2-bar strong { color: var(--ink); font-weight: 600; }
+
+  /* ---- Work area ---------------------------------------------------------------------------- */
+  .t2-work { display: grid; gap: 24px; align-items: start; }
+  .t2:is([data-v="a"],[data-v="c"]) .t2-work { grid-template-columns: auto 340px 1fr; gap: 0 32px; }
+  .t2[data-v="c"] .t2-work { padding-top: 16px; --t2-h: calc(100vh - var(--t2-nav) - 52px - 16px - 24px); }
+  .t2[data-v="c"] :is(.t2-rail, .t2-panel) { min-height: var(--t2-h); max-height: var(--t2-h); }
+  .t2[data-v="c"] .t2-panel { overflow: auto; }
+  .t2[data-v="b"] .t2-work { grid-template-columns: 300px 1fr; padding-top: 16px; }
+
+  .t2-rail { width: 64px; background: var(--rail-surface, #334155); border-radius: var(--radius) 0 0 var(--radius); display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 12px 0; min-height: 600px; margin-right: -32px; }
+  .t2-rail button { width: 42px; height: 42px; border: 0; border-radius: var(--radius-sm, 8px); background: transparent; color: rgba(255,255,255,.6); font-weight: 700; font-size: 12px; cursor: pointer; }
+  .t2-rail button.is-on { background: var(--brand-blue); color: #fff; }
+  .t2-rail-sep { width: 28px; border-top: 1px solid rgba(255,255,255,.2); margin: 8px 0; }
+  .t2-rail-ic { color: rgba(255,255,255,.4); font-size: 10px; }
+
+  .t2-panel { display: flex; flex-direction: column; gap: 10px; }
+  .t2:is([data-v="a"],[data-v="c"]) .t2-panel { border: 1px solid var(--border); border-left: 0; border-radius: 0 var(--radius) var(--radius) 0; padding: 20px; background: var(--surface-card); min-height: 600px; }
+  /* C: panel and rail end exactly where the exercise card ends. */
+  .t2[data-v="c"] .t2-panel { box-sizing: border-box; min-height: var(--t2-h); max-height: var(--t2-h); }
+  .t2[data-v="b"] .t2-panel { position: sticky; top: 16px; max-height: calc(100vh - var(--t2-nav) - 100px); overflow: auto; padding-right: 4px; }
+  .t2-stufe { background: linear-gradient(135deg, #ccfbf1, #99f6e4 70%); color: #115e59; border-radius: 12px; padding: 14px 16px; font-weight: 700; font-size: 1.1rem; }
+  .t2-lead { margin: 0; color: var(--muted); font-size: var(--text-sm); }
+  .t2-go { border: 0; border-radius: var(--radius-pill); background: var(--gradient-brand); color: #fff; font: inherit; font-weight: 700; font-size: 1.05rem; min-height: 52px; cursor: pointer; }
+  .t2-prog { margin: 4px 0 0; font-size: var(--text-sm); color: var(--ink); }
+  .t2-bar-thin { display: block; height: 4px; border-radius: 2px; background: color-mix(in srgb, var(--brand-blue) 12%, transparent); }
+  .t2-bar-thin span { display: block; height: 100%; width: 0; border-radius: 2px; background: var(--brand-blue); transition: width .3s; }
+  .t2-link { align-self: flex-start; border: 0; background: none; padding: 0; color: var(--brand-blue); font: inherit; font-weight: 600; text-decoration: underline; cursor: pointer; }
+  .t2-h { margin: 10px 0 0; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--brand-blue); }
+  .t2-packs { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
+  .t2-packs button { width: 100%; display: grid; grid-template-columns: 28px 1fr auto; align-items: center; gap: 10px; border: 0; background: none; padding: 9px 6px; border-radius: 10px; text-align: left; font: inherit; color: var(--ink); cursor: pointer; }
+  .t2-packs button:hover { background: var(--surface, #f3f5f8); }
+  .t2-packs .ic { font-size: 18px; }
+  .t2-packs .nm { display: flex; flex-direction: column; font-size: var(--text-sm); font-weight: 600; }
+  .t2-packs small { color: var(--muted); font-weight: 400; }
+  .t2-packs .dots { display: flex; gap: 3px; }
+  .t2-packs .dots i { width: 6px; height: 6px; border-radius: 50%; background: var(--border-strong); }
+  .t2-packs .dots i.on { background: var(--brand-blue); }
+
+  /* ---- The exercise card ------------------------------------------------------------------ */
+  .t2-card { border: 1px solid var(--border); border-radius: var(--radius-lg, 20px); background: var(--surface-card); padding: 20px 32px 28px; display: flex; flex-direction: column; }
+  .t2:is([data-v="b"],[data-v="c"]) .t2-card { min-height: calc(100vh - var(--t2-nav) - 52px - 16px - 24px); }
+  .t2-tools { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; padding-bottom: 12px; border-bottom: 1px solid var(--border); font-size: var(--text-sm); }
+  .t2-tab { color: var(--muted); font-weight: 600; }
+  .t2-tab.is-on { color: var(--brand-blue); text-decoration: underline; text-underline-offset: 4px; }
+  .t2-dot { color: var(--muted); }
+  .t2-tools-r { margin-left: auto; display: flex; gap: 8px; }
+  .t2-pill { border: 1px solid var(--border); border-radius: var(--radius-pill); padding: 5px 12px; font-size: 12px; color: var(--muted); }
+  .t2-kicker { margin: 14px 0 0; font-size: 12px; letter-spacing: .08em; color: var(--muted); font-weight: 700; }
+  .t2-dots { display: flex; align-items: center; gap: 4px; margin: 18px 0 0; }
+  .t2-dots span { flex: 1; height: 4px; border-radius: 2px; background: var(--border); }
+  .t2-dots span.d { background: color-mix(in srgb, var(--brand-blue) 45%, transparent); }
+  .t2-dots span.c { background: var(--brand-blue); }
+  .t2-dots em { font-style: normal; font-size: var(--text-sm); color: var(--muted); margin-left: 10px; white-space: nowrap; }
+  .t2-q { padding: 48px 0 8px; }
+  .t2:is([data-v="b"],[data-v="c"]) .t2-q { flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 24px 0; }
+  .t2-word { margin: 0; font-size: 2.2rem; font-weight: 500; }
+  .t2:is([data-v="b"],[data-v="c"]) .t2-word { font-size: clamp(2.4rem, 6vw, 4rem); }
+  .t2-gap { color: var(--brand-blue); letter-spacing: -.05em; }
+  .t2-gap.ok { color: var(--brand-blue); letter-spacing: 0; }
+  .t2-gap.no { color: #dc2626; letter-spacing: 0; }
+  .t2-answers { display: flex; gap: 12px; margin-top: 28px; }
+  .t2-answers button { min-width: 100px; min-height: 64px; border: 1px solid var(--border); border-radius: var(--radius-pill); background: var(--surface-card); color: var(--ink); font: inherit; font-size: 1.35rem; font-weight: 600; cursor: pointer; }
+  .t2:is([data-v="b"],[data-v="c"]) .t2-answers button { min-width: 140px; min-height: 76px; font-size: 1.6rem; }
+  .t2-answers button:hover:not(:disabled) { border-color: var(--brand-blue); }
+  .t2-answers button.ok { background: var(--brand-blue); border-color: var(--brand-blue); color: #fff; }
+  .t2-answers button.no { background: #dc2626; border-color: #dc2626; color: #fff; }
+  .t2-fb { margin: 22px 0 0; color: var(--muted); }
+
+  /* ---- The test toggle ---------------------------------------------------------------------- */
+  .t2-toggle { position: fixed; left: 16px; bottom: 16px; z-index: 60; display: flex; align-items: center; gap: 4px; padding: 5px; border-radius: var(--radius-pill); background: var(--rail-surface, #334155); box-shadow: 0 8px 24px rgba(0,0,0,.2); }
+  .t2-toggle span { color: rgba(255,255,255,.6); font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; padding: 0 8px 0 10px; }
+  .t2-toggle button { border: 0; border-radius: var(--radius-pill); background: transparent; color: #fff; font: inherit; font-size: 13px; font-weight: 600; padding: 8px 14px; cursor: pointer; }
+  .t2-toggle button.is-on { background: var(--brand-blue); }
+
+  /* ---- Phones --------------------------------------------------------------------------------- */
+  @media (max-width: 900px) {
+    .t2-in { padding: 0 16px; }
+    .t2[data-v] .t2-work { grid-template-columns: 1fr; gap: 16px; }
+    .t2[data-v="c"] :is(.t2-rail, .t2-panel) { min-height: 0; max-height: none; }
+    .t2[data-v="c"] .t2-panel { overflow: visible; }
+    /* Phone C: the rail row, then the exercise, then the packs — like B, with A's rail. */
+    .t2[data-v="c"] .t2-rail { order: 0; } .t2[data-v="c"] .t2-main { order: 1; } .t2[data-v="c"] .t2-panel { order: 2; border-radius: var(--radius); border-left: 1px solid var(--border); }
+    .t2[data-v="c"] .t2-rail { border-radius: var(--radius); }
+    .t2-rail { flex-direction: row; width: auto; min-height: 0; border-radius: var(--radius) var(--radius) 0 0; margin: 0; padding: 8px 12px; }
+    .t2-rail-sep, .t2-rail-ic { display: none; }
+    .t2:is([data-v="a"],[data-v="c"]) .t2-panel { border-left: 1px solid var(--border); border-radius: 0 0 var(--radius) var(--radius); min-height: 0; }
+    .t2[data-v="b"] .t2-panel { position: static; max-height: none; order: 2; }
+    .t2[data-v="b"] .t2-main { order: 1; }
+    .t2:is([data-v="b"],[data-v="c"]) .t2-card { min-height: calc(100svh - var(--t2-nav) - 96px - 16px); padding: 16px; }
+    .t2-card { padding: 16px; }
+    .t2-tools-r { display: none; }
+    .t2-seg--big button { padding: 10px 40px; }
+    .t2-mode-a { padding: 24px 0; }
+    .t2-bar .t2-crumb { flex-basis: 100%; }
+    .t2-bar .t2-in { gap: 8px 10px; }
+    .t2-levels { flex: 1; }
+    .t2-levels button { flex: 1; padding: 6px 4px; }
+    .t2-seg--sm { flex: none; }
+    .t2-seg--sm button { padding: 6px 12px; }
+    .t2-answers { gap: 8px; }
+    .t2[data-v] .t2-answers button { min-width: 0; flex: 1; min-height: 64px; font-size: 1.4rem; }
+    .t2-answers { width: 100%; }
+    .t2-toggle { left: 50%; transform: translateX(-50%); bottom: 10px; }
+    .t2-toggle span { display: none; }
+    .t2-toggle button { white-space: nowrap; font-size: 12px; padding: 8px 10px; }
+  }
+<

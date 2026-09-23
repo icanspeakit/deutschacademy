@@ -47,7 +47,7 @@ const { attr, target, label, storageKey, options } = Astro.props;
 <script>
   const sw = document.querySelector("[data-vsw]");
   if (sw) {
-    const shown = import.meta.env.DEV || new URLSearchParams(location.search).has("compare");
+    const shown = true;
     const target = document.querySelector(sw.dataset.target);
 
     if (shown && target) {

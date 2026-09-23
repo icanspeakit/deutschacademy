@@ -1,0 +1,19 @@
+---
+// /t1 — study: the der/die/das trainer with no level rail and the exercise given most of
+// the screen, for comparing against the live /uebungen/grammatik/artikel (rail kept).
+// One bar above the work — TopicBar, which already says where you are and how far you
+// got — instead of the live page's four rows (topic bar, course row, Üben/Aktiv toggle,
+// "Übungen" heading). See ArtikelTrainerT1.astro.
+import Layout from "../layouts/Layout.astro";
+import SiteNav from "../components/SiteNav.astro";
+import TopicBar from "../components/TopicBar.astro";
+import ArtikelTrainerT1 from "../components/ArtikelTrainerT1.astro";
+import "../styles/practice.css";
+---
+<Layout title="Artikel: der, die, das – DeutschAcademy">
+  <SiteNav active="grammatik" />
+  <TopicBar topic="artikel" kind="Grammatik" title="Artikel: der, die, das" level="A1" tasks={48} />
+  <main class="vp-page akk ak-t1" id="vp-page">
+    <ArtikelTrainerT1 />
+  </main>
+</Layout>

@@ -41,6 +41,9 @@
   /* Deliberately-inverted bands (footers, the dashboard callout) — dark in light
      mode, and *deeper* rather than lighter in dark mode, so they stay a band. */
   --inverse-surface: #1a2230;
+  /* The level rail beside a panel is not a band; at full inverse-surface it was the
+     loudest thing on the page. A softer slate keeps white labels readable (~10:1). */
+  --rail-surface: #334155;
 
   --gradient-brand: linear-gradient(135deg, #2dd4bf, var(--brand-blue));
   --gradient-brand-soft: linear-gradient(135deg, var(--blue-100), #f0fdfa 50%, var(--blue-200));
@@ -199,6 +202,7 @@
   --border:        #2a3440;
   --border-strong: #3d4958;
   --inverse-surface: #070b10;
+  --rail-surface: #0b1118;
 
   --brand-blue:       #14b8a6;
   --brand-blue-dark:  #5eead4;

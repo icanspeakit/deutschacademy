@@ -34,18 +34,39 @@ export function formatSize(bytes) {
   return `${Math.round(bytes / 1024)} KB`;
 }
 
-function hydrate(entry) {
-  const abs = path.join(DIR, entry.file);
+function fileInfo(file) {
+  const abs = path.join(DIR, file);
   if (!existsSync(abs)) return null;
-  const meta = manifest[entry.file] ?? {};
+  const meta = manifest[file] ?? {};
   const bytes = meta.bytes ?? statSync(abs).size;
-  return {
-    ...entry,
-    href: `/downloads/${entry.file}`,
-    pages: meta.pages ?? null,
-    bytes,
-    size: formatSize(bytes),
-  };
+  return { href: `/downloads/${file}`, pages: meta.pages ?? null, bytes, size: formatSize(bytes) };
+}
+
+/* The translated editions of a file: a Wortliste with the learner's own language in place
+   of the English column (generate-wortschatz-pdf.mjs), a Grammatik book with every rule
+   explained in it as well (generate-grammatik-pdf.mjs). Found on disk by
+   name rather than listed in the catalogue — the generator skips a level whose
+   translations are incomplete, and a catalogue entry would promise that file anyway.
+   Labels are each language's own name: the reader looking for it reads that language. */
+const EDITIONS = [
+  { lang: "en", label: "English" },
+  { lang: "ar", label: "العربية", rtl: true },
+  { lang: "uk", label: "Українська" },
+  { lang: "ru", label: "Русский" },
+  { lang: "tr", label: "Türkçe" },
+];
+function editionsOf(entry) {
+  const base = entry.file.replace(/\.pdf$/, "");
+  return EDITIONS.map((e) => {
+    const info = fileInfo(`${base}-${e.lang}.pdf`);
+    return info && { ...e, ...info };
+  }).filter(Boolean);
+}
+
+function hydrate(entry) {
+  const info = fileInfo(entry.file);
+  if (!info) return null;
+  return { ...entry, ...info, editions: editionsOf(entry) };
 }
 
 // What is actually inside a PDF, read from the same data the generator used — not

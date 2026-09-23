@@ -1,0 +1,184 @@
+/* The der/die/das trainer's layout and its panel — see ArtikelTrainer.astro and
+   ArtikelPicker.astro. Tokens only, so dark mode follows. */
+
+/* The host page is a plain .vp-page (880px); the trainer wants the panel beside the work. */
+.vp-page.ak-wide { max-width: 1240px; }
+
+.ak-layout {
+  display: grid;
+  grid-template-columns: minmax(280px, 330px) minmax(0, 1fr);
+  gap: 24px;
+  align-items: start;
+}
+.ak-side { position: sticky; top: 16px; padding: 18px; }
+.ak-main { min-width: 0; display: grid; gap: 20px; }
+@media (max-width: 1000px) {
+  .ak-layout { grid-template-columns: minmax(0, 1fr); gap: 16px; }
+  .ak-side { position: static; padding: 16px; }
+}
+
+/* What the current session is — "Stufe A1 gemischt", "Wohnung & Haus". */
+.ak-now {
+  margin: 0 0 12px;
+  font-family: var(--font-label);
+  font-size: 11px;
+  font-weight: var(--fw-bold);
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.ak-now:empty { display: none; }
+
+/* --- Panel ------------------------------------------------------------------ */
+.akp { display: grid; gap: 12px; text-align: left; }
+
+/* The level switch: a segmented control, four equal parts, usable at 360px. */
+.akp-levels {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 4px;
+  padding: 4px;
+  border-radius: var(--radius-pill);
+  background: var(--surface-sunken, rgba(0, 0, 0, .05));
+}
+.akp-level {
+  min-height: 36px;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: transparent;
+  font-family: var(--font-label);
+  font-size: 13px;
+  font-weight: var(--fw-bold);
+  color: var(--muted);
+  cursor: pointer;
+}
+.akp-level:hover { color: var(--ink); }
+.akp-level.is-on { background: var(--surface-card); color: var(--brand-blue); box-shadow: 0 1px 4px rgba(8, 20, 34, .12); }
+
+.akp-lead { margin: 0; font-size: 14px; line-height: 1.45; color: var(--muted); }
+
+.akp-go { width: 100%; min-height: 46px; font-size: 15px; }
+
+.akp-progress { display: grid; gap: 6px; }
+.akp-progress-text { margin: 0; font-size: 13px; color: var(--ink); }
+.akp-bar { display: block; height: 6px; border-radius: var(--radius-pill); background: var(--blue-50); overflow: hidden; }
+.akp-bar > span { display: block; height: 100%; background: var(--gradient-brand); border-radius: var(--radius-pill); transition: width .3s ease; }
+
+.akp-fehler {
+  justify-self: start;
+  padding: 4px 0;
+  border: 0;
+  background: none;
+  font-size: 13.5px;
+  font-weight: var(--fw-semibold);
+  color: var(--brand-blue);
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.akp-more, .akp-regel { border-top: 1px solid var(--border); padding-top: 10px; }
+.akp-more-sum {
+  cursor: pointer;
+  list-style: none;
+  font-size: 13.5px;
+  font-weight: var(--fw-semibold);
+  color: var(--ink);
+  padding: 4px 0;
+}
+.akp-more-sum::-webkit-details-marker { display: none; }
+.akp-more-sum::after { content: "▾"; margin-left: 6px; color: var(--muted); }
+details[open] > .akp-more-sum::after { content: "▴"; }
+/* Beside the work on a desktop, the pack list is simply there — no toggle to find. */
+@media (min-width: 1001px) {
+  .akp-more > .akp-more-sum { display: none; }
+  .akp-more { border-top: 0; padding-top: 0; }
+}
+
+.akp-head {
+  text-align: left;
+  margin: 12px 0 6px;
+  font-family: var(--font-label);
+  font-size: 11px;
+  font-weight: var(--fw-bold);
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.akp-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
+.akp-pack {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 26px minmax(0, 1fr) auto;
+  grid-template-areas: "ic name dots" "ic state state";
+  align-items: center;
+  column-gap: 10px;
+  padding: 8px 10px;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  background: none;
+  text-align: left;
+  cursor: pointer;
+  color: var(--ink);
+}
+.akp-pack:hover { background: var(--surface-sunken, rgba(0, 0, 0, .04)); }
+.akp-pack.is-on { border-color: var(--brand-blue); background: var(--blue-50); }
+.akp-pack-ic { grid-area: ic; font-size: 18px; line-height: 1; text-align: center; }
+.akp-pack-name { grid-area: name; font-size: 14px; font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.akp-pack-state { grid-area: state; font-size: 12px; color: var(--muted); }
+.akp-dots { grid-area: dots; display: inline-flex; gap: 3px; }
+.akp-dots i { width: 6px; height: 6px; border-radius: 50%; background: var(--border-strong); }
+.akp-dots i.on { background: var(--brand-blue); }
+
+/* A rule pack's icon is its article. */
+.akp-pack-art {
+  font-family: var(--font-label);
+  font-size: 10.5px;
+  font-weight: var(--fw-bold);
+  padding: 3px 0;
+  border-radius: 6px;
+  border: 1px solid var(--border-strong);
+  color: var(--muted);
+}
+.akp-art--der { color: #2f6fd6; border-color: currentColor; }
+.akp-art--die { color: #c2415a; border-color: currentColor; }
+.akp-art--das { color: #2e9a62; border-color: currentColor; }
+
+.akp-regel .ap-regel-hint { margin-top: 8px; }
+.akp-regel .akk-decl-table { width: 100%; margin-top: 10px; font-size: 13px; }
+
+/* The rule card shown before a rule pack's first question. */
+.akp-intro { padding: 8px 4px 4px; }
+.akp-intro-kicker {
+  margin: 0 0 4px;
+  font-family: var(--font-label);
+  font-size: 11px;
+  font-weight: var(--fw-bold);
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--brand-blue);
+}
+.akp-intro-title { margin: 0 0 8px; font-size: 22px; font-weight: 500; }
+.akp-intro-rule { margin: 0 0 12px; font-size: 16px; line-height: 1.5; }
+.akp-intro-ex { margin: 0 0 18px; padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: 8px; }
+.akp-intro-ex li { padding: 6px 12px; border-radius: var(--radius-pill); border: 1px solid var(--border); font-size: 15px; }
+
+/* --- The packs inside the old level rail (ArtikelPicker.astro) ---------------
+   One line per pack, like the Runde rows they replaced: icon, name, dots, count. */
+.ap-nvb .ap-weiter { gap: 8px; margin: 0 var(--space-2) var(--space-4); }
+
+.ap-nvb .ap-packs { margin-top: var(--space-2); }
+.ap-nvb .akp-pack {
+  grid-template-columns: 30px minmax(0, 1fr) auto auto;
+  grid-template-areas: "ic name dots state";
+  column-gap: 8px;
+  padding: 7px 10px;
+  border: none;
+  border-left: 3px solid transparent;
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
+.ap-nvb .akp-pack.active { background: var(--blue-50); border-left-color: var(--brand-blue); }
+.ap-nvb .akp-pack.active .akp-pack-name { font-weight: var(--fw-bold); color: var(--brand-blue-dark); }
+.ap-nvb .akp-pack-ic { font-size: 16px; }
+.ap-nvb .akp-pack-state { min-width: 30px; text-align: right; font-variant-numeric: tabular-nums; }
+.ap-nvb .akp-pack-art { justify-self: start; width: auto; min-width: 30px; padding: 2px 4px; font-size: 11px; }

@@ -12,6 +12,7 @@
 import Icon from "./Icon.astro";
 import LanguageSwitcher from "./LanguageSwitcher.astro";
 import ThemeToggle from "./ThemeToggle.astro";
+import NextStepCta from "./NextStepCta.astro";
 import AuthStatus from "./auth/AuthStatus.jsx";
 import { navSections, levels } from "../lib/catalog.js";
 import "../styles/site-nav.css";
@@ -20,7 +21,6 @@ import "../styles/auth.css";
 // B1 has eleven grammar topics and a menu that scrolls is a menu nobody reads to the end
 // of, so the Niveaus pane previews its first few and links to the rest.
 const GRAMMAR_PREVIEW = 5;
-const PROFILE_HREF = "/fortschritt";
 const WISSEN_HREF = "/wissen";
 
 /** `data-i18n-vars` wants a string or nothing — never the literal "undefined". */
@@ -92,19 +92,10 @@ const vars = (v) => (v ? JSON.stringify(v) : undefined);
         {/* What the avatar holds on a desktop. Down here rather than in with the
             subjects, because it is about the learner and not the material. */}
         <p class="lp-drawer-grouphead" data-i18n="nav.account">Konto</p>
-        {/* Was a two-up pair, "Dashboard" beside "Fortschritt". They were one destination
-            wearing two names, so this is one tile now — and the row it used to need back. */}
-        <div class="lp-drawer-duo lp-drawer-duo--single">
-          <a class="lp-drawer-tile" href={PROFILE_HREF}>
-            <span class="lp-drawer-ic"><Icon name="target" size={18} /></span>
-            <b data-i18n="nav.account.progress.short">Fortschritt</b>
-          </a>
-        </div>
-
-        {/* Sign in / who you are. This is the only account control most learners will ever
-            see: .lp-acct in the desktop cluster is display:none below 1080px, and this
-            audience is overwhelmingly on phones — so the drawer is the main path here, not
-            the fallback for one.
+        {/* Fortschritt and Anmelden/Abmelden are one card — see AuthStatus.jsx. This is
+            the only account control most learners will ever see: .lp-acct in the desktop
+            cluster is display:none below 1080px, and this audience is overwhelmingly on
+            phones — so the drawer is the main path here, not the fallback for one.
             client:idle rather than client:load for the same reason as in SiteNav.astro: it
             is chrome on every page, and the drawer has to be opened before it is read. */}
         <AuthStatus client:idle variant="drawer" />
@@ -357,7 +348,7 @@ const vars = (v) => (v ? JSON.stringify(v) : undefined);
 
     <!-- Bottom, not top: language, theme and the CTA are where the thumb rests. -->
     <div class="lp-drawer-foot">
-      <a href="/uebungen" class="lp-btn lp-btn--primary lp-drawer-cta" data-i18n="nav.cta">Kostenlos üben</a>
+      <NextStepCta variant="drawer" />
       <div class="lp-drawer-utils"><LanguageSwitcher /><ThemeToggle /></div>
     </div>
   </div>
@@ -409,7 +400,7 @@ const vars = (v) => (v ? JSON.stringify(v) : undefined);
 
   // Preview-only rows (currently the /leicht study). Same gate VariantSwitch uses, so
   // nothing internal reaches a learner on the live site.
-  if (import.meta.env.DEV || new URLSearchParams(location.search).has("compare")) {
+  {
     for (const el of document.querySelectorAll("[data-preview-link]")) el.removeAttribute("hidden");
   }
 

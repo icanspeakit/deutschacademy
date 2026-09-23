@@ -251,6 +251,22 @@
 .akk-rail-seg { flex: 1; height: 6px; border-radius: 999px; background: var(--akk-line); }
 .akk-rail-seg--current { background: var(--brand-blue); }
 .akk-rail-seg--done { background: var(--brand-blue-dark); }
+.akk-back {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: 1px solid var(--akk-line);
+  border-radius: 50%;
+  background: none;
+  color: var(--akk-ink);
+  cursor: pointer;
+}
+.akk-back:hover:not(:disabled) { border-color: var(--brand-blue); color: var(--brand-blue-dark); }
+.akk-back:disabled { opacity: .35; cursor: default; }
+.akk-focus-done-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
 
 /* Exercise area */
 #akk-exercise-root { padding: 24px 20px 28px; }
@@ -318,6 +334,16 @@
   padding: 4px 10px;
   color: var(--akk-ink-2);
 }
+
+.akk-why-chip--audio {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 36px;
+  cursor: pointer;
+}
+.akk-why-chip--audio:hover { border-color: var(--akk-line-strong); color: var(--akk-ink); }
+.akk-why-chip--audio svg { flex: none; }
 
 .akk-focus-done { text-align: center; padding: 20px 0; }
 .akk-focus-done-score { font-family: var(--font-display); font-size: 2.2rem; font-weight: 700; color: var(--akk-ink); }
@@ -408,6 +434,27 @@
   overflow-wrap: anywhere;
 }
 
+.ap-regel-hint {
+  margin: 0 0 20px;
+  padding: 12px 14px;
+  border-left: 3px solid var(--brand-blue);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  background: var(--surface);
+  font-size: 0.92rem;
+  line-height: 1.55;
+  color: var(--akk-ink);
+}
+.ap-regel-hint p { margin: 0; }
+.ap-regel-hint .ap-regel-hint-title {
+  margin-bottom: 4px;
+  font-family: var(--font-label);
+  font-size: 0.72rem;
+  font-weight: var(--fw-bold);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--brand-blue-dark);
+}
+.ap-regel-hint a { color: var(--brand-blue-dark); }
 .akk-regel-note { color: var(--akk-muted); font-size: 0.92rem; line-height: 1.6; margin: 0 0 24px; }
 .akk-btn {
   font-family: var(--akk-font);
@@ -471,6 +518,71 @@
   font-family: var(--font-body);
   cursor: pointer;
 }
+/* Nach Häufigkeit: the coverage curve and the timeline under it. Everything is drawn in
+   tokens so dark mode needs no second copy; the area is the line colour at low opacity
+   rather than a light tint that would glow on a dark panel. */
+.ap-chart { margin: 0 var(--space-2) var(--space-4); }
+.ap-chart svg { display: block; width: 100%; height: auto; overflow: visible; }
+/* The fold's handle: a label row, not a button-shaped button — it sits where a chart title
+   would, and the chevron says it moves. */
+.ap-chart-sum {
+  display: flex; align-items: center; justify-content: space-between;
+  min-height: 36px;
+  margin-bottom: var(--space-1);
+  padding: 0 var(--space-1);
+  border-radius: 8px;
+  list-style: none;
+  cursor: pointer;
+  font-family: var(--font-label);
+  font-size: 0.72rem;
+  font-weight: var(--fw-bold);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--brand-blue-dark);
+}
+.ap-chart-sum::-webkit-details-marker { display: none; }
+.ap-chart-sum:hover { background: var(--surface); }
+.ap-chart-sum:focus-visible { outline: 2px solid var(--brand-blue); outline-offset: 2px; }
+.ap-chart .ap-chart-chev { width: 14px; height: 14px; transition: transform .2s var(--nv-ease-out, ease); }
+.ap-chart-fold:not([open]) .ap-chart-chev { transform: rotate(-90deg); }
+.ap-chart-fold:not([open]) + figcaption { margin-top: 0; }
+.ap-chart text { font-family: var(--font-label); font-size: 10px; fill: var(--muted); }
+.ap-chart-grid line { stroke: var(--border); stroke-width: 1; }
+.ap-chart-area { fill: var(--brand-blue); fill-opacity: .1; }
+.ap-chart-line { fill: none; stroke: var(--brand-blue); stroke-width: 2; stroke-linejoin: round; }
+.ap-chart-ms circle { fill: var(--page-bg); stroke: var(--brand-blue); stroke-width: 1.5; }
+.ap-chart-ms text { font-weight: var(--fw-bold); fill: var(--brand-blue-dark); }
+.ap-chart-now line { stroke: var(--accent); stroke-width: 1; stroke-dasharray: 2 2; }
+.ap-chart-now circle { fill: var(--accent); stroke: var(--page-bg); stroke-width: 2; }
+.ap-chart-now line, .ap-chart-now circle { transition: all .3s var(--nv-ease-out, ease); }
+.ap-chart-band rect { fill: var(--surface); stroke: var(--border); stroke-width: 1; }
+.ap-chart-band text { font-size: 9.5px; font-weight: var(--fw-semibold); }
+.ap-chart-band.is-now rect { fill: var(--accent); fill-opacity: .14; stroke: var(--accent); }
+.ap-chart-band.is-now text { fill: var(--accent-dark); }
+.ap-chart-axis { font-size: 9.5px !important; fill: var(--muted-soft) !important; }
+.ap-chart figcaption {
+  margin-top: var(--space-2);
+  font-size: var(--text-xs);
+  line-height: 1.55;
+  color: var(--muted);
+}
+.ap-chart figcaption b { color: var(--ink); }
+.ap-phase + .ap-phase { margin-top: var(--space-3); }
+.ap-phase-head {
+  display: flex; justify-content: space-between; align-items: baseline;
+  margin: 0 var(--space-2) var(--space-1);
+  font-family: var(--font-label);
+  font-size: 0.72rem;
+  font-weight: var(--fw-bold);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--brand-blue-dark);
+}
+.ap-phase-n { font-weight: var(--fw-medium); letter-spacing: 0; text-transform: none; color: var(--muted); }
+@media (prefers-reduced-motion: reduce) {
+  .ap-chart-now line, .ap-chart-now circle, .ap-chart .ap-chart-chev { transition: none; }
+}
+
 /* The picker brings its own card; .vp-rule-card's padding would be a second frame
    around it, exactly as it is on a Wortschatz page. */
 .vp-rule-card:has(.ap-nvb) {
@@ -478,6 +590,28 @@
   background: none;
   border: none;
   overflow: visible;
+}
+/* Folded to its rail (the Stufen tab), the track shrinks with the panel — the same move
+   .vt-split makes on a Wortschatz page. The freed width goes to the exercise, so the page
+   keeps its edges instead of pulling its right side in. Not while the whole column is
+   away: that state owns --rule-w, and :has() would otherwise out-rank it. */
+@media (min-width: 1001px) {
+  /* The column stops being the scroller, as on a Wortschatz page: it clipped the tab
+     hanging off the panel's edge and carried the rail away with the list. The panel
+     beside the rail scrolls instead (lernset-picker.css). */
+  .vp-col--rule:has(.ap-nvb) {
+    overflow: visible;
+    max-height: none;
+    display: flex;
+    flex-direction: column;
+    z-index: 2;
+  }
+  .vp-rule-card:has(.ap-nvb), .ap-nvb { min-height: 0; }
+  .ap-nvb { max-height: calc(100vh - 32px); }
+  .vp-page--split:has(.ap-nvb)[data-fold="1"]:not([data-rule="hidden"]) {
+    --ex-w: calc(880px + clamp(320px, 28vw, 440px) - 66px);
+    --rule-w: 66px;
+  }
 }
 
 /* --- Leichte-Sprache switch (LeichtToggle.astro) ---------------------------
@@ -532,7 +666,129 @@
 .ls-switch-state { font-size: .8rem; font-weight: 600; color: var(--akk-ink); }
 .ls-switch[aria-pressed="true"] .ls-switch-state { color: var(--brand-blue-dark); }
 
+/* The sound switch sits before the Leichte-Sprache one and takes the push to the right
+   edge; the second switch then sits beside it instead of claiming the edge too. */
+.ls-switch--sound + .ls-switch { margin-left: 0; }
+
+.akk-hear-group {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: 12px;
+  white-space: nowrap;
+  vertical-align: middle;
+}
+.akk-hear-group .akk-slow, .akk-hear-group .akk-hear { margin-left: 0; }
+/* On the Artikel topic page .akk sits on the page's <main>, which is narrower than the
+   window — its paper background would show as a band. The page's own background stays. */
+.vp-page.akk { background: none; }
+/* The speaker beside a voiced prompt (practiceWorkspace.js hearHtml): says "this word can
+   be heard" and is the sound switch. Quiet when off, brand-coloured when on. */
+.akk-hear {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  margin-left: 10px;
+  vertical-align: middle;
+  border: 1px solid var(--akk-line);
+  border-radius: 50%;
+  background: none;
+  color: var(--akk-muted);
+  cursor: pointer;
+}
+.akk-hear[aria-pressed="true"] { color: var(--brand-blue-dark); border-color: var(--brand-blue); }
+/* Langsam is a light switch like Aussprache and Leichte Sprache in the toolbar — the same
+   track and knob, smaller, because it sits beside the word. */
+.akk-slow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 36px;
+  margin-left: 12px;
+  padding: 0 12px 0 8px;
+  vertical-align: middle;
+  border: 1px solid var(--akk-line);
+  border-radius: var(--radius-pill);
+  background: none;
+  font-family: var(--akk-font);
+  font-size: .8rem;
+  font-weight: 600;
+  color: var(--akk-muted);
+  cursor: pointer;
+}
+.akk-slow:hover { border-color: var(--brand-blue); }
+.akk-slow-track {
+  position: relative;
+  flex: none;
+  width: 28px;
+  height: 16px;
+  border-radius: var(--radius-pill);
+  background: var(--akk-line-strong);
+  transition: background .18s ease;
+}
+.akk-slow-knob {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--akk-surface);
+  box-shadow: 0 1px 2px rgba(8, 20, 34, .3);
+  transition: transform .18s ease;
+}
+.akk-slow[aria-pressed="true"] { color: var(--brand-blue-dark); }
+.akk-slow[aria-pressed="true"] .akk-slow-track { background: var(--brand-blue); }
+.akk-slow[aria-pressed="true"] .akk-slow-knob { transform: translateX(12px); }
+.akk-test-sentence .akk-slow { height: 30px; padding: 0 10px; margin-left: 8px; font-size: .75rem; }
+.akk-hear:hover { border-color: var(--brand-blue); }
+.akk-hear svg { width: 18px; height: 18px; }
+.akk-test-sentence .akk-hear { width: 30px; height: 30px; margin-left: 8px; }
+.akk-test-sentence .akk-hear svg { width: 15px; height: 15px; }
+
 /* Leichte Sprache is read slowly and often by someone who is not a confident reader, so
    where it is on, the sentences it produced get more room than the normal register had. */
 .is-leicht .akk-why-text,
 .is-leicht .akk-focus-instruction { line-height: 1.7; }
+
+/* --- "Wie oft hört man das?" (artikelFreqChart.js) ---------------------------
+   One series: the curve is the brand teal, recessive; the round's words are dots on it;
+   the word on the card is the one accent, with a surface ring so it lifts off the line.
+   Grid and axis text stay in the muted ink. */
+.afc { margin-top: 16px; padding: 18px 20px 14px; }
+.afc-title { font-family: var(--akk-mono); font-size: .72rem; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: var(--akk-muted); }
+.afc-head { margin: 6px 0 10px; font-size: .95rem; line-height: 1.5; color: var(--akk-ink); min-height: 1.5em; }
+.afc-plot { position: relative; }
+.afc-plot svg { display: block; max-width: 100%; overflow: visible; }
+.afc-tip[hidden] { display: none; }
+.afc-grid line { stroke: var(--akk-line); stroke-width: 1; }
+.afc-axis text { font-family: var(--akk-mono); font-size: 10px; fill: var(--akk-muted); }
+.afc-area { fill: var(--brand-blue); opacity: .08; }
+.afc-line { fill: none; stroke: var(--brand-blue); stroke-width: 2; stroke-linejoin: round; opacity: .55; }
+.afc-lane { fill: var(--akk-line); opacity: .45; }
+.afc-hit { fill: transparent; cursor: pointer; }
+.afc-mark { fill: var(--brand-blue-dark); stroke: var(--akk-surface); stroke-width: 2; }
+.afc-dot.is-rare .afc-mark { fill: var(--akk-surface); stroke: var(--brand-blue-dark); stroke-width: 2; }
+.afc-dot.is-current .afc-mark { fill: var(--accent); stroke: var(--akk-surface); stroke-width: 2; }
+.afc-dot:focus { outline: none; }
+.afc-dot:focus-visible .afc-mark { stroke: var(--akk-ink); }
+.afc-label { font-family: var(--akk-font); font-size: 12px; font-weight: 600; fill: var(--akk-ink); paint-order: stroke; stroke: var(--akk-surface); stroke-width: 3px; }
+.afc-label.is-rare { font-weight: 500; fill: var(--akk-muted); }
+.afc-tip {
+  position: absolute; z-index: 2; pointer-events: none;
+  display: flex; flex-direction: column; gap: 1px;
+  padding: 6px 10px; border-radius: 8px;
+  background: var(--akk-ink); color: var(--akk-surface);
+  font-size: .78rem; line-height: 1.35; white-space: nowrap;
+  box-shadow: 0 4px 14px rgba(8, 20, 34, .18);
+}
+.afc-note { margin: 8px 0 0; font-size: .78rem; line-height: 1.45; color: var(--akk-muted); }
+.afc-table { margin-top: 8px; font-size: .85rem; }
+.afc-table summary { cursor: pointer; color: var(--brand-blue-dark); font-weight: 600; padding: 4px 0; }
+.afc-table ol { margin: 6px 0 0; padding: 0; list-style: none; }
+.afc-table li { display: flex; justify-content: space-between; gap: 12px; padding: 5px 0; border-top: 1px solid var(--akk-line); color: var(--akk-ink); }
+.afc-table li span:last-child { color: var(--akk-muted); text-align: right; }
+.afc-table li.is-current span:first-child { font-weight: 700; }
+@media (max-width: 600px) { .afc { padding: 14px 14px 10px; } }

@@ -12,6 +12,7 @@ import { counts, asArtikelRows } from "./lexicon.js";
 import { taskCountOf } from "./grammarTasks.js";
 import { lernsets } from "./lernsets.js";
 import artikel from "../data/artikel.json";
+import einstufung from "../data/einstufung.json";
 import grammatik from "../data/grammatik.json";
 import wortschatz from "../data/wortschatz.json";
 import sprechen from "../data/sprechen.json";
@@ -91,10 +92,10 @@ const parts = (n) => Math.max(1, Math.ceil(n / PART_SIZE));
 export const lexiconCounts = counts();
 
 export const tools = [
-  { id: "artikel", group: "grammatik", href: "/uebungen/artikel-trainer", icon: "target",
+  { id: "artikel", group: "grammatik", href: "/uebungen/grammatik/artikel", icon: "target",
     titleKey: "tool.artikel.title", title: "der/die/das-Trainer", shortKey: "group.short.artikel", short: "Artikel",
     descKey: "tool.artikel.desc", desc: "Artikel gezielt üben, mit sofortigem Feedback.",
-    countKey: "tool.artikel.round", countVars: { n: ARTIKEL_ROUND }, count: `${ARTIKEL_ROUND} Nomen pro Runde` },
+    countKey: "tool.artikel.round", countVars: { n: ARTIKEL_ROUND }, count: `${ARTIKEL_ROUND} Nomen pro Übung` },
   { id: "grammatik", group: "grammatik", href: "/uebungen/grammatik", icon: "book",
     titleKey: "tool.grammatik.title", title: "Grammatik", shortKey: "tool.grammatik.title", short: "Grammatik",
     // Inside the Grammatik column of the menu, "Grammatik" was the row under a heading of
@@ -199,12 +200,24 @@ export const landingTools = (() => {
         `${schreibenIndex.tasks.length} Schreiben`,
       ),
     },
+    // The eighth tile: the placement test had no way in from the hub, and "welches Niveau
+    // bin ich?" is the question in front of every other tile here.
+    einstufung: {
+      id: "einstufung", group: "grammatik", href: "/einstufungstest", icon: "bars",
+      titleKey: "tool.einstufung.title", title: "Einstufungstest",
+      shortKey: "tool.einstufung.title", short: "Einstufung",
+      descKey: "tool.einstufung.desc", desc: "Wo stehst du? Ein paar Fragen pro Niveau, A1 bis B2.",
+      countKey: "tool.einstufung.count",
+      countVars: { n: Object.values(einstufung.levels).reduce((n, l) => n + l.length, 0) },
+      count: `${Object.values(einstufung.levels).reduce((n, l) => n + l.length, 0)} Fragen`,
+    },
   };
   // Order matters: grammar first (what most people come for), then words, then the two
-  // skill tiles, then Landeskunde.
+  // skill tiles, then Landeskunde — and the placement test last, as the way in for anyone
+  // who does not know where to start. Eight, so the four-column grid closes in two rows.
   return [
     t.artikel, t.grammatik, t.praep, t.wortschatz,
-    merged.hoerenAussprache, merged.fertigkeiten, t.kultur,
+    merged.hoerenAussprache, merged.fertigkeiten, t.kultur, merged.einstufung,
   ];
 })();
 
@@ -302,6 +315,7 @@ export const GRAMMAR_ICON = {
   wechselpraepositionen: "🧭",
   negation: "🚫",
   perfekt: "⏪",
+  konjugation: "📋",
   praepositionen: "🔗",
   adjektivdeklination: "🎨",
   "als-oder-wenn": "⏱️",
@@ -360,7 +374,7 @@ export const levels = NAV_LEVELS.map((level) => {
   if (genderedNouns) {
     vocab.push({ id: "artikel", icon: "target", title: "der/die/das-Trainer",
       titleKey: "tool.artikel.title",
-      href: `/uebungen/artikel-trainer?niveau=${level}`, count: `${ARTIKEL_ROUND} Nomen pro Runde`,
+      href: `/uebungen/grammatik/artikel?niveau=${level}`, count: `${ARTIKEL_ROUND} Nomen pro Übung`,
       countKey: "tool.artikel.round", countVars: { n: ARTIKEL_ROUND } });
   }
   if (words) {
@@ -461,8 +475,8 @@ const vocabLevelView = (level) => {
       countKey: "sets.rounds", countVars: { n: parts(words), size: PART_SIZE } });
   }
   if (nouns) {
-    lists.push({ ...levelRow(`der/die/das · ${level}`, `/uebungen/artikel-trainer?niveau=${level}`,
-      `${ARTIKEL_ROUND} Nomen pro Runde`),
+    lists.push({ ...levelRow(`der/die/das · ${level}`, `/uebungen/grammatik/artikel?niveau=${level}`,
+      `${ARTIKEL_ROUND} Nomen pro Übung`),
       countKey: "tool.artikel.round", countVars: { n: ARTIKEL_ROUND } });
   }
 
@@ -782,4 +796,77 @@ export const navUeben = {
     blurbKey: lv.blurbKey,
     blurb: lv.blurb,
   })),
+};
+
+// ---------------------------------------------------------------------------
+// The "Üben" mega menu as it renders — five columns
+// ---------------------------------------------------------------------------
+// `navUeben` above was four subject columns with a level chip row at the foot. Its
+// Grammatik column mixed three kinds of thing as peers — one drill (der/die/das), the
+// whole hub (Alle Themen) and a two-topic subset (Präpositionen) — so a beginner could not
+// tell where to start; the level entry sat last, and counts like "1029 Aufgaben" read as a
+// wall rather than an offer.
+//
+// This one opens with "Wo anfangen?" — the four levels as the first column. A subject
+// column leads with its hub as the one prominent link (`primary`), then a thin rule, then
+// the short ways in. No counts anywhere: a subtitle is a plain-language hint or nothing.
+// Every href is one the old menu already linked to, plus the per-level Wortlisten.
+
+/** The short drills under Grammatik. A new one (Konjugation, Plural) is one more row. */
+export const quickTrainers = [
+  { id: "artikel", href: "/uebungen/grammatik/artikel",
+    titleKey: "tool.artikel.title", title: "der/die/das-Trainer",
+    hintKey: "nav.hint.fiveMin", hint: "ca. 5 Min" },
+  { id: "praepositionen", href: "/uebungen/praepositionen",
+    titleKey: "tool.praepositionen.title", title: "Präpositionen",
+    hintKey: "nav.hint.fiveMin", hint: "ca. 5 Min" },
+];
+
+const LEVEL_NAMES = { A1: "Einsteiger", A2: "Grundlagen", B1: "Mittelstufe", B2: "Fortgeschritten" };
+
+export const navUebenMenu = {
+  start: {
+    nameKey: "nav.ueben.start", name: "Wo anfangen?",
+    levels: navUeben.levels.map((lv) => ({
+      level: lv.level,
+      href: lv.href,
+      nameKey: `nav.level.${lv.slug}.name`,
+      name: LEVEL_NAMES[lv.level],
+    })),
+    // The placement test exists (src/pages/einstufungstest.astro), so the link is real.
+    placement: { href: "/einstufungstest", titleKey: "nav.ueben.placement", title: "Mein Niveau testen →" },
+  },
+  columns: [
+    { id: "grammatik", icon: "book", href: "/uebungen/grammatik",
+      nameKey: "nav.subject.grammatik", name: "Grammatik",
+      primary: { href: "/uebungen/grammatik",
+        titleKey: "nav.grammatik.all", title: "Alle Grammatik-Themen →",
+        hintKey: "nav.grammatik.allHint", hint: "nach Niveau sortiert" },
+      items: quickTrainers },
+    // The same shape as Grammatik: the deck hub first, then one Wortliste per level the
+    // lexicon has reached — what "Wortschatz" means to someone who knows their level, and
+    // what the column had nothing of when it was a single row.
+    { id: "wortschatz", icon: "folder", href: "/uebungen/wortschatz",
+      nameKey: "nav.subject.wortschatz", name: "Wortschatz",
+      primary: { href: "/uebungen/wortschatz",
+        titleKey: "nav.wortschatz.all", title: "Wortschatz & Redemittel →",
+        hintKey: "nav.wortschatz.allHint", hint: "Karteikarten zum Wiederholen" },
+      items: NAV_LEVELS.filter((level) => lexiconCounts[level]?.words).map((level) => ({
+        href: `/uebungen/wortschatz/${level.toLowerCase()}`,
+        titleKey: "nav.vocab.listLevel", titleVars: { level }, title: `Wortliste ${level}`,
+      })) },
+    { id: "fertigkeiten", icon: "mic", href: "/uebungen/fertigkeiten",
+      nameKey: "nav.subject.fertigkeiten", name: "Fertigkeiten",
+      items: [
+        ...skills.map((sk) => ({ href: sk.href, titleKey: sk.nameKey, title: sk.name })),
+        // Pronunciation is speaking practice, not vocabulary: it hangs under Sprechen.
+        { href: "/uebungen/aussprache", titleKey: "nav.skill.aussprache", title: "Aussprache", nested: true },
+      ] },
+    { id: "landeskunde", icon: "map-pin", href: "/uebungen/kultur",
+      nameKey: "group.kultur.name", name: "Landeskunde",
+      items: [
+        { href: "/uebungen/kultur", titleKey: "tool.kultur.title", title: "Kulturwissen" },
+        { href: kulturQuizItem.href, titleKey: "nav.kultur.quiz", title: "Landeskunde-Quiz" },
+      ] },
+  ],
 };

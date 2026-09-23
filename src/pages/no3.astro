@@ -116,11 +116,9 @@ const IDEAS = [
       ))}
     </section>
 
-    {import.meta.env.DEV && (
-      <button type="button" class="vp-dev-reset" id="no3-dev-reset" title="Intro-Flag löschen und neu laden">
-        ↻ Tour neu
-      </button>
-    )}
+    <button type="button" class="vp-dev-reset" id="no3-dev-reset" title="Intro-Flag löschen und neu laden">
+      ↻ Tour neu
+    </button>
   </main>
 
   <script type="application/json" id="story-data" set:html={JSON.stringify(story)}></script>

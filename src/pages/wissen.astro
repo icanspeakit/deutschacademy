@@ -70,7 +70,10 @@ const mb = (totals.bytes / 1024 / 1024).toFixed(1).replace(".", ",");
                   under each says what is inside it, which is the part worth translating. */}
               <i data-i18n={`wissen.file.${f.id}.desc`}>{f.desc}</i>
               <span class="wi-card-foot">
-                <span class="wi-meta">PDF{f.pages ? ` · ${f.pages} Seiten` : ""} · {f.size}</span>
+                <span class="wi-meta">
+                  PDF{f.pages ? ` · ${f.pages} Seiten` : ""} · {f.size}
+                  {f.editions.length > 0 && <span class="wi-meta-eds"> · +{f.editions.map((e) => e.lang.toUpperCase()).join("/")}</span>}
+                </span>
                 <span class="wi-dl" aria-hidden="true">↓</span>
               </span>
             </button>
@@ -137,6 +140,21 @@ const mb = (totals.bytes / 1024 / 1024).toFixed(1).replace(".", ",");
             <span aria-hidden="true">↓</span>
             <span>Jetzt herunterladen</span>
           </a>
+          {/* The same list with the learner's language in the translation column. Each
+              language is named in itself — that is the word its reader will spot. */}
+          {f.editions.length > 0 && (
+            <div class="wi-sheet-eds">
+              <p class="wi-sheet-toclabel" data-i18n="wissen.editions.label">Mit Übersetzung in deine Sprache</p>
+              <div class="wi-sheet-eds-row">
+                {f.editions.map((e) => (
+                  <a class="wi-sheet-ed" href={e.href} download lang={e.lang} dir={e.rtl ? "rtl" : undefined}>
+                    <span>{e.label}</span>
+                    <small dir="ltr">{e.size}</small>
+                  </a>
+                ))}
+              </div>
+            </div>
+          )}
           <p class="wi-sheet-foot">Kostenlos, ohne Konto. Zum Ausdrucken und Weitergeben.</p>
         </div>
       ))}
@@ -200,7 +218,7 @@ const mb = (totals.bytes / 1024 / 1024).toFixed(1).replace(".", ",");
     scrim?.addEventListener("click", closeSheet);
     document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeSheet(); });
     // The download is the end of the errand: take the sheet away with it.
-    for (const dl of Array.from(document.querySelectorAll<HTMLElement>(".wi-sheet-dl"))) {
+    for (const dl of Array.from(document.querySelectorAll<HTMLElement>(".wi-sheet-dl, .wi-sheet-ed"))) {
       dl.addEventListener("click", () => window.setTimeout(closeSheet, 150));
     }
   </script>

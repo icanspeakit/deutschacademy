@@ -292,6 +292,12 @@
 .vp-ref-table tbody tr + tr { border-top: 1px solid var(--border); }
 .vp-ref-table tbody th[scope="row"] { font-weight: var(--fw-bold); color: var(--brand-blue-dark); }
 .vp-ref-table tbody td { color: var(--ink); }
+/* Conjugation grids: four columns have to fit a 390px phone without a sideways scroll. */
+.vp-ref-table--compact { font-size: .82rem; }
+.vp-ref-table--compact th,
+.vp-ref-table--compact td { padding: 7px 6px; }
+/* "bin aufgestanden" may break after the auxiliary rather than push the table sideways. */
+.vp-ref-table--compact td { white-space: normal; }
 .vp-ref-table-note { margin: 8px 0 0; font-size: .78rem; line-height: 1.5; color: var(--muted); }
 
 /* Tag on the right of a concept bullet ("schwach", "Pflicht", "(Sache)"). */

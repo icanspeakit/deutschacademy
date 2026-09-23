@@ -214,9 +214,13 @@ export const asVokabelCards = (opts = {}) => select({ ...opts, has: "en" }).map(
  *  mapping, so a deck built by query and a deck built by rank can never drift apart. */
 export const toVokabelCards = (rows) => rows.filter((e) => e.en != null).map(toCard);
 
-/** Shape consumed by src/lib/pronunciation.js via aussprache.astro. */
+/** Shape consumed by src/lib/pronunciation.js via aussprache.astro. The files are the
+ *  ones scripts/generate-wortschatz-audio.mjs writes, so every word it voices shows up on
+ *  the Aussprache page without further wiring. */
 export const asAudioItems = (opts = {}) =>
   select({ ...opts, has: "audio" }).map((e) => ({
-    text: e.pos === "noun" && e.gender ? `${e.gender} ${e.lemma}` : e.lemma,
-    audioSrc: `/audio/aussprache/${e.audio}.mp3`,
+    text: spokenForm(e),
+    audioSrc: `/audio/wortschatz/${e.audio}.mp3`,
+    note: [e.ipa ? `/${e.ipa}/` : "", e.example ?? ""].filter(Boolean).join(" · "),
+    translations: Object.fromEntries(TRANSLATION_LANGS.filter((l) => e[l]).map((l) => [l, e[l]])),
   }));

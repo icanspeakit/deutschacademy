@@ -2,6 +2,7 @@
 import Layout from "../../../layouts/Layout.astro";
 import LanguageSwitcher from "../../../components/LanguageSwitcher.astro";
 import ThemeToggle from "../../../components/ThemeToggle.astro";
+import CourseBar from "../../../components/CourseBar.astro";
 import "../../../styles/akkusativ.css";
 import akkusativQuestions from "../../../data/akkusativ.json";
 
@@ -23,6 +24,7 @@ const total = akkusativQuestions.filter((q) => q.difficulty === "leicht").length
         </div>
       </div>
     </header>
+    <CourseBar topic="akkusativ" title="Akkusativ – DeutschAcademy" />
 
     <main class="akk-main">
       <div class="akk-card">
@@ -46,7 +48,6 @@ const total = akkusativQuestions.filter((q) => q.difficulty === "leicht").length
         <div id="akk-uebung-view">
           <div class="akk-mode-row">
             <div class="akk-mode" role="group" aria-label="Übungsmodus" data-i18n-attr="aria-label:akk.mode.ariaLabel">
-              <span class="akk-mode-label" data-i18n="akk.mode.label">Modus</span>
               <button class="akk-mode-btn active" data-mode="fokus" type="button" data-i18n="akk.mode.fokus">Fokus-Modus</button>
               <span class="akk-mode-sep">·</span>
               <button class="akk-mode-btn" data-mode="test" type="button" data-i18n="akk.mode.test">Testmodus</button>

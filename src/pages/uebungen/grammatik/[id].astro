@@ -3,6 +3,8 @@ import Layout from "../../../layouts/Layout.astro";
 import SiteNav from "../../../components/SiteNav.astro";
 import TopicBar from "../../../components/TopicBar.astro";
 import TopicRail from "../../../components/TopicRail.astro";
+import ArtikelTrainer from "../../../components/ArtikelTrainer.astro";
+import CourseBar from "../../../components/CourseBar.astro";
 import { taskCountOf, topicKeyOf } from "../../../lib/grammarTasks.js";
 import "../../../styles/practice.css";
 import "../../../styles/landing.css";
@@ -10,6 +12,9 @@ import "../../../styles/verben-praepositionen.css";
 import "../../../styles/rule-intro.css";
 import "../../../styles/aktiv.css";
 import grammatik from "../../../data/grammatik.json";
+import GrammarHelp from "../../../components/GrammarHelp.astro";
+import GrammarHelpText from "../../../components/GrammarHelpText.astro";
+import grammarHelp from "../../../data/uebersetzungen/grammatik.json";
 
 // Two kinds of topic live on this route:
 //
@@ -40,6 +45,9 @@ const level = workspace ? workspace.level : topic.level;
 const intro = workspace ? workspace.subtitle : topic.intro;
 const concept = workspace?.concept;
 const reference = concept?.reference;
+// The rule in the learner's language (src/data/uebersetzungen/grammatik.json). A topic with
+// no entry renders exactly as before: no switch, no empty blocks.
+const gx = (grammarHelp.entries as Record<string, any>)[data.id] ?? null;
 
 // This page used to wear PracticeHeader — a bar with four text links and no sign that it
 // belonged to the same site as everything else. Reached from the homepage it was a dead end:
@@ -49,6 +57,11 @@ const reference = concept?.reference;
 // `topicKey` is the URL slug, which is the key /dashboard draws its per-topic bars from.
 const topicKey = topicKeyOf(data) ?? Astro.params.id;
 const tasks = taskCountOf(data);
+
+// Artikel's Üben view is the der/die/das trainer — every gendered noun in the lexicon, in
+// levels and rounds, with audio — instead of this topic's handful of fixed exercises. The
+// lesson around it (Sehen, Hören, Sprechen) is unchanged. See ArtikelTrainer.astro.
+const isArtikel = topicKey === "artikel";
 
 // Aktiv mode — Sehen · Hören · Sprechen, for the topics whose JSON carries an `aktiv`
 // block. It is a second view of THIS page, not a second page: the fourth beat, Schreiben,
@@ -78,17 +91,21 @@ const BEATS = [
 <Layout title={`${name} – DeutschAcademy`}>
   <SiteNav active="grammatik" />
   <TopicBar topic={topicKey} kind="Grammatik" title={name} level={level} tasks={tasks} />
+  {/* Where this topic sits in its Stufe, and the way back to it on the map. */}
+  <CourseBar topic={topicKey} title={`${name} – DeutschAcademy`} />
 
   <!-- The dashboard's rail, folded to a 64px strip. Opening it overlays the page rather
        than pushing it, so the exercise column below keeps its full 880px. Above 1100px
        only — see topic-rail.css. -->
-  <TopicRail current={topicKey} />
+  {/* Not on Artikel: its trainer brings its own A1–B2 rail (the noun levels), and two
+      dark A1–B2 rails side by side read as one menu twice. */}
+  {!isArtikel && <TopicRail current={topicKey} />}
 
   <!-- Rendered collapsed, then opened by the script if this learner asked for it.
        Collapsed is the more common state — the side column slides away on desktop,
        the rule card crops to a preview on a phone — so starting here means no
        visible re-layout on load. -->
-  <main class="vp-page vp-page--split vp-page--sheet" id="vp-page" data-rule="hidden" data-anim="off" data-topic-key={topicKey} data-mode="ueben">
+  <main class:list={["vp-page vp-page--split vp-page--sheet", isArtikel && "akk vp-page--rule-left"]} id="vp-page" data-rule="hidden" data-anim="off" data-topic-key={topicKey} data-mode="ueben" data-gx="off">
     {aktiv && (
       <div class="ak-modes" role="tablist" aria-label="Ansicht">
         <button type="button" class="ak-mode" data-mode-btn="ueben" role="tab" aria-selected="true" title="Lesen &amp; schreiben">
@@ -129,9 +146,12 @@ const BEATS = [
                   ))}
                 </div>
                 <div class="ak-qa">
-                  {concept.qa?.map((item) => <div class="ak-qa-item" set:html={item.html} />)}
+                  {concept.qa?.map((item, i) => (
+                    <div class="ak-qa-item"><Fragment set:html={item.html} /><GrammarHelpText text={gx?.qa?.[i]} /></div>
+                  ))}
                 </div>
                 {concept.noteHtml && <p class="ak-note" set:html={concept.noteHtml} />}
+                <GrammarHelpText text={gx?.note} />
               </div>
             </div>
           )}
@@ -164,9 +184,12 @@ const BEATS = [
           {concept && (
             <div class="ak-card">
               <div class="ak-qa">
-                {concept.qa?.map((item) => <div class="ak-qa-item" set:html={item.html} />)}
+                {concept.qa?.map((item, i) => (
+                  <div class="ak-qa-item"><Fragment set:html={item.html} /><GrammarHelpText text={gx?.qa?.[i]} /></div>
+                ))}
               </div>
               {concept.noteHtml && <p class="ak-note" set:html={concept.noteHtml} />}
+              <GrammarHelpText text={gx?.note} />
             </div>
           )}
 
@@ -195,6 +218,7 @@ const BEATS = [
          exercises. The desktop grid then places the exercises in column 1.
          Every [data-ex-index] slot must stay inside #vp-page: mountGrammarWorkspace
          binds to them from that root. -->
+    {isArtikel ? <ArtikelTrainer /> : (
     <div class="vp-workspace">
     <aside class="vp-col vp-col--rule" id="vp-rule">
     <div class="vp-hero">
@@ -204,6 +228,8 @@ const BEATS = [
       </div>
       <h1>{name}</h1>
       <p data-i18n={workspace?.subtitleKey}>{intro}</p>
+      <GrammarHelpText text={gx?.intro} />
+      {gx && <GrammarHelp level={level} reviewed={gx.reviewed} />}
     </div>
 
     {concept && (
@@ -256,16 +282,18 @@ const BEATS = [
 
         {concept.qa && (
           <div class="vp-qa-grid">
-            {concept.qa.map((item) => (
+            {concept.qa.map((item, i) => (
               <div class="vp-qa-item">
                 <span set:html={item.html} />
                 {item.tag && <span class="vp-qa-tag">{item.tag}</span>}
+                <GrammarHelpText text={gx?.qa?.[i]} />
               </div>
             ))}
           </div>
         )}
 
         {concept.noteHtml && <p class="vp-note" set:html={concept.noteHtml} />}
+        <GrammarHelpText text={gx?.note} />
 
         {reference && (
           <>
@@ -275,14 +303,17 @@ const BEATS = [
               id="vp-toggle-ref"
               data-show={reference.showLabel ?? "Referenzliste anzeigen ▼"}
               data-hide={reference.hideLabel ?? "Referenzliste ausblenden ▲"}
-            >{reference.showLabel ?? "Referenzliste anzeigen ▼"}</button>
+            >{reference.open
+                ? (reference.hideLabel ?? "Referenzliste ausblenden ▲")
+                : (reference.showLabel ?? "Referenzliste anzeigen ▼")}</button>
 
-            <div id="vp-ref-panel" hidden>
+            {/* `open`: for topics where the tables are the lesson (Konjugation), not an appendix. */}
+            <div id="vp-ref-panel" hidden={!reference.open}>
               {reference.tables?.map((table) => (
                 <div class="vp-ref-table-wrap">
                   {table.caption && <p class="vp-ref-table-caption">{table.caption}</p>}
                   <div class="vp-ref-table-scroll">
-                    <table class="vp-ref-table">
+                    <table class:list={["vp-ref-table", table.compact && "vp-ref-table--compact"]}>
                       <thead>
                         <tr>{table.head.map((h) => <th>{h}</th>)}</tr>
                       </thead>
@@ -423,18 +454,17 @@ const BEATS = [
     </div>
     </section>
     </div>
+    )}
 
     <!-- Dev only. The tour is a once-per-browser thing, so the moment you have seen
          it you can no longer see it the way a learner does — ?intro replays the
          animation but not the first-load path around it (the auto-play decision, the
          collapsed first paint, the scroll position it measures from). This wipes both
          stored flags and reloads clean, so the same browser gets to be a new user
-         again. Stripped from the built site. -->
-    {import.meta.env.DEV && (
-      <button type="button" class="vp-dev-reset" id="vp-dev-reset" title="Tour-Flags löschen und neu laden">
-        ↻ Tour neu
-      </button>
-    )}
+         again. Shown on the live site too. -->
+    <button type="button" class="vp-dev-reset" id="vp-dev-reset" title="Tour-Flags löschen und neu laden">
+      ↻ Tour neu
+    </button>
   </main>
 
   <script type="application/json" id="topic-data" set:html={JSON.stringify(workspace ?? topic)}></script>
@@ -456,7 +486,13 @@ const BEATS = [
       dispatchEvent(new CustomEvent("da:progress", { detail: { topic: topicKey, correct: ok } }));
     };
 
-    if (Array.isArray(data.exercises)) {
+    // Artikel brings its own workspace and rule column (ArtikelTrainer.astro); mounting
+    // this page's on top of it would bind two sets of handlers to one column.
+    const ownTrainer = Boolean(document.getElementById("akk-exercise-root"));
+
+    if (ownTrainer) {
+      // Nothing to mount — the trainer's own script has.
+    } else if (Array.isArray(data.exercises)) {
       mountGrammarWorkspace(document.getElementById("vp-page"), data, { onAnswer });
     } else {
       mountQuiz(document.getElementById("quiz-root"), withChoices(data.questions), { mode: "choice", onAnswer });
@@ -464,7 +500,7 @@ const BEATS = [
 
     // The rule column's own behaviour — collapse state, what it means at each width,
     // and the one-time tour — is shared with the exam pages; see src/lib/ruleColumn.js.
-    mountRuleColumn(document.getElementById("vp-page"), {
+    if (!ownTrainer) mountRuleColumn(document.getElementById("vp-page"), {
       storageKey: "da-grammatik-rule",
       seenKey: "da-grammatik-rule-peek",
       // Below 1001px the rule is a bottom sheet rather than an accordion, matching the
@@ -473,11 +509,11 @@ const BEATS = [
       sheet: true,
     });
 
-    mountRefToggle(document.getElementById("vp-toggle-ref"), document.getElementById("vp-ref-panel"));
+    if (!ownTrainer) mountRefToggle(document.getElementById("vp-toggle-ref"), document.getElementById("vp-ref-panel"));
 
     // Per-exercise rule buttons, plus the glow that waits until one is on screen so it
     // does not compete with the column's tour. See src/lib/exerciseRule.js.
-    mountExerciseRules(document.getElementById("vp-page"), { seenKey: "da-grammatik-ex-rule-peek" });
+    if (!ownTrainer) mountExerciseRules(document.getElementById("vp-page"), { seenKey: "da-grammatik-ex-rule-peek" });
 
     // Aktiv mode. Only topics whose JSON carries an `aktiv` block have the markup.
     if (data.aktiv && document.getElementById("ak-aktiv")) {
@@ -520,6 +556,12 @@ const BEATS = [
           b.setAttribute("aria-selected", String(on));
         });
         if (mode !== "aktiv") voice.stop();
+        // The address says which step you are on only in Aktiv (see mountBeats): leaving it
+        // takes the step off, entering it puts the current one back.
+        if (history.replaceState) {
+          const url = location.pathname + location.search;
+          history.replaceState(null, "", mode === "aktiv" && page.dataset.beat ? `${url}#${page.dataset.beat}` : url);
+        }
         try { localStorage.setItem("da-grammatik-mode", mode); } catch (e) {}
       };
 

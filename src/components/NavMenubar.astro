@@ -3,8 +3,8 @@
 //
 // Three text items, not eight:
 //
-//   Üben ▾        one mega menu, four columns — Grammatik, Wortschatz, Fertigkeiten,
-//                 Landeskunde — plus a level chip row under them
+//   Üben ▾        one mega menu, five columns — Wo anfangen? (the levels), Grammatik,
+//                 Wortschatz, Fertigkeiten, Landeskunde. See `navUebenMenu` in catalog.js
 //   Prüfungen ▾   a grid of five; the exams are peers, not a tree, and a grid reads
 //                 the way the Üben columns next door do rather than as a tall list
 //   Wissen        one page, so a link
@@ -32,7 +32,7 @@
 // shown/hidden, so every link is in the HTML for crawlers and the nav still navigates
 // with JS off — the `.lp-nav-fallback` block at the bottom is what JS-off gets instead.
 import Icon from "./Icon.astro";
-import { navSections, navUeben } from "../lib/catalog.js";
+import { navSections, navUeben, navUebenMenu } from "../lib/catalog.js";
 import "../styles/site-nav.css";
 
 interface Props {
@@ -68,9 +68,25 @@ const pruefungen = navSections.find((s) => s.id === "pruefungen");
       <svg class="lp-menu-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
     </a>
 
-    <div class="lp-panel lp-panel--mega" id="lp-panel-ueben" data-menu-panel role="menu" aria-label="Üben" data-i18n-attr="aria-label:nav.practise" hidden>
+    <div class="lp-panel lp-panel--mega lp-panel--mega5" id="lp-panel-ueben" data-menu-panel role="menu" aria-label="Üben" data-i18n-attr="aria-label:nav.practise" hidden>
       <div class="lp-mega-cols">
-        {navUeben.columns.map((col) => (
+        {/* Where to start comes first: a beginner decides by level before by subject. */}
+        <div class="lp-mega-col lp-mega-col--start">
+          <p class="lp-mega-head lp-mega-head--label" data-i18n={navUebenMenu.start.nameKey}>{navUebenMenu.start.name}</p>
+          <ul>
+            {navUebenMenu.start.levels.map((lv) => (
+              <li>
+                <a href={lv.href} role="menuitem" class="lp-mega-level">
+                  <span class="lp-mega-level-code">{lv.level}</span>
+                  <b data-i18n={lv.nameKey}>{lv.name}</b>
+                </a>
+              </li>
+            ))}
+          </ul>
+          <a class="lp-mega-more" href={navUebenMenu.start.placement.href} role="menuitem" data-i18n={navUebenMenu.start.placement.titleKey}>{navUebenMenu.start.placement.title}</a>
+        </div>
+
+        {navUebenMenu.columns.map((col) => (
           <div class="lp-mega-col">
             {/* The column head is a link, not a caption: "Grammatik" is a page, and a
                 heading you cannot click next to rows you can is a small lie. */}
@@ -78,31 +94,29 @@ const pruefungen = navSections.find((s) => s.id === "pruefungen");
               <span class="lp-panel-head-ic"><Icon name={col.icon} size={16} /></span>
               <span data-i18n={col.nameKey}>{col.name}</span>
             </a>
+            {/* The hub, louder than the rows under it: it is where a beginner should go.
+                A rule, not a label, separates it from the short ways in. */}
+            {col.primary && (
+              <>
+                <a class="lp-mega-primary" href={col.primary.href} role="menuitem">
+                  <b data-i18n={col.primary.titleKey}>{col.primary.title}</b>
+                  <i data-i18n={col.primary.hintKey}>{col.primary.hint}</i>
+                </a>
+                <hr class="lp-mega-rule" />
+              </>
+            )}
             <ul>
               {col.items.map((item) => (
-                <li>
+                <li class:list={[item.nested && "lp-mega-nested"]}>
                   <a href={item.href} role="menuitem">
                     <b data-i18n={item.titleKey} data-i18n-vars={vars(item.titleVars)}>{item.title}</b>
-                    {item.count && (
-                      <i data-i18n={item.countKey} data-i18n-vars={vars(item.countVars)}>{item.count}</i>
-                    )}
+                    {item.hint && <i data-i18n={item.hintKey}>{item.hint}</i>}
                   </a>
                 </li>
               ))}
             </ul>
           </div>
         ))}
-      </div>
-
-      {/* A level is a filter over all four columns above, so it reads across the foot of
-          them rather than becoming a fifth. */}
-      <div class="lp-mega-levels">
-        <p class="lp-mega-levels-head" data-i18n="nav.ueben.byLevel">Nach Niveau starten</p>
-        <div class="lp-chiprow">
-          {navUeben.levels.map((lv) => (
-            <a class="lp-chip" href={lv.href} role="menuitem" title={lv.blurb}>{lv.level}</a>
-          ))}
-        </div>
       </div>
     </div>
   </div>

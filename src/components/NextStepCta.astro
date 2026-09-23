@@ -1,0 +1,89 @@
+---
+// The nav's primary button: one next step, chosen from what this browser knows — see
+// src/lib/nextStep.js and NAV-CTA-PROMPT.md. It replaced "Kostenlos üben" → /uebungen,
+// which sat under six practice links and mostly pointed where the learner already was.
+//
+// Rendered in state C ("Wo stehe ich?" → /einstufungstest), which is right with no JS and
+// no storage; the script below upgrades it to "Weiter üben" or "Mit A2 starten".
+//
+//   header  one line; the second line goes into title/aria-label. Its width is reserved
+//           (site-nav.css), so the upgrade does not shift the header.
+//   drawer  two lines, the second muted and truncated.
+import { fallbackStep } from "../lib/nextStep.js";
+
+interface Props {
+  variant: "header" | "drawer";
+}
+const { variant } = Astro.props;
+const step = fallbackStep(Astro.url.pathname);
+// "Weiter üben: Verben im Präsens", but "Wo stehe ich? Einstufungstest" — no colon after a question.
+const joinName = (label: string, sub?: string) => (sub ? `${label}${/[?!]$/.test(label) ? " " : ": "}${sub}` : label);
+const name = joinName(step.label, step.sub);
+---
+<a
+  href={step.href}
+  class:list={["lp-btn lp-btn--primary lp-next", `lp-next--${variant}`, variant === "drawer" && "lp-drawer-cta"]}
+  data-next-cta
+  data-state={step.state}
+  aria-label={name}
+  title={variant === "header" ? name : undefined}
+>
+  <span class="lp-next-main" data-i18n={step.labelKey}>{step.label}</span>
+  {variant === "drawer" && (
+    <span class="lp-next-sub" data-i18n={step.subKey} hidden={!step.sub}>{step.sub}</span>
+  )}
+</a>
+
+<script>
+  import { getNextStep, getPlacementLevel } from "../lib/nextStep.js";
+  import { getLang, loadDict, onLangChange, translate } from "../lib/i18n.js";
+
+  const buttons = Array.from(document.querySelectorAll<HTMLAnchorElement>("[data-next-cta]"));
+  const step = getNextStep(location.pathname);
+
+  // Keys and vars go on the elements first, so the i18n pass — now or on a later language
+  // switch — translates the new label rather than restoring the old one.
+  function wire(dict: Record<string, string> | null) {
+    const t = (key: string | undefined, fallback: string | undefined, vars?: object) =>
+      key && dict && dict[key] != null ? translate(dict, key, vars) : (fallback ?? "");
+    const label = t(step.labelKey, step.label, step.vars);
+    // The resume state's second line is a topic title, not a string to translate.
+    const sub = step.subKey ? t(step.subKey, step.sub) : step.sub || "";
+    const name = sub ? `${label}${/[?!؟]$/.test(label) ? " " : ": "}${sub}` : label;
+
+    for (const a of buttons) {
+      a.href = step.href;
+      a.dataset.state = step.state;
+      a.setAttribute("aria-label", name);
+      if (a.classList.contains("lp-next--header")) a.title = name;
+
+      const main = a.querySelector<HTMLElement>(".lp-next-main")!;
+      main.setAttribute("data-i18n", step.labelKey);
+      if (step.vars) main.dataset.i18nVars = JSON.stringify(step.vars);
+      else delete main.dataset.i18nVars;
+      main.textContent = label;
+
+      const subEl = a.querySelector<HTMLElement>(".lp-next-sub");
+      if (subEl) {
+        if (step.subKey) subEl.setAttribute("data-i18n", step.subKey);
+        else subEl.removeAttribute("data-i18n");
+        subEl.textContent = sub;
+        subEl.hidden = !sub;
+      }
+    }
+  }
+
+  wire(null);
+  loadDict(getLang()).then(wire).catch(() => {});
+  onLangChange((_code, dict) => wire(dict));
+
+  // "Dein Niveau" in the drawer's level row: the chip for the placement result.
+  const mine = getPlacementLevel();
+  if (mine) {
+    for (const chip of document.querySelectorAll<HTMLAnchorElement>(".lp-chip--drawer")) {
+      if (chip.textContent?.trim().toUpperCase() !== mine) continue;
+      chip.classList.add("is-mine");
+      chip.setAttribute("aria-current", "true");
+    }
+  }
+</script>

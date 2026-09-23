@@ -1,5 +1,6 @@
 ---
 import "../styles/global.css";
+import DemoDock from "../components/DemoDock.astro";
 import "../styles/components.css";
 
 interface Props {
@@ -147,6 +148,7 @@ const abs = (path) => (Astro.site ? new URL(path, Astro.site).href : path);
   </head>
   <body>
     <slot />
+    <DemoDock />
     <script>
       import { initI18n } from "../lib/i18n.js";
       initI18n();

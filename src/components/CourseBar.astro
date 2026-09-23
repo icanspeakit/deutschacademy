@@ -18,15 +18,17 @@ interface Props {
   topic: string;
   /** For the share sheet. */
   title?: string;
+  /** Rendered inside TopicBar's row (slot="end") instead of as a bar of its own. */
+  inline?: boolean;
 }
-const { topic, title } = Astro.props;
+const { topic, title, inline = false } = Astro.props;
 const pos = kursPosition(topic);
 const stufe = pos?.level.toLowerCase();
 const url = `/uebungen/grammatik/${topic}`;
 const topicHref = (id: string) => `/uebungen/grammatik/${id}`;
 ---
 {pos && (
-  <nav class="kb" aria-label="Dein Kurs">
+  <nav class:list={["kb", inline && "kb--inline"]} aria-label="Dein Kurs">
     <div class="kb-inner">
       <a class="kb-back" href={`/fortschritt?stufe=${stufe}&thema=${topic}`}>
         <span aria-hidden="true">←</span>
@@ -102,10 +104,22 @@ const topicHref = (id: string) => `/uebungen/grammatik/${id}`;
   a.kb-step:hover { border-color: var(--brand-blue); color: var(--brand-blue-dark); }
   .kb-step--none { visibility: hidden; }
 
+  /* Inside TopicBar: no bar of its own, just the controls at the row's end. */
+  .kb--inline { background: none; border: 0; }
+  .kb--inline .kb-inner { max-width: none; margin: 0; padding: 0; gap: 10px; }
+  .kb--inline .kb-pos { margin-left: 4px; }
+  .kb--inline .kb-step { width: 32px; height: 32px; }
+  /* Sharing a row with the topic, the long labels go first on a narrower desktop. */
+  @media (max-width: 1100px) {
+    .kb--inline .kb-long { display: none; }
+    .kb--inline .kb-short { display: inline; }
+  }
+
   .kb-short { display: none; }
   /* One line at 390px: the words shorten before anything is allowed to wrap. */
   @media (max-width: 560px) {
     .kb-inner { gap: 8px; padding: 4px 16px; }
+    .kb--inline .kb-inner { padding: 0; }
     .kb-long { display: none; }
     .kb-short { display: inline; }
   }

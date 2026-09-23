@@ -1,5 +1,1756 @@
 {
   "_note": "Die Regel jedes Grammatik-Themas in der Sprache der Lernenden, für /uebungen/grammatik/[id]. entries[id]: intro/note = { en, ar, uk, tr }, qa = je concept.qa-Eintrag ein solches Objekt, gleiche Reihenfolge. Deutsche Beispiele bleiben im Text deutsch. glossary: die Fachbegriffe je Sprache — neue Übersetzungen halten sich daran. reviewed: false = maschineller Entwurf, auf der Seite als ungeprüft markiert; auf true setzen, wenn eine Lehrkraft die Sprache geprüft hat.",
-  "glossary": {},
-  "entries": {}
+  "glossary": {
+    "Adjektiv": {
+      "en": "adjective",
+      "uk": "прикметник",
+      "ar": "الصفة",
+      "tr": "sıfat"
+    },
+    "Adjektivdeklination": {
+      "uk": "відмінювання прикметників",
+      "tr": "sıfat çekimi"
+    },
+    "Adjektivendung": {
+      "en": "adjective ending",
+      "uk": "закінчення прикметника",
+      "tr": "sıfat eki"
+    },
+    "Adverb": {
+      "en": "adverb",
+      "uk": "прислівник",
+      "ar": "الظرف",
+      "tr": "zarf"
+    },
+    "Akkusativ": {
+      "en": "accusative",
+      "uk": "знахідний відмінок",
+      "ar": "حالة النصب",
+      "tr": "-i hâli"
+    },
+    "Akkusativobjekt": {
+      "en": "accusative object",
+      "uk": "додаток у знахідному відмінку",
+      "ar": "المفعول به في حالة النصب",
+      "tr": "-i hâlindeki nesne"
+    },
+    "Aktiv": {
+      "en": "active",
+      "uk": "актив",
+      "ar": "المبني للمعلوم",
+      "tr": "etken"
+    },
+    "Artikel": {
+      "en": "article",
+      "uk": "артикль",
+      "ar": "الأداة",
+      "tr": "artikel"
+    },
+    "Artikelwort": {
+      "en": "article word",
+      "uk": "артиклеве слово",
+      "ar": "كلمة الأداة",
+      "tr": "artikel sözcüğü"
+    },
+    "Aussagesatz": {
+      "en": "statement",
+      "uk": "розповідне речення",
+      "ar": "الجملة الخبرية",
+      "tr": "düz cümle"
+    },
+    "bestimmter Artikel": {
+      "en": "definite article",
+      "uk": "означений артикль",
+      "ar": "أداة التعريف",
+      "tr": "belirli artikel"
+    },
+    "Bewegungsverb": {
+      "en": "verb of movement",
+      "uk": "дієслово руху"
+    },
+    "Bezugswort": {
+      "en": "the word it refers to",
+      "tr": "bağlı olduğu sözcük"
+    },
+    "Dativ": {
+      "en": "dative",
+      "uk": "давальний відмінок",
+      "ar": "حالة الجر",
+      "tr": "-e hâli"
+    },
+    "Dativpronomen": {
+      "en": "dative pronoun"
+    },
+    "Deklination": {
+      "uk": "відмінювання"
+    },
+    "deklinieren": {
+      "en": "decline",
+      "uk": "відмінювати",
+      "ar": "يُصرَّف",
+      "tr": "çekimlemek"
+    },
+    "direktiv": {
+      "en": "directional"
+    },
+    "Endung": {
+      "en": "ending",
+      "uk": "закінчення",
+      "ar": "النهاية",
+      "tr": "ek"
+    },
+    "feminin": {
+      "en": "feminine",
+      "uk": "жіночий рід",
+      "ar": "مؤنث",
+      "tr": "dişil"
+    },
+    "Fokuspartikel": {
+      "en": "focus particle",
+      "uk": "фокусна частка",
+      "ar": "أداة التركيز",
+      "tr": "odak parçacığı"
+    },
+    "Fragewort": {
+      "en": "question word",
+      "uk": "питальне слово",
+      "ar": "أداة الاستفهام",
+      "tr": "soru sözcüğü"
+    },
+    "Fremdwort": {
+      "uk": "іншомовне слово"
+    },
+    "Futur I": {
+      "en": "future tense",
+      "uk": "майбутній час I",
+      "ar": "المستقبل",
+      "tr": "gelecek zaman"
+    },
+    "Gegenwart": {
+      "en": "present"
+    },
+    "Genitiv": {
+      "en": "genitive",
+      "uk": "родовий відмінок",
+      "ar": "حالة الإضافة",
+      "tr": "-in hâli"
+    },
+    "Genitiv-s": {
+      "tr": "-in hâlindeki -s"
+    },
+    "Genus": {
+      "en": "gender",
+      "ar": "الجنس",
+      "tr": "cins"
+    },
+    "Genus / Geschlecht": {
+      "uk": "рід"
+    },
+    "Hauptsatz": {
+      "en": "main clause",
+      "uk": "головне речення",
+      "ar": "الجملة الرئيسية",
+      "tr": "ana cümle"
+    },
+    "Hilfsverb": {
+      "en": "auxiliary verb",
+      "uk": "допоміжне дієслово",
+      "ar": "الفعل المساعد",
+      "tr": "yardımcı fiil"
+    },
+    "Imperativ": {
+      "en": "imperative",
+      "uk": "наказовий спосіб",
+      "ar": "صيغة الأمر",
+      "tr": "emir kipi"
+    },
+    "indirekte Frage": {
+      "en": "indirect question",
+      "uk": "непряме питання",
+      "ar": "السؤال غير المباشر",
+      "tr": "dolaylı soru"
+    },
+    "Infinitiv": {
+      "en": "infinitive",
+      "uk": "інфінітив",
+      "ar": "المصدر",
+      "tr": "mastar"
+    },
+    "Infinitivsatz": {
+      "en": "infinitive clause",
+      "uk": "інфінітивна конструкція",
+      "ar": "جملة المصدر",
+      "tr": "mastar cümlesi"
+    },
+    "Ja/Nein-Frage": {
+      "en": "yes/no question",
+      "uk": "загальне питання",
+      "ar": "سؤال نعم/لا",
+      "tr": "evet/hayır sorusu"
+    },
+    "Kasus": {
+      "uk": "відмінок",
+      "ar": "الحالة الإعرابية",
+      "tr": "hâl"
+    },
+    "Kasus / Fall": {
+      "en": "case"
+    },
+    "Komparativ": {
+      "uk": "вищий ступінь порівняння",
+      "ar": "صيغة المقارنة",
+      "tr": "karşılaştırma derecesi"
+    },
+    "Komparativ / Steigerung": {
+      "en": "comparative"
+    },
+    "Konjugation": {
+      "uk": "дієвідмінювання"
+    },
+    "konjugieren": {
+      "uk": "змінювати за особами",
+      "tr": "çekimlemek"
+    },
+    "konjugiertes Verb": {
+      "en": "conjugated verb",
+      "uk": "дієслово в особовій формі",
+      "ar": "الفعل المصرَّف",
+      "tr": "çekimli fiil"
+    },
+    "Konjunktiv": {
+      "en": "subjunctive",
+      "uk": "умовний спосіб",
+      "ar": "صيغة التمني",
+      "tr": "dilek kipi"
+    },
+    "Konjunktiv II": {
+      "en": "subjunctive II",
+      "uk": "умовний спосіб (Konjunktiv II)",
+      "ar": "صيغة التمني",
+      "tr": "dilek kipi II"
+    },
+    "Konnektor": {
+      "en": "connector",
+      "uk": "сполучник",
+      "ar": "أداة الربط",
+      "tr": "bağlaç"
+    },
+    "maskulin": {
+      "en": "masculine",
+      "uk": "чоловічий рід",
+      "ar": "مذكر",
+      "tr": "eril"
+    },
+    "Mittelfeld": {
+      "en": "middle field",
+      "uk": "середнє поле речення",
+      "ar": "وسط الجملة",
+      "tr": "orta alan"
+    },
+    "modal": {
+      "uk": "обставина способу дії"
+    },
+    "Modalangabe": {
+      "en": "manner phrase",
+      "uk": "обставина способу дії",
+      "ar": "ظرف الطريقة",
+      "tr": "tarz bildiren öge"
+    },
+    "Modalpartikel": {
+      "en": "modal particle",
+      "uk": "модальна частка",
+      "ar": "أداة الصيغة",
+      "tr": "kip parçacığı"
+    },
+    "Modalverb": {
+      "en": "modal verb",
+      "uk": "модальне дієслово",
+      "ar": "فعل الصيغة",
+      "tr": "modal fiil"
+    },
+    "n-Deklination": {
+      "en": "n-declension",
+      "ar": "تصريف n",
+      "tr": "n-çekimi"
+    },
+    "N-Deklination": {
+      "uk": "n-відмінювання"
+    },
+    "Nebensatz": {
+      "en": "subordinate clause",
+      "uk": "підрядне речення",
+      "ar": "الجملة الفرعية",
+      "tr": "yan cümle"
+    },
+    "Negation": {
+      "uk": "заперечення"
+    },
+    "Negation / Verneinung": {
+      "en": "negation"
+    },
+    "neutral": {
+      "en": "neuter",
+      "uk": "середній рід",
+      "ar": "محايد",
+      "tr": "nötr"
+    },
+    "Nomen": {
+      "en": "noun",
+      "uk": "іменник",
+      "ar": "الاسم",
+      "tr": "isim"
+    },
+    "Nomen-Verb-Verbindung": {
+      "en": "noun-verb combination",
+      "uk": "іменно-дієслівне сполучення",
+      "ar": "التركيب الاسمي الفعلي",
+      "tr": "isim-fiil kalıbı"
+    },
+    "Nominativ": {
+      "en": "nominative",
+      "uk": "називний відмінок",
+      "ar": "حالة الرفع",
+      "tr": "yalın hâl"
+    },
+    "Numerus": {
+      "en": "number",
+      "uk": "число",
+      "ar": "العدد",
+      "tr": "sayı"
+    },
+    "Objekt": {
+      "en": "object",
+      "uk": "додаток",
+      "tr": "nesne"
+    },
+    "Ortsangabe": {
+      "en": "place phrase",
+      "uk": "обставина місця",
+      "ar": "ظرف المكان",
+      "tr": "yer bildiren öge"
+    },
+    "Partikel": {
+      "uk": "частка",
+      "tr": "parçacık"
+    },
+    "Partizip": {
+      "ar": "التصريف الثالث"
+    },
+    "Partizip I": {
+      "en": "present participle",
+      "uk": "дієприкметник I",
+      "ar": "اسم الفاعل",
+      "tr": "ortaç I"
+    },
+    "Partizip II": {
+      "en": "past participle",
+      "uk": "дієприкметник II",
+      "ar": "التصريف الثالث",
+      "tr": "ortaç II"
+    },
+    "Passiv": {
+      "en": "passive",
+      "uk": "пасив",
+      "ar": "المبني للمجهول",
+      "tr": "edilgen yapı"
+    },
+    "Perfekt": {
+      "en": "perfect tense",
+      "uk": "перфект",
+      "ar": "الماضي التام",
+      "tr": "bileşik geçmiş zaman"
+    },
+    "Plural": {
+      "en": "plural",
+      "uk": "множина",
+      "ar": "الجمع",
+      "tr": "çoğul"
+    },
+    "Plusquamperfekt": {
+      "en": "past perfect",
+      "uk": "плюсквамперфект",
+      "ar": "الماضي الأسبق",
+      "tr": "önceki geçmiş zaman"
+    },
+    "Position 1": {
+      "en": "position 1",
+      "uk": "позиція 1",
+      "ar": "الموقع 1",
+      "tr": "1. konum"
+    },
+    "Position 2": {
+      "en": "position 2",
+      "uk": "позиція 2",
+      "ar": "الموقع 2",
+      "tr": "2. konum"
+    },
+    "Possessivartikel": {
+      "en": "possessive article",
+      "uk": "присвійний артикль",
+      "ar": "أداة الملكية",
+      "tr": "iyelik artikeli"
+    },
+    "Präfix": {
+      "uk": "префікс",
+      "ar": "السابقة",
+      "tr": "ön ek"
+    },
+    "Präfix / Vorsilbe": {
+      "en": "prefix"
+    },
+    "Präposition": {
+      "en": "preposition",
+      "uk": "прийменник",
+      "ar": "حرف الجر",
+      "tr": "edat"
+    },
+    "Präsens": {
+      "en": "present tense",
+      "uk": "теперішній час",
+      "ar": "المضارع",
+      "tr": "şimdiki zaman"
+    },
+    "Präteritum": {
+      "en": "simple past",
+      "uk": "простий минулий час",
+      "ar": "الماضي البسيط",
+      "tr": "yalın geçmiş zaman"
+    },
+    "Pronomen": {
+      "en": "pronoun",
+      "uk": "займенник",
+      "ar": "الضمير",
+      "tr": "zamir"
+    },
+    "regelmäßig": {
+      "en": "regular",
+      "tr": "düzenli"
+    },
+    "regelmäßiges Verb": {
+      "uk": "правильне дієслово"
+    },
+    "Relativpronomen": {
+      "en": "relative pronoun",
+      "uk": "відносний займенник",
+      "ar": "الضمير الموصول",
+      "tr": "ilgi zamiri"
+    },
+    "Relativsatz": {
+      "en": "relative clause",
+      "uk": "означальне підрядне речення",
+      "ar": "الجملة الموصولة",
+      "tr": "ilgi cümlesi"
+    },
+    "Satzbrücke": {
+      "en": "sentence bridge",
+      "uk": "рамка речення",
+      "ar": "جسر الجملة",
+      "tr": "cümle köprüsü"
+    },
+    "Satzende": {
+      "en": "end of the sentence",
+      "uk": "кінець речення",
+      "ar": "نهاية الجملة",
+      "tr": "cümle sonu"
+    },
+    "Satznegation": {
+      "en": "sentence negation",
+      "uk": "загальне заперечення",
+      "ar": "نفي الجملة",
+      "tr": "cümle olumsuzluğu"
+    },
+    "Satzteil": {
+      "en": "sentence part",
+      "uk": "член речення",
+      "tr": "cümle ögesi"
+    },
+    "Singular": {
+      "en": "singular",
+      "uk": "однина",
+      "ar": "المفرد",
+      "tr": "tekil"
+    },
+    "situativ": {
+      "en": "location"
+    },
+    "Stamm": {
+      "en": "stem",
+      "uk": "основа",
+      "ar": "جذر الفعل",
+      "tr": "kök"
+    },
+    "Subjekt": {
+      "en": "subject",
+      "uk": "підмет",
+      "ar": "الفاعل",
+      "tr": "özne"
+    },
+    "Suffix": {
+      "en": "suffix",
+      "uk": "суфікс",
+      "ar": "اللاحقة",
+      "tr": "son ek"
+    },
+    "Teilnegation": {
+      "en": "partial negation",
+      "uk": "часткове заперечення",
+      "ar": "النفي الجزئي",
+      "tr": "kısmi olumsuzluk"
+    },
+    "temporal": {
+      "uk": "обставина часу"
+    },
+    "trennbares Verb": {
+      "en": "separable verb",
+      "uk": "відокремлюване дієслово",
+      "ar": "الفعل المنفصل",
+      "tr": "ayrılabilen fiil"
+    },
+    "Typ A / Typ B / Typ C": {
+      "en": "Typ A / Typ B / Typ C (kept as labels)"
+    },
+    "Umlaut": {
+      "en": "umlaut",
+      "uk": "умлаут",
+      "tr": "Umlaut"
+    },
+    "unbestimmter Artikel": {
+      "en": "indefinite article",
+      "uk": "неозначений артикль",
+      "ar": "أداة التنكير",
+      "tr": "belirsiz artikel"
+    },
+    "unregelmäßig": {
+      "en": "irregular",
+      "tr": "düzensiz"
+    },
+    "unregelmäßiges Verb": {
+      "uk": "неправильне дієслово"
+    },
+    "untrennbares Präfix": {
+      "en": "inseparable prefix",
+      "uk": "невідокремлюваний префікс",
+      "ar": "السابقة غير المنفصلة",
+      "tr": "ayrılamayan ön ek"
+    },
+    "Verb": {
+      "en": "verb",
+      "uk": "дієслово",
+      "ar": "الفعل",
+      "tr": "fiil"
+    },
+    "Vergangenheit": {
+      "en": "past",
+      "uk": "минуле"
+    },
+    "Verschmelzung": {
+      "en": "contraction",
+      "uk": "злиття",
+      "ar": "الدمج",
+      "tr": "kaynaşma"
+    },
+    "Vokal": {
+      "en": "vowel",
+      "uk": "голосний",
+      "ar": "حرف العلة",
+      "tr": "ünlü"
+    },
+    "Vorsilbe": {
+      "uk": "префікс",
+      "tr": "ön ek"
+    },
+    "Vorzeitigkeit": {
+      "en": "something happened earlier",
+      "uk": "передування"
+    },
+    "W-Frage": {
+      "en": "W-question",
+      "uk": "питання з питальним словом",
+      "ar": "سؤال W",
+      "tr": "W-sorusu"
+    },
+    "Wechselpräposition": {
+      "en": "two-way preposition",
+      "uk": "прийменник із двома відмінками",
+      "ar": "حرف الجر المتغيّر",
+      "tr": "değişken edat"
+    },
+    "Zeitangabe": {
+      "tr": "zaman bildiren öge"
+    },
+    "Zukunft": {
+      "en": "future"
+    },
+    "Zustandsverb": {
+      "en": "verb of state",
+      "uk": "дієслово стану"
+    },
+    "zweiteiliger Konnektor": {
+      "en": "two-part connector",
+      "uk": "парний сполучник"
+    },
+    "zweiter Verbteil": {
+      "en": "second verb part",
+      "uk": "друга частина дієслова",
+      "tr": "ikinci fiil parçası"
+    }
+  },
+  "entries": {
+    "adjektivdeklination": {
+      "reviewed": false,
+      "intro": {
+        "en": "The ending of the adjective does not depend on the noun, but on what comes before it. Three types — definite article, indefinite article, no article — and you know the pattern.",
+        "uk": "Закінчення прикметника залежить не від іменника, а від того, що стоїть перед ним. Три типи — означений артикль, неозначений артикль, без артикля — і схема засвоєна.",
+        "ar": "نهاية الصفة (Endung) لا تتعلق بالاسم (Nomen)، بل بما يأتي قبله. هناك ثلاثة أنواع — أداة التعريف (bestimmter Artikel)، أداة التنكير (unbestimmter Artikel)، بدون أداة — وبعدها يصبح النمط واضحاً.",
+        "tr": "Sıfatın eki isme göre değil, önünde ne olduğuna göre değişir. Üç tip var — belirli artikel, belirsiz artikel, artikel yok — ve kalıp oturur."
+      },
+      "qa": [
+        {
+          "en": "<strong>Typ A</strong> — after <em>der/die/das</em>: the article word already shows the case, so the adjective only gets <strong>-e</strong> or <strong>-en</strong>.",
+          "uk": "<strong>Typ A</strong> — після <em>der/die/das</em>: артиклеве слово вже показує відмінок, тому прикметник отримує лише <strong>-e</strong> або <strong>-en</strong>.",
+          "ar": "<strong>Typ A</strong> — بعد <em>der/die/das</em>: كلمة الأداة تُظهر الحالة الإعرابية (Kasus) مسبقاً، لذلك تأخذ الصفة فقط <strong>-e</strong> أو <strong>-en</strong>.",
+          "tr": "<strong>Typ A</strong> — <em>der/die/das</em> sonrası: artikel sözcüğü hâli (Kasus) zaten gösterir, sıfat yalnızca <strong>-e</strong> ya da <strong>-en</strong> alır."
+        },
+        {
+          "en": "<strong>Typ B</strong> — after <em>ein-/kein-/mein-</em>: where <em>ein</em> has no ending, the adjective must do the work (<em>ein hoh<strong>er</strong> Baum</em>).",
+          "uk": "<strong>Typ B</strong> — після <em>ein-/kein-/mein-</em>: там, де <em>ein</em> не має закінчення, цю роботу мусить виконати прикметник (<em>ein hoh<strong>er</strong> Baum</em>).",
+          "ar": "<strong>Typ B</strong> — بعد <em>ein-/kein-/mein-</em>: حيث لا تكون لـ<em>ein</em> نهاية، يجب أن تقوم الصفة بهذا العمل (<em>ein hoh<strong>er</strong> Baum</em>).",
+          "tr": "<strong>Typ B</strong> — <em>ein-/kein-/mein-</em> sonrası: <em>ein</em> ek almadığı yerde işi sıfat yapmak zorundadır (<em>ein hoh<strong>er</strong> Baum</em>)."
+        },
+        {
+          "en": "<strong>Typ C</strong> — without an article: the adjective carries the article ending itself (<em>alt<strong>er</strong> Wein</em>, <em>mit alt<strong>em</strong> Wein</em>).",
+          "uk": "<strong>Typ C</strong> — без артикля: прикметник сам отримує закінчення артикля (<em>alt<strong>er</strong> Wein</em>, <em>mit alt<strong>em</strong> Wein</em>).",
+          "ar": "<strong>Typ C</strong> — بدون أداة: الصفة نفسها تحمل نهاية الأداة (<em>alt<strong>er</strong> Wein</em>، <em>mit alt<strong>em</strong> Wein</em>).",
+          "tr": "<strong>Typ C</strong> — artikelsiz: sıfat artikel ekini kendisi taşır (<em>alt<strong>er</strong> Wein</em>, <em>mit alt<strong>em</strong> Wein</em>)."
+        }
+      ],
+      "note": {
+        "en": "Rule of thumb for Typ A: in the <em>nominative singular</em> (and accusative feminine/neuter) the ending is <em>-e</em> — everywhere else it is <em>-en</em>. In the <em>plural</em> it is always <em>-en</em> after every article word.",
+        "uk": "Просте правило для Typ A: у <em>називному відмінку однини (Nominativ)</em> (і в знахідному відмінку (Akkusativ) жіночого та середнього роду) стоїть <em>-e</em> — усюди інакше <em>-en</em>. У <em>множині</em> після будь-якого артиклевого слова завжди <em>-en</em>.",
+        "ar": "قاعدة عامة لـ Typ A: في <em>المفرد في حالة الرفع (Singular Nominativ)</em> (وفي حالة النصب (Akkusativ) للمؤنث والمحايد) تأتي <em>-e</em> — وفي كل مكان آخر <em>-en</em>. في <em>الجمع (Plural)</em> تأتي دائماً <em>-en</em> بعد أي كلمة أداة.",
+        "tr": "Typ A için pratik kural: <em>tekil yalın hâlde (Singular Nominativ)</em> (ve dişil/nötr -i hâlinde (Akkusativ)) <em>-e</em> gelir — diğer her yerde <em>-en</em>. <em>Çoğulda (Plural)</em> her artikel sözcüğünden sonra hep <em>-en</em> gelir."
+      }
+    },
+    "akkusativ": {
+      "reviewed": false,
+      "intro": {
+        "en": "Nominativ → Akkusativ: der → den, die → die, das → das, die (Pl.) → die. After haben, brauchen, sehen.",
+        "ar": "Nominativ → Akkusativ: der → den, die → die, das → das, die (Pl.) → die. بعد الأفعال haben و brauchen و sehen.",
+        "uk": "Nominativ → Akkusativ: der → den, die → die, das → das, die (Pl.) → die. Після haben, brauchen, sehen.",
+        "tr": "Nominativ → Akkusativ: der → den, die → die, das → das, die (Pl.) → die. haben, brauchen, sehen fiillerinden sonra."
+      },
+      "qa": [],
+      "note": null
+    },
+    "als-oder-wenn": {
+      "reviewed": false,
+      "intro": {
+        "en": "In many languages both are the same word — not in German. A single moment in the past is always „als“; everything repeated, conditional or in the future is „wenn“.",
+        "uk": "У багатьох мовах обидва слова перекладаються однаково — у німецькій ні. Одноразовий момент у минулому — це завжди „als“; усе, що повторюється, є умовою або стосується майбутнього, — це „wenn“.",
+        "ar": "في لغات كثيرة للكلمتين المعنى نفسه — أما في الألمانية فلا. اللحظة التي حدثت مرة واحدة في الماضي تكون دائماً „als“؛ وكل ما يتكرر أو يكون شرطاً أو في المستقبل يكون „wenn“.",
+        "tr": "Birçok dilde ikisi aynı sözcükle söylenir — Almancada değil. Geçmişte bir kez olan bir an her zaman „als“; tekrar eden, koşullu ya da gelecekteki her şey „wenn“."
+      },
+      "qa": [
+        {
+          "en": "<strong>als</strong> — a single, finished moment or period in the <em>past</em>.",
+          "uk": "<strong>als</strong> — один-єдиний завершений момент або період у <em>минулому</em>.",
+          "ar": "<strong>als</strong> — لحظة واحدة منتهية أو فترة زمنية واحدة في <em>الماضي</em>.",
+          "tr": "<strong>als</strong> — <em>geçmişte</em> tek, bitmiş bir an ya da zaman dilimi."
+        },
+        {
+          "en": "<strong>wenn</strong> — something that <em>repeats</em> („immer wenn“), or a <em>condition</em>.",
+          "uk": "<strong>wenn</strong> — те, що <em>повторюється</em> („immer wenn“), або <em>умова</em>.",
+          "ar": "<strong>wenn</strong> — شيء <em>يتكرر</em> („immer wenn“)، أو <em>شرط</em>.",
+          "tr": "<strong>wenn</strong> — <em>tekrar eden</em> bir şey („immer wenn“) ya da bir <em>koşul</em>."
+        },
+        {
+          "en": "<strong>wenn</strong> — everything in the <em>present and future</em>, even if it only happens once.",
+          "uk": "<strong>wenn</strong> — усе в <em>теперішньому й майбутньому</em>, навіть якщо це стається лише один раз.",
+          "ar": "<strong>wenn</strong> — كل ما هو في <em>الحاضر والمستقبل</em>، حتى لو حدث مرة واحدة فقط.",
+          "tr": "<strong>wenn</strong> — <em>şimdi ve gelecekte</em> olan her şey, sadece bir kez olsa bile."
+        }
+      ],
+      "note": {
+        "en": "Test: Does <em>immer wenn</em> fit in front of it? Then it is <strong>wenn</strong>. Is there a one-time expression of time like <em>gestern, letzte Woche, 1998</em> in the past? Then it is <strong>als</strong>. In both cases the conjugated verb goes at the <strong>end of the sentence</strong>.",
+        "uk": "Перевірка: чи можна поставити перед ним <em>immer wenn</em>? Тоді це <strong>wenn</strong>. Чи є тут одноразове позначення часу в минулому, як-от <em>gestern, letzte Woche, 1998</em>? Тоді це <strong>als</strong>. В обох випадках дієслово в особовій формі стоїть у <strong>кінці речення</strong>.",
+        "ar": "اختبار: هل تناسب <em>immer wenn</em> قبلها؟ إذن هي <strong>wenn</strong>. هل يوجد معها تحديد زمني لمرة واحدة في الماضي مثل <em>gestern, letzte Woche, 1998</em>؟ إذن هي <strong>als</strong>. في الحالتين يأتي الفعل المصرَّف في <strong>نهاية الجملة (Satzende)</strong>.",
+        "tr": "Test: Önüne <em>immer wenn</em> uyuyor mu? O zaman <strong>wenn</strong>. Geçmişte <em>gestern, letzte Woche, 1998</em> gibi tek seferlik bir zaman bilgisi var mı? O zaman <strong>als</strong>. İki durumda da çekimli fiil <strong>cümle sonunda (Satzende)</strong> durur."
+      }
+    },
+    "artikel": {
+      "reviewed": false,
+      "intro": {
+        "en": "Every German noun has a gender — and the gender is not in the word, but in the article in front of it. That is why you never learn „Tisch“, but always „der Tisch“.",
+        "uk": "Кожен німецький іменник має рід. Рід видно не в самому слові, а в артиклі перед ним. Тому ніколи не вчать просто „Tisch“, а завжди „der Tisch“.",
+        "ar": "كل اسم (Nomen) ألماني له جنس — والجنس ليس في الكلمة نفسها، بل في الأداة (Artikel) قبلها. لذلك لا نتعلم „Tisch“ أبداً، بل دائماً „der Tisch“.",
+        "tr": "Her Almanca ismin bir cinsiyeti vardır — ve cinsiyet sözcükte değil, önündeki artikelde görünür. Bu yüzden hiçbir zaman „Tisch“ değil, her zaman „der Tisch“ öğrenilir."
+      },
+      "qa": [
+        {
+          "en": "<strong>der / die / das</strong> — definite article. You already know <em>which one</em>: <em>der Baum</em> (exactly this one).",
+          "uk": "<strong>der / die / das</strong> — означений артикль. Ми вже знаємо, <em>який саме</em>: <em>der Baum</em> (саме це дерево).",
+          "ar": "<strong>der / die / das</strong> — أداة التعريف (bestimmter Artikel). نعرف <em>أيّ</em> واحد: <em>der Baum</em> (هذه الشجرة بالضبط).",
+          "tr": "<strong>der / die / das</strong> — belirli artikel. <em>Hangisi</em> olduğunu biliyoruz: <em>der Baum</em> (tam bu ağaç)."
+        },
+        {
+          "en": "<strong>ein / eine</strong> — indefinite article. New in the conversation, any one: <em>ein Baum</em>.",
+          "uk": "<strong>ein / eine</strong> — неозначений артикль. Щось нове в розмові, якийсь один: <em>ein Baum</em>.",
+          "ar": "<strong>ein / eine</strong> — أداة التنكير (unbestimmter Artikel). شيء جديد في الحديث، أيّ واحد: <em>ein Baum</em>.",
+          "tr": "<strong>ein / eine</strong> — belirsiz artikel. Konuşmada yeni, herhangi biri: <em>ein Baum</em>."
+        },
+        {
+          "en": "In the <strong>plural</strong> the definite article is always <em>die</em> — <em>die Bäume, die Frauen, die Kinder</em>.",
+          "uk": "У <strong>множині</strong> означений артикль завжди <em>die</em> — <em>die Bäume, die Frauen, die Kinder</em>.",
+          "ar": "في <strong>الجمع (Plural)</strong> تكون أداة التعريف دائماً <em>die</em> — <em>die Bäume, die Frauen, die Kinder</em>.",
+          "tr": "<strong>Çoğulda (Plural)</strong> belirli artikel her zaman <em>die</em> olur — <em>die Bäume, die Frauen, die Kinder</em>."
+        },
+        {
+          "en": "There is no indefinite article in the plural: <em>ein Baum → Bäume</em>, with no article at all.",
+          "uk": "Неозначеного артикля в множині немає: <em>ein Baum → Bäume</em>, зовсім без артикля.",
+          "ar": "لا توجد أداة تنكير في الجمع: <em>ein Baum → Bäume</em>، بدون أي أداة.",
+          "tr": "Çoğulda belirsiz artikel yoktur: <em>ein Baum → Bäume</em>, hiç artikel olmadan."
+        }
+      ],
+      "note": {
+        "en": "The start of a fairy tale shows the difference in two sentences: <em>„Es war einmal <strong>ein</strong> König, der hatte <strong>eine</strong> Tochter. <strong>Diese</strong> Tochter war …“</em> — first introduce something with the indefinite article, then keep talking with the definite one. Also remember the contractions: <em>in dem = im, an dem = am, bei dem = beim, zu dem = zum, in das = ins, an das = ans</em>.",
+        "uk": "Початок казки показує різницю у двох реченнях: <em>„Es war einmal <strong>ein</strong> König, der hatte <strong>eine</strong> Tochter. <strong>Diese</strong> Tochter war …“</em> — спочатку щось нове з неозначеним артиклем, потім далі з означеним. Запам’ятайте також злиття: <em>in dem = im, an dem = am, bei dem = beim, zu dem = zum, in das = ins, an das = ans</em>.",
+        "ar": "بداية الحكاية الخرافية تُظهر الفرق في جملتين: <em>„Es war einmal <strong>ein</strong> König, der hatte <strong>eine</strong> Tochter. <strong>Diese</strong> Tochter war …“</em> — أولاً نقدّم الشيء بأداة التنكير، ثم نتابع الكلام بأداة التعريف. احفظوا أيضاً الدمج: <em>in dem = im, an dem = am, bei dem = beim, zu dem = zum, in das = ins, an das = ans</em>.",
+        "tr": "Masalların başlangıcı farkı iki cümlede gösterir: <em>„Es war einmal <strong>ein</strong> König, der hatte <strong>eine</strong> Tochter. <strong>Diese</strong> Tochter war …“</em> — önce belirsiz artikelle tanıtılır, sonra belirli artikelle devam edilir. Kaynaşmaları da aklınızda tutun: <em>in dem = im, an dem = am, bei dem = beim, zu dem = zum, in das = ins, an das = ans</em>."
+      }
+    },
+    "dativ": {
+      "reviewed": false,
+      "intro": {
+        "en": "Dative pronouns: ich→mir, du→dir, er/es→ihm, sie→ihr, wir→uns, ihr→euch, sie/Sie→ihnen/Ihnen. Definite article: der/das→dem, die→der.",
+        "uk": "Займенники в давальному відмінку (Dativ): ich→mir, du→dir, er/es→ihm, sie→ihr, wir→uns, ihr→euch, sie/Sie→ihnen/Ihnen. Означений артикль: der/das→dem, die→der.",
+        "ar": "ضمائر حالة الجر (Dativ): ich→mir, du→dir, er/es→ihm, sie→ihr, wir→uns, ihr→euch, sie/Sie→ihnen/Ihnen. أداة التعريف (bestimmter Artikel): der/das→dem, die→der.",
+        "tr": "-e hâli (Dativ) zamirleri: ich→mir, du→dir, er/es→ihm, sie→ihr, wir→uns, ihr→euch, sie/Sie→ihnen/Ihnen. Belirli artikel: der/das→dem, die→der."
+      },
+      "qa": [],
+      "note": null
+    },
+    "fokuspartikeln": {
+      "reviewed": false,
+      "intro": {
+        "en": "„Auch ich schenke dir Blumen“ and „Ich schenke dir auch Blumen“ say two different things. Focus particles stand directly before the sentence part they highlight — and that changes the meaning.",
+        "uk": "„Auch ich schenke dir Blumen“ і „Ich schenke dir auch Blumen“ означають різне. Фокусні частки стоять безпосередньо перед членом речення, який вони виділяють, — і це змінює зміст.",
+        "ar": "„Auch ich schenke dir Blumen“ و„Ich schenke dir auch Blumen“ تقولان شيئين مختلفين. تقف أدوات التركيز (Fokuspartikeln) مباشرة قبل جزء الجملة الذي تُبرزه — وهذا يغيّر المعنى.",
+        "tr": "„Auch ich schenke dir Blumen“ ile „Ich schenke dir auch Blumen“ iki farklı şey söyler. Odak parçacıkları (Fokuspartikeln) vurguladıkları cümle ögesinin hemen önünde durur — ve bu anlamı değiştirir."
+      },
+      "qa": [
+        {
+          "en": "If <em>auch</em> refers to the <strong>whole sentence</strong>, it has the same position as <em>nicht</em> — or stands directly before it.",
+          "uk": "Якщо <em>auch</em> стосується <strong>усього речення</strong>, воно стоїть там само, де й <em>nicht</em>, — або безпосередньо перед ним.",
+          "ar": "إذا كانت <em>auch</em> تتعلق بـ<strong>الجملة كلها</strong>، فلها الموقع نفسه الذي لـ<em>nicht</em> — أو تقف مباشرة قبلها.",
+          "tr": "<em>auch</em> <strong>bütün cümleye</strong> bağlıysa, <em>nicht</em> ile aynı konumda durur — ya da hemen onun önünde."
+        },
+        {
+          "en": "As a <strong>focus particle</strong>, <em>auch</em> stands directly <strong>before</strong> the sentence part it highlights. This part is stressed when you speak.",
+          "uk": "Як <strong>фокусна частка</strong> <em>auch</em> стоїть безпосередньо <strong>перед</strong> членом речення, який воно виділяє. Цю частину вимовляють із наголосом.",
+          "ar": "بوصفها <strong>أداة تركيز (Fokuspartikel)</strong> تقف <em>auch</em> مباشرة <strong>قبل</strong> جزء الجملة الذي تُبرزه. ويُنطق هذا الجزء بنبرة قوية.",
+          "tr": "<strong>Odak parçacığı (Fokuspartikel)</strong> olarak <em>auch</em>, vurguladığı cümle ögesinin hemen <strong>önünde</strong> durur. Bu öge vurgulu söylenir."
+        },
+        {
+          "en": "Other particles stand in the same place: <em>ebenfalls, nur, bloß, lediglich, sogar, selbst, gerade, ausgerechnet, insbesondere</em>.",
+          "uk": "Інші частки стоять на тому самому місці: <em>ebenfalls, nur, bloß, lediglich, sogar, selbst, gerade, ausgerechnet, insbesondere</em>.",
+          "ar": "أدوات أخرى تقف في المكان نفسه: <em>ebenfalls, nur, bloß, lediglich, sogar, selbst, gerade, ausgerechnet, insbesondere</em>.",
+          "tr": "Başka parçacıklar da aynı yerde durur: <em>ebenfalls, nur, bloß, lediglich, sogar, selbst, gerade, ausgerechnet, insbesondere</em>."
+        },
+        {
+          "en": "<em>auch</em> and the other focus particles <strong>cannot stand alone in position 1</strong> — only together with their sentence part: <em>Auch ich schenke …</em>",
+          "uk": "<em>auch</em> та інші фокусні частки <strong>не можуть стояти самі на позиції 1</strong> — лише разом зі своїм членом речення: <em>Auch ich schenke …</em>",
+          "ar": "لا يمكن أن تقف <em>auch</em> وأدوات التركيز الأخرى <strong>وحدها في الموقع 1 (Position 1)</strong> — بل فقط مع جزء الجملة التابع لها: <em>Auch ich schenke …</em>",
+          "tr": "<em>auch</em> ve diğer odak parçacıkları <strong>1. konumda (Position 1) tek başına duramaz</strong> — yalnızca kendi cümle ögeleriyle birlikte: <em>Auch ich schenke …</em>"
+        }
+      ],
+      "note": {
+        "en": "The same memory aid as for <em>nicht</em>, just with <em>auch</em>: <strong>te-ka-<span class=\"vp-verb\">auch</span>-nicht-mo-lo</strong>. <em>Ich konnte meinen Vater gestern dank deiner Hilfe <strong>auch</strong> pünktlich am Bahnhof abholen.</em> If <em>nicht</em> is also in the sentence, <em>auch</em> comes directly before it: <em>Ich kann mich heute <strong>auch nicht</strong> um meinen Kollegen kümmern.</em> Do not confuse this with the <strong>modal particle</strong> <em>auch</em> (<em>Warum hast du auch nicht aufgepasst!</em>) — that is a different function.",
+        "uk": "Та сама підказка, що й для <em>nicht</em>, тільки з <em>auch</em>: <strong>te-ka-<span class=\"vp-verb\">auch</span>-nicht-mo-lo</strong>. <em>Ich konnte meinen Vater gestern dank deiner Hilfe <strong>auch</strong> pünktlich am Bahnhof abholen.</em> Якщо в реченні є ще й <em>nicht</em>, <em>auch</em> стоїть безпосередньо перед ним: <em>Ich kann mich heute <strong>auch nicht</strong> um meinen Kollegen kümmern.</em> Не плутайте з <strong>модальною часткою</strong> <em>auch</em> (<em>Warum hast du auch nicht aufgepasst!</em>) — це інша функція.",
+        "ar": "وسيلة الحفظ نفسها كما مع <em>nicht</em>، لكن مع <em>auch</em>: <strong>te-ka-<span class=\"vp-verb\">auch</span>-nicht-mo-lo</strong>. <em>Ich konnte meinen Vater gestern dank deiner Hilfe <strong>auch</strong> pünktlich am Bahnhof abholen.</em> إذا كانت <em>nicht</em> موجودة في الجملة، تأتي <em>auch</em> مباشرة قبلها: <em>Ich kann mich heute <strong>auch nicht</strong> um meinen Kollegen kümmern.</em> لا تخلطوا بينها وبين <strong>أداة الصيغة (Modalpartikel)</strong> <em>auch</em> (<em>Warum hast du auch nicht aufgepasst!</em>) — فهذه وظيفة أخرى.",
+        "tr": "<em>nicht</em> için kullanılan hatırlatıcının aynısı, sadece <em>auch</em> ile: <strong>te-ka-<span class=\"vp-verb\">auch</span>-nicht-mo-lo</strong>. <em>Ich konnte meinen Vater gestern dank deiner Hilfe <strong>auch</strong> pünktlich am Bahnhof abholen.</em> Cümlede <em>nicht</em> de varsa, <em>auch</em> hemen onun önüne gelir: <em>Ich kann mich heute <strong>auch nicht</strong> um meinen Kollegen kümmern.</em> <strong>Kip parçacığı (Modalpartikel)</strong> olan <em>auch</em> ile karıştırmayın (<em>Warum hast du auch nicht aufgepasst!</em>) — o başka bir işlevdir."
+      }
+    },
+    "imperativ": {
+      "reviewed": false,
+      "intro": {
+        "en": "Requests, instructions, tips: the imperative puts the verb at the start. With du the pronoun disappears, with Sie it stays — and a bitte makes everything friendlier.",
+        "uk": "Прохання, вказівки, поради: наказовий спосіб (Imperativ) ставить дієслово на початок. З du займенник зникає, із Sie — залишається. А bitte робить усе ввічливішим.",
+        "ar": "طلبات، تعليمات، نصائح: صيغة الأمر (Imperativ) تضع الفعل في البداية. مع du يسقط الضمير، ومع Sie يبقى — وكلمة bitte تجعل كل شيء ألطف.",
+        "tr": "Rica, talimat, öneri: Emir kipi (Imperativ) fiili başa koyar. du ile zamir düşer, Sie ile kalır — ve bir bitte her şeyi daha kibar yapar."
+      },
+      "qa": [
+        {
+          "en": "<strong>du</strong>: the du form without <em>du</em> and without <em>-st</em>: <em>du trinkst → Trink! du nimmst → Nimm!</em>",
+          "uk": "<strong>du</strong>: форма для du без <em>du</em> і без <em>-st</em>: <em>du trinkst → Trink! du nimmst → Nimm!</em>",
+          "ar": "<strong>du</strong>: صيغة du بدون <em>du</em> وبدون <em>-st</em>: <em>du trinkst → Trink! du nimmst → Nimm!</em>",
+          "tr": "<strong>du</strong>: <em>du</em> olmadan ve <em>-st</em> olmadan du-biçimi: <em>du trinkst → Trink! du nimmst → Nimm!</em>"
+        },
+        {
+          "en": "<strong>ihr</strong>: the ihr form without <em>ihr</em>: <em>ihr trinkt → Trinkt! ihr nehmt → Nehmt!</em>",
+          "uk": "<strong>ihr</strong>: форма для ihr без <em>ihr</em>: <em>ihr trinkt → Trinkt! ihr nehmt → Nehmt!</em>",
+          "ar": "<strong>ihr</strong>: صيغة ihr بدون <em>ihr</em>: <em>ihr trinkt → Trinkt! ihr nehmt → Nehmt!</em>",
+          "tr": "<strong>ihr</strong>: <em>ihr</em> olmadan ihr-biçimi: <em>ihr trinkt → Trinkt! ihr nehmt → Nehmt!</em>"
+        },
+        {
+          "en": "<strong>Sie</strong>: verb + <em>Sie</em>, the pronoun stays: <em>Trinken Sie! Nehmen Sie Platz!</em>",
+          "uk": "<strong>Sie</strong>: дієслово + <em>Sie</em>, займенник залишається: <em>Trinken Sie! Nehmen Sie Platz!</em>",
+          "ar": "<strong>Sie</strong>: الفعل + <em>Sie</em>، والضمير يبقى: <em>Trinken Sie! Nehmen Sie Platz!</em>",
+          "tr": "<strong>Sie</strong>: fiil + <em>Sie</em>, zamir kalır: <em>Trinken Sie! Nehmen Sie Platz!</em>"
+        },
+        {
+          "en": "The umlaut <strong>a → ä disappears</strong>: <em>du fährst → Fahr! du schläfst → Schlaf!</em> The change <strong>e → i stays</strong>: <em>Lies! Gib! Iss! Sprich!</em>",
+          "uk": "Умлаут <strong>a → ä зникає</strong>: <em>du fährst → Fahr! du schläfst → Schlaf!</em> Заміна <strong>e → i залишається</strong>: <em>Lies! Gib! Iss! Sprich!</em>",
+          "ar": "الـ Umlaut <strong>a → ä يسقط</strong>: <em>du fährst → Fahr! du schläfst → Schlaf!</em> أما التغيير <strong>e → i فيبقى</strong>: <em>Lies! Gib! Iss! Sprich!</em>",
+          "tr": "Umlaut <strong>a → ä gider</strong>: <em>du fährst → Fahr! du schläfst → Schlaf!</em> Ünlü değişimi <strong>e → i kalır</strong>: <em>Lies! Gib! Iss! Sprich!</em>"
+        },
+        {
+          "en": "<strong>sein</strong> is different again: <em>Sei ruhig! Seid ruhig! Seien Sie ruhig!</em>",
+          "uk": "<strong>sein</strong> знову має інші форми: <em>Sei ruhig! Seid ruhig! Seien Sie ruhig!</em>",
+          "ar": "<strong>sein</strong> مختلف مرة أخرى: <em>Sei ruhig! Seid ruhig! Seien Sie ruhig!</em>",
+          "tr": "<strong>sein</strong> yine farklıdır: <em>Sei ruhig! Seid ruhig! Seien Sie ruhig!</em>"
+        }
+      ],
+      "note": {
+        "en": "With <strong>separable verbs</strong> the prefix moves to the end: <em>Mach das Fenster <strong>auf</strong>! Steh <strong>auf</strong>!</em> And with <em>bitte</em>, <em>doch</em> or <em>mal</em> an imperative does not sound like an order: <em>Komm doch mal vorbei! Setzen Sie sich bitte.</em>",
+        "uk": "У <strong>відокремлюваних дієсловах</strong> префікс іде в кінець: <em>Mach das Fenster <strong>auf</strong>! Steh <strong>auf</strong>!</em> А з <em>bitte</em>, <em>doch</em> або <em>mal</em> наказ не звучить як команда: <em>Komm doch mal vorbei! Setzen Sie sich bitte.</em>",
+        "ar": "في <strong>الأفعال المنفصلة (trennbare Verben)</strong> تنتقل السابقة (Präfix) إلى النهاية: <em>Mach das Fenster <strong>auf</strong>! Steh <strong>auf</strong>!</em> ومع <em>bitte</em> أو <em>doch</em> أو <em>mal</em> لا تبدو صيغة الأمر كأنها أمر: <em>Komm doch mal vorbei! Setzen Sie sich bitte.</em>",
+        "tr": "<strong>Ayrılabilen fiillerde (trennbare Verben)</strong> ön ek sona gider: <em>Mach das Fenster <strong>auf</strong>! Steh <strong>auf</strong>!</em> <em>bitte</em>, <em>doch</em> ya da <em>mal</em> ile emir kipi bir komut gibi duyulmaz: <em>Komm doch mal vorbei! Setzen Sie sich bitte.</em>"
+      }
+    },
+    "indirekte-fragen": {
+      "reviewed": false,
+      "intro": {
+        "en": "„Wo ist der Bahnhof?“ sounds short. „Können Sie mir sagen, wo der Bahnhof ist?“ sounds polite — and turns the question into a subordinate clause with the verb at the end.",
+        "uk": "„Wo ist der Bahnhof?“ звучить коротко. „Können Sie mir sagen, wo der Bahnhof ist?“ звучить ввічливо — і робить із питання підрядне речення з дієсловом у кінці.",
+        "ar": "„Wo ist der Bahnhof?“ تبدو مقتضبة. „Können Sie mir sagen, wo der Bahnhof ist?“ تبدو مهذبة — وتجعل السؤال جملة فرعية (Nebensatz) فعلها في النهاية.",
+        "tr": "„Wo ist der Bahnhof?“ kısa ve sert duyulur. „Können Sie mir sagen, wo der Bahnhof ist?“ kibar duyulur — ve soruyu, fiili sonda olan bir yan cümleye (Nebensatz) çevirir."
+      },
+      "qa": [
+        {
+          "en": "A <strong>W-question</strong> becomes an indirect question with the same question word: <em>Wo ist der Bahnhof? → Wissen Sie, wo der Bahnhof ist?</em>",
+          "uk": "Із <strong>питання з питальним словом (W-Frage)</strong> непряме питання утворюють із тим самим питальним словом: <em>Wo ist der Bahnhof? → Wissen Sie, wo der Bahnhof ist?</em>",
+          "ar": "من <strong>سؤال W (W-Frage)</strong> نصنع السؤال غير المباشر بأداة الاستفهام نفسها: <em>Wo ist der Bahnhof? → Wissen Sie, wo der Bahnhof ist?</em>",
+          "tr": "Bir <strong>W-sorusu (W-Frage)</strong> aynı soru sözcüğüyle dolaylı soru olur: <em>Wo ist der Bahnhof? → Wissen Sie, wo der Bahnhof ist?</em>"
+        },
+        {
+          "en": "A <strong>yes/no question</strong> becomes an indirect question with <em>ob</em>: <em>Ist es noch weit? → Wissen Sie, ob es noch weit ist?</em>",
+          "uk": "Із <strong>загального питання (Ja/Nein-Frage)</strong> його утворюють за допомогою <em>ob</em>: <em>Ist es noch weit? → Wissen Sie, ob es noch weit ist?</em>",
+          "ar": "ومن <strong>سؤال نعم/لا (Ja/Nein-Frage)</strong> نصنعه بـ<em>ob</em>: <em>Ist es noch weit? → Wissen Sie, ob es noch weit ist?</em>",
+          "tr": "Bir <strong>evet/hayır sorusu (Ja/Nein-Frage)</strong> <em>ob</em> ile dolaylı soru olur: <em>Ist es noch weit? → Wissen Sie, ob es noch weit ist?</em>"
+        },
+        {
+          "en": "The indirect question is a <strong>subordinate clause</strong> — the conjugated verb goes at the end, with a comma before the clause.",
+          "uk": "Непряме питання — це <strong>підрядне речення</strong>: дієслово в особовій формі стоїть у кінці, а перед реченням стоїть кома.",
+          "ar": "السؤال غير المباشر هو <strong>جملة فرعية (Nebensatz)</strong> — الفعل المصرَّف يأتي في النهاية، وقبلها فاصلة.",
+          "tr": "Dolaylı soru bir <strong>yan cümledir (Nebensatz)</strong> — çekimli fiil sonda durur, önünde virgül vardır."
+        },
+        {
+          "en": "A <strong>question word + preposition or noun</strong> also stays together at the front: <em>Hast du eine Idee, <strong>auf welchem Gleis</strong> der Zug heute abfährt?</em>",
+          "uk": "<strong>Питальне слово + прийменник або іменник</strong> також залишаються разом на початку: <em>Hast du eine Idee, <strong>auf welchem Gleis</strong> der Zug heute abfährt?</em>",
+          "ar": "كذلك <strong>أداة الاستفهام + حرف جر أو اسم</strong> تبقى معاً في البداية: <em>Hast du eine Idee, <strong>auf welchem Gleis</strong> der Zug heute abfährt?</em>",
+          "tr": "<strong>Soru sözcüğü + edat ya da isim</strong> de birlikte önde kalır: <em>Hast du eine Idee, <strong>auf welchem Gleis</strong> der Zug heute abfährt?</em>"
+        }
+      ],
+      "note": {
+        "en": "Indirect questions are mainly <strong>polite</strong> questions. Typical openings: <em>Wissen Sie, … · Können Sie mir sagen, … · Ich möchte gerne wissen, … · Ich habe keine Ahnung, … · Hast du dich informiert, … · Weißt du schon, …</em> If the opening itself is a question, there is a <strong>question mark</strong> at the end; with <em>Ich möchte wissen, …</em> there is a full stop.",
+        "uk": "Непрямі питання — це передусім <strong>ввічливі</strong> питання. Типові вступні фрази: <em>Wissen Sie, … · Können Sie mir sagen, … · Ich möchte gerne wissen, … · Ich habe keine Ahnung, … · Hast du dich informiert, … · Weißt du schon, …</em> Якщо вступна фраза сама є питанням, у кінці ставлять <strong>знак питання</strong>; після <em>Ich möchte wissen, …</em> ставлять крапку.",
+        "ar": "الأسئلة غير المباشرة هي قبل كل شيء أسئلة <strong>مهذبة</strong>. بدايات نموذجية: <em>Wissen Sie, … · Können Sie mir sagen, … · Ich möchte gerne wissen, … · Ich habe keine Ahnung, … · Hast du dich informiert, … · Weißt du schon, …</em> إذا كانت البداية نفسها جملة سؤال، تأتي في النهاية <strong>علامة استفهام</strong>؛ ومع <em>Ich möchte wissen, …</em> تأتي نقطة.",
+        "tr": "Dolaylı sorular her şeyden önce <strong>kibar</strong> sorulardır. Tipik girişler: <em>Wissen Sie, … · Können Sie mir sagen, … · Ich möchte gerne wissen, … · Ich habe keine Ahnung, … · Hast du dich informiert, … · Weißt du schon, …</em> Giriş kendisi bir soru cümlesiyse, sonda <strong>soru işareti</strong> gelir; <em>Ich möchte wissen, …</em> ile nokta gelir."
+      }
+    },
+    "infinitiv-mit-zu": {
+      "reviewed": false,
+      "intro": {
+        "en": "An infinitive clause has no subject of its own — the subject of the main clause applies. The „zu“ goes right at the end before the infinitive; with separable verbs it goes in the middle of the word.",
+        "uk": "Інфінітивна конструкція не має власного підмета — діє підмет головного речення. „zu“ стоїть у самому кінці перед інфінітивом, а у відокремлюваних дієсловах — усередині слова.",
+        "ar": "جملة المصدر (Infinitivsatz) ليس لها فاعل خاص بها — فاعلها هو فاعل الجملة الرئيسية (Hauptsatz). تأتي „zu“ في آخر الجملة قبل المصدر (Infinitiv) مباشرة، ومع الأفعال المنفصلة (trennbare Verben) في وسط الكلمة.",
+        "tr": "Mastar cümlesinin (Infinitivsatz) kendi öznesi yoktur — ana cümlenin (Hauptsatz) öznesi geçerlidir. „zu“ en sonda, mastarın (Infinitiv) önünde durur; ayrılabilen fiillerde sözcüğün ortasında."
+      },
+      "qa": [
+        {
+          "en": "<strong>um … zu</strong> names a goal and purpose. It contains the meaning of <em>wollen/möchten</em>: <em>Ich koche ohne Fett, um abzunehmen.</em>",
+          "uk": "<strong>um … zu</strong> називає мету. У ньому є значення <em>wollen/möchten</em>: <em>Ich koche ohne Fett, um abzunehmen.</em>",
+          "ar": "<strong>um … zu</strong> تذكر الهدف والغاية. فيها معنى <em>wollen/möchten</em>: <em>Ich koche ohne Fett, um abzunehmen.</em>",
+          "tr": "<strong>um … zu</strong> amacı ve hedefi bildirir. İçinde <em>wollen/möchten</em> anlamı vardır: <em>Ich koche ohne Fett, um abzunehmen.</em>"
+        },
+        {
+          "en": "<strong>anstatt … zu</strong> names the alternative that is <em>not</em> chosen: <em>Ich esse zu Hause Obst, anstatt ins Café zu gehen.</em>",
+          "uk": "<strong>anstatt … zu</strong> називає альтернативу, яку <em>не</em> обирають: <em>Ich esse zu Hause Obst, anstatt ins Café zu gehen.</em>",
+          "ar": "<strong>anstatt … zu</strong> تذكر البديل الذي <em>لا</em> نختاره: <em>Ich esse zu Hause Obst, anstatt ins Café zu gehen.</em>",
+          "tr": "<strong>anstatt … zu</strong> <em>seçilmeyen</em> alternatifi bildirir: <em>Ich esse zu Hause Obst, anstatt ins Café zu gehen.</em>"
+        },
+        {
+          "en": "<strong>ohne … zu</strong> names the expected result that does not happen: <em>Ich mache Sport, ohne abzunehmen.</em>",
+          "uk": "<strong>ohne … zu</strong> називає очікуваний наслідок, якого не настає: <em>Ich mache Sport, ohne abzunehmen.</em>",
+          "ar": "<strong>ohne … zu</strong> تذكر النتيجة المتوقعة التي لا تحدث: <em>Ich mache Sport, ohne abzunehmen.</em>",
+          "tr": "<strong>ohne … zu</strong> beklenen ama gerçekleşmeyen sonucu bildirir: <em>Ich mache Sport, ohne abzunehmen.</em>"
+        },
+        {
+          "en": "With <strong>separable verbs</strong> the <em>zu</em> slips between the prefix and the stem: <em>abnehmen → ab<strong>zu</strong>nehmen, anrufen → an<strong>zu</strong>rufen</em>.",
+          "uk": "У <strong>відокремлюваних дієсловах</strong> <em>zu</em> стає між префіксом і основою: <em>abnehmen → ab<strong>zu</strong>nehmen, anrufen → an<strong>zu</strong>rufen</em>.",
+          "ar": "في <strong>الأفعال المنفصلة (trennbare Verben)</strong> تدخل <em>zu</em> بين السابقة (Präfix) وجذر الفعل (Stamm): <em>abnehmen → ab<strong>zu</strong>nehmen, anrufen → an<strong>zu</strong>rufen</em>.",
+          "tr": "<strong>Ayrılabilen fiillerde (trennbare Verben)</strong> <em>zu</em> ön ek ile kök arasına girer: <em>abnehmen → ab<strong>zu</strong>nehmen, anrufen → an<strong>zu</strong>rufen</em>."
+        }
+      ],
+      "note": {
+        "en": "The basic condition: the infinitive clause has <strong>no subject</strong> — the subject of the main clause also applies there. If the subject is different, you need a subordinate clause: <em>Ich arbeite, <strong>um</strong> Geld <strong>zu</strong> verdienen</em> (ich = ich), but <em>Ich arbeite, <strong>damit</strong> meine Eltern glücklich sind</em> (ich ≠ meine Eltern). The same is true for <em>anstatt … zu</em> vs. <em>anstatt dass</em>.",
+        "uk": "Головна умова: в інфінітивній конструкції <strong>немає підмета</strong> — там діє підмет головного речення. Якщо підмет інший, потрібне підрядне речення: <em>Ich arbeite, <strong>um</strong> Geld <strong>zu</strong> verdienen</em> (ich = ich), але <em>Ich arbeite, <strong>damit</strong> meine Eltern glücklich sind</em> (ich ≠ meine Eltern). Те саме стосується <em>anstatt … zu</em> і <em>anstatt dass</em>.",
+        "ar": "الشرط الأساسي: في جملة المصدر (Infinitivsatz) <strong>لا يوجد فاعل</strong> — فاعل الجملة الرئيسية (Hauptsatz) هو فاعلها أيضاً. إذا كان الفاعل مختلفاً، نحتاج إلى جملة فرعية (Nebensatz): <em>Ich arbeite, <strong>um</strong> Geld <strong>zu</strong> verdienen</em> (ich = ich)، لكن <em>Ich arbeite, <strong>damit</strong> meine Eltern glücklich sind</em> (ich ≠ meine Eltern). والأمر نفسه ينطبق على <em>anstatt … zu</em> مقابل <em>anstatt dass</em>.",
+        "tr": "Temel koşul: Mastar cümlesinde (Infinitivsatz) <strong>özne yoktur</strong> — ana cümlenin (Hauptsatz) öznesi orada da geçerlidir. Özne farklıysa bir yan cümle (Nebensatz) gerekir: <em>Ich arbeite, <strong>um</strong> Geld <strong>zu</strong> verdienen</em> (ich = ich), ama <em>Ich arbeite, <strong>damit</strong> meine Eltern glücklich sind</em> (ich ≠ meine Eltern). Aynısı <em>anstatt … zu</em> ve <em>anstatt dass</em> için de geçerlidir."
+      }
+    },
+    "irgend": {
+      "reviewed": false,
+      "intro": {
+        "en": "You don't know exactly, or it doesn't matter: you simply put „irgend“ in front of a question word, the indefinite article or „welche“ — and the statement becomes pleasantly vague.",
+        "uk": "Точно невідомо, або це неважливо: „irgend“ просто додають перед питальним словом, перед неозначеним артиклем або перед „welche“ — і висловлювання стає приємно нечітким.",
+        "ar": "لا نعرف الشيء بالضبط، أو لا يهم: نضع „irgend“ ببساطة قبل أداة استفهام، أو قبل أداة التنكير (unbestimmter Artikel)، أو قبل „welche“ — فيصبح الكلام غامضاً بشكل لطيف.",
+        "tr": "Tam bilinmiyor ya da önemli değil: „irgend“ bir soru sözcüğünün, belirsiz artikelin ya da „welche“ sözcüğünün önüne eklenir — ve ifade hoş bir şekilde belirsiz olur."
+      },
+      "qa": [
+        {
+          "en": "<strong>irgend…</strong> means something unknown or random. I have no more exact information — or it doesn't matter to me.",
+          "uk": "<strong>irgend…</strong> означає: щось невідоме або будь-яке. У мене немає точнішої інформації — або мені це байдуже.",
+          "ar": "<strong>irgend…</strong> تعني: شيء غير معروف أو أيّ شيء كان. ليس لديّ معلومات أدق — أو لا يهمني ذلك.",
+          "tr": "<strong>irgend…</strong> şu demektir: bilinmeyen ya da herhangi bir şey. Daha kesin bilgim yok — ya da benim için önemli değil."
+        },
+        {
+          "en": "It combines with <strong>question words</strong> (<em>wer, was, wo, wann, wie, wohin, woher</em>), with the <strong>indefinite article</strong> and with <strong>welche</strong>.",
+          "uk": "Воно поєднується з <strong>питальними словами</strong> (<em>wer, was, wo, wann, wie, wohin, woher</em>), із <strong>неозначеним артиклем</strong> і з <strong>welche</strong>.",
+          "ar": "تتصل بـ<strong>أدوات الاستفهام</strong> (<em>wer, was, wo, wann, wie, wohin, woher</em>)، وبـ<strong>أداة التنكير (unbestimmter Artikel)</strong>، وبـ<strong>welche</strong>.",
+          "tr": "<strong>Soru sözcükleriyle</strong> (<em>wer, was, wo, wann, wie, wohin, woher</em>), <strong>belirsiz artikelle</strong> ve <strong>welche</strong> ile birleşir."
+        },
+        {
+          "en": "In the <strong>singular</strong>: <em>irgend + ein</em> (declined). In the <strong>plural</strong>: <em>irgend + welche</em> (declined).",
+          "uk": "В <strong>однині</strong>: <em>irgend + ein</em> (відмінюється). У <strong>множині</strong>: <em>irgend + welche</em> (відмінюється).",
+          "ar": "في <strong>المفرد (Singular)</strong>: <em>irgend + ein</em> (مع التصريف). في <strong>الجمع (Plural)</strong>: <em>irgend + welche</em> (مع التصريف).",
+          "tr": "<strong>Tekilde (Singular)</strong>: <em>irgend + ein</em> (çekimli). <strong>Çoğulda (Plural)</strong>: <em>irgend + welche</em> (çekimli)."
+        },
+        {
+          "en": "<em>irgend…</em> stands in exactly the place where the sentence part it replaces would stand: <em>irgendwann</em> for time, <em>irgendwie</em> for manner.",
+          "uk": "<em>irgend…</em> стоїть саме там, де стояв би член речення, який воно заміняє: <em>irgendwann</em> — як обставина часу, <em>irgendwie</em> — як обставина способу дії.",
+          "ar": "تقف <em>irgend…</em> في المكان نفسه الذي يقف فيه جزء الجملة الذي تحلّ محله: <em>irgendwann</em> للزمان، <em>irgendwie</em> للطريقة.",
+          "tr": "<em>irgend…</em>, yerini tuttuğu cümle ögesinin duracağı yerde durur: <em>irgendwann</em> zaman bildirir, <em>irgendwie</em> tarz bildirir."
+        }
+      ],
+      "note": {
+        "en": "<strong>irgendjemand, irgendwer</strong> and <strong>irgendeiner</strong> mean the same. Two tricky points: <em>irgendjemand</em> <strong>can</strong> be declined (<em>irgendjemanden</em>), <em>irgendeiner / irgendeine / irgendeins / irgendwelche</em> <strong>must</strong> be declined. And: <em>irgend…</em> belongs mainly to spoken language — depending on the tone, it can sound negative.",
+        "uk": "<strong>irgendjemand, irgendwer</strong> і <strong>irgendeiner</strong> означають те саме. Два підводні камені: <em>irgendjemand</em> <strong>можна</strong> відмінювати (<em>irgendjemanden</em>), а <em>irgendeiner / irgendeine / irgendeins / irgendwelche</em> <strong>треба</strong> відмінювати. І ще: <em>irgend…</em> належить переважно до усного мовлення — залежно від тону воно може звучати зневажливо.",
+        "ar": "<strong>irgendjemand, irgendwer</strong> و<strong>irgendeiner</strong> لها المعنى نفسه. نقطتان صعبتان: <em>irgendjemand</em> <strong>يمكن</strong> تصريفها (<em>irgendjemanden</em>)، أما <em>irgendeiner / irgendeine / irgendeins / irgendwelche</em> <strong>فيجب</strong> تصريفها. وأيضاً: <em>irgend…</em> تنتمي غالباً إلى اللغة المحكية — وحسب نبرة الصوت قد يكون فيها استخفاف.",
+        "tr": "<strong>irgendjemand, irgendwer</strong> ve <strong>irgendeiner</strong> aynı anlama gelir. İki tuzak: <em>irgendjemand</em> <strong>çekimlenebilir</strong> (<em>irgendjemanden</em>), <em>irgendeiner / irgendeine / irgendeins / irgendwelche</em> ise <strong>çekimlenmek zorundadır</strong>. Ayrıca: <em>irgend…</em> çoğunlukla konuşma diline aittir — ses tonuna göre küçümseyici duyulabilir."
+      }
+    },
+    "ja-nein-fragen": {
+      "reviewed": false,
+      "intro": {
+        "en": "Without a question word, the verb moves right to the front: „Er kommt aus Berlin.“ becomes „Kommt er aus Berlin?“ And to a negative question you do not answer with ja, but with doch.",
+        "uk": "Без питального слова дієслово йде на самий початок: „Er kommt aus Berlin.“ стає „Kommt er aus Berlin?“ А на заперечне питання відповідають не ja, а doch.",
+        "ar": "بدون أداة استفهام ينتقل الفعل إلى البداية تماماً: „Er kommt aus Berlin.“ تصبح „Kommt er aus Berlin?“ وعلى السؤال المنفي لا نجيب بـ ja، بل بـ doch.",
+        "tr": "Soru sözcüğü yoksa fiil en başa gelir: „Er kommt aus Berlin.“ → „Kommt er aus Berlin?“ Olumsuz bir soruya ja ile değil, doch ile cevap verilir."
+      },
+      "qa": [
+        {
+          "en": "The conjugated <strong>verb is at the start</strong>, the subject comes right after it. Nothing else changes.",
+          "uk": "<strong>Дієслово в особовій формі стоїть на початку</strong>, підмет — одразу за ним. Більше нічого не змінюється.",
+          "ar": "<strong>الفعل المصرَّف يأتي في البداية</strong>، والفاعل (Subjekt) بعده مباشرة. ولا يتغير شيء آخر.",
+          "tr": "Çekimli <strong>fiil başta durur</strong>, özne hemen arkasında. Başka hiçbir şey değişmez."
+        },
+        {
+          "en": "To a <strong>positive</strong> question you answer with <em>ja</em> or <em>nein</em>: <em>Kommen Sie heute? — Ja, ich komme.</em>",
+          "uk": "На <strong>стверджувальне</strong> питання відповідають <em>ja</em> або <em>nein</em>: <em>Kommen Sie heute? — Ja, ich komme.</em>",
+          "ar": "على السؤال <strong>المثبت</strong> نجيب بـ<em>ja</em> أو <em>nein</em>: <em>Kommen Sie heute? — Ja, ich komme.</em>",
+          "tr": "<strong>Olumlu</strong> bir soruya <em>ja</em> ya da <em>nein</em> ile cevap verilir: <em>Kommen Sie heute? — Ja, ich komme.</em>"
+        },
+        {
+          "en": "To a <strong>negative</strong> question you answer with <em>doch</em> or <em>nein</em>: <em>Kommen Sie heute nicht? — Doch, ich komme.</em>",
+          "uk": "На <strong>заперечне</strong> питання відповідають <em>doch</em> або <em>nein</em>: <em>Kommen Sie heute nicht? — Doch, ich komme.</em>",
+          "ar": "على السؤال <strong>المنفي</strong> نجيب بـ<em>doch</em> أو <em>nein</em>: <em>Kommen Sie heute nicht? — Doch, ich komme.</em>",
+          "tr": "<strong>Olumsuz</strong> bir soruya <em>doch</em> ya da <em>nein</em> ile cevap verilir: <em>Kommen Sie heute nicht? — Doch, ich komme.</em>"
+        },
+        {
+          "en": "The <strong>imperative</strong> also starts with the verb: <em>Trink eine Tasse Kaffee! Essen Sie doch ein Stück Schokolade!</em>",
+          "uk": "<strong>Наказовий спосіб (Imperativ)</strong> теж починається з дієслова: <em>Trink eine Tasse Kaffee! Essen Sie doch ein Stück Schokolade!</em>",
+          "ar": "صيغة <strong>الأمر (Imperativ)</strong> أيضاً تبدأ بالفعل: <em>Trink eine Tasse Kaffee! Essen Sie doch ein Stück Schokolade!</em>",
+          "tr": "<strong>Emir kipi (Imperativ)</strong> de fiille başlar: <em>Trink eine Tasse Kaffee! Essen Sie doch ein Stück Schokolade!</em>"
+        }
+      ],
+      "note": {
+        "en": "<strong>doch</strong> is the word that many languages do not have. It says no to a negative: <em>„Du hast doch keine Zeit, oder?“ — „Doch!“</em> means: yes, I do have time. With <em>ja</em> the answer would be hard to understand. By the way, you ask more politely with the subjunctive: <em>Könnten Sie mir bitte helfen? Würden Sie bitte das Fenster öffnen?</em>",
+        "uk": "<strong>doch</strong> — це слово, якого немає в багатьох мовах. Воно заперечує заперечення: <em>„Du hast doch keine Zeit, oder?“ — „Doch!“</em> означає: у мене таки є час. З <em>ja</em> відповідь була б незрозумілою. До речі, ввічливіше просити в умовному способі (Konjunktiv): <em>Könnten Sie mir bitte helfen? Würden Sie bitte das Fenster öffnen?</em>",
+        "ar": "<strong>doch</strong> كلمة غير موجودة في لغات كثيرة. إنها تعترض على النفي: <em>„Du hast doch keine Zeit, oder?“ — „Doch!“</em> تعني: بل عندي وقت. أما الجواب بـ<em>ja</em> فسيكون غير مفهوم. وبالمناسبة، يكون طلبكم أكثر أدباً بصيغة التمني (Konjunktiv): <em>Könnten Sie mir bitte helfen? Würden Sie bitte das Fenster öffnen?</em>",
+        "tr": "<strong>doch</strong> birçok dilde olmayan bir sözcüktür. Bir olumsuzluğa karşı çıkar: <em>„Du hast doch keine Zeit, oder?“ — „Doch!“</em> şu demektir: aslında vaktim var. <em>ja</em> ile cevap anlaşılmaz olurdu. Daha kibar rica etmek için dilek kipini (Konjunktiv) kullanın: <em>Könnten Sie mir bitte helfen? Würden Sie bitte das Fenster öffnen?</em>"
+      }
+    },
+    "konjugation": {
+      "reviewed": false,
+      "intro": {
+        "en": "The conjugation tables for the most important verbs — present tense, simple past, perfect tense, past perfect and future tense. For looking things up and for practice.",
+        "uk": "Таблиці дієвідмінювання найважливіших дієслів — теперішній час (Präsens), простий минулий час (Präteritum), перфект (Perfekt), плюсквамперфект (Plusquamperfekt) і майбутній час I (Futur I). Щоб довідатися і щоб потренуватися.",
+        "ar": "جداول تصريف أهم الأفعال — المضارع (Präsens)، والماضي البسيط (Präteritum)، والماضي التام (Perfekt)، والماضي الأسبق (Plusquamperfekt)، والمستقبل (Futur I). للمراجعة وللتمرين.",
+        "tr": "En önemli fiillerin çekim tabloları — şimdiki zaman (Präsens), yalın geçmiş zaman (Präteritum), bileşik geçmiş zaman (Perfekt), önceki geçmiş zaman (Plusquamperfekt) ve gelecek zaman (Futur I). Bakmak ve alıştırma yapmak için."
+      },
+      "qa": [
+        {
+          "en": "<strong>Present tense</strong>: stem + ending. <em>ich lern-e, du lern-st, er lern-t, wir lern-en, ihr lern-t, sie lern-en</em>. Also for the future: <em>Morgen fahre ich.</em>",
+          "uk": "<strong>Теперішній час (Präsens)</strong>: основа + закінчення. <em>ich lern-e, du lern-st, er lern-t, wir lern-en, ihr lern-t, sie lern-en</em>. Також для майбутнього: <em>Morgen fahre ich.</em>",
+          "ar": "<strong>المضارع (Präsens)</strong>: جذر الفعل (Stamm) + النهاية (Endung). <em>ich lern-e, du lern-st, er lern-t, wir lern-en, ihr lern-t, sie lern-en</em>. ويُستعمل أيضاً للمستقبل: <em>Morgen fahre ich.</em>",
+          "tr": "<strong>Şimdiki zaman (Präsens)</strong>: kök + ek. <em>ich lern-e, du lern-st, er lern-t, wir lern-en, ihr lern-t, sie lern-en</em>. Gelecek için de kullanılır: <em>Morgen fahre ich.</em>"
+        },
+        {
+          "en": "<strong>Simple past</strong>: regular verbs: stem + <em>-te</em> (<em>lernte</em>); irregular verbs have a new vowel (<em>fuhr, ging, sprach</em>). <em>ich</em> and <em>er</em> are always the same: <em>ich fuhr, er fuhr</em>.",
+          "uk": "<strong>Простий минулий час (Präteritum)</strong>: у правильних дієслів основа + <em>-te</em> (<em>lernte</em>), у неправильних — новий голосний (<em>fuhr, ging, sprach</em>). Форми для <em>ich</em> і <em>er</em> завжди однакові: <em>ich fuhr, er fuhr</em>.",
+          "ar": "<strong>الماضي البسيط (Präteritum)</strong>: في الأفعال المنتظمة جذر الفعل + <em>-te</em> (<em>lernte</em>)، وفي الأفعال غير المنتظمة حرف علة جديد (<em>fuhr, ging, sprach</em>). <em>ich</em> و<em>er</em> متشابهان دائماً: <em>ich fuhr, er fuhr</em>.",
+          "tr": "<strong>Yalın geçmiş zaman (Präteritum)</strong>: düzenli fiillerde kök + <em>-te</em> (<em>lernte</em>), düzensiz fiillerde yeni bir ünlüyle (<em>fuhr, ging, sprach</em>). <em>ich</em> ve <em>er</em> her zaman aynıdır: <em>ich fuhr, er fuhr</em>."
+        },
+        {
+          "en": "<strong>Perfect tense</strong>: <em>haben</em> or <em>sein</em> + past participle. <em>Ich habe gelernt. Ich bin gefahren.</em> This is how you talk about yesterday when you speak.",
+          "uk": "<strong>Перфект (Perfekt)</strong>: <em>haben</em> або <em>sein</em> + дієприкметник II (Partizip II). <em>Ich habe gelernt. Ich bin gefahren.</em> Так усно розповідають про вчорашній день.",
+          "ar": "<strong>الماضي التام (Perfekt)</strong>: <em>haben</em> أو <em>sein</em> + التصريف الثالث (Partizip II). <em>Ich habe gelernt. Ich bin gefahren.</em> هكذا نحكي شفهياً عمّا حدث أمس.",
+          "tr": "<strong>Bileşik geçmiş zaman (Perfekt)</strong>: <em>haben</em> ya da <em>sein</em> + ortaç II (Partizip II). <em>Ich habe gelernt. Ich bin gefahren.</em> Dün olanlar konuşurken böyle anlatılır."
+        },
+        {
+          "en": "<strong>Past perfect</strong>: <em>hatte</em> or <em>war</em> + past participle — for what happened even <em>before</em> the past: <em>Ich hatte schon gegessen.</em>",
+          "uk": "<strong>Плюсквамперфект (Plusquamperfekt)</strong>: <em>hatte</em> або <em>war</em> + дієприкметник II (Partizip II) — для того, що було ще <em>до</em> минулого: <em>Ich hatte schon gegessen.</em>",
+          "ar": "<strong>الماضي الأسبق (Plusquamperfekt)</strong>: <em>hatte</em> أو <em>war</em> + التصريف الثالث (Partizip II) — لما حدث <em>قبل</em> الماضي: <em>Ich hatte schon gegessen.</em>",
+          "tr": "<strong>Önceki geçmiş zaman (Plusquamperfekt)</strong>: <em>hatte</em> ya da <em>war</em> + ortaç II (Partizip II) — geçmişten de <em>önce</em> olanlar için: <em>Ich hatte schon gegessen.</em>"
+        },
+        {
+          "en": "<strong>Future tense</strong>: <em>werden</em> + infinitive. <em>Ich werde anrufen.</em> For plans, promises and guesses.",
+          "uk": "<strong>Майбутній час I (Futur I)</strong>: <em>werden</em> + інфінітив. <em>Ich werde anrufen.</em> Для планів, обіцянок і припущень.",
+          "ar": "<strong>المستقبل (Futur I)</strong>: <em>werden</em> + المصدر (Infinitiv). <em>Ich werde anrufen.</em> للخطط والوعود والتوقعات.",
+          "tr": "<strong>Gelecek zaman (Futur I)</strong>: <em>werden</em> + mastar (Infinitiv). <em>Ich werde anrufen.</em> Planlar, sözler ve tahminler için."
+        }
+      ],
+      "note": {
+        "en": "You do not need to learn most verbs by heart — they follow the pattern of <strong>lernen</strong>. You must learn by heart <strong>sein, haben, werden</strong>, the modal verbs and the irregular verbs like <em>fahren, sprechen, gehen</em>.",
+        "uk": "Більшість дієслів не треба вчити напам’ять — вони змінюються за зразком <strong>lernen</strong>. Напам’ять треба вчити <strong>sein, haben, werden</strong>, модальні дієслова і неправильні дієслова, як-от <em>fahren, sprechen, gehen</em>.",
+        "ar": "معظم الأفعال لا نحتاج إلى حفظها — فهي تتبع نمط <strong>lernen</strong>. أما ما يجب حفظه فهو <strong>sein, haben, werden</strong>، وأفعال الصيغة (Modalverben)، والأفعال غير المنتظمة مثل <em>fahren, sprechen, gehen</em>.",
+        "tr": "Fiillerin çoğunu ezberlemek gerekmez — <strong>lernen</strong> kalıbını izlerler. Ezberlenmesi gerekenler: <strong>sein, haben, werden</strong>, modal fiiller (Modalverben) ve <em>fahren, sprechen, gehen</em> gibi düzensiz fiiller."
+      }
+    },
+    "konjunktiv2": {
+      "reviewed": false,
+      "intro": {
+        "en": "Unreal wish / reproach in the perfect tense: hätte/wäre + past participle (+ sollen). \"Was hättest du machen sollen?\"",
+        "uk": "Нереальне бажання / докір у перфекті (Perfekt): hätte/wäre + дієприкметник II (Partizip II) (+ sollen). \"Was hättest du machen sollen?\"",
+        "ar": "تمنٍّ غير واقعي / لوم في الماضي التام (Perfekt): hätte/wäre + التصريف الثالث (Partizip II) (+ sollen). \"Was hättest du machen sollen?\"",
+        "tr": "Bileşik geçmiş zamanda (Perfekt) gerçek dışı dilek / sitem: hätte/wäre + ortaç II (Partizip II) (+ sollen). \"Was hättest du machen sollen?\""
+      },
+      "qa": [],
+      "note": null
+    },
+    "modalverben": {
+      "reviewed": false,
+      "intro": {
+        "en": "müssen, können, dürfen, sollen, wollen, mögen — they do not say what happens, but how it is meant: duty, permission, ability or wish. The second verb moves to the end of the sentence.",
+        "uk": "müssen, können, dürfen, sollen, wollen, mögen — вони кажуть не що відбувається, а як це мається на увазі: обов’язок, дозвіл, уміння чи бажання. Друге дієслово при цьому йде в кінець речення.",
+        "ar": "müssen, können, dürfen, sollen, wollen, mögen — لا تقول ماذا يحدث، بل كيف نقصده: واجب، أو إذن، أو قدرة، أو رغبة. والفعل الثاني ينتقل إلى نهاية الجملة (Satzende).",
+        "tr": "müssen, können, dürfen, sollen, wollen, mögen — ne olduğunu değil, nasıl kastedildiğini söylerler: zorunluluk, izin, yetenek ya da istek. İkinci fiil cümle sonuna (Satzende) gider."
+      },
+      "qa": [
+        {
+          "en": "<strong>müssen</strong> — there is no other way. <em>Der Zug fällt aus, wir müssen warten.</em>",
+          "uk": "<strong>müssen</strong> — інакше не можна. <em>Der Zug fällt aus, wir müssen warten.</em>",
+          "ar": "<strong>müssen</strong> — لا يوجد حل آخر. <em>Der Zug fällt aus, wir müssen warten.</em>",
+          "tr": "<strong>müssen</strong> — başka yolu yok. <em>Der Zug fällt aus, wir müssen warten.</em>"
+        },
+        {
+          "en": "<strong>dürfen</strong> — someone allows it. In the negative it means it is not allowed: <em>Hier darf man nicht parken.</em>",
+          "uk": "<strong>dürfen</strong> — хтось це дозволяє. Із запереченням це заборона: <em>Hier darf man nicht parken.</em>",
+          "ar": "<strong>dürfen</strong> — شخص ما يسمح بذلك. مع النفي يعني المنع: <em>Hier darf man nicht parken.</em>",
+          "tr": "<strong>dürfen</strong> — biri izin veriyor. Olumsuzu yasak demektir: <em>Hier darf man nicht parken.</em>"
+        },
+        {
+          "en": "<strong>können</strong> — you are able to do it. <em>Meine Tochter kann schon schwimmen.</em>",
+          "uk": "<strong>können</strong> — людина здатна це зробити. <em>Meine Tochter kann schon schwimmen.</em>",
+          "ar": "<strong>können</strong> — الشخص قادر على ذلك. <em>Meine Tochter kann schon schwimmen.</em>",
+          "tr": "<strong>können</strong> — kişi bunu yapabilecek durumda. <em>Meine Tochter kann schon schwimmen.</em>"
+        },
+        {
+          "en": "<strong>sollen</strong> — someone else wants it. <em>Der Arzt sagt, ich soll mehr schlafen.</em>",
+          "uk": "<strong>sollen</strong> — так хоче хтось інший. <em>Der Arzt sagt, ich soll mehr schlafen.</em>",
+          "ar": "<strong>sollen</strong> — شخص آخر يريد ذلك. <em>Der Arzt sagt, ich soll mehr schlafen.</em>",
+          "tr": "<strong>sollen</strong> — başka biri böyle istiyor. <em>Der Arzt sagt, ich soll mehr schlafen.</em>"
+        }
+      ],
+      "note": {
+        "en": "The form for <em>ich</em> and <em>er/sie/es</em> is the same and has <strong>no ending</strong>: <em>ich muss</em>, <em>er muss</em> (not <em>er musst</em>). The vowel also changes in the singular: <em>müssen → ich muss</em>, <em>können → ich kann</em>, <em>dürfen → ich darf</em>.",
+        "uk": "Форми для <em>ich</em> і <em>er/sie/es</em> однакові й <strong>не мають закінчення</strong>: <em>ich muss</em>, <em>er muss</em> (не <em>er musst</em>). Крім того, в однині змінюється голосний: <em>müssen → ich muss</em>, <em>können → ich kann</em>, <em>dürfen → ich darf</em>.",
+        "ar": "الصيغة مع <em>ich</em> ومع <em>er/sie/es</em> واحدة، و<strong>بدون نهاية (Endung)</strong>: <em>ich muss</em>، <em>er muss</em> (وليس <em>er musst</em>). كذلك يتغير حرف العلة في المفرد: <em>müssen → ich muss</em>، <em>können → ich kann</em>، <em>dürfen → ich darf</em>.",
+        "tr": "<em>ich</em> ve <em>er/sie/es</em> ile biçim aynıdır ve <strong>ek almaz</strong>: <em>ich muss</em>, <em>er muss</em> (<em>er musst</em> değil). Ayrıca tekilde (Singular) ünlü değişir: <em>müssen → ich muss</em>, <em>können → ich kann</em>, <em>dürfen → ich darf</em>."
+      }
+    },
+    "n-deklination": {
+      "reviewed": false,
+      "intro": {
+        "en": "A small group of masculine nouns adds -(e)n in every case except the nominative: der Herr, but an Herrn Schneider. If you know them, you write letters correctly.",
+        "uk": "Невелика група іменників чоловічого роду в усіх відмінках, крім називного відмінка (Nominativ), додає -(e)n: der Herr, але an Herrn Schneider. Хто їх знає, правильно пише листи.",
+        "ar": "مجموعة صغيرة من الأسماء المذكرة تضيف -(e)n في كل حالة إعرابية (Kasus) ما عدا حالة الرفع (Nominativ): der Herr، لكن an Herrn Schneider. من يعرفها يكتب الرسائل بشكل صحيح.",
+        "tr": "Küçük bir eril isim grubu, yalın hâl (Nominativ) dışındaki her hâlde bir -(e)n alır: der Herr, ama an Herrn Schneider. Bunları bilen mektupları doğru yazar."
+      },
+      "qa": [
+        {
+          "en": "All nouns of the n-declension are <strong>masculine</strong>. In the plural the form always ends in <em>-(e)n</em>.",
+          "uk": "Усі іменники n-відмінювання (N-Deklination) — <strong>чоловічого роду</strong>. У множині форма завжди закінчується на <em>-(e)n</em>.",
+          "ar": "كل أسماء تصريف n (n-Deklination) <strong>مذكرة</strong>. وفي الجمع تنتهي الصيغة دائماً بـ<em>-(e)n</em>.",
+          "tr": "n-çekiminin (n-Deklination) bütün isimleri <strong>erildir</strong>. Çoğulda (Plural) biçim her zaman <em>-(e)n</em> ile biter."
+        },
+        {
+          "en": "The <strong>genitive -s is dropped</strong>: <em>des Mannes</em>, but <em>des Herrn</em>, <em>des Studenten</em>.",
+          "uk": "<strong>-s у родовому відмінку (Genitiv) зникає</strong>: <em>des Mannes</em>, але <em>des Herrn</em>, <em>des Studenten</em>.",
+          "ar": "<strong>حرف s في حالة الإضافة (Genitiv) يسقط</strong>: <em>des Mannes</em>، لكن <em>des Herrn</em>، <em>des Studenten</em>.",
+          "tr": "<strong>-in hâlindeki -s (Genitiv-s) düşer</strong>: <em>des Mannes</em>, ama <em>des Herrn</em>, <em>des Studenten</em>."
+        },
+        {
+          "en": "Typical are <strong>male people and animals ending in -e</strong>: <em>der Junge, der Kollege, der Türke, der Löwe, der Rabe</em>.",
+          "uk": "Типові — <strong>назви осіб і тварин чоловічої статі на -e</strong>: <em>der Junge, der Kollege, der Türke, der Löwe, der Rabe</em>.",
+          "ar": "من الأمثلة النموذجية <strong>الأشخاص والحيوانات المذكرة المنتهية بـ -e</strong>: <em>der Junge, der Kollege, der Türke, der Löwe, der Rabe</em>.",
+          "tr": "Tipik olanlar <strong>-e ile biten erkek kişiler ve hayvanlardır</strong>: <em>der Junge, der Kollege, der Türke, der Löwe, der Rabe</em>."
+        },
+        {
+          "en": "Also the endings <strong>-and, -ant, -ent, -at, -ist, -graf</strong>: <em>der Doktorand, der Praktikant, der Student, der Automat, der Christ, der Geograf</em>.",
+          "uk": "А також закінчення <strong>-and, -ant, -ent, -at, -ist, -graf</strong>: <em>der Doktorand, der Praktikant, der Student, der Automat, der Christ, der Geograf</em>.",
+          "ar": "وكذلك النهايات <strong>-and, -ant, -ent, -at, -ist, -graf</strong>: <em>der Doktorand, der Praktikant, der Student, der Automat, der Christ, der Geograf</em>.",
+          "tr": "Bunlara ek olarak <strong>-and, -ant, -ent, -at, -ist, -graf</strong> ile bitenler: <em>der Doktorand, der Praktikant, der Student, der Automat, der Christ, der Geograf</em>."
+        }
+      ],
+      "note": {
+        "en": "Two special cases: the <strong>abstract nouns ending in -e</strong> (<em>der Name, der Friede, der Buchstabe, der Glaube, der Gedanke</em>) also get an <em>s</em> in the genitive: <em>des Namens, des Gedankens</em>. And <strong>das Herz</strong> is regular in the accusative (<em>das Herz</em>), in the dative it is <em>dem Herzen</em>, in the genitive <em>des Herzens</em>. By the way, in spoken language people leave out the <em>-(e)n</em> more and more often — but in written German the rule still applies.",
+        "uk": "Два особливі випадки: <strong>абстрактні іменники на -e</strong> (<em>der Name, der Friede, der Buchstabe, der Glaube, der Gedanke</em>) у родовому відмінку (Genitiv) отримують ще й <em>s</em>: <em>des Namens, des Gedankens</em>. А <strong>das Herz</strong> у знахідному відмінку (Akkusativ) має звичайну форму (<em>das Herz</em>), у давальному відмінку (Dativ) — <em>dem Herzen</em>, у родовому відмінку — <em>des Herzens</em>. До речі, в усному мовленні <em>-(e)n</em> дедалі частіше пропускають — але в письмовій німецькій правило й далі діє.",
+        "ar": "حالتان خاصتان: <strong>الأسماء المجردة المنتهية بـ -e</strong> (<em>der Name, der Friede, der Buchstabe, der Glaube, der Gedanke</em>) تأخذ في حالة الإضافة (Genitiv) حرف <em>s</em> إضافياً: <em>des Namens, des Gedankens</em>. و<strong>das Herz</strong> منتظمة في حالة النصب (Akkusativ) (<em>das Herz</em>)، وفي حالة الجر (Dativ) <em>dem Herzen</em>، وفي حالة الإضافة <em>des Herzens</em>. وبالمناسبة، في اللغة المحكية يُحذف <em>-(e)n</em> أكثر فأكثر — لكن القاعدة ما زالت سارية في الألمانية المكتوبة.",
+        "tr": "İki özel durum: <strong>-e ile biten soyut isimler</strong> (<em>der Name, der Friede, der Buchstabe, der Glaube, der Gedanke</em>) -in hâlinde (Genitiv) ayrıca bir <em>s</em> alır: <em>des Namens, des Gedankens</em>. <strong>das Herz</strong> ise -i hâlinde (Akkusativ) düzenlidir (<em>das Herz</em>), -e hâlinde (Dativ) <em>dem Herzen</em>, -in hâlinde <em>des Herzens</em>. Bu arada konuşma dilinde <em>-(e)n</em> gittikçe daha sık düşürülür — ama yazılı Almancada kural hâlâ geçerlidir."
+      }
+    },
+    "negation": {
+      "reviewed": false,
+      "intro": {
+        "en": "Two words share the job of negation: „kein“ replaces „ein“ before a noun, „nicht“ negates everything else. And „nicht“ almost always stands further to the right than you think.",
+        "uk": "Заперечення виражають два слова: „kein“ замінює „ein“ перед іменником, „nicht“ заперечує все інше. І „nicht“ майже завжди стоїть правіше, ніж здається.",
+        "ar": "كلمتان تتقاسمان النفي: „kein“ تحلّ محل „ein“ قبل الاسم (Nomen)، و„nicht“ تنفي كل شيء آخر. و„nicht“ تقف دائماً تقريباً أقرب إلى نهاية الجملة مما نظن.",
+        "tr": "Olumsuzluğu iki sözcük paylaşır: „kein“ bir ismin önünde „ein“ yerine gelir, „nicht“ geri kalan her şeyi olumsuz yapar. Ve „nicht“ neredeyse her zaman düşündüğünüzden daha sağda durur."
+      },
+      "qa": [
+        {
+          "en": "<strong>kein</strong> goes before nouns with <em>ein/eine</em> and before nouns with no article at all: <em>kein Geld, keine Zeit, keine Karte</em>. It is declined like <em>ein</em>.",
+          "uk": "<strong>kein</strong> стоїть перед іменниками з <em>ein/eine</em> і перед іменниками зовсім без артикля: <em>kein Geld, keine Zeit, keine Karte</em>. Воно відмінюється, як <em>ein</em>.",
+          "ar": "<strong>kein</strong> تأتي قبل الأسماء التي تأخذ <em>ein/eine</em>، وقبل الأسماء بدون أداة: <em>kein Geld, keine Zeit, keine Karte</em>. وتُصرَّف مثل <em>ein</em>.",
+          "tr": "<strong>kein</strong>, <em>ein/eine</em> alan isimlerin ve hiç artikel almayan isimlerin önünde durur: <em>kein Geld, keine Zeit, keine Karte</em>. <em>ein</em> gibi çekimlenir."
+        },
+        {
+          "en": "<strong>nicht</strong> negates verbs, adjectives, adverbs and nouns with a definite article: <em>Ich kenne den neuen Kollegen nicht.</em>",
+          "uk": "<strong>nicht</strong> заперечує дієслова, прикметники, прислівники та іменники з означеним артиклем: <em>Ich kenne den neuen Kollegen nicht.</em>",
+          "ar": "<strong>nicht</strong> تنفي الأفعال والصفات والظروف والأسماء مع أداة التعريف: <em>Ich kenne den neuen Kollegen nicht.</em>",
+          "tr": "<strong>nicht</strong> fiilleri, sıfatları, zarfları ve belirli artikelli isimleri olumsuz yapar: <em>Ich kenne den neuen Kollegen nicht.</em>"
+        },
+        {
+          "en": "<strong>Sentence negation</strong>: <em>nicht</em> stands as far to the right as possible — but always <em>before</em> the manner phrase, the place phrase and the second verb part.",
+          "uk": "<strong>Загальне заперечення</strong>: <em>nicht</em> стоїть якомога правіше — але завжди <em>перед</em> обставиною способу дії, обставиною місця і другою частиною дієслова.",
+          "ar": "<strong>نفي الجملة (Satznegation)</strong>: تقف <em>nicht</em> أقرب ما يمكن إلى نهاية الجملة — لكن دائماً <em>قبل</em> ظرف الطريقة وظرف المكان والجزء الثاني من الفعل.",
+          "tr": "<strong>Cümle olumsuzluğu (Satznegation)</strong>: <em>nicht</em> olabildiğince sağda durur — ama her zaman tarz bildiren ögenin, yer bildiren ögenin ve ikinci fiil parçasının <em>önünde</em>."
+        },
+        {
+          "en": "<strong>Partial negation</strong>: <em>nicht</em> stands directly before the sentence part it negates. It is often followed by <em>sondern</em>. <em>Ich schenke ihr <strong>nicht heute</strong> den Ring, sondern morgen.</em>",
+          "uk": "<strong>Часткове заперечення</strong>: <em>nicht</em> стоїть безпосередньо перед членом речення, який воно заперечує. Після цього часто йде <em>sondern</em>. <em>Ich schenke ihr <strong>nicht heute</strong> den Ring, sondern morgen.</em>",
+          "ar": "<strong>النفي الجزئي (Teilnegation)</strong>: تقف <em>nicht</em> مباشرة قبل جزء الجملة الذي تنفيه. وبعده تأتي غالباً <em>sondern</em>. <em>Ich schenke ihr <strong>nicht heute</strong> den Ring, sondern morgen.</em>",
+          "tr": "<strong>Kısmi olumsuzluk (Teilnegation)</strong>: <em>nicht</em>, olumsuz yaptığı cümle ögesinin hemen önünde durur. Arkasından çoğu zaman <em>sondern</em> gelir. <em>Ich schenke ihr <strong>nicht heute</strong> den Ring, sondern morgen.</em>"
+        }
+      ],
+      "note": {
+        "en": "The memory aid for the position of <em>nicht</em> is <strong>te-ka-<span class=\"vp-verb\">nicht</span>-mo-lo</strong>: <em>temporal – kausal – <strong>nicht</strong> – modal – lokal</em>. Everything that comes before <em>nicht</em> (time, reason, pronouns, objects) stays on the left; manner, place and the second verb part come after it: <em>Ich konnte meinen Vater gestern wegen eines Termins <strong>nicht</strong> pünktlich am Bahnhof abholen.</em>",
+        "uk": "Підказка для місця <em>nicht</em>: <strong>te-ka-<span class=\"vp-verb\">nicht</span>-mo-lo</strong>: <em>temporal – kausal – <strong>nicht</strong> – modal – lokal</em>. Усе, що стоїть перед <em>nicht</em> (час, причина, займенники, додатки), залишається ліворуч; спосіб дії, місце і друга частина дієслова йдуть після нього: <em>Ich konnte meinen Vater gestern wegen eines Termins <strong>nicht</strong> pünktlich am Bahnhof abholen.</em>",
+        "ar": "وسيلة حفظ موقع <em>nicht</em> هي <strong>te-ka-<span class=\"vp-verb\">nicht</span>-mo-lo</strong>: <em>temporal – kausal – <strong>nicht</strong> – modal – lokal</em>. كل ما يأتي قبل <em>nicht</em> (الزمان، السبب، الضمائر، المفعولات) يبقى قبلها؛ أما الطريقة والمكان والجزء الثاني من الفعل فتأتي بعدها: <em>Ich konnte meinen Vater gestern wegen eines Termins <strong>nicht</strong> pünktlich am Bahnhof abholen.</em>",
+        "tr": "<em>nicht</em> sözcüğünün konumu için hatırlatıcı: <strong>te-ka-<span class=\"vp-verb\">nicht</span>-mo-lo</strong>: <em>temporal – kausal – <strong>nicht</strong> – modal – lokal</em> (zaman – neden – nicht – tarz – yer). <em>nicht</em> önünde duran her şey (zaman, neden, zamirler, nesneler) solda kalır; tarz, yer ve ikinci fiil parçası ondan sonra gelir: <em>Ich konnte meinen Vater gestern wegen eines Termins <strong>nicht</strong> pünktlich am Bahnhof abholen.</em>"
+      }
+    },
+    "negationswoerter": {
+      "reviewed": false,
+      "intro": {
+        "en": "Beyond nicht and kein there is a whole system: nichts, niemand, nirgendwo, noch nie, nicht mehr — and the word parts un-, in- and -los, which negate a word from the inside.",
+        "uk": "Крім nicht і kein, існує ціла система: nichts, niemand, nirgendwo, noch nie, nicht mehr — а також префікси un-, in- і -los, які заперечують слово зсередини.",
+        "ar": "إلى جانب nicht و kein يوجد نظام كامل: nichts, niemand, nirgendwo, noch nie, nicht mehr — وكذلك un- و in- و -los التي تنفي الكلمة من داخلها.",
+        "tr": "nicht ve kein dışında koca bir sistem var: nichts, niemand, nirgendwo, noch nie, nicht mehr — ve bir sözcüğü içeriden olumsuz yapan un-, in- ve -los ekleri."
+      },
+      "qa": [
+        {
+          "en": "Every positive word has its negative partner: <em>jeder → niemand, alles → nichts, immer → nie, überall → nirgends, schon → noch nicht</em>.",
+          "uk": "Кожне стверджувальне слово має свою заперечну пару: <em>jeder → niemand, alles → nichts, immer → nie, überall → nirgends, schon → noch nicht</em>.",
+          "ar": "لكل كلمة مثبتة كلمة منفية تقابلها: <em>jeder → niemand, alles → nichts, immer → nie, überall → nirgends, schon → noch nicht</em>.",
+          "tr": "Her olumlu sözcüğün olumsuz bir karşılığı vardır: <em>jeder → niemand, alles → nichts, immer → nie, überall → nirgends, schon → noch nicht</em>."
+        },
+        {
+          "en": "<strong>noch</strong> turns a negation into an in-between stage: <em>noch nicht, noch nie, noch kein…</em> — it has not happened so far, but it still could.",
+          "uk": "<strong>noch</strong> робить із заперечення проміжний етап: <em>noch nicht, noch nie, noch kein…</em> — досі цього не сталося, але ще може статися.",
+          "ar": "<strong>noch</strong> تجعل النفي مرحلة وسطى: <em>noch nicht, noch nie, noch kein…</em> — لم يحدث الشيء حتى الآن، لكنه قد يحدث لاحقاً.",
+          "tr": "<strong>noch</strong> bir olumsuzluğu ara bir aşamaya çevirir: <em>noch nicht, noch nie, noch kein…</em> — şimdiye kadar olmadı, ama hâlâ olabilir."
+        },
+        {
+          "en": "<strong>mehr</strong> marks the end: <em>nicht mehr, kein … mehr</em> — it used to be like this, but not any more.",
+          "uk": "<strong>mehr</strong> позначає кінець: <em>nicht mehr, kein … mehr</em> — колись так було, а тепер уже ні.",
+          "ar": "<strong>mehr</strong> تشير إلى النهاية: <em>nicht mehr, kein … mehr</em> — كان الأمر كذلك من قبل، أما الآن فلا.",
+          "tr": "<strong>mehr</strong> sonu gösterir: <em>nicht mehr, kein … mehr</em> — eskiden öyleydi, artık değil."
+        },
+        {
+          "en": "<strong>ohne + accusative</strong> replaces a whole negation and usually has no article: <em>mit einer Fahrkarte → ohne Fahrkarte</em>.",
+          "uk": "<strong>ohne + знахідний відмінок (Akkusativ)</strong> замінює ціле заперечення і зазвичай стоїть без артикля: <em>mit einer Fahrkarte → ohne Fahrkarte</em>.",
+          "ar": "<strong>ohne + حالة النصب (Akkusativ)</strong> تحلّ محل نفي كامل، وتأتي غالباً بدون أداة: <em>mit einer Fahrkarte → ohne Fahrkarte</em>.",
+          "tr": "<strong>ohne + Akkusativ</strong> bütün bir olumsuzluğun yerini alır ve çoğunlukla artikelsiz kullanılır: <em>mit einer Fahrkarte → ohne Fahrkarte</em>."
+        }
+      ],
+      "note": {
+        "en": "Three word formations negate from the inside: <strong>un-</strong> fits almost everywhere (<em>gültig → ungültig, gerecht → ungerecht</em>), <strong>in-</strong> only with foreign words (<em>tolerant → intolerant, akzeptabel → inakzeptabel</em>), and <strong>-los</strong> is added to nouns — but it sounds negative: <em>fantasielos</em> is harsher than the neutral <em>Ich habe keine Fantasie</em>. These must be declined: <em>kein…, noch kein…, kein … mehr</em>. <em>Niemand</em> can be declined, but does not have to be.",
+        "uk": "Три словотвірні засоби заперечують зсередини: <strong>un-</strong> підходить майже скрізь (<em>gültig → ungültig, gerecht → ungerecht</em>), <strong>in-</strong> — лише в іншомовних словах (<em>tolerant → intolerant, akzeptabel → inakzeptabel</em>), а <strong>-los</strong> приєднується до іменників — але звучить зневажливо: <em>fantasielos</em> різкіше, ніж нейтральне <em>Ich habe keine Fantasie</em>. Що треба відмінювати: <em>kein…, noch kein…, kein … mehr</em>. <em>Niemand</em> можна відмінювати, але не обов’язково.",
+        "ar": "ثلاث طرق لبناء الكلمات تنفي من الداخل: <strong>un-</strong> تناسب كل الكلمات تقريباً (<em>gültig → ungültig, gerecht → ungerecht</em>)، و<strong>in-</strong> فقط مع الكلمات الأجنبية (<em>tolerant → intolerant, akzeptabel → inakzeptabel</em>)، و<strong>-los</strong> تُضاف إلى الأسماء — لكنها تبدو سلبية: <em>fantasielos</em> أقسى من الجملة المحايدة <em>Ich habe keine Fantasie</em>. ما يجب تصريفه: <em>kein…, noch kein…, kein … mehr</em>. أما <em>Niemand</em> فيجوز تصريفها، لكن ذلك ليس واجباً.",
+        "tr": "Üç sözcük yapımı içeriden olumsuz yapar: <strong>un-</strong> neredeyse her yere uyar (<em>gültig → ungültig, gerecht → ungerecht</em>), <strong>in-</strong> yalnızca yabancı kökenli sözcüklerde kullanılır (<em>tolerant → intolerant, akzeptabel → inakzeptabel</em>), <strong>-los</strong> ise isimlere eklenir — ama küçümseyici duyulur: <em>fantasielos</em>, nötr <em>Ich habe keine Fantasie</em> cümlesinden daha serttir. Çekimlenmesi gerekenler: <em>kein…, noch kein…, kein … mehr</em>. <em>Niemand</em> çekimlenebilir, ama zorunlu değildir."
+      }
+    },
+    "nomen-verb-verbindungen": {
+      "reviewed": false,
+      "intro": {
+        "en": "„Rücksicht nehmen“, „in Frage kommen“, „zur Verfügung stehen“ — fixed pairs of noun and verb in which the verb has almost no meaning of its own. You have to learn them as a whole.",
+        "uk": "„Rücksicht nehmen“, „in Frage kommen“, „zur Verfügung stehen“ — сталі пари з іменника й дієслова, у яких дієслово майже не має власного значення. Їх треба вчити цілком.",
+        "ar": "„Rücksicht nehmen“، „in Frage kommen“، „zur Verfügung stehen“ — أزواج ثابتة من اسم (Nomen) وفعل (Verb)، لا يكاد يكون للفعل فيها معنى خاص به. يجب تعلّمها ككل.",
+        "tr": "„Rücksicht nehmen“, „in Frage kommen“, „zur Verfügung stehen“ — isim ve fiilden oluşan sabit çiftler; fiilin burada neredeyse hiç kendi anlamı yoktur. Bunları bütün olarak öğrenmek gerekir."
+      },
+      "qa": [
+        {
+          "en": "The verb can be <strong>replaced by a simple verb</strong>: <em>Rücksicht nehmen ≈ rücksichtsvoll sein</em>, <em>zu Ende bringen ≈ beenden</em>.",
+          "uk": "Дієслово <strong>можна замінити простим дієсловом</strong>: <em>Rücksicht nehmen ≈ rücksichtsvoll sein</em>, <em>zu Ende bringen ≈ beenden</em>.",
+          "ar": "يمكن <strong>استبدال الفعل بفعل بسيط</strong>: <em>Rücksicht nehmen ≈ rücksichtsvoll sein</em>، <em>zu Ende bringen ≈ beenden</em>.",
+          "tr": "Fiil <strong>basit bir fiille değiştirilebilir</strong>: <em>Rücksicht nehmen ≈ rücksichtsvoll sein</em>, <em>zu Ende bringen ≈ beenden</em>."
+        },
+        {
+          "en": "The <strong>combination is fixed</strong>. <em>Einen Kompromiss <strong>schließen</strong></em> — not machen, not nehmen.",
+          "uk": "<strong>Сполучення стале</strong>. <em>Einen Kompromiss <strong>schließen</strong></em> — не machen і не nehmen.",
+          "ar": "<strong>التركيب ثابت</strong>. <em>Einen Kompromiss <strong>schließen</strong></em> — وليس machen، وليس nehmen.",
+          "tr": "<strong>Kombinasyon sabittir</strong>. <em>Einen Kompromiss <strong>schließen</strong></em> — machen değil, nehmen değil."
+        },
+        {
+          "en": "Many begin with a <strong>preposition</strong>: <em>in Schwierigkeiten, unter Druck, zu Ende, zur Verfügung, in Frage, in Kauf, im Irrtum</em>.",
+          "uk": "Багато з них починаються з <strong>прийменника</strong>: <em>in Schwierigkeiten, unter Druck, zu Ende, zur Verfügung, in Frage, in Kauf, im Irrtum</em>.",
+          "ar": "كثير منها يبدأ بـ<strong>حرف جر (Präposition)</strong>: <em>in Schwierigkeiten, unter Druck, zu Ende, zur Verfügung, in Frage, in Kauf, im Irrtum</em>.",
+          "tr": "Birçoğu bir <strong>edatla (Präposition)</strong> başlar: <em>in Schwierigkeiten, unter Druck, zu Ende, zur Verfügung, in Frage, in Kauf, im Irrtum</em>."
+        },
+        {
+          "en": "They are usually negated with <strong>kein</strong> before the noun — with a preposition, with <strong>nicht</strong>: <em>Das spielt <strong>keine</strong> Rolle. Das kommt <strong>nicht</strong> in Frage.</em>",
+          "uk": "Заперечують зазвичай за допомогою <strong>kein</strong> перед іменником — а якщо є прийменник, то за допомогою <strong>nicht</strong>: <em>Das spielt <strong>keine</strong> Rolle. Das kommt <strong>nicht</strong> in Frage.</em>",
+          "ar": "النفي يكون غالباً بـ<strong>kein</strong> قبل الاسم — ومع حرف الجر بـ<strong>nicht</strong>: <em>Das spielt <strong>keine</strong> Rolle. Das kommt <strong>nicht</strong> in Frage.</em>",
+          "tr": "Olumsuzluk çoğunlukla ismin önünde <strong>kein</strong> ile yapılır — edat varsa <strong>nicht</strong> ile: <em>Das spielt <strong>keine</strong> Rolle. Das kommt <strong>nicht</strong> in Frage.</em>"
+        }
+      ],
+      "note": {
+        "en": "Noun-verb combinations are typical of <strong>written and formal German</strong> — in letters from government offices, newspaper texts and business letters. If you know them, you understand these texts much faster; if you use them, you sound more mature right away. Be careful with the case: <em>Rücksicht nehmen <strong>auf</strong> + accusative</em>, <em>Zweifel haben <strong>an</strong> + dative</em>.",
+        "uk": "Іменно-дієслівні сполучення — ознака <strong>письмової та офіційної німецької</strong>: у листах від установ, газетних текстах і діловому листуванні. Хто їх знає, розуміє такі тексти значно швидше; хто ними користується, одразу звучить доросліше. Обережно з відмінком: <em>Rücksicht nehmen <strong>auf</strong> + Akkusativ</em>, <em>Zweifel haben <strong>an</strong> + Dativ</em>.",
+        "ar": "التراكيب الاسمية الفعلية (Nomen-Verb-Verbindungen) علامة مميزة لـ<strong>الألمانية المكتوبة والرسمية</strong> — في رسائل الدوائر الرسمية، ونصوص الصحف، والمراسلات التجارية. من يعرفها يفهم هذه النصوص بسرعة أكبر بكثير؛ ومن يستعملها يبدو كلامه فوراً أكثر نضجاً. انتبهوا إلى الحالة الإعرابية (Kasus): <em>Rücksicht nehmen <strong>auf</strong> + Akkusativ</em>، <em>Zweifel haben <strong>an</strong> + Dativ</em>.",
+        "tr": "İsim-fiil kalıpları (Nomen-Verb-Verbindungen) <strong>yazılı ve resmî Almancanın</strong> bir özelliğidir — resmî kurum mektuplarında, gazete metinlerinde ve iş yazışmalarında. Bunları bilen bu metinleri çok daha hızlı anlar; kullanan hemen daha olgun duyulur. Hâl (Kasus) konusunda dikkat: <em>Rücksicht nehmen <strong>auf</strong> + Akkusativ</em>, <em>Zweifel haben <strong>an</strong> + Dativ</em>."
+      }
+    },
+    "partizip-als-adjektiv": {
+      "reviewed": false,
+      "intro": {
+        "en": "A whole sentence becomes one word: „Der Zug fährt ein“ → „der einfahrende Zug“. Present participle means: it is happening right now. Past participle means: it is finished, or it was done.",
+        "uk": "Ціле речення стає одним словом: „Der Zug fährt ein“ → „der einfahrende Zug“. Дієприкметник I (Partizip I) означає: дія триває зараз. Дієприкметник II (Partizip II) означає: дія завершена або її було виконано.",
+        "ar": "من جملة كاملة تصبح كلمة واحدة: „Der Zug fährt ein“ → „der einfahrende Zug“. اسم الفاعل (Partizip I) يعني: الحدث مستمر الآن. التصريف الثالث (Partizip II) يعني: انتهى أو تمّ فعله.",
+        "tr": "Koca bir cümle tek bir sözcük olur: „Der Zug fährt ein“ → „der einfahrende Zug“. Ortaç I (Partizip I) şu demektir: şu anda sürüyor. Ortaç II (Partizip II) şu demektir: bitti ya da yapıldı."
+      },
+      "qa": [
+        {
+          "en": "<strong>Present participle</strong> = infinitive + <em>-d</em> + adjective ending. The action <em>is still going on</em>: <em>der einfahrende Zug</em> — it is arriving right now.",
+          "uk": "<strong>Дієприкметник I (Partizip I)</strong> = інфінітив + <em>-d</em> + закінчення прикметника. Дія <em>триває</em>: <em>der einfahrende Zug</em> — він саме заїжджає.",
+          "ar": "<strong>اسم الفاعل (Partizip I)</strong> = المصدر (Infinitiv) + <em>-d</em> + نهاية الصفة. الحدث <em>مستمر</em>: <em>der einfahrende Zug</em> — القطار يدخل المحطة الآن.",
+          "tr": "<strong>Ortaç I (Partizip I)</strong> = mastar (Infinitiv) + <em>-d</em> + sıfat eki. Eylem <em>devam ediyor</em>: <em>der einfahrende Zug</em> — tren şu anda giriyor."
+        },
+        {
+          "en": "<strong>Past participle</strong> + adjective ending. The action is <em>finished</em> — active (<em>der eingefahrene Zug</em>) or passive (<em>der eingebaute Motor</em>).",
+          "uk": "<strong>Дієприкметник II (Partizip II)</strong> + закінчення прикметника. Дія <em>завершена</em> — в активному значенні (<em>der eingefahrene Zug</em>) або в пасивному (<em>der eingebaute Motor</em>).",
+          "ar": "<strong>التصريف الثالث (Partizip II)</strong> + نهاية الصفة. الحدث <em>منتهٍ</em> — بمعنى المبني للمعلوم (<em>der eingefahrene Zug</em>) أو المبني للمجهول (<em>der eingebaute Motor</em>).",
+          "tr": "<strong>Ortaç II (Partizip II)</strong> + sıfat eki. Eylem <em>bitmiştir</em> — etken (<em>der eingefahrene Zug</em>) ya da edilgen (<em>der eingebaute Motor</em>)."
+        },
+        {
+          "en": "The participle behaves like any other adjective and is <strong>declined</strong> normally: <em>ein lächelnder Verkäufer, den lächelnden Verkäufer</em>.",
+          "uk": "Дієприкметник поводиться як будь-який інший прикметник і звичайно <strong>відмінюється</strong>: <em>ein lächelnder Verkäufer, den lächelnden Verkäufer</em>.",
+          "ar": "يتصرف الـ Partizip مثل أي صفة أخرى، و<strong>يُصرَّف</strong> بشكل عادي تماماً: <em>ein lächelnder Verkäufer, den lächelnden Verkäufer</em>.",
+          "tr": "Ortaç her sıfat gibi davranır ve normal şekilde <strong>çekimlenir</strong>: <em>ein lächelnder Verkäufer, den lächelnden Verkäufer</em>."
+        },
+        {
+          "en": "Do not use the past participle as an adjective with: <strong>sein, haben</strong> and verbs like <em>arbeiten, antworten, danken, gefallen, nützen, schlafen, sitzen, stehen</em>.",
+          "uk": "Не утворюють дієприкметник II (Partizip II) як прикметник: <strong>sein, haben</strong> і дієслова, як-от <em>arbeiten, antworten, danken, gefallen, nützen, schlafen, sitzen, stehen</em>.",
+          "ar": "لا نصنع صفة من التصريف الثالث (Partizip II) لهذه الأفعال: <strong>sein, haben</strong> وأفعال مثل <em>arbeiten, antworten, danken, gefallen, nützen, schlafen, sitzen, stehen</em>.",
+          "tr": "Şunlardan sıfat olarak ortaç II (Partizip II) yapılmaz: <strong>sein, haben</strong> ve <em>arbeiten, antworten, danken, gefallen, nützen, schlafen, sitzen, stehen</em> gibi fiiller."
+        }
+      ],
+      "note": {
+        "en": "The difference in one pair: <em>das ein<strong>stürzende</strong> Gebäude</em> is collapsing at this moment — <em>das ein<strong>gestürzte</strong> Gebäude</em> is already in ruins. Related, but different: the suffix <strong>-artig</strong> makes an adjective from a noun with the meaning “like”: <em>Krampf + -artig = krampfartig</em>, and also <em>wellenartig, blitzartig, kolikartig, wehenartig</em>.",
+        "uk": "Різниця на одній парі: <em>das ein<strong>stürzende</strong> Gebäude</em> руйнується в цю мить — <em>das ein<strong>gestürzte</strong> Gebäude</em> уже лежить у руїнах. Споріднене, але інше: суфікс <strong>-artig</strong> утворює з іменника прикметник зі значенням „такий, як“: <em>Krampf + -artig = krampfartig</em>, так само <em>wellenartig, blitzartig, kolikartig, wehenartig</em>.",
+        "ar": "الفرق في زوج واحد: <em>das ein<strong>stürzende</strong> Gebäude</em> ينهار في هذه اللحظة — <em>das ein<strong>gestürzte</strong> Gebäude</em> صار أنقاضاً. قريب منه لكنه مختلف: اللاحقة (Suffix) <strong>-artig</strong> تصنع من الاسم صفة بمعنى «مثل»: <em>Krampf + -artig = krampfartig</em>، وكذلك <em>wellenartig, blitzartig, kolikartig, wehenartig</em>.",
+        "tr": "Farkı bir çift gösterir: <em>das ein<strong>stürzende</strong> Gebäude</em> şu anda çöküyor — <em>das ein<strong>gestürzte</strong> Gebäude</em> zaten yıkıntı hâlinde. Benzer ama farklı: <strong>-artig</strong> son eki bir isimden „so wie“ (… gibi) anlamında bir sıfat yapar: <em>Krampf + -artig = krampfartig</em>, aynı şekilde <em>wellenartig, blitzartig, kolikartig, wehenartig</em>."
+      }
+    },
+    "passiv": {
+      "reviewed": false,
+      "intro": {
+        "en": "In the passive, what matters is what happens — not who does it. With a modal verb, werden moves to the end of the sentence as an infinitive and does not change any more: „Das Hotel muss gebucht werden.“",
+        "uk": "У пасиві (Passiv) важливо, що відбувається, — а не хто це робить. Якщо поруч є модальне дієслово, werden як інфінітив іде в кінець речення і більше не змінюється: „Das Hotel muss gebucht werden.“",
+        "ar": "في المبني للمجهول (Passiv) المهم هو ما يحدث — وليس من يفعله. وعندما يوجد معه فعل صيغة (Modalverb)، تنتقل werden بصيغة المصدر (Infinitiv) إلى نهاية الجملة ولا تتغير بعد ذلك: „Das Hotel muss gebucht werden.“",
+        "tr": "Edilgen yapıda (Passiv) önemli olan ne olduğudur — kimin yaptığı değil. Yanında bir modal fiil (Modalverb) varsa werden mastar (Infinitiv) olarak cümle sonuna gider ve artık değişmez: „Das Hotel muss gebucht werden.“"
+      },
+      "qa": [
+        {
+          "en": "<strong>Without a modal verb</strong> — <em>werden</em> is conjugated, the past participle is at the end: <em>Das Hotel <strong>wird</strong> gebucht.</em>",
+          "uk": "<strong>Без модального дієслова</strong> — <em>werden</em> змінюється за особами, дієприкметник II (Partizip II) стоїть у кінці: <em>Das Hotel <strong>wird</strong> gebucht.</em>",
+          "ar": "<strong>بدون فعل صيغة (Modalverb)</strong> — تُصرَّف <em>werden</em>، ويأتي التصريف الثالث (Partizip II) في النهاية: <em>Das Hotel <strong>wird</strong> gebucht.</em>",
+          "tr": "<strong>Modal fiil olmadan</strong> — <em>werden</em> çekimlenir, ortaç II (Partizip II) sonda durur: <em>Das Hotel <strong>wird</strong> gebucht.</em>"
+        },
+        {
+          "en": "<strong>With a modal verb</strong> — now the <em>modal verb</em> is conjugated, and <em>werden</em> moves to the very end as an infinitive: <em>Das Hotel <strong>muss</strong> gebucht <strong>werden</strong>.</em>",
+          "uk": "<strong>З модальним дієсловом</strong> — тепер за особами змінюється <em>модальне дієслово</em>, а <em>werden</em> як інфінітив переходить у самий кінець: <em>Das Hotel <strong>muss</strong> gebucht <strong>werden</strong>.</em>",
+          "ar": "<strong>مع فعل صيغة (Modalverb)</strong> — الآن يُصرَّف <em>فعل الصيغة</em>، وتنتقل <em>werden</em> بصيغة المصدر إلى آخر الجملة: <em>Das Hotel <strong>muss</strong> gebucht <strong>werden</strong>.</em>",
+          "tr": "<strong>Modal fiille</strong> — şimdi <em>modal fiil</em> çekimlenir ve <em>werden</em> mastar (Infinitiv) olarak en sona kayar: <em>Das Hotel <strong>muss</strong> gebucht <strong>werden</strong>.</em>"
+        },
+        {
+          "en": "The <strong>accusative object</strong> of the active sentence becomes the subject of the passive sentence: <em>Ich buche <strong>das Hotel</strong></em> → <em><strong>Das Hotel</strong> wird gebucht.</em>",
+          "uk": "<strong>Додаток у знахідному відмінку (Akkusativ)</strong> активного речення стає підметом пасивного речення: <em>Ich buche <strong>das Hotel</strong></em> → <em><strong>Das Hotel</strong> wird gebucht.</em>",
+          "ar": "<strong>المفعول به في حالة النصب (Akkusativobjekt)</strong> في جملة المبني للمعلوم (Aktiv) يصبح فاعل (Subjekt) جملة المبني للمجهول: <em>Ich buche <strong>das Hotel</strong></em> → <em><strong>Das Hotel</strong> wird gebucht.</em>",
+          "tr": "Etken cümlenin <strong>-i hâlindeki nesnesi (Akkusativobjekt)</strong> edilgen cümlenin öznesi olur: <em>Ich buche <strong>das Hotel</strong></em> → <em><strong>Das Hotel</strong> wird gebucht.</em>"
+        },
+        {
+          "en": "Who does it can be left out — that is the point of the passive. If you do say it: <em>von</em> + person, <em>durch</em> + means or cause. <em>Das Hotel wird <strong>von der Firma</strong> gebucht.</em>",
+          "uk": "Того, хто виконує дію, можна не називати — у цьому й сенс пасиву. Якщо все ж треба: <em>von</em> + особа, <em>durch</em> + засіб або причина. <em>Das Hotel wird <strong>von der Firma</strong> gebucht.</em>",
+          "ar": "يمكن ألّا نذكر من يفعل الشيء — وهذا هو معنى المبني للمجهول. وإذا ذكرناه: <em>von</em> + شخص، <em>durch</em> + وسيلة أو سبب. <em>Das Hotel wird <strong>von der Firma</strong> gebucht.</em>",
+          "tr": "Kimin yaptığı söylenmeyebilir — edilgen yapının amacı budur. Söylenecekse: <em>von</em> + kişi, <em>durch</em> + araç ya da neden. <em>Das Hotel wird <strong>von der Firma</strong> gebucht.</em>"
+        }
+      ],
+      "note": {
+        "en": "For the past you use the <em>simple past</em>: <em>Das Hotel <strong>musste</strong> gebucht werden.</em> A perfect tense with a modal verb in the passive („hat gebucht werden müssen“) is possible, but nobody says it — if in doubt, use the simple past.",
+        "uk": "Для минулого беруть <em>простий минулий час (Präteritum)</em>: <em>Das Hotel <strong>musste</strong> gebucht werden.</em> Перфект (Perfekt) із модальним дієсловом у пасиві („hat gebucht werden müssen“) утворити можна, але так ніхто не каже — якщо сумніваєтеся, беріть простий минулий час.",
+        "ar": "للماضي نستعمل <em>الماضي البسيط (Präteritum)</em>: <em>Das Hotel <strong>musste</strong> gebucht werden.</em> يمكن تكوين الماضي التام (Perfekt) مع فعل صيغة في المبني للمجهول („hat gebucht werden müssen“)، لكن لا أحد يقوله — عند الشك استعملوا الماضي البسيط.",
+        "tr": "Geçmiş için <em>yalın geçmiş zaman (Präteritum)</em> kullanılır: <em>Das Hotel <strong>musste</strong> gebucht werden.</em> Edilgen yapıda modal fiille bileşik geçmiş zaman (Perfekt) („hat gebucht werden müssen“) kurulabilir, ama kimse söylemez — emin değilseniz yalın geçmiş zaman."
+      }
+    },
+    "perfekt": {
+      "reviewed": false,
+      "intro": {
+        "en": "In conversation you talk about the past in the perfect tense. You need to answer two questions: which auxiliary verb — and what is the past participle?",
+        "uk": "У розмові про минуле розповідають у перфекті (Perfekt). Треба з’ясувати два питання: яке допоміжне дієслово — і яка форма дієприкметника II (Partizip II)?",
+        "ar": "في الحديث نحكي عن الماضي بصيغة الماضي التام (Perfekt). هناك سؤالان: أيّ فعل مساعد (Hilfsverb)؟ — وما هو التصريف الثالث (Partizip II)؟",
+        "tr": "Konuşurken geçmiş, bileşik geçmiş zamanla (Perfekt) anlatılır. İki soruyu çözmek gerekir: hangi yardımcı fiil — ve ortaç II (Partizip II) nasıl?"
+      },
+      "qa": [
+        {
+          "en": "<strong>sein</strong> is used with verbs of <em>movement from A to B</em> (gehen, fahren, fliegen, kommen, steigen) and of <em>change of state</em> (aufwachen, einschlafen, sterben, passieren).",
+          "uk": "<strong>sein</strong> беруть дієслова <em>руху з пункту A в пункт B</em> (gehen, fahren, fliegen, kommen, steigen) і <em>зміни стану</em> (aufwachen, einschlafen, sterben, passieren).",
+          "ar": "<strong>sein</strong> تأخذها أفعال <em>الحركة من A إلى B</em> (gehen, fahren, fliegen, kommen, steigen) وأفعال <em>تغيّر الحالة</em> (aufwachen, einschlafen, sterben, passieren).",
+          "tr": "<strong>sein</strong> alanlar: <em>A'dan B'ye hareket</em> fiilleri (gehen, fahren, fliegen, kommen, steigen) ve <em>durum değişikliği</em> fiilleri (aufwachen, einschlafen, sterben, passieren)."
+        },
+        {
+          "en": "<strong>haben</strong> is used with all other verbs — especially all verbs with an accusative object: <em>Ich habe einen Kaffee getrunken.</em>",
+          "uk": "<strong>haben</strong> беруть усі інші дієслова — насамперед усі дієслова з додатком у знахідному відмінку (Akkusativ): <em>Ich habe einen Kaffee getrunken.</em>",
+          "ar": "<strong>haben</strong> تأخذها كل الأفعال الأخرى — وخاصة كل الأفعال التي لها مفعول به في حالة النصب (Akkusativobjekt): <em>Ich habe einen Kaffee getrunken.</em>",
+          "tr": "<strong>haben</strong> alanlar: geri kalan bütün fiiller — özellikle -i hâlinde nesnesi (Akkusativobjekt) olan bütün fiiller: <em>Ich habe einen Kaffee getrunken.</em>"
+        },
+        {
+          "en": "<strong>Regular</strong>: ge- + stem + -t. <em>kaufen → gekauft, wohnen → gewohnt, arbeiten → gearbeitet</em>.",
+          "uk": "<strong>Правильні дієслова</strong>: ge- + основа + -t. <em>kaufen → gekauft, wohnen → gewohnt, arbeiten → gearbeitet</em>.",
+          "ar": "<strong>الأفعال المنتظمة</strong>: ge- + جذر الفعل (Stamm) + -t. <em>kaufen → gekauft, wohnen → gewohnt, arbeiten → gearbeitet</em>.",
+          "tr": "<strong>Düzenli</strong>: ge- + kök + -t. <em>kaufen → gekauft, wohnen → gewohnt, arbeiten → gearbeitet</em>."
+        },
+        {
+          "en": "<strong>Irregular</strong>: ge- + (often changed) stem + -en. <em>trinken → getrunken, sprechen → gesprochen, gehen → gegangen</em>.",
+          "uk": "<strong>Неправильні дієслова</strong>: ge- + (часто змінена) основа + -en. <em>trinken → getrunken, sprechen → gesprochen, gehen → gegangen</em>.",
+          "ar": "<strong>الأفعال غير المنتظمة</strong>: ge- + جذر الفعل (Stamm) (غالباً متغيّر) + -en. <em>trinken → getrunken, sprechen → gesprochen, gehen → gegangen</em>.",
+          "tr": "<strong>Düzensiz</strong>: ge- + (çoğu zaman değişmiş) kök + -en. <em>trinken → getrunken, sprechen → gesprochen, gehen → gegangen</em>."
+        }
+      ],
+      "note": {
+        "en": "Two special cases without <em>ge-</em>: verbs ending in <strong>-ieren</strong> (<em>studieren → studiert, telefonieren → telefoniert</em>) and verbs with an <strong>inseparable prefix</strong> be-, emp-, ent-, er-, ver-, zer- (<em>bekommen → bekommen, empfehlen → empfohlen, vergessen → vergessen</em>). With <strong>separable</strong> verbs the <em>ge-</em> goes into the middle: <em>aufwachen → auf<strong>ge</strong>wacht, einladen → ein<strong>ge</strong>laden</em>.",
+        "uk": "Два особливі випадки без <em>ge-</em>: дієслова на <strong>-ieren</strong> (<em>studieren → studiert, telefonieren → telefoniert</em>) і дієслова з <strong>невідокремлюваним префіксом</strong> be-, emp-, ent-, er-, ver-, zer- (<em>bekommen → bekommen, empfehlen → empfohlen, vergessen → vergessen</em>). У <strong>відокремлюваних</strong> дієсловах <em>ge-</em> стає всередину: <em>aufwachen → auf<strong>ge</strong>wacht, einladen → ein<strong>ge</strong>laden</em>.",
+        "ar": "حالتان خاصتان بدون <em>ge-</em>: الأفعال المنتهية بـ<strong>-ieren</strong> (<em>studieren → studiert, telefonieren → telefoniert</em>) والأفعال ذات <strong>السابقة غير المنفصلة (untrennbares Präfix)</strong> be-, emp-, ent-, er-, ver-, zer- (<em>bekommen → bekommen, empfehlen → empfohlen, vergessen → vergessen</em>). وفي الأفعال <strong>المنفصلة (trennbare Verben)</strong> تدخل <em>ge-</em> في الوسط: <em>aufwachen → auf<strong>ge</strong>wacht, einladen → ein<strong>ge</strong>laden</em>.",
+        "tr": "<em>ge-</em> almayan iki özel durum: <strong>-ieren</strong> ile biten fiiller (<em>studieren → studiert, telefonieren → telefoniert</em>) ve be-, emp-, ent-, er-, ver-, zer- gibi <strong>ayrılamayan ön ekli</strong> fiiller (<em>bekommen → bekommen, empfehlen → empfohlen, vergessen → vergessen</em>). <strong>Ayrılabilen</strong> fiillerde <em>ge-</em> ortaya kayar: <em>aufwachen → auf<strong>ge</strong>wacht, einladen → ein<strong>ge</strong>laden</em>."
+      }
+    },
+    "plural": {
+      "reviewed": false,
+      "intro": {
+        "en": "In the plural the article is always die — but a noun has five ways to become plural: -e, -er, -(e)n, -s or no ending at all, often with an umlaut.",
+        "uk": "У множині артикль завжди die. Але іменник має п’ять способів утворити множину: -e, -er, -(e)n, -s або без закінчення, часто з умлаутом.",
+        "ar": "في الجمع (Plural) تكون الأداة (Artikel) دائماً die — لكن للاسم (Nomen) خمس طرق للجمع: -e، -er، -(e)n، -s أو بدون نهاية (Endung)، وغالباً مع Umlaut.",
+        "tr": "Çoğulda (Plural) artikel her zaman die — ama isim beş yolla çoğul olur: -e, -er, -(e)n, -s ya da hiç ek yok, çoğu zaman Umlaut ile."
+      },
+      "qa": [
+        {
+          "en": "The article in the plural is <strong>always die</strong> — no matter if the word has <em>der</em>, <em>die</em> or <em>das</em> in the singular.",
+          "uk": "Артикль у множині — <strong>завжди die</strong>. Неважливо, чи в однині слово має <em>der</em>, <em>die</em> або <em>das</em>.",
+          "ar": "الأداة في الجمع هي <strong>دائماً die</strong> — سواء كانت الكلمة في المفرد <em>der</em> أو <em>die</em> أو <em>das</em>.",
+          "tr": "Çoğulda artikel <strong>her zaman die</strong> — sözcük tekilde <em>der</em>, <em>die</em> ya da <em>das</em> alsa da."
+        },
+        {
+          "en": "Feminine nouns usually get <strong>-(e)n</strong>: <em>die Frau → die Frauen, die Lampe → die Lampen, die Lehrerin → die Lehrerinnen</em>.",
+          "uk": "Іменники жіночого роду здебільшого отримують <strong>-(e)n</strong>: <em>die Frau → die Frauen, die Lampe → die Lampen, die Lehrerin → die Lehrerinnen</em>.",
+          "ar": "الأسماء المؤنثة تأخذ غالباً <strong>-(e)n</strong>: <em>die Frau → die Frauen, die Lampe → die Lampen, die Lehrerin → die Lehrerinnen</em>.",
+          "tr": "Dişil isimler çoğunlukla <strong>-(e)n</strong> alır: <em>die Frau → die Frauen, die Lampe → die Lampen, die Lehrerin → die Lehrerinnen</em>."
+        },
+        {
+          "en": "Masculine and neuter nouns ending in <strong>-er, -el, -en</strong> get <strong>no ending</strong>, sometimes an umlaut: <em>der Lehrer → die Lehrer, das Zimmer → die Zimmer, der Apfel → die Äpfel</em>.",
+          "uk": "Іменники чоловічого і середнього роду на <strong>-er, -el, -en</strong> <strong>не отримують закінчення</strong>, іноді отримують умлаут: <em>der Lehrer → die Lehrer, das Zimmer → die Zimmer, der Apfel → die Äpfel</em>.",
+          "ar": "الأسماء المذكرة والمحايدة المنتهية بـ<strong>-er, -el, -en</strong> لا تأخذ <strong>أي نهاية</strong>، وأحياناً تأخذ Umlaut: <em>der Lehrer → die Lehrer, das Zimmer → die Zimmer, der Apfel → die Äpfel</em>.",
+          "tr": "<strong>-er, -el, -en</strong> ile biten eril ve nötr isimler <strong>ek almaz</strong>, bazen Umlaut alır: <em>der Lehrer → die Lehrer, das Zimmer → die Zimmer, der Apfel → die Äpfel</em>."
+        },
+        {
+          "en": "Short masculine nouns often get <strong>-e</strong>, short neuter nouns often <strong>-er</strong> — both often with an umlaut: <em>der Tisch → die Tische, der Stuhl → die Stühle, das Buch → die Bücher, das Kind → die Kinder</em>.",
+          "uk": "Короткі іменники чоловічого роду часто отримують <strong>-e</strong>, короткі іменники середнього роду — часто <strong>-er</strong>. Обидва часто з умлаутом: <em>der Tisch → die Tische, der Stuhl → die Stühle, das Buch → die Bücher, das Kind → die Kinder</em>.",
+          "ar": "الأسماء المذكرة القصيرة تأخذ غالباً <strong>-e</strong>، والمحايدة القصيرة غالباً <strong>-er</strong> — وكثيراً ما يكون ذلك مع Umlaut: <em>der Tisch → die Tische, der Stuhl → die Stühle, das Buch → die Bücher, das Kind → die Kinder</em>.",
+          "tr": "Kısa eril isimler çoğu zaman <strong>-e</strong>, kısa nötr isimler çoğu zaman <strong>-er</strong> alır — ikisi de sık sık Umlaut ile: <em>der Tisch → die Tische, der Stuhl → die Stühle, das Buch → die Bücher, das Kind → die Kinder</em>."
+        },
+        {
+          "en": "Words from other languages and words ending in a vowel often get <strong>-s</strong>: <em>das Auto → die Autos, das Handy → die Handys, das Hotel → die Hotels</em>.",
+          "uk": "Слова з інших мов і слова на голосний часто отримують <strong>-s</strong>: <em>das Auto → die Autos, das Handy → die Handys, das Hotel → die Hotels</em>.",
+          "ar": "الكلمات من لغات أخرى والكلمات المنتهية بحرف علة تأخذ غالباً <strong>-s</strong>: <em>das Auto → die Autos, das Handy → die Handys, das Hotel → die Hotels</em>.",
+          "tr": "Başka dillerden gelen sözcükler ve ünlüyle biten sözcükler çoğu zaman <strong>-s</strong> alır: <em>das Auto → die Autos, das Handy → die Handys, das Hotel → die Hotels</em>."
+        }
+      ],
+      "note": {
+        "en": "The rules help, but they are not a guarantee. So learn the plural like the article: always with the word. In the dictionary it looks like this: <em>der Tisch, -e</em> · <em>das Buch, ¨-er</em> · <em>der Lehrer, -</em>.",
+        "uk": "Правила допомагають, але не дають гарантії. Тому вчіть множину як артикль: завжди разом зі словом. У словнику вона виглядає так: <em>der Tisch, -e</em> · <em>das Buch, ¨-er</em> · <em>der Lehrer, -</em>.",
+        "ar": "القواعد تساعد، لكنها ليست مضمونة. لذلك تعلّموا الجمع مثل الأداة: دائماً مع الكلمة. في القاموس يُكتب هكذا: <em>der Tisch, -e</em> · <em>das Buch, ¨-er</em> · <em>der Lehrer, -</em>.",
+        "tr": "Kurallar yardımcı olur, ama garanti değildir. Bu yüzden çoğulu artikel gibi öğrenin: her zaman sözcükle birlikte. Sözlükte şöyle yazar: <em>der Tisch, -e</em> · <em>das Buch, ¨-er</em> · <em>der Lehrer, -</em>."
+      }
+    },
+    "possessivartikel": {
+      "reviewed": false,
+      "intro": {
+        "en": "Whose is it? mein Buch, dein Auto, ihre Tasche. The possessive article gets the same endings as ein/eine — it also tells you who something belongs to.",
+        "uk": "Чиє це? mein Buch, dein Auto, ihre Tasche. Присвійний артикль має ті самі закінчення, що й ein/eine. Він тільки ще показує, чиє це.",
+        "ar": "لمن هذا؟ mein Buch، dein Auto، ihre Tasche. أداة الملكية (Possessivartikel) تأخذ النهايات نفسها مثل ein/eine — لكنها تقول أيضاً لمن الشيء.",
+        "tr": "Bu kimin? mein Buch, dein Auto, ihre Tasche. İyelik artikeli (Possessivartikel) ein/eine ile aynı ekleri alır — sadece bir şeyin kime ait olduğunu da söyler."
+      },
+      "qa": [
+        {
+          "en": "<strong>ich → mein, du → dein, er/es → sein, sie → ihr, wir → unser, ihr → euer, sie (Pl.) → ihr, Sie → Ihr</strong>.",
+          "uk": "<strong>ich → mein, du → dein, er/es → sein, sie → ihr, wir → unser, ihr → euer, sie (мн.) → ihr, Sie → Ihr</strong>.",
+          "ar": "<strong>ich → mein, du → dein, er/es → sein, sie → ihr, wir → unser, ihr → euer, sie (Pl.) → ihr, Sie → Ihr</strong>.",
+          "tr": "<strong>ich → mein, du → dein, er/es → sein, sie → ihr, wir → unser, ihr → euer, sie (Pl.) → ihr, Sie → Ihr</strong>."
+        },
+        {
+          "en": "The ending comes from the noun, just like with <em>ein/eine</em>: <em>der/das</em> → <strong>mein</strong>, <em>die</em> and plural → <strong>meine</strong>.",
+          "uk": "Закінчення залежить від іменника, так само як в <em>ein/eine</em>: <em>der/das</em> → <strong>mein</strong>, <em>die</em> і множина → <strong>meine</strong>.",
+          "ar": "النهاية تأتي من الاسم، تماماً كما في <em>ein/eine</em>: <em>der/das</em> → <strong>mein</strong>، <em>die</em> والجمع → <strong>meine</strong>.",
+          "tr": "Ek, tıpkı <em>ein/eine</em> gibi, isimden gelir: <em>der/das</em> → <strong>mein</strong>, <em>die</em> ve çoğul → <strong>meine</strong>."
+        },
+        {
+          "en": "In the <strong>accusative</strong> only the masculine changes: <em>Ich suche mein<strong>en</strong> Schlüssel.</em> Feminine, neuter and plural stay the same.",
+          "uk": "У <strong>знахідному відмінку (Akkusativ)</strong> змінюється тільки чоловічий рід: <em>Ich suche mein<strong>en</strong> Schlüssel.</em> Жіночий рід, середній рід і множина не змінюються.",
+          "ar": "في <strong>حالة النصب (Akkusativ)</strong> يتغير المذكر فقط: <em>Ich suche mein<strong>en</strong> Schlüssel.</em> المؤنث والمحايد والجمع تبقى كما هي.",
+          "tr": "<strong>-i hâlinde (Akkusativ)</strong> yalnızca eril değişir: <em>Ich suche mein<strong>en</strong> Schlüssel.</em> Dişil, nötr ve çoğul aynı kalır."
+        },
+        {
+          "en": "<em>euer</em> loses its second <em>e</em> when an ending is added: <em>euer Haus</em>, but <em>eure Kinder</em>.",
+          "uk": "<em>euer</em> втрачає друге <em>e</em>, коли є закінчення: <em>euer Haus</em>, але <em>eure Kinder</em>.",
+          "ar": "<em>euer</em> تفقد حرف <em>e</em> الثاني عندما تأتي نهاية: <em>euer Haus</em>، لكن <em>eure Kinder</em>.",
+          "tr": "<em>euer</em>, bir ek gelince ikinci <em>e</em> harfini kaybeder: <em>euer Haus</em>, ama <em>eure Kinder</em>."
+        }
+      ],
+      "note": {
+        "en": "<strong>sein</strong> or <strong>ihr</strong>? That depends on the <em>owner</em>, not on the thing: <em>Tom und <strong>seine</strong> Schwester</em>, <em>Anna und <strong>ihr</strong> Bruder</em>. But the ending comes from the thing: <em>seine</em> Schwester, because <em>die</em> Schwester.",
+        "uk": "<strong>sein</strong> чи <strong>ihr</strong>? Це залежить від <em>власника</em>, а не від речі: <em>Tom und <strong>seine</strong> Schwester</em>, <em>Anna und <strong>ihr</strong> Bruder</em>. А закінчення залежить від речі: <em>seine</em> Schwester, бо <em>die</em> Schwester.",
+        "ar": "<strong>sein</strong> أم <strong>ihr</strong>؟ هذا يتعلق بـ<em>المالك</em>، وليس بالشيء: <em>Tom und <strong>seine</strong> Schwester</em>، <em>Anna und <strong>ihr</strong> Bruder</em>. أما النهاية فتأتي من الشيء: <em>seine</em> Schwester، لأن <em>die</em> Schwester.",
+        "tr": "<strong>sein</strong> mi <strong>ihr</strong> mi? Bu eşyaya değil, <em>sahibine</em> bağlıdır: <em>Tom und <strong>seine</strong> Schwester</em>, <em>Anna und <strong>ihr</strong> Bruder</em>. Ek ise eşyadan gelir: <em>seine</em> Schwester, çünkü <em>die</em> Schwester."
+      }
+    },
+    "praepositionen": {
+      "reviewed": false,
+      "intro": {
+        "en": "Some verbs need a fixed preposition. Learn the pattern, then practise it in five different types of exercise — like on a coursebook page.",
+        "uk": "Деякі дієслова потребують сталого прийменника. Вивчи схему, а потім потренуйся на п’яти різних типах завдань — як на сторінці підручника.",
+        "ar": "بعض الأفعال تحتاج إلى حرف جر (Präposition) ثابت. تعلّم النمط، ثم تدرّب عليه في خمسة أنواع مختلفة من التمارين — كما في صفحة من كتاب الدورة.",
+        "tr": "Bazı fiiller sabit bir edat (Präposition) ister. Kalıbı öğren, sonra beş farklı alıştırma türünde çalış — bir ders kitabı sayfasındaki gibi."
+      },
+      "qa": [
+        {
+          "en": "<strong>Worüber</strong> ärgert sie sich? — Über den Verkehr.",
+          "uk": "<strong>Worüber</strong> ärgert sie sich? — Über den Verkehr.",
+          "ar": "<strong>Worüber</strong> ärgert sie sich? — Über den Verkehr.",
+          "tr": "<strong>Worüber</strong> ärgert sie sich? — Über den Verkehr."
+        },
+        {
+          "en": "<strong>Über wen</strong> ärgert sie sich? — Über ihren Chef.",
+          "uk": "<strong>Über wen</strong> ärgert sie sich? — Über ihren Chef.",
+          "ar": "<strong>Über wen</strong> ärgert sie sich? — Über ihren Chef.",
+          "tr": "<strong>Über wen</strong> ärgert sie sich? — Über ihren Chef."
+        }
+      ],
+      "note": {
+        "en": "Question word for things: <em>wo(r) + preposition</em>, e.g. <em>worüber</em>. Question word for people: <em>preposition + wen/wem</em>, e.g. <em>über wen</em>.",
+        "uk": "Питальне слово для речей: <em>wo(r) + прийменник</em>, наприклад <em>worüber</em>. Питальне слово для людей: <em>прийменник + wen/wem</em>, наприклад <em>über wen</em>.",
+        "ar": "أداة الاستفهام للأشياء: <em>wo(r) + Präposition</em>، مثلاً <em>worüber</em>. أداة الاستفهام للأشخاص: <em>Präposition + wen/wem</em>، مثلاً <em>über wen</em>.",
+        "tr": "Şeyler için soru sözcüğü: <em>wo(r) + Präposition</em>, örn. <em>worüber</em>. Kişiler için soru sözcüğü: <em>Präposition + wen/wem</em>, örn. <em>über wen</em>."
+      }
+    },
+    "praesens": {
+      "reviewed": false,
+      "intro": {
+        "en": "The verb changes with the person: ich lern-e, du lern-st, er lern-t. The stem stays, only the ending changes — and sein and haben go their own way.",
+        "uk": "Дієслово змінюється залежно від особи: ich lern-e, du lern-st, er lern-t. Основа залишається, змінюється тільки закінчення. А sein і haben мають свої власні форми.",
+        "ar": "الفعل يتغير حسب الشخص: ich lern-e، du lern-st، er lern-t. جذر الفعل (Stamm) يبقى، وتتغير النهاية (Endung) فقط — أما sein و haben فلهما طريقتهما الخاصة.",
+        "tr": "Fiil kişiye uyar: ich lern-e, du lern-st, er lern-t. Kök aynı kalır, sadece ek değişir — sein ve haben ise kendi yollarından gider."
+      },
+      "qa": [
+        {
+          "en": "The endings: <strong>ich -e, du -st, er/sie/es -t, wir -en, ihr -t, sie/Sie -en</strong>. They are the same for almost all verbs.",
+          "uk": "Закінчення: <strong>ich -e, du -st, er/sie/es -t, wir -en, ihr -t, sie/Sie -en</strong>. Вони діють майже для всіх дієслів.",
+          "ar": "النهايات: <strong>ich -e, du -st, er/sie/es -t, wir -en, ihr -t, sie/Sie -en</strong>. وهي صالحة لكل الأفعال تقريباً.",
+          "tr": "Ekler: <strong>ich -e, du -st, er/sie/es -t, wir -en, ihr -t, sie/Sie -en</strong>. Neredeyse bütün fiiller için geçerlidir."
+        },
+        {
+          "en": "If the stem ends in <strong>-t or -d</strong>, an <em>e</em> comes in between: <em>du arbeit<strong>e</strong>st, er find<strong>e</strong>t, ihr wart<strong>e</strong>t</em>.",
+          "uk": "Якщо основа закінчується на <strong>-t або -d</strong>, між основою і закінченням з’являється <em>e</em>: <em>du arbeit<strong>e</strong>st, er find<strong>e</strong>t, ihr wart<strong>e</strong>t</em>.",
+          "ar": "إذا انتهى جذر الفعل بـ<strong>-t أو -d</strong>، يدخل <em>e</em> في الوسط: <em>du arbeit<strong>e</strong>st, er find<strong>e</strong>t, ihr wart<strong>e</strong>t</em>.",
+          "tr": "Kök <strong>-t ya da -d</strong> ile bitiyorsa, araya bir <em>e</em> girer: <em>du arbeit<strong>e</strong>st, er find<strong>e</strong>t, ihr wart<strong>e</strong>t</em>."
+        },
+        {
+          "en": "Some verbs change the vowel with <strong>du</strong> and <strong>er/sie/es</strong>: <em>fahren → du fährst, sprechen → er spricht, lesen → sie liest</em>. With wir, ihr, sie everything is normal.",
+          "uk": "Деякі дієслова змінюють голосний у формах для <strong>du</strong> і <strong>er/sie/es</strong>: <em>fahren → du fährst, sprechen → er spricht, lesen → sie liest</em>. З wir, ihr, sie усе як звичайно.",
+          "ar": "بعض الأفعال يتغير فيها حرف العلة مع <strong>du</strong> و<strong>er/sie/es</strong>: <em>fahren → du fährst, sprechen → er spricht, lesen → sie liest</em>. ومع wir و ihr و sie يبقى كل شيء عادياً.",
+          "tr": "Bazı fiiller <strong>du</strong> ve <strong>er/sie/es</strong> ile ünlüyü değiştirir: <em>fahren → du fährst, sprechen → er spricht, lesen → sie liest</em>. wir, ihr, sie ile her şey normal kalır."
+        },
+        {
+          "en": "<strong>sein</strong> and <strong>haben</strong> are irregular: <em>ich bin, du bist, er ist, wir sind, ihr seid, sie sind</em> — <em>ich habe, du hast, er hat, wir haben, ihr habt, sie haben</em>.",
+          "uk": "<strong>sein</strong> і <strong>haben</strong> — неправильні дієслова: <em>ich bin, du bist, er ist, wir sind, ihr seid, sie sind</em> — <em>ich habe, du hast, er hat, wir haben, ihr habt, sie haben</em>.",
+          "ar": "<strong>sein</strong> و<strong>haben</strong> غير منتظمين: <em>ich bin, du bist, er ist, wir sind, ihr seid, sie sind</em> — <em>ich habe, du hast, er hat, wir haben, ihr habt, sie haben</em>.",
+          "tr": "<strong>sein</strong> ve <strong>haben</strong> düzensizdir: <em>ich bin, du bist, er ist, wir sind, ihr seid, sie sind</em> — <em>ich habe, du hast, er hat, wir haben, ihr habt, sie haben</em>."
+        }
+      ],
+      "note": {
+        "en": "If the stem ends in <strong>-s, -ß or -z</strong>, <em>du</em> only gets a <em>-t</em>: <em>du heißt, du tanzt, du isst</em>. And <em>Sie</em> (polite) always has the same form as <em>sie</em> (plural): <em>Kommen Sie aus Berlin?</em>",
+        "uk": "Якщо основа закінчується на <strong>-s, -ß або -z</strong>, <em>du</em> отримує тільки <em>-t</em>: <em>du heißt, du tanzt, du isst</em>. А <em>Sie</em> (ввічливо) завжди має ту саму форму, що й <em>sie</em> (множина): <em>Kommen Sie aus Berlin?</em>",
+        "ar": "إذا انتهى جذر الفعل بـ<strong>-s أو -ß أو -z</strong>، تأخذ <em>du</em> فقط <em>-t</em>: <em>du heißt, du tanzt, du isst</em>. و<em>Sie</em> (للاحترام) لها دائماً الصيغة نفسها مثل <em>sie</em> (الجمع): <em>Kommen Sie aus Berlin?</em>",
+        "tr": "Kök <strong>-s, -ß ya da -z</strong> ile bitiyorsa, <em>du</em> sadece bir <em>-t</em> alır: <em>du heißt, du tanzt, du isst</em>. <em>Sie</em> (kibar) her zaman <em>sie</em> (çoğul) ile aynı biçimdedir: <em>Kommen Sie aus Berlin?</em>"
+      }
+    },
+    "praeteritum-plusquamperfekt": {
+      "reviewed": false,
+      "intro": {
+        "en": "Three past forms, three jobs: perfect tense for conversation, simple past for telling stories and for writing — and past perfect for everything that happened even before that.",
+        "uk": "Три форми минулого часу, три завдання: перфект (Perfekt) — для розмови, простий минулий час (Präteritum) — для розповіді й письма, а плюсквамперфект (Plusquamperfekt) — для всього, що сталося ще раніше.",
+        "ar": "ثلاث صيغ للماضي، ولكل منها مهمة: الماضي التام (Perfekt) للحديث، والماضي البسيط (Präteritum) للسرد والكتابة — والماضي الأسبق (Plusquamperfekt) لكل ما حدث قبل ذلك.",
+        "tr": "Üç geçmiş zaman biçimi, üç görev: bileşik geçmiş zaman (Perfekt) konuşmak için, yalın geçmiş zaman (Präteritum) anlatmak ve yazmak için — önceki geçmiş zaman (Plusquamperfekt) ise ondan da önce olan her şey için."
+      },
+      "qa": [
+        {
+          "en": "<strong>Perfect tense</strong> is the form of spoken language: <em>Was hast du gestern gemacht?</em>",
+          "uk": "<strong>Перфект (Perfekt)</strong> — це форма усного мовлення: <em>Was hast du gestern gemacht?</em>",
+          "ar": "<strong>الماضي التام (Perfekt)</strong> هو صيغة اللغة المحكية: <em>Was hast du gestern gemacht?</em>",
+          "tr": "<strong>Bileşik geçmiş zaman (Perfekt)</strong> konuşma dilinin biçimidir: <em>Was hast du gestern gemacht?</em>"
+        },
+        {
+          "en": "<strong>Simple past</strong> is the form of written stories and reports: <em>1966 startete die Serie in den USA.</em>",
+          "uk": "<strong>Простий минулий час (Präteritum)</strong> — це форма письмових розповідей і звітів: <em>1966 startete die Serie in den USA.</em>",
+          "ar": "<strong>الماضي البسيط (Präteritum)</strong> هو صيغة القصص والتقارير المكتوبة: <em>1966 startete die Serie in den USA.</em>",
+          "tr": "<strong>Yalın geçmiş zaman (Präteritum)</strong> yazılı anlatıların ve haberlerin biçimidir: <em>1966 startete die Serie in den USA.</em>"
+        },
+        {
+          "en": "With <strong>haben, sein and the modal verbs</strong> you use the simple past in conversation too: <em>ich war, ich hatte, ich musste, ich wollte, ich konnte</em>.",
+          "uk": "Із <strong>haben, sein і модальними дієсловами</strong> простий минулий час (Präteritum) вживають і в розмові: <em>ich war, ich hatte, ich musste, ich wollte, ich konnte</em>.",
+          "ar": "مع <strong>haben و sein وأفعال الصيغة (Modalverben)</strong> نستعمل الماضي البسيط (Präteritum) حتى في الحديث: <em>ich war, ich hatte, ich musste, ich wollte, ich konnte</em>.",
+          "tr": "<strong>haben, sein ve modal fiillerde</strong> konuşurken de yalın geçmiş zaman (Präteritum) kullanılır: <em>ich war, ich hatte, ich musste, ich wollte, ich konnte</em>."
+        },
+        {
+          "en": "<strong>Past perfect</strong> = <em>hatte/war</em> in the simple past + past participle. It shows that something happened earlier: first this, then the other thing.",
+          "uk": "<strong>Плюсквамперфект (Plusquamperfekt)</strong> = <em>hatte/war</em> у простому минулому часі (Präteritum) + дієприкметник II (Partizip II). Він позначає передування: спочатку одне, потім інше.",
+          "ar": "<strong>الماضي الأسبق (Plusquamperfekt)</strong> = <em>hatte/war</em> في الماضي البسيط (Präteritum) + التصريف الثالث (Partizip II). يدلّ على ما حدث قبل: أولاً هذا، ثم الآخر.",
+          "tr": "<strong>Önceki geçmiş zaman (Plusquamperfekt)</strong> = yalın geçmiş zamanda (Präteritum) <em>hatte/war</em> + ortaç II (Partizip II). Önce olanı gösterir: önce bu, sonra öteki."
+        }
+      ],
+      "note": {
+        "en": "The past perfect almost never stands alone — it needs a second sentence in the past that it refers to. The typical trigger is <strong>nachdem</strong>: <em>Nachdem das Raumschiff in Deutschland <strong>gelandet war</strong>, <strong>eroberte</strong> es die Herzen des Publikums.</em> Remember the combination: <em>nachdem</em> + past perfect in the subordinate clause, simple past in the main clause.",
+        "uk": "Плюсквамперфект (Plusquamperfekt) майже ніколи не стоїть сам — йому потрібне друге речення в минулому, до якого він належить. Типовий сигнал — <strong>nachdem</strong>: <em>Nachdem das Raumschiff in Deutschland <strong>gelandet war</strong>, <strong>eroberte</strong> es die Herzen des Publikums.</em> Запам’ятайте поєднання: <em>nachdem</em> + плюсквамперфект у підрядному реченні, простий минулий час (Präteritum) у головному реченні.",
+        "ar": "الماضي الأسبق (Plusquamperfekt) لا يأتي وحده تقريباً أبداً — بل يحتاج إلى جملة ثانية في الماضي يرتبط بها. والكلمة النموذجية التي تستدعيه هي <strong>nachdem</strong>: <em>Nachdem das Raumschiff in Deutschland <strong>gelandet war</strong>, <strong>eroberte</strong> es die Herzen des Publikums.</em> احفظوا هذا التركيب: <em>nachdem</em> + الماضي الأسبق في الجملة الفرعية (Nebensatz)، والماضي البسيط (Präteritum) في الجملة الرئيسية (Hauptsatz).",
+        "tr": "Önceki geçmiş zaman (Plusquamperfekt) neredeyse hiç tek başına durmaz — bağlı olduğu, geçmişte ikinci bir cümleye ihtiyaç duyar. Tipik tetikleyici <strong>nachdem</strong> sözcüğüdür: <em>Nachdem das Raumschiff in Deutschland <strong>gelandet war</strong>, <strong>eroberte</strong> es die Herzen des Publikums.</em> Bu kombinasyonu aklınızda tutun: <em>nachdem</em> + yan cümlede (Nebensatz) önceki geçmiş zaman, ana cümlede (Hauptsatz) yalın geçmiş zaman (Präteritum)."
+      }
+    },
+    "relativpronomen": {
+      "reviewed": false,
+      "intro": {
+        "en": "The relative pronoun takes the gender/number of the word it refers to and the case it has in the relative clause. The verb goes at the end.",
+        "uk": "Відносний займенник узгоджується з родом і числом слова, до якого він належить, а відмінок залежить від його ролі в означальному підрядному реченні (Relativsatz). Дієслово стоїть у кінці.",
+        "ar": "الضمير الموصول (Relativpronomen) يتبع جنس الكلمة المرجعية وعددها (Genus/Numerus)، ويتبع الحالة الإعرابية (Kasus) في الجملة الموصولة (Relativsatz). الفعل يأتي في النهاية.",
+        "tr": "İlgi zamiri (Relativpronomen), bağlı olduğu sözcüğün cinsine/sayısına (Genus/Numerus) ve ilgi cümlesindeki (Relativsatz) hâle (Kasus) göre değişir. Fiil sonda durur."
+      },
+      "qa": [],
+      "note": null
+    },
+    "satzstellung": {
+      "reviewed": false,
+      "intro": {
+        "en": "In a German statement the conjugated verb is always in position 2 — no matter what is in position 1. The second verb part waits at the end of the sentence: that is the sentence bridge.",
+        "uk": "У німецькому розповідному реченні дієслово в особовій формі завжди стоїть на позиції 2 — неважливо, що стоїть на позиції 1. Друга частина дієслова чекає в кінці речення: це і є рамка речення (Satzbrücke).",
+        "ar": "في الجملة الخبرية الألمانية يقف الفعل المصرَّف دائماً في الموقع 2 (Position 2) — مهما كان في الموقع 1 (Position 1). والجزء الثاني من الفعل ينتظر في نهاية الجملة (Satzende): هذا هو جسر الجملة (Satzbrücke).",
+        "tr": "Almanca düz cümlede çekimli fiil her zaman 2. konumdadır (Position 2) — 1. konumda ne olursa olsun. İkinci fiil parçası cümle sonunda (Satzende) bekler: işte bu cümle köprüsüdür (Satzbrücke)."
+      },
+      "qa": [
+        {
+          "en": "Almost any sentence part can be in <strong>position 1</strong> — even several words: <em>Wie jeden Dienstag möchte ich ins Kino gehen.</em>",
+          "uk": "На <strong>позиції 1</strong> може стояти майже будь-який член речення — навіть кілька слів: <em>Wie jeden Dienstag möchte ich ins Kino gehen.</em>",
+          "ar": "في <strong>الموقع 1 (Position 1)</strong> يمكن أن يقف أي جزء من الجملة تقريباً — حتى عدة كلمات: <em>Wie jeden Dienstag möchte ich ins Kino gehen.</em>",
+          "tr": "<strong>1. konumda (Position 1)</strong> neredeyse her cümle ögesi durabilir — birkaç sözcük de: <em>Wie jeden Dienstag möchte ich ins Kino gehen.</em>"
+        },
+        {
+          "en": "The conjugated verb is always in <strong>position 2</strong>. This is the fixed rule in a statement and in a W-question.",
+          "uk": "На <strong>позиції 2</strong> завжди стоїть дієслово в особовій формі. Це тверде правило в розповідному реченні та в питанні з питальним словом (W-Frage).",
+          "ar": "في <strong>الموقع 2 (Position 2)</strong> يقف دائماً الفعل المصرَّف. هذه قاعدة ثابتة في الجملة الخبرية وفي سؤال W (W-Frage).",
+          "tr": "<strong>2. konumda (Position 2)</strong> her zaman çekimli fiil durur. Düz cümlede ve W-sorusunda (W-Frage) bu sabit bir kuraldır."
+        },
+        {
+          "en": "The <strong>subject</strong> stands right next to the verb — on its left or on its right: <em>Ich gehe heute … / Heute gehe ich …</em>",
+          "uk": "<strong>Підмет</strong> стоїть безпосередньо біля дієслова — ліворуч або праворуч від нього: <em>Ich gehe heute … / Heute gehe ich …</em>",
+          "ar": "<strong>الفاعل (Subjekt)</strong> يقف مباشرة بجانب الفعل — قبله أو بعده: <em>Ich gehe heute … / Heute gehe ich …</em>",
+          "tr": "<strong>Özne</strong> fiilin hemen yanında durur — solunda ya da sağında: <em>Ich gehe heute … / Heute gehe ich …</em>"
+        },
+        {
+          "en": "The <strong>second verb part</strong> goes to the end of the sentence: separable prefix, infinitive or participle. <em>Ich hole dich um zwei Uhr <strong>ab</strong>.</em>",
+          "uk": "<strong>Друга частина дієслова</strong> йде в кінець речення: відокремлюваний префікс, інфінітив або дієприкметник. <em>Ich hole dich um zwei Uhr <strong>ab</strong>.</em>",
+          "ar": "<strong>الجزء الثاني من الفعل</strong> يذهب إلى نهاية الجملة: السابقة المنفصلة، أو المصدر (Infinitiv)، أو التصريف الثالث (Partizip). <em>Ich hole dich um zwei Uhr <strong>ab</strong>.</em>",
+          "tr": "<strong>İkinci fiil parçası</strong> cümle sonuna gider: ayrılabilen ön ek, mastar (Infinitiv) ya da ortaç (Partizip). <em>Ich hole dich um zwei Uhr <strong>ab</strong>.</em>"
+        }
+      ],
+      "note": {
+        "en": "Rule of thumb for the middle field: <strong>time</strong> usually goes on the left (often already in position 1), <strong>place</strong> usually on the right. <em>Ich wohne <strong>seit zwei Monaten</strong> in Deutschland.</em> — and there is no comma after position 1, unless a whole subordinate clause is there.",
+        "uk": "Просте правило для середнього поля речення (Mittelfeld): <strong>час</strong> зазвичай стоїть ліворуч (часто вже на позиції 1), <strong>місце</strong> — зазвичай праворуч. <em>Ich wohne <strong>seit zwei Monaten</strong> in Deutschland.</em> — і після позиції 1 коми немає, хіба що там стоїть ціле підрядне речення.",
+        "ar": "قاعدة عامة لوسط الجملة (Mittelfeld): <strong>الزمان</strong> يأتي غالباً أولاً (وكثيراً ما يكون في الموقع 1)، و<strong>المكان</strong> يأتي غالباً بعده. <em>Ich wohne <strong>seit zwei Monaten</strong> in Deutschland.</em> — وبعد الموقع 1 لا توجد فاصلة، إلا إذا كانت فيه جملة فرعية (Nebensatz) كاملة.",
+        "tr": "Orta alan (Mittelfeld) için pratik kural: <strong>zaman</strong> çoğunlukla solda (çoğu zaman zaten 1. konumda), <strong>yer</strong> çoğunlukla sağda durur. <em>Ich wohne <strong>seit zwei Monaten</strong> in Deutschland.</em> — 1. konumdan sonra virgül gelmez; orada bütün bir yan cümle (Nebensatz) varsa gelir."
+      }
+    },
+    "trennbare-verben": {
+      "reviewed": false,
+      "intro": {
+        "en": "The prefix moves to the end of the sentence: fern|sehen, ein|steigen, aus|steigen, an|rufen, an|kommen.",
+        "uk": "Префікс іде в кінець речення: fern|sehen, ein|steigen, aus|steigen, an|rufen, an|kommen.",
+        "ar": "السابقة (Präfix) تنتقل إلى نهاية الجملة (Satzende): fern|sehen, ein|steigen, aus|steigen, an|rufen, an|kommen.",
+        "tr": "Ön ek (Präfix) cümle sonuna (Satzende) gider: fern|sehen, ein|steigen, aus|steigen, an|rufen, an|kommen."
+      },
+      "qa": [],
+      "note": null
+    },
+    "w-fragen": {
+      "reviewed": false,
+      "intro": {
+        "en": "A W-question starts with the question word, the verb follows right away in position 2 — and the subject comes after it. Once you see the pattern, you can build every question correctly.",
+        "uk": "Питання з питальним словом (W-Frage) починається з питального слова. Дієслово йде одразу за ним, на позицію 2. Підмет стоїть після дієслова. Хто раз побачить цю схему, правильно побудує кожне питання.",
+        "ar": "سؤال W (W-Frage) يبدأ بأداة الاستفهام، ثم يأتي الفعل فوراً في الموقع 2 (Position 2) — وينتقل الفاعل (Subjekt) إلى ما بعده. من يرى هذا النمط مرة واحدة، يبني كل سؤال بشكل صحيح.",
+        "tr": "W-sorusu (W-Frage) soru sözcüğüyle başlar, fiil hemen 2. konuma (Position 2) gelir — özne de arkasına kayar. Bu şemayı bir kez gören her soruyu doğru kurar."
+      },
+      "qa": [
+        {
+          "en": "<strong>Position 1</strong> is for the question word, <strong>position 2</strong> is always for the conjugated verb.",
+          "uk": "<strong>Позиція 1</strong> — для питального слова, <strong>позиція 2</strong> — завжди для дієслова в особовій формі.",
+          "ar": "<strong>الموقع 1 (Position 1)</strong> لأداة الاستفهام، و<strong>الموقع 2 (Position 2)</strong> دائماً للفعل المصرَّف.",
+          "tr": "<strong>1. konum (Position 1)</strong> soru sözcüğünündür, <strong>2. konum (Position 2)</strong> her zaman çekimli fiilindir."
+        },
+        {
+          "en": "The <strong>subject</strong> stands directly to the right of the verb: <em>Wann essen Ilse und Heiko?</em>",
+          "uk": "<strong>Підмет</strong> стоїть одразу праворуч від дієслова: <em>Wann essen Ilse und Heiko?</em>",
+          "ar": "<strong>الفاعل (Subjekt)</strong> يقف مباشرة بعد الفعل: <em>Wann essen Ilse und Heiko?</em>",
+          "tr": "<strong>Özne</strong> fiilin hemen sağında durur: <em>Wann essen Ilse und Heiko?</em>"
+        },
+        {
+          "en": "<strong>Wer / wen / wem</strong> ask about people and change with the case — <em>Wer kommt? Wen siehst du? Wem gehört das?</em>",
+          "uk": "<strong>Wer / wen / wem</strong> питають про людей і змінюються за відмінками — <em>Wer kommt? Wen siehst du? Wem gehört das?</em>",
+          "ar": "<strong>Wer / wen / wem</strong> تسأل عن الأشخاص وتتغير حسب الحالة الإعرابية (Kasus) — <em>Wer kommt? Wen siehst du? Wem gehört das?</em>",
+          "tr": "<strong>Wer / wen / wem</strong> kişileri sorar ve hâle (Kasus) göre değişir — <em>Wer kommt? Wen siehst du? Wem gehört das?</em>"
+        },
+        {
+          "en": "After a preposition, the preposition stays with the question word: <em>Mit wem? Von wem? Für wen?</em>",
+          "uk": "Якщо є прийменник, він стоїть разом із питальним словом: <em>Mit wem? Von wem? Für wen?</em>",
+          "ar": "مع حرف الجر (Präposition) يبقى حرف الجر ملتصقاً بأداة الاستفهام: <em>Mit wem? Von wem? Für wen?</em>",
+          "tr": "Edatla kullanılınca edat soru sözcüğüne yapışık kalır: <em>Mit wem? Von wem? Für wen?</em>"
+        }
+      ],
+      "note": {
+        "en": "Two question words are often mixed up: <strong>wo</strong> asks about the place (<em>Wo bist du? — Im Wohnzimmer.</em>), <strong>wohin</strong> about the direction (<em>Wohin gehst du? — Ins Kino.</em>) and <strong>woher</strong> about where someone comes from (<em>Woher kommst du? — Aus Passau.</em>).",
+        "uk": "Два питальні слова часто плутають: <strong>wo</strong> питає про місце (<em>Wo bist du? — Im Wohnzimmer.</em>), <strong>wohin</strong> — про напрямок (<em>Wohin gehst du? — Ins Kino.</em>), а <strong>woher</strong> — про походження (<em>Woher kommst du? — Aus Passau.</em>).",
+        "ar": "كلمتا استفهام يُخلط بينهما كثيراً: <strong>wo</strong> تسأل عن المكان (<em>Wo bist du? — Im Wohnzimmer.</em>)، و<strong>wohin</strong> عن الاتجاه (<em>Wohin gehst du? — Ins Kino.</em>)، و<strong>woher</strong> عن الأصل (<em>Woher kommst du? — Aus Passau.</em>).",
+        "tr": "İki soru sözcüğü sık karıştırılır: <strong>wo</strong> yeri sorar (<em>Wo bist du? — Im Wohnzimmer.</em>), <strong>wohin</strong> yönü sorar (<em>Wohin gehst du? — Ins Kino.</em>) ve <strong>woher</strong> nereden gelindiğini sorar (<em>Woher kommst du? — Aus Passau.</em>)."
+      }
+    },
+    "wechselpraepositionen": {
+      "reviewed": false,
+      "intro": {
+        "en": "Nine prepositions can take the dative or the accusative. The question decides: „Wo?“ means dative, „Wohin?“ means accusative. Im Kino is not ins Kino.",
+        "uk": "Дев’ять прийменників можуть вимагати давального відмінка (Dativ) або знахідного відмінка (Akkusativ). Вирішує питання: „Wo?“ — це давальний відмінок, „Wohin?“ — знахідний відмінок. Im Kino — це не ins Kino.",
+        "ar": "تسعة حروف جر (Präpositionen) يمكن أن تتطلب حالة الجر (Dativ) أو حالة النصب (Akkusativ). السؤال هو الذي يقرر: „Wo?“ تعني حالة الجر، و„Wohin?“ تعني حالة النصب. Im Kino ليست ins Kino.",
+        "tr": "Dokuz edat -e hâli (Dativ) ya da -i hâli (Akkusativ) isteyebilir. Soru karar verir: „Wo?“ -e hâli demektir, „Wohin?“ -i hâli demektir. Im Kino, ins Kino ile aynı şey değildir."
+      },
+      "qa": [
+        {
+          "en": "<strong>Wohin?</strong> names the direction (directional): preposition + <em>accusative</em>. <em>Der Löwe springt auf <strong>den</strong> Boden.</em>",
+          "uk": "<strong>Wohin?</strong> називає напрямок (direktiv): прийменник + <em>знахідний відмінок (Akkusativ)</em>. <em>Der Löwe springt auf <strong>den</strong> Boden.</em>",
+          "ar": "<strong>Wohin?</strong> تذكر الاتجاه (direktiv): حرف الجر + <em>حالة النصب (Akkusativ)</em>. <em>Der Löwe springt auf <strong>den</strong> Boden.</em>",
+          "tr": "<strong>Wohin?</strong> yönü bildirir (direktiv): edat + <em>-i hâli (Akkusativ)</em>. <em>Der Löwe springt auf <strong>den</strong> Boden.</em>"
+        },
+        {
+          "en": "<strong>Wo?</strong> names the place (location): preposition + <em>dative</em>. <em>Der Löwe sitzt auf <strong>dem</strong> Boden.</em>",
+          "uk": "<strong>Wo?</strong> називає місце (situativ): прийменник + <em>давальний відмінок (Dativ)</em>. <em>Der Löwe sitzt auf <strong>dem</strong> Boden.</em>",
+          "ar": "<strong>Wo?</strong> تذكر المكان (situativ): حرف الجر + <em>حالة الجر (Dativ)</em>. <em>Der Löwe sitzt auf <strong>dem</strong> Boden.</em>",
+          "tr": "<strong>Wo?</strong> yeri bildirir (situativ): edat + <em>-e hâli (Dativ)</em>. <em>Der Löwe sitzt auf <strong>dem</strong> Boden.</em>"
+        },
+        {
+          "en": "Only these nine are two-way prepositions: <strong>in, an, auf, über, unter, vor, hinter, neben, zwischen</strong>.",
+          "uk": "Прийменники із двома відмінками (Wechselpräpositionen) — це тільки ці дев’ять: <strong>in, an, auf, über, unter, vor, hinter, neben, zwischen</strong>.",
+          "ar": "هذه التسعة فقط هي حروف الجر المتغيّرة (Wechselpräpositionen): <strong>in, an, auf, über, unter, vor, hinter, neben, zwischen</strong>.",
+          "tr": "Yalnızca bu dokuzu değişken edattır (Wechselpräposition): <strong>in, an, auf, über, unter, vor, hinter, neben, zwischen</strong>."
+        },
+        {
+          "en": "Contractions: <em>in + das = ins, an + das = ans</em> (accusative) — <em>in + dem = im, an + dem = am</em> (dative).",
+          "uk": "Злиття: <em>in + das = ins, an + das = ans</em> (знахідний відмінок, Akkusativ) — <em>in + dem = im, an + dem = am</em> (давальний відмінок, Dativ).",
+          "ar": "الدمج: <em>in + das = ins, an + das = ans</em> (Akkusativ) — <em>in + dem = im, an + dem = am</em> (Dativ).",
+          "tr": "Kaynaşmalar: <em>in + das = ins, an + das = ans</em> (-i hâli, Akkusativ) — <em>in + dem = im, an + dem = am</em> (-e hâli, Dativ)."
+        }
+      ],
+      "note": {
+        "en": "The verb shows you the question: <strong>verbs of movement</strong> (gehen, fahren, bringen, steigen, legen, stellen, setzen, hängen) ask <em>wohin</em> → accusative. <strong>Verbs of state</strong> (sein, sitzen, stehen, liegen, wohnen, studieren, hängen) ask <em>wo</em> → dative. A classic pair: <em>Sie <strong>legt</strong> die Decke auf <strong>das</strong> Bett.</em> — <em>Die Decke <strong>liegt</strong> auf <strong>dem</strong> Bett.</em>",
+        "uk": "Дієслово підказує питання: <strong>дієслова руху</strong> (gehen, fahren, bringen, steigen, legen, stellen, setzen, hängen) питають <em>wohin</em> → знахідний відмінок (Akkusativ). <strong>Дієслова стану</strong> (sein, sitzen, stehen, liegen, wohnen, studieren, hängen) питають <em>wo</em> → давальний відмінок (Dativ). Класична пара: <em>Sie <strong>legt</strong> die Decke auf <strong>das</strong> Bett.</em> — <em>Die Decke <strong>liegt</strong> auf <strong>dem</strong> Bett.</em>",
+        "ar": "الفعل يكشف السؤال: <strong>أفعال الحركة</strong> (gehen, fahren, bringen, steigen, legen, stellen, setzen, hängen) تسأل بـ<em>wohin</em> → حالة النصب (Akkusativ). <strong>أفعال الحالة</strong> (sein, sitzen, stehen, liegen, wohnen, studieren, hängen) تسأل بـ<em>wo</em> → حالة الجر (Dativ). زوج كلاسيكي: <em>Sie <strong>legt</strong> die Decke auf <strong>das</strong> Bett.</em> — <em>Die Decke <strong>liegt</strong> auf <strong>dem</strong> Bett.</em>",
+        "tr": "Fiil soruyu ele verir: <strong>hareket fiilleri</strong> (gehen, fahren, bringen, steigen, legen, stellen, setzen, hängen) <em>wohin</em> sorusunu sorar → -i hâli (Akkusativ). <strong>Durum fiilleri</strong> (sein, sitzen, stehen, liegen, wohnen, studieren, hängen) <em>wo</em> sorusunu sorar → -e hâli (Dativ). Klasik bir çift: <em>Sie <strong>legt</strong> die Decke auf <strong>das</strong> Bett.</em> — <em>Die Decke <strong>liegt</strong> auf <strong>dem</strong> Bett.</em>"
+      }
+    },
+    "zweiteilige-konnektoren": {
+      "reviewed": false,
+      "intro": {
+        "en": "These connectors always come in pairs: „nicht nur … sondern auch“, „weder … noch“, „je … desto“. If you use the first part, you must also use the second.",
+        "uk": "Ці сполучники завжди йдуть парою: „nicht nur … sondern auch“, „weder … noch“, „je … desto“. Хто вжив першу частину, мусить додати й другу.",
+        "ar": "أدوات الربط (Konnektoren) هذه تأتي دائماً على شكل زوج: „nicht nur … sondern auch“، „weder … noch“، „je … desto“. من يستعمل الجزء الأول، عليه أن يأتي بالجزء الثاني أيضاً.",
+        "tr": "Bu bağlaçlar (Konnektoren) her zaman çift gelir: „nicht nur … sondern auch“, „weder … noch“, „je … desto“. İlk parçayı kullanan ikincisini de kullanmak zorundadır."
+      },
+      "qa": [
+        {
+          "en": "<strong>sowohl … als auch</strong> — both are true, equally. <em>Ich trinke Kaffee sowohl mit Milch als auch mit Zucker.</em>",
+          "uk": "<strong>sowohl … als auch</strong> — діє і те, і те, рівноцінно. <em>Ich trinke Kaffee sowohl mit Milch als auch mit Zucker.</em>",
+          "ar": "<strong>sowohl … als auch</strong> — الأمران صحيحان، وبالقدر نفسه. <em>Ich trinke Kaffee sowohl mit Milch als auch mit Zucker.</em>",
+          "tr": "<strong>sowohl … als auch</strong> — ikisi de geçerli, eşit ağırlıkta. <em>Ich trinke Kaffee sowohl mit Milch als auch mit Zucker.</em>"
+        },
+        {
+          "en": "<strong>nicht nur … sondern auch</strong> — both are true, but the second part is stressed. <em>Er trinkt Kaffee nicht nur mit Zucker, sondern auch mit Sahne.</em>",
+          "uk": "<strong>nicht nur … sondern auch</strong> — діє і те, і те, але друга частина наголошена. <em>Er trinkt Kaffee nicht nur mit Zucker, sondern auch mit Sahne.</em>",
+          "ar": "<strong>nicht nur … sondern auch</strong> — الأمران صحيحان، لكن التأكيد على الجزء الثاني. <em>Er trinkt Kaffee nicht nur mit Zucker, sondern auch mit Sahne.</em>",
+          "tr": "<strong>nicht nur … sondern auch</strong> — ikisi de geçerli, ama ikinci parça vurgulanır. <em>Er trinkt Kaffee nicht nur mit Zucker, sondern auch mit Sahne.</em>"
+        },
+        {
+          "en": "<strong>weder … noch</strong> — neither is true. Careful: <em>weder…noch</em> is already negative, an extra <em>nicht</em> would be wrong.",
+          "uk": "<strong>weder … noch</strong> — не діє ні те, ні те. Увага: <em>weder…noch</em> уже є запереченням, додаткове <em>nicht</em> було б помилкою.",
+          "ar": "<strong>weder … noch</strong> — لا هذا ولا ذاك. انتبهوا: <em>weder…noch</em> منفية أصلاً، وإضافة <em>nicht</em> ستكون خطأ.",
+          "tr": "<strong>weder … noch</strong> — ikisi de geçerli değil. Dikkat: <em>weder…noch</em> zaten olumsuzdur, ayrıca bir <em>nicht</em> yanlış olur."
+        },
+        {
+          "en": "<strong>entweder … oder</strong> — only one of the two, a strong „oder“. <em>Ich trinke Tee entweder mit Zitrone oder mit Milch.</em>",
+          "uk": "<strong>entweder … oder</strong> — тільки одне з двох, сильне „oder“. <em>Ich trinke Tee entweder mit Zitrone oder mit Milch.</em>",
+          "ar": "<strong>entweder … oder</strong> — واحد فقط من الاثنين، „oder“ قوية. <em>Ich trinke Tee entweder mit Zitrone oder mit Milch.</em>",
+          "tr": "<strong>entweder … oder</strong> — ikisinden yalnızca biri, güçlü bir „oder“. <em>Ich trinke Tee entweder mit Zitrone oder mit Milch.</em>"
+        }
+      ],
+      "note": {
+        "en": "Three more belong to this group: <strong>zwar … aber</strong> first admits something and then limits it (<em>Jan möchte zwar gern reisen, aber er hat Angst vorm Fliegen</em>), <strong>einerseits … andererseits</strong> puts two sides next to each other, and <strong>je … desto</strong> connects two comparatives — after <em>je</em> comes a subordinate clause with the verb at the end, and after <em>desto</em> the verb comes directly after the comparative: <em>Je länger Lara lernt, desto mehr Spaß macht ihr die Schule.</em>",
+        "uk": "До них належать ще три: <strong>zwar … aber</strong> спочатку визнає, а потім обмежує (<em>Jan möchte zwar gern reisen, aber er hat Angst vorm Fliegen</em>), <strong>einerseits … andererseits</strong> ставить поруч дві сторони, а <strong>je … desto</strong> поєднує два наростання — після <em>je</em> стоїть підрядне речення з дієсловом у кінці, а після <em>desto</em> дієслово стоїть одразу за вищим ступенем порівняння (Komparativ): <em>Je länger Lara lernt, desto mehr Spaß macht ihr die Schule.</em>",
+        "ar": "وهناك ثلاث أخرى من هذا النوع: <strong>zwar … aber</strong> تعترف أولاً ثم تقيّد (<em>Jan möchte zwar gern reisen, aber er hat Angst vorm Fliegen</em>)، و<strong>einerseits … andererseits</strong> تضع جانبين بجانب بعضهما، و<strong>je … desto</strong> تربط بين زيادتين — وبعد <em>je</em> تأتي جملة فرعية (Nebensatz) فعلها في النهاية، وبعد <em>desto</em> يأتي الفعل مباشرة بعد صيغة المقارنة (Komparativ): <em>Je länger Lara lernt, desto mehr Spaß macht ihr die Schule.</em>",
+        "tr": "Üç tane daha var: <strong>zwar … aber</strong> önce kabul eder, sonra sınırlar (<em>Jan möchte zwar gern reisen, aber er hat Angst vorm Fliegen</em>), <strong>einerseits … andererseits</strong> iki tarafı yan yana koyar, <strong>je … desto</strong> ise iki artışı birbirine bağlar — bu arada <em>je</em> sözcüğünden sonra fiili sonda olan bir yan cümle (Nebensatz) gelir, <em>desto</em> sözcüğünden sonra ise fiil karşılaştırma derecesinin (Komparativ) hemen arkasında durur: <em>Je länger Lara lernt, desto mehr Spaß macht ihr die Schule.</em>"
+      }
+    }
+  }
 }

@@ -181,15 +181,17 @@ async function buildBook({ level, fileName, lang = null }) {
     }
   }
   const baseTitle = level ? `Grammatik ${level}` : "Grammatik A1–B2";
-  const title = ed ? `${baseTitle} · Deutsch–${ed.name}` : baseTitle;
+  // The language pair goes in the eyebrow, not the title: "Grammatik A1–B2 · Deutsch–
+  // Ukrainisch" wraps to two lines and pushes the translated line off the cover band.
+  const title = baseTitle;
   const outPath = path.join(outDir, fileName);
-  const pdf = createDoc({ outPath, runningHead: `DEUTSCHACADEMY · ${title.toUpperCase()}`, unicode: Boolean(ed) });
+  const pdf = createDoc({ outPath, runningHead: `DEUTSCHACADEMY · ${title.toUpperCase()}${ed ? ` · DEUTSCH–${ed.name.toUpperCase()}` : ""}`, unicode: Boolean(ed) });
   const unreviewed = ed && ordered.some((t) => !help.entries[t.id]?.reviewed);
 
   const tableCount = ordered.reduce((n, t) => n + (t.concept?.reference?.tables?.length ?? 0), 0);
 
   pdf.cover({
-    eyebrow: "DEUTSCHACADEMY · GRAMMATIK",
+    eyebrow: `DEUTSCHACADEMY · GRAMMATIK${ed ? ` · DEUTSCH–${ed.name.toUpperCase()}` : ""}`,
     title,
     subtitle: level
       ? `${LEVEL_BLURB[level]} — alle Grammatikthemen dieses Niveaus zum Nachschlagen und Ausdrucken.`

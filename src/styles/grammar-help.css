@@ -34,3 +34,14 @@
 [data-gx-lang="tr"] .gx-tr-l[lang="tr"] { display: block; }
 /* German examples keep their German look inside the translation. */
 .gx-tr-l em, .gx-tr-l strong { color: var(--ink); }
+
+/* In the rule card the switch is the first thing, so it needs no top margin. */
+.vp-sheet-body > .gx-bar { margin: 0 0 14px; }
+
+/* verben-praepositionen.css drops the hero subtitle on a phone (the title and the rule
+   button already say it). Its translation goes with it, and so does a quiz topic's
+   switch, which would otherwise steer a text nobody can see. */
+@media (max-width: 640px) {
+  .vp-page--split .vp-hero .gx-tr,
+  .vp-page--split .vp-hero .gx-bar { display: none; }
+}

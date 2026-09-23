@@ -90,9 +90,11 @@ const BEATS = [
 ---
 <Layout title={`${name} – DeutschAcademy`}>
   <SiteNav active="grammatik" />
-  <TopicBar topic={topicKey} kind="Grammatik" title={name} level={level} tasks={tasks} />
-  {/* Where this topic sits in its Stufe, and the way back to it on the map. */}
-  <CourseBar topic={topicKey} title={`${name} – DeutschAcademy`} />
+  {/* One bar: the topic and its progress, then where it sits in its Stufe and the way
+      back to it on the map. They were two stacked bars, a row of height for nothing. */}
+  <TopicBar topic={topicKey} kind="Grammatik" title={name} level={level} tasks={tasks}>
+    <CourseBar slot="end" inline topic={topicKey} title={`${name} – DeutschAcademy`} />
+  </TopicBar>
 
   <!-- The dashboard's rail, folded to a 64px strip. Opening it overlays the page rather
        than pushing it, so the exercise column below keeps its full 880px. Above 1100px
@@ -229,7 +231,9 @@ const BEATS = [
       <h1>{name}</h1>
       <p data-i18n={workspace?.subtitleKey}>{intro}</p>
       <GrammarHelpText text={gx?.intro} />
-      {gx && <GrammarHelp level={level} reviewed={gx.reviewed} />}
+      {/* The switch sits with the rule it translates — in the rule card when there is one.
+          A quiz-only topic has no card, so its switch goes under the intro here. */}
+      {gx && !concept && <GrammarHelp level={level} reviewed={gx.reviewed} />}
     </div>
 
     {concept && (
@@ -266,6 +270,8 @@ const BEATS = [
           </button>
         </div>
         <div class="vp-sheet-body">
+
+        {gx && <GrammarHelp level={level} reviewed={gx.reviewed} />}
 
         {concept.flow && (
           <div class="vp-flow">
@@ -368,7 +374,6 @@ const BEATS = [
 
     <section class="vp-col vp-col--ex">
     <div class="vp-ex-toolbar">
-      <h2 class="vp-section-title" data-i18n="nav.exercises">Übungen</h2>
       <button
         type="button"
         class="vp-rule-toggle"

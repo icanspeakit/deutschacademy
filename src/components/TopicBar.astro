@@ -29,7 +29,7 @@ interface Props {
 }
 const { topic, kind, title, level, tasks = 0 } = Astro.props;
 ---
-<div class="tb" data-topic-bar data-topic={topic} data-tasks={tasks}>
+<div class:list={["tb", Astro.slots.has("end") && "tb--merged"]} data-topic-bar data-topic={topic} data-tasks={tasks}>
   <div class="tb-inner">
     <p class="tb-where">
       <a href="/uebungen/grammatik">{kind}</a>
@@ -48,10 +48,13 @@ const { topic, kind, title, level, tasks = 0 } = Astro.props;
     <!-- Says where progress lives, not just that it exists. "Gespeichert" alone would imply
          an account; there is none, and a learner who clears their browser should know that
          before they lose six weeks of it. -->
-    <a class="tb-saved" href="/fortschritt" data-topic-saved>
+    <a class="tb-saved" href="/fortschritt" data-topic-saved title="Fortschritt wird auf diesem Gerät gespeichert">
       <svg viewBox="0 0 24 24" aria-hidden="true" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 12 10 18 20 6"></polyline></svg>
       <span data-topic-saved-text data-i18n="topic.savedLocally">Fortschritt wird auf diesem Gerät gespeichert</span>
     </a>
+
+    {/* The course controls (CourseBar inline): one bar instead of two stacked. */}
+    {Astro.slots.has("end") && <div class="tb-end"><slot name="end" /></div>}
   </div>
 </div>
 
@@ -70,6 +73,15 @@ const { topic, kind, title, level, tasks = 0 } = Astro.props;
     padding: 10px 24px;
   }
 
+  .tb-end { margin-left: auto; min-width: 0; }
+  /* Sharing the row with the course controls, the saved note is its check mark only —
+     the sentence stays for screen readers and as the tooltip. The full sentence cost the
+     row its single line. */
+  .tb--merged .tb-inner { padding-top: 6px; padding-bottom: 6px; }
+  .tb--merged .tb-saved [data-topic-saved-text] {
+    position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap;
+  }
+  .tb--merged .tb-saved.is-idle { opacity: 1; visibility: visible; }
   .tb-where {
     display: flex;
     align-items: center;
@@ -157,6 +169,14 @@ const { topic, kind, title, level, tasks = 0 } = Astro.props;
     .tb-count { margin-left: auto; font-size: 12px; }
     .tb-saved { font-size: 11px; flex-basis: 100%; order: 5; }
     .tb-where { font-size: 12.5px; }
+    /* Merged on a phone: the topic, then the course controls, then the track with its
+       count: three short rows where the two bars took five. */
+    .tb--merged .tb-inner { padding: 6px 16px 8px; }
+    .tb--merged .tb-where { flex-basis: 100%; }
+    .tb--merged .tb-end { order: 2; margin-left: 0; }
+    .tb--merged .tb-count { order: 5; margin-left: 0; }
+    .tb--merged .tb-saved { order: 6; flex-basis: auto; }
+    .tb--merged .tb-track { order: 4; flex: 1 1 calc(100% - 140px); min-width: 0; }
   }
 </style>
 

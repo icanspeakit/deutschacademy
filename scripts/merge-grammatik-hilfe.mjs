@@ -34,7 +34,7 @@ for (const f of readdirSync(wsDir).filter((f) => f.endsWith(".json"))) {
   german[w.id] = { intro: w.subtitle ?? null, qa: (w.concept?.qa ?? []).map((q) => q.html), note: w.concept?.noteHtml ?? null };
 }
 for (const t of JSON.parse(readFileSync(path.join(root, "src/data/grammatik.json"), "utf8"))) {
-  if (!german[t.id] && t.id !== "akkusativ") german[t.id] = { intro: t.intro ?? null, qa: [], note: null };
+  if (!german[t.id]) german[t.id] = { intro: t.intro ?? null, qa: [], note: null };
 }
 
 const dataPath = path.join(root, "src/data/uebersetzungen/grammatik.json");

@@ -104,64 +104,98 @@ export function createDoc({ outPath, runningHead, unicode = false }) {
     doc.registerFont("Noto-Bold", path.join(FONT_DIR, "NotoSans-Bold.ttf"));
     doc.registerFont("Noto-Arabic", path.join(FONT_DIR, "NotoSansArabic-Regular.ttf"));
     F = { regular: "Noto", bold: "Noto-Bold", italic: "Noto" };
-    S = (text) => String(text ?? "");
+    S = (text) => [...String(text ?? "")].map((ch) => (CHAR_MAP.has(ch) ? CHAR_MAP.get(ch) : ch)).join("");
   }
 
-  /* Right-to-left text is placed word by word, from the right edge leftwards. Handing
-     pdfkit a whole Arabic line lost the spaces between words ("الاسم الأول" printed as
-     one run), because its line wrapper and fontkit's RTL reordering disagree about which
-     end of a word its trailing space belongs to. One word per call leaves fontkit only
-     the job it does well — joining and ordering the letters inside the word. A Latin
-     token such as "A1" is drawn in the Latin face: Noto Sans Arabic has no "A". */
-  const LATIN = /[A-Za-z0-9]/;
-  const rtlFont = (word) => (LATIN.test(word) && !ARABIC.test(word) ? F.regular : "Noto-Arabic");
+  /* Right-to-left text is placed by hand, from the right edge leftwards. Handing pdfkit
+     a whole Arabic line lost the spaces between words ("الاسم الأول" printed as one run):
+     its line wrapper and fontkit's RTL reordering disagree about which end of a word a
+     trailing space belongs to. So fontkit only ever gets one same-script piece at a time
+     and does the job it does well — joining and ordering the letters inside it.
+
+     Noto Sans Arabic has Arabic and nothing else: no Latin letters, and not even ( ) / —.
+     Every word is therefore cut into script segments, and only the Arabic ones are drawn
+     in the Arabic face; digits, punctuation and German go in the Latin one. */
+  const ARABIC = /[\u0600-\u06FF]/;
+  const LATIN = /[A-Za-z0-9\u00C0-\u024F]/;
+  // In right-to-left text an opening bracket stands on the right and has to face left.
+  const MIRROR = { "(": ")", ")": "(", "[": "]", "]": "[", "«": "»", "»": "«", "<": ">", ">": "<" };
+  // A word is Arabic by its letters, not its punctuation: "Bäume" followed by an Arabic
+  // comma is a German word, and must stay in its German phrase. Such a word is split in
+  // two and the comma carries TIGHT — no space before it — so it lands on the Arabic side
+  // of the German run, which is where bidi puts it.
+  const ARABIC_LETTER = /[\u0620-\u064A\u066E-\u06D3\u06FA-\u06FF]/;
+  const TIGHT = "\u0001";
+  const bare = (tok) => tok.replace(TIGHT, "");
+  function tokenize(text) {
+    const out = [];
+    for (const w of String(text ?? "").split(/\s+/).filter(Boolean)) {
+      const m = !ARABIC_LETTER.test(w) && w.match(/^(.*[^\u060C\u061B\u061F])([\u060C\u061B\u061F]+)$/);
+      if (m) out.push(m[1], TIGHT + m[2]);
+      else out.push(w);
+    }
+    return out;
+  }
+  const segments = (word) => bare(word).match(/[\u0600-\u06FF]+|[^\u0600-\u06FF]+/g) ?? [];
+  const segFont = (seg) => (ARABIC.test(seg) ? "Noto-Arabic" : F.regular);
+  const segWidth = (seg, size) => doc.font(segFont(seg)).fontSize(size).widthOfString(seg);
+  const wordWidth = (word, size) => segments(word).reduce((n, seg) => n + segWidth(seg, size), 0);
   function rtlWidth(words, size) {
-    let wsum = 0;
-    for (const word of words) wsum += doc.font(rtlFont(word)).fontSize(size).widthOfString(word);
-    doc.font("Noto-Arabic").fontSize(size);
-    return wsum + Math.max(0, words.length - 1) * doc.widthOfString(" ");
+    const space = doc.font(F.regular).fontSize(size).widthOfString(" ");
+    return words.reduce((n, w, i) => n + wordWidth(w, size) + (i > 0 && !w.startsWith(TIGHT) ? space : 0), 0);
   }
   // pdfkit places text by the top of the line box, and Noto Sans Arabic's ascender is
-  // taller than Noto Sans's — so each word is nudged onto the Latin face's baseline, the
+  // taller than Noto Sans's — so each piece is nudged onto the Latin face's baseline, the
   // one the German in the neighbouring cells sits on.
   const ascender = (name) => doc.font(name)._font.ascender;
-  const drawWord = (word, x, y, size) => {
-    const font = rtlFont(word);
-    doc.font(font).fontSize(size).text(word, x, y + ((ascender(F.regular) - ascender(font)) * size) / 1000, { lineBreak: false });
+  const drawSeg = (seg, x, y, size) => {
+    const font = segFont(seg);
+    doc.font(font).fontSize(size).text(seg, x, y + ((ascender(F.regular) - ascender(font)) * size) / 1000, { lineBreak: false });
   };
+  /** One word of a right-to-left run: its segments go right to left, brackets mirrored. */
+  function drawRtlWord(word, right, y, size) {
+    let x = right;
+    for (let seg of segments(word)) {
+      if (!ARABIC.test(seg) && !LATIN.test(seg)) seg = [...seg].reverse().map((c) => MIRROR[c] ?? c).join("");
+      x -= segWidth(seg, size);
+      drawSeg(seg, x, y, size);
+    }
+  }
   /* A German phrase inside an Arabic sentence ("… مثل der hohe Baum …") must still read
      left to right, so a line is cut into runs: consecutive Latin words form one run whose
      words go left to right, and the runs themselves are placed right to left. A token with
-     neither script (a dash, a bracket) joins the run before it. */
-  const ARABIC = /[\u0600-\u06FF]/;
+     neither script (a dash, a lone bracket) joins the run before it. */
   function rtlRuns(words) {
     const runs = [];
     for (const word of words) {
-      const kind = ARABIC.test(word) ? "rtl" : LATIN.test(word) ? "ltr" : runs.at(-1)?.kind ?? "rtl";
+      const kind = ARABIC_LETTER.test(word) || word.startsWith(TIGHT) ? "rtl" : LATIN.test(word) ? "ltr" : runs.at(-1)?.kind ?? "rtl";
       if (runs.at(-1)?.kind === kind) runs.at(-1).words.push(word);
       else runs.push({ kind, words: [word] });
     }
     return runs;
   }
   function rtlDraw(words, right, y, size) {
-    doc.font("Noto-Arabic").fontSize(size);
-    const space = doc.widthOfString(" ");
+    const space = doc.font(F.regular).fontSize(size).widthOfString(" ");
     let x = right;
+    let first = true;
     for (const run of rtlRuns(words)) {
+      // The gap before a run belongs to its first word: none at the line start, none before TIGHT.
+      if (!first && !run.words[0].startsWith(TIGHT)) x -= space;
+      first = false;
       if (run.kind === "ltr") {
         const width = rtlWidth(run.words, size);
         let lx = x - width;
-        for (const word of run.words) {
-          drawWord(word, lx, y, size);
-          lx += doc.font(rtlFont(word)).fontSize(size).widthOfString(word) + space;
-        }
-        x -= width + space;
+        run.words.forEach((word, i) => {
+          if (i > 0 && !word.startsWith(TIGHT)) lx += space;
+          for (const seg of segments(word)) { drawSeg(seg, lx, y, size); lx += segWidth(seg, size); }
+        });
+        x -= width;
       } else {
-        for (const word of run.words) {
-          x -= doc.font(rtlFont(word)).fontSize(size).widthOfString(word);
-          drawWord(word, x, y, size);
-          x -= space;
-        }
+        run.words.forEach((word, i) => {
+          if (i > 0 && !word.startsWith(TIGHT)) x -= space;
+          drawRtlWord(word, x, y, size);
+          x -= wordWidth(word, size);
+        });
       }
     }
   }
@@ -169,9 +203,10 @@ export function createDoc({ outPath, runningHead, unicode = false }) {
   function rtlWrap(text, width, size) {
     const lines = [];
     let line = [];
-    for (const word of String(text ?? "").split(/\s+/).filter(Boolean)) {
+    for (const word of tokenize(text)) {
       const next = [...line, word];
-      if (line.length && rtlWidth(next, size) > width) { lines.push(line); line = [word]; }
+      // A TIGHT token never starts a line: it is punctuation belonging to the word before.
+      if (line.length && rtlWidth(next, size) > width && !word.startsWith(TIGHT)) { lines.push(line); line = [word]; }
       else line = next;
     }
     if (line.length) lines.push(line);
@@ -216,7 +251,7 @@ export function createDoc({ outPath, runningHead, unicode = false }) {
     // enough never to wrap, so an RTL line can be drawn whole and right-aligned.
     if (subtitleTranslated) {
       doc.fillColor(TEAL_DARK);
-      if (subtitleRtl) rtlDraw(subtitleTranslated.split(" "), MARGIN + w, doc.y + 6, 11.5);
+      if (subtitleRtl) rtlDraw(tokenize(subtitleTranslated), MARGIN + w, doc.y + 6, 11.5);
       else doc.font(F.regular).fontSize(11.5).text(subtitleTranslated, MARGIN, doc.y + 6, { width: w, lineBreak: false });
     }
     doc.y = 250;
@@ -325,6 +360,7 @@ export function createDoc({ outPath, runningHead, unicode = false }) {
     text = S(text);
     const w = contentWidth();
     const inner = w - 24;
+    doc.font(opts.bold ? F.bold : F.regular).fontSize(opts.size || 10.25);
     const h = doc.heightOfString(text, { width: inner, lineGap: 2 }) + 20;
     ensureSpace(h + 8);
     const y = doc.y;
@@ -345,18 +381,19 @@ export function createDoc({ outPath, runningHead, unicode = false }) {
     const size = opts.size ?? 9.25;
     const indent = opts.indent ?? 12;
     const w = contentWidth() - indent - 10;
-    const lineH = () => doc.currentLineHeight(true) + 1.5;
     doc.fillColor(MUTED);
     if (opts.rtl) {
-      const lines = rtlWrap(text, w, size);
-      doc.font("Noto-Arabic").fontSize(size);
-      const h = lines.length * lineH();
+      const lines = rtlWrap(S(text), w, size);
+      // One line height for the block, from the taller Arabic face: measuring while drawing
+      // picked up whichever face the previous segment had left set.
+      const lh = doc.font("Noto-Arabic").fontSize(size).currentLineHeight(true) + 1.5;
+      const h = lines.length * lh;
       ensureSpace(h + 6);
       const y = doc.y;
       const right = MARGIN + indent + 10 + w;
       doc.rect(right + 6, y, 1.5, h).fill(TEAL);
       doc.fillColor(MUTED);
-      lines.forEach((line, i) => rtlDraw(line, right, y + i * lineH(), size));
+      lines.forEach((line, i) => rtlDraw(line, right, y + i * lh, size));
       doc.y = y + h + 5;
     } else {
       doc.font(F.regular).fontSize(size);
@@ -419,7 +456,7 @@ export function createDoc({ outPath, runningHead, unicode = false }) {
       doc.font(cellFont(i)).fontSize(fontSize);
       const width = widths[i] - 14;
       if (!rtl.has(i)) return doc.heightOfString(S(cell), { width, lineGap });
-      return rtlLines(cell, width).length * (doc.currentLineHeight(true) + lineGap);
+      return rtlLines(cell, width).length * (doc.font("Noto-Arabic").fontSize(fontSize).currentLineHeight(true) + lineGap);
     };
 
     rows.forEach((row, ri) => {
@@ -442,7 +479,7 @@ export function createDoc({ outPath, runningHead, unicode = false }) {
           let ly = y + pad;
           for (const line of rtlLines(cell, width)) {
             rtlDraw(line, x + 7 + width, ly, fontSize);
-            ly += doc.currentLineHeight(true) + lineGap;
+            ly += doc.font("Noto-Arabic").fontSize(fontSize).currentLineHeight(true) + lineGap;
           }
         } else {
           doc.text(S(cell), x + 7, y + pad, { width, lineGap });

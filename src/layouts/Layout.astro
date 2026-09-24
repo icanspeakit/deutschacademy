@@ -1,6 +1,8 @@
 ---
 import "../styles/global.css";
 import DemoDock from "../components/DemoDock.astro";
+// Vercel Web Analytics: page views, cookieless. Only reports on Vercel deployments.
+import Analytics from "@vercel/analytics/astro";
 import "../styles/components.css";
 
 interface Props {
@@ -145,6 +147,7 @@ const abs = (path) => (Astro.site ? new URL(path, Astro.site).href : path);
 
     <slot name="head" />
     <title>{title}</title>
+    <Analytics />
   </head>
   <body>
     <slot />

@@ -664,6 +664,19 @@ const defaultVariant = variants[0];
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>
                   </button>
                 </div>
+                {/* Right under the heading: the page you last practised on, one tap back. Filled
+                    from progress.js's recents (getResume) — hidden until there is one, so a
+                    first visit never shows an invented "last session". */}
+                {section.id === "weg" && (
+                  <a class="wg-last" data-weg-last href="/" hidden>
+                    <span class="wg-resume-kicker" data-i18n="fortschritt.last.kicker">Zuletzt geübt</span>
+                    <span class="wg-last-row">
+                      <span class="wg-resume-label" data-weg-last-title></span>
+                      <span class="wg-last-go" aria-hidden="true">→</span>
+                    </span>
+                    <span class="wg-resume-meta" data-weg-last-when></span>
+                  </a>
+                )}
                 {sectionStats[section.id].pct !== null && (
                   <div class="nvb-panelprogress">
                     <span class="nvb-panelbar"><span data-secbar={section.id} style={`width:${sectionStats[section.id].pct}%`}></span></span>
@@ -959,7 +972,7 @@ const defaultVariant = variants[0];
   <script type="application/json" id="nv-data" set:html={JSON.stringify(clientData)}></script>
 
   <script>
-    import { getTopicProgress, resetProgress } from "../lib/progress.js";
+    import { getTopicProgress, resetProgress, getResume } from "../lib/progress.js";
     import { mountWegPanel, paintWegPanel } from "../lib/wegPanel.js";
     import { createRuleIntro } from "../lib/ruleIntro.js";
     import { getLang, loadDict, onLangChange } from "../lib/i18n.js";
@@ -1527,6 +1540,25 @@ const defaultVariant = variants[0];
     mountWegPanel(wegRoot, {
       onResume: () => { selectItem("grammatik-basis"); syncUrl(); },
     });
+    // "Zuletzt geübt": the last graded page, with how long ago in words.
+    function paintLast() {
+      const card = $("[data-weg-last]") as HTMLAnchorElement | null;
+      if (!card) return;
+      let last: { path: string; title: string; at?: string } | null = null;
+      try { last = getResume()?.last ?? null; } catch {}
+      card.hidden = !last;
+      if (!last) return;
+      card.href = last.path;
+      card.querySelector("[data-weg-last-title]")!.textContent = last.title;
+      const days = last.at ? Math.round((Date.parse(new Date().toISOString().slice(0, 10)) - Date.parse(last.at)) / 864e5) : NaN;
+      card.querySelector("[data-weg-last-when]")!.textContent =
+        !Number.isFinite(days) ? "" :
+        days <= 0 ? t("fortschritt.last.today", "heute") :
+        days === 1 ? t("fortschritt.last.yesterday", "gestern") :
+        t("fortschritt.last.daysAgo", "vor {n} Tagen", { n: days });
+    }
+    paintLast();
+
     $$("[data-reset-progress]").forEach((b) =>
       b.addEventListener("click", () => {
         if (!confirm(t("fortschritt.reset.confirm", "Deinen gesamten Fortschritt löschen? Das lässt sich nicht rückgängig machen."))) return;
@@ -1638,8 +1670,8 @@ const defaultVariant = variants[0];
       repaint();
       if (current.item) { paintDetail(current.item); paintItemRing(current.item); }
     };
-    loadDict(getLang()).then((d: Record<string, string>) => { DICT = d; relabel(); }).catch(() => {});
-    onLangChange((_code: string, d: Record<string, string>) => { DICT = d; relabel(); });
+    loadDict(getLang()).then((d: Record<string, string>) => { DICT = d; relabel(); paintLast(); }).catch(() => {});
+    onLangChange((_code: string, d: Record<string, string>) => { DICT = d; relabel(); paintLast(); });
 
     (window as any).__daDemoItems = ITEMS;
   </script>

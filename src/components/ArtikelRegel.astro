@@ -1,0 +1,123 @@
+---
+// The Artikel-Trainer's Regel, as a drawer that opens on the right — where every other
+// grammar topic keeps its rule — while the left column stays the level navigation.
+// It used to be one more pane of that left panel: the rule then replaced the levels, and
+// its tables were squeezed into a 240px panel that scrolled sideways.
+//
+// Opened by the "Regel" button in the trainer and by the rail's Regel entry; see the
+// drawer wiring in ArtikelTrainer.astro.
+import UiText from "./UiText.astro";
+import GrammarHelp from "./GrammarHelp.astro";
+import GrammarHelpText from "./GrammarHelpText.astro";
+import RefTable from "./RefTable.astro";
+import artikelTopic from "../data/grammatik/artikel.json";
+import grammarHelp from "../data/uebersetzungen/grammatik.json";
+import "../styles/artikel-panel.css";
+
+// The Regel's text in the learner's language, like every grammar topic's rule.
+const gxTrainer = (grammarHelp.entries as Record<string, any>).artikel?.trainer ?? null;
+const gxTopic = (grammarHelp.entries as Record<string, any>).artikel ?? null;
+const rule = (artikelTopic as any).concept ?? {};
+const gxLevel = "A1";
+// The table the "!" belongs to — see the note at the tables below.
+const ENDINGS_CAPTION = "Endungen, die das Genus verraten";
+---
+<div class="ap-drawer-scrim" data-regel-close aria-hidden="true"></div>
+<aside class="ap-drawer" id="ap-regel" aria-labelledby="ap-regel-h" aria-hidden="true" inert>
+  <div class="ap-drawer-head">
+    <h2 id="ap-regel-h" data-i18n="ak.rule">Regel</h2>
+    <button type="button" class="ap-drawer-x" data-regel-close aria-label="Regel schließen" data-i18n-attr="aria-label:vp.rule.close">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="6" y1="6" x2="18" y2="18"></line><line x1="18" y1="6" x2="6" y2="18"></line></svg>
+    </button>
+  </div>
+  <div class="ap-drawer-body ap-regel">
+    {gxTrainer && <GrammarHelp level={gxLevel} reviewed={gxTrainer.reviewed} />}
+    <p class="akk-regel-intro">
+      Der Artikel eines deutschen Nomens ist meist nicht am Genus der Sache erkennbar – aber manche
+      Wortendungen geben einen zuverlässigen Hinweis. Die folgenden Muster helfen beim Raten, wenn
+      das Wort noch unbekannt ist.
+    </p>
+    <GrammarHelpText text={gxTrainer?.intro} />
+    {/* The rule in full — the same tables, sentences and boxes a grammar topic's Regel
+        carries (src/data/grammatik/artikel.json), so Artikel explains itself as
+        thoroughly as every other topic instead of with a six-row aside. */}
+    <div class="ap-regel-tables">
+      {/* A small "!" that points at the Hinweis at the bottom. It sits on the endings
+          table's heading because that is the table the caveat is about: those rules have
+          exceptions, and the warning is easy to miss under two tables. It blinks softly
+          until opened once in this browser; tapping it scrolls to the Hinweis. */}
+      {rule.reference?.tables?.map((table) =>
+        table.caption === ENDINGS_CAPTION ? (
+          <RefTable table={table}>
+            <button slot="cap" type="button" class="ap-hint-dot" data-hint-jump aria-controls="ap-regel-hint" aria-label="Hinweis lesen" title="Hinweis lesen" data-i18n-attr="aria-label:ap.hint.jump;title:ap.hint.jump">!</button>
+          </RefTable>
+        ) : (
+          <RefTable table={table} />
+        ),
+      )}
+    </div>
+    <div class="ak-qa ap-regel-qa">
+      {rule.qa?.map((item, i) => (
+        <div class="ak-qa-item"><Fragment set:html={item.html} /><GrammarHelpText text={gxTopic?.qa?.[i]} /></div>
+      ))}
+    </div>
+    {rule.reference?.boxes?.map((box) => (
+      <div class:list={["ap-regel-box", box.variant && `ap-regel-box--${box.variant}`]}>
+        <p class="ap-regel-box-title"><UiText de={box.badge} /></p>
+        <ul>{box.items.map((it) => <li>{it}</li>)}</ul>
+      </div>
+    ))}
+    {rule.noteHtml && <p class="akk-regel-note" set:html={rule.noteHtml} />}
+    <GrammarHelpText text={gxTopic?.note} />
+    <p class="akk-regel-note">
+      Männliche Personenbezeichnungen bleiben maskulin, auch wenn sie auf -e enden (z. B. der Kollege,
+      der Junge). Bei vielen Wörtern gibt es kein Muster – der Artikel muss einfach mitgelernt werden.
+    </p>
+    <GrammarHelpText text={gxTrainer?.note} />
+    <!-- Last, as the aside it is: the rule comes first when someone asks for the rule. -->
+    <aside class="ap-regel-hint" id="ap-regel-hint" tabindex="-1">
+      <p class="ap-regel-hint-title" data-i18n="ap.hint">Hinweis</p>
+      <p>
+        Das Genus über Regeln zu lernen, ist oft sehr theoretisch, denn viele Regeln haben
+        Ausnahmen. Die meisten Lernenden lernen den Artikel in der Praxis: Sie lernen jedes
+        Nomen immer zusammen mit seinem Artikel (der Tisch, die Lampe, das Buch) – zum
+        Beispiel im{" "}<a href="/uebungen/wortschatz">Wortschatz</a>{" "}– und begegnen den
+        Wörtern im Alltag. Die Regeln hier sind vor allem interessant als Hintergrundwissen.
+        Nur wenige sind wirklich zuverlässig und im Alltag nützlich, zum Beispiel
+        -ung, -heit, -keit → die und -chen, -lein → das.
+      </p>
+      <GrammarHelpText text={gxTrainer?.hint} />
+    </aside>
+  </div>
+</aside>
+
+<script>
+  // The "!" by the tables: scroll the drawer to the Hinweis and let it light up once.
+  // After the first time it stops blinking — it has done its job of being noticed.
+  const SEEN = "da-artikel-hint-seen";
+  const dot = document.querySelector<HTMLButtonElement>("[data-hint-jump]");
+  const hint = document.getElementById("ap-regel-hint");
+  try { if (localStorage.getItem(SEEN) === "1") dot?.classList.add("is-seen"); } catch {}
+  dot?.addEventListener("click", () => {
+    if (!hint) return;
+    const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    hint.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "center" });
+    hint.focus({ preventScroll: true });
+    // The ring radiates once the Hinweis has arrived on screen: fired at the click, it
+    // was half over by the time the smooth scroll got there. `scrollend` where the
+    // browser has it, a timeout where it does not.
+    const body = hint.closest(".ap-drawer-body");
+    let fired = false;
+    const flash = () => {
+      if (fired) return;
+      fired = true;
+      hint.classList.remove("is-flash");
+      void hint.offsetWidth;
+      hint.classList.add("is-flash");
+    };
+    body?.addEventListener("scrollend", flash, { once: true });
+    setTimeout(flash, reduce ? 0 : 700);
+    dot.classList.add("is-seen");
+    try { localStorage.setItem(SEEN, "1"); } catch {}
+  });
+</script>

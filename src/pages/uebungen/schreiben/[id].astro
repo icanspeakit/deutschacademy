@@ -12,7 +12,8 @@
 // is producing German, not recognising it.
 //
 // Nothing is graded. It cannot be, and pretending otherwise would be worse than admitting
-// it: a score on a Beschwerdebrief would have to come from counting words.
+// it: a score on a Beschwerdebrief would have to come from counting words. What there is, on
+// request, is a correction: mistakes found and sorted, no mark (src/lib/schreibKorrektur.js).
 import Layout from "../../../layouts/Layout.astro";
 import SiteNav from "../../../components/SiteNav.astro";
 import Icon from "../../../components/Icon.astro";
@@ -80,13 +81,15 @@ const parts = (task.source ?? "").split(/\*\*(.+?)\*\*/g);
           <p class="sk-blurb" data-i18n="schreiben.form.hint">Übertrage die Angaben aus der Vorlage. Die Lösungen erscheinen erst, wenn du unten auf „Lösung zeigen“ klickst.</p>
           <div class="sk-fields" id="sk-form">
             {task.fields.map((f, i) => (
-              <>
-                <div class="sk-field">
-                  <label for={`sk-f${i}`}>{f.label}</label>
-                  <input id={`sk-f${i}`} type="text" autocomplete="off" />
+              <div class="sk-field">
+                <label for={`sk-f${i}`}>{f.label}</label>
+                {/* The check lands in the box itself: green when it matches, the correction
+                    right under it when it does not. See the #sk-solve handler below. */}
+                <div class="sk-field-in">
+                  <input id={`sk-f${i}`} type="text" autocomplete="off" data-expect={f.answer} aria-describedby={`sk-f${i}-fb`} />
+                  <p class="sk-field-answer" id={`sk-f${i}-fb`} data-answer hidden></p>
                 </div>
-                <p class="sk-field-answer" data-answer hidden>{f.answer}</p>
-              </>
+              </div>
             ))}
           </div>
           <p style="margin-top:16px"><button class="sk-btn" type="button" id="sk-solve"><span data-i18n="schreiben.solve">Lösung zeigen</span><span data-i18n="schreiben.solved" hidden>Lösung steht dabei</span></button></p>
@@ -114,8 +117,10 @@ const parts = (task.source ?? "").split(/\*\*(.+?)\*\*/g);
             ></textarea>
             <div class="sk-write-bar">
               <span id="sk-count" data-i18n="skills.words.many" data-i18n-vars='{"n":0}'>0 Wörter</span>
-              <span data-i18n="schreiben.privacy">Der Text bleibt in diesem Browser — er wird nirgendwohin geschickt.</span>
+              <span data-i18n="schreiben.privacy">Der Text bleibt in diesem Browser. Nur „Text korrigieren“ schickt ihn zur Prüfung an LanguageTool.</span>
             </div>
+            {/* Grammatik, Ausdruck, Satzzeichen, Rechtschreibung — see src/lib/schreibKorrektur.js. */}
+            <div class="skk" id="sk-korrektur" data-task={JSON.stringify({ type: task.type, situation: task.situation ?? "", points: task.points ?? [] })}></div>
           </section>
         </>
       )}
@@ -129,6 +134,7 @@ const parts = (task.source ?? "").split(/\*\*(.+?)\*\*/g);
             <span id="sk-count" data-i18n="skills.words.many" data-i18n-vars='{"n":0}'>0 Wörter</span>
             <span data-i18n="schreiben.privacyShort">Der Text bleibt in diesem Browser.</span>
           </div>
+          <div class="skk" id="sk-korrektur" data-task={JSON.stringify({ type: task.type, situation: task.situation ?? "", points: task.points ?? [] })}></div>
         </section>
       )}
 
@@ -162,6 +168,7 @@ const parts = (task.source ?? "").split(/\*\*(.+?)\*\*/g);
   <script>
     import { recordSession } from "../../../lib/progress.js";
     import { getLang, loadDict, onLangChange } from "../../../lib/i18n.js";
+    import { mountKorrektur } from "../../../lib/schreibKorrektur.js";
 
     let uiDict = null;
     loadDict(getLang()).then((d) => { uiDict = d; }).catch(() => {});
@@ -187,13 +194,62 @@ const parts = (task.source ?? "").split(/\*\*(.+?)\*\*/g);
       });
     }
 
+    const korrektur = document.getElementById("sk-korrektur");
+    if (korrektur && write) mountKorrektur(korrektur, write as HTMLTextAreaElement, JSON.parse(korrektur.dataset.task || "{}"));
+
     // The form task reveals every answer at once. Row by row would turn a transfer exercise
     // into a guessing game: you would check field one, learn the pattern, and fill the rest
     // from the answer rather than from the text.
+    //
+    // Each box is marked on its own: "ok" (matches), "near" (right apart from case, spacing
+    // or a letter or two — the correction shows which letters), "no" (wrong or empty).
+    const norm = (t) => t.trim().replace(/\s+/g, " ");
+    // Same content, other spelling: case, punctuation, "4.3." for "04.03.".
+    const loose = (t) => t.toLowerCase().replace(/(^|\D)0+(\d)/g, "$1$2").replace(/[.,\-\/\s]+/g, " ").trim();
+    function dist(a, b) {
+      const d = Array.from({ length: a.length + 1 }, (_, i) => [i, ...Array(b.length).fill(0)]);
+      for (let j = 1; j <= b.length; j++) d[0][j] = j;
+      for (let i = 1; i <= a.length; i++)
+        for (let j = 1; j <= b.length; j++)
+          d[i][j] = Math.min(d[i - 1][j] + 1, d[i][j - 1] + 1, d[i - 1][j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1));
+      return d[a.length][b.length];
+    }
+    const escHtml = (t) => t.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+    // The correction with the letters the learner got wrong marked. Aligned (longest common
+    // subsequence), not position by position, so a missing "0" in "4.3." marks the 0s only.
+    function marked(given, expect) {
+      const a = given, b = expect;
+      const L = Array.from({ length: a.length + 1 }, () => Array(b.length + 1).fill(0));
+      for (let i = a.length - 1; i >= 0; i--)
+        for (let j = b.length - 1; j >= 0; j--)
+          L[i][j] = a[i] === b[j] ? L[i + 1][j + 1] + 1 : Math.max(L[i + 1][j], L[i][j + 1]);
+      const keep = new Set();
+      for (let i = 0, j = 0; i < a.length && j < b.length; ) {
+        if (a[i] === b[j]) { keep.add(j); i++; j++; }
+        else if (L[i + 1][j] >= L[i][j + 1]) i++;
+        else j++;
+      }
+      return [...b].map((ch, k) => (keep.has(k) ? escHtml(ch) : `<mark>${escHtml(ch)}</mark>`)).join("");
+    }
+    function check(input) {
+      const expect = norm(input.dataset.expect || "");
+      const given = norm(input.value);
+      const fb = document.getElementById(input.getAttribute("aria-describedby"));
+      let state = "no";
+      if (given === expect) state = "ok";
+      else if (given && (loose(given) === loose(expect) || dist(given.toLowerCase(), expect.toLowerCase()) <= Math.max(1, Math.floor(expect.length / 6)))) state = "near";
+      input.closest(".sk-field").dataset.check = state;
+      if (state === "ok") { fb.hidden = true; fb.textContent = ""; }
+      else {
+        fb.hidden = false;
+        fb.innerHTML = `<span aria-hidden="true">→</span> ${state === "near" ? marked(given, expect) : escHtml(expect)}`;
+      }
+    }
+
     const solve = document.getElementById("sk-solve");
     if (solve) {
       solve.addEventListener("click", () => {
-        for (const el of document.querySelectorAll("[data-answer]")) el.hidden = false;
+        for (const input of document.querySelectorAll("#sk-form input[data-expect]")) check(input);
         solve.disabled = true;
         const [before, after] = solve.children;
         before.hidden = true;

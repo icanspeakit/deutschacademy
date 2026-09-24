@@ -76,6 +76,7 @@ const total = levels.reduce((n, l) => n + l.sentences.length, 0);
           </div>
         </div>
         <div class="ac-scores" data-scores></div>
+        <div class="ac-melody" data-melody hidden></div>
         <div class="ac-detail" data-detail hidden></div>
         <div class="ac-tip" data-tip></div>
       </div>
@@ -87,7 +88,8 @@ const total = levels.reduce((n, l) => n + l.sentences.length, 0);
     </section>
 
     <p class="ac-privacy">
-      Deine Aufnahme wird zur Auswertung an Microsoft Azure geschickt und dort nicht gespeichert. Mehr in der <a href="/datenschutz">Datenschutzerklärung</a>.
+      Deine Aufnahme wird zur Auswertung an Microsoft Azure geschickt und dort nicht gespeichert.
+      Die Satzmelodie wird direkt in deinem Browser berechnet. Mehr in der <a href="/datenschutz">Datenschutzerklärung</a>.
     </p>
   </main>
 

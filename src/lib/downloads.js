@@ -84,6 +84,15 @@ function contentsOf(entry) {
     };
   }
   if (entry.category === "wortschatz") {
+    // The A1–B2 book holds every level's sets; name the level in front of each.
+    if (entry.level === "A1–B2") {
+      const sets = ["A1", "A2", "B1", "B2"].flatMap((l) => lernsets({ level: l, status: "built" }).map((s) => ({ ...s, l })));
+      return {
+        label: `${sets.length} Lernsets`,
+        labelKey: "wissen.toc.sets", labelVars: { n: sets.length },
+        items: sets.map((s) => `${s.l} · ${s.title} · ${s.words} Wörter`),
+      };
+    }
     const sets = lernsets({ level: entry.level, status: "built" });
     return {
       label: `${sets.length} Lernsets`,

@@ -72,11 +72,21 @@
       "rights": "eigen"
     },
     {
+      "id": "wortschatz-komplett",
+      "category": "wortschatz",
+      "level": "A1–B2",
+      "title": "Wortliste A1–B2 (komplett)",
+      "desc": "Alle 4.000 Wörter von A1 bis B2 in einem Band, nach Niveau und 160 Lernsets geordnet — mit Artikel, Plural, Übersetzung und Beispielsatz.",
+      "file": "wortschatz-a1-b2-komplett.pdf",
+      "rights": "eigen",
+      "featured": true
+    },
+    {
       "id": "wortschatz-a1",
       "category": "wortschatz",
       "level": "A1",
       "title": "Wortliste A1",
-      "desc": "650 Wörter in 26 Lernsets, mit Artikel, Plural, englischer Übersetzung und Beispielsatz.",
+      "desc": "650 Wörter in 26 Lernsets, mit Artikel, Plural und Beispielsatz. Mit Übersetzung: Englisch, Arabisch, Russisch oder Türkisch.",
       "file": "wortschatz-a1.pdf",
       "rights": "eigen"
     },
@@ -94,17 +104,16 @@
       "category": "wortschatz",
       "level": "B1",
       "title": "Wortliste B1",
-      "desc": "1.150 Wörter in 46 Lernsets — der größte Einzelband der Sammlung.",
+      "desc": "1.150 Wörter in 46 Lernsets.",
       "file": "wortschatz-b1.pdf",
-      "rights": "eigen",
-      "featured": true
+      "rights": "eigen"
     },
     {
       "id": "wortschatz-b2",
       "category": "wortschatz",
       "level": "B2",
       "title": "Wortliste B2",
-      "desc": "875 Wörter in 35 Lernsets.",
+      "desc": "1.500 Wörter in 60 Lernsets.",
       "file": "wortschatz-b2.pdf",
       "rights": "eigen"
     },
@@ -167,7 +176,7 @@
       "title": "telc: Deutsch-Test für Zuwanderer (Übungstest, PDF)",
       "href": "https://www.telc.net/fileadmin/user_upload/Downloads_Verlag/Auf_jeden_Fall/Uebungstests/Auf_jeden_Fall_B1.2_UEbungstest_DTZ.pdf",
       "source": "telc gGmbH",
-      "note": "Ein vollständiger DTZ-Übungstest als PDF, kostenlos."
+      "note": "Ein vollständiger DTZ-Übungstest als PDF, kostenlos (5,5 MB, lädt beim Herausgeber einige Sekunden)."
     },
     {
       "id": "goethe",
@@ -186,9 +195,10 @@
     {
       "id": "bamf-lid-katalog",
       "title": "BAMF: Gesamtfragenkatalog „Leben in Deutschland“ (PDF)",
-      "href": "https://www.bamf.de/SharedDocs/Anlagen/DE/Integration/Einbuergerung/gesamtfragenkatalog-lebenindeutschland.pdf?__blob=publicationFile&v=23",
+      "href": "/downloads/extern/bamf-gesamtfragenkatalog-leben-in-deutschland.pdf",
+      "original": "https://www.bamf.de/SharedDocs/Anlagen/DE/Integration/Einbuergerung/gesamtfragenkatalog-lebenindeutschland.pdf",
       "source": "Bundesamt für Migration und Flüchtlinge",
-      "note": "Alle 300 bundesweiten und 160 Landesfragen in einem PDF."
+      "note": "Alle 300 bundesweiten und 160 Landesfragen in einem PDF (9 MB). Unveränderte Kopie von uns, weil die BAMF-Seite oft langsam lädt — das Original ist auf der ersten Seite verlinkt."
     },
     {
       "id": "bamf-testcenter",

@@ -52,6 +52,7 @@ export function mountDiktat(root, { round: ROUND, pool }) {
   const score = $("[data-akd-score]");
   const slow = $("[data-akd-slow]");
   const done = $("[data-akd-done]");
+  const checkBtn = $("[data-akd-check]");
   const audio = new Audio();
   audio.preload = "auto";
 
@@ -78,6 +79,7 @@ export function mountDiktat(root, { round: ROUND, pool }) {
     next.hidden = true;
     input.value = "";
     input.disabled = false;
+    checkBtn.hidden = false;
     input.classList.remove("is-ok", "is-no");
     count.textContent = `${i + 1} / ${items.length}`;
     score.textContent = i ? `${right} richtig` : "";
@@ -112,6 +114,7 @@ export function mountDiktat(root, { round: ROUND, pool }) {
     const r = check(input.value, q);
     if (r.ok) right++;
     input.disabled = true;
+    checkBtn.hidden = true;
     input.classList.add(r.ok ? "is-ok" : "is-no");
     feedback.hidden = false;
     feedback.className = `akd-feedback ${r.ok ? "is-ok" : "is-no"}`;

@@ -7,65 +7,40 @@
 //
 // A chip row rather than a side column: the detail pages are already two columns (the
 // practice and the sliding explanation), and a third would not fit beside them.
+//
+// Two levels, not seven equal pills: the way up ("← Alle Prüfungen") is a quiet link above,
+// and the exams are one underlined tab row — the current one in ink with a brand underline,
+// the rest muted. Leben in Deutschland stands apart behind a divider: it is the
+// Einbürgerungstest, not a language exam with a level.
+import "../styles/exam-rail.css";
+
 const exams = [
   { name: "Start Deutsch 1", href: "/pruefungen/start-deutsch-1", level: "A1" },
   { name: "DTZ", href: "/pruefungen/dtz", level: "A2/B1" },
   { name: "telc", href: "/pruefungen/telc", level: "A1–C2" },
   { name: "Goethe-Zertifikat", href: "/pruefungen/goethe", level: "A1–C2" },
   { name: "TestDaF", href: "/pruefungen/testdaf", level: "B2–C1" },
-  { name: "Leben in Deutschland", href: "/pruefungen/leben-in-deutschland", level: "" },
 ];
+const lid = { name: "Leben in Deutschland", href: "/pruefungen/leben-in-deutschland" };
 const here = Astro.url.pathname.replace(/\/+$/, "");
 ---
 <nav class="ex-rail" aria-label="Prüfungen" data-i18n-attr="aria-label:nav.exams">
-  <a class="ex-rail-item ex-rail-item--home" href="/pruefungen" data-i18n="fortschritt.meta.overview">Übersicht</a>
-  {exams.map((e) => (
-    <a class="ex-rail-item" href={e.href} aria-current={here === e.href ? "page" : undefined}>
-      <span>{e.name}</span>
-      {e.level && <span class="ex-rail-level">{e.level}</span>}
-    </a>
-  ))}
+  <a class="ex-rail-up" href="/pruefungen"><span aria-hidden="true">←</span> <span data-i18n="nav.panel.allExams">Alle Prüfungen ansehen</span></a>
+  <div class="ex-rail-tabs">
+    {exams.map((e) => (
+      <a class="ex-rail-item" href={e.href} aria-current={here === e.href ? "page" : undefined}>
+        {e.name}<span class="ex-rail-level">{e.level}</span>
+      </a>
+    ))}
+    <span class="ex-rail-sep" aria-hidden="true"></span>
+    <a class="ex-rail-item" href={lid.href} aria-current={here === lid.href ? "page" : undefined}>{lid.name}</a>
+  </div>
 </nav>
 
-<style>
-  .ex-rail {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-    margin: 0 0 20px;
-  }
-  .ex-rail-item {
-    display: inline-flex;
-    align-items: baseline;
-    gap: 6px;
-    padding: 7px 13px;
-    border: 1px solid var(--border);
-    border-radius: var(--radius-pill);
-    background: var(--surface-card);
-    color: var(--ink);
-    font-size: var(--text-sm);
-    text-decoration: none;
-    white-space: nowrap;
-  }
-  .ex-rail-item:hover { border-color: var(--border-strong); }
-  .ex-rail-item--home { color: var(--brand-blue-dark, var(--brand-blue)); font-weight: var(--fw-semibold); }
-  .ex-rail-item[aria-current="page"] {
-    background: var(--gradient-brand-soft);
-    border-color: transparent;
-    font-weight: var(--fw-semibold);
-  }
-  .ex-rail-level { font-size: .75rem; color: var(--muted); }
-  /* A phone: one row that scrolls sideways instead of three rows of chips above the
-     exercises. The level is dropped — the name is what you tap. */
-  @media (max-width: 720px) {
-    .ex-rail {
-      flex-wrap: nowrap;
-      overflow-x: auto;
-      scrollbar-width: none;
-      margin-inline: calc(-1 * clamp(14px, 4vw, 24px));
-      padding-inline: clamp(14px, 4vw, 24px);
-    }
-    .ex-rail::-webkit-scrollbar { display: none; }
-    .ex-rail-level { display: none; }
-  }
-</style>
+
+<script>
+  // On a phone the row scrolls; start it at the exam you are on, not cut off at the edge.
+  const cur = document.querySelector<HTMLElement>(".ex-rail-item[aria-current='page']");
+  const row = cur?.parentElement;
+  if (cur && row && row.scrollWidth > row.clientWidth) row.scrollLeft = cur.offsetLeft - (row.clientWidth - cur.offsetWidth) / 2;
+</script>

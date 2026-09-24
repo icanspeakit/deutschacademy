@@ -17,7 +17,7 @@
    below the fold. Both panes own their scrolling; the page itself has none. */
 .pr-shell {
   display: grid;
-  grid-template-columns: 340px 1fr;
+  grid-template-columns: 372px 1fr;
   height: calc(100vh - 62px);
   background: var(--page-bg);
   overflow: hidden;
@@ -163,6 +163,51 @@
 }
 .pr-row[data-heard="true"] .pr-row-heard { background: var(--success); border-color: var(--success); color: #fff; }
 
+/* The menu — the Artikel-Trainer's (ArtikelPicker.astro): nav.css's .nvb rail of level
+   badges beside a panel of that level's topics. Here it fills the rest of the side
+   column and the panel scrolls inside it. */
+.pr-nvb { flex: 1; min-height: 0; margin: 0 var(--space-4) var(--space-4); }
+.pr-nvb .nvb-panel { flex: 1; width: auto; min-width: 0; overflow-y: auto; }
+.pr-nvb .ls-raildiv { width: 22px; height: 1px; margin: 4px 0; background: rgba(255, 255, 255, .18); }
+.pr-pane-lead { margin: 0 var(--space-2) var(--space-3); font-size: var(--text-sm); color: var(--muted); line-height: 1.45; }
+.pr-pane-sub {
+  margin: var(--space-2) var(--space-2) var(--space-2);
+  font-family: var(--font-label); font-size: .68rem; font-weight: var(--fw-bold);
+  letter-spacing: .08em; text-transform: uppercase; color: var(--brand-blue-dark, var(--brand-blue));
+}
+.pr-pack {
+  display: grid;
+  grid-template-columns: 26px minmax(0, 1fr) 4ch;
+  column-gap: 8px;
+  padding: 7px 10px;
+  border-left: 3px solid transparent;
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
+.pr-pack.active { background: var(--blue-50); border-left-color: var(--brand-blue); }
+.pr-pack.active .pr-pack-name { font-weight: var(--fw-bold); color: var(--brand-blue-dark); }
+.pr-pack-ic { font-size: 16px; line-height: 1; text-align: center; }
+.pr-pack-name { font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.pr-pack-n { font-size: 12px; color: var(--muted); text-align: right; font-variant-numeric: tabular-nums; }
+.pr-pick-toggle { display: none; }
+
+/* The words of the chosen topic, under the player: what the side column listed before
+   the menu took its place. A wrapping row of chips, so a 25-word topic is one glance. */
+.pr-words { margin-top: var(--space-8); }
+.pr-words .pr-rail-progress { padding: 0 0 var(--space-3); }
+.pr-words .pr-rail-scroll { overflow: visible; padding: 0; }
+.pr-words [data-rail-list]:not([hidden]) { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+.pr-words .pr-row {
+  grid-template-columns: 1fr auto;
+  width: auto;
+  padding: 6px 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  background: var(--surface-card);
+}
+.pr-words .pr-row-bar { display: none; }
+.pr-words .pr-row[aria-current="true"] { border-color: var(--brand-blue); background: var(--blue-50); color: var(--brand-blue-dark); box-shadow: none; }
+.pr-words .pr-row-heard { width: 14px; height: 14px; font-size: 9px; line-height: 11px; }
+
 /* Stage --------------------------------------------------------------------- */
 
 .pr-stage {
@@ -210,9 +255,19 @@
   font-size: clamp(1.4rem, 3.4vw, 2.2rem);
   align-self: center;
 }
-.pr-word--der { background: var(--blue-100); color: var(--brand-blue-dark); }
-.pr-word--die { background: var(--warning-soft); color: var(--accent-dark); }
-.pr-word--das { background: var(--surface); color: var(--muted); border: 1px solid var(--border); }
+/* The Wortschatz colours (vokabeltrainer.css .vt-art--*): der blue, die red, das green —
+   one hue per gender everywhere on the site, so a learner's eye learns them once. */
+.pr-word--der { background: color-mix(in srgb, var(--info) 12%, transparent); color: var(--info); }
+.pr-word--die { background: color-mix(in srgb, var(--danger) 12%, transparent); color: var(--danger); }
+.pr-word--das { background: color-mix(in srgb, var(--success) 12%, transparent); color: var(--success); }
+/* The example sentence under the word, while "Im Satz hören" is on. */
+.pr-sentence { margin: -4px 0 var(--space-4); font-size: var(--text-lg); line-height: 1.5; color: var(--ink); }
+.pr-sentence[hidden] { display: none; }
+.pr-tool[data-sentence][aria-pressed="true"] { border-color: var(--brand-blue); color: var(--brand-blue-dark, var(--brand-blue)); background: color-mix(in srgb, var(--brand-blue) 8%, transparent); }
+.pr-tool[hidden] { display: none; }
+.pr-art--der { color: var(--info); }
+.pr-art--die { color: var(--danger); }
+.pr-art--das { color: var(--success); }
 
 .pr-translation {
   font-size: var(--text-lg);
@@ -348,7 +403,8 @@
   flex-wrap: wrap;
   align-items: center;
   gap: 6px;
-  margin: var(--space-5) 0 0;
+  /* Right under Schleife / Aufnehmen now, so it sits close to them. */
+  margin: var(--space-3) 0 0;
   font-family: var(--font-label);
   font-size: var(--text-xs);
   letter-spacing: .04em;
@@ -370,35 +426,21 @@
   .pr-rail { border-right: none; border-bottom: 1px solid var(--border); }
   .pr-rail-head { padding: var(--space-5) var(--space-4) var(--space-3); }
   .pr-rail-title { font-size: var(--text-xl); font-weight: var(--fw-regular); }
-  .pr-rail-progress { padding: 0 var(--space-4) var(--space-3); }
-  .pr-rail-scroll {
-    overflow-x: auto;
-    overflow-y: hidden;
-    padding: 0 var(--space-4) var(--space-4);
-    scroll-snap-type: x proximity;
+  /* The menu folds under one button that names the topic you are on; choosing a topic
+     folds it again, so the phrase is what you see. */
+  .pr-pick-toggle {
+    display: flex; align-items: center; gap: var(--space-2);
+    margin: 0 var(--space-4) var(--space-3); padding: 10px 14px;
+    border: 1px solid var(--border); border-radius: var(--radius-sm);
+    background: var(--surface-card); font: inherit; color: var(--ink); cursor: pointer; text-align: left;
   }
-  /* The rows sit inside a per-set wrapper, so the strip has to be laid out on
-     that wrapper — flexing .pr-rail-scroll would only flex the one wrapper.
-     :not([hidden]) keeps the inactive set hidden, which display:flex would
-     otherwise override. */
-  .pr-rail-scroll [data-rail-list]:not([hidden]) {
-    display: flex;
-    gap: var(--space-2);
-    width: max-content;
-  }
-  .pr-row {
-    grid-template-columns: 1fr;
-    width: auto;
-    flex: none;
-    max-width: 200px;
-    padding: 8px 14px;
-    border: 1px solid var(--border);
-    border-radius: var(--radius-pill);
-    background: var(--surface-card);
-    scroll-snap-align: start;
-  }
-  .pr-row-bar, .pr-row-heard { display: none; }
-  .pr-row[aria-current="true"] { border-color: var(--brand-blue); background: var(--blue-100); color: var(--brand-blue-dark); }
+  .pr-pick-toggle-label { font-size: var(--text-xs); color: var(--muted); }
+  .pr-pick-toggle-name { flex: 1; min-width: 0; font-weight: var(--fw-semibold); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .pr-pick-toggle-chev { transition: transform .2s ease; }
+  .pr-rail[data-pick-open="true"] .pr-pick-toggle-chev { transform: rotate(180deg); }
+  .pr-nvb { display: none; max-height: 60vh; }
+  .pr-rail[data-pick-open="true"] .pr-nvb { display: flex; }
+  .pr-words { margin-top: var(--space-6); }
   .pr-stage { padding: var(--space-8) var(--space-4) var(--space-16); align-items: flex-start; }
   .pr-player { flex-wrap: wrap; gap: var(--space-3); }
   .pr-wave { flex-basis: 100%; order: 3; height: 40px; }

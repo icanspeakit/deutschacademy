@@ -644,3 +644,23 @@
   background: currentColor;
 }
 :root[data-theme="dark"] .tool-card-aktiv { background: #0c2c2a; }
+
+/* Schreiben (mountSchreiben in aktivMode.js): the drill's stage with a text field where
+   Sprechen has the answer line. */
+.ak-write-form { width: 100%; max-width: 520px; margin: 0 auto; }
+.ak-write-input {
+  width: 100%; box-sizing: border-box;
+  padding: 12px 16px;
+  border: 1.5px solid var(--border-strong); border-radius: var(--radius);
+  background: var(--surface-card); color: var(--ink);
+  font: 500 1.25rem/1.3 var(--font-body); text-align: center;
+}
+.ak-write-input:focus { outline: none; border-color: var(--brand-blue); box-shadow: 0 0 0 3px var(--blue-100); }
+.ak-write-input.is-right { border-color: var(--success); }
+.ak-write-input.is-wrong { border-color: var(--accent-dark, #c2410c); }
+.ak-write-verdict { min-height: 1.6em; margin: var(--space-3) 0 0; text-align: center; font-size: var(--text-sm); color: var(--ink); }
+.ak-write-say {
+  border: none; background: none; cursor: pointer; font-size: 1rem; padding: 2px 4px;
+  vertical-align: middle; opacity: .75;
+}
+.ak-write-say:hover { opacity: 1; }

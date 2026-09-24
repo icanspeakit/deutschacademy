@@ -1,0 +1,32 @@
+/* The exam switcher on /pruefungen detail pages — see src/components/ExamRail.astro. */
+.ex-rail { margin: 0 0 24px; }
+.ex-rail-up {
+  display: inline-flex; gap: 6px; margin-bottom: 10px;
+  font-size: var(--text-sm); font-weight: var(--fw-semibold);
+  color: var(--brand-blue-dark, var(--brand-blue)); text-decoration: none;
+}
+.ex-rail-up:hover { text-decoration: underline; }
+.ex-rail-tabs {
+  display: flex; align-items: stretch; gap: 4px;
+  border-bottom: 1px solid var(--border);
+  overflow-x: auto; scrollbar-width: none;
+}
+.ex-rail-tabs::-webkit-scrollbar { display: none; }
+.ex-rail-item {
+  display: inline-flex; align-items: baseline; gap: 6px;
+  padding: 10px 12px 11px;
+  margin-bottom: -1px;
+  border-bottom: 2px solid transparent;
+  color: var(--muted);
+  font-size: var(--text-sm); font-weight: var(--fw-semibold);
+  text-decoration: none; white-space: nowrap;
+}
+.ex-rail-item:hover { color: var(--ink); border-bottom-color: var(--border-strong); }
+.ex-rail-item[aria-current="page"] { color: var(--ink); border-bottom-color: var(--brand-blue); }
+.ex-rail-level { font-size: .72rem; font-weight: var(--fw-regular, 400); color: var(--muted-soft, var(--muted)); }
+.ex-rail-sep { flex: none; width: 1px; margin: 10px 8px; background: var(--border-strong); }
+/* A phone: the tab row scrolls sideways; the level is dropped — the name is what you tap. */
+@media (max-width: 720px) {
+  .ex-rail-tabs { margin-inline: calc(-1 * clamp(14px, 4vw, 24px)); padding-inline: clamp(14px, 4vw, 24px); }
+  .ex-rail-level { display: none; }
+}

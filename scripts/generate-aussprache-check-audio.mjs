@@ -14,7 +14,10 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const KEY = process.env.AZURE_SPEECH_KEY;
-const REGION = process.env.AZURE_SPEECH_REGION;
+// Same two ways to say where the key lives as src/lib/pronunciation/azure.server.ts:
+// a Foundry / multi-service endpoint (its token names the region), or a plain region.
+const ENDPOINT = process.env.AZURE_SPEECH_ENDPOINT;
+const REGION_ENV = process.env.AZURE_SPEECH_REGION;
 const VOICE = process.env.AZURE_TTS_VOICE || "de-DE-KatjaNeural";
 const force = process.argv.includes("--force");
 const dryRun = process.argv.includes("--dry-run");
@@ -32,8 +35,26 @@ const chars = todo.reduce((n, s) => n + s.text.length, 0);
 console.log(`${todo.length} of ${sentences.length} sentences to voice, ${chars} characters, voice ${VOICE}.`);
 
 if (!dryRun && todo.length) {
-  if (!KEY || !REGION) {
-    console.error("AZURE_SPEECH_KEY and AZURE_SPEECH_REGION must be set (e.g. in .env.local).");
+  if (!KEY || (!ENDPOINT && !REGION_ENV)) {
+    console.error("AZURE_SPEECH_KEY and AZURE_SPEECH_ENDPOINT (or AZURE_SPEECH_REGION) must be set (e.g. in .env.local).");
+    process.exit(1);
+  }
+  // One STS token for the whole run (valid 10 minutes); it also tells us the region.
+  const sts = ENDPOINT
+    ? `${new URL(ENDPOINT).origin}/sts/v1.0/issueToken`
+    : `https://${REGION_ENV}.api.cognitive.microsoft.com/sts/v1.0/issueToken`;
+  const tokRes = await fetch(sts, { method: "POST", headers: { "Ocp-Apim-Subscription-Key": KEY, "Content-Length": "0" } });
+  if (!tokRes.ok) {
+    console.error(`Azure STS answered ${tokRes.status}.`);
+    process.exit(1);
+  }
+  const token = await tokRes.text();
+  let REGION = REGION_ENV;
+  if (!REGION) {
+    try { REGION = JSON.parse(Buffer.from(token.split(".")[1], "base64url").toString("utf8")).region; } catch {}
+  }
+  if (!REGION) {
+    console.error("No region: set AZURE_SPEECH_REGION, the token did not name one.");
     process.exit(1);
   }
   mkdirSync(outDir, { recursive: true });
@@ -42,7 +63,7 @@ if (!dryRun && todo.length) {
     const res = await fetch(`https://${REGION}.tts.speech.microsoft.com/cognitiveservices/v1`, {
       method: "POST",
       headers: {
-        "Ocp-Apim-Subscription-Key": KEY,
+        Authorization: `Bearer ${token}`,
         "Content-Type": "application/ssml+xml",
         "X-Microsoft-OutputFormat": "audio-24khz-48kbitrate-mono-mp3",
         "User-Agent": "deutschacademy-aussprache-check",

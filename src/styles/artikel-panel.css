@@ -204,3 +204,83 @@ details[open] > .akp-more-sum::after { content: "▴"; }
   font: inherit; font-size: .875rem; font-weight: 600; cursor: pointer;
 }
 .akk-regel-btn:hover { background: var(--brand-blue); color: #fff; }
+
+/* --- The Regel drawer (ArtikelRegel.astro) ----------------------------------------
+   Opens from the right edge, where every other grammar topic keeps its rule, and leaves
+   the level column on the left exactly as it was. Wide enough for the article table's
+   five columns; on a phone it takes the whole width. */
+.ap-drawer-scrim {
+  position: fixed; inset: 0; z-index: 900;
+  background: rgba(15, 23, 42, .28);
+  opacity: 0; pointer-events: none;
+  transition: opacity .3s ease;
+}
+.ap-drawer {
+  position: fixed; top: 0; right: 0; bottom: 0; z-index: 901;
+  width: min(560px, 100vw);
+  display: flex; flex-direction: column;
+  background: var(--surface-card);
+  border-left: 1px solid var(--border);
+  box-shadow: -18px 0 40px rgba(15, 23, 42, .12);
+  transform: translateX(100%);
+  transition: transform .45s cubic-bezier(.22, 1, .36, 1);
+}
+.ap-regel-open .ap-drawer { transform: none; }
+.ap-regel-open .ap-drawer-scrim { opacity: 1; pointer-events: auto; }
+.ap-drawer-head {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding: 18px 22px 14px; border-bottom: 1px solid var(--border);
+}
+.ap-drawer-head h2 { margin: 0; font-size: 1.25rem; font-weight: var(--fw-regular); color: var(--ink); }
+.ap-drawer-x {
+  display: grid; place-items: center; width: 36px; height: 36px;
+  border: 1px solid var(--border); border-radius: 50%; background: none; color: var(--muted); cursor: pointer;
+}
+.ap-drawer-x:hover { color: var(--ink); border-color: var(--border-strong); }
+.ap-drawer-x svg { width: 18px; height: 18px; }
+.ap-drawer-body { flex: 1; min-height: 0; overflow-y: auto; padding: 18px 22px 40px; container-type: inline-size; }
+@media (prefers-reduced-motion: reduce) {
+  .ap-drawer, .ap-drawer-scrim { transition: none; }
+}
+
+/* The "!" on the endings table's heading (ArtikelRegel.astro), pointing at the Hinweis.
+   Inline in the caption, right after its text; the caption is uppercase and spaced, so the
+   dot resets both. */
+.ap-hint-dot {
+  flex: none;
+  align-self: center;
+  width: 20px; height: 20px; padding: 0;
+  letter-spacing: 0; text-transform: none;
+  display: grid; place-items: center;
+  border: none; border-radius: 50%;
+  background: var(--brand-blue); color: #fff;
+  font: 700 12px/1 var(--font-body);
+  cursor: pointer;
+  animation: apHintPulse 2.4s ease-in-out infinite;
+}
+.ap-hint-dot:hover { background: var(--brand-blue-dark, var(--brand-blue)); }
+.ap-hint-dot:focus-visible { outline: 2px solid var(--brand-blue); outline-offset: 3px; }
+.ap-hint-dot.is-seen { animation: none; }
+@keyframes apHintPulse {
+  0%, 100% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--brand-blue) 45%, transparent); opacity: 1; }
+  50% { box-shadow: 0 0 0 7px color-mix(in srgb, var(--brand-blue) 0%, transparent); opacity: .72; }
+}
+.ap-regel-hint:focus { outline: none; }
+/* Arriving from the "!": a ring radiates out of the Hinweis twice, over about a second,
+   with the box tinted meanwhile — enough to find it, gone before it is a distraction. */
+.ap-regel-hint.is-flash {
+  animation:
+    apHintRing .55s ease-out 2,
+    apHintTint 1.2s ease-out;
+}
+@keyframes apHintRing {
+  0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--brand-blue) 60%, transparent); }
+  100% { box-shadow: 0 0 0 14px color-mix(in srgb, var(--brand-blue) 0%, transparent); }
+}
+@keyframes apHintTint {
+  0%, 50% { background: color-mix(in srgb, var(--brand-blue) 12%, var(--surface)); }
+  100% { background: var(--surface); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ap-hint-dot, .ap-regel-hint.is-flash { animation: none; }
+}

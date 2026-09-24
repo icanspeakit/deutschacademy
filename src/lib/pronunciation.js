@@ -46,6 +46,8 @@ export function mountPronunciation(root, options = {}) {
     wavePlayed: root.querySelector("[data-wave-played]"),
     rates: [...root.querySelectorAll("[data-rate]")],
     loop: root.querySelector("[data-loop]"),
+    sentence: root.querySelector("[data-sentence]"),
+    sentenceText: root.querySelector("[data-sentence-text]"),
     rec: root.querySelector("[data-rec]"),
     playMine: root.querySelector("[data-play-mine]"),
     status: root.querySelector("[data-status]"),
@@ -61,6 +63,9 @@ export function mountPronunciation(root, options = {}) {
   let index = 0;
   let rate = 1;
   let looping = false;
+  // "Im Satz hören": the player plays the word's example sentence instead. It stays on from
+  // word to word; a word without a voiced sentence just plays the word.
+  let inSentence = false;
   // One Set per practice set, created on first visit — the sets come from the lexicon, so
   // their keys are not known here.
   const heard = {};
@@ -76,15 +81,20 @@ export function mountPronunciation(root, options = {}) {
 
   const items = () => sets[set] || [];
   const current = () => items()[index];
+  const useSentence = () => inSentence && !!current()?.sentence;
+  const srcOf = (item) => (useSentence() ? item.sentence.audioSrc : item.audioSrc);
 
   // Rendering ---------------------------------------------------------------
 
   function renderPhrase(item) {
     const words = item.text.split(/\s+/);
+    // A sentence ("Das sehe ich anders.") starts with a pronoun, not an article: the chip
+    // is for a noun with its article ("der Name"), which never ends in punctuation.
+    const isSentence = /[.!?…]$/.test(item.text.trim());
     el.phrase.innerHTML = words
       .map((word, i) => {
         const bare = word.toLowerCase();
-        if (i === 0 && ARTICLES.has(bare)) {
+        if (i === 0 && !isSentence && ARTICLES.has(bare)) {
           return `<span class="pr-word pr-word--article pr-word--${bare}">${word}</span>`;
         }
         return `<span class="pr-word">${word}</span>`;
@@ -128,7 +138,11 @@ export function mountPronunciation(root, options = {}) {
       .replace("{i}", String(index + 1))
       .replace("{n}", String(items().length));
     renderPhrase(item);
-    renderWave(item);
+    renderWave(useSentence() ? item.sentence : item);
+    el.sentence.hidden = !item.sentence;
+    el.sentence.setAttribute("aria-pressed", String(useSentence()));
+    el.sentenceText.hidden = !useSentence();
+    el.sentenceText.textContent = useSentence() ? item.sentence.text : "";
     el.translation.textContent = item.translation || "";
     el.note.textContent = item.note || "";
     el.prev.disabled = index === 0;
@@ -144,7 +158,32 @@ export function mountPronunciation(root, options = {}) {
     el.playIcon.innerHTML = playing ? ICON_STOP : ICON_PLAY;
   }
 
+  // A phrase with no recording yet (audioSrc "") is read by the browser's German voice —
+  // same button, same tempo and loop, no waveform progress. The note says it is synthetic.
+  let speaking = false;
+  function speak(text) {
+    if (!("speechSynthesis" in window)) { el.status.textContent = strings.audioError || ""; return; }
+    speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = "de-DE";
+    u.rate = rate;
+    const de = speechSynthesis.getVoices().find((v) => v.lang?.startsWith("de"));
+    if (de) u.voice = de;
+    u.onstart = () => {
+      speaking = true;
+      setPlayIcon(true);
+      if (!heardIn(set).has(index)) { heardIn(set).add(index); onHeard?.(); renderRail(); }
+    };
+    u.onend = () => {
+      speaking = false;
+      setPlayIcon(false);
+      if (looping) setTimeout(play, 600);
+    };
+    speechSynthesis.speak(u);
+  }
+
   function stop() {
+    if (speaking || speechSynthesis?.speaking) { speaking = false; speechSynthesis.cancel(); }
     audio.pause();
     audio.currentTime = 0;
     el.wavePlayed.style.width = "0%";
@@ -154,7 +193,8 @@ export function mountPronunciation(root, options = {}) {
   function play() {
     const item = current();
     if (!item) return;
-    const src = new URL(item.audioSrc, location.href).href;
+    if (!srcOf(item)) return speak(item.text);
+    const src = new URL(srcOf(item), location.href).href;
     if (audio.src !== src) audio.src = src;
     audio.playbackRate = rate;
     audio.currentTime = 0;
@@ -191,7 +231,7 @@ export function mountPronunciation(root, options = {}) {
     if (looping) setTimeout(play, 600);
   });
 
-  el.play.addEventListener("click", () => (audio.paused ? play() : stop()));
+  el.play.addEventListener("click", () => (audio.paused && !speaking ? play() : stop()));
 
   // Scrub by clicking the waveform — the bars are decorative, but the track
   // position under the pointer is real.
@@ -208,6 +248,13 @@ export function mountPronunciation(root, options = {}) {
       audio.playbackRate = rate;
       el.rates.forEach((b) => b.setAttribute("aria-pressed", String(b === btn)));
     });
+  });
+
+  el.sentence.addEventListener("click", () => {
+    inSentence = !inSentence;
+    stop();
+    render();
+    play();
   });
 
   el.loop.addEventListener("click", () => {
@@ -311,7 +358,7 @@ export function mountPronunciation(root, options = {}) {
     else if (e.key === " " || e.code === "Space") {
       if (e.target.closest("button")) return;
       e.preventDefault();
-      audio.paused ? play() : stop();
+      audio.paused && !speaking ? play() : stop();
     }
   });
 

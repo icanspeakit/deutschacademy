@@ -1,0 +1,1559 @@
+---
+// FROZEN COPY of LearnShell.astro as of 539b20c (2026-09-23), for /olduxdashboard only —
+// the dashboard layout before the 2026-09-24 redesign, kept to compare. Do not develop here.
+// /nav — navigation test bed. Takes the "list on the left" shell from the
+// Pflegeplace dashboard (sticky step list + grouped sections + content pane)
+// and tries three ways of doing it, swapped by the toggle in the top bar:
+//
+//   A · Rail      — one flat column, everything visible at once.
+//   B · Icon-Rail — a 64px level column plus a list panel.  ← the favoured one
+//   C · Akkordeon — folding groups, each header carrying its own progress.
+//
+// All three are driven by the SAME `sections` array below, so the comparison is
+// only ever about the layout. The order of that array is the information
+// architecture: items are sorted by CEFR level (A1 → A2 → B1 → B2), not by tool
+// type, with the current course path pinned above it and the exams — which are
+// targets rather than a level — kept in their own group at the end.
+//
+// TWO CONTENT VIEWS. Picking a Stufe shows that level's OVERVIEW (own hero, own
+// ring, own content table). Picking an entry shows the ITEM card: what it is, how
+// far along the learner is, and one link to where it is practised.
+//
+// This is the map, not a second place to learn. It used to mount every exercise
+// inline as well, beside a button that opened the same exercise on its own page
+// in a new tab — two homes for one piece of content, and the learner had to pick.
+// Decided in FORTSCHRITT-KARTE-PROMPT.md (the /uxfocus study, "Karte → Seite"):
+// the topic page is the one place to practise; this page shows where you are and
+// sends you there. See docs/fortschritt-karte-tier1-v1.md.
+//
+// LEVELS: grammatik.json carries a real `level` per topic (source: "data").
+// The other exercise data files have no level field, so those entries are
+// derived from what the exercise itself contains (source: "abgeleitet") and are
+// the ones to correct first. When this concept graduates, the derived levels
+// should move into the data files rather than living in this page.
+//
+// NUMBERS: `tasks` counts are real, from the same data files the live pages use.
+// `done` values are mock (nobody is logged in here) but every percentage on the
+// page is computed from them, so the strip, the rings, the bars and the tables
+// can never contradict each other — and correct answers in the inline quiz feed
+// straight back into the same numbers. `minutes` are rough estimates, always
+// shown with "ca.". Not linked from the public nav; noindex.
+import Icon from "./Icon.astro";
+
+// The workspace styles the inline rule card and the five exercise widgets need.
+// Both files are fully class-scoped (.vp-*, .quiz-*) — no bare element selectors —
+// so they cannot leak into the .nv shell.
+import "../styles/practice.css";
+import "../styles/akkusativ.css";
+import "../styles/dtz.css";
+import "../styles/verben-praepositionen.css";
+import "../styles/nav.css";
+import "../styles/rule-intro.css";
+import artikel from "../data/artikel.json";
+import { nouns } from "../lib/lexicon.js";
+import { kursTopicsAt, workspaces as kursWorkspaces } from "../lib/kursOrder.js";
+import grammatik from "../data/grammatik.json";
+import wortschatz from "../data/wortschatz.json";
+import sprechen from "../data/sprechen.json";
+import lesen from "../data/lesen.json";
+import kultur from "../data/kultur.json";
+import lid from "../data/leben-in-deutschland.json";
+import hoeren from "../data/hoeren.json";
+import { counts as lexiconCounts } from "../lib/lexicon.js";
+import { files as downloadFiles } from "../lib/downloads.js";
+import { exams } from "../lib/catalog.js";
+
+const readingQuestionCount = lesen.groups.reduce((sum, g) => sum + g.questions.length, 0);
+
+/* What the site actually holds, counted from the data rather than typed out.
+ *
+ * On a phone the dashboard opens onto one exercise card and nothing else — the module list
+ * that shows how much is here sits two screens down, so the first impression of a site with
+ * 3.375 Wörter and 664 Aufgaben is "one gap-fill". This strip is that scale in one
+ * swipeable line, directly under the rail, and every chip is a way in. */
+const de = (n: number) => n.toLocaleString("de-DE");
+const ausspracheWordCount = wortschatz.length + artikel.length;
+const byLevel = (level: string) => grammatik.filter((t) => t.level === level);
+
+type IconName = "target" | "book" | "book-open" | "folder" | "volume" | "mic" | "pencil" | "map-pin" | "sparkle" | "document" | "landmark" | "graduation-cap";
+
+type Item = {
+  id: string;
+  label: string;
+  icon: IconName;
+  href: string;
+  level: string;
+  levelSource: "data" | "abgeleitet" | "—";
+  eyebrow: string;
+  lead: string;
+  tasks?: number;
+  done?: number;
+  minutes?: number;
+  meta?: string;
+  // "quiz"      — a single Lückentext from grammatik.json
+  // "workspace" — the full rule card plus four or five exercises
+  // "trainer" — the real Artikel-Trainer (practiceWorkspace.js)
+  // Every kind of inline exercise /nav can mount. "info" means the row really
+  // has nothing to practise (an overview, an exam description).
+  practice?: "quiz" | "workspace" | "trainer" | "choice" | "cards" | "audio" | "speak" | "read" | "dtz" | "picker" | "result" | "bausteine";
+  // Aggregate rows (the course modules) are the sum of other rows, so practising
+  // a single topic has to move them too — otherwise the course strip sits still
+  // while the level bar climbs, and the page contradicts itself.
+  derived?: string[];
+};
+
+type Section = {
+  id: string;
+  label: string;
+  badge: string;
+  icon: IconName;
+  kind: "kurs" | "stufe" | "ziel" | "uebergreifend";
+  /** Two-word caption under an icon-only rail chip; falls back to `badge`. */
+  blurb: string;
+  focus: string[];
+  items: Item[];
+};
+
+// Nothing is pre-filled. Every number on this page starts at zero and is filled
+// in on the client from what the learner has actually answered, via
+// getTopicProgress() in src/lib/progress.js. The server render is the empty state.
+const doneOf = (_id: string) => 0;
+
+// The der/die/das trainer is a row on the map like any other: a round is
+// ARTIKEL_SESSION nouns, drawn from every gendered noun in the lexicon.
+const ARTIKEL_SESSION = 25;
+const ARTIKEL_NOUNS = nouns({ level: ["A1", "A2", "B1", "B2"], has: "gender" }).length;
+
+const grammarItem = (t: (typeof grammatik)[number], level: string): Item => ({
+  id: t.id,
+  label: t.name,
+  icon: "book",
+  href: `/uebungen/grammatik/${t.id}`,
+  level,
+  levelSource: "data",
+  eyebrow: `Grammatik · ${level}`,
+  lead: t.intro,
+  tasks: t.questions.length,
+  done: doneOf(t.id),
+  minutes: Math.round(t.questions.length * 1.5),
+  practice: "quiz",
+});
+
+// ── The full grammar workspaces ──────────────────────────────────────────
+// src/data/grammatik/*.json each describe a complete Kursbuchseite: the
+// "Wie funktioniert das?" rule card plus four or five exercises. The live
+// /uebungen/grammatik/<topic> route renders exactly these. The map reads their
+// metadata only — which topics a level has and in what order comes from
+// src/lib/kursOrder.js, the same list the topic page's course bar walks.
+const workspaces = kursWorkspaces;
+
+// One "Slot" is one thing the learner has to get right, counted the same way
+// the five exercise renderers in grammarWorkspace.js consume their data.
+const slotsOf = (ex: any): number => {
+  if (ex.type === "fill") return ex.items.length;
+  if (ex.type === "match") return ex.pairs.length;
+  if (ex.type === "table") return ex.rows.length;
+  if (ex.type === "story") return ex.segments.filter((s: any) => s.blank !== undefined).length;
+  if (ex.type === "build") return ex.sentences.length;
+  return 0;
+};
+const workspaceSlots = (w: any) => (w.exercises ?? []).reduce((a: number, e: any) => a + slotsOf(e), 0);
+
+const workspaceItem = (w: any): Item => {
+  const id = w.slug ?? w.id;
+  const tasks = workspaceSlots(w);
+  return {
+    id,
+    label: w.name,
+    icon: "book-open",
+    href: `/uebungen/grammatik/${id}`,
+    level: w.level,
+    levelSource: "data",
+    eyebrow: `Grammatik · ${w.level}`,
+    lead: w.subtitle ?? "",
+    tasks,
+    done: doneOf(id),
+    minutes: Math.max(8, Math.round(tasks * 0.8)),
+    practice: "workspace",
+  };
+};
+
+// Which topics a level holds, in course order: kursTopicsAt() in src/lib/kursOrder.js.
+// One list for this map and for the topic page's "Thema x von y" and ‹ ›.
+const grammarAt = (level: string) =>
+  kursTopicsAt(level).map((t: any) => (t.kind === "workspace" ? workspaceItem(t.data) : grammarItem(t.data, level)));
+
+// The portions below split a topic on its exercise boundaries, so they need the
+// workspace behind an id.
+const workspaceById = Object.fromEntries(workspaces.map((w: any) => [w.slug ?? w.id, w]));
+
+// Every grammar entry, in one list — the course module "Grammatik-Basis" is
+// their sum, so practising any single topic moves the course strip too.
+const allGrammarItems = ["A1", "A2", "B1", "B2"].flatMap(grammarAt);
+const allGrammarIds = allGrammarItems.map((i) => i.id);
+const allGrammarTasks = allGrammarItems.reduce((a, i) => a + (i.tasks ?? 0), 0);
+const allGrammarDone = allGrammarItems.reduce((a, i) => a + (i.done ?? 0), 0);
+const allGrammarMinutes = allGrammarItems.reduce((a, i) => a + (i.minutes ?? 0), 0);
+
+/* The scale strip's chips. `allGrammarTasks` rather than a fresh count over grammatik.json:
+   that file holds only the seven quiz-only topics now, and counting it alone would advertise
+   37 Aufgaben two centimetres above a blurb that says 664. One number, one source. */
+const scaleChips = [
+  { label: "Grammatik", value: `${de(allGrammarTasks)} Aufgaben`, href: "/uebungen/grammatik", icon: "book" as const },
+  { label: "Wortschatz", value: `${de(lexiconCounts().total)} Wörter`, href: "/uebungen/wortschatz", icon: "folder" as const },
+  { label: "Hören", value: `${hoeren.texts.length} Hörtexte`, href: "/uebungen/hoeren", icon: "volume" as const },
+  { label: "Landeskunde", value: `${kultur.topics.length} Themen`, href: "/uebungen/kultur", icon: "map-pin" as const },
+  { label: "Prüfungen", value: `${exams.length} Formate`, href: "/pruefungen", icon: "graduation-cap" as const },
+  { label: "Downloads", value: `${downloadFiles.length} PDFs`, href: "/wissen", icon: "document" as const },
+];
+
+// ── The grammar module, handed out in portions ───────────────────────────
+// "Grammatik-Basis" was one row of 664 Aufgaben and the course strip above it
+// read 0 / 724. Neither is a number anyone starts. It is the whole grammar
+// catalogue stated as a single task, and a bar across it cannot visibly move
+// for days — the one thing a progress bar exists to do.
+//
+// Same material, handed out in portions of ten to thirty: a sitting, not a
+// syllabus. A portion never crosses a level, and apart from the short quiz
+// topics that cannot fill one alone it never crosses a topic either, so it is
+// always one page to open. Cuts fall on exercise boundaries, never inside one.
+// A topic over PORTION_MAX is divided into equal parts rather than a full one
+// and a remainder: 33 Aufgaben become 15 + 18, not 25 + 8.
+const PORTION_MAX = 25;
+const PORTION_MIN = 10;
+/** What absorbing a too-small portion may grow its neighbour to. */
+const PORTION_CAP = 30;
+
+type Part = { topic: string; from: number; size: number; topicLabel: string; href: string; level: string };
+
+/** One number per exercise, in the order the workspace renders them. */
+const exerciseSizes = (i: Item): number[] => {
+  const w = workspaceById[i.id];
+  const sizes = w ? (w.exercises ?? []).map(slotsOf) : [];
+  return sizes.length ? sizes : [i.tasks ?? 0];
+};
+
+function splitTopic(i: Item): Part[][] {
+  const sizes = exerciseSizes(i);
+  const total = sizes.reduce((a, b) => a + b, 0);
+  const wanted = Math.max(1, Math.ceil(total / PORTION_MAX));
+  const out: Part[][] = [];
+  let cur: Part[] = [];
+  let from = 0;
+  let acc = 0;
+  let left = total;
+  let made = 1;
+  for (const size of sizes) {
+    const share = left / (wanted - made + 1);
+    // Close here when taking one more exercise would land further from this
+    // part's share than stopping does.
+    if (cur.length && made < wanted && Math.abs(acc + size - share) > Math.abs(acc - share)) {
+      out.push(cur);
+      left -= acc;
+      cur = [];
+      acc = 0;
+      made++;
+    }
+    cur.push({ topic: i.id, from, size, topicLabel: i.label, href: i.href, level: i.level });
+    from += size;
+    acc += size;
+  }
+  if (cur.length) out.push(cur);
+  return out;
+}
+
+const partsSize = (parts: Part[]) => parts.reduce((a, x) => a + x.size, 0);
+
+// A four-question quiz topic is not a sitting. Those are the only portions that
+// come out under PORTION_MIN, they sit at the end of their level (grammarAt puts
+// the workspaces first), and they are also the only case a portion covers more
+// than one topic — so they pair off with each other before they are allowed to
+// weigh down a full topic's portion.
+const packedPortions: Part[][] = allGrammarItems.flatMap(splitTopic);
+
+const sameLevel = (a: Part[], b: Part[]) => a[0].level === b[0].level;
+
+// Pass one: two undersized neighbours make one portion (Dativ + Trennbare Verben).
+for (let k = packedPortions.length - 2; k >= 0; k--) {
+  const here = packedPortions[k];
+  const next = packedPortions[k + 1];
+  if (partsSize(here) < PORTION_MIN && partsSize(next) < PORTION_MIN && sameLevel(here, next)) {
+    packedPortions.splice(k, 2, [...here, ...next]);
+  }
+}
+// Pass two: whatever is still too small joins the portion before it, or the one
+// after when the level starts with it.
+for (let k = packedPortions.length - 1; k >= 0; k--) {
+  const here = packedPortions[k];
+  if (partsSize(here) >= PORTION_MIN) continue;
+  const prev = packedPortions[k - 1];
+  const next = packedPortions[k + 1];
+  if (prev && sameLevel(prev, here) && partsSize(prev) + partsSize(here) <= PORTION_CAP) {
+    packedPortions.splice(k - 1, 2, [...prev, ...here]);
+  } else if (next && sameLevel(here, next) && partsSize(here) + partsSize(next) <= PORTION_CAP) {
+    packedPortions.splice(k, 2, [...here, ...next]);
+  }
+}
+
+const pieceCount: Record<string, number> = {};
+for (const parts of packedPortions) pieceCount[parts[0].topic] = (pieceCount[parts[0].topic] ?? 0) + 1;
+const pieceSeen: Record<string, number> = {};
+
+const portions = packedPortions.map((parts, idx) => {
+  const head = parts[0];
+  const of = pieceCount[head.topic];
+  const nth = (pieceSeen[head.topic] = (pieceSeen[head.topic] ?? 0) + 1);
+  const names = parts.map((x) => x.topicLabel).filter((n, k, all) => all.indexOf(n) === k);
+  const base = of > 1 ? `${head.topicLabel} · Teil ${nth} von ${of}` : head.topicLabel;
+  const tasks = partsSize(parts);
+  return {
+    id: `portion-${idx + 1}`,
+    level: head.level,
+    label: names.length > 1 ? `${base} + ${names.slice(1).join(" + ")}` : base,
+    href: head.href,
+    topic: head.topic,
+    tasks,
+    minutes: Math.max(8, Math.round(tasks * 0.8)),
+    parts: parts.map((x) => ({ topic: x.topic, from: x.from, size: x.size })),
+  };
+});
+const firstPortion = portions[0];
+
+const sections: Section[] = [
+  {
+    id: "weg",
+    label: "Dein Weg",
+    badge: "Kurs",
+    icon: "sparkle",
+    kind: "kurs",
+    blurb: `Dein aktueller Kurs — nach Reihenfolge sortiert, nicht nach Stufe. Erst die Grammatik, dann der Wortschatz, dann der komplette Probelauf. Die Grammatik kommt in ${portions.length} Portionen von je 10 bis 30 Aufgaben; du siehst immer die, die dran ist.`,
+    focus: [`Grammatik von A1 bis B2 — ${portions.length} Portionen, ${allGrammarTasks} Aufgaben`, "Redemittel für den Alltag", "Ein kompletter DTZ-Übungssatz"],
+    items: [
+      { id: "start", label: "Start", icon: "sparkle", href: "/uebungen", level: "A1–B1", levelSource: "—", eyebrow: "Übersicht", lead: "Dein Einstieg: wo du stehst, was als Nächstes ansteht und wie viel bis zur Prüfung fehlt.", meta: "Übersicht", practice: "picker" },
+      // Not the whole grammar catalogue any more: the portion the learner is on.
+      // The row, its bar and its count all speak about that one sitting, and
+      // repaint() moves them to the next as soon as this one is finished. The
+      // full figure still stands in the section's blurb, where it is context
+      // rather than a target.
+      { id: "grammatik-basis", label: firstPortion.label, icon: "book", href: firstPortion.href, level: firstPortion.level, levelSource: "data", eyebrow: `Modul 1 · Portion 1 von ${portions.length}`, lead: `Portion 1 von ${portions.length} aus ${allGrammarItems.length} Grammatikthemen von A1 bis B2 — Regelkarte und Übungen, ${firstPortion.tasks} Aufgaben in einem Durchgang.`, tasks: firstPortion.tasks, done: 0, minutes: firstPortion.minutes, practice: "picker" },
+      { id: "wortschatz-kurs", label: "Wortschatz-Karten", icon: "folder", href: "/uebungen/wortschatz", level: "A1–B1", levelSource: "abgeleitet", eyebrow: "Modul 2", lead: "Redemittel für Amt, Wohnungssuche und Alltag — als Karteikarten zum Umdrehen.", tasks: wortschatz.length, done: 0, minutes: 15, practice: "cards" },
+      { id: "probelauf", label: "Prüfungssimulation", icon: "document", href: "/pruefungen/dtz/uebungssatz", level: "A2/B1", levelSource: "abgeleitet", eyebrow: "Modul 3", lead: "Ein kompletter DTZ-Übungssatz im echten Format: neun Prüfungsteile, 45 bewertete Aufgaben.", tasks: 45, done: 0, minutes: 54, practice: "dtz" },
+      { id: "ergebnis", label: "Ergebnis", icon: "graduation-cap", href: "/pruefungen/dtz", level: "A2/B1", levelSource: "—", eyebrow: "Abschluss", lead: "Deine Auswertung nach Stufe — live aus dem, was du auf dieser Seite geübt hast.", meta: "Am Ende", practice: "result" },
+    ],
+  },
+  {
+    id: "a1",
+    label: "Stufe A1",
+    badge: "A1",
+    icon: "book",
+    kind: "stufe",
+    blurb: "Der Anfang: die Artikel der häufigsten Nomen und der Akkusativ. Wer diese Stufe sicher hat, kann einfache Sätze bilden, die stimmen.",
+    focus: ["Artikel: der, die, das", "Akkusativ nach Verben", "Grundwortschatz"],
+    items: [
+      ...grammarAt("A1"),
+      { id: "artikel-trainer", label: "der/die/das-Trainer", icon: "target", href: "/uebungen/grammatik/artikel", level: "A1", levelSource: "abgeleitet", eyebrow: "Übung · A1", lead: `Artikel gezielt trainieren — ${ARTIKEL_NOUNS} Nomen aus dem Lexikon, Fokus- oder Testmodus, mit sofortigem Feedback nach jeder Antwort.`, tasks: ARTIKEL_SESSION, done: doneOf("artikel-trainer"), minutes: 8, practice: "trainer" },
+    ],
+  },
+  {
+    id: "a2",
+    label: "Stufe A2",
+    badge: "A2",
+    icon: "book",
+    kind: "stufe",
+    blurb: "Der Sprung in den Alltag: Dativ und trennbare Verben. Ab hier lassen sich Sätze bauen, die mehr können als „Ich habe einen Hund.“",
+    focus: ["Dativ nach Verben und Präpositionen", "Trennbare Verben im Satz", "Alltagssituationen"],
+    items: grammarAt("A2"),
+  },
+  {
+    id: "b1",
+    label: "Stufe B1",
+    badge: "B1",
+    icon: "book-open",
+    kind: "stufe",
+    blurb: "Das DTZ-Niveau: längere Nebensätze, feste Präpositionen und die Feinheiten der Deklination. Der Block, der für die Prüfung am meisten zählt.",
+    focus: ["Nebensätze: als oder wenn, indirekte Fragen", "Verben mit festen Präpositionen", "Adjektiv- und n-Deklination"],
+    items: [
+      ...grammarAt("B1"),
+    ],
+  },
+  {
+    id: "b2",
+    label: "Stufe B2",
+    badge: "B2",
+    icon: "graduation-cap",
+    kind: "stufe",
+    blurb: "Nach dem DTZ: Passiv mit Modalverben, Konjunktiv II und die Feinheiten, an denen man Fortgeschrittene hört. Für alle, die weitermachen oder aufs Studium zielen.",
+    focus: ["Passiv und Partizipien als Adjektiv", "Konjunktiv II: höflich und hypothetisch", "Feste Wendungen, Negation, Fokuspartikeln"],
+    items: grammarAt("B2"),
+  },
+  {
+    id: "alle",
+    label: "Stufenübergreifend",
+    badge: "A1–B1",
+    icon: "folder",
+    // Not "stufe": it sat in the rail as a fifth level chip reading "A1–B1" beside A1, A2,
+    // B1 and B2, and called itself "Alle Stufen" — a name that promises the whole catalogue
+    // and opens two tools. Its own kind, so the rail gives it an icon instead of a level
+    // chip and every label below says what it is: the shelf for the exercises no single
+    // level owns, because their content genuinely runs across all of them. Deleting the
+    // section instead would leave Wortschatz & Redemittel and das Aussprache-Training with
+    // nowhere to live, since neither can honestly be filed under one level.
+    kind: "uebergreifend",
+    blurb: "Übungen, deren Inhalt echt über mehrere Stufen läuft — die Karteikarten reichen von „Wie geht's dir?“ bis „Ich bin der Meinung, dass …“.",
+    focus: ["Redemittel A1 bis B1", "Aussprache im Langsam-Modus"],
+    items: [
+      { id: "wortschatz", label: "Wortschatz & Redemittel", icon: "folder", href: "/uebungen/wortschatz", level: "A1–B1", levelSource: "abgeleitet", eyebrow: "Übung · A1–B1", lead: `${wortschatz.length} Karteikarten, von „Wie geht's dir?“ (A1) bis „Ich bin der Meinung, dass …“ (B1).`, tasks: wortschatz.length, done: 0, minutes: 15, practice: "cards" },
+      { id: "aussprache", label: "Aussprache-Training", icon: "volume", href: "/uebungen/aussprache", level: "A1–B1", levelSource: "abgeleitet", eyebrow: "Übung · A1–B1", lead: `Alle ${ausspracheWordCount} Wörter aus Wortschatz und Artikel-Trainer anhören und im Langsam-Modus nachsprechen.`, tasks: ausspracheWordCount, done: 0, minutes: 12, practice: "audio" },
+    ],
+  },
+  {
+    id: "pruefungen",
+    label: "Prüfungen",
+    badge: "Ziel",
+    // "Ziel" is how the section argues about itself; on a 42px chip the learner needs to
+    // know which part of the site it opens.
+    icon: "landmark",
+    kind: "ziel",
+    blurb: "Prüfungen sind keine Stufe, sondern ein Ziel — deshalb eine eigene Gruppe, sortiert nach Einstiegsniveau statt nach Fortschritt. Dazu die DTZ-Prüfungsteile zum Üben.",
+    focus: ["Format und Dauer", "Was zum Bestehen reicht", "DTZ üben: Lesen, Bildbeschreibung, Landeskunde"],
+    items: [
+      { id: "dtz", label: "DTZ", icon: "document", href: "/pruefungen/dtz", level: "A2/B1", levelSource: "data", eyebrow: "Prüfung", lead: "Deutsch-Test für Zuwanderer: Hören, Lesen, Schreiben, Sprechen — 45 bewertete Aufgaben plus Schreibteil.", tasks: 45, done: 0, minutes: 54, practice: "dtz" },
+      { id: "lid", label: "Leben in Deutschland", icon: "map-pin", href: "/pruefungen/leben-in-deutschland", level: "kein GER", levelSource: "data", eyebrow: "Prüfung", lead: `33 Fragen aus dem offiziellen Katalog, dazu die Landesfragen aller ${lid.bundeslaender.length} Bundesländer — Wissenstest, keine Sprachprüfung.`, tasks: lid.questions.length, done: 0, minutes: 20, practice: "choice" },
+      { id: "telc", label: "telc", icon: "document", href: "/pruefungen/telc", level: "A1–C2", levelSource: "data", eyebrow: "Prüfung", lead: "Sprachbausteine — der Prüfungsteil, den es so nur bei telc gibt: Grammatik im laufenden Text.", tasks: 20, done: 0, minutes: 20, practice: "bausteine" },
+      { id: "goethe", label: "Goethe-Zertifikat", icon: "landmark", href: "/pruefungen/goethe", level: "A1–C2", levelSource: "data", eyebrow: "Prüfung", lead: "Die Goethe-Zertifikate decken A1 bis C2 ab — hier alle Themen, nach Stufe sortiert.", meta: "A1–C2", practice: "picker" },
+      { id: "testdaf", label: "TestDaF", icon: "graduation-cap", href: "/pruefungen/testdaf", level: "B2–C1", levelSource: "data", eyebrow: "Prüfung", lead: "TestDaF setzt B2–C1 voraus — hier die Themen dieser Stufen.", meta: "B2–C1", practice: "picker" },
+
+      /* DTZ skill practice, moved here out of Stufe B1. These are exam formats —
+         Bildbeschreibung with real examiner questions, the Leseverstehen simulation,
+         the discussion topics — not B1 grammar. They sat in B1 only because B1 is the
+         DTZ level, which made the biggest group three entries bigger still and put
+         exam rehearsal in the middle of a grammar syllabus. This group is explicitly
+         "ein Ziel, keine Stufe", which is exactly what they are. */
+      { id: "sprechen", label: "Sprechen: Bildbeschreibung", icon: "mic", href: "/uebungen/sprechen", level: "A2/B1", levelSource: "abgeleitet", eyebrow: "Übung · B1", lead: "Bildbeschreibung mit echten DTZ-Prüferfragen und 90-Sekunden-Timer — dieselbe Aufgabenform wie im Prüfungsteil Sprechen.", tasks: sprechen.length, done: 0, minutes: 15, practice: "speak" },
+      { id: "lesen", label: "Lesen & Schreiben", icon: "pencil", href: "/uebungen/lesen-schreiben", level: "A2/B1", levelSource: "abgeleitet", eyebrow: "Übung · B1", lead: `DTZ-Leseverstehen-Simulation mit ${readingQuestionCount} Aufgaben in vier Teilen, dazu Schreibaufgaben.`, tasks: readingQuestionCount, done: 0, minutes: 25, practice: "choice" },
+      { id: "kultur", label: "Kulturwissen", icon: "map-pin", href: "/uebungen/kultur", level: "B1", levelSource: "abgeleitet", eyebrow: "Übung · B1", lead: "Diskussionsthemen aus echten Unterrichtsgesprächen — mit Pro- und Kontra-Argumenten zum Nachsprechen.", tasks: kultur.topics.length, done: 0, minutes: 10, practice: "read" },
+    ],
+  },
+];
+
+// Everything below is derived — no percentage is typed by hand.
+const sum = (ns: number[]) => ns.reduce((a, b) => a + b, 0);
+const stats = (s: Section) => {
+  const counted = s.items.filter((i) => typeof i.tasks === "number");
+  const tasks = sum(counted.map((i) => i.tasks!));
+  const done = sum(counted.map((i) => i.done ?? 0));
+  return { tasks, done, minutes: sum(s.items.map((i) => i.minutes ?? 0)), pct: tasks ? Math.round((done / tasks) * 100) : null };
+};
+const sectionStats = Object.fromEntries(sections.map((s) => [s.id, stats(s)]));
+const itemPct = (i: Item) => (i.tasks ? Math.round(((i.done ?? 0) / i.tasks) * 100) : null);
+const sectionOf = Object.fromEntries(sections.flatMap((s) => s.items.map((i) => [i.id, s])));
+const courseStats = sectionStats.weg;
+
+const ladder = ["a1", "a2", "b1", "b2"].map((id) => {
+  const s = sections.find((x) => x.id === id)!;
+  const p = sectionStats[id].pct ?? 0;
+  return { id, label: s.badge, state: p === 100 ? "done" : p > 0 ? "current" : "todo" };
+});
+
+/**
+ * The module the group's main button leads to: the first one in curriculum order that
+ * still has work in it, falling back to the first practisable entry and then to the
+ * first entry at all — a group of pure reference pages still needs a target.
+ *
+ * On the server every `done` is 0, so this always picks the group's opening module; the
+ * client repaints it against real progress on first paint.
+ */
+const nextOf = (s: Section): Item =>
+  s.items.find((i) => i.practice && i.tasks && (i.done ?? 0) < i.tasks)
+  ?? s.items.find((i) => i.practice)
+  ?? s.items[0];
+
+/** "Fang an mit" on an untouched group, "Weiter mit" once something has been answered. */
+const nextKicker = (s: Section) =>
+  s.items.some((i) => (i.done ?? 0) > 0) ? "Weiter mit" : "Fang an mit";
+
+// Handed to the client: one flat item table, the sections, and what the course
+// strip and the portions are counted from. No exercise content — nothing is
+// practised on the map.
+const clientData = {
+  items: Object.fromEntries(sections.flatMap((s) => s.items.map((i) => [i.id, {
+    label: i.label, eyebrow: i.eyebrow, lead: i.lead, href: i.href,
+    level: i.level, levelSource: i.levelSource,
+    tasks: i.tasks ?? null, done: i.done ?? 0, minutes: i.minutes ?? null,
+    practice: i.practice ?? null, derived: i.derived ?? null,
+    section: sectionOf[i.id].id, sectionLabel: sectionOf[i.id].label,
+  }]))),
+  sections: Object.fromEntries(sections.map((s) => [s.id, { label: s.label, badge: s.badge, items: s.items.map((i) => i.id) }])),
+  // Which coarse skill bucket each kind of exercise reports into, so /uebungen's
+  // existing per-skill stats keep working alongside the per-topic numbers.
+  skillOf: Object.fromEntries(sections.flatMap((s) => s.items.map((i) => [i.id,
+    i.practice === "cards" ? "wortschatz"
+    : i.practice === "audio" ? "hoeren"
+    : i.practice === "speak" ? "sprechen"
+    : i.practice === "choice" || i.practice === "read" ? "lesen"
+    : i.practice === "dtz" || i.practice === "bausteine" ? "pruefungen"
+    : "grammatik"]))),
+  picker: allGrammarItems.map((i) => ({ id: i.id, label: i.label, level: i.level, tasks: i.tasks })),
+  // The grammar module's portions, in order. `parts` is a window over a topic's
+  // ordered slots, so a portion's progress is what that topic has done inside it.
+  portions,
+};
+
+
+const RING = 2 * Math.PI * 42;
+
+interface Props {
+  /** Which navigation variants to render. One = no toggle, that layout only. */
+  variants?: ("a" | "b" | "c")[];
+  /** Study mode: the test banner and the A/B/C toggle. Off for the real page. */
+  study?: boolean;
+}
+const { variants = ["b"], study = false } = Astro.props;
+const showVariant = (id: string) => variants.includes(id as any);
+const defaultVariant = variants[0];
+
+---
+  <div class:list={["nv", study && "nv--study"]}>
+    {study && (
+      <div class="nv-banner">
+        🧪 <strong>Navigations-Studie</strong> — dieselbe Seite wie <a href="/fortschritt">/fortschritt</a>, hier mit allen drei Navigationsvarianten zum Vergleichen.
+      </div>
+    )}
+
+    {study && (
+      <header class="nv-topbar">
+        <a href="/" class="nv-brand">
+          <img src="/assets/logo.png" alt="DeutschAcademy" />
+          <span>Deutsch Academy</span>
+        </a>
+        <div class="nv-toggle">
+          <span class="nv-toggle-label">Navigation</span>
+          <div class="nv-toggle-group" role="tablist" aria-label="Navigationsvariante">
+            {showVariant("a") && <button type="button" class="nv-toggle-btn" data-variant="a" role="tab">A · Rail</button>}
+            {showVariant("b") && <button type="button" class="nv-toggle-btn" data-variant="b" role="tab">B · Icon-Rail</button>}
+            {showVariant("c") && <button type="button" class="nv-toggle-btn" data-variant="c" role="tab">C · Akkordeon</button>}
+          </div>
+        </div>
+      </header>
+    )}
+
+    <div class="nv-strip">
+      <span class="nv-strip-title">Dein Kurs</span>
+      <span class="nv-strip-sub">DTZ-Vorbereitung</span>
+      <span class="nv-strip-track"><span class="nv-strip-fill" data-strip-fill style={`width:${courseStats.pct}%`}></span></span>
+      <span class="nv-strip-points" data-strip-label>0 % · Portion 1 von {portions.length} · 0 / {firstPortion.tasks} Aufgaben</span>
+    </div>
+
+    <div class="nv-shell">
+
+      <!-- ── Variante A · Rail ─────────────────────────────────────────── -->
+      {showVariant("a") && (
+      <aside class="nv-aside nva" data-variant-pane="a" aria-label="Seitennavigation, Variante Rail">
+        <div class="nva-ladder">
+          <span class="nva-ladder-label">Deine Stufe</span>
+          <div class="nva-ladder-row">
+            {ladder.map((l) => (
+              <button type="button" class="nva-step" data-state={l.state} data-ladder={l.id} data-section-btn={l.id}>{l.label}</button>
+            ))}
+          </div>
+        </div>
+
+        {sections.map((section, i) => (
+          <>
+            <div class="nva-group">
+              <button type="button" class="nv-eyebrow nva-grouphead" data-section-btn={section.id}>
+                <span>{section.label}</span>
+                {section.label !== `Stufe ${section.badge}` && <span class="nv-levelchip">{section.badge}</span>}
+                <span class="nva-groupgo">→</span>
+              </button>
+              {section.items.map((item) => (
+                <button type="button" class="nva-item" data-nav-item={item.id} data-row={item.id}>
+                  {section.id === "weg" ? <span class="nva-dot"></span> : <span class="nv-icon"><Icon name={item.icon} size={17} /></span>}
+                  <span>{item.label}</span>
+                  <span class="nv-count" data-count={item.id}>{item.meta ?? `${item.done ?? 0}/${item.tasks}`}</span>
+                </button>
+              ))}
+            </div>
+            {i === 0 && (
+              <div>
+                <div class="nva-divider"></div>
+                <button type="button" class="nva-reset" data-reset-progress>Fortschritt zurücksetzen</button>
+              </div>
+            )}
+          </>
+        ))}
+      </aside>
+      )}
+
+      <!-- ── Variante B · Icon-Rail + Panel ────────────────────────────── -->
+      {showVariant("b") && (
+      <aside class="nv-aside" data-variant-pane="b" aria-label="Seitennavigation, Variante Icon-Rail" hidden>
+        <div class="nvb" data-nvb>
+          <!-- Hangs off the right edge of the card, like the tab on a Karteiordner: one
+               control that both folds the list away and brings it back, and the only part
+               of it still on screen once it has. -->
+          <button type="button" class="nvb-foldtab" data-nvb-collapse aria-label="Liste einklappen">
+            <span class="nvb-foldtab-txt">Stufen</span>
+            <svg class="nvb-foldtab-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>
+          </button>
+          <div class="nvb-rail" role="tablist" aria-label="Stufe">
+            {/* A level chip reads itself — "A1" needs no caption. An icon does not, and
+                the sparkle and the landmark were the only two rail buttons with nothing
+                to read: "what does the star mean?" is a question they earned.
+
+                They carried a printed caption for a while, which answered it at a cost:
+                8.5px type in a 46px rail, and two buttons a different height and shape
+                from the five beside them, so the row no longer read as one control. The
+                tooltip every rail button already has says the same thing in full words
+                on hover and on focus — see .nvb-tip in nav.css. */}
+            {sections.map((section) => (
+              <button
+                type="button"
+                class="nvb-railbtn"
+                data-section-btn={section.id}
+                role="tab"
+                aria-label={section.label}
+              >
+                {section.kind === "stufe"
+                  ? <span class="nvb-railbadge">{section.badge}</span>
+                  : <Icon name={section.icon} size={20} />}
+                {sectionStats[section.id].pct !== null && <span class="nvb-raildot" data-raildot={section.id}></span>}
+                <span class="nvb-tip">{section.label}</span>
+              </button>
+            ))}
+          </div>
+          <div class="nvb-panel">
+            {sections.map((section) => (
+              <div class="nvb-section" data-rail-section={section.id} hidden>
+                <div class="nvb-panelhead">
+                  <h3>{section.label}</h3>
+                  <button type="button" class="nvb-collapse" data-nvb-collapse aria-label="Liste einklappen">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>
+                  </button>
+                </div>
+                {sectionStats[section.id].pct !== null && (
+                  <div class="nvb-panelprogress">
+                    <span class="nvb-panelbar"><span data-secbar={section.id} style={`width:${sectionStats[section.id].pct}%`}></span></span>
+                    <span data-secpct={section.id}>{sectionStats[section.id].pct} %</span>
+                  </div>
+                )}
+                {/* What this does is not guessable from its label, and it is the one control
+                    here that changes the OTHER column. The tip is a sibling, not a child, so
+                    its sentence does not become part of the button's accessible name; the
+                    button points at it with aria-describedby instead. */}
+                <span class="nvb-ovwrap">
+                  <button
+                    type="button"
+                    class="nvb-overview"
+                    data-section-btn={section.id}
+                    aria-describedby={`nvb-ovtip-${section.id}`}
+                    aria-label={`${
+                      section.kind === "stufe" ? "Stufenübersicht"
+                        : section.kind === "kurs" ? "Kursübersicht"
+                        : "Übersicht"
+                    } ${section.kind === "stufe" ? section.badge : section.label} öffnen`}
+                  >
+                    {/* The label is spelled out above because the two spans below sit on
+                        separate lines with no whitespace between them, so the computed name
+                        would run together as "StufenübersichtA1". */}
+                    <span class="nvb-ov-txt">
+                      {/* The kind decides the noun, so a level reads "Stufenübersicht" and
+                          the two groups that are not levels do not claim to be one. */}
+                      <span class="nvb-ov-kicker">{
+                        section.kind === "stufe" ? "Stufenübersicht"
+                          : section.kind === "kurs" ? "Kursübersicht"
+                          : "Übersicht"
+                      }</span>
+                      {/* A level names itself by its badge (A1, A1–B1) — that is the word
+                          the rail, the card and the chips all use for it. Everything else
+                          carries its own name. */}
+                      <span class="nvb-ov-name">{section.kind === "stufe" ? section.badge : section.label}</span>
+                    </span>
+                  </button>
+                  <span class="nvb-tip nvb-tip--wide" id={`nvb-ovtip-${section.id}`} role="tooltip">
+                    Zeigt rechts wieder {section.kind === "stufe" ? "die ganze Stufe"
+                      : section.kind === "kurs" ? "den ganzen Kurs"
+                      : section.kind === "ziel" ? "alle Prüfungen"
+                      : "alle stufenübergreifenden Übungen"} statt eines einzelnen Themas —
+                    Beschreibung, Umfang, Schwerpunkte und der Startknopf für alles.
+                  </span>
+                </span>
+
+                {section.id === "weg" ? (
+                  /* "Dein Weg" is the one group that is not a shelf of things to pick from —
+                     it is the answer to "how am I doing". Listing its five modules here just
+                     repeated the Stufenübersicht two centimetres to its right. This pane
+                     shows the learner's own record instead: what to resume, how the week
+                     went, how the four levels stand, and how accurate the answers were.
+                     Everything below is an empty skeleton on the server and is filled by
+                     mountWegPanel() from the same localStorage the trainers write. */
+                  <div class="wg" data-weg-panel>
+                    <button type="button" class="wg-resume" data-weg-resume hidden>
+                      <span class="wg-resume-kicker">Weitermachen</span>
+                      <span class="wg-resume-label" data-weg-resume-label></span>
+                      <span class="wg-resume-meta" data-weg-resume-meta></span>
+                    </button>
+
+                    <div class="wg-week" data-weg-week>
+                      <div class="wg-row">
+                        <span class="wg-h">Letzte 7 Tage</span>
+                        <span class="wg-streak" data-weg-streak></span>
+                      </div>
+                      <div class="wg-days" data-weg-days></div>
+                    </div>
+
+                    <div class="wg-block">
+                      <div class="wg-row">
+                        <span class="wg-h">Stufen</span>
+                        <span class="wg-sub" data-weg-levelsum></span>
+                      </div>
+                      <div data-weg-levels></div>
+                    </div>
+
+                    <div class="wg-block" data-weg-skillblock hidden>
+                      <div class="wg-row">
+                        <span class="wg-h">Treffsicherheit</span>
+                        <span class="wg-sub" data-weg-skillsum></span>
+                      </div>
+                      <div data-weg-skills></div>
+                    </div>
+
+                    <div class="wg-block wg-block--speak" data-weg-speakblock hidden>
+                      <div class="wg-row">
+                        <span class="wg-h">Laut gesprochen</span>
+                        <span class="wg-sub" data-weg-speaksum></span>
+                      </div>
+                      <p class="wg-speak-note" data-weg-speaknote></p>
+                    </div>
+
+                    <p class="wg-empty" data-weg-empty hidden>
+                      Noch nichts geübt. Sobald du die erste Aufgabe beantwortest, steht hier
+                      dein Fortschritt — nach Stufe, nach Woche und nach Treffsicherheit.
+                    </p>
+                  </div>
+                ) : (
+                  section.items.map((item) => (
+                    <button type="button" class="nvb-item" data-nav-item={item.id} data-row={item.id}>
+                      <span class="nv-icon"><Icon name={item.icon} size={16} /></span>
+                      <span>{item.label}</span>
+                      <span class="nv-count" data-count={item.id}>{item.meta ?? `${item.done ?? 0}/${item.tasks}`}</span>
+                    </button>
+                  ))
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      </aside>
+      )}
+
+      <!-- ── Variante C · Akkordeon ────────────────────────────────────── -->
+      {showVariant("c") && (
+      <aside class="nv-aside nvc" data-variant-pane="c" aria-label="Seitennavigation, Variante Akkordeon" hidden>
+        {sections.map((section, i) => (
+          <div class:list={["nvc-group", i === 0 && "open"]} data-nvc-group>
+            <button type="button" class="nvc-head" data-section-btn={section.id} aria-expanded={i === 0 ? "true" : "false"}>
+              <span class="nv-levelchip nv-levelchip--lg">{section.badge}</span>
+              <span class="nvc-head-text">
+                <span class="nvc-head-title">{section.label}</span>
+                <span class="nvc-bar"><span data-secbar={section.id} style={`width:${sectionStats[section.id].pct ?? 0}%`}></span></span>
+              </span>
+              <span class="nv-count">{section.items.length}</span>
+              <svg class="nvc-chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+            </button>
+            <div class="nvc-list"><div class="nvc-listinner">
+              {section.items.map((item) => (
+                <button type="button" class="nvc-item" data-nav-item={item.id} data-row={item.id}>
+                  <span>{item.label}</span>
+                  <span class="nv-count" data-count={item.id}>{item.meta ?? `${item.done ?? 0}/${item.tasks}`}</span>
+                </button>
+              ))}
+            </div></div>
+          </div>
+        ))}
+        <div class="nvc-cta">
+          <p>Weiter, wo du aufgehört hast</p>
+          <strong>Dativ · A2</strong>
+          <button type="button" class="nvc-cta-btn" data-nav-item="dativ">Weitermachen →</button>
+        </div>
+      </aside>
+      )}
+
+      <!-- ── Inhalt ────────────────────────────────────────────────────── -->
+      <main class="nv-main">
+        <!-- Stufenübersicht: eine pro Gruppe, serverseitig gerendert. -->
+        {sections.map((section) => {
+          const st = sectionStats[section.id];
+          return (
+            <div class="nv-view" data-section-view={section.id} hidden>
+              <section class="nv-detail">
+                <div>
+                  <p class="nv-detail-eyebrow">{section.kind === "stufe" ? "Stufe" : section.kind === "ziel" ? "Ziel" : section.kind === "uebergreifend" ? "Übergreifend" : "Kurs"}</p>
+                  <h1>{section.label}</h1>
+                  <p class="nv-detail-level">
+                    <span class="nv-levelchip nv-levelchip--lg">{section.badge}</span>
+                    <span class="nv-detail-levelsrc">{section.items.length} Einträge{st.tasks ? ` · ${st.tasks} Aufgaben` : ""}{st.minutes ? ` · ca. ${st.minutes} Min.` : ""}</span>
+                  </p>
+                  <p>{section.blurb}</p>
+                  <ul class="nv-focus">{section.focus.map((f) => <li>{f}</li>)}</ul>
+                  {/* "Stufe starten" said nothing: every level had the same button, it
+                      did not say what starting would open, and on a level already half
+                      done "starten" was simply wrong. The button now names the module it
+                      leads to — the first one in curriculum order with work left — and
+                      the kicker says whether that is the beginning or the middle. Server
+                      renders the first module; repaint() moves it on as they get done. */}
+                  <div class="nv-detail-actions">
+                    <button type="button" class="nv-btn nv-btn--primary nv-btn--next" data-cta={section.id} data-nav-item={nextOf(section).id}>
+                      <span class="nv-btn-kicker" data-cta-kicker={section.id}>{nextKicker(section)}</span>
+                      <span class="nv-btn-main" data-cta-label={section.id}>{nextOf(section).label} →</span>
+                    </button>
+                  </div>
+                </div>
+                {st.pct !== null && (
+                <div class="nv-ring-card" data-ringcard={section.id}>
+                  <div class="nv-ring">
+                    <svg width="96" height="96" viewBox="0 0 96 96">
+                      <circle cx="48" cy="48" r="42" fill="none" stroke="rgba(255,255,255,.28)" stroke-width="8" />
+                      <circle cx="48" cy="48" r="42" fill="none" stroke="#fff" stroke-width="8" stroke-linecap="round"
+                              stroke-dasharray={RING} stroke-dashoffset={RING} data-secring={section.id} />
+                    </svg>
+                    <span class="nv-ring-value" data-secringvalue={section.id}>{st.pct === null ? "–" : "0%"}</span>
+                  </div>
+                  <span class="nv-ring-label" data-secringlabel={section.id}>
+                    {`${st.done} von ${st.tasks} Aufgaben`}
+                  </span>
+                </div>
+                )}
+              </section>
+
+              {/* The list of what this Stufe holds comes before the single exercise below it:
+                  the learner opened the level to see its contents, and a trainer card at the top
+                  pushed that list under the fold. "Direkt üben" stays — one scroll further down. */}
+              <section class="nv-panel">
+                <h2>{section.kind === "kurs" ? "Module" : section.kind === "ziel" ? "Prüfungen" : section.kind === "uebergreifend" ? "Diese Übungen" : "Inhalte dieser Stufe"}</h2>
+                {/* Each row IS the control, rather than a div with a button in its last
+                    cell: the only hit target used to be a 60px word three quarters of the
+                    way across a 1000px row. As a <button> the whole row also takes keyboard
+                    focus and carries one accessible name, which the old markup never had. */}
+                {section.items.map((item, n) => (
+                  <button type="button" class="nv-modrow" style={`--i:${n}`} data-modrow={item.id} data-nav-item={item.id}>
+                    <span class="nv-modnum">{n + 1}</span>
+                    <span>
+                      <span class="nv-modname">{item.label}</span><br />
+                      <span class="nv-modmeta">
+                        {item.level}
+                        {item.tasks ? ` · ${item.tasks} Aufgaben` : ""}
+                        {item.minutes ? ` · ca. ${item.minutes} Min.` : ""}
+                      </span>
+                    </span>
+                    {itemPct(item) === null
+                      ? <span class="nv-modmeta">{item.meta}</span>
+                      : <span class="nv-modtrack"><span data-itembar={item.id} style={`width:${itemPct(item)}%`}></span></span>}
+                    <span class="nv-modpoints" data-itempoints={item.id}>{item.tasks ? `${item.done ?? 0} / ${item.tasks}` : ""}</span>
+                    {/* A label now, not a control: the row around it is the button. Kept
+                        because it is the only thing that says what a click will do. */}
+                    <span class="nv-modlink" aria-hidden="true">Ansehen →</span>
+                  </button>
+                ))}
+              </section>
+
+            </div>
+          );
+        })}
+
+        <!-- Einzelansicht: eine Hülle, aus den Daten des geklickten Eintrags gefüllt. -->
+        <div class="nv-view" data-item-view hidden>
+          <section class="nv-detail">
+            <div>
+              <p class="nv-detail-eyebrow" data-detail-eyebrow></p>
+              <h1 data-detail-title></h1>
+              <p class="nv-detail-level">
+                <span class="nv-levelchip nv-levelchip--lg" data-detail-level></span>
+                <span class="nv-detail-levelsrc" data-detail-levelsrc></span>
+              </p>
+              <p data-detail-lead></p>
+              {/* The one way on: a plain same-tab link to where this is practised.
+                  The label follows progress — see paintStart(). */}
+              <div class="nv-detail-actions">
+                <a class="nv-btn nv-btn--primary" href="#" data-detail-start>Übungen starten →</a>
+                <button type="button" class="nv-btn nv-btn--ghost" data-back>Zurück zur Stufe</button>
+              </div>
+            </div>
+            <div class="nv-ring-card" data-itemringcard>
+              <div class="nv-ring">
+                <svg width="96" height="96" viewBox="0 0 96 96">
+                  <circle cx="48" cy="48" r="42" fill="none" stroke="rgba(255,255,255,.28)" stroke-width="8" />
+                  <circle cx="48" cy="48" r="42" fill="none" stroke="#fff" stroke-width="8" stroke-linecap="round"
+                          stroke-dasharray={RING} stroke-dashoffset={RING} data-detail-ring />
+                </svg>
+                <span class="nv-ring-value" data-detail-ringvalue>–</span>
+              </div>
+              <span class="nv-ring-label" data-detail-ringlabel></span>
+            </div>
+          </section>
+
+        </div>
+
+        <!-- How much else is here, at the foot of the page. Scrolls sideways on a phone
+             and wraps on a desktop; every chip is a link to that part of the site. -->
+        <nav class="nv-scale nv-scale--foot" aria-label="Was diese Seite enthält">
+          {scaleChips.map((chip) => (
+            <a class="nv-scale-chip" href={chip.href}>
+              <span class="nv-scale-ic"><Icon name={chip.icon} size={15} /></span>
+              <span class="nv-scale-txt">
+                <b>{chip.value}</b>
+                <i>{chip.label}</i>
+              </span>
+            </a>
+          ))}
+        </nav>
+      </main>
+    </div>
+
+    <div class="nv-toast" data-toast hidden role="status" aria-live="polite"></div>
+  </div>
+
+  <script type="application/json" id="nv-variants" set:html={JSON.stringify(variants)}></script>
+  <script type="application/json" id="nv-data" set:html={JSON.stringify(clientData)}></script>
+
+  <script>
+    import { getTopicProgress, resetProgress } from "../lib/progress.js";
+    import { mountWegPanel, paintWegPanel } from "../lib/wegPanelOld.js";
+    import { createRuleIntro } from "../lib/ruleIntro.js";
+
+    const DATA = JSON.parse(document.getElementById("nv-data")!.textContent!);
+    const ITEMS: Record<string, any> = DATA.items;
+    const SECTIONS: Record<string, any> = DATA.sections;
+    const PORTIONS: any[] = DATA.portions ?? [];
+    const SECTION_IDS = new Set(Object.keys(SECTIONS));
+    const RING = 2 * Math.PI * 42;
+    const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    // Real progress, read back from localStorage. The server rendered zeros; this
+    // is where the page learns what the learner has already done.
+    const progress: Record<string, number> = {};
+    const stored = (() => { try { return getTopicProgress(); } catch (e) { return {}; } })();
+    Object.keys(ITEMS).forEach((id) => {
+      const tasks = ITEMS[id].tasks;
+      progress[id] = tasks ? Math.min(stored[id]?.done ?? 0, tasks) : 0;
+    });
+
+    const $ = <T extends Element = HTMLElement>(sel: string) => document.querySelector(sel) as T | null;
+    const $$ = (sel: string) => Array.from(document.querySelectorAll(sel)) as HTMLElement[];
+
+    // ── Motion helpers ────────────────────────────────────────────────
+    // Each run stamps the element; an older run that is still animating sees a
+    // newer stamp and stops. Without this, switching items fast lets the
+    // previous item's count-up keep writing over the new item's number.
+    let countToken = 0;
+    function countUp(el: Element | null, to: number, suffix = "%") {
+      if (!el) return;
+      const token = String(++countToken);
+      (el as HTMLElement).dataset.count = token;
+      const from = parseInt(el.textContent || "0", 10) || 0;
+      if (reduced || from === to) { el.textContent = to + suffix; return; }
+      const start = performance.now();
+      // Matches --nv-dur-value and the expo-out curve the bars and rings use, so
+      // the number and the bar under it finish together instead of racing.
+      const dur = 1150;
+      const step = (now: number) => {
+        if ((el as HTMLElement).dataset.count !== token) return;
+        const t = Math.min(1, (now - start) / dur);
+        const eased = t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
+        el.textContent = Math.round(from + (to - from) * eased) + suffix;
+        if (t < 1) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+    }
+    // Writing a plain value must also cancel any in-flight animation.
+    function setCount(el: Element | null, text: string) {
+      if (!el) return;
+      (el as HTMLElement).dataset.count = String(++countToken);
+      el.textContent = text;
+    }
+
+    function setRing(el: Element | null, pct: number, sweep = false) {
+      if (!el) return;
+      if (sweep && !reduced) {
+        el.setAttribute("stroke-dashoffset", String(RING));
+        // Next frame, so the transition has something to move from.
+        requestAnimationFrame(() => requestAnimationFrame(() =>
+          el.setAttribute("stroke-dashoffset", String(RING * (1 - pct / 100)))));
+      } else {
+        el.setAttribute("stroke-dashoffset", String(RING * (1 - pct / 100)));
+      }
+    }
+
+    function flash(el: Element | null, cls = "nv-flash") {
+      if (!el || reduced) return;
+      el.classList.remove(cls);
+      void (el as HTMLElement).offsetWidth; // restart the animation
+      el.classList.add(cls);
+    }
+
+    let toastTimer: number | undefined;
+    function toast(msg: string) {
+      const t = $("[data-toast]");
+      if (!t) return;
+      t.textContent = msg;
+      t.hidden = false;
+      flash(t, "nv-toast--in");
+      clearTimeout(toastTimer);
+      toastTimer = window.setTimeout(() => { t.hidden = true; }, 3200);
+    }
+
+    // ── Derived numbers ───────────────────────────────────────────────
+    const pctOf = (id: string) => {
+      const it = ITEMS[id];
+      return it.tasks ? Math.round((progress[id] / it.tasks) * 100) : null;
+    };
+    // The course as a whole: every grammar topic behind the portions, plus the
+    // two modules that are not split. Only the strip reads this — everything
+    // else speaks in portions.
+    function wholeCourse() {
+      const grammar = (DATA.picker ?? []) as { id: string; tasks: number | null }[];
+      let tasks = 0;
+      let done = 0;
+      for (const g of grammar) {
+        if (!g.tasks) continue;
+        tasks += g.tasks;
+        done += Math.min(progress[g.id] ?? 0, g.tasks);
+      }
+      for (const id of ["wortschatz-kurs", "probelauf"]) {
+        const it = ITEMS[id];
+        if (!it?.tasks) continue;
+        tasks += it.tasks;
+        done += Math.min(progress[id] ?? 0, it.tasks);
+      }
+      return { tasks, done, pct: tasks ? Math.round((done / tasks) * 100) : null };
+    }
+
+    function sectionTotals(sid: string) {
+      const ids = SECTIONS[sid].items.filter((id: string) => ITEMS[id].tasks);
+      const tasks = ids.reduce((a: number, id: string) => a + ITEMS[id].tasks, 0);
+      const done = ids.reduce((a: number, id: string) => a + progress[id], 0);
+      return { tasks, done, pct: tasks ? Math.round((done / tasks) * 100) : null };
+    }
+
+    // How much of one portion is done. A portion is a window over the ordered
+    // slots of a topic, so its progress is the overlap of that window with what
+    // the topic has answered — the workspaces run their exercises in order, so
+    // the overlap is the honest reading.
+    const portionDone = (p: any) => p.parts.reduce(
+      (n: number, part: any) => n + Math.min(Math.max((progress[part.topic] ?? 0) - part.from, 0), part.size),
+      0,
+    );
+
+    /** The first portion that is not finished — or the last, once they all are. */
+    function currentPortion() {
+      return PORTIONS.find((p) => portionDone(p) < p.tasks) ?? PORTIONS[PORTIONS.length - 1];
+    }
+
+    // Move the grammar module onto whichever portion is now current. Called from
+    // repaint, so finishing one hands over the next without a reload.
+    function paintPortion() {
+      if (!PORTIONS.length) return;
+      const cur = currentPortion();
+      const nth = PORTIONS.indexOf(cur) + 1;
+      const it = ITEMS["grammatik-basis"];
+      if (!it) return;
+      it.label = cur.label;
+      it.href = cur.href;
+      it.level = cur.level;
+      it.tasks = cur.tasks;
+      it.minutes = cur.minutes;
+      it.eyebrow = `Modul 1 · Portion ${nth} von ${PORTIONS.length}`;
+      it.lead = `Portion ${nth} von ${PORTIONS.length}: ${cur.label}. ${cur.tasks} Aufgaben, ca. ${cur.minutes} Min.`;
+      progress["grammatik-basis"] = portionDone(cur);
+
+      $$('[data-modrow="grammatik-basis"] .nv-modname').forEach((e) => (e.textContent = cur.label));
+      $$('[data-modrow="grammatik-basis"] .nv-modmeta').forEach((e) => {
+        e.textContent = `${cur.level} · ${cur.tasks} Aufgaben · ca. ${cur.minutes} Min. · Portion ${nth} von ${PORTIONS.length}`;
+      });
+      $$('[data-row="grammatik-basis"] > span:not(.nv-count):not(.nv-icon):not(.nva-dot)')
+        .forEach((e) => (e.textContent = cur.label));
+    }
+
+    // The group's main button. It names a module, so it has to move when that module is
+    // finished — otherwise it keeps pointing at something with a full bar, which is the
+    // exact complaint "Stufe starten" had.
+    function paintCta() {
+      Object.keys(SECTIONS).forEach((sid) => {
+        const btn = $(`[data-cta="${sid}"]`) as HTMLElement | null;
+        if (!btn) return;
+        const ids: string[] = SECTIONS[sid].items;
+        const open = ids.find((id) => ITEMS[id]?.practice && ITEMS[id].tasks && (progress[id] ?? 0) < ITEMS[id].tasks);
+        const target = open ?? ids.find((id) => ITEMS[id]?.practice) ?? ids[0];
+        const anyDone = ids.some((id) => (progress[id] ?? 0) > 0);
+        btn.dataset.navItem = target;
+        const kicker = $(`[data-cta-kicker="${sid}"]`);
+        const label = $(`[data-cta-label="${sid}"]`);
+        // Nothing left anywhere in the group: say so instead of inviting them into a
+        // module whose bar is already full.
+        if (kicker) kicker.textContent = !open ? "Alles geschafft ·" : anyDone ? "Weiter mit" : "Fang an mit";
+        if (label) label.textContent = `${ITEMS[target]?.label ?? ""} →`;
+      });
+    }
+
+    // "Dein Weg" in the left pane. Its four levels have to be counted here rather than in
+    // wegPanel.js: sectionTotals() is the one place that knows how a level's topics add
+    // up, and a second copy of that arithmetic would disagree the first time a topic moved
+    // between levels. The module gets the finished numbers and owns only the presentation.
+    const wegRoot = $("[data-weg-panel]");
+    function paintWeg() {
+      if (!wegRoot) return;
+      const levels = ["a1", "a2", "b1", "b2"]
+        .filter((id) => SECTIONS[id])
+        .map((id) => ({ id, label: SECTIONS[id].badge ?? id.toUpperCase(), ...sectionTotals(id) }));
+      const cur = currentPortion();
+      paintWegPanel(wegRoot, {
+        levels,
+        resume: cur
+          ? { label: cur.label, meta: `${cur.level} · ${cur.tasks} Aufgaben · ca. ${cur.minutes} Min.` }
+          : null,
+      });
+    }
+
+    // Repaint every number that depends on `progress`.
+    function repaint(sweep = false) {
+      // The grammar module before the aggregates: it decides its own count.
+      paintPortion();
+      // Aggregates: a course module is the sum of the topics under it.
+      Object.keys(ITEMS).forEach((id) => {
+        const from: string[] | null = ITEMS[id].derived;
+        if (from) progress[id] = from.reduce((a, x) => a + (progress[x] ?? 0), 0);
+      });
+
+      Object.keys(ITEMS).forEach((id) => {
+        const it = ITEMS[id];
+        if (!it.tasks) return;
+        const p = pctOf(id)!;
+        $$(`[data-itembar="${id}"]`).forEach((b) => (b.style.width = p + "%"));
+        $$(`[data-itempoints="${id}"]`).forEach((e) => (e.textContent = `${progress[id]} / ${it.tasks}`));
+        $$(`[data-count="${id}"]`).forEach((e) => (e.textContent = `${progress[id]}/${it.tasks}`));
+        $$(`[data-row="${id}"]`).forEach((e) => e.classList.toggle("done", p === 100));
+      });
+
+      Object.keys(SECTIONS).forEach((sid) => {
+        const st = sectionTotals(sid);
+        if (st.pct === null) return;
+        $$(`[data-secbar="${sid}"]`).forEach((b) => (b.style.width = st.pct + "%"));
+        $$(`[data-secpct="${sid}"]`).forEach((e) => (e.textContent = st.pct + " %"));
+        const label = $(`[data-secringlabel="${sid}"]`);
+        if (label) label.textContent = `${st.done} von ${st.tasks} Aufgaben`;
+        const dot = $(`[data-raildot="${sid}"]`);
+        if (dot) dot.dataset.state = st.pct === 100 ? "done" : st.pct > 0 ? "current" : "todo";
+        const ladderBtn = $(`[data-ladder="${sid}"]`);
+        if (ladderBtn) ladderBtn.dataset.state = st.pct === 100 ? "done" : st.pct > 0 ? "current" : "todo";
+        // The visible section ring animates; the hidden ones just get set.
+        const view = $(`[data-section-view="${sid}"]`);
+        const visible = view && !(view as HTMLElement).hidden;
+        setRing($(`[data-secring="${sid}"]`), st.pct, sweep && !!visible);
+        if (visible) countUp($(`[data-secringvalue="${sid}"]`), st.pct);
+        else setCount($(`[data-secringvalue="${sid}"]`), st.pct + "%");
+      });
+
+      paintCta();
+      paintWeg();
+
+      // The strip carries both numbers, because neither alone is honest. The bar
+      // and the percentage are the whole course — all 27 grammar topics, the
+      // cards and the Probelauf — so finishing a portion visibly moves it. The
+      // count beside it is the portion, because that is the pile actually in
+      // front of the learner. Showing the course as a count instead put "0 / 724"
+      // at the top of the page, which is a number nobody starts.
+      const course = wholeCourse();
+      const fill = $("[data-strip-fill]");
+      if (fill && course.pct !== null) fill.style.width = course.pct + "%";
+      const stripLabel = $("[data-strip-label]");
+      const cur = PORTIONS.length ? currentPortion() : null;
+      if (stripLabel && course.pct !== null) {
+        stripLabel.textContent = cur
+          ? `${course.pct} % · Portion ${PORTIONS.indexOf(cur) + 1} von ${PORTIONS.length} · ${portionDone(cur)} / ${cur.tasks} Aufgaben`
+          : `${course.pct} % · ${course.done} / ${course.tasks} Aufgaben`;
+      }
+    }
+
+    // ── The level chips, on a phone ───────────────────────────────────
+    // The rail sits last in the shell on a phone, because navigation should not
+    // stand between the learner and the exercise (see .nv-aside order in
+    // nav.css). That was right about the list and wrong about the chips: the
+    // whole rail ended up at y=1929 on a 390px screen, two and a half screens
+    // down, so "which level am I on" and "switch level" were effectively gone.
+    //
+    // The two halves split. The chip row — 58px — rides at the top of the shell
+    // and sticks there; the 328px list it used to sit on keeps its place below
+    // the exercise. CSS cannot lift one child of the aside to the top of the
+    // shell, so the row is moved in the DOM, and moved back when the viewport
+    // grows again.
+    const phone = window.matchMedia("(max-width: 900px)");
+    const shellEl = $(".nv-shell");
+    const railRow = $(".nvb-rail");
+    const railHome = railRow?.parentElement ?? null;
+
+    function placeRail() {
+      if (!shellEl || !railRow || !railHome) return;
+      if (phone.matches) {
+        if (railRow.parentElement !== shellEl) {
+          shellEl.prepend(railRow);
+          railRow.classList.add("nvb-rail--top");
+        }
+      } else if (railRow.parentElement !== railHome) {
+        railHome.prepend(railRow);
+        railRow.classList.remove("nvb-rail--top");
+      }
+    }
+    placeRail();
+    phone.addEventListener("change", placeRail);
+
+    // ── Variant switch ────────────────────────────────────────────────
+    function showVariant(id: string) {
+      $$("[data-variant-pane]").forEach((p) => { p.hidden = p.dataset.variantPane !== id; });
+      $$(".nv-toggle-btn").forEach((b) => {
+        const on = b.dataset.variant === id;
+        b.classList.toggle("active", on);
+        b.setAttribute("aria-selected", String(on));
+      });
+      try { localStorage.setItem("nv-variant", id); } catch (e) {}
+    }
+    $$(".nv-toggle-btn").forEach((b) => b.addEventListener("click", () => showVariant(b.dataset.variant!)));
+
+    // ── The content views ─────────────────────────────────────────────
+    const current = { section: "weg", item: null as string | null };
+    const LEVEL_SOURCE_TEXT: Record<string, string> = {
+      data: "Stufe aus den Daten",
+      abgeleitet: "Stufe aus dem Inhalt abgeleitet — noch kein level-Feld",
+      "—": "",
+    };
+
+    let railShown: string | null = null;
+
+    // One shake, once per browser, for the Stufenübersicht button — see the .nvb-ov-jiggle
+    // block in nav.css. Read once here rather than per open, so a throwing localStorage
+    // costs one try/catch instead of one per level switch.
+    const OV_JIGGLE_KEY = "da_ov_jiggled_v1";
+    let ovJiggled = (() => { try { return localStorage.getItem(OV_JIGGLE_KEY) === "1"; } catch (e) { return true; } })();
+    let itemShown: string | null = null;
+
+    // Akkusativ → W-Fragen only rewrote the card's text in place, so the swap fell
+    // between two frames and read as a repaint. Slide the card in from the side the
+    // new topic sits on: down the list enters from the right, up from the left, and
+    // the direction itself says which way you moved. Only the card moves — the view
+    // holds a fixed-position dock, and transforming its container would drag that
+    // along for the ride.
+    function playItemSwap(id: string, section: string) {
+      const view = $("[data-item-view]");
+      if (!view) return;
+      const rows = $$(`[data-rail-section="${section}"] .nvb-item`).map((b) => b.dataset.navItem);
+      const from = itemShown ? rows.indexOf(itemShown) : -1;
+      const to = rows.indexOf(id);
+      const back = from > -1 && to > -1 && to < from;
+      itemShown = id;
+      view.classList.remove("nv-view--fwd", "nv-view--back");
+      void view.offsetWidth;
+      view.classList.add(back ? "nv-view--back" : "nv-view--fwd");
+    }
+
+    function selectSection(id: string, keepItem = false) {
+      current.section = id;
+      if (!keepItem) current.item = null;
+
+      $$("[data-section-view]").forEach((v) => { v.hidden = v.dataset.sectionView !== id || !!current.item; });
+      const itemView = $("[data-item-view]");
+      if (itemView) itemView.hidden = !current.item;
+
+      // Swapping levels used to be a single frame: one list gone, another there.
+      // Replay the stagger so the new list visibly arrives. Picking a topic inside
+      // the same level must not replay it — that list did not change.
+      const railChanged = railShown !== id;
+      railShown = id;
+      $$("[data-rail-section]").forEach((s) => {
+        const on = s.dataset.railSection === id;
+        s.hidden = !on;
+        s.classList.remove("nvb-section--enter");
+        if (on && railChanged) { void s.offsetWidth; s.classList.add("nvb-section--enter"); }
+        // The Stufenübersicht button is the one control in here that changes the other
+        // column, and it is easy to read past on the way to the topic list. The first time
+        // a panel is ever opened it shakes once to be noticed; after that the flag is set
+        // and it never does it again. Storage can throw (private mode, blocked cookies),
+        // and a decoration must not take the rail down with it.
+        if (on && railChanged && !ovJiggled) {
+          // By id, not by walking up from the rail section: .nvb-ovwrap is a SIBLING of
+          // [data-rail-section], one per section, so a parentElement lookup finds
+          // whichever button comes first in the panel rather than this section's.
+          const btn = document.querySelector(`.nvb-overview[data-section-btn="${id}"]`);
+          if (btn) {
+            ovJiggled = true;
+            try { localStorage.setItem(OV_JIGGLE_KEY, "1"); } catch (e) {}
+            btn.classList.remove("nvb-ov-jiggle");
+            void (btn as HTMLElement).offsetWidth;
+            btn.classList.add("nvb-ov-jiggle");
+            btn.addEventListener("animationend", () => btn.classList.remove("nvb-ov-jiggle"), { once: true });
+          }
+        }
+      });
+      $$("[data-section-btn]").forEach((b) => b.classList.toggle("active", b.dataset.sectionBtn === id));
+      $("[data-nvb]")?.classList.remove("collapsed");
+
+      // In the accordion, choosing a group also opens it.
+      const head = $(`.nvc-head[data-section-btn="${id}"]`);
+      if (head) {
+        $$("[data-nvc-group]").forEach((g) => {
+          const on = g.contains(head);
+          g.classList.toggle("open", on);
+          g.querySelector(".nvc-head")?.setAttribute("aria-expanded", String(on));
+        });
+      }
+
+      if (!current.item) {
+        itemShown = null;
+        $$("[data-nav-item]").forEach((el) => { el.classList.remove("active"); el.setAttribute("aria-current", "false"); });
+        repaint(true);
+      }
+      try { localStorage.setItem("nv-view", JSON.stringify(current)); } catch (e) {}
+    }
+
+    function selectItem(id: string) {
+      const it = ITEMS[id];
+      if (!it) return;
+      current.item = id;
+      selectSection(it.section, true);
+
+      const wasActive = $(".nvb-item.active")?.dataset.navItem;
+      $$("[data-nav-item]").forEach((el) => {
+        const on = el.dataset.navItem === id;
+        el.classList.toggle("active", on);
+        el.classList.remove("nvb-item--pick");
+        el.setAttribute("aria-current", on ? "page" : "false");
+        if (on && el.classList.contains("nvb-item") && wasActive !== id) {
+          void el.offsetWidth;
+          el.classList.add("nvb-item--pick");
+        }
+      });
+
+      const set = (sel: string, text: string) => { const el = $(sel); if (el) el.textContent = text; };
+      set("[data-detail-eyebrow]", it.eyebrow);
+      set("[data-detail-title]", it.label);
+      set("[data-detail-level]", it.level);
+      set("[data-detail-levelsrc]", LEVEL_SOURCE_TEXT[it.levelSource] || "");
+      set("[data-detail-lead]", it.lead);
+      paintStart(id);
+      paintItemRing(id, true);
+      // The list rows, the level bar and the course strip only repainted when a LEVEL was
+      // picked, so landing straight on a topic — now possible by link, ?thema=artikel — left
+      // the sidebar reading "0 / 42" next to a ring that said "4 von 42". Same numbers, same
+      // store, two answers on one screen.
+      repaint();
+
+
+      $$("[data-section-view]").forEach((v) => (v.hidden = true));
+      const itemView = $("[data-item-view]");
+      if (itemView) itemView.hidden = false;
+      playItemSwap(id, it.section);
+
+      try { localStorage.setItem("nv-view", JSON.stringify(current)); } catch (e) {}
+    }
+
+    // The item card's one action. Where it goes never changes; what it says follows the
+    // learner — "starten" on an untouched topic, "Weiter üben" once anything is answered,
+    // and "Öffnen" for an entry with nothing to count (an overview, an exam page).
+    function paintStart(id: string) {
+      const it = ITEMS[id];
+      const start = $<HTMLAnchorElement>("[data-detail-start]");
+      if (!start) return;
+      start.href = it.href;
+      start.textContent = !it.tasks ? "Öffnen →" : (progress[id] ?? 0) > 0 ? "Weiter üben →" : "Übungen starten →";
+    }
+
+    function paintItemRing(id: string, sweep = false) {
+      const it = ITEMS[id];
+      const pct = pctOf(id);
+      setRing($("[data-detail-ring]"), pct ?? 0, sweep);
+      const value = $("[data-detail-ringvalue]");
+      if (value) {
+        if (pct === null) setCount(value, "–");
+        else if (sweep) { setCount(value, "0%"); countUp(value, pct); }
+        else countUp(value, pct);
+      }
+      const label = $("[data-detail-ringlabel]");
+      if (label) label.textContent = it.tasks
+        ? `${progress[id]} von ${it.tasks} Aufgaben` + (it.minutes ? ` · ca. ${it.minutes} Min.` : "")
+        : "";
+      // An item with no countable tasks (an overview, the Ergebnis page) hides the ring
+      // instead of showing an empty one. This card is shared by every item, so it is
+      // toggled rather than skipped at render time.
+      const card = $("[data-itemringcard]");
+      if (card) (card as HTMLElement).hidden = !it.tasks;
+    }
+
+    // ── The URL ───────────────────────────────────────────────────────
+    // What is open in this shell is real state — a level, and often one topic inside it —
+    // and until now it lived only in localStorage. Every view was /dashboard: you could not
+    // link a classmate to "Artikel: der, die, das", could not bookmark the topic you are
+    // working through, and the browser's back button walked out of the page instead of back
+    // to the level you came from.
+    //
+    // Query parameters rather than a route per topic: this shell is one client-rendered page
+    // over ~40 items, and /dashboard/a1/artikel would mean pre-rendering every combination of
+    // something that never reloads. `?stufe=a1&thema=artikel` is as linkable and costs nothing.
+    //
+    // Restoring from a URL must not push a new entry, or arriving at a link would leave a
+    // duplicate in history and the first Back would appear to do nothing — hence `applying`.
+    let applying = false;
+
+    function urlFor(section: string, item: string | null) {
+      /* Seeded from the current query, not empty: on /fortschritt this component shares
+         the address bar with the view tabs (?ansicht=) and the exam dashboard's
+         selection (?pruefung=). Rebuilding from scratch dropped both the first time
+         anyone clicked a level, which silently threw you back to the practice tab. */
+      const p = new URLSearchParams(location.search);
+      p.delete("stufe");
+      p.delete("thema");
+      if (section && section !== "weg") p.set("stufe", section);
+      if (item) p.set("thema", item);
+      const q = p.toString();
+      return location.pathname + (q ? `?${q}` : "") + location.hash;
+    }
+
+    function syncUrl(replace = false) {
+      if (applying) return;
+      const next = urlFor(current.section, current.item);
+      if (next === location.pathname + location.search + location.hash) return;
+      try { history[replace ? "replaceState" : "pushState"]({ nv: true }, "", next); } catch (e) {}
+    }
+
+    /** Apply whatever the address bar currently says, without writing to it. */
+    function applyUrl(fallbackToSaved = false) {
+      const p = new URLSearchParams(location.search);
+      const wanted = p.get("thema");
+      const stufe = p.get("stufe");
+      applying = true;
+      try {
+        if (wanted && ITEMS[wanted]) selectItem(wanted);
+        else if (stufe && SECTION_IDS.has(stufe)) selectSection(stufe);
+        else if (fallbackToSaved) return false;
+        else selectSection("weg");
+      } finally {
+        applying = false;
+      }
+      return true;
+    }
+
+    addEventListener("popstate", () => applyUrl());
+
+    // ── Wiring ────────────────────────────────────────────────────────
+    $$("[data-section-btn]").forEach((b) => b.addEventListener("click", () => { selectSection(b.dataset.sectionBtn!); syncUrl(); }));
+    $$("[data-nav-item]").forEach((b) => b.addEventListener("click", () => { selectItem(b.dataset.navItem!); syncUrl(); }));
+
+    // "Weitermachen" in Dein Weg opens the portion the course is actually on — the same
+    // target the grammatik-basis row used to be, which is why that row could go.
+    mountWegPanel(wegRoot, {
+      onResume: () => { selectItem("grammatik-basis"); syncUrl(); },
+    });
+    $$("[data-reset-progress]").forEach((b) =>
+      b.addEventListener("click", () => {
+        if (!confirm("Deinen gesamten Fortschritt löschen? Das lässt sich nicht rückgängig machen.")) return;
+        try { resetProgress(); } catch (e) {}
+        Object.keys(progress).forEach((k) => (progress[k] = 0));
+        repaint(true);
+        toast("Fortschritt zurückgesetzt");
+      }));
+    // Still live for the card's own "Zurück zur Stufe" button.
+    $$("[data-back]").forEach((b) => b.addEventListener("click", () => { selectSection(current.section); syncUrl(); }));
+    $$("[data-nvb-collapse]").forEach((b) =>
+      b.addEventListener("click", (e) => { e.stopPropagation(); $("[data-nvb]")?.classList.toggle("collapsed"); }));
+
+    // ── Restore ───────────────────────────────────────────────────────
+    const AVAILABLE: string[] = JSON.parse(document.getElementById("nv-variants")!.textContent!);
+    let savedVariant = AVAILABLE[0];
+    try {
+      const stored = localStorage.getItem("nv-variant");
+      if (stored && AVAILABLE.includes(stored)) savedVariant = stored;
+    } catch (e) {}
+    showVariant(savedVariant);
+
+    // A link someone was sent beats what this browser happened to be looking at last.
+    let saved: any = null;
+    try { saved = JSON.parse(localStorage.getItem("nv-view") || "null"); } catch (e) {}
+
+    if (!applyUrl(true)) {
+      applying = true;
+      try {
+        if (saved && saved.item && ITEMS[saved.item]) selectItem(saved.item);
+        else selectSection(saved && saved.section ? saved.section : "weg");
+      } finally {
+        applying = false;
+      }
+      // replace, not push: the restored view is where this page load started, so Back
+      // belongs to whatever the learner was on before /dashboard.
+      syncUrl(true);
+    }
+
+    /* The Stufen tab explains itself to nobody. The list is open on arrival, so what a
+       learner cannot guess is that it folds — and that the 40px sliver left at the edge is
+       what brings it back. Same story the Wortschatz Lernset column tells, so it is the
+       same module: `restHidden: false` because this column rests OPEN, which puts the two
+       beats the other way round — beat 1 names what is already in front of you, beat 2 is
+       the fold and the light landing on the tab.
+
+       Once per browser. ?intro replays it without spending that one time. */
+    {
+      const nvb = $("[data-nvb]");
+      const foldtab = $(".nvb-foldtab") as HTMLElement | null;
+      const panel = $(".nvb-panel") as HTMLElement | null;
+      const SEEN = "da-stufen-foldtab-seen";
+      if (nvb && foldtab && panel) {
+        const intro = createRuleIntro({
+          ruleEl: panel,
+          ruleBtn: foldtab,
+          ruleCard: panel,
+          setRule: (next: boolean) => nvb.classList.toggle("collapsed", next),
+          // It rests open, and the tour has to give back the state it borrowed.
+          restHidden: false,
+          // The tab both folds the list and brings it back, so it is also the pivot —
+          // beat 2 lights the thing the learner will actually reach for.
+          pivot: foldtab,
+          coach: [
+            ["intro.stufen.title", "intro.stufen.text"],
+            ["intro.stufenAway.title", "intro.stufenAway.text"],
+          ],
+        });
+        const forced = new URLSearchParams(location.search).has("intro");
+        let seen = false;
+        try { seen = localStorage.getItem(SEEN) === "1"; } catch {}
+        const calm = matchMedia("(prefers-reduced-motion: reduce)").matches;
+        // Desktop only: below the breakpoint the rail is not the navigation and there is
+        // no tab to explain.
+        const playIntro = () => {
+          if (!forced) { try { localStorage.setItem(SEEN, "1"); } catch {} }
+          intro.play();
+        };
+        if (!calm && matchMedia("(min-width: 1001px)").matches && (forced || !seen)) {
+          /* Only once it is actually on screen. On /fortschritt this shell sits in a tab
+             panel that starts `hidden` when the URL asks for the Prüfungen view — which
+             is what every "back to the overview" link from a sitting now does. Playing
+             there would run the tour where nobody can see it AND spend the once-per-
+             browser flag, so the learner who later opens the Übungen tab would never be
+             shown it at all. */
+          if (nvb.offsetParent !== null) playIntro();
+          else {
+            const io = new IntersectionObserver((entries) => {
+              if (!entries.some((e) => e.isIntersecting)) return;
+              io.disconnect();
+              playIntro();
+            });
+            io.observe(nvb);
+          }
+        }
+        // The dev button already clears the other tours' flags; this one joins them.
+        document.getElementById("vp-dev-reset")?.addEventListener("click", () => {
+          try { localStorage.removeItem(SEEN); } catch {}
+        });
+      }
+    }
+
+    // The demo dock (DemoDock.astro, rendered by Layout) seeds whatever the page publishes
+    // here — the items already on screen, so it fills bars that exist rather than inventing
+    // slugs, and a renamed topic stays empty instead of becoming a phantom row.
+    (window as any).__daDemoItems = ITEMS;
+  </script>

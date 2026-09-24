@@ -24,6 +24,11 @@ import tr from "../content/lexicon/i18n/tr.json" with { type: "json" };
 
 export const LEVELS = ["A1", "A2", "B1", "B2", "C1", "C2"];
 
+/** A short name per level, in German — the one place it is defined. The UI shows it
+ *  through the i18n key `level.name.<LEVEL>` (public/i18n/*.json), with this as the
+ *  server-rendered German text. First used by the Artikel rail's tooltips. */
+export const LEVEL_NAMES = { A1: "Einstieg", A2: "Aufbau", B1: "Ausbau", B2: "Vertiefung" };
+
 /** Every language a card can carry a translation in, English first. */
 export const TRANSLATION_LANGS = ["en", "ar", "ru", "tr"];
 
@@ -222,5 +227,7 @@ export const asAudioItems = (opts = {}) =>
     text: spokenForm(e),
     audioSrc: `/audio/wortschatz/${e.audio}.mp3`,
     note: [e.ipa ? `/${e.ipa}/` : "", e.example ?? ""].filter(Boolean).join(" · "),
+    // The page looks for its recording (scripts/generate-satz-audio.mjs) — "Im Satz hören".
+    example: e.example ?? "",
     translations: Object.fromEntries(TRANSLATION_LANGS.filter((l) => e[l]).map((l) => [l, e[l]])),
   }));

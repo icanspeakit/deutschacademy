@@ -247,7 +247,11 @@ export function mountPracticeWorkspace(root, allQuestions, { onSessionUpdate, on
               })
               .join("")}
           </div>
-          <p class="akk-focus-instruction" data-ls="${attr(t("pw.instruction", "Wähle den passenden Artikel."))}" data-ls-leicht="${attr(t("pw.instruction.leicht", "Was passt: der, die oder das? Klicke auf ein Wort."))}">${t("pw.instruction", "Wähle den passenden Artikel.")}</p>
+          ${root.dataset.instruction
+            // A host trainer that is not about articles says its own line (data-instruction
+            // on the root) — the Präpositionen trainer asks "Welche Präposition passt?".
+            ? `<p class="akk-focus-instruction">${attr(root.dataset.instruction)}</p>`
+            : `<p class="akk-focus-instruction" data-ls="${attr(t("pw.instruction", "Wähle den passenden Artikel."))}" data-ls-leicht="${attr(t("pw.instruction.leicht", "Was passt: der, die oder das? Klicke auf ein Wort."))}">${t("pw.instruction", "Wähle den passenden Artikel.")}</p>`}
           <div class="akk-feedback" id="akk-focus-feedback">
             ${
               revealed

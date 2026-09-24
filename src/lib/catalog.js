@@ -28,6 +28,7 @@ import sprechenIndex from "../data/fertigkeiten/sprechen.json";
 import kultur from "../data/kultur.json";
 import lid from "../data/leben-in-deutschland.json";
 import verbenPraepositionen from "../data/grammatik/verben-praepositionen.json";
+import praepTrainer from "../data/praepositionen-trainer.json";
 
 // The grammar catalogue has two pools and the hub tiles have to count both of them.
 // src/data/grammatik/*.json are full workspaces (a concept card plus up to five exercise
@@ -70,6 +71,7 @@ export const praepositionTopics = PRAEPOSITION_IDS
     tasks: taskCountOf(w),
   }));
 const praepositionTaskCount = praepositionTopics.reduce((n, t) => n + t.tasks, 0);
+const praepTrainerTasks = praepTrainer.packs.reduce((n, p) => n + p.questions.length, 0);
 
 const kulturTopicCount = kultur.topics.length;
 const kulturQuizCount = kultur.topics.reduce((n, t) => n + t.quiz.length, 0);
@@ -107,14 +109,13 @@ export const tools = [
     menuTitleKey: "tool.grammatik.allTopics", menuTitle: "Alle Themen",
     descKey: "tool.grammatik.desc", desc: "Themen nach Niveau: Akkusativ, Dativ, Passiv und mehr.",
     countKey: "tool.grammatik.count", countVars: { n: grammarTopicCount, q: grammarTaskCount }, count: `${grammarTopicCount} Themen · ${grammarTaskCount} Aufgaben` },
-  // The tile used to open one topic (verben-praepositionen) and call itself after it.
-  // It now opens the area that holds both preposition topics; the single topic is one
-  // tap further in, which is the right depth for a subject with more than one page.
+  // The tile opens the Präpositionen trainer (A1–B2 topics plus the Wechselpräpositionen);
+  // the two full grammar topics are linked from inside it. Counts are the trainer's.
   { id: "praep", group: "grammatik", href: "/uebungen/praepositionen", icon: "link",
     titleKey: "tool.praepositionen.title", title: "Präpositionen", shortKey: "group.short.praep", short: "Präpositionen",
-    descKey: "tool.praepositionen.desc", desc: "Wechselpräpositionen und feste Verb-Präpositionen an einem Ort.",
-    countKey: "tool.praepositionen.count", countVars: { n: praepositionTopics.length, q: praepositionTaskCount },
-    count: `${praepositionTopics.length} Themen · ${praepositionTaskCount} Aufgaben` },
+    descKey: "tool.praepositionen.desc", desc: "Von mit, für und am bis aufgrund und darauf — A1 bis B2, mit den Wechselpräpositionen.",
+    countKey: "tool.praepositionen.count", countVars: { n: praepTrainer.packs.length, q: praepTrainerTasks },
+    count: `${praepTrainer.packs.length} Themen · ${praepTrainerTasks} Aufgaben` },
   { id: "wortschatz", group: "woerter", href: "/uebungen/wortschatz", icon: "folder",
     titleKey: "tool.wortschatz.title", title: "Wortschatz & Redemittel", shortKey: "group.short.wortschatz", short: "Wortschatz",
     descKey: "tool.wortschatz.desc", desc: "Karteikarten zum Umdrehen und Wiederholen.",

@@ -7,12 +7,28 @@
 // selected state instead of hiding it behind a menu.
 import Layout from "../../../layouts/Layout.astro";
 import SiteNav from "../../../components/SiteNav.astro";
+import Icon from "../../../components/Icon.astro";
 import kultur from "../../../data/kultur.json";
 import "../../../styles/practice.css";
 import "../../../styles/kultur.css";
 
 const { topics } = kultur;
 const total = topics.reduce((n, t) => n + t.quiz.length, 0);
+
+// The picker: "all mixed" first, then the five Landeskunde groups as tiles that open in
+// place. It was 22 chips wrapping into nine ragged rows above the quiz — every topic at
+// the same weight, nothing to scan by. Groups and their order are the nav's (catalog.js).
+const GROUPS = [
+  { id: "wohnen", name: "Wohnen & Alltag", icon: "folder" },
+  { id: "aemter", name: "Ämter & Versicherung", icon: "document" },
+  { id: "umgang", name: "Umgang & Gewohnheiten", icon: "mic" },
+  { id: "bildung", name: "Schule & Ausbildung", icon: "graduation-cap" },
+  { id: "land", name: "Land & Kalender", icon: "landmark" },
+];
+const byGroup = GROUPS.map((g) => {
+  const list = topics.filter((t) => t.group === g.id);
+  return { ...g, list, n: list.reduce((s, t) => s + t.quiz.length, 0) };
+}).filter((g) => g.list.length);
 
 // Each question carries the topic it came from, so a wrong answer can say where to
 // read up on it — the quiz engine renders `explain` as HTML.
@@ -40,11 +56,26 @@ const pool = topics.flatMap((t) =>
       <p data-i18n="kultur.quiz.lead" data-i18n-vars={JSON.stringify({ n: total, t: topics.length })}>{total} Fragen aus {topics.length} Themen. Wähle ein Thema oder nimm alle gemischt.</p>
     </div>
 
-    <div class="ku-chips" data-ku-chips>
-      <button class="ku-chip is-on" type="button" data-topic="alle"><span data-i18n="kultur.quiz.allChip">Alle Themen</span> <span>{total}</span></button>
-      {topics.map((t) => (
-        <button class="ku-chip" type="button" data-topic={t.id}>{t.title} <span>{t.quiz.length}</span></button>
-      ))}
+    <div class="ku-pick" data-ku-chips>
+      <button class="ku-all is-on" type="button" data-topic="alle"><span data-i18n="kultur.quiz.allChip">Alle Themen</span> <span class="ku-all-n">{total}</span></button>
+      <div class="ku-tiles">
+        {byGroup.map((g) => (
+          <details class="ku-tile" data-group={g.id}>
+            <summary>
+              <span class="ku-tile-ic"><Icon name={g.icon} size={20} /></span>
+              <span class="ku-tile-t"><span data-i18n={`nav.kultur.${g.id}`}>{g.name}</span><small data-i18n="kultur.quiz.groupMeta" data-i18n-vars={JSON.stringify({ t: g.list.length, n: g.n })}>{g.list.length} Themen · {g.n} Fragen</small></span>
+              <span class="ku-tile-chev" aria-hidden="true">›</span>
+            </summary>
+            <ul class="ku-tile-list">
+              {g.list.map((t) => (
+                <li><button class="ku-row" type="button" data-topic={t.id}>
+                  <span class="ku-row-t">{t.title}</span><span class="ku-row-lv">{t.level}</span>
+                </button></li>
+              ))}
+            </ul>
+          </details>
+        ))}
+      </div>
     </div>
 
     <div class="quiz-card" id="ku-quiz"></div>
@@ -90,6 +121,11 @@ const pool = topics.flatMap((t) =>
       else u.searchParams.set("thema", btn.dataset.topic);
       history.replaceState(null, "", u);
       start(btn.dataset.topic);
+      // On a phone the quiz sits below the open tile; bring it up rather than leave the
+      // learner wondering whether the tap did anything.
+      if (btn.dataset.topic !== "alle" && root.getBoundingClientRect().top > innerHeight * 0.6) {
+        root.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
     });
 
     // A ?thema= in the URL opens that topic straight away — so a narrowed quiz can be
@@ -98,6 +134,8 @@ const pool = topics.flatMap((t) =>
     const chip = wanted && chips.querySelector(`[data-topic="${CSS.escape(wanted)}"]`);
     if (chip) {
       for (const b of chips.querySelectorAll("[data-topic]")) b.classList.toggle("is-on", b === chip);
+      const tile = chip.closest("details");
+      if (tile) tile.open = true;
       start(wanted);
     } else {
       start("alle");

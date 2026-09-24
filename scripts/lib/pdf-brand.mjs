@@ -236,7 +236,10 @@ export function createDoc({ outPath, runningHead, unicode = false }) {
     if (doc.y + height > contentBottom()) doc.addPage();
   }
 
-  function cover({ eyebrow, title, subtitle, subtitleTranslated, subtitleRtl, meta = [], footer }) {
+  /* `rtl`: the meta lines and the footer are in a right-to-left language (a translated
+     edition's cover is written in the reader's language), so they are wrapped and drawn
+     by rtlWrap/rtlDraw with the bullet on the right. */
+  function cover({ eyebrow, title, subtitle, subtitleTranslated, subtitleRtl, meta = [], footer, rtl = false }) {
     const w = contentWidth();
     doc.rect(0, 0, doc.page.width, 210).fill(TEAL_SOFT);
     doc.fillColor(TEAL_DARK).font(F.bold).fontSize(9)
@@ -255,6 +258,25 @@ export function createDoc({ outPath, runningHead, unicode = false }) {
       else doc.font(F.regular).fontSize(11.5).text(subtitleTranslated, MARGIN, doc.y + 6, { width: w, lineBreak: false });
     }
     doc.y = 250;
+    if (rtl) {
+      const lh = doc.font("Noto-Arabic").fontSize(10.5).currentLineHeight(true) + 2;
+      for (const line of meta) {
+        const lines = rtlWrap(S(line), w - 14, 10.5);
+        const y = doc.y;
+        doc.fillColor(TEAL).font(F.bold).fontSize(10).text("•", MARGIN + w - 7, y, { width: 10, lineBreak: false });
+        doc.fillColor(INK);
+        lines.forEach((l, i) => rtlDraw(l, MARGIN + w - 14, y + i * lh, 10.5));
+        doc.y = y + lines.length * lh + 6;
+      }
+      if (footer) {
+        const flh = doc.font("Noto-Arabic").fontSize(8.5).currentLineHeight(true) + 2;
+        const lines = rtlWrap(S(footer), w, 8.5);
+        doc.fillColor(MUTED);
+        lines.forEach((l, i) => rtlDraw(l, MARGIN + w, contentBottom() - 60 + i * flh, 8.5));
+      }
+      doc.x = MARGIN;
+      return;
+    }
     for (const line of meta) {
       doc.fillColor(TEAL).font(F.bold).fontSize(10)
         .text("•", MARGIN, doc.y, { width: 12, continued: false });
@@ -502,12 +524,19 @@ export function createDoc({ outPath, runningHead, unicode = false }) {
     for (let i = range.start; i < range.start + range.count; i++) {
       if (skipFirst && i === range.start) continue;
       doc.switchToPage(i);
+      // The number sits below the bottom margin, and pdfkit treats text there as overflow:
+      // it adds a new page for it — one per numbered page, each blank but for the running
+      // head, which doubled every book (the A1–B2 edition was 85 pages and 84 empty ones).
+      // So the margin is lifted while the number is written, and lineBreak is off.
+      const bottom = doc.page.margins.bottom;
+      doc.page.margins.bottom = 0;
       doc.fillColor(MUTED).font(F.regular).fontSize(8).text(
         `${i - range.start + 1} / ${range.count}`,
         MARGIN,
         doc.page.height - 38,
-        { width: doc.page.width - MARGIN * 2, align: "right" }
+        { width: doc.page.width - MARGIN * 2, align: "right", lineBreak: false }
       );
+      doc.page.margins.bottom = bottom;
     }
   }
 

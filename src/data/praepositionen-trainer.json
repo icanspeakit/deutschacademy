@@ -1,0 +1,5048 @@
+{
+  "_note": "Präpositionen-Trainer (/uebungen/praepositionen): Themen-Packs je Niveau, je 25 Lückensätze. cat \"wechsel\" = zusätzlich unter Wechselpräpositionen in der Rail. Frage: prompt mit ___, options, answer, explain, change (Chip nach der Antwort).",
+  "packs": [
+    {
+      "id": "a1-dativ",
+      "level": "A1",
+      "name": "Immer mit Dativ",
+      "preps": "aus · bei · mit · nach · seit · von · zu",
+      "rule": {
+        "text": "Nach diesen Präpositionen kommt immer der Dativ. Der Artikel ändert sich: der → dem, das → dem, die → der, die (Plural) → den. Merksatz: aus, bei, mit, nach, seit, von, zu – immer mit Dativ!",
+        "table": {
+          "caption": "Präpositionen mit Dativ",
+          "head": [
+            "Präposition",
+            "Wofür?",
+            "Beispiel"
+          ],
+          "rows": [
+            [
+              "aus",
+              "Herkunft, aus einem Ort heraus",
+              "Ich komme aus der Ukraine."
+            ],
+            [
+              "bei",
+              "Ort bei Personen, Firmen",
+              "Ich arbeite bei einer Firma."
+            ],
+            [
+              "mit",
+              "zusammen mit, Verkehrsmittel",
+              "Ich fahre mit dem Bus."
+            ],
+            [
+              "nach",
+              "Zeit danach; Städte, Länder",
+              "Nach dem Kurs gehe ich nach Hause."
+            ],
+            [
+              "seit",
+              "Zeit: von früher bis jetzt",
+              "Ich wohne seit einem Jahr hier."
+            ],
+            [
+              "von",
+              "Absender, Startpunkt",
+              "Der Brief ist von meiner Mutter."
+            ],
+            [
+              "zu",
+              "Richtung zu Personen, Orten",
+              "Ich gehe zu meiner Ärztin."
+            ]
+          ]
+        }
+      },
+      "questions": [
+        {
+          "id": "a1-dativ-01",
+          "prompt": "Ich komme ___ der Türkei.",
+          "options": [
+            "nach",
+            "aus",
+            "von"
+          ],
+          "answer": "aus",
+          "explain": "aus + Dativ: Herkunft – aus der Türkei.",
+          "change": "aus der Türkei"
+        },
+        {
+          "id": "a1-dativ-02",
+          "prompt": "Mein Bruder arbeitet ___ einer Firma in Köln.",
+          "options": [
+            "bei",
+            "zu",
+            "mit"
+          ],
+          "answer": "bei",
+          "explain": "bei + Dativ: Arbeitsplatz – bei einer Firma.",
+          "change": "bei einer Firma"
+        },
+        {
+          "id": "a1-dativ-03",
+          "prompt": "Wir fahren ___ dem Bus zur Arbeit.",
+          "options": [
+            "mit",
+            "bei",
+            "von"
+          ],
+          "answer": "mit",
+          "explain": "mit + Dativ: Verkehrsmittel – mit dem Bus.",
+          "change": "mit dem Bus"
+        },
+        {
+          "id": "a1-dativ-04",
+          "prompt": "___ dem Deutschkurs gehe ich einkaufen.",
+          "options": [
+            "Nach",
+            "Seit",
+            "Aus"
+          ],
+          "answer": "Nach",
+          "explain": "nach + Dativ: Zeit danach – nach dem Deutschkurs.",
+          "change": "Nach dem Deutschkurs"
+        },
+        {
+          "id": "a1-dativ-05",
+          "prompt": "Ich wohne ___ einem Jahr in Hamburg.",
+          "options": [
+            "nach",
+            "von",
+            "seit"
+          ],
+          "answer": "seit",
+          "explain": "seit + Dativ: von früher bis jetzt – seit einem Jahr.",
+          "change": "seit einem Jahr"
+        },
+        {
+          "id": "a1-dativ-06",
+          "prompt": "Das Geschenk ist ___ meiner Mutter.",
+          "options": [
+            "aus",
+            "mit",
+            "von"
+          ],
+          "answer": "von",
+          "explain": "von + Dativ: Wer schenkt? – von meiner Mutter.",
+          "change": "von meiner Mutter"
+        },
+        {
+          "id": "a1-dativ-07",
+          "prompt": "Morgen gehe ich ___ meiner Ärztin.",
+          "options": [
+            "bei",
+            "zu",
+            "nach"
+          ],
+          "answer": "zu",
+          "explain": "zu + Dativ: Richtung zu einer Person – zu meiner Ärztin.",
+          "change": "zu meiner Ärztin"
+        },
+        {
+          "id": "a1-dativ-08",
+          "prompt": "Die Kinder sind heute ___ ihrer Oma.",
+          "options": [
+            "mit",
+            "bei",
+            "zu"
+          ],
+          "answer": "bei",
+          "explain": "bei + Dativ: Ort bei einer Person – bei ihrer Oma.",
+          "change": "bei ihrer Oma"
+        },
+        {
+          "id": "a1-dativ-09",
+          "prompt": "Er telefoniert ___ seiner Frau.",
+          "options": [
+            "bei",
+            "von",
+            "mit"
+          ],
+          "answer": "mit",
+          "explain": "mit + Dativ: zusammen mit – mit seiner Frau.",
+          "change": "mit seiner Frau"
+        },
+        {
+          "id": "a1-dativ-10",
+          "prompt": "Ich nehme die Milch ___ dem Kühlschrank.",
+          "options": [
+            "aus",
+            "bei",
+            "zu"
+          ],
+          "answer": "aus",
+          "explain": "aus + Dativ: aus etwas heraus – aus dem Kühlschrank.",
+          "change": "aus dem Kühlschrank"
+        },
+        {
+          "id": "a1-dativ-11",
+          "prompt": "___ der Arbeit bin ich oft müde.",
+          "options": [
+            "Seit",
+            "Nach",
+            "Aus"
+          ],
+          "answer": "Nach",
+          "explain": "nach + Dativ: Zeit danach – nach der Arbeit.",
+          "change": "Nach der Arbeit"
+        },
+        {
+          "id": "a1-dativ-12",
+          "prompt": "Sie lernt ___ drei Monaten Deutsch.",
+          "options": [
+            "nach",
+            "seit",
+            "von"
+          ],
+          "answer": "seit",
+          "explain": "seit + Dativ: seit drei Monaten (Plural Dativ: -n).",
+          "change": "seit drei Monaten"
+        },
+        {
+          "id": "a1-dativ-13",
+          "prompt": "Ich habe einen Brief ___ der Ausländerbehörde bekommen.",
+          "options": [
+            "bei",
+            "aus",
+            "von"
+          ],
+          "answer": "von",
+          "explain": "von + Dativ: Absender – von der Ausländerbehörde.",
+          "change": "von der Ausländerbehörde"
+        },
+        {
+          "id": "a1-dativ-14",
+          "prompt": "Am Sonntag gehen wir ___ unseren Freunden.",
+          "options": [
+            "mit",
+            "bei",
+            "zu"
+          ],
+          "answer": "zu",
+          "explain": "zu + Dativ: Richtung zu Personen – zu unseren Freunden.",
+          "change": "zu unseren Freunden"
+        },
+        {
+          "id": "a1-dativ-15",
+          "prompt": "Kannst du ___ dem Fahrrad zur Schule fahren?",
+          "options": [
+            "bei",
+            "von",
+            "mit"
+          ],
+          "answer": "mit",
+          "explain": "mit + Dativ: Verkehrsmittel – mit dem Fahrrad.",
+          "change": "mit dem Fahrrad"
+        },
+        {
+          "id": "a1-dativ-16",
+          "prompt": "Im Sommer fliegen wir ___ Spanien.",
+          "options": [
+            "nach",
+            "zu",
+            "bei"
+          ],
+          "answer": "nach",
+          "explain": "nach + Land ohne Artikel: nach Spanien.",
+          "change": "nach Spanien"
+        },
+        {
+          "id": "a1-dativ-17",
+          "prompt": "Mein Mann arbeitet ___ der Post.",
+          "options": [
+            "bei",
+            "zu",
+            "aus"
+          ],
+          "answer": "bei",
+          "explain": "bei + Dativ: Arbeitgeber – bei der Post.",
+          "change": "bei der Post"
+        },
+        {
+          "id": "a1-dativ-18",
+          "prompt": "Der Brief ist ___ meinem Vermieter.",
+          "options": [
+            "von",
+            "bei",
+            "aus"
+          ],
+          "answer": "von",
+          "explain": "von + Dativ: Absender – von meinem Vermieter.",
+          "change": "von meinem Vermieter"
+        },
+        {
+          "id": "a1-dativ-19",
+          "prompt": "Ich wohne noch ___ meinen Eltern.",
+          "options": [
+            "mit",
+            "zu",
+            "bei"
+          ],
+          "answer": "bei",
+          "explain": "bei + Dativ: wohnen bei Personen – bei meinen Eltern.",
+          "change": "bei meinen Eltern"
+        },
+        {
+          "id": "a1-dativ-20",
+          "prompt": "___ meiner Wohnung bis zum Supermarkt sind es fünf Minuten.",
+          "options": [
+            "Seit",
+            "Aus",
+            "Von"
+          ],
+          "answer": "Von",
+          "explain": "von … bis: Startpunkt – von meiner Wohnung.",
+          "change": "Von meiner Wohnung"
+        },
+        {
+          "id": "a1-dativ-21",
+          "prompt": "Ich fahre ___ der Straßenbahn in die Stadt.",
+          "options": [
+            "bei",
+            "mit",
+            "von"
+          ],
+          "answer": "mit",
+          "explain": "mit + Dativ: Verkehrsmittel – mit der Straßenbahn.",
+          "change": "mit der Straßenbahn"
+        },
+        {
+          "id": "a1-dativ-22",
+          "prompt": "Wir sind ___ Syrien nach Deutschland gekommen.",
+          "options": [
+            "von",
+            "aus",
+            "zu"
+          ],
+          "answer": "aus",
+          "explain": "aus: Herkunftsland – aus Syrien.",
+          "change": "aus Syrien"
+        },
+        {
+          "id": "a1-dativ-23",
+          "prompt": "Er hat ___ zwei Wochen Rückenschmerzen.",
+          "options": [
+            "seit",
+            "nach",
+            "von"
+          ],
+          "answer": "seit",
+          "explain": "seit + Dativ: bis heute – seit zwei Wochen.",
+          "change": "seit zwei Wochen"
+        },
+        {
+          "id": "a1-dativ-24",
+          "prompt": "Ich gehe jetzt ___ der Nachbarin und frage nach dem Schlüssel.",
+          "options": [
+            "bei",
+            "aus",
+            "zu"
+          ],
+          "answer": "zu",
+          "explain": "zu + Dativ: Richtung zu einer Person – zu der Nachbarin.",
+          "change": "zu der Nachbarin"
+        },
+        {
+          "id": "a1-dativ-25",
+          "prompt": "Sie hat das Handy ___ ihrer Schwester bekommen.",
+          "options": [
+            "mit",
+            "von",
+            "bei"
+          ],
+          "answer": "von",
+          "explain": "von + Dativ: Wer gibt? – von ihrer Schwester.",
+          "change": "von ihrer Schwester"
+        }
+      ]
+    },
+    {
+      "id": "a1-akkusativ",
+      "level": "A1",
+      "name": "Immer mit Akkusativ",
+      "preps": "durch · für · gegen · ohne · um",
+      "rule": {
+        "text": "Nach diesen Präpositionen kommt immer der Akkusativ. Nur der maskuline Artikel ändert sich: der → den, ein → einen. Merkwort: DOGFU – durch, ohne, gegen, für, um.",
+        "table": {
+          "caption": "Präpositionen mit Akkusativ",
+          "head": [
+            "Präposition",
+            "Wofür?",
+            "Beispiel"
+          ],
+          "rows": [
+            [
+              "durch",
+              "von einer Seite zur anderen",
+              "Wir gehen durch den Park."
+            ],
+            [
+              "für",
+              "für eine Person, einen Zweck",
+              "Das ist für meinen Sohn."
+            ],
+            [
+              "gegen",
+              "Kontakt, Gegner, Medizin",
+              "Ich nehme etwas gegen den Husten."
+            ],
+            [
+              "ohne",
+              "nicht mit",
+              "Ich komme ohne meinen Mann."
+            ],
+            [
+              "um",
+              "rund herum; Uhrzeit",
+              "Wir sitzen um den Tisch. Um 8 Uhr."
+            ]
+          ]
+        }
+      },
+      "questions": [
+        {
+          "id": "a1-akkusativ-01",
+          "prompt": "Der Bus fährt ___ den Tunnel.",
+          "options": [
+            "für",
+            "um",
+            "durch"
+          ],
+          "answer": "durch",
+          "explain": "durch + Akkusativ: von einer Seite zur anderen – durch den Tunnel.",
+          "change": "durch den Tunnel"
+        },
+        {
+          "id": "a1-akkusativ-02",
+          "prompt": "Das Geschenk ist ___ meinen Sohn.",
+          "options": [
+            "gegen",
+            "ohne",
+            "für"
+          ],
+          "answer": "für",
+          "explain": "für + Akkusativ: für eine Person – für meinen Sohn.",
+          "change": "für meinen Sohn"
+        },
+        {
+          "id": "a1-akkusativ-03",
+          "prompt": "Ich gehe nicht ___ meinen Mann zur Party.",
+          "options": [
+            "für",
+            "gegen",
+            "ohne"
+          ],
+          "answer": "ohne",
+          "explain": "ohne + Akkusativ: nicht zusammen mit – ohne meinen Mann.",
+          "change": "ohne meinen Mann"
+        },
+        {
+          "id": "a1-akkusativ-04",
+          "prompt": "Das Auto ist ___ einen Baum gefahren.",
+          "options": [
+            "durch",
+            "gegen",
+            "um"
+          ],
+          "answer": "gegen",
+          "explain": "gegen + Akkusativ: Kontakt, Unfall – gegen einen Baum.",
+          "change": "gegen einen Baum"
+        },
+        {
+          "id": "a1-akkusativ-05",
+          "prompt": "Wir sitzen ___ den Tisch herum.",
+          "options": [
+            "um",
+            "durch",
+            "gegen"
+          ],
+          "answer": "um",
+          "explain": "um + Akkusativ: rund herum – um den Tisch herum.",
+          "change": "um den Tisch herum"
+        },
+        {
+          "id": "a1-akkusativ-06",
+          "prompt": "Ich brauche eine Tablette ___ den Husten.",
+          "options": [
+            "gegen",
+            "um",
+            "durch"
+          ],
+          "answer": "gegen",
+          "explain": "gegen + Akkusativ: Medizin – gegen den Husten.",
+          "change": "gegen den Husten"
+        },
+        {
+          "id": "a1-akkusativ-07",
+          "prompt": "Wir gehen ___ den Park nach Hause.",
+          "options": [
+            "für",
+            "ohne",
+            "durch"
+          ],
+          "answer": "durch",
+          "explain": "durch + Akkusativ: durch den Park.",
+          "change": "durch den Park"
+        },
+        {
+          "id": "a1-akkusativ-08",
+          "prompt": "Ich brauche einen Termin ___ meine Tochter.",
+          "options": [
+            "durch",
+            "gegen",
+            "für"
+          ],
+          "answer": "für",
+          "explain": "für + Akkusativ: für eine Person – für meine Tochter.",
+          "change": "für meine Tochter"
+        },
+        {
+          "id": "a1-akkusativ-09",
+          "prompt": "Er kommt heute ___ seine Frau.",
+          "options": [
+            "um",
+            "für",
+            "ohne"
+          ],
+          "answer": "ohne",
+          "explain": "ohne + Akkusativ: nicht mit – ohne seine Frau.",
+          "change": "ohne seine Frau"
+        },
+        {
+          "id": "a1-akkusativ-10",
+          "prompt": "Das Geschäft ist gleich ___ die Ecke.",
+          "options": [
+            "durch",
+            "gegen",
+            "um"
+          ],
+          "answer": "um",
+          "explain": "um + Akkusativ: um die Ecke.",
+          "change": "um die Ecke"
+        },
+        {
+          "id": "a1-akkusativ-11",
+          "prompt": "Bist du für oder ___ den Vorschlag?",
+          "options": [
+            "um",
+            "gegen",
+            "ohne"
+          ],
+          "answer": "gegen",
+          "explain": "gegen + Akkusativ: dagegen sein – gegen den Vorschlag.",
+          "change": "gegen den Vorschlag"
+        },
+        {
+          "id": "a1-akkusativ-12",
+          "prompt": "Ich kann ___ meine Brille nicht lesen.",
+          "options": [
+            "für",
+            "ohne",
+            "gegen"
+          ],
+          "answer": "ohne",
+          "explain": "ohne + Akkusativ: ohne meine Brille.",
+          "change": "ohne meine Brille"
+        },
+        {
+          "id": "a1-akkusativ-13",
+          "prompt": "Die Kinder laufen ___ das Haus herum.",
+          "options": [
+            "durch",
+            "gegen",
+            "um"
+          ],
+          "answer": "um",
+          "explain": "um + Akkusativ: rund herum – um das Haus herum.",
+          "change": "um das Haus herum"
+        },
+        {
+          "id": "a1-akkusativ-14",
+          "prompt": "Wir fahren ___ die Stadt zum Bahnhof.",
+          "options": [
+            "ohne",
+            "durch",
+            "für"
+          ],
+          "answer": "durch",
+          "explain": "durch + Akkusativ: durch die Stadt.",
+          "change": "durch die Stadt"
+        },
+        {
+          "id": "a1-akkusativ-15",
+          "prompt": "Danke ___ deine Hilfe!",
+          "options": [
+            "um",
+            "gegen",
+            "für"
+          ],
+          "answer": "für",
+          "explain": "danke für + Akkusativ: für deine Hilfe.",
+          "change": "für deine Hilfe"
+        },
+        {
+          "id": "a1-akkusativ-16",
+          "prompt": "Der Kurs beginnt ___ neun Uhr.",
+          "options": [
+            "ohne",
+            "um",
+            "durch"
+          ],
+          "answer": "um",
+          "explain": "um + Uhrzeit: um neun Uhr.",
+          "change": "um neun Uhr"
+        },
+        {
+          "id": "a1-akkusativ-17",
+          "prompt": "Ich kaufe Blumen ___ meine Nachbarin.",
+          "options": [
+            "ohne",
+            "für",
+            "gegen"
+          ],
+          "answer": "für",
+          "explain": "für + Akkusativ: für eine Person – für meine Nachbarin.",
+          "change": "für meine Nachbarin"
+        },
+        {
+          "id": "a1-akkusativ-18",
+          "prompt": "Am Samstag spielt mein Sohn ___ eine starke Mannschaft.",
+          "options": [
+            "gegen",
+            "durch",
+            "um"
+          ],
+          "answer": "gegen",
+          "explain": "gegen + Akkusativ: Gegner – gegen eine starke Mannschaft.",
+          "change": "gegen eine starke Mannschaft"
+        },
+        {
+          "id": "a1-akkusativ-19",
+          "prompt": "Sie geht nie ___ ihren Hund spazieren.",
+          "options": [
+            "durch",
+            "um",
+            "ohne"
+          ],
+          "answer": "ohne",
+          "explain": "ohne + Akkusativ: ohne ihren Hund.",
+          "change": "ohne ihren Hund"
+        },
+        {
+          "id": "a1-akkusativ-20",
+          "prompt": "Das Wasser tropft ___ die Decke.",
+          "options": [
+            "durch",
+            "für",
+            "um"
+          ],
+          "answer": "durch",
+          "explain": "durch + Akkusativ: durch die Decke.",
+          "change": "durch die Decke"
+        },
+        {
+          "id": "a1-akkusativ-21",
+          "prompt": "Die Wohnung ist zu teuer ___ uns.",
+          "options": [
+            "ohne",
+            "für",
+            "gegen"
+          ],
+          "answer": "für",
+          "explain": "für + Akkusativ: für uns.",
+          "change": "für uns"
+        },
+        {
+          "id": "a1-akkusativ-22",
+          "prompt": "Er hat eine Impfung ___ die Grippe bekommen.",
+          "options": [
+            "gegen",
+            "durch",
+            "für"
+          ],
+          "answer": "gegen",
+          "explain": "gegen + Akkusativ: Schutz – gegen die Grippe.",
+          "change": "gegen die Grippe"
+        },
+        {
+          "id": "a1-akkusativ-23",
+          "prompt": "Ich gehe am Abend noch kurz ___ den Block.",
+          "options": [
+            "gegen",
+            "um",
+            "durch"
+          ],
+          "answer": "um",
+          "explain": "um + Akkusativ: einmal herum – um den Block.",
+          "change": "um den Block"
+        },
+        {
+          "id": "a1-akkusativ-24",
+          "prompt": "Die Katze kommt ___ die Tür herein.",
+          "options": [
+            "für",
+            "um",
+            "durch"
+          ],
+          "answer": "durch",
+          "explain": "durch + Akkusativ: durch die Tür.",
+          "change": "durch die Tür"
+        },
+        {
+          "id": "a1-akkusativ-25",
+          "prompt": "___ einen Ausweis kann ich kein Konto eröffnen.",
+          "options": [
+            "Gegen",
+            "Ohne",
+            "Für"
+          ],
+          "answer": "Ohne",
+          "explain": "ohne + Akkusativ: ohne einen Ausweis.",
+          "change": "Ohne einen Ausweis"
+        }
+      ]
+    },
+    {
+      "id": "a1-zeit",
+      "level": "A1",
+      "name": "Zeit: am, im, um",
+      "preps": "am · im · um · von … bis",
+      "rule": {
+        "text": "Für Tage und Tageszeiten sagt man „am“. Für Monate und Jahreszeiten sagt man „im“, für die Uhrzeit „um“. Anfang und Ende sagt man mit „von … bis“.",
+        "table": {
+          "caption": "Wann?",
+          "head": [
+            "Präposition",
+            "für …",
+            "Beispiel"
+          ],
+          "rows": [
+            [
+              "am",
+              "Tag, Datum, Tageszeit, Wochenende",
+              "am Montag, am 3. Mai, am Abend, am Wochenende"
+            ],
+            [
+              "im",
+              "Monat, Jahreszeit",
+              "im Mai, im Sommer"
+            ],
+            [
+              "um",
+              "Uhrzeit",
+              "um 8 Uhr, um halb neun"
+            ],
+            [
+              "von … bis",
+              "Anfang und Ende",
+              "von 9 bis 17 Uhr, von Montag bis Freitag"
+            ]
+          ]
+        }
+      },
+      "questions": [
+        {
+          "id": "a1-zeit-01",
+          "prompt": "Der Kurs beginnt ___ Montag.",
+          "options": [
+            "um",
+            "am",
+            "im"
+          ],
+          "answer": "am",
+          "explain": "am + Wochentag: am Montag.",
+          "change": "am Montag"
+        },
+        {
+          "id": "a1-zeit-02",
+          "prompt": "Ich habe ___ Mai Geburtstag.",
+          "options": [
+            "um",
+            "am",
+            "im"
+          ],
+          "answer": "im",
+          "explain": "im + Monat: im Mai.",
+          "change": "im Mai"
+        },
+        {
+          "id": "a1-zeit-03",
+          "prompt": "Der Termin beim Arzt ist ___ 8 Uhr.",
+          "options": [
+            "im",
+            "um",
+            "am"
+          ],
+          "answer": "um",
+          "explain": "um + Uhrzeit: um 8 Uhr.",
+          "change": "um 8 Uhr"
+        },
+        {
+          "id": "a1-zeit-04",
+          "prompt": "___ Sommer fahren wir in die Türkei.",
+          "options": [
+            "Um",
+            "Im",
+            "Am"
+          ],
+          "answer": "Im",
+          "explain": "im + Jahreszeit: im Sommer.",
+          "change": "Im Sommer"
+        },
+        {
+          "id": "a1-zeit-05",
+          "prompt": "___ Wochenende arbeite ich nicht.",
+          "options": [
+            "Im",
+            "Am",
+            "Um"
+          ],
+          "answer": "Am",
+          "explain": "am + Wochenende: am Wochenende.",
+          "change": "Am Wochenende"
+        },
+        {
+          "id": "a1-zeit-06",
+          "prompt": "Die Praxis ist ___ 8 bis 12 Uhr geöffnet.",
+          "options": [
+            "um",
+            "von",
+            "am"
+          ],
+          "answer": "von",
+          "explain": "von … bis: Anfang und Ende – von 8 bis 12 Uhr.",
+          "change": "von 8 bis 12 Uhr"
+        },
+        {
+          "id": "a1-zeit-07",
+          "prompt": "Das Bürgeramt ist von Montag ___ Donnerstag geöffnet.",
+          "options": [
+            "am",
+            "von",
+            "bis"
+          ],
+          "answer": "bis",
+          "explain": "von … bis: bis zum Ende – von Montag bis Donnerstag.",
+          "change": "von Montag bis Donnerstag"
+        },
+        {
+          "id": "a1-zeit-08",
+          "prompt": "Ich stehe ___ halb sieben auf.",
+          "options": [
+            "im",
+            "am",
+            "um"
+          ],
+          "answer": "um",
+          "explain": "um + Uhrzeit: um halb sieben.",
+          "change": "um halb sieben"
+        },
+        {
+          "id": "a1-zeit-09",
+          "prompt": "___ Winter ist es in Deutschland kalt.",
+          "options": [
+            "Im",
+            "Um",
+            "Am"
+          ],
+          "answer": "Im",
+          "explain": "im + Jahreszeit: im Winter.",
+          "change": "Im Winter"
+        },
+        {
+          "id": "a1-zeit-10",
+          "prompt": "Wir gehen ___ Samstag einkaufen.",
+          "options": [
+            "am",
+            "um",
+            "im"
+          ],
+          "answer": "am",
+          "explain": "am + Wochentag: am Samstag.",
+          "change": "am Samstag"
+        },
+        {
+          "id": "a1-zeit-11",
+          "prompt": "Mein Sohn kommt ___ August in die Schule.",
+          "options": [
+            "um",
+            "im",
+            "am"
+          ],
+          "answer": "im",
+          "explain": "im + Monat: im August.",
+          "change": "im August"
+        },
+        {
+          "id": "a1-zeit-12",
+          "prompt": "___ Abend sehe ich fern.",
+          "options": [
+            "Im",
+            "Um",
+            "Am"
+          ],
+          "answer": "Am",
+          "explain": "am + Tageszeit: am Abend.",
+          "change": "Am Abend"
+        },
+        {
+          "id": "a1-zeit-13",
+          "prompt": "Der Bus fährt ___ 7:15 Uhr.",
+          "options": [
+            "am",
+            "um",
+            "im"
+          ],
+          "answer": "um",
+          "explain": "um + Uhrzeit: um 7:15 Uhr.",
+          "change": "um 7:15 Uhr"
+        },
+        {
+          "id": "a1-zeit-14",
+          "prompt": "___ Morgen trinke ich immer Tee.",
+          "options": [
+            "Um",
+            "Im",
+            "Am"
+          ],
+          "answer": "Am",
+          "explain": "am + Tageszeit: am Morgen.",
+          "change": "Am Morgen"
+        },
+        {
+          "id": "a1-zeit-15",
+          "prompt": "Ich arbeite ___ 9 bis 17 Uhr.",
+          "options": [
+            "am",
+            "von",
+            "um"
+          ],
+          "answer": "von",
+          "explain": "von … bis: von 9 bis 17 Uhr.",
+          "change": "von 9 bis 17 Uhr"
+        },
+        {
+          "id": "a1-zeit-16",
+          "prompt": "Ich habe von 12 ___ 13 Uhr Pause.",
+          "options": [
+            "um",
+            "von",
+            "bis"
+          ],
+          "answer": "bis",
+          "explain": "von … bis: von 12 bis 13 Uhr.",
+          "change": "von 12 bis 13 Uhr"
+        },
+        {
+          "id": "a1-zeit-17",
+          "prompt": "___ Januar ist das Wetter oft schlecht.",
+          "options": [
+            "Im",
+            "Um",
+            "Am"
+          ],
+          "answer": "Im",
+          "explain": "im + Monat: im Januar.",
+          "change": "Im Januar"
+        },
+        {
+          "id": "a1-zeit-18",
+          "prompt": "Die Party ist ___ Freitagabend.",
+          "options": [
+            "im",
+            "um",
+            "am"
+          ],
+          "answer": "am",
+          "explain": "am + Tag: am Freitagabend.",
+          "change": "am Freitagabend"
+        },
+        {
+          "id": "a1-zeit-19",
+          "prompt": "Wir essen ___ 12 Uhr zu Mittag.",
+          "options": [
+            "um",
+            "im",
+            "am"
+          ],
+          "answer": "um",
+          "explain": "um + Uhrzeit: um 12 Uhr.",
+          "change": "um 12 Uhr"
+        },
+        {
+          "id": "a1-zeit-20",
+          "prompt": "___ Herbst regnet es oft.",
+          "options": [
+            "Am",
+            "Im",
+            "Um"
+          ],
+          "answer": "Im",
+          "explain": "im + Jahreszeit: im Herbst.",
+          "change": "Im Herbst"
+        },
+        {
+          "id": "a1-zeit-21",
+          "prompt": "Mein Geburtstag ist ___ 3. März.",
+          "options": [
+            "im",
+            "am",
+            "um"
+          ],
+          "answer": "am",
+          "explain": "am + Datum: am 3. März.",
+          "change": "am 3. März"
+        },
+        {
+          "id": "a1-zeit-22",
+          "prompt": "Der Supermarkt ist ___ Sonntag geschlossen.",
+          "options": [
+            "am",
+            "um",
+            "im"
+          ],
+          "answer": "am",
+          "explain": "am + Wochentag: am Sonntag.",
+          "change": "am Sonntag"
+        },
+        {
+          "id": "a1-zeit-23",
+          "prompt": "Der Deutschkurs dauert ___ September bis Dezember.",
+          "options": [
+            "im",
+            "am",
+            "von"
+          ],
+          "answer": "von",
+          "explain": "von … bis: von September bis Dezember.",
+          "change": "von September bis Dezember"
+        },
+        {
+          "id": "a1-zeit-24",
+          "prompt": "Das Vorstellungsgespräch ist ___ Viertel nach zehn.",
+          "options": [
+            "am",
+            "um",
+            "im"
+          ],
+          "answer": "um",
+          "explain": "um + Uhrzeit: um Viertel nach zehn.",
+          "change": "um Viertel nach zehn"
+        },
+        {
+          "id": "a1-zeit-25",
+          "prompt": "___ Nachmittag holt meine Frau die Kinder ab.",
+          "options": [
+            "Um",
+            "Am",
+            "Im"
+          ],
+          "answer": "Am",
+          "explain": "am + Tageszeit: am Nachmittag.",
+          "change": "Am Nachmittag"
+        }
+      ]
+    },
+    {
+      "id": "a1-wohin",
+      "level": "A1",
+      "name": "Wohin? nach, zu, in",
+      "preps": "nach · zu · in",
+      "rule": {
+        "text": "Städte und Länder ohne Artikel: „nach“. Zu Personen (und oft zu Orten): „zu“ + Dativ. Länder mit Artikel und Gebäude, in die man hineingeht: „in“ + Akkusativ.",
+        "table": {
+          "caption": "Wohin gehst du?",
+          "head": [
+            "Präposition",
+            "Wann?",
+            "Beispiel"
+          ],
+          "rows": [
+            [
+              "nach",
+              "Stadt, Land ohne Artikel; nach Hause",
+              "nach Berlin, nach Polen, nach Hause"
+            ],
+            [
+              "zu + Dativ",
+              "Personen, Institutionen",
+              "zu meiner Ärztin, zum Arzt, zur Arbeit"
+            ],
+            [
+              "in + Akkusativ",
+              "Land mit Artikel; hinein in ein Gebäude",
+              "in die Schweiz, in die Stadt, in den Supermarkt"
+            ]
+          ]
+        }
+      },
+      "questions": [
+        {
+          "id": "a1-wohin-01",
+          "prompt": "Ich fahre morgen ___ Berlin.",
+          "options": [
+            "in",
+            "zu",
+            "nach"
+          ],
+          "answer": "nach",
+          "explain": "nach + Stadt ohne Artikel: nach Berlin.",
+          "change": "nach Berlin"
+        },
+        {
+          "id": "a1-wohin-02",
+          "prompt": "Nach der Arbeit gehe ich ___ Hause.",
+          "options": [
+            "in",
+            "zu",
+            "nach"
+          ],
+          "answer": "nach",
+          "explain": "Wohin? → nach Hause (Wo? → zu Hause).",
+          "change": "nach Hause"
+        },
+        {
+          "id": "a1-wohin-03",
+          "prompt": "Heute Nachmittag gehen wir ___ meiner Tante.",
+          "options": [
+            "in",
+            "zu",
+            "nach"
+          ],
+          "answer": "zu",
+          "explain": "zu + Dativ: zu einer Person – zu meiner Tante.",
+          "change": "zu meiner Tante"
+        },
+        {
+          "id": "a1-wohin-04",
+          "prompt": "Sie fliegt im Urlaub ___ die Schweiz.",
+          "options": [
+            "zu",
+            "nach",
+            "in"
+          ],
+          "answer": "in",
+          "explain": "Land mit Artikel: in + Akkusativ – in die Schweiz.",
+          "change": "in die Schweiz"
+        },
+        {
+          "id": "a1-wohin-05",
+          "prompt": "Am Samstag fahren wir ___ die Stadt.",
+          "options": [
+            "in",
+            "nach",
+            "zu"
+          ],
+          "answer": "in",
+          "explain": "in + Akkusativ: in die Stadt.",
+          "change": "in die Stadt"
+        },
+        {
+          "id": "a1-wohin-06",
+          "prompt": "Ich muss heute ___ meiner Hausärztin.",
+          "options": [
+            "zu",
+            "in",
+            "nach"
+          ],
+          "answer": "zu",
+          "explain": "zu + Dativ: zu einer Person – zu meiner Hausärztin.",
+          "change": "zu meiner Hausärztin"
+        },
+        {
+          "id": "a1-wohin-07",
+          "prompt": "Mein Kollege zieht nächstes Jahr ___ Hamburg.",
+          "options": [
+            "in",
+            "zu",
+            "nach"
+          ],
+          "answer": "nach",
+          "explain": "nach + Stadt ohne Artikel: nach Hamburg.",
+          "change": "nach Hamburg"
+        },
+        {
+          "id": "a1-wohin-08",
+          "prompt": "Die Kinder gehen jeden Tag ___ die Schule.",
+          "options": [
+            "in",
+            "nach",
+            "zu"
+          ],
+          "answer": "in",
+          "explain": "in + Akkusativ: in die Schule.",
+          "change": "in die Schule"
+        },
+        {
+          "id": "a1-wohin-09",
+          "prompt": "Geh bitte ___ deinem Bruder und hilf ihm!",
+          "options": [
+            "nach",
+            "in",
+            "zu"
+          ],
+          "answer": "zu",
+          "explain": "zu + Dativ: zu einer Person – zu deinem Bruder.",
+          "change": "zu deinem Bruder"
+        },
+        {
+          "id": "a1-wohin-10",
+          "prompt": "Wir fahren im Sommer ___ die Türkei.",
+          "options": [
+            "in",
+            "nach",
+            "zu"
+          ],
+          "answer": "in",
+          "explain": "Land mit Artikel: in + Akkusativ – in die Türkei.",
+          "change": "in die Türkei"
+        },
+        {
+          "id": "a1-wohin-11",
+          "prompt": "Fährst du im Urlaub auch ___ Österreich?",
+          "options": [
+            "zu",
+            "nach",
+            "in"
+          ],
+          "answer": "nach",
+          "explain": "nach + Land ohne Artikel: nach Österreich.",
+          "change": "nach Österreich"
+        },
+        {
+          "id": "a1-wohin-12",
+          "prompt": "Ich gehe schnell ___ den Supermarkt.",
+          "options": [
+            "nach",
+            "zu",
+            "in"
+          ],
+          "answer": "in",
+          "explain": "in + Akkusativ: hinein – in den Supermarkt.",
+          "change": "in den Supermarkt"
+        },
+        {
+          "id": "a1-wohin-13",
+          "prompt": "Ich gehe ___ Herrn Weber, er hat meinen Schlüssel.",
+          "options": [
+            "zu",
+            "in",
+            "nach"
+          ],
+          "answer": "zu",
+          "explain": "zu + Dativ: zu einer Person – zu Herrn Weber.",
+          "change": "zu Herrn Weber"
+        },
+        {
+          "id": "a1-wohin-14",
+          "prompt": "Der Zug fährt direkt ___ Frankfurt.",
+          "options": [
+            "zu",
+            "nach",
+            "in"
+          ],
+          "answer": "nach",
+          "explain": "nach + Stadt ohne Artikel: nach Frankfurt.",
+          "change": "nach Frankfurt"
+        },
+        {
+          "id": "a1-wohin-15",
+          "prompt": "Sie bringt das Kind ___ den Kindergarten.",
+          "options": [
+            "nach",
+            "in",
+            "zu"
+          ],
+          "answer": "in",
+          "explain": "in + Akkusativ: in den Kindergarten.",
+          "change": "in den Kindergarten"
+        },
+        {
+          "id": "a1-wohin-16",
+          "prompt": "Wann kommst du heute ___ Hause?",
+          "options": [
+            "zu",
+            "in",
+            "nach"
+          ],
+          "answer": "nach",
+          "explain": "Wohin? → nach Hause.",
+          "change": "nach Hause"
+        },
+        {
+          "id": "a1-wohin-17",
+          "prompt": "Wir gehen ___ unseren Nachbarn zum Kaffee.",
+          "options": [
+            "in",
+            "zu",
+            "nach"
+          ],
+          "answer": "zu",
+          "explain": "zu + Dativ: zu Personen – zu unseren Nachbarn.",
+          "change": "zu unseren Nachbarn"
+        },
+        {
+          "id": "a1-wohin-18",
+          "prompt": "Ich fahre mit dem Bus ___ die Innenstadt.",
+          "options": [
+            "nach",
+            "in",
+            "zu"
+          ],
+          "answer": "in",
+          "explain": "in + Akkusativ: in die Innenstadt.",
+          "change": "in die Innenstadt"
+        },
+        {
+          "id": "a1-wohin-19",
+          "prompt": "Meine Eltern fliegen im Oktober ___ Marokko.",
+          "options": [
+            "in",
+            "zu",
+            "nach"
+          ],
+          "answer": "nach",
+          "explain": "nach + Land ohne Artikel: nach Marokko.",
+          "change": "nach Marokko"
+        },
+        {
+          "id": "a1-wohin-20",
+          "prompt": "Er fährt geschäftlich ___ die USA.",
+          "options": [
+            "nach",
+            "in",
+            "zu"
+          ],
+          "answer": "in",
+          "explain": "Land mit Artikel (Plural): in die USA.",
+          "change": "in die USA"
+        },
+        {
+          "id": "a1-wohin-21",
+          "prompt": "Bring den Brief bitte ___ deiner Lehrerin.",
+          "options": [
+            "in",
+            "zu",
+            "nach"
+          ],
+          "answer": "zu",
+          "explain": "zu + Dativ: zu einer Person – zu deiner Lehrerin.",
+          "change": "zu deiner Lehrerin"
+        },
+        {
+          "id": "a1-wohin-22",
+          "prompt": "Wir ziehen nächsten Monat ___ eine neue Wohnung.",
+          "options": [
+            "nach",
+            "zu",
+            "in"
+          ],
+          "answer": "in",
+          "explain": "in + Akkusativ: in eine neue Wohnung.",
+          "change": "in eine neue Wohnung"
+        },
+        {
+          "id": "a1-wohin-23",
+          "prompt": "Ich fahre am Wochenende ___ Leipzig.",
+          "options": [
+            "nach",
+            "zu",
+            "in"
+          ],
+          "answer": "nach",
+          "explain": "nach + Stadt ohne Artikel: nach Leipzig.",
+          "change": "nach Leipzig"
+        },
+        {
+          "id": "a1-wohin-24",
+          "prompt": "Kommst du mit ___ meiner Freundin?",
+          "options": [
+            "in",
+            "nach",
+            "zu"
+          ],
+          "answer": "zu",
+          "explain": "zu + Dativ: zu einer Person – zu meiner Freundin.",
+          "change": "zu meiner Freundin"
+        },
+        {
+          "id": "a1-wohin-25",
+          "prompt": "Frau Ahmadi geht ___ die Apotheke.",
+          "options": [
+            "zu",
+            "nach",
+            "in"
+          ],
+          "answer": "in",
+          "explain": "in + Akkusativ: in die Apotheke.",
+          "change": "in die Apotheke"
+        }
+      ]
+    },
+    {
+      "id": "a2-wo",
+      "level": "A2",
+      "cat": "wechsel",
+      "name": "Wo? – mit Dativ",
+      "preps": "an · auf · hinter · in · neben · über · unter · vor · zwischen",
+      "rule": {
+        "text": "Diese neun Präpositionen heißen Wechselpräpositionen. Fragt man „Wo?“, steht etwas still an einem Ort: Dann kommt der Dativ. Typische Verben: liegen, stehen, hängen, sitzen, sein.",
+        "table": {
+          "caption": "Wo? → Dativ",
+          "head": [
+            "Präposition",
+            "Wo?",
+            "Beispiel"
+          ],
+          "rows": [
+            [
+              "an",
+              "direkt daran (senkrecht)",
+              "Das Bild hängt an der Wand."
+            ],
+            [
+              "auf",
+              "oben darauf (waagrecht)",
+              "Das Buch liegt auf dem Tisch."
+            ],
+            [
+              "hinter",
+              "dahinter",
+              "Der Garten ist hinter dem Haus."
+            ],
+            [
+              "in",
+              "drinnen",
+              "Die Milch steht im Kühlschrank."
+            ],
+            [
+              "neben",
+              "daneben",
+              "Die Bank ist neben dem Supermarkt."
+            ],
+            [
+              "über",
+              "oben, ohne Kontakt",
+              "Die Lampe hängt über dem Tisch."
+            ],
+            [
+              "unter",
+              "darunter",
+              "Der Hund liegt unter dem Tisch."
+            ],
+            [
+              "vor",
+              "davor",
+              "Das Auto steht vor dem Haus."
+            ],
+            [
+              "zwischen",
+              "in der Mitte von zwei Dingen",
+              "Die Apotheke ist zwischen der Bank und der Post."
+            ]
+          ]
+        }
+      },
+      "questions": [
+        {
+          "id": "a2-wo-01",
+          "prompt": "Das Bild hängt ___ der Wand.",
+          "options": [
+            "zwischen",
+            "an",
+            "unter"
+          ],
+          "answer": "an",
+          "explain": "Wo? hängen → an + Dativ: an der Wand.",
+          "change": "an der Wand"
+        },
+        {
+          "id": "a2-wo-02",
+          "prompt": "Die Lampe hängt ___ dem Esstisch.",
+          "options": [
+            "unter",
+            "über",
+            "zwischen"
+          ],
+          "answer": "über",
+          "explain": "Wo? oben, ohne Kontakt → über + Dativ: über dem Esstisch.",
+          "change": "über dem Esstisch"
+        },
+        {
+          "id": "a2-wo-03",
+          "prompt": "Die Apotheke ist ___ der Bank und der Post.",
+          "options": [
+            "zwischen",
+            "hinter",
+            "neben"
+          ],
+          "answer": "zwischen",
+          "explain": "Wo? in der Mitte von zwei Dingen → zwischen + Dativ.",
+          "change": "zwischen der Bank und der Post"
+        },
+        {
+          "id": "a2-wo-04",
+          "prompt": "Der Hund schläft ___ dem Tisch.",
+          "options": [
+            "unter",
+            "zwischen",
+            "über"
+          ],
+          "answer": "unter",
+          "explain": "Wo? → unter + Dativ: unter dem Tisch.",
+          "change": "unter dem Tisch"
+        },
+        {
+          "id": "a2-wo-05",
+          "prompt": "Die Kinder sind noch ___ der Schule.",
+          "options": [
+            "unter",
+            "zwischen",
+            "in"
+          ],
+          "answer": "in",
+          "explain": "Wo? drinnen → in + Dativ: in der Schule.",
+          "change": "in der Schule"
+        },
+        {
+          "id": "a2-wo-06",
+          "prompt": "Das Auto steht ___ dem Haus, direkt an der Straße.",
+          "options": [
+            "zwischen",
+            "vor",
+            "über"
+          ],
+          "answer": "vor",
+          "explain": "Wo? davor → vor + Dativ: vor dem Haus.",
+          "change": "vor dem Haus"
+        },
+        {
+          "id": "a2-wo-07",
+          "prompt": "Der Garten liegt ___ dem Haus, man sieht ihn von der Straße nicht.",
+          "options": [
+            "vor",
+            "hinter",
+            "zwischen"
+          ],
+          "answer": "hinter",
+          "explain": "Wo? dahinter → hinter + Dativ: hinter dem Haus.",
+          "change": "hinter dem Haus"
+        },
+        {
+          "id": "a2-wo-08",
+          "prompt": "Die Schlüssel liegen ___ dem Tisch, direkt neben der Zeitung.",
+          "options": [
+            "auf",
+            "zwischen",
+            "über"
+          ],
+          "answer": "auf",
+          "explain": "Wo? oben darauf → auf + Dativ: auf dem Tisch.",
+          "change": "auf dem Tisch"
+        },
+        {
+          "id": "a2-wo-09",
+          "prompt": "Wir warten ___ der Bushaltestelle.",
+          "options": [
+            "über",
+            "zwischen",
+            "an"
+          ],
+          "answer": "an",
+          "explain": "Wo? → an + Dativ: an der Bushaltestelle.",
+          "change": "an der Bushaltestelle"
+        },
+        {
+          "id": "a2-wo-10",
+          "prompt": "Die Bäckerei ist gleich ___ dem Supermarkt, links davon.",
+          "options": [
+            "neben",
+            "über",
+            "zwischen"
+          ],
+          "answer": "neben",
+          "explain": "Wo? daneben → neben + Dativ: neben dem Supermarkt.",
+          "change": "neben dem Supermarkt"
+        },
+        {
+          "id": "a2-wo-11",
+          "prompt": "Wir wohnen im 2. Stock. Familie Yilmaz wohnt ___ uns im 3. Stock.",
+          "options": [
+            "über",
+            "unter",
+            "zwischen"
+          ],
+          "answer": "über",
+          "explain": "Wo? eine Etage höher → über + Dativ: über uns.",
+          "change": "über uns"
+        },
+        {
+          "id": "a2-wo-12",
+          "prompt": "Die Ärztin sitzt ___ ihrem Schreibtisch.",
+          "options": [
+            "zwischen",
+            "über",
+            "hinter"
+          ],
+          "answer": "hinter",
+          "explain": "Wo? → hinter + Dativ: hinter ihrem Schreibtisch.",
+          "change": "hinter ihrem Schreibtisch"
+        },
+        {
+          "id": "a2-wo-13",
+          "prompt": "Die Handtücher liegen ___ dem Schrank.",
+          "options": [
+            "in",
+            "an",
+            "zwischen"
+          ],
+          "answer": "in",
+          "explain": "Wo? drinnen → in + Dativ: in dem Schrank (im Schrank).",
+          "change": "in dem Schrank"
+        },
+        {
+          "id": "a2-wo-14",
+          "prompt": "Die Straßenbahn hält direkt ___ dem Rathaus.",
+          "options": [
+            "unter",
+            "vor",
+            "zwischen"
+          ],
+          "answer": "vor",
+          "explain": "Wo? → vor + Dativ: vor dem Rathaus.",
+          "change": "vor dem Rathaus"
+        },
+        {
+          "id": "a2-wo-15",
+          "prompt": "Die Katze sitzt ___ dem Bett, deshalb sehe ich sie nicht.",
+          "options": [
+            "neben",
+            "auf",
+            "unter"
+          ],
+          "answer": "unter",
+          "explain": "Wo? darunter → unter + Dativ: unter dem Bett.",
+          "change": "unter dem Bett"
+        },
+        {
+          "id": "a2-wo-16",
+          "prompt": "Der Zettel mit den Regeln hängt ___ der Tür.",
+          "options": [
+            "unter",
+            "an",
+            "zwischen"
+          ],
+          "answer": "an",
+          "explain": "Wo? hängen → an + Dativ: an der Tür.",
+          "change": "an der Tür"
+        },
+        {
+          "id": "a2-wo-17",
+          "prompt": "Ich stehe schon lange ___ der Kasse und warte.",
+          "options": [
+            "über",
+            "zwischen",
+            "an"
+          ],
+          "answer": "an",
+          "explain": "Wo? → an + Dativ: an der Kasse.",
+          "change": "an der Kasse"
+        },
+        {
+          "id": "a2-wo-18",
+          "prompt": "Die Kinder spielen ___ dem Spielplatz.",
+          "options": [
+            "auf",
+            "zwischen",
+            "über"
+          ],
+          "answer": "auf",
+          "explain": "Wo? → auf + Dativ: auf dem Spielplatz.",
+          "change": "auf dem Spielplatz"
+        },
+        {
+          "id": "a2-wo-19",
+          "prompt": "Das Kind sitzt ___ seiner Mutter und seinem Vater.",
+          "options": [
+            "neben",
+            "hinter",
+            "zwischen"
+          ],
+          "answer": "zwischen",
+          "explain": "Wo? in der Mitte → zwischen + Dativ.",
+          "change": "zwischen seiner Mutter und seinem Vater"
+        },
+        {
+          "id": "a2-wo-20",
+          "prompt": "Der Parkplatz ist ___ dem Gebäude, auf der Rückseite.",
+          "options": [
+            "über",
+            "vor",
+            "hinter"
+          ],
+          "answer": "hinter",
+          "explain": "Wo? Rückseite → hinter + Dativ: hinter dem Gebäude.",
+          "change": "hinter dem Gebäude"
+        },
+        {
+          "id": "a2-wo-21",
+          "prompt": "Mein Mantel hängt ___ der Garderobe.",
+          "options": [
+            "zwischen",
+            "an",
+            "unter"
+          ],
+          "answer": "an",
+          "explain": "Wo? hängen → an + Dativ: an der Garderobe.",
+          "change": "an der Garderobe"
+        },
+        {
+          "id": "a2-wo-22",
+          "prompt": "Der Schrank steht direkt ___ dem Fenster, rechts davon.",
+          "options": [
+            "über",
+            "zwischen",
+            "neben"
+          ],
+          "answer": "neben",
+          "explain": "Wo? daneben → neben + Dativ: neben dem Fenster.",
+          "change": "neben dem Fenster"
+        },
+        {
+          "id": "a2-wo-23",
+          "prompt": "Die Rechnung liegt schon ___ dem Briefkasten.",
+          "options": [
+            "zwischen",
+            "in",
+            "über"
+          ],
+          "answer": "in",
+          "explain": "Wo? drinnen → in + Dativ: in dem Briefkasten.",
+          "change": "in dem Briefkasten"
+        },
+        {
+          "id": "a2-wo-24",
+          "prompt": "Die Uhr hängt ___ dem Sofa an der Wand.",
+          "options": [
+            "unter",
+            "zwischen",
+            "über"
+          ],
+          "answer": "über",
+          "explain": "Wo? oben, ohne Kontakt → über + Dativ: über dem Sofa.",
+          "change": "über dem Sofa"
+        },
+        {
+          "id": "a2-wo-25",
+          "prompt": "Wir treffen uns ___ dem Jobcenter, am Eingang.",
+          "options": [
+            "unter",
+            "vor",
+            "über"
+          ],
+          "answer": "vor",
+          "explain": "Wo? davor → vor + Dativ: vor dem Jobcenter.",
+          "change": "vor dem Jobcenter"
+        }
+      ]
+    },
+    {
+      "id": "a2-wohin",
+      "level": "A2",
+      "cat": "wechsel",
+      "name": "Wohin? – mit Akkusativ",
+      "preps": "an · auf · hinter · in · neben · über · unter · vor · zwischen",
+      "rule": {
+        "text": "Fragt man „Wohin?“, gibt es eine Bewegung zu einem neuen Ort: Dann kommt der Akkusativ. Typische Verben: legen, stellen, hängen, setzen, gehen, fahren. Nur maskulin ändert sich: dem → den.",
+        "table": {
+          "caption": "Wo? oder Wohin?",
+          "head": [
+            "",
+            "Wo? (Dativ)",
+            "Wohin? (Akkusativ)"
+          ],
+          "rows": [
+            [
+              "der Tisch",
+              "Das Buch liegt auf dem Tisch.",
+              "Ich lege das Buch auf den Tisch."
+            ],
+            [
+              "das Regal",
+              "Die Vase steht auf dem Regal.",
+              "Ich stelle die Vase auf das Regal."
+            ],
+            [
+              "die Wand",
+              "Das Bild hängt an der Wand.",
+              "Ich hänge das Bild an die Wand."
+            ],
+            [
+              "die Stühle (Pl.)",
+              "Die Tasche steht zwischen den Stühlen.",
+              "Ich stelle die Tasche zwischen die Stühle."
+            ],
+            [
+              "Verben",
+              "liegen, stehen, hängen, sitzen",
+              "legen, stellen, hängen, setzen"
+            ]
+          ]
+        }
+      },
+      "questions": [
+        {
+          "id": "a2-wohin-01",
+          "prompt": "Ich hänge das Bild ___ die Wand.",
+          "options": [
+            "zwischen",
+            "unter",
+            "an"
+          ],
+          "answer": "an",
+          "explain": "Wohin? hängen → an + Akkusativ: an die Wand.",
+          "change": "an die Wand"
+        },
+        {
+          "id": "a2-wohin-02",
+          "prompt": "Er legt die Schlüssel ___ den Tisch.",
+          "options": [
+            "auf",
+            "an",
+            "zwischen"
+          ],
+          "answer": "auf",
+          "explain": "Wohin? legen → auf + Akkusativ: auf den Tisch.",
+          "change": "auf den Tisch"
+        },
+        {
+          "id": "a2-wohin-03",
+          "prompt": "Stell die Milch bitte ___ den Kühlschrank!",
+          "options": [
+            "in",
+            "zwischen",
+            "über"
+          ],
+          "answer": "in",
+          "explain": "Wohin? stellen → in + Akkusativ: in den Kühlschrank.",
+          "change": "in den Kühlschrank"
+        },
+        {
+          "id": "a2-wohin-04",
+          "prompt": "Wir hängen die neue Lampe ___ den Esstisch.",
+          "options": [
+            "unter",
+            "über",
+            "zwischen"
+          ],
+          "answer": "über",
+          "explain": "Wohin? oben, ohne Kontakt → über + Akkusativ: über den Esstisch.",
+          "change": "über den Esstisch"
+        },
+        {
+          "id": "a2-wohin-05",
+          "prompt": "Der Hund kriecht ___ das Sofa und versteckt sich.",
+          "options": [
+            "unter",
+            "zwischen",
+            "an"
+          ],
+          "answer": "unter",
+          "explain": "Wohin? darunter → unter + Akkusativ: unter das Sofa.",
+          "change": "unter das Sofa"
+        },
+        {
+          "id": "a2-wohin-06",
+          "prompt": "Setz dich ___ mich und meine Schwester!",
+          "options": [
+            "neben",
+            "hinter",
+            "zwischen"
+          ],
+          "answer": "zwischen",
+          "explain": "Wohin? in die Mitte → zwischen + Akkusativ.",
+          "change": "zwischen mich und meine Schwester"
+        },
+        {
+          "id": "a2-wohin-07",
+          "prompt": "Ich stelle das Fahrrad ___ das Haus, nicht in den Hof.",
+          "options": [
+            "über",
+            "vor",
+            "zwischen"
+          ],
+          "answer": "vor",
+          "explain": "Wohin? davor → vor + Akkusativ: vor das Haus.",
+          "change": "vor das Haus"
+        },
+        {
+          "id": "a2-wohin-08",
+          "prompt": "Ich gehe morgen ___ die Bank und hole Geld.",
+          "options": [
+            "zwischen",
+            "unter",
+            "in"
+          ],
+          "answer": "in",
+          "explain": "Wohin? hinein → in + Akkusativ: in die Bank.",
+          "change": "in die Bank"
+        },
+        {
+          "id": "a2-wohin-09",
+          "prompt": "Die Kinder laufen ___ den Spielplatz.",
+          "options": [
+            "auf",
+            "zwischen",
+            "unter"
+          ],
+          "answer": "auf",
+          "explain": "Wohin? → auf + Akkusativ: auf den Spielplatz.",
+          "change": "auf den Spielplatz"
+        },
+        {
+          "id": "a2-wohin-10",
+          "prompt": "Komm, setz dich ___ mich auf das Sofa!",
+          "options": [
+            "zwischen",
+            "über",
+            "neben"
+          ],
+          "answer": "neben",
+          "explain": "Wohin? daneben → neben + Akkusativ: neben mich.",
+          "change": "neben mich"
+        },
+        {
+          "id": "a2-wohin-11",
+          "prompt": "Ich werfe den Brief ___ den Briefkasten.",
+          "options": [
+            "zwischen",
+            "über",
+            "in"
+          ],
+          "answer": "in",
+          "explain": "Wohin? hinein → in + Akkusativ: in den Briefkasten.",
+          "change": "in den Briefkasten"
+        },
+        {
+          "id": "a2-wohin-12",
+          "prompt": "Er fährt das Auto ___ die Garage.",
+          "options": [
+            "zwischen",
+            "über",
+            "in"
+          ],
+          "answer": "in",
+          "explain": "Wohin? hinein → in + Akkusativ: in die Garage.",
+          "change": "in die Garage"
+        },
+        {
+          "id": "a2-wohin-13",
+          "prompt": "Stell die Schuhe bitte ___ das Bett.",
+          "options": [
+            "zwischen",
+            "unter",
+            "über"
+          ],
+          "answer": "unter",
+          "explain": "Wohin? darunter → unter + Akkusativ: unter das Bett.",
+          "change": "unter das Bett"
+        },
+        {
+          "id": "a2-wohin-14",
+          "prompt": "Hängen Sie Ihre Jacke bitte ___ die Garderobe.",
+          "options": [
+            "an",
+            "unter",
+            "zwischen"
+          ],
+          "answer": "an",
+          "explain": "Wohin? hängen → an + Akkusativ: an die Garderobe.",
+          "change": "an die Garderobe"
+        },
+        {
+          "id": "a2-wohin-15",
+          "prompt": "Wir stellen den Schrank ___ das Fenster, links daneben.",
+          "options": [
+            "zwischen",
+            "neben",
+            "über"
+          ],
+          "answer": "neben",
+          "explain": "Wohin? daneben → neben + Akkusativ: neben das Fenster.",
+          "change": "neben das Fenster"
+        },
+        {
+          "id": "a2-wohin-16",
+          "prompt": "Ich lege das Handy ___ die Zeitung, dann sieht es niemand.",
+          "options": [
+            "neben",
+            "unter",
+            "an"
+          ],
+          "answer": "unter",
+          "explain": "Wohin? darunter → unter + Akkusativ: unter die Zeitung.",
+          "change": "unter die Zeitung"
+        },
+        {
+          "id": "a2-wohin-17",
+          "prompt": "Das Kind klettert ___ den Baum.",
+          "options": [
+            "auf",
+            "zwischen",
+            "unter"
+          ],
+          "answer": "auf",
+          "explain": "Wohin? nach oben → auf + Akkusativ: auf den Baum.",
+          "change": "auf den Baum"
+        },
+        {
+          "id": "a2-wohin-18",
+          "prompt": "Park das Auto bitte ___ das Haus, im Hof hinten.",
+          "options": [
+            "hinter",
+            "über",
+            "vor"
+          ],
+          "answer": "hinter",
+          "explain": "Wohin? dahinter → hinter + Akkusativ: hinter das Haus.",
+          "change": "hinter das Haus"
+        },
+        {
+          "id": "a2-wohin-19",
+          "prompt": "Ich gehe jetzt ___ die Küche und koche.",
+          "options": [
+            "in",
+            "zwischen",
+            "über"
+          ],
+          "answer": "in",
+          "explain": "Wohin? hinein → in + Akkusativ: in die Küche.",
+          "change": "in die Küche"
+        },
+        {
+          "id": "a2-wohin-20",
+          "prompt": "Häng die Uhr doch ___ das Sofa!",
+          "options": [
+            "unter",
+            "über",
+            "zwischen"
+          ],
+          "answer": "über",
+          "explain": "Wohin? oben, ohne Kontakt → über + Akkusativ: über das Sofa.",
+          "change": "über das Sofa"
+        },
+        {
+          "id": "a2-wohin-21",
+          "prompt": "Stell den Ordner ___ die beiden anderen Ordner ins Regal.",
+          "options": [
+            "an",
+            "zwischen",
+            "unter"
+          ],
+          "answer": "zwischen",
+          "explain": "Wohin? in die Mitte → zwischen + Akkusativ.",
+          "change": "zwischen die beiden anderen Ordner"
+        },
+        {
+          "id": "a2-wohin-22",
+          "prompt": "Am Wochenende fahren wir ___ das Meer.",
+          "options": [
+            "über",
+            "an",
+            "zwischen"
+          ],
+          "answer": "an",
+          "explain": "Wohin? ans Wasser → an + Akkusativ: an das Meer.",
+          "change": "an das Meer"
+        },
+        {
+          "id": "a2-wohin-23",
+          "prompt": "Schreiben Sie Ihren Namen bitte ___ das Formular.",
+          "options": [
+            "zwischen",
+            "auf",
+            "unter"
+          ],
+          "answer": "auf",
+          "explain": "Wohin? schreiben → auf + Akkusativ: auf das Formular.",
+          "change": "auf das Formular"
+        },
+        {
+          "id": "a2-wohin-24",
+          "prompt": "Setz dich bitte nicht ___ den Fernseher, ich sehe nichts!",
+          "options": [
+            "vor",
+            "zwischen",
+            "über"
+          ],
+          "answer": "vor",
+          "explain": "Wohin? davor → vor + Akkusativ: vor den Fernseher.",
+          "change": "vor den Fernseher"
+        },
+        {
+          "id": "a2-wohin-25",
+          "prompt": "Die Katze springt ___ das Bett.",
+          "options": [
+            "auf",
+            "an",
+            "zwischen"
+          ],
+          "answer": "auf",
+          "explain": "Wohin? nach oben → auf + Akkusativ: auf das Bett.",
+          "change": "auf das Bett"
+        }
+      ]
+    },
+    {
+      "id": "a2-wechsel-mix",
+      "level": "A2",
+      "cat": "wechsel",
+      "name": "Wo oder wohin? – gemischt",
+      "preps": "an · auf · hinter · in · neben · über · unter · vor · zwischen",
+      "rule": {
+        "text": "Zuerst fragen: Wo oder wohin? Ruhe am Ort (liegen, stehen, sein) → Dativ. Bewegung zu einem Ort (legen, stellen, gehen) → Akkusativ.",
+        "table": {
+          "caption": "Artikel nach Wechselpräpositionen",
+          "head": [
+            "",
+            "Wo? (Dativ)",
+            "Wohin? (Akkusativ)"
+          ],
+          "rows": [
+            [
+              "maskulin",
+              "auf dem Tisch",
+              "auf den Tisch"
+            ],
+            [
+              "neutral",
+              "auf dem Sofa",
+              "auf das Sofa"
+            ],
+            [
+              "feminin",
+              "an der Wand",
+              "an die Wand"
+            ],
+            [
+              "Plural",
+              "zwischen den Stühlen",
+              "zwischen die Stühle"
+            ]
+          ]
+        }
+      },
+      "questions": [
+        {
+          "id": "a2-wechsel-mix-01",
+          "prompt": "Ich lege das Buch ___ Tisch.",
+          "options": [
+            "auf den",
+            "auf dem"
+          ],
+          "answer": "auf den",
+          "explain": "Wohin? legen → Akkusativ: auf den Tisch.",
+          "change": "auf den Tisch"
+        },
+        {
+          "id": "a2-wechsel-mix-02",
+          "prompt": "Das Buch liegt ___ Tisch.",
+          "options": [
+            "auf den",
+            "auf dem"
+          ],
+          "answer": "auf dem",
+          "explain": "Wo? liegen → Dativ: auf dem Tisch.",
+          "change": "auf dem Tisch"
+        },
+        {
+          "id": "a2-wechsel-mix-03",
+          "prompt": "Wir hängen das Foto ___ Wand.",
+          "options": [
+            "an der",
+            "an die"
+          ],
+          "answer": "an die",
+          "explain": "Wohin? hängen (Bewegung) → Akkusativ: an die Wand.",
+          "change": "an die Wand"
+        },
+        {
+          "id": "a2-wechsel-mix-04",
+          "prompt": "Das Foto hängt ___ Wand.",
+          "options": [
+            "an der",
+            "an die"
+          ],
+          "answer": "an der",
+          "explain": "Wo? hängen (Ruhe) → Dativ: an der Wand.",
+          "change": "an der Wand"
+        },
+        {
+          "id": "a2-wechsel-mix-05",
+          "prompt": "Meine Mutter ist gerade ___ Küche.",
+          "options": [
+            "in die",
+            "in der"
+          ],
+          "answer": "in der",
+          "explain": "Wo? sein → Dativ: in der Küche.",
+          "change": "in der Küche"
+        },
+        {
+          "id": "a2-wechsel-mix-06",
+          "prompt": "Ich gehe ___ Küche und mache Tee.",
+          "options": [
+            "in die",
+            "in der"
+          ],
+          "answer": "in die",
+          "explain": "Wohin? gehen → Akkusativ: in die Küche.",
+          "change": "in die Küche"
+        },
+        {
+          "id": "a2-wechsel-mix-07",
+          "prompt": "Stell die leeren Flaschen bitte ___ Tür.",
+          "options": [
+            "vor die",
+            "vor der"
+          ],
+          "answer": "vor die",
+          "explain": "Wohin? stellen → Akkusativ: vor die Tür.",
+          "change": "vor die Tür"
+        },
+        {
+          "id": "a2-wechsel-mix-08",
+          "prompt": "Die leeren Flaschen stehen ___ Tür.",
+          "options": [
+            "vor die",
+            "vor der"
+          ],
+          "answer": "vor der",
+          "explain": "Wo? stehen → Dativ: vor der Tür.",
+          "change": "vor der Tür"
+        },
+        {
+          "id": "a2-wechsel-mix-09",
+          "prompt": "Der Koffer liegt ___ Bett.",
+          "options": [
+            "unter den",
+            "unter das",
+            "unter dem"
+          ],
+          "answer": "unter dem",
+          "explain": "Wo? liegen → Dativ: unter dem Bett.",
+          "change": "unter dem Bett"
+        },
+        {
+          "id": "a2-wechsel-mix-10",
+          "prompt": "Ich schiebe den Koffer ___ Bett.",
+          "options": [
+            "unter dem",
+            "unter den",
+            "unter das"
+          ],
+          "answer": "unter das",
+          "explain": "Wohin? schieben → Akkusativ: unter das Bett.",
+          "change": "unter das Bett"
+        },
+        {
+          "id": "a2-wechsel-mix-11",
+          "prompt": "Im Meeting setzt er sich ___ Chef.",
+          "options": [
+            "neben seinen",
+            "neben seinem"
+          ],
+          "answer": "neben seinen",
+          "explain": "Wohin? sich setzen → Akkusativ: neben seinen Chef.",
+          "change": "neben seinen Chef"
+        },
+        {
+          "id": "a2-wechsel-mix-12",
+          "prompt": "Im Meeting sitzt er ___ Chef.",
+          "options": [
+            "neben seinem",
+            "neben seinen"
+          ],
+          "answer": "neben seinem",
+          "explain": "Wo? sitzen → Dativ: neben seinem Chef.",
+          "change": "neben seinem Chef"
+        },
+        {
+          "id": "a2-wechsel-mix-13",
+          "prompt": "Heute Nachmittag fahren wir ___ Stadt.",
+          "options": [
+            "in der",
+            "in die"
+          ],
+          "answer": "in die",
+          "explain": "Wohin? fahren → Akkusativ: in die Stadt.",
+          "change": "in die Stadt"
+        },
+        {
+          "id": "a2-wechsel-mix-14",
+          "prompt": "Wir wohnen seit zwei Jahren ___ Stadt.",
+          "options": [
+            "in der",
+            "in die"
+          ],
+          "answer": "in der",
+          "explain": "Wo? wohnen → Dativ: in der Stadt.",
+          "change": "in der Stadt"
+        },
+        {
+          "id": "a2-wechsel-mix-15",
+          "prompt": "Die Lampe hängt ___ Esstisch.",
+          "options": [
+            "über den",
+            "über dem"
+          ],
+          "answer": "über dem",
+          "explain": "Wo? hängen (Ruhe) → Dativ: über dem Esstisch.",
+          "change": "über dem Esstisch"
+        },
+        {
+          "id": "a2-wechsel-mix-16",
+          "prompt": "Häng die Lampe bitte ___ Esstisch!",
+          "options": [
+            "über dem",
+            "über den"
+          ],
+          "answer": "über den",
+          "explain": "Wohin? hängen (Bewegung) → Akkusativ: über den Esstisch.",
+          "change": "über den Esstisch"
+        },
+        {
+          "id": "a2-wechsel-mix-17",
+          "prompt": "Das Auto steht ___ Haus.",
+          "options": [
+            "hinter dem",
+            "hinter die",
+            "hinter das"
+          ],
+          "answer": "hinter dem",
+          "explain": "Wo? stehen → Dativ: hinter dem Haus.",
+          "change": "hinter dem Haus"
+        },
+        {
+          "id": "a2-wechsel-mix-18",
+          "prompt": "Fahr das Auto bitte ___ Haus!",
+          "options": [
+            "hinter das",
+            "hinter die",
+            "hinter dem"
+          ],
+          "answer": "hinter das",
+          "explain": "Wohin? fahren → Akkusativ: hinter das Haus.",
+          "change": "hinter das Haus"
+        },
+        {
+          "id": "a2-wechsel-mix-19",
+          "prompt": "Stell die Tasche ___ Stühle.",
+          "options": [
+            "zwischen die",
+            "zwischen den"
+          ],
+          "answer": "zwischen die",
+          "explain": "Wohin? stellen → Akkusativ Plural: zwischen die Stühle.",
+          "change": "zwischen die Stühle"
+        },
+        {
+          "id": "a2-wechsel-mix-20",
+          "prompt": "Die Tasche steht ___ Stühlen.",
+          "options": [
+            "zwischen die",
+            "zwischen den"
+          ],
+          "answer": "zwischen den",
+          "explain": "Wo? stehen → Dativ Plural: zwischen den Stühlen.",
+          "change": "zwischen den Stühlen"
+        },
+        {
+          "id": "a2-wechsel-mix-21",
+          "prompt": "Die Fernbedienung liegt ___ Sofa.",
+          "options": [
+            "auf den",
+            "auf dem",
+            "auf das"
+          ],
+          "answer": "auf dem",
+          "explain": "Wo? liegen → Dativ: auf dem Sofa.",
+          "change": "auf dem Sofa"
+        },
+        {
+          "id": "a2-wechsel-mix-22",
+          "prompt": "Leg die Decke bitte ___ Sofa.",
+          "options": [
+            "auf das",
+            "auf den",
+            "auf dem"
+          ],
+          "answer": "auf das",
+          "explain": "Wohin? legen → Akkusativ: auf das Sofa.",
+          "change": "auf das Sofa"
+        },
+        {
+          "id": "a2-wechsel-mix-23",
+          "prompt": "Heute ist Frau Dr. Keller nicht ___ Praxis.",
+          "options": [
+            "in die",
+            "in der"
+          ],
+          "answer": "in der",
+          "explain": "Wo? sein → Dativ: in der Praxis.",
+          "change": "in der Praxis"
+        },
+        {
+          "id": "a2-wechsel-mix-24",
+          "prompt": "Morgens bringe ich meinen Sohn ___ Kita.",
+          "options": [
+            "in der",
+            "in die"
+          ],
+          "answer": "in die",
+          "explain": "Wohin? bringen → Akkusativ: in die Kita.",
+          "change": "in die Kita"
+        },
+        {
+          "id": "a2-wechsel-mix-25",
+          "prompt": "Mein Sohn ist bis 15 Uhr ___ Kita.",
+          "options": [
+            "in die",
+            "in der"
+          ],
+          "answer": "in der",
+          "explain": "Wo? sein → Dativ: in der Kita.",
+          "change": "in der Kita"
+        }
+      ]
+    },
+    {
+      "id": "a2-verschmelzung",
+      "level": "A2",
+      "name": "Kurzformen: im, ins, am, zum …",
+      "preps": "am · ans · beim · im · ins · vom · zum · zur",
+      "rule": {
+        "text": "Präposition und Artikel werden oft zu einem Wort. Mit „dem“ (Dativ) und „das“ (Akkusativ) entstehen Kurzformen, mit „der“ nur bei „zu“: zur. Im Alltag sagt man fast immer die Kurzform.",
+        "table": {
+          "caption": "Kurzformen",
+          "head": [
+            "Kurzform",
+            "lang",
+            "Beispiel"
+          ],
+          "rows": [
+            [
+              "am",
+              "an dem",
+              "am Bahnhof, am Montag"
+            ],
+            [
+              "ans",
+              "an das",
+              "ans Meer"
+            ],
+            [
+              "beim",
+              "bei dem",
+              "beim Arzt"
+            ],
+            [
+              "im",
+              "in dem",
+              "im Kino, im Mai"
+            ],
+            [
+              "ins",
+              "in das",
+              "ins Kino"
+            ],
+            [
+              "vom",
+              "von dem",
+              "vom Zahnarzt"
+            ],
+            [
+              "zum",
+              "zu dem",
+              "zum Arzt"
+            ],
+            [
+              "zur",
+              "zu der",
+              "zur Arbeit"
+            ]
+          ]
+        }
+      },
+      "questions": [
+        {
+          "id": "a2-verschmelzung-01",
+          "prompt": "Ich gehe heute ___ Arzt.",
+          "options": [
+            "beim",
+            "zur",
+            "zum"
+          ],
+          "answer": "zum",
+          "explain": "zu + dem Arzt (maskulin) → zum Arzt.",
+          "change": "zum Arzt"
+        },
+        {
+          "id": "a2-verschmelzung-02",
+          "prompt": "Mein Mann fährt mit dem Rad ___ Arbeit.",
+          "options": [
+            "zur",
+            "im",
+            "zum"
+          ],
+          "answer": "zur",
+          "explain": "zu + der Arbeit (feminin) → zur Arbeit.",
+          "change": "zur Arbeit"
+        },
+        {
+          "id": "a2-verschmelzung-03",
+          "prompt": "Heute Abend gehen wir ___ Kino.",
+          "options": [
+            "ins",
+            "am",
+            "im"
+          ],
+          "answer": "ins",
+          "explain": "Wohin? in + das Kino → ins Kino.",
+          "change": "ins Kino"
+        },
+        {
+          "id": "a2-verschmelzung-04",
+          "prompt": "Der neue Film läuft schon ___ Kino.",
+          "options": [
+            "am",
+            "im",
+            "ins"
+          ],
+          "answer": "im",
+          "explain": "Wo? in + dem Kino → im Kino.",
+          "change": "im Kino"
+        },
+        {
+          "id": "a2-verschmelzung-05",
+          "prompt": "Ich war heute Morgen ___ Arzt.",
+          "options": [
+            "beim",
+            "vom",
+            "zum"
+          ],
+          "answer": "beim",
+          "explain": "Wo? bei + dem Arzt → beim Arzt.",
+          "change": "beim Arzt"
+        },
+        {
+          "id": "a2-verschmelzung-06",
+          "prompt": "Er kommt gerade ___ Zahnarzt.",
+          "options": [
+            "beim",
+            "zum",
+            "vom"
+          ],
+          "answer": "vom",
+          "explain": "Woher? von + dem Zahnarzt → vom Zahnarzt.",
+          "change": "vom Zahnarzt"
+        },
+        {
+          "id": "a2-verschmelzung-07",
+          "prompt": "Im Sommer fahren wir ___ Meer.",
+          "options": [
+            "am",
+            "ans",
+            "im"
+          ],
+          "answer": "ans",
+          "explain": "Wohin? an + das Meer → ans Meer.",
+          "change": "ans Meer"
+        },
+        {
+          "id": "a2-verschmelzung-08",
+          "prompt": "Meine Tante wohnt direkt ___ Meer.",
+          "options": [
+            "am",
+            "im",
+            "ans"
+          ],
+          "answer": "am",
+          "explain": "Wo? an + dem Meer → am Meer.",
+          "change": "am Meer"
+        },
+        {
+          "id": "a2-verschmelzung-09",
+          "prompt": "Ich bringe das Paket ___ Post.",
+          "options": [
+            "zum",
+            "beim",
+            "zur"
+          ],
+          "answer": "zur",
+          "explain": "zu + der Post (feminin) → zur Post.",
+          "change": "zur Post"
+        },
+        {
+          "id": "a2-verschmelzung-10",
+          "prompt": "Das Formular liegt ___ Büro auf dem Tisch.",
+          "options": [
+            "im",
+            "ins",
+            "zum"
+          ],
+          "answer": "im",
+          "explain": "Wo? in + dem Büro → im Büro.",
+          "change": "im Büro"
+        },
+        {
+          "id": "a2-verschmelzung-11",
+          "prompt": "Geh jetzt bitte ___ Bett, es ist schon spät.",
+          "options": [
+            "ins",
+            "zum",
+            "im"
+          ],
+          "answer": "ins",
+          "explain": "Wohin? in + das Bett → ins Bett.",
+          "change": "ins Bett"
+        },
+        {
+          "id": "a2-verschmelzung-12",
+          "prompt": "Wir treffen uns um 10 Uhr ___ Bahnhof.",
+          "options": [
+            "ans",
+            "am",
+            "zum"
+          ],
+          "answer": "am",
+          "explain": "Wo? an + dem Bahnhof → am Bahnhof.",
+          "change": "am Bahnhof"
+        },
+        {
+          "id": "a2-verschmelzung-13",
+          "prompt": "Entschuldigung, wie komme ich ___ Bahnhof?",
+          "options": [
+            "zur",
+            "zum",
+            "am"
+          ],
+          "answer": "zum",
+          "explain": "zu + dem Bahnhof (maskulin) → zum Bahnhof.",
+          "change": "zum Bahnhof"
+        },
+        {
+          "id": "a2-verschmelzung-14",
+          "prompt": "Den neuen Schlüssel habe ich ___ Hausmeister bekommen.",
+          "options": [
+            "vom",
+            "beim",
+            "zum"
+          ],
+          "answer": "vom",
+          "explain": "Von wem? von + dem Hausmeister → vom Hausmeister.",
+          "change": "vom Hausmeister"
+        },
+        {
+          "id": "a2-verschmelzung-15",
+          "prompt": "___ Kochen höre ich gern Musik.",
+          "options": [
+            "Beim",
+            "Vom",
+            "Zum"
+          ],
+          "answer": "Beim",
+          "explain": "bei + dem Kochen → beim Kochen (während ich koche).",
+          "change": "Beim Kochen"
+        },
+        {
+          "id": "a2-verschmelzung-16",
+          "prompt": "Unsere Tochter geht schon ___ Schule.",
+          "options": [
+            "im",
+            "zum",
+            "zur"
+          ],
+          "answer": "zur",
+          "explain": "zu + der Schule (feminin) → zur Schule.",
+          "change": "zur Schule"
+        },
+        {
+          "id": "a2-verschmelzung-17",
+          "prompt": "Kannst du mich morgen ___ Flughafen bringen?",
+          "options": [
+            "vom",
+            "zur",
+            "zum"
+          ],
+          "answer": "zum",
+          "explain": "zu + dem Flughafen (maskulin) → zum Flughafen.",
+          "change": "zum Flughafen"
+        },
+        {
+          "id": "a2-verschmelzung-18",
+          "prompt": "Ich hole dich nach der Reise ___ Flughafen ab.",
+          "options": [
+            "vom",
+            "ins",
+            "zum"
+          ],
+          "answer": "vom",
+          "explain": "Woher? von + dem Flughafen → vom Flughafen abholen.",
+          "change": "vom Flughafen"
+        },
+        {
+          "id": "a2-verschmelzung-19",
+          "prompt": "Häng den Zettel bitte ___ Schwarze Brett.",
+          "options": [
+            "ans",
+            "im",
+            "am"
+          ],
+          "answer": "ans",
+          "explain": "Wohin? an + das Brett → ans Schwarze Brett.",
+          "change": "ans Schwarze Brett"
+        },
+        {
+          "id": "a2-verschmelzung-20",
+          "prompt": "Der Zettel hängt schon ___ Schwarzen Brett.",
+          "options": [
+            "im",
+            "am",
+            "ans"
+          ],
+          "answer": "am",
+          "explain": "Wo? an + dem Brett → am Schwarzen Brett.",
+          "change": "am Schwarzen Brett"
+        },
+        {
+          "id": "a2-verschmelzung-21",
+          "prompt": "Meine Tochter arbeitet ___ Bäcker um die Ecke.",
+          "options": [
+            "vom",
+            "beim",
+            "zum"
+          ],
+          "answer": "beim",
+          "explain": "Wo? bei + dem Bäcker → beim Bäcker.",
+          "change": "beim Bäcker"
+        },
+        {
+          "id": "a2-verschmelzung-22",
+          "prompt": "Morgen muss ich mit meinem Pass ___ Bürgeramt.",
+          "options": [
+            "im",
+            "zum",
+            "zur"
+          ],
+          "answer": "zum",
+          "explain": "zu + dem Bürgeramt (neutral) → zum Bürgeramt.",
+          "change": "zum Bürgeramt"
+        },
+        {
+          "id": "a2-verschmelzung-23",
+          "prompt": "Der Termin beim Jobcenter ist ___ Freitag.",
+          "options": [
+            "ans",
+            "im",
+            "am"
+          ],
+          "answer": "am",
+          "explain": "Zeit: an + dem Freitag → am Freitag.",
+          "change": "am Freitag"
+        },
+        {
+          "id": "a2-verschmelzung-24",
+          "prompt": "Er macht ___ Juli drei Wochen Urlaub.",
+          "options": [
+            "im",
+            "ins",
+            "am"
+          ],
+          "answer": "im",
+          "explain": "Zeit: in + dem Juli → im Juli.",
+          "change": "im Juli"
+        },
+        {
+          "id": "a2-verschmelzung-25",
+          "prompt": "Ich brauche noch Brot, ich gehe schnell ___ Bäckerei.",
+          "options": [
+            "beim",
+            "zur",
+            "zum"
+          ],
+          "answer": "zur",
+          "explain": "zu + der Bäckerei (feminin) → zur Bäckerei.",
+          "change": "zur Bäckerei"
+        }
+      ]
+    },
+    {
+      "id": "b1-verben-akk",
+      "level": "B1",
+      "name": "Verben mit Präposition + Akkusativ",
+      "preps": "an · auf · für · über · um",
+      "rule": {
+        "text": "Viele Verben haben eine feste Präposition. Man muss Verb und Präposition zusammen lernen. Nach diesen Präpositionen steht hier immer der Akkusativ.",
+        "table": {
+          "caption": "Verben mit Präposition + Akkusativ",
+          "head": [
+            "Verb",
+            "Präposition",
+            "Beispiel"
+          ],
+          "rows": [
+            [
+              "denken",
+              "an",
+              "Ich denke an meine Familie."
+            ],
+            [
+              "warten",
+              "auf",
+              "Wir warten auf den Bus."
+            ],
+            [
+              "sich freuen",
+              "auf",
+              "Ich freue mich auf den Urlaub. (Zukunft)"
+            ],
+            [
+              "sich freuen",
+              "über",
+              "Ich freue mich über das Geschenk. (jetzt/vorbei)"
+            ],
+            [
+              "sich interessieren",
+              "für",
+              "Sie interessiert sich für den Beruf."
+            ],
+            [
+              "sich kümmern",
+              "um",
+              "Er kümmert sich um die Kinder."
+            ],
+            [
+              "sich bewerben",
+              "um",
+              "Ich bewerbe mich um eine Stelle."
+            ],
+            [
+              "sich ärgern",
+              "über",
+              "Er ärgert sich über die Rechnung."
+            ]
+          ]
+        }
+      },
+      "questions": [
+        {
+          "id": "b1-verben-akk-01",
+          "prompt": "Ich denke oft ___ meine Familie in Syrien.",
+          "options": [
+            "für",
+            "auf",
+            "an",
+            "über"
+          ],
+          "answer": "an",
+          "explain": "denken an + Akkusativ: an meine Familie.",
+          "change": "denken an meine Familie"
+        },
+        {
+          "id": "b1-verben-akk-02",
+          "prompt": "Wir warten seit einer Stunde ___ den Bus.",
+          "options": [
+            "auf",
+            "an",
+            "für",
+            "um"
+          ],
+          "answer": "auf",
+          "explain": "warten auf + Akkusativ: auf den Bus.",
+          "change": "warten auf den Bus"
+        },
+        {
+          "id": "b1-verben-akk-03",
+          "prompt": "Sie freut sich schon ___ den Urlaub im August.",
+          "options": [
+            "über",
+            "auf",
+            "an",
+            "für"
+          ],
+          "answer": "auf",
+          "explain": "sich freuen auf + Akkusativ: etwas kommt noch (Zukunft).",
+          "change": "sich freuen auf den Urlaub"
+        },
+        {
+          "id": "b1-verben-akk-04",
+          "prompt": "Er hat sich sehr ___ das Geschenk seiner Kollegen gefreut.",
+          "options": [
+            "auf",
+            "an",
+            "über",
+            "um"
+          ],
+          "answer": "über",
+          "explain": "sich freuen über + Akkusativ: das Geschenk ist schon da.",
+          "change": "sich freuen über das Geschenk"
+        },
+        {
+          "id": "b1-verben-akk-05",
+          "prompt": "Interessierst du dich ___ eine Ausbildung als Pflegekraft?",
+          "options": [
+            "an",
+            "über",
+            "für",
+            "um"
+          ],
+          "answer": "für",
+          "explain": "sich interessieren für + Akkusativ: für eine Ausbildung.",
+          "change": "sich interessieren für eine Ausbildung"
+        },
+        {
+          "id": "b1-verben-akk-06",
+          "prompt": "Wer kümmert sich ___ die Kinder, wenn du arbeitest?",
+          "options": [
+            "an",
+            "für",
+            "auf",
+            "um"
+          ],
+          "answer": "um",
+          "explain": "sich kümmern um + Akkusativ: um die Kinder.",
+          "change": "sich kümmern um die Kinder"
+        },
+        {
+          "id": "b1-verben-akk-07",
+          "prompt": "Der Mieter ärgert sich ___ die hohe Nebenkostenabrechnung.",
+          "options": [
+            "über",
+            "an",
+            "für",
+            "um"
+          ],
+          "answer": "über",
+          "explain": "sich ärgern über + Akkusativ: über die Abrechnung.",
+          "change": "sich ärgern über die Nebenkostenabrechnung"
+        },
+        {
+          "id": "b1-verben-akk-08",
+          "prompt": "Ich bewerbe mich ___ eine Stelle als Lagerarbeiter.",
+          "options": [
+            "auf",
+            "an",
+            "für",
+            "um"
+          ],
+          "answer": "um",
+          "explain": "sich bewerben um + Akkusativ: um eine Stelle.",
+          "change": "sich bewerben um eine Stelle"
+        },
+        {
+          "id": "b1-verben-akk-09",
+          "prompt": "Wir müssen uns noch ___ einen Termin beim Bürgeramt kümmern.",
+          "options": [
+            "für",
+            "an",
+            "auf",
+            "um"
+          ],
+          "answer": "um",
+          "explain": "sich kümmern um + Akkusativ: um einen Termin.",
+          "change": "sich kümmern um einen Termin"
+        },
+        {
+          "id": "b1-verben-akk-10",
+          "prompt": "Die Ärztin bittet den Patienten ___ etwas Geduld.",
+          "options": [
+            "für",
+            "nach",
+            "um",
+            "auf"
+          ],
+          "answer": "um",
+          "explain": "bitten um + Akkusativ: um Geduld.",
+          "change": "bitten um etwas Geduld"
+        },
+        {
+          "id": "b1-verben-akk-11",
+          "prompt": "Der Chef hat sich ___ die Verspätung beschwert.",
+          "options": [
+            "über",
+            "an",
+            "für",
+            "um"
+          ],
+          "answer": "über",
+          "explain": "sich beschweren über + Akkusativ: über die Verspätung.",
+          "change": "sich beschweren über die Verspätung"
+        },
+        {
+          "id": "b1-verben-akk-12",
+          "prompt": "Hast du schon ___ die Rechnung gedacht?",
+          "options": [
+            "an",
+            "auf",
+            "über",
+            "um"
+          ],
+          "answer": "an",
+          "explain": "denken an + Akkusativ: an die Rechnung.",
+          "change": "denken an die Rechnung"
+        },
+        {
+          "id": "b1-verben-akk-13",
+          "prompt": "Nach langem Überlegen hat sie sich ___ den Job in Köln entschieden.",
+          "options": [
+            "an",
+            "auf",
+            "um",
+            "für"
+          ],
+          "answer": "für",
+          "explain": "sich entscheiden für + Akkusativ: für den Job.",
+          "change": "sich entscheiden für den Job"
+        },
+        {
+          "id": "b1-verben-akk-14",
+          "prompt": "Im Haus muss man sich ___ die Hausordnung halten.",
+          "options": [
+            "um",
+            "an",
+            "auf",
+            "für"
+          ],
+          "answer": "an",
+          "explain": "sich halten an + Akkusativ: an die Hausordnung.",
+          "change": "sich halten an die Hausordnung"
+        },
+        {
+          "id": "b1-verben-akk-15",
+          "prompt": "Ich danke Ihnen ___ Ihre Hilfe beim Formular.",
+          "options": [
+            "über",
+            "um",
+            "für",
+            "auf"
+          ],
+          "answer": "für",
+          "explain": "danken für + Akkusativ: für Ihre Hilfe.",
+          "change": "danken für Ihre Hilfe"
+        },
+        {
+          "id": "b1-verben-akk-16",
+          "prompt": "Die Firma sorgt ___ eine gute Einarbeitung der neuen Mitarbeiter.",
+          "options": [
+            "an",
+            "über",
+            "für",
+            "auf"
+          ],
+          "answer": "für",
+          "explain": "sorgen für + Akkusativ: für eine gute Einarbeitung.",
+          "change": "sorgen für eine gute Einarbeitung"
+        },
+        {
+          "id": "b1-verben-akk-17",
+          "prompt": "Die Zeitung berichtet ___ den Streik bei der Bahn.",
+          "options": [
+            "für",
+            "über",
+            "an",
+            "um"
+          ],
+          "answer": "über",
+          "explain": "berichten über + Akkusativ: über den Streik.",
+          "change": "berichten über den Streik"
+        },
+        {
+          "id": "b1-verben-akk-18",
+          "prompt": "Ich kann mich nicht ___ den Namen des Arztes erinnern.",
+          "options": [
+            "über",
+            "an",
+            "auf",
+            "um"
+          ],
+          "answer": "an",
+          "explain": "sich erinnern an + Akkusativ: an den Namen.",
+          "change": "sich erinnern an den Namen"
+        },
+        {
+          "id": "b1-verben-akk-19",
+          "prompt": "Du kannst dich immer ___ mich verlassen.",
+          "options": [
+            "um",
+            "auf",
+            "an",
+            "für"
+          ],
+          "answer": "auf",
+          "explain": "sich verlassen auf + Akkusativ: auf mich.",
+          "change": "sich verlassen auf mich"
+        },
+        {
+          "id": "b1-verben-akk-20",
+          "prompt": "Wir haben uns lange ___ die Politik in Deutschland unterhalten.",
+          "options": [
+            "an",
+            "auf",
+            "über",
+            "um"
+          ],
+          "answer": "über",
+          "explain": "sich unterhalten über + Akkusativ: über die Politik.",
+          "change": "sich unterhalten über die Politik"
+        },
+        {
+          "id": "b1-verben-akk-21",
+          "prompt": "Er hat sich ___ den Deutschkurs am Abend angemeldet.",
+          "options": [
+            "an",
+            "für",
+            "um",
+            "über"
+          ],
+          "answer": "für",
+          "explain": "sich anmelden für + Akkusativ: für den Deutschkurs.",
+          "change": "sich anmelden für den Deutschkurs"
+        },
+        {
+          "id": "b1-verben-akk-22",
+          "prompt": "Ich muss mich erst ___ das neue Team gewöhnen.",
+          "options": [
+            "für",
+            "an",
+            "über",
+            "auf"
+          ],
+          "answer": "an",
+          "explain": "sich gewöhnen an + Akkusativ: an das neue Team.",
+          "change": "sich gewöhnen an das neue Team"
+        },
+        {
+          "id": "b1-verben-akk-23",
+          "prompt": "Die Nachbarin passt am Wochenende ___ unseren Hund auf.",
+          "options": [
+            "an",
+            "für",
+            "auf",
+            "um"
+          ],
+          "answer": "auf",
+          "explain": "aufpassen auf + Akkusativ: auf unseren Hund.",
+          "change": "aufpassen auf unseren Hund"
+        },
+        {
+          "id": "b1-verben-akk-24",
+          "prompt": "Die Mitarbeiter diskutieren ___ den neuen Dienstplan.",
+          "options": [
+            "über",
+            "für",
+            "an",
+            "um"
+          ],
+          "answer": "über",
+          "explain": "diskutieren über + Akkusativ: über den Dienstplan.",
+          "change": "diskutieren über den neuen Dienstplan"
+        },
+        {
+          "id": "b1-verben-akk-25",
+          "prompt": "In dem Gespräch geht es ___ eine Gehaltserhöhung.",
+          "options": [
+            "für",
+            "über",
+            "um",
+            "an"
+          ],
+          "answer": "um",
+          "explain": "es geht um + Akkusativ: um eine Gehaltserhöhung.",
+          "change": "es geht um eine Gehaltserhöhung"
+        }
+      ]
+    },
+    {
+      "id": "b1-verben-dat",
+      "level": "B1",
+      "name": "Verben mit Präposition + Dativ",
+      "preps": "an · aus · bei · mit · nach · von · vor · zu",
+      "rule": {
+        "text": "Auch diese Verben haben eine feste Präposition. Nach aus, bei, mit, nach, von und zu steht immer der Dativ. Bei an und vor hängt es vom Verb ab: teilnehmen an und Angst haben vor brauchen den Dativ.",
+        "table": {
+          "caption": "Verben mit Präposition + Dativ",
+          "head": [
+            "Verb",
+            "Präposition",
+            "Beispiel"
+          ],
+          "rows": [
+            [
+              "teilnehmen",
+              "an",
+              "Ich nehme an dem Kurs teil."
+            ],
+            [
+              "bestehen",
+              "aus",
+              "Die Wohnung besteht aus zwei Zimmern."
+            ],
+            [
+              "sich bedanken",
+              "bei",
+              "Ich bedanke mich bei Ihnen."
+            ],
+            [
+              "sich beschäftigen",
+              "mit",
+              "Sie beschäftigt sich mit der Buchhaltung."
+            ],
+            [
+              "fragen",
+              "nach",
+              "Er fragt nach dem Weg."
+            ],
+            [
+              "träumen",
+              "von",
+              "Sie träumt von einer eigenen Wohnung."
+            ],
+            [
+              "Angst haben",
+              "vor",
+              "Er hat Angst vor dem Zahnarzt."
+            ],
+            [
+              "gratulieren",
+              "zu",
+              "Wir gratulieren dir zum Geburtstag."
+            ]
+          ]
+        }
+      },
+      "questions": [
+        {
+          "id": "b1-verben-dat-01",
+          "prompt": "Nächste Woche nehme ich ___ einem Erste-Hilfe-Kurs teil.",
+          "options": [
+            "an",
+            "zu",
+            "mit",
+            "bei"
+          ],
+          "answer": "an",
+          "explain": "teilnehmen an + Dativ: an einem Kurs.",
+          "change": "teilnehmen an einem Erste-Hilfe-Kurs"
+        },
+        {
+          "id": "b1-verben-dat-02",
+          "prompt": "Sie träumt ___ einer eigenen Wohnung mit Balkon.",
+          "options": [
+            "vor",
+            "nach",
+            "zu",
+            "von"
+          ],
+          "answer": "von",
+          "explain": "träumen von + Dativ: von einer Wohnung.",
+          "change": "träumen von einer eigenen Wohnung"
+        },
+        {
+          "id": "b1-verben-dat-03",
+          "prompt": "In der Ausbildung beschäftige ich mich viel ___ der Buchhaltung.",
+          "options": [
+            "bei",
+            "von",
+            "zu",
+            "mit"
+          ],
+          "answer": "mit",
+          "explain": "sich beschäftigen mit + Dativ: mit der Buchhaltung.",
+          "change": "sich beschäftigen mit der Buchhaltung"
+        },
+        {
+          "id": "b1-verben-dat-04",
+          "prompt": "Der Polizist fragt ___ meinem Ausweis.",
+          "options": [
+            "zu",
+            "nach",
+            "von",
+            "mit"
+          ],
+          "answer": "nach",
+          "explain": "fragen nach + Dativ: nach meinem Ausweis.",
+          "change": "fragen nach meinem Ausweis"
+        },
+        {
+          "id": "b1-verben-dat-05",
+          "prompt": "Viele Kinder haben Angst ___ dem Zahnarzt.",
+          "options": [
+            "von",
+            "mit",
+            "vor",
+            "bei"
+          ],
+          "answer": "vor",
+          "explain": "Angst haben vor + Dativ: vor dem Zahnarzt.",
+          "change": "Angst haben vor dem Zahnarzt"
+        },
+        {
+          "id": "b1-verben-dat-06",
+          "prompt": "Wir gratulieren dir herzlich ___ deiner bestandenen Prüfung.",
+          "options": [
+            "bei",
+            "für",
+            "zu",
+            "von"
+          ],
+          "answer": "zu",
+          "explain": "gratulieren zu + Dativ: zu deiner Prüfung.",
+          "change": "gratulieren zu deiner bestandenen Prüfung"
+        },
+        {
+          "id": "b1-verben-dat-07",
+          "prompt": "Ich möchte mich ___ Ihnen für die schnelle Hilfe bedanken.",
+          "options": [
+            "von",
+            "mit",
+            "zu",
+            "bei"
+          ],
+          "answer": "bei",
+          "explain": "sich bedanken bei + Dativ (Person): bei Ihnen.",
+          "change": "sich bedanken bei Ihnen"
+        },
+        {
+          "id": "b1-verben-dat-08",
+          "prompt": "Die Wohnung besteht ___ zwei Zimmern, Küche und Bad.",
+          "options": [
+            "mit",
+            "bei",
+            "aus",
+            "von"
+          ],
+          "answer": "aus",
+          "explain": "bestehen aus + Dativ: aus zwei Zimmern.",
+          "change": "bestehen aus zwei Zimmern"
+        },
+        {
+          "id": "b1-verben-dat-09",
+          "prompt": "Hast du schon ___ deiner Chefin über den Urlaub gesprochen?",
+          "options": [
+            "nach",
+            "zu",
+            "mit",
+            "bei"
+          ],
+          "answer": "mit",
+          "explain": "sprechen mit + Dativ (Person): mit deiner Chefin.",
+          "change": "sprechen mit deiner Chefin"
+        },
+        {
+          "id": "b1-verben-dat-10",
+          "prompt": "Er leidet seit Jahren ___ starken Rückenschmerzen.",
+          "options": [
+            "vor",
+            "an",
+            "von",
+            "bei"
+          ],
+          "answer": "an",
+          "explain": "leiden an + Dativ: an Rückenschmerzen.",
+          "change": "leiden an starken Rückenschmerzen"
+        },
+        {
+          "id": "b1-verben-dat-11",
+          "prompt": "Ich habe mich ___ der Firma als Elektriker beworben.",
+          "options": [
+            "mit",
+            "nach",
+            "bei",
+            "zu"
+          ],
+          "answer": "bei",
+          "explain": "sich bewerben bei + Dativ (Firma): bei der Firma.",
+          "change": "sich bewerben bei der Firma"
+        },
+        {
+          "id": "b1-verben-dat-12",
+          "prompt": "Das hängt ___ der Entscheidung des Jobcenters ab.",
+          "options": [
+            "von",
+            "bei",
+            "mit",
+            "an"
+          ],
+          "answer": "von",
+          "explain": "abhängen von + Dativ: von der Entscheidung.",
+          "change": "abhängen von der Entscheidung"
+        },
+        {
+          "id": "b1-verben-dat-13",
+          "prompt": "Der Arzt hat mir ___ einer Operation geraten.",
+          "options": [
+            "zu",
+            "von",
+            "bei",
+            "nach"
+          ],
+          "answer": "zu",
+          "explain": "raten zu + Dativ: zu einer Operation.",
+          "change": "raten zu einer Operation"
+        },
+        {
+          "id": "b1-verben-dat-14",
+          "prompt": "Er hat sich herzlich ___ seinen Kollegen verabschiedet.",
+          "options": [
+            "zu",
+            "mit",
+            "von",
+            "bei"
+          ],
+          "answer": "von",
+          "explain": "sich verabschieden von + Dativ: von seinen Kollegen.",
+          "change": "sich verabschieden von seinen Kollegen"
+        },
+        {
+          "id": "b1-verben-dat-15",
+          "prompt": "Was hältst du ___ dem neuen Gesetz?",
+          "options": [
+            "von",
+            "zu",
+            "mit",
+            "über"
+          ],
+          "answer": "von",
+          "explain": "halten von + Dativ (Meinung): von dem neuen Gesetz.",
+          "change": "halten von dem neuen Gesetz"
+        },
+        {
+          "id": "b1-verben-dat-16",
+          "prompt": "Die Mieter beschweren sich ___ dem Hausmeister über den Lärm.",
+          "options": [
+            "bei",
+            "mit",
+            "von",
+            "zu"
+          ],
+          "answer": "bei",
+          "explain": "sich beschweren bei + Dativ (Person): bei dem Hausmeister.",
+          "change": "sich beschweren bei dem Hausmeister"
+        },
+        {
+          "id": "b1-verben-dat-17",
+          "prompt": "Wir suchen seit Monaten ___ einer bezahlbaren Wohnung.",
+          "options": [
+            "nach",
+            "zu",
+            "von",
+            "aus"
+          ],
+          "answer": "nach",
+          "explain": "suchen nach + Dativ: nach einer Wohnung.",
+          "change": "suchen nach einer bezahlbaren Wohnung"
+        },
+        {
+          "id": "b1-verben-dat-18",
+          "prompt": "Die Kinder fürchten sich ___ dem großen Hund.",
+          "options": [
+            "mit",
+            "vor",
+            "von",
+            "bei"
+          ],
+          "answer": "vor",
+          "explain": "sich fürchten vor + Dativ: vor dem Hund.",
+          "change": "sich fürchten vor dem großen Hund"
+        },
+        {
+          "id": "b1-verben-dat-19",
+          "prompt": "Hör endlich ___ dem Rauchen auf!",
+          "options": [
+            "mit",
+            "von",
+            "vor",
+            "zu"
+          ],
+          "answer": "mit",
+          "explain": "aufhören mit + Dativ: mit dem Rauchen.",
+          "change": "aufhören mit dem Rauchen"
+        },
+        {
+          "id": "b1-verben-dat-20",
+          "prompt": "Der Kurs setzt sich ___ zwölf Teilnehmenden zusammen.",
+          "options": [
+            "von",
+            "mit",
+            "bei",
+            "aus"
+          ],
+          "answer": "aus",
+          "explain": "sich zusammensetzen aus + Dativ: aus zwölf Teilnehmenden.",
+          "change": "sich zusammensetzen aus zwölf Teilnehmenden"
+        },
+        {
+          "id": "b1-verben-dat-21",
+          "prompt": "Wir laden euch herzlich ___ unserer Hochzeit ein.",
+          "options": [
+            "nach",
+            "bei",
+            "an",
+            "zu"
+          ],
+          "answer": "zu",
+          "explain": "einladen zu + Dativ: zu unserer Hochzeit.",
+          "change": "einladen zu unserer Hochzeit"
+        },
+        {
+          "id": "b1-verben-dat-22",
+          "prompt": "Die Ärztin hat sich ___ meinem Befinden erkundigt.",
+          "options": [
+            "zu",
+            "von",
+            "nach",
+            "mit"
+          ],
+          "answer": "nach",
+          "explain": "sich erkundigen nach + Dativ: nach meinem Befinden.",
+          "change": "sich erkundigen nach meinem Befinden"
+        },
+        {
+          "id": "b1-verben-dat-23",
+          "prompt": "Ich warne dich ___ diesem Vermieter.",
+          "options": [
+            "bei",
+            "mit",
+            "vor",
+            "von"
+          ],
+          "answer": "vor",
+          "explain": "warnen vor + Dativ: vor diesem Vermieter.",
+          "change": "warnen vor diesem Vermieter"
+        },
+        {
+          "id": "b1-verben-dat-24",
+          "prompt": "Der Streik bei der Bahn führt ___ langen Wartezeiten.",
+          "options": [
+            "zu",
+            "nach",
+            "von",
+            "mit"
+          ],
+          "answer": "zu",
+          "explain": "führen zu + Dativ: zu langen Wartezeiten.",
+          "change": "führen zu langen Wartezeiten"
+        },
+        {
+          "id": "b1-verben-dat-25",
+          "prompt": "Er entschuldigt sich ___ seinem Nachbarn für den Lärm.",
+          "options": [
+            "mit",
+            "von",
+            "zu",
+            "bei"
+          ],
+          "answer": "bei",
+          "explain": "sich entschuldigen bei + Dativ (Person): bei seinem Nachbarn.",
+          "change": "sich entschuldigen bei seinem Nachbarn"
+        }
+      ]
+    },
+    {
+      "id": "b1-genitiv",
+      "level": "B1",
+      "name": "Mit Genitiv: wegen, trotz …",
+      "preps": "statt · trotz · während · wegen",
+      "rule": {
+        "text": "Nach wegen, trotz, während und statt steht der Genitiv: des Streiks, der Miete. Wegen nennt einen Grund, trotz einen Gegengrund. Während heißt „in der Zeit von“, statt heißt „anstatt / nicht das, sondern …“.",
+        "table": {
+          "caption": "Präpositionen mit Genitiv",
+          "head": [
+            "Präposition",
+            "Bedeutung",
+            "Beispiel"
+          ],
+          "rows": [
+            [
+              "wegen",
+              "Grund",
+              "Wegen des Streiks fährt kein Bus."
+            ],
+            [
+              "trotz",
+              "Gegengrund",
+              "Trotz des Regens gehen wir spazieren."
+            ],
+            [
+              "während",
+              "Zeit",
+              "Während der Arbeit kein Handy."
+            ],
+            [
+              "statt",
+              "Ersatz",
+              "Statt eines Briefes kam eine E-Mail."
+            ]
+          ]
+        }
+      },
+      "questions": [
+        {
+          "id": "b1-genitiv-01",
+          "prompt": "___ des Streiks fahren heute keine Busse.",
+          "options": [
+            "Statt",
+            "Wegen",
+            "Trotz",
+            "Während"
+          ],
+          "answer": "Wegen",
+          "explain": "wegen + Genitiv nennt den Grund: wegen des Streiks.",
+          "change": "wegen des Streiks"
+        },
+        {
+          "id": "b1-genitiv-02",
+          "prompt": "___ des schlechten Wetters sind wir spazieren gegangen.",
+          "options": [
+            "Während",
+            "Wegen",
+            "Trotz",
+            "Statt"
+          ],
+          "answer": "Trotz",
+          "explain": "trotz + Genitiv: Das Wetter ist schlecht, aber wir gehen trotzdem.",
+          "change": "trotz des schlechten Wetters"
+        },
+        {
+          "id": "b1-genitiv-03",
+          "prompt": "___ der Arbeitszeit darf man das Handy nicht privat benutzen.",
+          "options": [
+            "Statt",
+            "Wegen",
+            "Während",
+            "Trotz"
+          ],
+          "answer": "Während",
+          "explain": "während + Genitiv nennt die Zeit: während der Arbeitszeit.",
+          "change": "während der Arbeitszeit"
+        },
+        {
+          "id": "b1-genitiv-04",
+          "prompt": "___ eines Briefes hat das Amt mir eine E-Mail geschickt.",
+          "options": [
+            "Statt",
+            "Trotz",
+            "Während",
+            "Wegen"
+          ],
+          "answer": "Statt",
+          "explain": "statt + Genitiv: nicht ein Brief, sondern eine E-Mail.",
+          "change": "statt eines Briefes"
+        },
+        {
+          "id": "b1-genitiv-05",
+          "prompt": "Er kam ___ seiner Erkältung zur Arbeit.",
+          "options": [
+            "während",
+            "trotz",
+            "statt",
+            "wegen"
+          ],
+          "answer": "trotz",
+          "explain": "trotz + Genitiv: Er ist erkältet, kommt aber trotzdem.",
+          "change": "trotz seiner Erkältung"
+        },
+        {
+          "id": "b1-genitiv-06",
+          "prompt": "Bitte sprechen Sie ___ der Prüfung nicht mit Ihrem Nachbarn.",
+          "options": [
+            "statt",
+            "während",
+            "wegen",
+            "trotz"
+          ],
+          "answer": "während",
+          "explain": "während + Genitiv nennt die Zeit: während der Prüfung.",
+          "change": "während der Prüfung"
+        },
+        {
+          "id": "b1-genitiv-07",
+          "prompt": "___ der hohen Miete ist sie in eine kleinere Wohnung gezogen.",
+          "options": [
+            "Wegen",
+            "Trotz",
+            "Während",
+            "Statt"
+          ],
+          "answer": "Wegen",
+          "explain": "wegen + Genitiv nennt den Grund: wegen der hohen Miete.",
+          "change": "wegen der hohen Miete"
+        },
+        {
+          "id": "b1-genitiv-08",
+          "prompt": "___ seiner guten Noten hat er keinen Ausbildungsplatz bekommen.",
+          "options": [
+            "Wegen",
+            "Während",
+            "Statt",
+            "Trotz"
+          ],
+          "answer": "Trotz",
+          "explain": "trotz + Genitiv: gute Noten, aber kein Platz.",
+          "change": "trotz seiner guten Noten"
+        },
+        {
+          "id": "b1-genitiv-09",
+          "prompt": "Ich trinke ___ eines Kaffees lieber einen Tee.",
+          "options": [
+            "statt",
+            "während",
+            "trotz",
+            "wegen"
+          ],
+          "answer": "statt",
+          "explain": "statt + Genitiv: Tee und nicht Kaffee.",
+          "change": "statt eines Kaffees"
+        },
+        {
+          "id": "b1-genitiv-10",
+          "prompt": "Der Zug hat ___ einer technischen Störung Verspätung.",
+          "options": [
+            "trotz",
+            "während",
+            "statt",
+            "wegen"
+          ],
+          "answer": "wegen",
+          "explain": "wegen + Genitiv nennt den Grund: wegen einer Störung.",
+          "change": "wegen einer technischen Störung"
+        },
+        {
+          "id": "b1-genitiv-11",
+          "prompt": "___ ihres Urlaubs hat sie keine E-Mails gelesen.",
+          "options": [
+            "Trotz",
+            "Statt",
+            "Während"
+          ],
+          "answer": "Während",
+          "explain": "während + Genitiv nennt die Zeit: während ihres Urlaubs.",
+          "change": "während ihres Urlaubs"
+        },
+        {
+          "id": "b1-genitiv-12",
+          "prompt": "Wir haben ___ der Kälte draußen gegessen.",
+          "options": [
+            "statt",
+            "wegen",
+            "trotz"
+          ],
+          "answer": "trotz",
+          "explain": "trotz + Genitiv: Es ist kalt, aber wir essen draußen.",
+          "change": "trotz der Kälte"
+        },
+        {
+          "id": "b1-genitiv-13",
+          "prompt": "___ der Bauarbeiten ist die Straße gesperrt.",
+          "options": [
+            "Wegen",
+            "Trotz",
+            "Statt"
+          ],
+          "answer": "Wegen",
+          "explain": "wegen + Genitiv nennt den Grund: wegen der Bauarbeiten.",
+          "change": "wegen der Bauarbeiten"
+        },
+        {
+          "id": "b1-genitiv-14",
+          "prompt": "Die Firma zahlt ___ eines Weihnachtsgeldes einen Einkaufsgutschein.",
+          "options": [
+            "während",
+            "trotz",
+            "wegen",
+            "statt"
+          ],
+          "answer": "statt",
+          "explain": "statt + Genitiv: ein Gutschein und kein Weihnachtsgeld.",
+          "change": "statt eines Weihnachtsgeldes"
+        },
+        {
+          "id": "b1-genitiv-15",
+          "prompt": "Er hat ___ der Warnung des Arztes weiter geraucht.",
+          "options": [
+            "während",
+            "statt",
+            "trotz",
+            "wegen"
+          ],
+          "answer": "trotz",
+          "explain": "trotz + Genitiv: Der Arzt warnt, aber er raucht weiter.",
+          "change": "trotz der Warnung"
+        },
+        {
+          "id": "b1-genitiv-16",
+          "prompt": "___ des Gesprächs mit der Sachbearbeiterin hat mein Handy geklingelt.",
+          "options": [
+            "Statt",
+            "Trotz",
+            "Wegen",
+            "Während"
+          ],
+          "answer": "Während",
+          "explain": "während + Genitiv nennt die Zeit: während des Gesprächs.",
+          "change": "während des Gesprächs"
+        },
+        {
+          "id": "b1-genitiv-17",
+          "prompt": "Das Stadtfest fällt ___ des Sturms aus.",
+          "options": [
+            "statt",
+            "wegen",
+            "während",
+            "trotz"
+          ],
+          "answer": "wegen",
+          "explain": "wegen + Genitiv nennt den Grund: wegen des Sturms.",
+          "change": "wegen des Sturms"
+        },
+        {
+          "id": "b1-genitiv-18",
+          "prompt": "___ aller Probleme hat sie die B1-Prüfung bestanden.",
+          "options": [
+            "Statt",
+            "Wegen",
+            "Trotz",
+            "Während"
+          ],
+          "answer": "Trotz",
+          "explain": "trotz + Genitiv: viele Probleme, aber Erfolg.",
+          "change": "trotz aller Probleme"
+        },
+        {
+          "id": "b1-genitiv-19",
+          "prompt": "Viele Pendler nehmen ___ des Autos lieber das Fahrrad.",
+          "options": [
+            "wegen",
+            "trotz",
+            "während",
+            "statt"
+          ],
+          "answer": "statt",
+          "explain": "statt + Genitiv: das Fahrrad und nicht das Auto.",
+          "change": "statt des Autos"
+        },
+        {
+          "id": "b1-genitiv-20",
+          "prompt": "___ der Schwangerschaft geht sie regelmäßig zur Vorsorge.",
+          "options": [
+            "Trotz",
+            "Während",
+            "Statt"
+          ],
+          "answer": "Während",
+          "explain": "während + Genitiv nennt die Zeit: während der Schwangerschaft.",
+          "change": "während der Schwangerschaft"
+        },
+        {
+          "id": "b1-genitiv-21",
+          "prompt": "Der Flug wurde ___ des dichten Nebels gestrichen.",
+          "options": [
+            "trotz",
+            "während",
+            "wegen",
+            "statt"
+          ],
+          "answer": "wegen",
+          "explain": "wegen + Genitiv nennt den Grund: wegen des Nebels.",
+          "change": "wegen des dichten Nebels"
+        },
+        {
+          "id": "b1-genitiv-22",
+          "prompt": "___ des Regens war der Marktplatz voller Menschen.",
+          "options": [
+            "Wegen",
+            "Statt",
+            "Trotz"
+          ],
+          "answer": "Trotz",
+          "explain": "trotz + Genitiv: Es regnet, aber viele Menschen kommen.",
+          "change": "trotz des Regens"
+        },
+        {
+          "id": "b1-genitiv-23",
+          "prompt": "Er hat ___ einer Kündigung nur eine Abmahnung bekommen.",
+          "options": [
+            "trotz",
+            "während",
+            "statt",
+            "wegen"
+          ],
+          "answer": "statt",
+          "explain": "statt + Genitiv: eine Abmahnung und keine Kündigung.",
+          "change": "statt einer Kündigung"
+        },
+        {
+          "id": "b1-genitiv-24",
+          "prompt": "___ der Nacht schaut die Pflegekraft alle zwei Stunden nach den Patienten.",
+          "options": [
+            "Statt",
+            "Trotz",
+            "Während",
+            "Wegen"
+          ],
+          "answer": "Während",
+          "explain": "während + Genitiv nennt die Zeit: während der Nacht.",
+          "change": "während der Nacht"
+        },
+        {
+          "id": "b1-genitiv-25",
+          "prompt": "___ meiner Krankheit kann ich morgen nicht zur Arbeit kommen.",
+          "options": [
+            "Wegen",
+            "Statt",
+            "Während",
+            "Trotz"
+          ],
+          "answer": "Wegen",
+          "explain": "wegen + Genitiv nennt den Grund: wegen meiner Krankheit.",
+          "change": "wegen meiner Krankheit"
+        }
+      ]
+    },
+    {
+      "id": "b1-adjektive",
+      "level": "B1",
+      "name": "Adjektive mit Präposition",
+      "preps": "an · auf · für · mit · über · von",
+      "rule": {
+        "text": "Auch viele Adjektive haben eine feste Präposition. Lernen Sie Adjektiv und Präposition zusammen. Die Präposition bestimmt den Kasus: auf, für und über meist mit Akkusativ, an, mit und von hier mit Dativ.",
+        "table": {
+          "caption": "Adjektive mit Präposition",
+          "head": [
+            "Adjektiv",
+            "Präposition",
+            "Beispiel"
+          ],
+          "rows": [
+            [
+              "stolz",
+              "auf + Akk.",
+              "Sie ist stolz auf ihre Tochter."
+            ],
+            [
+              "verantwortlich",
+              "für + Akk.",
+              "Er ist verantwortlich für das Lager."
+            ],
+            [
+              "froh",
+              "über + Akk.",
+              "Wir sind froh über die Antwort."
+            ],
+            [
+              "interessiert",
+              "an + Dat.",
+              "Ich bin interessiert an einem Praktikum."
+            ],
+            [
+              "zufrieden",
+              "mit + Dat.",
+              "Sie ist zufrieden mit der Stelle."
+            ],
+            [
+              "abhängig",
+              "von + Dat.",
+              "Das ist abhängig von dem Wetter."
+            ]
+          ]
+        }
+      },
+      "questions": [
+        {
+          "id": "b1-adjektive-01",
+          "prompt": "Die Eltern sind sehr stolz ___ ihre Tochter.",
+          "options": [
+            "auf",
+            "über",
+            "an",
+            "für"
+          ],
+          "answer": "auf",
+          "explain": "stolz auf + Akkusativ: auf ihre Tochter.",
+          "change": "stolz auf ihre Tochter"
+        },
+        {
+          "id": "b1-adjektive-02",
+          "prompt": "Bist du zufrieden ___ deiner neuen Stelle?",
+          "options": [
+            "von",
+            "über",
+            "an",
+            "mit"
+          ],
+          "answer": "mit",
+          "explain": "zufrieden mit + Dativ: mit deiner Stelle.",
+          "change": "zufrieden mit deiner neuen Stelle"
+        },
+        {
+          "id": "b1-adjektive-03",
+          "prompt": "Ich bin sehr interessiert ___ einem Praktikum in Ihrer Firma.",
+          "options": [
+            "von",
+            "an",
+            "für",
+            "mit"
+          ],
+          "answer": "an",
+          "explain": "interessiert an + Dativ: an einem Praktikum.",
+          "change": "interessiert an einem Praktikum"
+        },
+        {
+          "id": "b1-adjektive-04",
+          "prompt": "Viele Familien sind abhängig ___ der Unterstützung des Jobcenters.",
+          "options": [
+            "an",
+            "von",
+            "für",
+            "mit"
+          ],
+          "answer": "von",
+          "explain": "abhängig von + Dativ: von der Unterstützung.",
+          "change": "abhängig von der Unterstützung"
+        },
+        {
+          "id": "b1-adjektive-05",
+          "prompt": "Wer ist verantwortlich ___ die Reinigung des Treppenhauses?",
+          "options": [
+            "über",
+            "an",
+            "auf",
+            "für"
+          ],
+          "answer": "für",
+          "explain": "verantwortlich für + Akkusativ: für die Reinigung.",
+          "change": "verantwortlich für die Reinigung"
+        },
+        {
+          "id": "b1-adjektive-06",
+          "prompt": "Wir sind froh ___ die schnelle Antwort der Ausländerbehörde.",
+          "options": [
+            "über",
+            "für",
+            "an",
+            "auf"
+          ],
+          "answer": "über",
+          "explain": "froh über + Akkusativ: über die Antwort.",
+          "change": "froh über die schnelle Antwort"
+        },
+        {
+          "id": "b1-adjektive-07",
+          "prompt": "Sie ist seit fünf Jahren ___ einem Deutschen verheiratet.",
+          "options": [
+            "mit",
+            "von",
+            "an",
+            "für"
+          ],
+          "answer": "mit",
+          "explain": "verheiratet mit + Dativ: mit einem Deutschen.",
+          "change": "verheiratet mit einem Deutschen"
+        },
+        {
+          "id": "b1-adjektive-08",
+          "prompt": "Ich bin inzwischen ___ das frühe Aufstehen gewöhnt.",
+          "options": [
+            "mit",
+            "auf",
+            "an",
+            "für"
+          ],
+          "answer": "an",
+          "explain": "gewöhnt an + Akkusativ: an das frühe Aufstehen.",
+          "change": "gewöhnt an das frühe Aufstehen"
+        },
+        {
+          "id": "b1-adjektive-09",
+          "prompt": "Die Kinder sind schon gespannt ___ den ersten Schultag.",
+          "options": [
+            "auf",
+            "von",
+            "über",
+            "an"
+          ],
+          "answer": "auf",
+          "explain": "gespannt auf + Akkusativ: auf den ersten Schultag.",
+          "change": "gespannt auf den ersten Schultag"
+        },
+        {
+          "id": "b1-adjektive-10",
+          "prompt": "Frau Özdemir ist ___ Ihren Antrag zuständig.",
+          "options": [
+            "für",
+            "auf",
+            "über",
+            "an"
+          ],
+          "answer": "für",
+          "explain": "zuständig für + Akkusativ: für Ihren Antrag.",
+          "change": "zuständig für Ihren Antrag"
+        },
+        {
+          "id": "b1-adjektive-11",
+          "prompt": "Der Patient ist dankbar ___ die gute Pflege.",
+          "options": [
+            "auf",
+            "über",
+            "für",
+            "an"
+          ],
+          "answer": "für",
+          "explain": "dankbar für + Akkusativ: für die gute Pflege.",
+          "change": "dankbar für die gute Pflege"
+        },
+        {
+          "id": "b1-adjektive-12",
+          "prompt": "Mein Vater ist ___ einer schweren Grippe erkrankt.",
+          "options": [
+            "an",
+            "über",
+            "mit",
+            "von"
+          ],
+          "answer": "an",
+          "explain": "erkrankt an + Dativ: an einer Grippe.",
+          "change": "erkrankt an einer schweren Grippe"
+        },
+        {
+          "id": "b1-adjektive-13",
+          "prompt": "Bist du ___ dem Vorschlag der Vermieterin einverstanden?",
+          "options": [
+            "mit",
+            "von",
+            "an",
+            "für"
+          ],
+          "answer": "mit",
+          "explain": "einverstanden mit + Dativ: mit dem Vorschlag.",
+          "change": "einverstanden mit dem Vorschlag"
+        },
+        {
+          "id": "b1-adjektive-14",
+          "prompt": "Ältere Menschen sind oft ___ die Hilfe ihrer Nachbarn angewiesen.",
+          "options": [
+            "an",
+            "über",
+            "für",
+            "auf"
+          ],
+          "answer": "auf",
+          "explain": "angewiesen auf + Akkusativ: auf die Hilfe.",
+          "change": "angewiesen auf die Hilfe"
+        },
+        {
+          "id": "b1-adjektive-15",
+          "prompt": "Die Mitarbeiter sind ___ dem neuen Chef begeistert.",
+          "options": [
+            "für",
+            "an",
+            "von",
+            "mit"
+          ],
+          "answer": "von",
+          "explain": "begeistert von + Dativ: von dem neuen Chef.",
+          "change": "begeistert von dem neuen Chef"
+        },
+        {
+          "id": "b1-adjektive-16",
+          "prompt": "Diese Arbeit ist nicht geeignet ___ Menschen mit Rückenproblemen.",
+          "options": [
+            "von",
+            "an",
+            "auf",
+            "für"
+          ],
+          "answer": "für",
+          "explain": "geeignet für + Akkusativ: für Menschen mit Rückenproblemen.",
+          "change": "geeignet für Menschen mit Rückenproblemen"
+        },
+        {
+          "id": "b1-adjektive-17",
+          "prompt": "Der Fahrer war schuld ___ dem Unfall.",
+          "options": [
+            "für",
+            "mit",
+            "von",
+            "an"
+          ],
+          "answer": "an",
+          "explain": "schuld an + Dativ: an dem Unfall.",
+          "change": "schuld an dem Unfall"
+        },
+        {
+          "id": "b1-adjektive-18",
+          "prompt": "Ich bin fest ___ deinem Erfolg überzeugt.",
+          "options": [
+            "an",
+            "über",
+            "von",
+            "mit"
+          ],
+          "answer": "von",
+          "explain": "überzeugt von + Dativ: von deinem Erfolg.",
+          "change": "überzeugt von deinem Erfolg"
+        },
+        {
+          "id": "b1-adjektive-19",
+          "prompt": "Wir sind sehr traurig ___ die Nachricht aus der Heimat.",
+          "options": [
+            "für",
+            "an",
+            "auf",
+            "über"
+          ],
+          "answer": "über",
+          "explain": "traurig über + Akkusativ: über die Nachricht.",
+          "change": "traurig über die Nachricht"
+        },
+        {
+          "id": "b1-adjektive-20",
+          "prompt": "Seit dem Umzug ist sie gut ___ unseren Nachbarn befreundet.",
+          "options": [
+            "an",
+            "mit",
+            "von",
+            "für"
+          ],
+          "answer": "mit",
+          "explain": "befreundet mit + Dativ: mit unseren Nachbarn.",
+          "change": "befreundet mit unseren Nachbarn"
+        },
+        {
+          "id": "b1-adjektive-21",
+          "prompt": "Viele Menschen sind neugierig ___ das Ergebnis der Wahl.",
+          "options": [
+            "auf",
+            "an",
+            "über",
+            "für"
+          ],
+          "answer": "auf",
+          "explain": "neugierig auf + Akkusativ: auf das Ergebnis.",
+          "change": "neugierig auf das Ergebnis"
+        },
+        {
+          "id": "b1-adjektive-22",
+          "prompt": "Sind Sie schon fertig ___ dem Formular?",
+          "options": [
+            "für",
+            "an",
+            "von",
+            "mit"
+          ],
+          "answer": "mit",
+          "explain": "fertig mit + Dativ: mit dem Formular.",
+          "change": "fertig mit dem Formular"
+        },
+        {
+          "id": "b1-adjektive-23",
+          "prompt": "Pünktlichkeit ist typisch ___ den deutschen Arbeitsalltag.",
+          "options": [
+            "an",
+            "auf",
+            "über",
+            "für"
+          ],
+          "answer": "für",
+          "explain": "typisch für + Akkusativ: für den Arbeitsalltag.",
+          "change": "typisch für den deutschen Arbeitsalltag"
+        },
+        {
+          "id": "b1-adjektive-24",
+          "prompt": "Obst und Gemüse sind reich ___ Vitaminen.",
+          "options": [
+            "von",
+            "mit",
+            "für",
+            "an"
+          ],
+          "answer": "an",
+          "explain": "reich an + Dativ: an Vitaminen.",
+          "change": "reich an Vitaminen"
+        },
+        {
+          "id": "b1-adjektive-25",
+          "prompt": "Mit einem eigenen Einkommen ist man unabhängig ___ seinen Eltern.",
+          "options": [
+            "von",
+            "an",
+            "für",
+            "mit"
+          ],
+          "answer": "von",
+          "explain": "unabhängig von + Dativ: von seinen Eltern.",
+          "change": "unabhängig von seinen Eltern"
+        }
+      ]
+    },
+    {
+      "id": "b2-genitiv",
+      "level": "B2",
+      "name": "Genitiv – gehoben",
+      "preps": "angesichts · anstelle · aufgrund · außerhalb · bezüglich · infolge · innerhalb · mithilfe",
+      "rule": {
+        "text": "Diese Präpositionen mit Genitiv klingen formell. Man findet sie oft in Briefen vom Amt, in Verträgen und in den Nachrichten. Im Gespräch sagt man oft einfacher: wegen, statt, mit.",
+        "table": {
+          "caption": "Gehobene Präpositionen mit Genitiv",
+          "head": [
+            "Präposition",
+            "Bedeutung",
+            "Beispiel"
+          ],
+          "rows": [
+            [
+              "aufgrund",
+              "Grund (= wegen)",
+              "aufgrund eines Defekts"
+            ],
+            [
+              "infolge",
+              "Folge von etwas",
+              "infolge des Unwetters"
+            ],
+            [
+              "angesichts",
+              "weil man etwas sieht / bedenkt",
+              "angesichts der hohen Preise"
+            ],
+            [
+              "anstelle",
+              "Ersatz (= statt)",
+              "anstelle eines Zeugnisses"
+            ],
+            [
+              "außerhalb",
+              "nicht in (Ort / Zeit)",
+              "außerhalb der Stadt"
+            ],
+            [
+              "innerhalb",
+              "in (Ort / Zeit)",
+              "innerhalb eines Monats"
+            ],
+            [
+              "bezüglich",
+              "Thema (= zu)",
+              "bezüglich Ihrer Anfrage"
+            ],
+            [
+              "mithilfe",
+              "Mittel (= mit)",
+              "mithilfe eines Übersetzers"
+            ]
+          ]
+        }
+      },
+      "questions": [
+        {
+          "id": "b2-genitiv-01",
+          "prompt": "Bitte zahlen Sie die Rechnung ___ der nächsten zwei Wochen.",
+          "options": [
+            "innerhalb",
+            "außerhalb",
+            "bezüglich",
+            "anstelle"
+          ],
+          "answer": "innerhalb",
+          "explain": "innerhalb + Genitiv nennt eine Frist: innerhalb der nächsten zwei Wochen.",
+          "change": "innerhalb der nächsten zwei Wochen"
+        },
+        {
+          "id": "b2-genitiv-02",
+          "prompt": "___ der Öffnungszeiten ist das Bürgeramt telefonisch nicht erreichbar.",
+          "options": [
+            "Außerhalb",
+            "Bezüglich",
+            "Innerhalb",
+            "Mithilfe"
+          ],
+          "answer": "Außerhalb",
+          "explain": "außerhalb + Genitiv: nicht in der Zeit der Öffnungszeiten.",
+          "change": "außerhalb der Öffnungszeiten"
+        },
+        {
+          "id": "b2-genitiv-03",
+          "prompt": "___ Ihrer Anfrage vom 3. Mai teilen wir Ihnen Folgendes mit.",
+          "options": [
+            "Anstelle",
+            "Außerhalb",
+            "Mithilfe",
+            "Bezüglich"
+          ],
+          "answer": "Bezüglich",
+          "explain": "bezüglich + Genitiv nennt das Thema: bezüglich Ihrer Anfrage.",
+          "change": "bezüglich Ihrer Anfrage"
+        },
+        {
+          "id": "b2-genitiv-04",
+          "prompt": "___ eines Übersetzers konnte sie das Formular ausfüllen.",
+          "options": [
+            "Bezüglich",
+            "Mithilfe",
+            "Anstelle",
+            "Außerhalb"
+          ],
+          "answer": "Mithilfe",
+          "explain": "mithilfe + Genitiv nennt das Mittel: mithilfe eines Übersetzers.",
+          "change": "mithilfe eines Übersetzers"
+        },
+        {
+          "id": "b2-genitiv-05",
+          "prompt": "___ der steigenden Energiepreise sparen viele Haushalte Strom.",
+          "options": [
+            "Mithilfe",
+            "Außerhalb",
+            "Anstelle",
+            "Angesichts"
+          ],
+          "answer": "Angesichts",
+          "explain": "angesichts + Genitiv: weil man die hohen Preise sieht.",
+          "change": "angesichts der steigenden Energiepreise"
+        },
+        {
+          "id": "b2-genitiv-06",
+          "prompt": "Der Zug fällt ___ eines technischen Defekts aus.",
+          "options": [
+            "anstelle",
+            "aufgrund",
+            "innerhalb",
+            "bezüglich"
+          ],
+          "answer": "aufgrund",
+          "explain": "aufgrund + Genitiv nennt den Grund: aufgrund eines Defekts.",
+          "change": "aufgrund eines technischen Defekts"
+        },
+        {
+          "id": "b2-genitiv-07",
+          "prompt": "___ des Unwetters kam es in vielen Orten zu Überschwemmungen.",
+          "options": [
+            "Mithilfe",
+            "Anstelle",
+            "Bezüglich",
+            "Infolge"
+          ],
+          "answer": "Infolge",
+          "explain": "infolge + Genitiv nennt die Ursache einer Folge: infolge des Unwetters.",
+          "change": "infolge des Unwetters"
+        },
+        {
+          "id": "b2-genitiv-08",
+          "prompt": "___ eines Arbeitszeugnisses können Sie auch eine Bescheinigung einreichen.",
+          "options": [
+            "Anstelle",
+            "Infolge",
+            "Bezüglich",
+            "Mithilfe"
+          ],
+          "answer": "Anstelle",
+          "explain": "anstelle + Genitiv: eine Bescheinigung statt eines Zeugnisses.",
+          "change": "anstelle eines Arbeitszeugnisses"
+        },
+        {
+          "id": "b2-genitiv-09",
+          "prompt": "Die Wohnung liegt ___ der Stadt, deshalb braucht man ein Auto.",
+          "options": [
+            "innerhalb",
+            "anstelle",
+            "bezüglich",
+            "außerhalb"
+          ],
+          "answer": "außerhalb",
+          "explain": "außerhalb + Genitiv: nicht in der Stadt.",
+          "change": "außerhalb der Stadt"
+        },
+        {
+          "id": "b2-genitiv-10",
+          "prompt": "Ihr Antrag wird ___ eines Monats bearbeitet.",
+          "options": [
+            "außerhalb",
+            "innerhalb",
+            "anstelle",
+            "mithilfe"
+          ],
+          "answer": "innerhalb",
+          "explain": "innerhalb + Genitiv nennt eine Frist: innerhalb eines Monats.",
+          "change": "innerhalb eines Monats"
+        },
+        {
+          "id": "b2-genitiv-11",
+          "prompt": "Haben Sie noch Fragen ___ des Mietvertrags?",
+          "options": [
+            "bezüglich",
+            "außerhalb",
+            "infolge",
+            "anstelle"
+          ],
+          "answer": "bezüglich",
+          "explain": "bezüglich + Genitiv nennt das Thema: bezüglich des Mietvertrags.",
+          "change": "bezüglich des Mietvertrags"
+        },
+        {
+          "id": "b2-genitiv-12",
+          "prompt": "___ moderner Technik können viele Patienten zu Hause betreut werden.",
+          "options": [
+            "Anstelle",
+            "Außerhalb",
+            "Mithilfe",
+            "Bezüglich"
+          ],
+          "answer": "Mithilfe",
+          "explain": "mithilfe + Genitiv nennt das Mittel: mithilfe moderner Technik.",
+          "change": "mithilfe moderner Technik"
+        },
+        {
+          "id": "b2-genitiv-13",
+          "prompt": "___ der hohen Zahl an Bewerbungen dauert unsere Antwort länger.",
+          "options": [
+            "Anstelle",
+            "Bezüglich",
+            "Außerhalb",
+            "Aufgrund"
+          ],
+          "answer": "Aufgrund",
+          "explain": "aufgrund + Genitiv nennt den Grund: aufgrund der hohen Zahl.",
+          "change": "aufgrund der hohen Zahl an Bewerbungen"
+        },
+        {
+          "id": "b2-genitiv-14",
+          "prompt": "___ der Krise hat die Regierung ein Hilfspaket beschlossen.",
+          "options": [
+            "Anstelle",
+            "Angesichts",
+            "Mithilfe",
+            "Außerhalb"
+          ],
+          "answer": "Angesichts",
+          "explain": "angesichts + Genitiv: Die Regierung reagiert auf die Krise.",
+          "change": "angesichts der Krise"
+        },
+        {
+          "id": "b2-genitiv-15",
+          "prompt": "___ eines Unfalls auf der A7 gibt es einen langen Stau.",
+          "options": [
+            "Infolge",
+            "Innerhalb",
+            "Bezüglich",
+            "Anstelle"
+          ],
+          "answer": "Infolge",
+          "explain": "infolge + Genitiv: Der Stau ist die Folge des Unfalls.",
+          "change": "infolge eines Unfalls"
+        },
+        {
+          "id": "b2-genitiv-16",
+          "prompt": "Der Kollege nimmt ___ der Chefin an der Besprechung teil.",
+          "options": [
+            "anstelle",
+            "bezüglich",
+            "mithilfe",
+            "infolge"
+          ],
+          "answer": "anstelle",
+          "explain": "anstelle + Genitiv: Er kommt statt der Chefin.",
+          "change": "anstelle der Chefin"
+        },
+        {
+          "id": "b2-genitiv-17",
+          "prompt": "Rauchen ist nur ___ des Gebäudes erlaubt.",
+          "options": [
+            "außerhalb",
+            "bezüglich",
+            "anstelle",
+            "infolge"
+          ],
+          "answer": "außerhalb",
+          "explain": "außerhalb + Genitiv: draußen, nicht im Gebäude.",
+          "change": "außerhalb des Gebäudes"
+        },
+        {
+          "id": "b2-genitiv-18",
+          "prompt": "___ einer App kann man online einen Termin beim Bürgeramt buchen.",
+          "options": [
+            "Infolge",
+            "Mithilfe",
+            "Anstelle",
+            "Außerhalb"
+          ],
+          "answer": "Mithilfe",
+          "explain": "mithilfe + Genitiv nennt das Mittel: mithilfe einer App.",
+          "change": "mithilfe einer App"
+        },
+        {
+          "id": "b2-genitiv-19",
+          "prompt": "Er hat ___ seiner guten Leistungen einen unbefristeten Vertrag bekommen.",
+          "options": [
+            "aufgrund",
+            "bezüglich",
+            "außerhalb",
+            "anstelle"
+          ],
+          "answer": "aufgrund",
+          "explain": "aufgrund + Genitiv nennt den Grund: aufgrund seiner Leistungen.",
+          "change": "aufgrund seiner guten Leistungen"
+        },
+        {
+          "id": "b2-genitiv-20",
+          "prompt": "___ der Probezeit kann man mit einer kurzen Frist kündigen.",
+          "options": [
+            "Mithilfe",
+            "Innerhalb",
+            "Anstelle",
+            "Bezüglich"
+          ],
+          "answer": "Innerhalb",
+          "explain": "innerhalb + Genitiv nennt einen Zeitraum: innerhalb der Probezeit.",
+          "change": "innerhalb der Probezeit"
+        },
+        {
+          "id": "b2-genitiv-21",
+          "prompt": "Ich schreibe Ihnen ___ meiner Nebenkostenabrechnung.",
+          "options": [
+            "infolge",
+            "anstelle",
+            "bezüglich",
+            "außerhalb"
+          ],
+          "answer": "bezüglich",
+          "explain": "bezüglich + Genitiv nennt das Thema: bezüglich meiner Abrechnung.",
+          "change": "bezüglich meiner Nebenkostenabrechnung"
+        },
+        {
+          "id": "b2-genitiv-22",
+          "prompt": "___ der Personalkürzungen mussten die Pflegekräfte mehr Überstunden machen.",
+          "options": [
+            "Außerhalb",
+            "Anstelle",
+            "Infolge",
+            "Mithilfe"
+          ],
+          "answer": "Infolge",
+          "explain": "infolge + Genitiv: Die Überstunden sind eine Folge der Kürzungen.",
+          "change": "infolge der Personalkürzungen"
+        },
+        {
+          "id": "b2-genitiv-23",
+          "prompt": "___ der vielen Verkehrstoten fordern Politiker strengere Regeln.",
+          "options": [
+            "Mithilfe",
+            "Anstelle",
+            "Angesichts",
+            "Innerhalb"
+          ],
+          "answer": "Angesichts",
+          "explain": "angesichts + Genitiv: Man sieht die vielen Toten und reagiert.",
+          "change": "angesichts der vielen Verkehrstoten"
+        },
+        {
+          "id": "b2-genitiv-24",
+          "prompt": "___ eines Umtauschs bekommen Sie einen Gutschein.",
+          "options": [
+            "Bezüglich",
+            "Außerhalb",
+            "Mithilfe",
+            "Anstelle"
+          ],
+          "answer": "Anstelle",
+          "explain": "anstelle + Genitiv: ein Gutschein statt eines Umtauschs.",
+          "change": "anstelle eines Umtauschs"
+        },
+        {
+          "id": "b2-genitiv-25",
+          "prompt": "Die Informationsveranstaltung wurde ___ geringer Nachfrage abgesagt.",
+          "options": [
+            "anstelle",
+            "aufgrund",
+            "innerhalb",
+            "mithilfe"
+          ],
+          "answer": "aufgrund",
+          "explain": "aufgrund + Genitiv nennt den Grund: aufgrund geringer Nachfrage.",
+          "change": "aufgrund geringer Nachfrage"
+        }
+      ]
+    },
+    {
+      "id": "b2-da-wo",
+      "level": "B2",
+      "name": "da- und wo-Wörter",
+      "preps": "darauf · daran · darüber · davon · dafür · worauf · woran · worüber · wovon · wofür",
+      "rule": {
+        "text": "Bei Sachen ersetzt man „Präposition + es/das“ durch da(r)- + Präposition: darauf, daran. Oft kündigt das da-Wort einen dass-Satz oder einen Infinitiv an. In Fragen nach Sachen benutzt man wo(r)-: Worauf wartest du? Das Verb bestimmt die Präposition.",
+        "table": {
+          "caption": "Verb → da-Wort → wo-Wort",
+          "head": [
+            "Verb",
+            "da-Wort",
+            "wo-Wort"
+          ],
+          "rows": [
+            [
+              "warten auf",
+              "darauf",
+              "Worauf?"
+            ],
+            [
+              "denken an",
+              "daran",
+              "Woran?"
+            ],
+            [
+              "sprechen über",
+              "darüber",
+              "Worüber?"
+            ],
+            [
+              "träumen von",
+              "davon",
+              "Wovon?"
+            ],
+            [
+              "sich interessieren für",
+              "dafür",
+              "Wofür?"
+            ]
+          ]
+        }
+      },
+      "questions": [
+        {
+          "id": "b2-da-wo-01",
+          "prompt": "Ich freue mich schon ___, dich nächste Woche zu sehen.",
+          "options": [
+            "darauf",
+            "davon",
+            "daran",
+            "dafür"
+          ],
+          "answer": "darauf",
+          "explain": "sich freuen auf (Zukunft) → darauf.",
+          "change": "sich schon darauf freuen, dich zu sehen"
+        },
+        {
+          "id": "b2-da-wo-02",
+          "prompt": "___ denkst du gerade?",
+          "options": [
+            "Worüber",
+            "Wovon",
+            "Worauf",
+            "Woran"
+          ],
+          "answer": "Woran",
+          "explain": "denken an → Frage mit woran.",
+          "change": "Woran denkst du?"
+        },
+        {
+          "id": "b2-da-wo-03",
+          "prompt": "___ wartest du noch?",
+          "options": [
+            "Wofür",
+            "Wovon",
+            "Woran",
+            "Worauf"
+          ],
+          "answer": "Worauf",
+          "explain": "warten auf → Frage mit worauf.",
+          "change": "Worauf wartest du?"
+        },
+        {
+          "id": "b2-da-wo-04",
+          "prompt": "___ habt ihr in der Teambesprechung gesprochen?",
+          "options": [
+            "Wofür",
+            "Woran",
+            "Worauf",
+            "Worüber"
+          ],
+          "answer": "Worüber",
+          "explain": "sprechen über → Frage mit worüber.",
+          "change": "Worüber habt ihr gesprochen?"
+        },
+        {
+          "id": "b2-da-wo-05",
+          "prompt": "___ interessierst du dich beruflich?",
+          "options": [
+            "Wofür",
+            "Worauf",
+            "Wovon",
+            "Woran"
+          ],
+          "answer": "Wofür",
+          "explain": "sich interessieren für → Frage mit wofür.",
+          "change": "Wofür interessierst du dich?"
+        },
+        {
+          "id": "b2-da-wo-06",
+          "prompt": "___ träumst du, wenn du an die Zukunft denkst?",
+          "options": [
+            "Worauf",
+            "Woran",
+            "Wovon",
+            "Wofür"
+          ],
+          "answer": "Wovon",
+          "explain": "träumen von → Frage mit wovon.",
+          "change": "Wovon träumst du?"
+        },
+        {
+          "id": "b2-da-wo-07",
+          "prompt": "Hast du ___ gedacht, die Miete zu überweisen?",
+          "options": [
+            "darüber",
+            "davon",
+            "darauf",
+            "daran"
+          ],
+          "answer": "daran",
+          "explain": "denken an → daran.",
+          "change": "daran denken, die Miete zu überweisen"
+        },
+        {
+          "id": "b2-da-wo-08",
+          "prompt": "Ich habe keine Lust ___, am Wochenende zu arbeiten.",
+          "options": [
+            "dafür",
+            "davon",
+            "darauf",
+            "daran"
+          ],
+          "answer": "darauf",
+          "explain": "Lust haben auf → darauf.",
+          "change": "Lust darauf haben, am Wochenende zu arbeiten"
+        },
+        {
+          "id": "b2-da-wo-09",
+          "prompt": "Der Chef hat sich ___ beschwert, dass wir zu spät kamen.",
+          "options": [
+            "daran",
+            "davon",
+            "darüber",
+            "darauf"
+          ],
+          "answer": "darüber",
+          "explain": "sich beschweren über → darüber.",
+          "change": "sich darüber beschweren, dass …"
+        },
+        {
+          "id": "b2-da-wo-10",
+          "prompt": "Das hängt ___ ab, wie viel Zeit ich habe.",
+          "options": [
+            "daran",
+            "davon",
+            "dafür",
+            "darauf"
+          ],
+          "answer": "davon",
+          "explain": "abhängen von → davon.",
+          "change": "davon abhängen, wie viel Zeit …"
+        },
+        {
+          "id": "b2-da-wo-11",
+          "prompt": "Die Stadt sorgt ___, dass die Straßen im Winter geräumt werden.",
+          "options": [
+            "davon",
+            "dafür",
+            "darauf",
+            "daran"
+          ],
+          "answer": "dafür",
+          "explain": "sorgen für → dafür.",
+          "change": "dafür sorgen, dass …"
+        },
+        {
+          "id": "b2-da-wo-12",
+          "prompt": "Ich bin ___ überzeugt, dass sie die Prüfung schafft.",
+          "options": [
+            "daran",
+            "dafür",
+            "darauf",
+            "davon"
+          ],
+          "answer": "davon",
+          "explain": "überzeugt sein von → davon.",
+          "change": "davon überzeugt sein, dass …"
+        },
+        {
+          "id": "b2-da-wo-13",
+          "prompt": "Sie hat sich sehr ___ gefreut, dass alle zu ihrer Feier kamen.",
+          "options": [
+            "darüber",
+            "daran",
+            "davon",
+            "dafür"
+          ],
+          "answer": "darüber",
+          "explain": "sich freuen über (etwas ist passiert) → darüber.",
+          "change": "sich darüber freuen, dass alle kamen"
+        },
+        {
+          "id": "b2-da-wo-14",
+          "prompt": "Ich kann mich nicht ___ erinnern, wo ich den Schlüssel hingelegt habe.",
+          "options": [
+            "davon",
+            "darüber",
+            "daran",
+            "darauf"
+          ],
+          "answer": "daran",
+          "explain": "sich erinnern an → daran.",
+          "change": "sich daran erinnern, wo …"
+        },
+        {
+          "id": "b2-da-wo-15",
+          "prompt": "___ ärgerst du dich so?",
+          "options": [
+            "Worauf",
+            "Woran",
+            "Wofür",
+            "Worüber"
+          ],
+          "answer": "Worüber",
+          "explain": "sich ärgern über → Frage mit worüber.",
+          "change": "Worüber ärgerst du dich?"
+        },
+        {
+          "id": "b2-da-wo-16",
+          "prompt": "___ hängt es ab, ob ich das Visum bekomme?",
+          "options": [
+            "Worauf",
+            "Wofür",
+            "Woran",
+            "Wovon"
+          ],
+          "answer": "Wovon",
+          "explain": "abhängen von → Frage mit wovon.",
+          "change": "Wovon hängt es ab?"
+        },
+        {
+          "id": "b2-da-wo-17",
+          "prompt": "___ bedankst du dich bei deiner Kollegin?",
+          "options": [
+            "Woran",
+            "Wovon",
+            "Wofür",
+            "Worüber"
+          ],
+          "answer": "Wofür",
+          "explain": "sich bedanken für → Frage mit wofür.",
+          "change": "Wofür bedankst du dich?"
+        },
+        {
+          "id": "b2-da-wo-18",
+          "prompt": "Der Artikel berichtet ___, wie stark die Mieten gestiegen sind.",
+          "options": [
+            "daran",
+            "dafür",
+            "darauf",
+            "darüber"
+          ],
+          "answer": "darüber",
+          "explain": "berichten über → darüber.",
+          "change": "darüber berichten, wie …"
+        },
+        {
+          "id": "b2-da-wo-19",
+          "prompt": "___ achten Sie bei der Wohnungssuche besonders?",
+          "options": [
+            "Woran",
+            "Worauf",
+            "Wofür",
+            "Worüber"
+          ],
+          "answer": "Worauf",
+          "explain": "achten auf → Frage mit worauf.",
+          "change": "Worauf achten Sie?"
+        },
+        {
+          "id": "b2-da-wo-20",
+          "prompt": "Ich habe mich ___ entschieden, eine Ausbildung zu machen.",
+          "options": [
+            "davon",
+            "dafür",
+            "daran",
+            "darauf"
+          ],
+          "answer": "dafür",
+          "explain": "sich entscheiden für → dafür.",
+          "change": "sich dafür entscheiden, eine Ausbildung zu machen"
+        },
+        {
+          "id": "b2-da-wo-21",
+          "prompt": "Er gewöhnt sich langsam ___, jeden Tag um fünf Uhr aufzustehen.",
+          "options": [
+            "davon",
+            "darauf",
+            "dafür",
+            "daran"
+          ],
+          "answer": "daran",
+          "explain": "sich gewöhnen an → daran.",
+          "change": "sich daran gewöhnen, früh aufzustehen"
+        },
+        {
+          "id": "b2-da-wo-22",
+          "prompt": "___ erinnerst du dich noch aus deiner Kindheit?",
+          "options": [
+            "Woran",
+            "Worüber",
+            "Worauf",
+            "Wovon"
+          ],
+          "answer": "Woran",
+          "explain": "sich erinnern an → Frage mit woran.",
+          "change": "Woran erinnerst du dich?"
+        },
+        {
+          "id": "b2-da-wo-23",
+          "prompt": "Sie träumt ___, eines Tages als Ärztin in Deutschland zu arbeiten.",
+          "options": [
+            "davon",
+            "darauf",
+            "daran",
+            "darüber"
+          ],
+          "answer": "davon",
+          "explain": "träumen von → davon.",
+          "change": "davon träumen, als Ärztin zu arbeiten"
+        },
+        {
+          "id": "b2-da-wo-24",
+          "prompt": "___ brauchst du das Geld eigentlich?",
+          "options": [
+            "Woran",
+            "Wofür",
+            "Wovon",
+            "Worauf"
+          ],
+          "answer": "Wofür",
+          "explain": "brauchen für (Zweck) → Frage mit wofür.",
+          "change": "Wofür brauchst du das Geld?"
+        },
+        {
+          "id": "b2-da-wo-25",
+          "prompt": "Wir warten immer noch ___, dass das Amt uns antwortet.",
+          "options": [
+            "darauf",
+            "davon",
+            "dafür",
+            "daran"
+          ],
+          "answer": "darauf",
+          "explain": "warten auf → darauf.",
+          "change": "darauf warten, dass das Amt antwortet"
+        }
+      ]
+    }
+  ]
+}

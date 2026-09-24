@@ -40,15 +40,20 @@ const POS_LABEL = {
   phrase: "Wendung",
 };
 
-/* The translated editions. Same list, the English column swapped for the learner's own
-   language — a learner who does not read English was getting a German list glossed in a
-   third language. The cover line is written in that language so the file says what it is
+/* The translated editions. The main file is German only (Wort, Wortart, Beispiel); each
+   edition adds one column in the learner's own language. English is one of them rather
+   than the default — a learner who does not read English was getting a German list glossed
+   in a third language. The cover line is written in that language so the file says what it is
    to the person it is for; everything else stays German, because German is the subject.
 
    A level only gets an edition in a language that covers EVERY word in it: a list with
    holes in the translation column reads as a broken file — the same rule langsOf()
    applies to the trainer's language tabs. */
 const EDITIONS = {
+  en: {
+    column: "Englisch",
+    cover: (level) => `German word list, level ${level}, with English translations`,
+  },
   ar: {
     column: "Arabisch",
     rtl: true,
@@ -73,20 +78,26 @@ function headword(w) {
   return w.lemma;
 }
 
+/** One level (`level: "B1"`), or with `level: null` the whole A1–B2 in one book — levels in
+ *  order, each opened by its own heading, the Lernsets under it as in the single books. */
 async function buildLevel(level, lang = null) {
-  const words = select({ level });
+  const all = !level;
+  const label = all ? "A1–B2" : level;
+  const levels = all ? LEVELS : [level];
+  const words = select({ level: levels });
   const ed = lang ? EDITIONS[lang] : null;
+  const slug = all ? "a1-b2-komplett" : level.toLowerCase();
   if (ed && !words.every((w) => w[lang])) {
     const have = words.filter((w) => w[lang]).length;
-    console.log(`wortschatz-${level.toLowerCase()}-${lang}.pdf  übersprungen: ${have}/${words.length} übersetzt`);
+    console.log(`wortschatz-${slug}-${lang}.pdf  übersprungen: ${have}/${words.length} übersetzt`);
     return;
   }
-  const sets = lernsets({ level, status: "built" });
-  const fileName = `wortschatz-${level.toLowerCase()}${lang ? `-${lang}` : ""}.pdf`;
+  const sets = levels.flatMap((l) => lernsets({ level: l, status: "built" }).map((s) => ({ ...s, level: l })));
+  const fileName = `wortschatz-${slug}${lang ? `-${lang}` : ""}.pdf`;
   const outPath = path.join(outDir, fileName);
   const pdf = createDoc({
     outPath,
-    runningHead: `DEUTSCHACADEMY · WORTLISTE ${level}${ed ? ` · DEUTSCH–${ed.column.toUpperCase()}` : ""}`,
+    runningHead: `DEUTSCHACADEMY · WORTLISTE ${label}${ed ? ` · DEUTSCH–${ed.column.toUpperCase()}` : ""}`,
     unicode: Boolean(ed),
   });
 
@@ -94,14 +105,16 @@ async function buildLevel(level, lang = null) {
 
   pdf.cover({
     eyebrow: "DEUTSCHACADEMY · WORTSCHATZ",
-    title: ed ? `Wortliste ${level} · Deutsch–${ed.column}` : `Wortliste ${level}`,
-    subtitle: `${LEVEL_BLURB[level]} — der komplette Wortschatz dieses Niveaus, nach Lernsets geordnet.`,
+    title: ed ? `Wortliste ${label} · Deutsch–${ed.column}` : `Wortliste ${label}${all ? " (komplett)" : ""}`,
+    subtitle: all
+      ? "Der komplette Wortschatz von A1 bis B2 in einem Band — nach Niveau und Lernsets geordnet."
+      : `${LEVEL_BLURB[level]} — der komplette Wortschatz dieses Niveaus, nach Lernsets geordnet.`,
     subtitleRtl: ed?.rtl,
-    subtitleTranslated: ed?.cover(level),
+    subtitleTranslated: ed?.cover(label),
     meta: [
       `${words.length} Wörter in ${sets.length} Lernsets`,
       `${withExample} Beispielsätze`,
-      "Als Karteikarten mit Audio: deutschacademy.com/uebungen/wortschatz/" + level.toLowerCase(),
+      "Als Karteikarten mit Audio: deutschacademy.com/uebungen/wortschatz" + (all ? "" : "/" + level.toLowerCase()),
     ],
     footer:
       "Von DeutschAcademy geschrieben — von Lehrkräften, die wirklich unterrichten. Dieses PDF darfst du frei " +
@@ -117,20 +130,35 @@ async function buildLevel(level, lang = null) {
   );
 
   const w = pdf.contentWidth();
+  let current = null;
   for (const set of sets) {
     const items = words.filter((x) => x.unit === set.id);
     if (!items.length) continue;
+    // The whole book: each level starts on a page of its own, under its own heading.
+    if (all && set.level !== current) {
+      current = set.level;
+      pdf.doc.addPage();
+      pdf.h2(`Niveau ${current} · ${LEVEL_BLURB[current]}`);
+    }
     pdf.section(set.title, set.id.toUpperCase());
     pdf.paragraph(`${items.length} Wörter`, { color: MUTED, size: 9.5 });
+    // German only: no translation column, and the example gets the room.
+    if (!ed) {
+      pdf.table(
+        ["Wort", "Wortart", "Beispiel"],
+        items.map((x) => [headword(x), POS_LABEL[x.pos] ?? x.pos ?? "", x.example ?? ""]),
+        { widths: [w * 0.3, w * 0.12, w * 0.58] }
+      );
+      continue;
+    }
     pdf.table(
-      ["Wort", "Wortart", ed ? ed.column : "Englisch", "Beispiel"],
-      items.map((x) => [headword(x), POS_LABEL[x.pos] ?? x.pos ?? "", (lang ? x[lang] : x.en) ?? "", x.example ?? ""]),
+      ["Wort", "Wortart", ed.column, "Beispiel"],
+      items.map((x) => [headword(x), POS_LABEL[x.pos] ?? x.pos ?? "", x[lang] ?? "", x.example ?? ""]),
       {
         widths: [w * 0.27, w * 0.11, w * 0.2, w * 0.42],
-        // The learner's own language is what they read the list by, so it is drawn in
-        // ink rather than the muted grey the English gloss had.
-        ...(ed && { inkCols: [2] }),
-        ...(ed?.rtl && { rtl: [2] }),
+        // The learner's own language is what they read the list by, so it is drawn in ink.
+        inkCols: [2],
+        ...(ed.rtl && { rtl: [2] }),
       }
     );
   }
@@ -140,7 +168,8 @@ async function buildLevel(level, lang = null) {
   console.log(`${fileName.padEnd(26)} ${String(words.length).padStart(4)} Wörter  ${sets.length} Lernsets  ${kb} KB`);
 }
 
-for (const level of LEVELS) {
+// null = the whole A1–B2 in one book, like grammatik-a1-b2-komplett.pdf.
+for (const level of [...LEVELS, null]) {
   await buildLevel(level);
   for (const lang of Object.keys(EDITIONS)) await buildLevel(level, lang);
 }

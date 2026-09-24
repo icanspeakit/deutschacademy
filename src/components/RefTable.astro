@@ -28,7 +28,9 @@ const cellHtml = (s: string) => String(s).split(", ").map(markOne).join(", ");
 const short = (s: string) => String(s).length <= 24;
 ---
 <figure class="ct ct--ref">
-  {table.caption && <figcaption class="ct-cap"><UiText de={table.caption} /><span class="ct-hint" aria-hidden="true" data-i18n="ct.swipe">wischen für mehr →</span></figcaption>}
+  {/* Slot "cap": something that belongs right after the caption text, like the Artikel
+      Regel's "!" pointing at its Hinweis. */}
+  {table.caption && <figcaption class="ct-cap"><UiText de={table.caption} /><slot name="cap" /><span class="ct-hint" aria-hidden="true" data-i18n="ct.swipe">wischen für mehr →</span></figcaption>}
   <div class="ct-scroll">
     <table class="ct-table">
       <thead>

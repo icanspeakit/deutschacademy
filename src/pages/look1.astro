@@ -1,0 +1,261 @@
+---
+// /look1 — design test: four ways to pick a topic on the Landeskunde-Quiz
+// (/uebungen/kultur/quiz), whose 22 topic chips wrap into nine ragged rows above the quiz.
+//
+// Switched by the toggle pinned bottom-left, and by ?v=1…4 so each can be linked:
+//   1 · Gruppiert   — the five Landeskunde groups as short lists, two columns on a desktop
+//   2 · Niveau      — a level tab row (A1 … C2) filtering one compact list
+//   3 · Kompakt     — one "Alle gemischt" button and a single "Thema wählen" menu; the quiz
+//                     starts right under it, above the fold on a phone
+//   4 · Kacheln     — five group tiles; a tile opens its topics in place
+//
+// A mockup: the real topics and counts from kultur.json, but no quiz runs — the card under
+// the picker only shows which selection would start. noindex.
+import Layout from "../layouts/Layout.astro";
+import SiteNav from "../components/SiteNav.astro";
+import Icon from "../components/Icon.astro";
+import kultur from "../data/kultur.json";
+import "../styles/practice.css";
+
+const { topics } = kultur;
+const total = topics.reduce((n, t) => n + t.quiz.length, 0);
+const GROUPS = [
+  { id: "wohnen", name: "Wohnen & Alltag", icon: "folder" },
+  { id: "aemter", name: "Ämter & Versicherung", icon: "document" },
+  { id: "umgang", name: "Umgang & Gewohnheiten", icon: "mic" },
+  { id: "bildung", name: "Schule & Ausbildung", icon: "graduation-cap" },
+  { id: "land", name: "Land & Kalender", icon: "landmark" },
+];
+const LEVELS = ["A1", "A2", "B1", "B2", "C1", "C2"];
+const byGroup = GROUPS.map((g) => {
+  const list = topics.filter((t) => t.group === g.id);
+  return { ...g, list, n: list.reduce((s, t) => s + t.quiz.length, 0) };
+});
+---
+<Layout title="Look1 – Quiz-Themen – DeutschAcademy" noindex>
+  <SiteNav active="landeskunde" />
+  <main class="practice-main lk" data-v="1">
+    <a href="/uebungen/kultur" class="vp-back-link">← Alle Themen</a>
+
+    <header class="lk-hero">
+      <p class="eyebrow">Landeskunde</p>
+      <h1>Quiz</h1>
+      <p class="lk-lead">{total} Fragen aus {topics.length} Themen.</p>
+    </header>
+
+    <!-- 1 · Gruppiert -->
+    <section class="lk-v lk-v1">
+      <button type="button" class="lk-all is-on" data-pick="alle" data-n={total}>Alle Themen gemischt <span>{total} Fragen</span></button>
+      <div class="lk-groups">
+        {byGroup.map((g) => (
+          <div class="lk-group">
+            <h2 class="lk-group-h"><Icon name={g.icon} size={16} /> {g.name}</h2>
+            <ul class="lk-list">
+              {g.list.map((t) => (
+                <li><button type="button" class="lk-row" data-pick={t.id} data-n={t.quiz.length}>
+                  <span class="lk-row-t">{t.title}</span><span class="lk-lv">{t.level}</span>
+                </button></li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- 2 · Niveau -->
+    <section class="lk-v lk-v2">
+      <div class="lk-tabs" role="tablist" aria-label="Niveau">
+        <button type="button" class="lk-tab is-on" data-level="alle">Alle</button>
+        {LEVELS.map((l) => <button type="button" class="lk-tab" data-level={l}>{l}</button>)}
+      </div>
+      <button type="button" class="lk-all" data-pick="alle" data-n={total}>Alle gemischt <span>{total} Fragen</span></button>
+      <ul class="lk-list lk-list--cols">
+        {topics.map((t) => (
+          <li data-lv={t.level}><button type="button" class="lk-row" data-pick={t.id} data-n={t.quiz.length}>
+            <span class="lk-row-t">{t.title}</span><span class="lk-lv">{t.level}</span>
+          </button></li>
+        ))}
+      </ul>
+    </section>
+
+    <!-- 3 · Kompakt -->
+    <section class="lk-v lk-v3">
+      <div class="lk-compact">
+        <button type="button" class="lk-all is-on" data-pick="alle" data-n={total}>Alle gemischt <span>{total}</span></button>
+        <span class="lk-or">oder</span>
+        <label class="lk-select">
+          <span class="lk-sr">Thema wählen</span>
+          <select data-select>
+            <option value="">Thema wählen …</option>
+            {byGroup.map((g) => (
+              <optgroup label={g.name}>
+                {g.list.map((t) => <option value={t.id} data-n={t.quiz.length}>{t.title} ({t.level})</option>)}
+              </optgroup>
+            ))}
+          </select>
+        </label>
+      </div>
+    </section>
+
+    <!-- 4 · Kacheln -->
+    <section class="lk-v lk-v4">
+      <button type="button" class="lk-all is-on" data-pick="alle" data-n={total}>Alle Themen gemischt <span>{total} Fragen</span></button>
+      <div class="lk-tiles">
+        {byGroup.map((g) => (
+          <details class="lk-tile">
+            <summary>
+              <span class="lk-tile-ic"><Icon name={g.icon} size={20} /></span>
+              <span class="lk-tile-t">{g.name}<small>{g.list.length} Themen · {g.n} Fragen</small></span>
+              <span class="lk-tile-chev" aria-hidden="true">›</span>
+            </summary>
+            <ul class="lk-list">
+              {g.list.map((t) => (
+                <li><button type="button" class="lk-row" data-pick={t.id} data-n={t.quiz.length}>
+                  <span class="lk-row-t">{t.title}</span><span class="lk-lv">{t.level}</span>
+                </button></li>
+              ))}
+            </ul>
+          </details>
+        ))}
+      </div>
+    </section>
+
+    <!-- What would start: stands in for the quiz card -->
+    <div class="lk-quiz">
+      <p class="lk-quiz-top"><b data-q-count>Frage 1 / {total}</b><span>0 richtig · 0 falsch</span></p>
+      <p class="lk-quiz-topic" data-q-topic>Alle Themen gemischt</p>
+      <p class="lk-quiz-note">Hier beginnt das Quiz.</p>
+    </div>
+
+    <div class="lk-toggle" role="radiogroup" aria-label="Layout-Variante">
+      <span>Look</span>
+      <button type="button" data-v="1">1 · Gruppiert</button>
+      <button type="button" data-v="2">2 · Niveau</button>
+      <button type="button" data-v="3">3 · Kompakt</button>
+      <button type="button" data-v="4">4 · Kacheln</button>
+    </div>
+  </main>
+</Layout>
+
+<script>
+  const root = document.querySelector<HTMLElement>(".lk")!;
+  const titles = Object.fromEntries([...root.querySelectorAll<HTMLElement>(".lk-v1 [data-pick]")].map((b) => [b.dataset.pick, b.querySelector(".lk-row-t")?.textContent ?? "Alle Themen gemischt"]));
+  titles.alle = "Alle Themen gemischt";
+
+  function setV(v: string) {
+    root.dataset.v = v;
+    root.querySelectorAll<HTMLButtonElement>(".lk-toggle [data-v]").forEach((b) => b.classList.toggle("is-on", b.dataset.v === v));
+    const u = new URL(location.href); u.searchParams.set("v", v); history.replaceState(null, "", u);
+  }
+  const q = new URL(location.href).searchParams.get("v");
+  setV(["1", "2", "3", "4"].includes(q ?? "") ? q! : "1");
+  root.querySelectorAll<HTMLButtonElement>(".lk-toggle [data-v]").forEach((b) => b.addEventListener("click", () => setV(b.dataset.v!)));
+
+  function pick(id: string, n: string) {
+    root.querySelectorAll<HTMLElement>("[data-pick]").forEach((b) => b.classList.toggle("is-on", b.dataset.pick === id));
+    const sel = root.querySelector<HTMLSelectElement>("[data-select]")!;
+    sel.value = id === "alle" ? "" : id;
+    root.querySelector("[data-q-count]")!.textContent = `Frage 1 / ${n}`;
+    root.querySelector("[data-q-topic]")!.textContent = titles[id] ?? id;
+  }
+  root.addEventListener("click", (e) => {
+    const b = (e.target as HTMLElement).closest<HTMLElement>("[data-pick]");
+    if (b) pick(b.dataset.pick!, b.dataset.n!);
+    const tab = (e.target as HTMLElement).closest<HTMLElement>("[data-level]");
+    if (tab) {
+      const lv = tab.dataset.level!;
+      root.querySelectorAll<HTMLElement>(".lk-tab").forEach((t) => t.classList.toggle("is-on", t === tab));
+      root.querySelectorAll<HTMLElement>(".lk-v2 li[data-lv]").forEach((li) => (li.hidden = lv !== "alle" && li.dataset.lv !== lv));
+    }
+  });
+  root.querySelector<HTMLSelectElement>("[data-select]")!.addEventListener("change", (e) => {
+    const s = e.target as HTMLSelectElement;
+    const opt = s.selectedOptions[0];
+    if (!s.value) pick("alle", root.querySelector<HTMLElement>(".lk-v3 [data-pick]")!.dataset.n!);
+    else pick(s.value, opt.dataset.n!);
+  });
+</script>
+
+<style is:global>
+  .lk { padding-bottom: 96px; }
+  .lk-hero { text-align: center; margin: 8px 0 20px; }
+  .lk-hero h1 { margin: 4px 0; }
+  .lk-lead { margin: 0; color: var(--muted); }
+  .lk-v { display: none; }
+  .lk[data-v="1"] .lk-v1, .lk[data-v="2"] .lk-v2, .lk[data-v="3"] .lk-v3, .lk[data-v="4"] .lk-v4 { display: block; }
+
+  /* Shared: the "all" button and a topic row */
+  .lk-all {
+    display: flex; align-items: baseline; justify-content: space-between; gap: 12px; width: 100%;
+    margin: 0 0 16px; padding: 14px 18px; border: 1px solid var(--border); border-radius: var(--radius, 12px);
+    background: var(--surface-card); color: var(--ink); font: inherit; font-weight: 700; cursor: pointer; text-align: left;
+  }
+  .lk-all span { font-weight: 500; font-size: var(--text-sm); color: var(--muted); }
+  .lk-all.is-on { background: var(--gradient-brand); color: #fff; border-color: transparent; }
+  .lk-all.is-on span { color: rgba(255,255,255,.85); }
+  .lk-list { list-style: none; margin: 0; padding: 0; }
+  .lk-row {
+    display: flex; align-items: center; justify-content: space-between; gap: 12px; width: 100%;
+    padding: 10px 12px; border: 0; border-radius: 8px; background: none; color: var(--ink);
+    font: inherit; font-size: .95rem; text-align: left; cursor: pointer;
+  }
+  .lk-row:hover { background: var(--surface, #f3f5f8); }
+  .lk-row.is-on { background: color-mix(in srgb, var(--brand-blue) 10%, transparent); color: var(--brand-blue-dark, var(--brand-blue)); font-weight: 600; }
+  .lk-lv { flex: none; font-size: 11px; font-weight: 700; color: var(--muted); padding: 2px 7px; border-radius: 6px; background: var(--surface, #f3f5f8); }
+
+  /* 1 · Gruppiert */
+  .lk-groups { display: grid; gap: 20px 32px; }
+  @media (min-width: 760px) { .lk-groups { grid-template-columns: 1fr 1fr; } }
+  .lk-group-h { display: flex; align-items: center; gap: 8px; margin: 0 0 4px; padding: 0 12px 6px; border-bottom: 1px solid var(--border);
+    font-size: 12px; letter-spacing: .07em; text-transform: uppercase; color: var(--brand-blue-dark, var(--brand-blue)); }
+
+  /* 2 · Niveau */
+  .lk-tabs { display: flex; gap: 4px; margin: 0 0 14px; border-bottom: 1px solid var(--border); overflow-x: auto; scrollbar-width: none; }
+  .lk-tab { padding: 9px 14px 10px; margin-bottom: -1px; border: 0; border-bottom: 2px solid transparent; background: none;
+    color: var(--muted); font: inherit; font-weight: 600; cursor: pointer; white-space: nowrap; }
+  .lk-tab.is-on { color: var(--ink); border-bottom-color: var(--brand-blue); }
+  .lk-list--cols { columns: 1; }
+  @media (min-width: 760px) { .lk-list--cols { columns: 2; column-gap: 32px; } }
+  .lk-list--cols li { break-inside: avoid; }
+
+  /* 3 · Kompakt */
+  .lk-compact { display: grid; gap: 10px; align-items: center; }
+  @media (min-width: 760px) { .lk-compact { grid-template-columns: auto auto minmax(0, 1fr); } .lk-compact .lk-all { margin: 0; width: auto; } }
+  .lk-compact .lk-all { margin: 0; }
+  .lk-or { text-align: center; color: var(--muted); font-size: var(--text-sm); }
+  .lk-select select { width: 100%; min-height: 50px; padding: 0 14px; border: 1px solid var(--border-strong); border-radius: var(--radius, 12px);
+    background: var(--surface-card); color: var(--ink); font: inherit; }
+  .lk-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+
+  /* 4 · Kacheln */
+  .lk-tiles { display: grid; gap: 10px; }
+  @media (min-width: 760px) { .lk-tiles { grid-template-columns: 1fr 1fr; align-items: start; } }
+  .lk-tile { border: 1px solid var(--border); border-radius: var(--radius, 12px); background: var(--surface-card); }
+  .lk-tile summary { display: flex; align-items: center; gap: 12px; padding: 14px 16px; cursor: pointer; list-style: none; }
+  .lk-tile summary::-webkit-details-marker { display: none; }
+  .lk-tile-ic { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 10px; background: color-mix(in srgb, var(--brand-blue) 12%, transparent); color: var(--brand-blue-dark, var(--brand-blue)); flex: none; }
+  .lk-tile-t { flex: 1; display: flex; flex-direction: column; font-weight: 700; }
+  .lk-tile-t small { font-weight: 500; color: var(--muted); }
+  .lk-tile-chev { font-size: 1.4rem; color: var(--muted); transition: transform .2s; }
+  .lk-tile[open] .lk-tile-chev { transform: rotate(90deg); }
+  .lk-tile .lk-list { padding: 0 8px 10px; }
+
+  /* The quiz stand-in */
+  .lk-quiz { margin-top: 24px; padding: 20px 24px; border: 1px solid var(--border); border-radius: var(--radius-lg, 16px); background: var(--surface-card); }
+  .lk-quiz-top { display: flex; justify-content: space-between; margin: 0 0 8px; }
+  .lk-quiz-top span { color: var(--muted); }
+  .lk-quiz-topic { margin: 0; font-weight: 700; color: var(--brand-blue-dark, var(--brand-blue)); }
+  .lk-quiz-note { margin: 4px 0 0; color: var(--muted); font-size: var(--text-sm); }
+
+  /* The test toggle */
+  .lk-toggle { position: fixed; left: 16px; bottom: 16px; z-index: 60; display: flex; align-items: center; gap: 4px; padding: 5px;
+    border-radius: var(--radius-pill); background: var(--rail-surface, #334155); box-shadow: 0 8px 24px rgba(0,0,0,.2); }
+  .lk-toggle span { color: rgba(255,255,255,.6); font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; padding: 0 8px 0 10px; }
+  .lk-toggle button { border: 0; border-radius: var(--radius-pill); background: transparent; color: #fff; font: inherit; font-size: 13px; font-weight: 600; padding: 8px 12px; cursor: pointer; white-space: nowrap; }
+  .lk-toggle button.is-on { background: var(--brand-blue); }
+  @media (max-width: 720px) {
+    .lk-toggle { left: 8px; right: 8px; bottom: 8px; overflow-x: auto; scrollbar-width: none; }
+    .lk-toggle span { display: none; }
+    .lk-toggle button { font-size: 12px; padding: 8px 10px; }
+  }
+</style>

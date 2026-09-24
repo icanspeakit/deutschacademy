@@ -15,6 +15,7 @@ import { readdirSync, readFileSync, statSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import path from "node:path";
 import { createDoc, plain, MUTED, TEAL_DARK, TEAL_SOFT, INK, SURFACE } from "./lib/pdf-brand.mjs";
+import { all as lexicon } from "../src/lib/lexicon.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.join(__dirname, "..");
@@ -57,6 +58,51 @@ const EDITIONS = {
   tr: { name: "Türkisch", cover: (lv) => `${lv} Almanca dilbilgisi, Türkçe açıklamalarla` },
 };
 
+/* The cover and the contents page of a translated edition, in the reader's language. The
+   reader chose this file because they want the help in their language; a cover that tells
+   them what is inside in German is the one page they may not be able to read yet.
+   Chapter content keeps its German headings — German is the subject. */
+const ukPlural = (n, one, few, many) =>
+  n % 10 === 1 && n % 100 !== 11 ? one : n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > 14) ? few : many;
+const COVER_UI = {
+  en: {
+    explained: "Every rule explained in English; examples and tables stay in German",
+    draft: "The English explanations are a machine draft, not yet checked by a teacher",
+    topics: (n, levels) => `${n} topics${levels ? ` on four levels (${levels})` : ""}`,
+    tables: (n) => `${n} reference tables`,
+    online: "The matching exercises are free at deutschacademy.com/uebungen/grammatik",
+    footer: "Written by DeutschAcademy — by teachers who actually teach. You may download, print and share this PDF in class. No account, no cost.",
+    contents: "Contents", level: "Level", topic: "Topic",
+  },
+  ar: {
+    explained: "كل قاعدة مشروحة بالعربية، والأمثلة والجداول تبقى بالألمانية",
+    draft: "الشرح بالعربية مسودة آلية لم يراجعها معلم بعد",
+    topics: (n, levels) => `عدد المواضيع: ${n}${levels ? ` في أربعة مستويات (${levels})` : ""}`,
+    tables: (n) => `عدد الجداول المرجعية: ${n}`,
+    online: "التمارين المرافقة مجانية على deutschacademy.com/uebungen/grammatik",
+    footer: "كتبته DeutschAcademy — معلمون يدرّسون فعلًا. يمكنك تنزيل هذا الملف وطباعته ومشاركته في الصف بحرية. بدون حساب وبدون تكلفة.",
+    contents: "المحتوى", level: "المستوى", topic: "الموضوع",
+  },
+  uk: {
+    explained: "Кожне правило пояснено українською; приклади й таблиці залишаються німецькою",
+    draft: "Пояснення українською — машинна чернетка, ще не перевірена викладачем",
+    topics: (n, levels) => `${n} ${ukPlural(n, "тема", "теми", "тем")}${levels ? ` на чотирьох рівнях (${levels})` : ""}`,
+    tables: (n) => `${n} ${ukPlural(n, "довідкова таблиця", "довідкові таблиці", "довідкових таблиць")}`,
+    online: "Вправи до книги — безкоштовно на deutschacademy.com/uebungen/grammatik",
+    footer: "Написано DeutschAcademy — викладачами, які справді викладають. Цей PDF можна вільно завантажувати, друкувати й роздавати на заняттях. Без акаунта, безкоштовно.",
+    contents: "Зміст", level: "Рівень", topic: "Тема",
+  },
+  tr: {
+    explained: "Her kural Türkçe açıklamalı; örnekler ve tablolar Almanca kalır",
+    draft: "Türkçe açıklamalar bir makine taslağıdır, henüz bir öğretmen tarafından kontrol edilmedi",
+    topics: (n, levels) => (levels ? `Dört seviyede (${levels}) ${n} konu` : `${n} konu`),
+    tables: (n) => `${n} başvuru tablosu`,
+    online: "İlgili alıştırmalar ücretsiz: deutschacademy.com/uebungen/grammatik",
+    footer: "DeutschAcademy tarafından yazıldı — gerçekten ders veren öğretmenler tarafından. Bu PDF'yi serbestçe indirebilir, yazdırabilir ve derste paylaşabilirsin. Hesap yok, ücret yok.",
+    contents: "İçindekiler", level: "Seviye", topic: "Konu",
+  },
+};
+
 /** Whether a topic's every explained block has this language. A book goes out in a
     language only if all its topics do — half-translated reads as broken. */
 function translatedIn(topic, lang) {
@@ -68,6 +114,48 @@ function translatedIn(topic, lang) {
   if (qa.some((_, i) => !e.qa?.[i]?.[lang])) return false;
   if (topic.concept?.noteHtml && !e.note?.[lang]) return false;
   return true;
+}
+
+/* Word meanings for the word tables of a translated edition. A table whose rows are single
+   German words (kaufen, der Tisch, du · kommen) gets one more column with the word's meaning
+   in the reader's language, from the site's lexicon (A1–B2), so the site and the PDF agree.
+   Ukrainian is not in the lexicon yet; its drafts live in src/data/uebersetzungen/woerter-uk.json.
+   A table only gets the column when at least 70 % of its rows are such a word: sentence
+   tables and grammar-term tables stay as they are, and a word the lexicon lacks gets an
+   empty cell rather than a guess. */
+const woerterUk = JSON.parse(readFileSync(path.join(root, "src", "data", "uebersetzungen", "woerter-uk.json"), "utf8")).uk;
+const MEANING_HEAD = { en: "English", ar: "Arabisch", uk: "Українська", tr: "Türkçe" };
+const LEAD = new Set("der die das ein eine ich du er sie es wir ihr sich".split(" "));
+const normWord = (w) => w.toLowerCase().replace(/[^a-zäöüß-]/g, "");
+const lexA1B2 = lexicon().filter((e) => LEVELS.includes(e.level));
+const byLemma = new Map();
+const byForm = new Map();
+for (const e of lexA1B2) if (!byLemma.has(normWord(e.lemma))) byLemma.set(normWord(e.lemma), e);
+for (const e of lexA1B2) {
+  // A form ("hatte", "gegangen", "Äpfel") points back at its lemma, so a row that shows
+  // one still finds the word.
+  for (const f of [...(e.forms ?? []), e.plural]) {
+    const n = f ? normWord(String(f).split(/\s+/).at(-1)) : "";
+    if (n && !byForm.has(n)) byForm.set(n, e);
+  }
+}
+/** The one German word a table row is about, or null when its first cell is not one word. */
+function rowWord(cell) {
+  const content = plain(cell).replace(/\([^)]*\)/g, " ").split(/[\s·,/]+/).map(normWord).filter((t) => t && !LEAD.has(t));
+  return content.length === 1 ? byLemma.get(content[0]) ?? byForm.get(content[0]) ?? null : null;
+}
+const meaningOf = (e, lang) => (lang === "uk" ? woerterUk[e.id] : e[lang]) ?? "";
+
+/** The table with a meaning column added, or the table as it was. */
+function withMeanings(head, rows, lang) {
+  if (!lang) return { head, rows, opts: {} };
+  const words = rows.map((r) => rowWord(r[0]));
+  if (words.filter(Boolean).length / rows.length < 0.7) return { head, rows, opts: {} };
+  return {
+    head: [...head, MEANING_HEAD[lang]],
+    rows: rows.map((r, i) => [...r, words[i] ? meaningOf(words[i], lang) : ""]),
+    opts: EDITIONS[lang].rtl ? { rtl: [head.length] } : {},
+  };
 }
 
 // --- Render one topic -------------------------------------------------------
@@ -136,7 +224,8 @@ function renderTopic(pdf, topic, { withBadge, lang = null }) {
   // The reason to print this at all.
   for (const t of c.reference?.tables ?? []) {
     pdf.h2(plain(t.caption) || "Übersicht");
-    pdf.table(t.head.map(plain), t.rows.map((r) => r.map(plain)));
+    const tb = withMeanings(t.head.map(plain), t.rows.map((r) => r.map(plain)), lang);
+    pdf.table(tb.head, tb.rows, tb.opts);
   }
 
   // `boxes` is the other reference shape: a `badge` over a list of examples. The badge is
@@ -156,10 +245,8 @@ function renderTopic(pdf, topic, { withBadge, lang = null }) {
   for (const ex of printable) {
     pdf.h2(`Übung: ${plain(ex.title)}`);
     if (ex.hint) pdf.paragraph(plain(ex.hint), { color: MUTED, size: 9.5 });
-    pdf.table(
-      (ex.columns ?? ["", "Lösung"]).map(plain),
-      ex.rows.map((r) => [plain(r.term), plain(r.answer)])
-    );
+    const tb = withMeanings((ex.columns ?? ["", "Lösung"]).map(plain), ex.rows.map((r) => [plain(r.term), plain(r.answer)]), lang);
+    pdf.table(tb.head, tb.rows, tb.opts);
   }
 }
 
@@ -187,6 +274,7 @@ async function buildBook({ level, fileName, lang = null }) {
   const outPath = path.join(outDir, fileName);
   const pdf = createDoc({ outPath, runningHead: `DEUTSCHACADEMY · ${title.toUpperCase()}${ed ? ` · DEUTSCH–${ed.name.toUpperCase()}` : ""}`, unicode: Boolean(ed) });
   const unreviewed = ed && ordered.some((t) => !help.entries[t.id]?.reviewed);
+  const ui = lang ? COVER_UI[lang] : null;
 
   const tableCount = ordered.reduce((n, t) => n + (t.concept?.reference?.tables?.length ?? 0), 0);
 
@@ -198,23 +286,33 @@ async function buildBook({ level, fileName, lang = null }) {
       : "Alle Grammatikthemen von A1 bis B2 in einem Band, zum Nachschlagen und Ausdrucken.",
     subtitleTranslated: ed?.cover(level ?? "A1–B2"),
     subtitleRtl: ed?.rtl,
-    meta: [
-      ...(ed ? [`Jede Regel mit Erklärung auf ${ed.name}; Beispiele und Tabellen bleiben deutsch`] : []),
-      ...(unreviewed ? [`Die Erklärungen auf ${ed.name} sind ein maschineller Entwurf, noch nicht von einer Lehrkraft geprüft`] : []),
-      `${ordered.length} Themen${level ? "" : ` auf vier Niveaus (${LEVELS.join(", ")})`}`,
-      `${tableCount} Übersichtstabellen zum Nachschlagen`,
-      "Die Übungen dazu stehen kostenlos auf deutschacademy.com/uebungen/grammatik",
-    ],
-    footer:
+    meta: ui
+      ? [
+          ui.explained,
+          ...(unreviewed ? [ui.draft] : []),
+          ui.topics(ordered.length, level ? null : LEVELS.join(", ")),
+          ui.tables(tableCount),
+          ui.online,
+        ]
+      : [
+          `${ordered.length} Themen${level ? "" : ` auf vier Niveaus (${LEVELS.join(", ")})`}`,
+          `${tableCount} Übersichtstabellen zum Nachschlagen`,
+          "Die Übungen dazu stehen kostenlos auf deutschacademy.com/uebungen/grammatik",
+        ],
+    footer: ui?.footer ??
       "Von DeutschAcademy geschrieben — von Lehrkräften, die wirklich unterrichten. Dieses PDF darfst du frei " +
       "herunterladen, ausdrucken und im Unterricht weitergeben. Kein Konto, keine Kosten.",
+    rtl: Boolean(ed?.rtl),
   });
 
-  // Contents.
+  // Contents. In a translated edition the headings are in the reader's language and the
+  // topic names stay German — they are the names the chapters carry.
   pdf.doc.addPage();
-  pdf.h2("Inhalt");
+  // Not for Arabic: h2() and the table head draw with the Latin face and cannot shape it.
+  const toc = ed?.rtl ? null : ui;
+  pdf.h2(toc ? `${toc.contents} · Inhalt` : "Inhalt");
   pdf.table(
-    level ? ["Thema"] : ["Niveau", "Thema"],
+    level ? [toc?.topic ?? "Thema"] : [toc?.level ?? "Niveau", toc?.topic ?? "Thema"],
     ordered.map((t) => (level ? [t.name] : [t.level, t.name])),
     level ? {} : { widths: [70, pdf.contentWidth() - 70] }
   );

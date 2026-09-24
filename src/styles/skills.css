@@ -201,7 +201,8 @@
    end rather than per row — checking one field at a time turns a transfer task into a
    guessing game. */
 .sk-fields { display: flex; flex-direction: column; gap: 10px; }
-.sk-field { display: grid; grid-template-columns: minmax(140px, 0.8fr) minmax(0, 1.2fr); gap: 12px; align-items: center; }
+.sk-field { display: grid; grid-template-columns: minmax(140px, 0.8fr) minmax(0, 1.2fr); gap: 12px; align-items: start; }
+.sk-field label { padding-top: 9px; }
 .sk-field label { font-size: .875rem; color: var(--muted); }
 .sk-field input {
   padding: 9px 12px;
@@ -213,12 +214,20 @@
   font-size: .9375rem;
 }
 .sk-field input:focus-visible { outline: 2px solid var(--brand-blue); outline-offset: 1px; }
-.sk-field-answer {
-  grid-column: 2;
-  margin: -4px 0 4px;
-  font-size: .8125rem;
-  color: var(--brand-blue-dark);
+.sk-field-in { position: relative; display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.sk-field-in input { width: 100%; }
+.sk-field-answer { margin: 0; font-size: .875rem; font-weight: 600; }
+.sk-field-answer mark { background: color-mix(in srgb, #f59e0b 30%, transparent); color: inherit; border-radius: 2px; }
+/* After "Lösung zeigen": the box says it. Green when it matches, amber when it is nearly
+   right, red when it is not — the correction under the box in the last two cases. */
+.sk-field[data-check="ok"] input { border-color: var(--success, #16a34a); background: var(--success-soft, #f0fdf4); padding-right: 36px; }
+.sk-field[data-check="ok"] .sk-field-in::after {
+  content: "✓"; position: absolute; right: 12px; top: 9px; font-weight: 700; color: var(--success, #16a34a);
 }
+.sk-field[data-check="near"] input { border-color: #d97706; background: color-mix(in srgb, #f59e0b 8%, var(--surface-card)); }
+.sk-field[data-check="near"] .sk-field-answer { color: #b45309; }
+.sk-field[data-check="no"] input { border-color: var(--danger, #dc2626); background: var(--danger-soft, #fef2f2); }
+.sk-field[data-check="no"] .sk-field-answer { color: var(--danger, #dc2626); }
 
 .sk-btn {
   display: inline-flex;
@@ -321,7 +330,6 @@
   .sk-head .sk-badge { grid-column: 2; justify-self: start; }
   .sk-text { padding: 16px 16px; }
   .sk-field { grid-template-columns: minmax(0, 1fr); gap: 5px; }
-  .sk-field-answer { grid-column: 1; }
 }
 
 /* --- Hilfe in der eigenen Sprache (TextWithTranslation, VocabList) -------------------
@@ -421,3 +429,48 @@
 .tt-bar[hidden] { display: none; }
 .tt[data-tt-lang=""] .tt-tr,
 .tt[data-tt-lang=""] .help-draft { display: none; }
+
+/* --- Text korrigieren (src/lib/schreibKorrektur.js) ----------------------------------
+   Four groups, four colours, used the same way in the chips, the underlines and the tags,
+   so the eye can match a mark in the text to its line in the list without reading. */
+.skk { --skk-grammatik: #dc2626; --skk-ausdruck: #7c3aed; --skk-satzzeichen: #d97706; --skk-rechtschreibung: #2563eb; margin-top: 14px; }
+.skk-bar { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.skk-status { font-size: .875rem; color: var(--muted); }
+.skk-out { margin-top: 16px; padding: 18px 20px; border: 1px solid var(--border); border-radius: var(--radius, 12px); background: var(--surface-card); display: grid; gap: 14px; }
+.skk-note { margin: 0; font-size: .875rem; color: #b45309; }
+.skk-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.skk-chip { display: inline-flex; align-items: baseline; gap: 6px; padding: 5px 12px; border-radius: var(--radius-pill); font-size: .875rem; font-weight: 600; border: 1px solid currentColor; }
+.skk-chip b { font-size: 1rem; }
+.skk-chip.is-zero { opacity: .45; }
+.skk-grammatik { color: var(--skk-grammatik); }
+.skk-ausdruck { color: var(--skk-ausdruck); }
+.skk-satzzeichen { color: var(--skk-satzzeichen); }
+.skk-rechtschreibung { color: var(--skk-rechtschreibung); }
+.skk-none { margin: 0; font-weight: 600; color: var(--success, #16a34a); }
+.skk-text { white-space: pre-wrap; line-height: 1.9; font-size: 1rem; color: var(--ink); padding: 12px 14px; border-radius: 8px; background: var(--surface, #f6f7f9); }
+.skk-m { background: none; color: inherit; text-decoration: underline wavy; text-decoration-thickness: 1.5px; text-underline-offset: 4px; cursor: pointer; border-radius: 2px; }
+.skk-m.skk-grammatik { text-decoration-color: var(--skk-grammatik); background: color-mix(in srgb, var(--skk-grammatik) 8%, transparent); }
+.skk-m.skk-ausdruck { text-decoration-color: var(--skk-ausdruck); background: color-mix(in srgb, var(--skk-ausdruck) 8%, transparent); }
+.skk-m.skk-satzzeichen { text-decoration-color: var(--skk-satzzeichen); background: color-mix(in srgb, var(--skk-satzzeichen) 12%, transparent); }
+.skk-m.skk-rechtschreibung { text-decoration-color: var(--skk-rechtschreibung); background: color-mix(in srgb, var(--skk-rechtschreibung) 8%, transparent); }
+.skk-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.skk-item { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; grid-template-areas: "tag what btn" "tag msg btn"; gap: 2px 12px; align-items: start; padding: 10px 12px; border: 1px solid var(--border); border-radius: 10px; }
+.skk-tag { grid-area: tag; font-size: .75rem; font-weight: 700; padding: 2px 8px; border-radius: 6px; background: color-mix(in srgb, currentColor 10%, transparent); white-space: nowrap; }
+.skk-what { grid-area: what; font-size: 1rem; color: var(--ink); }
+.skk-what s { color: var(--muted); }
+.skk-what b { color: var(--success, #16a34a); }
+.skk-msg { grid-area: msg; font-size: .875rem; color: var(--muted); }
+.skk-apply { grid-area: btn; align-self: center; border: 1px solid var(--border); background: var(--surface-card); color: var(--brand-blue-dark, var(--brand-blue)); border-radius: var(--radius-pill); padding: 5px 12px; font: inherit; font-size: .8125rem; font-weight: 600; cursor: pointer; white-space: nowrap; }
+.skk-apply:hover { border-color: var(--brand-blue); }
+.skk-task { border-top: 1px solid var(--border); padding-top: 12px; }
+.skk-task-h, .skk-task-q { margin: 0 0 6px; font-size: .75rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+.skk-task-q { margin-top: 10px; }
+.skk-words { margin: 0; font-weight: 600; color: var(--success, #16a34a); }
+.skk-words.is-off { color: #b45309; }
+.skk-points { margin: 0; padding-left: 1.2em; color: var(--ink); font-size: .9375rem; }
+@media (max-width: 600px) {
+  .skk-out { padding: 14px; }
+  .skk-item { grid-template-columns: minmax(0, 1fr); grid-template-areas: "tag" "what" "msg" "btn"; }
+  .skk-tag { justify-self: start; }
+  .skk-apply { justify-self: start; margin-top: 6px; }
+}

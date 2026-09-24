@@ -103,8 +103,8 @@ const BEATS = [
   { id: "sehen", n: 1, label: "Sehen", key: "ak.beat.sehen" },
   { id: "hoeren", n: 2, label: "Hören", key: "ak.beat.hoeren" },
   { id: "sprechen", n: 3, label: "Sprechen", key: "ak.beat.sprechen" },
-  // No panel of its own: this chip hands the learner back to Üben mode, where the
-  // exercises already live. See onExit in mountBeats.
+  // Its own panel: the Sprechen drill typed (mountSchreiben). It used to switch the page
+  // back to Üben, which felt like being thrown out of the mode you had picked.
   { id: "schreiben", n: 4, label: "Schreiben", key: "ak.beat.schreiben" },
 ];
 ---
@@ -225,9 +225,15 @@ const BEATS = [
           <button type="button" class="ak-next" data-beat-next="schreiben" data-i18n="ak.next.schreiben">Weiter → Schreiben</button>
         </section>
 
-        {/* Artikel's Schreiben is a panel, not the way back to Üben: there the trainer only
-            has taps, so the writing lives here — a Diktat. See ArtikelDiktat.astro. */}
-        {isArtikel && <ArtikelDiktat />}
+        {/* Schreiben: on Artikel a Diktat (ArtikelDiktat.astro), on every other topic the
+            Sprechen drill typed instead of said (mountSchreiben in aktivMode.js). */}
+        {isArtikel ? <ArtikelDiktat /> : (
+          <section class="ak-panel" data-beat-panel="schreiben" hidden>
+            <h2 data-i18n="ak.beat.schreiben">Schreiben</h2>
+            <p class="ak-panel-lead" data-i18n="ak.schreiben.lead">Jetzt schriftlich: Hör die Vorgabe, schreib die Form und prüf sie — mit Umlauten und Endungen.</p>
+            <div id="ak-schreiben"></div>
+          </section>
+        )}
       </div>
     )}
 
@@ -547,7 +553,7 @@ const BEATS = [
 
     // Aktiv mode. Only topics whose JSON carries an `aktiv` block have the markup.
     if (data.aktiv && document.getElementById("ak-aktiv")) {
-      const { makeVoice, mountBeats, mountListen, mountHoeren, mountSprechen } =
+      const { makeVoice, mountBeats, mountListen, mountHoeren, mountSprechen, mountSchreiben } =
         await import("../../../lib/aktivMode.js");
       const { recordDrill } = await import("../../../lib/progress.js");
 
@@ -565,6 +571,12 @@ const BEATS = [
       mountSprechen(document.getElementById("ak-sprechen"), data.aktiv.sprechen, {
         voice,
         onRate: (sure) => { try { recordDrill({ topic: topicKey, sure }); } catch (e) {} },
+      });
+
+      // Typed, so it is measured: each check counts like an answer in Üben.
+      mountSchreiben(document.getElementById("ak-schreiben"), data.aktiv.sprechen, {
+        voice,
+        onAnswer: (ok) => { try { onAnswer(ok); } catch (e) {} },
       });
 
       // The beat chips pin below the site nav, not under it. Measured, because the nav is
@@ -596,7 +608,7 @@ const BEATS = [
 
       mountBeats(page, {
         onLeave: () => voice.stop(),
-        // The fourth chip has no panel: Schreiben IS the exercise column, one mode over.
+        // Only for a chip without a panel (a topic whose data has no drill).
         onExit: () => setMode("ueben"),
         anchor: document.getElementById("ak-sticky"),
       });

@@ -7,6 +7,7 @@
 // scored words up with the sentence, the page, the tips, and the fallback voice.
 import { tipFor, soundLabel } from "./ausspracheTipps.js";
 import { pronunciationProvider as provider, PronunciationError } from "./pronunciation/index.ts";
+import { referenceMelody, learnerMelody, compareMelody, melodyChart } from "./satzmelodie.js";
 
 const LANG = "de-DE";
 const BEST_KEY = "ac.best";
@@ -60,13 +61,13 @@ function writeJSON(key, value) {
 /* ------------------------------------------------------------- microphone ---- */
 // Ask for the microphone ourselves before the provider does: its own failure is usually a
 // generic cancellation, and a learner who clicked "Blockieren" needs to be told where to
-// undo it.
+// undo it. The stream is kept, not closed: the Satzmelodie records from it while the
+// provider listens (see record()).
 async function checkMicrophone() {
   if (!window.isSecureContext) throw new PronunciationError("insecure");
   if (!navigator.mediaDevices?.getUserMedia) throw new PronunciationError("micUnsupported");
   try {
-    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-    stream.getTracks().forEach((t) => t.stop());
+    return await navigator.mediaDevices.getUserMedia({ audio: true });
   } catch (err) {
     const name = err?.name;
     if (name === "NotAllowedError" || name === "SecurityError") throw new PronunciationError("micDenied");
@@ -165,6 +166,7 @@ export function mountAusspracheCheck(root, data) {
     scores: $("[data-scores]"),
     detail: $("[data-detail]"),
     tip: $("[data-tip]"),
+    melody: $("[data-melody]"),
     prev: $("[data-prev]"),
     next: $("[data-next]"),
   };
@@ -203,7 +205,10 @@ export function mountAusspracheCheck(root, data) {
     els.focus.innerHTML = s.focus.map((f) => `<span class="ac-chip">${esc(soundLabel(f))}</span>`).join("");
     els.sentence.innerHTML = s.text.split(/\s+/).map((w) => `<span class="ac-w">${esc(w)}</span>`).join(" ");
     els.results.hidden = true;
+    els.melody.hidden = true;
     els.login.hidden = true;
+    // Warm the reference contour while the learner reads, so the score is quick later.
+    referenceMelody(s);
     els.prev.disabled = si === 0 && li === 0;
     els.next.disabled = si === levels[li].sentences.length - 1 && li === levels.length - 1;
     setStatus(MSG.ready);
@@ -255,16 +260,18 @@ export function mountAusspracheCheck(root, data) {
       ["Genauigkeit", assessment.accuracy, "Wie genau die Laute stimmen"],
       ["Flüssigkeit", assessment.fluency, "Tempo und Pausen"],
       ["Vollständigkeit", assessment.completeness, "Wie viele Wörter du gesagt hast"],
-      ["Satzmelodie", assessment.prosody, "Betonung und Melodie"],
+      // Our own score, filled in by renderMelody() — the provider's prosody score is
+      // English-only.
+      ["Satzmelodie", null, "Betonung und Melodie"],
     ];
     els.scores.innerHTML = rows
       .map(([name, v, hint]) => {
         const has = typeof v === "number";
         const n = has ? Math.round(v) : null;
-        return `<div class="ac-score" data-band="${has ? band(n) : "none"}">
+        return `<div class="ac-score" data-band="${has ? band(n) : "none"}"${name === "Satzmelodie" ? " data-melody-score" : ""}>
           <div class="ac-score-top"><span>${name}</span><b>${has ? n : "—"}</b></div>
           <span class="ac-score-bar"><span style="width:${has ? n : 0}%"></span></span>
-          <small>${has ? hint : "Für diesen Satz nicht verfügbar"}</small>
+          <small>${has ? hint : name === "Satzmelodie" ? "Wird berechnet …" : "Nicht bewertet"}</small>
         </div>`;
       })
       .join("");
@@ -304,6 +311,54 @@ export function mountAusspracheCheck(root, data) {
     els.best.textContent = `Bestwert ${best[s.id]}`;
   }
 
+  /* Satzmelodie: pitch contour of the take against the reference clip, all in the
+     browser (src/lib/satzmelodie.js). Runs after the word scores are on screen, so the
+     learner never waits for it. */
+  async function renderMelody(blob) {
+    const s = sentence();
+    const row = els.scores.querySelector("[data-melody-score]");
+    const setRow = (n, hint) => {
+      if (!row) return;
+      row.dataset.band = n == null ? "none" : band(n);
+      row.querySelector("b").textContent = n == null ? "—" : n;
+      row.querySelector(".ac-score-bar span").style.width = `${n ?? 0}%`;
+      row.querySelector("small").textContent = hint;
+    };
+    els.melody.hidden = true;
+    try {
+      const [ref, you] = await Promise.all([referenceMelody(s), blob ? learnerMelody(blob) : null]);
+      if (!ref?.length) return setRow(null, "Für diesen Satz gibt es noch kein Vorbild");
+      if (!you?.length) return setRow(null, "Zu wenig Stimme gehört");
+      const r = compareMelody(ref, you, s);
+      if (!r) return setRow(null, "Zu wenig Stimme gehört");
+      setRow(r.score, "Betonung und Melodie");
+      const kind = { "ja-nein": "Ja/Nein-Frage: am Ende hoch", "w-frage": "W-Frage: am Ende runter", aussage: "Aussage: am Ende runter" }[r.type];
+      els.melody.innerHTML = `
+        <div class="ac-mel-head">
+          <span class="ac-mel-title">Satzmelodie</span>
+          <span class="ac-mel-kind">${esc(kind)}</span>
+        </div>
+        ${melodyChart(ref, you)}
+        <div class="ac-mel-legend"><span><i class="ac-mel-key ac-mel-key--ref"></i>Vorbild</span><span><i class="ac-mel-key ac-mel-key--you"></i>Du</span></div>
+        ${r.tip ? `<p class="ac-mel-tip">${esc(r.tip)}</p>` : r.score >= 75 ? `<p class="ac-mel-tip">Deine Melodie passt gut zum Vorbild.</p>` : ""}`;
+      els.melody.hidden = false;
+    } catch (err) {
+      console.error(err);
+      setRow(null, "Nicht bewertet");
+    }
+  }
+
+  /** MediaRecorder on the stream we already hold; resolves to the take as a Blob. */
+  function startTake(stream) {
+    if (!stream || typeof MediaRecorder === "undefined") return null;
+    const rec = new MediaRecorder(stream);
+    const chunks = [];
+    rec.ondataavailable = (e) => { if (e.data?.size) chunks.push(e.data); };
+    const done = new Promise((resolve) => { rec.onstop = () => resolve(chunks.length ? new Blob(chunks, { type: rec.mimeType }) : null); });
+    rec.start();
+    return { stop: () => { if (rec.state !== "inactive") rec.stop(); return done; } };
+  }
+
   async function record() {
     if (busy) return;
     busy = true;
@@ -312,8 +367,11 @@ export function mountAusspracheCheck(root, data) {
     els.recordLabel.textContent = "Moment …";
     els.login.hidden = true;
     setStatus(MSG.preparing);
+    let stream = null;
+    let take = null;
     try {
-      await checkMicrophone();
+      stream = await checkMicrophone();
+      take = startTake(stream);
       const result = await provider.assess({
         referenceText: sentence().text,
         language: LANG,
@@ -325,12 +383,17 @@ export function mountAusspracheCheck(root, data) {
       });
       els.record.dataset.state = "prep";
       setStatus(MSG.analysing);
+      const blob = await take?.stop();
+      take = null;
       renderResults(result);
       setStatus(MSG.done, "ok");
+      renderMelody(blob);
     } catch (err) {
       if (!(err instanceof PronunciationError)) console.error(err);
       showError(err);
     } finally {
+      take?.stop();
+      stream?.getTracks().forEach((t) => t.stop());
       busy = false;
       els.record.dataset.state = "idle";
       els.recordLabel.textContent = words ? "Noch einmal" : "Aufnehmen";

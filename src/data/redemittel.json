@@ -1,0 +1,186 @@
+{
+  "_comment": "Redemittel for the Aussprache page (/uebungen/aussprache): short, everyday phrases by speech act — agreeing, disagreeing, doubting, consoling … Each set is one row under 'Sätze & Redemittel'. Audio: scripts/generate-satz-audio.mjs → public/audio/redemittel/<slug>.mp3. Translations are drafts (reviewed: false) — the German is the content, the gloss only helps.",
+  "reviewed": false,
+  "sets": [
+    {
+      "id": "zustimmen",
+      "name": "Zustimmen",
+      "icon": "👍",
+      "phrases": [
+        { "de": "Da hast du recht.", "en": "You're right about that.", "ar": "معك حق في ذلك.", "ru": "Тут ты прав.", "tr": "Bu konuda haklısın." },
+        { "de": "Das sehe ich genauso.", "en": "I see it exactly the same way.", "ar": "أرى الأمر بالطريقة نفسها تمامًا.", "ru": "Я вижу это точно так же.", "tr": "Ben de aynen öyle düşünüyorum." },
+        { "de": "Genau!", "en": "Exactly!", "ar": "بالضبط!", "ru": "Точно!", "tr": "Aynen!" },
+        { "de": "Da stimme ich dir zu.", "en": "I agree with you on that.", "ar": "أوافقك على ذلك.", "ru": "Здесь я с тобой согласен.", "tr": "Bu konuda sana katılıyorum." },
+        { "de": "Das finde ich auch.", "en": "I think so too.", "ar": "وأنا أيضًا أرى ذلك.", "ru": "Я тоже так считаю.", "tr": "Ben de öyle düşünüyorum." },
+        { "de": "Ganz meine Meinung.", "en": "My thoughts exactly.", "ar": "هذا رأيي تمامًا.", "ru": "Полностью согласен.", "tr": "Tamamen benim fikrim." },
+        { "de": "Das ist eine gute Idee.", "en": "That's a good idea.", "ar": "هذه فكرة جيدة.", "ru": "Это хорошая идея.", "tr": "Bu iyi bir fikir." },
+        { "de": "Einverstanden.", "en": "Agreed.", "ar": "موافق.", "ru": "Договорились.", "tr": "Anlaştık." }
+      ]
+    },
+    {
+      "id": "widersprechen",
+      "name": "Widersprechen",
+      "icon": "✋",
+      "phrases": [
+        { "de": "Das sehe ich anders.", "en": "I see it differently.", "ar": "أرى الأمر بشكل مختلف.", "ru": "Я вижу это иначе.", "tr": "Ben farklı görüyorum." },
+        { "de": "Da bin ich anderer Meinung.", "en": "I have a different opinion on that.", "ar": "لديّ رأي مختلف في ذلك.", "ru": "Здесь я другого мнения.", "tr": "Bu konuda farklı düşünüyorum." },
+        { "de": "Das stimmt so nicht.", "en": "That's not quite right.", "ar": "هذا ليس صحيحًا تمامًا.", "ru": "Это не совсем так.", "tr": "Bu tam olarak doğru değil." },
+        { "de": "Da muss ich dir widersprechen.", "en": "I have to disagree with you there.", "ar": "عليّ أن أخالفك في هذا.", "ru": "Тут я вынужден с тобой не согласиться.", "tr": "Burada sana itiraz etmem gerek." },
+        { "de": "Ich glaube nicht, dass das stimmt.", "en": "I don't think that's true.", "ar": "لا أظن أن هذا صحيح.", "ru": "Не думаю, что это правда.", "tr": "Bunun doğru olduğunu sanmıyorum." },
+        { "de": "Das finde ich nicht.", "en": "I don't think so.", "ar": "لا أرى ذلك.", "ru": "Я так не считаю.", "tr": "Ben öyle düşünmüyorum." },
+        { "de": "Ja, aber …", "en": "Yes, but …", "ar": "نعم، لكن …", "ru": "Да, но …", "tr": "Evet, ama …" },
+        { "de": "Auf keinen Fall.", "en": "No way.", "ar": "مستحيل.", "ru": "Ни в коем случае.", "tr": "Kesinlikle hayır." }
+      ]
+    },
+    {
+      "id": "zweifeln",
+      "name": "Zweifel äußern",
+      "icon": "🤔",
+      "phrases": [
+        { "de": "Da bin ich mir nicht so sicher.", "en": "I'm not so sure about that.", "ar": "لست متأكدًا من ذلك.", "ru": "Я в этом не уверен.", "tr": "Bundan pek emin değilim." },
+        { "de": "Meinst du wirklich?", "en": "Do you really think so?", "ar": "هل تظن ذلك حقًا؟", "ru": "Ты правда так думаешь?", "tr": "Gerçekten öyle mi düşünüyorsun?" },
+        { "de": "Ich weiß nicht so recht.", "en": "I'm not really sure.", "ar": "لا أعرف تمامًا.", "ru": "Даже не знаю.", "tr": "Pek bilemiyorum." },
+        { "de": "Ist das wirklich so?", "en": "Is that really the case?", "ar": "هل هذا صحيح فعلًا؟", "ru": "Это действительно так?", "tr": "Gerçekten öyle mi?" },
+        { "de": "Das kann ich mir kaum vorstellen.", "en": "I can hardly imagine that.", "ar": "بالكاد أستطيع تخيّل ذلك.", "ru": "С трудом могу себе это представить.", "tr": "Bunu pek hayal edemiyorum." },
+        { "de": "Hm, ich habe da meine Zweifel.", "en": "Hmm, I have my doubts.", "ar": "همم، لديّ شكوك في ذلك.", "ru": "Хм, у меня есть сомнения.", "tr": "Hmm, bu konuda şüphelerim var." },
+        { "de": "Bist du sicher?", "en": "Are you sure?", "ar": "هل أنت متأكد؟", "ru": "Ты уверен?", "tr": "Emin misin?" },
+        { "de": "Das glaube ich eher nicht.", "en": "I rather doubt it.", "ar": "لا أظن ذلك على الأرجح.", "ru": "Скорее всего, нет.", "tr": "Pek sanmıyorum." }
+      ]
+    },
+    {
+      "id": "troesten",
+      "name": "Trösten",
+      "icon": "🤗",
+      "phrases": [
+        { "de": "Das tut mir leid.", "en": "I'm sorry.", "ar": "أنا آسف لذلك.", "ru": "Мне очень жаль.", "tr": "Buna üzüldüm." },
+        { "de": "Kopf hoch!", "en": "Chin up!", "ar": "ارفع رأسك!", "ru": "Не вешай нос!", "tr": "Başını dik tut!" },
+        { "de": "Das wird schon wieder.", "en": "It'll be alright.", "ar": "ستتحسن الأمور.", "ru": "Всё наладится.", "tr": "Her şey düzelecek." },
+        { "de": "Mach dir keine Sorgen.", "en": "Don't worry.", "ar": "لا تقلق.", "ru": "Не волнуйся.", "tr": "Endişelenme." },
+        { "de": "Ich bin für dich da.", "en": "I'm here for you.", "ar": "أنا هنا من أجلك.", "ru": "Я рядом.", "tr": "Senin yanındayım." },
+        { "de": "Das ist nicht so schlimm.", "en": "That's not so bad.", "ar": "الأمر ليس بهذا السوء.", "ru": "Это не так страшно.", "tr": "O kadar da kötü değil." },
+        { "de": "Du schaffst das!", "en": "You can do it!", "ar": "ستنجح في ذلك!", "ru": "Ты справишься!", "tr": "Başarabilirsin!" },
+        { "de": "Kann ich dir irgendwie helfen?", "en": "Can I help you somehow?", "ar": "هل يمكنني مساعدتك بشكل ما؟", "ru": "Могу я тебе чем-то помочь?", "tr": "Sana bir şekilde yardım edebilir miyim?" }
+      ]
+    },
+    {
+      "id": "meinung",
+      "name": "Meinung sagen",
+      "icon": "💭",
+      "phrases": [
+        { "de": "Ich bin der Meinung, dass …", "en": "I'm of the opinion that …", "ar": "رأيي أن …", "ru": "Я считаю, что …", "tr": "Bence …" },
+        { "de": "Ich finde, dass …", "en": "I think that …", "ar": "أجد أن …", "ru": "Я нахожу, что …", "tr": "Bence şöyle: …" },
+        { "de": "Meiner Meinung nach …", "en": "In my opinion …", "ar": "في رأيي …", "ru": "По моему мнению …", "tr": "Bana göre …" },
+        { "de": "Ich glaube, …", "en": "I believe …", "ar": "أعتقد أن …", "ru": "Я думаю, …", "tr": "Sanırım …" },
+        { "de": "Für mich ist wichtig, dass …", "en": "What matters to me is that …", "ar": "المهم بالنسبة لي أن …", "ru": "Для меня важно, чтобы …", "tr": "Benim için önemli olan …" },
+        { "de": "Ehrlich gesagt …", "en": "To be honest …", "ar": "بصراحة …", "ru": "Честно говоря …", "tr": "Açıkçası …" },
+        { "de": "Ich denke, das ist richtig.", "en": "I think that's right.", "ar": "أظن أن هذا صحيح.", "ru": "Думаю, это правильно.", "tr": "Bence bu doğru." },
+        { "de": "Was meinst du dazu?", "en": "What do you think about it?", "ar": "ما رأيك في ذلك؟", "ru": "А ты что об этом думаешь?", "tr": "Sen bu konuda ne düşünüyorsun?" }
+      ]
+    },
+    {
+      "id": "nachfragen",
+      "name": "Nachfragen",
+      "icon": "❓",
+      "phrases": [
+        { "de": "Wie bitte?", "en": "Pardon?", "ar": "عفوًا؟", "ru": "Простите?", "tr": "Efendim?" },
+        { "de": "Können Sie das bitte wiederholen?", "en": "Could you repeat that, please?", "ar": "هل يمكنك تكرار ذلك من فضلك؟", "ru": "Не могли бы вы повторить?", "tr": "Lütfen tekrar eder misiniz?" },
+        { "de": "Können Sie bitte langsamer sprechen?", "en": "Could you speak more slowly, please?", "ar": "هل يمكنك التحدث ببطء أكثر من فضلك؟", "ru": "Говорите, пожалуйста, медленнее.", "tr": "Lütfen daha yavaş konuşabilir misiniz?" },
+        { "de": "Was bedeutet das?", "en": "What does that mean?", "ar": "ماذا يعني هذا؟", "ru": "Что это значит?", "tr": "Bu ne anlama geliyor?" },
+        { "de": "Das habe ich nicht verstanden.", "en": "I didn't understand that.", "ar": "لم أفهم ذلك.", "ru": "Я этого не понял.", "tr": "Bunu anlamadım." },
+        { "de": "Wie schreibt man das?", "en": "How do you spell that?", "ar": "كيف يُكتب هذا؟", "ru": "Как это пишется?", "tr": "Bu nasıl yazılıyor?" },
+        { "de": "Meinen Sie …?", "en": "Do you mean …?", "ar": "هل تقصد …؟", "ru": "Вы имеете в виду …?", "tr": "… mı demek istiyorsunuz?" },
+        { "de": "Können Sie mir ein Beispiel geben?", "en": "Can you give me an example?", "ar": "هل يمكنك أن تعطيني مثالًا؟", "ru": "Можете привести пример?", "tr": "Bana bir örnek verebilir misiniz?" }
+      ]
+    },
+    {
+      "id": "bitten",
+      "name": "Bitten & Hilfe",
+      "icon": "🙏",
+      "phrases": [
+        { "de": "Können Sie mir bitte helfen?", "en": "Can you help me, please?", "ar": "هل يمكنك مساعدتي من فضلك؟", "ru": "Не могли бы вы мне помочь?", "tr": "Bana yardım edebilir misiniz lütfen?" },
+        { "de": "Hätten Sie kurz Zeit?", "en": "Do you have a moment?", "ar": "هل لديك لحظة؟", "ru": "У вас есть минутка?", "tr": "Bir dakikanız var mı?" },
+        { "de": "Würden Sie mir bitte … geben?", "en": "Would you please give me …?", "ar": "هل يمكنك أن تعطيني … من فضلك؟", "ru": "Не могли бы вы дать мне …?", "tr": "Bana … verir misiniz lütfen?" },
+        { "de": "Ich hätte eine Bitte.", "en": "I have a favour to ask.", "ar": "لديّ طلب.", "ru": "У меня к вам просьба.", "tr": "Bir ricam var." },
+        { "de": "Darf ich kurz stören?", "en": "May I interrupt for a moment?", "ar": "هل يمكنني المقاطعة للحظة؟", "ru": "Можно вас ненадолго отвлечь?", "tr": "Kısaca rahatsız edebilir miyim?" },
+        { "de": "Könntest du mir das zeigen?", "en": "Could you show me that?", "ar": "هل يمكنك أن تريني ذلك؟", "ru": "Можешь мне это показать?", "tr": "Bunu bana gösterebilir misin?" },
+        { "de": "Ich brauche Hilfe.", "en": "I need help.", "ar": "أحتاج إلى مساعدة.", "ru": "Мне нужна помощь.", "tr": "Yardıma ihtiyacım var." },
+        { "de": "Wäre das möglich?", "en": "Would that be possible?", "ar": "هل هذا ممكن؟", "ru": "Это возможно?", "tr": "Bu mümkün olur mu?" }
+      ]
+    },
+    {
+      "id": "entschuldigen",
+      "name": "Sich entschuldigen",
+      "icon": "😔",
+      "phrases": [
+        { "de": "Entschuldigung!", "en": "Sorry! / Excuse me!", "ar": "عذرًا!", "ru": "Извините!", "tr": "Özür dilerim! / Affedersiniz!" },
+        { "de": "Es tut mir leid.", "en": "I'm sorry.", "ar": "أنا آسف.", "ru": "Мне жаль.", "tr": "Özür dilerim." },
+        { "de": "Das war nicht so gemeint.", "en": "I didn't mean it like that.", "ar": "لم أقصد ذلك.", "ru": "Я не это имел в виду.", "tr": "Öyle demek istemedim." },
+        { "de": "Entschuldigen Sie die Verspätung.", "en": "Sorry for being late.", "ar": "أعتذر عن التأخير.", "ru": "Извините за опоздание.", "tr": "Geciktiğim için özür dilerim." },
+        { "de": "Das war mein Fehler.", "en": "That was my mistake.", "ar": "كان هذا خطئي.", "ru": "Это была моя ошибка.", "tr": "Benim hatamdı." },
+        { "de": "Kein Problem.", "en": "No problem.", "ar": "لا مشكلة.", "ru": "Без проблем.", "tr": "Sorun değil." },
+        { "de": "Schon gut.", "en": "It's alright.", "ar": "لا بأس.", "ru": "Ничего страшного.", "tr": "Önemli değil." },
+        { "de": "Das kann jedem passieren.", "en": "That can happen to anyone.", "ar": "هذا يمكن أن يحدث لأي شخص.", "ru": "С каждым бывает.", "tr": "Herkesin başına gelebilir." }
+      ]
+    },
+    {
+      "id": "danken",
+      "name": "Danken",
+      "icon": "💐",
+      "phrases": [
+        { "de": "Vielen Dank!", "en": "Thank you very much!", "ar": "شكرًا جزيلًا!", "ru": "Большое спасибо!", "tr": "Çok teşekkürler!" },
+        { "de": "Danke, das ist sehr nett.", "en": "Thanks, that's very kind.", "ar": "شكرًا، هذا لطف كبير.", "ru": "Спасибо, это очень мило.", "tr": "Teşekkürler, çok naziksiniz." },
+        { "de": "Herzlichen Dank für Ihre Hilfe.", "en": "Many thanks for your help.", "ar": "شكرًا جزيلًا على مساعدتك.", "ru": "Сердечное спасибо за вашу помощь.", "tr": "Yardımınız için çok teşekkür ederim." },
+        { "de": "Das ist lieb von dir.", "en": "That's sweet of you.", "ar": "هذا لطف منك.", "ru": "Как мило с твоей стороны.", "tr": "Çok tatlısın." },
+        { "de": "Bitte schön!", "en": "You're welcome!", "ar": "على الرحب والسعة!", "ru": "Пожалуйста!", "tr": "Rica ederim!" },
+        { "de": "Gern geschehen.", "en": "My pleasure.", "ar": "بكل سرور.", "ru": "Не за что.", "tr": "Ne demek, memnuniyetle." },
+        { "de": "Nichts zu danken.", "en": "Don't mention it.", "ar": "لا شكر على واجب.", "ru": "Не стоит благодарности.", "tr": "Teşekküre gerek yok." },
+        { "de": "Ich weiß das sehr zu schätzen.", "en": "I really appreciate it.", "ar": "أقدّر ذلك كثيرًا.", "ru": "Я очень это ценю.", "tr": "Bunu gerçekten takdir ediyorum." }
+      ]
+    },
+    {
+      "id": "vorschlagen",
+      "name": "Vorschläge machen",
+      "icon": "💡",
+      "phrases": [
+        { "de": "Wie wäre es mit …?", "en": "How about …?", "ar": "ما رأيك في …؟", "ru": "Как насчёт …?", "tr": "… nasıl olur?" },
+        { "de": "Wollen wir zusammen essen gehen?", "en": "Shall we go and eat together?", "ar": "هل نذهب لتناول الطعام معًا؟", "ru": "Пойдём вместе поедим?", "tr": "Birlikte yemeğe gidelim mi?" },
+        { "de": "Ich schlage vor, dass wir …", "en": "I suggest that we …", "ar": "أقترح أن …", "ru": "Предлагаю, чтобы мы …", "tr": "… yapmamızı öneriyorum." },
+        { "de": "Hast du Lust, ins Kino zu gehen?", "en": "Do you feel like going to the cinema?", "ar": "هل ترغب في الذهاب إلى السينما؟", "ru": "Хочешь сходить в кино?", "tr": "Sinemaya gitmek ister misin?" },
+        { "de": "Gute Idee, machen wir das!", "en": "Good idea, let's do that!", "ar": "فكرة جيدة، لنفعل ذلك!", "ru": "Хорошая идея, давай так и сделаем!", "tr": "İyi fikir, hadi yapalım!" },
+        { "de": "Leider kann ich da nicht.", "en": "Unfortunately I can't make it then.", "ar": "للأسف لا أستطيع في ذلك الوقت.", "ru": "К сожалению, я тогда не могу.", "tr": "Maalesef o zaman gelemem." },
+        { "de": "Vielleicht ein anderes Mal.", "en": "Maybe another time.", "ar": "ربما في وقت آخر.", "ru": "Может, в другой раз.", "tr": "Belki başka bir zaman." },
+        { "de": "Passt dir Samstag?", "en": "Does Saturday suit you?", "ar": "هل يناسبك السبت؟", "ru": "Тебе подходит суббота?", "tr": "Cumartesi sana uyar mı?" }
+      ]
+    },
+    {
+      "id": "gratulieren",
+      "name": "Gratulieren & Wünschen",
+      "icon": "🎉",
+      "phrases": [
+        { "de": "Herzlichen Glückwunsch!", "en": "Congratulations!", "ar": "تهانينا!", "ru": "Поздравляю!", "tr": "Tebrikler!" },
+        { "de": "Alles Gute zum Geburtstag!", "en": "Happy birthday!", "ar": "عيد ميلاد سعيد!", "ru": "С днём рождения!", "tr": "Doğum günün kutlu olsun!" },
+        { "de": "Viel Glück!", "en": "Good luck!", "ar": "حظًا سعيدًا!", "ru": "Удачи!", "tr": "Bol şans!" },
+        { "de": "Viel Erfolg bei der Prüfung!", "en": "Good luck with the exam!", "ar": "بالتوفيق في الامتحان!", "ru": "Успехов на экзамене!", "tr": "Sınavda başarılar!" },
+        { "de": "Gute Besserung!", "en": "Get well soon!", "ar": "أتمنى لك الشفاء العاجل!", "ru": "Выздоравливай!", "tr": "Geçmiş olsun!" },
+        { "de": "Schönes Wochenende!", "en": "Have a nice weekend!", "ar": "عطلة نهاية أسبوع سعيدة!", "ru": "Хороших выходных!", "tr": "İyi hafta sonları!" },
+        { "de": "Frohe Weihnachten!", "en": "Merry Christmas!", "ar": "عيد ميلاد مجيد!", "ru": "Счастливого Рождества!", "tr": "Mutlu Noeller!" },
+        { "de": "Das freut mich für dich!", "en": "I'm happy for you!", "ar": "أنا سعيد من أجلك!", "ru": "Я рад за тебя!", "tr": "Senin adına sevindim!" }
+      ]
+    },
+    {
+      "id": "begruessen",
+      "name": "Begrüßen & Verabschieden",
+      "icon": "👋",
+      "phrases": [
+        { "de": "Guten Morgen!", "en": "Good morning!", "ar": "صباح الخير!", "ru": "Доброе утро!", "tr": "Günaydın!" },
+        { "de": "Schön, Sie kennenzulernen.", "en": "Nice to meet you.", "ar": "سعيد بالتعرف إليك.", "ru": "Приятно познакомиться.", "tr": "Tanıştığımıza memnun oldum." },
+        { "de": "Wie geht es Ihnen?", "en": "How are you? (formal)", "ar": "كيف حالك؟ (رسمي)", "ru": "Как у вас дела?", "tr": "Nasılsınız?" },
+        { "de": "Lange nicht gesehen!", "en": "Long time no see!", "ar": "لم أرك منذ زمن طويل!", "ru": "Давно не виделись!", "tr": "Görüşmeyeli uzun zaman oldu!" },
+        { "de": "Bis morgen!", "en": "See you tomorrow!", "ar": "إلى الغد!", "ru": "До завтра!", "tr": "Yarın görüşürüz!" },
+        { "de": "Auf Wiedersehen!", "en": "Goodbye!", "ar": "إلى اللقاء!", "ru": "До свидания!", "tr": "Hoşça kalın!" },
+        { "de": "Mach's gut!", "en": "Take care!", "ar": "اعتنِ بنفسك!", "ru": "Всего хорошего!", "tr": "Kendine iyi bak!" },
+        { "de": "Einen schönen Tag noch!", "en": "Have a nice day!", "ar": "أتمنى لك يومًا سعيدًا!", "ru": "Хорошего дня!", "tr": "İyi günler!" }
+      ]
+    }
+  ]
+}

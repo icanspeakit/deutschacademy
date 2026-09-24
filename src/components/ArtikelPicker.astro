@@ -20,22 +20,11 @@
 // lexicon has gendered nouns to B2 (386 / 478 / 762 / 951), so three quarters of the pool
 // was unreachable; the row could not have carried four levels plus their sizes anyway.
 //
-// The Regel sits on the rail as its own entry rather than in a column of its own, the way
-// Redemittel does in the Wortschatz rail: it is one more thing the side can show, not a
-// second side.
+// The Regel keeps an entry on the rail, but it no longer swaps this panel: it opens the
+// drawer on the right (ArtikelRegel.astro), so the levels stay where they are.
 import Icon from "./Icon.astro";
+import { LEVEL_NAMES } from "../lib/lexicon.js";
 import UiText from "./UiText.astro";
-import GrammarHelp from "./GrammarHelp.astro";
-import GrammarHelpText from "./GrammarHelpText.astro";
-import RefTable from "./RefTable.astro";
-import artikelTopic from "../data/grammatik/artikel.json";
-import grammarHelp from "../data/uebersetzungen/grammatik.json";
-// The Regel pane's text in the learner's language, like every grammar topic's rule.
-const gxTrainer = (grammarHelp.entries as Record<string, any>).artikel?.trainer ?? null;
-// The topic's own rule, for the Regel pane (tables, sentences, boxes, note).
-const gxTopic = (grammarHelp.entries as Record<string, any>).artikel ?? null;
-const rule = (artikelTopic as any).concept ?? {};
-const gxLevel = "A1";
 // The rail, the panel, the rows and the tooltips are nav.css's (variant B of the
 // dashboard rail); the fold tab and the unfold button are lernset-picker.css's. Same two
 // stylesheets LernsetPicker.astro pulls in, for the same reason.
@@ -153,7 +142,10 @@ const markerData = JSON.stringify(
         data-i18n-attr={`aria-label:kb.level.${level}`}
       >
         <span class="nvb-railbadge">{level}</span>
-        <span class="nvb-tip" data-i18n="ap.levelTip" data-i18n-vars={JSON.stringify({ level, n: counts[level] })}>Stufe {level} · {counts[level]} Nomen</span>
+        {/* "Stufe A1 · Einstieg": the level's name, not its size — a noun count on hover
+            told a beginner how much there is still to learn. Two keys, so both halves
+            follow the UI language; the names live in LEVEL_NAMES (src/lib/lexicon.js). */}
+        <span class="nvb-tip"><span data-i18n="ap.levelName" data-i18n-vars={JSON.stringify({ level })}>Stufe {level}</span> · <span data-i18n={`level.name.${level}`}>{LEVEL_NAMES[level as keyof typeof LEVEL_NAMES]}</span></span>
       </button>
     ))}
 
@@ -176,14 +168,15 @@ const markerData = JSON.stringify(
       <span class="nvb-tip" data-i18n="ap.byFreqTip" data-i18n-vars={JSON.stringify({ n: freq.words })}>Nach Häufigkeit · {freq.words} Nomen</span>
     </button>
 
-    <!-- The Regel, as one more thing the side can show. -->
+    <!-- The Regel: opens the drawer on the right (ArtikelRegel.astro); the panel keeps the
+         level you were on. -->
     <button
       type="button"
       role="tab"
       class="nvb-railbtn"
       data-rail="regel"
       aria-selected="false"
-      aria-controls="ap-pane-regel"
+      aria-controls="ap-regel"
       aria-label="Regel"
       data-i18n-attr="aria-label:ak.rule"
     >
@@ -339,58 +332,5 @@ const markerData = JSON.stringify(
       </p>
     </div>
 
-    <!-- The Regel pane. Same panel, same rail — the column does not change shape to show
-         it, because it is one of the things the column shows. -->
-    <div class="nvb-section ap-regel" id="ap-pane-regel" data-pane="regel" hidden>
-      <div class="nvb-panelhead">
-        <h3 data-i18n="ak.rule">Regel</h3>
-        <button type="button" class="nvb-collapse" data-nvb-collapse aria-label="Liste einklappen" data-i18n-attr="aria-label:ap.list.collapse">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>
-        </button>
-      </div>
-      {gxTrainer && <GrammarHelp level={gxLevel} reviewed={gxTrainer.reviewed} />}
-      <p class="akk-regel-intro">
-        Der Artikel eines deutschen Nomens ist meist nicht am Genus der Sache erkennbar – aber manche
-        Wortendungen geben einen zuverlässigen Hinweis. Die folgenden Muster helfen beim Raten, wenn
-        das Wort noch unbekannt ist.
-      </p>
-      <GrammarHelpText text={gxTrainer?.intro} />
-      {/* The rule in full — the same tables, sentences and boxes a grammar topic's Regel
-          carries (src/data/grammatik/artikel.json), so Artikel explains itself as
-          thoroughly as every other topic instead of with a six-row aside. */}
-      {rule.reference?.tables?.map((table) => <RefTable table={table} />)}
-      <div class="ak-qa ap-regel-qa">
-        {rule.qa?.map((item, i) => (
-          <div class="ak-qa-item"><Fragment set:html={item.html} /><GrammarHelpText text={gxTopic?.qa?.[i]} /></div>
-        ))}
-      </div>
-      {rule.reference?.boxes?.map((box) => (
-        <div class:list={["ap-regel-box", box.variant && `ap-regel-box--${box.variant}`]}>
-          <p class="ap-regel-box-title"><UiText de={box.badge} /></p>
-          <ul>{box.items.map((it) => <li>{it}</li>)}</ul>
-        </div>
-      ))}
-      {rule.noteHtml && <p class="akk-regel-note" set:html={rule.noteHtml} />}
-      <GrammarHelpText text={gxTopic?.note} />
-      <p class="akk-regel-note">
-        Männliche Personenbezeichnungen bleiben maskulin, auch wenn sie auf -e enden (z. B. der Kollege,
-        der Junge). Bei vielen Wörtern gibt es kein Muster – der Artikel muss einfach mitgelernt werden.
-      </p>
-      <GrammarHelpText text={gxTrainer?.note} />
-      <!-- Last, as the aside it is: the rule comes first when someone asks for the rule. -->
-      <aside class="ap-regel-hint">
-        <p class="ap-regel-hint-title" data-i18n="ap.hint">Hinweis</p>
-        <p>
-          Das Genus über Regeln zu lernen, ist oft sehr theoretisch, denn viele Regeln haben
-          Ausnahmen. Die meisten Lernenden lernen den Artikel in der Praxis: Sie lernen jedes
-          Nomen immer zusammen mit seinem Artikel (der Tisch, die Lampe, das Buch) – zum
-          Beispiel im{" "}<a href="/uebungen/wortschatz">Wortschatz</a>{" "}– und begegnen den
-          Wörtern im Alltag. Die Regeln hier sind vor allem interessant als Hintergrundwissen.
-          Nur wenige sind wirklich zuverlässig und im Alltag nützlich, zum Beispiel
-          -ung, -heit, -keit → die und -chen, -lein → das.
-        </p>
-        <GrammarHelpText text={gxTrainer?.hint} />
-      </aside>
-    </div>
   </div>
 </div>

@@ -50,6 +50,16 @@ if (!FILES_ONLY) {
   console.log(`\nLinks (${data.links.length})`);
   for (const l of data.links) {
     let line;
+    // A mirrored official file (href starts with "/"): check it is on disk, and check the
+    // original it names still answers, so the mirror is not left pointing at nothing.
+    if (l.href.startsWith("/")) {
+      const onDisk = existsSync(path.join(root, "public", l.href));
+      line = onDisk ? "ok       lokal" : "MISSING  lokal";
+      if (!onDisk) bad++;
+      console.log(`  ${line}  ${l.title}`);
+      if (!l.original) continue;
+      l.href = l.original;
+    }
     try {
       // manual: a 30x that lands on a different page is the thing we want to see.
       const r = await fetch(l.href, { redirect: "manual", headers: { "user-agent": UA } });

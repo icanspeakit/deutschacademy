@@ -3,8 +3,8 @@
 // The workspaces at /uebungen/grammatik/<topic> are silent and text-only: the learner
 // reads a rule and types endings. That trains recognition, not production. This adds the
 // two beats a Grammatik-aktiv page is actually built on — hear the form, then say it
-// under time pressure. The fourth beat, Schreiben, is the exercise column that page
-// already has; nothing here re-implements it.
+// under time pressure. The fourth beat, Schreiben, types the Sprechen drill (see
+// mountSchreiben at the end).
 //
 // Data is one optional `aktiv: { listen, hoeren, sprechen }` block in
 // src/data/grammatik/<topic>.json. A topic without it renders exactly as before — no
@@ -447,4 +447,119 @@ export function mountSprechen(root, data, { voice, onRate } = {}) {
   render();
   onUiText(render);
   return { stop };
+}
+
+/* -------------------------------------------------------------- schreiben ---- */
+
+/**
+ * The fourth beat: the Sprechen drill again, typed instead of said. Hear (and see) the
+ * prompt, write the form, check. Sprechen is self-rated — only here does the page find out
+ * whether the learner can actually produce the form, spelling included.
+ *
+ * It used to be no panel at all: the chip switched the page back to Üben, which read as the
+ * app throwing the learner out of the mode they had chosen.
+ *
+ * Checking is forgiving about what is not grammar — case, punctuation, extra spaces — and
+ * says so when that was the only difference. Umlauts count: "fahrt" is not "fährt".
+ */
+export function mountSchreiben(root, data, { voice, onAnswer } = {}) {
+  if (!root || !data?.rounds?.length) return { stop() {} };
+  const rounds = data.rounds;
+  let r = 0;
+  let i = 0;
+  let state = "ask"; // ask | right | near | wrong
+  let typed = "";
+  const scores = rounds.map((round) => round.items.map(() => null));
+
+  const round = () => rounds[r];
+  const item = () => round().items[i];
+  const loose = (s) => s.toLowerCase().replace(/[.,!?;:„“"«»()]/g, "").replace(/\s+/g, " ").trim();
+  const strict = (s) => s.replace(/\s+/g, " ").trim();
+
+  function render() {
+    const cur = round();
+    const done = scores[r].filter((s) => s !== null).length;
+    const good = scores[r].filter((s) => s === true).length;
+    const answered = state !== "ask";
+    const listen = esc(t("ak.write.listen", "Anhören"));
+    root.innerHTML = `
+      <div class="ak-drill ak-write">
+        <div class="ak-round-tabs" role="tablist">
+          ${rounds.map((ro, ri) => `<button type="button" class="ak-round-tab ${ri === r ? "is-active" : ""}" data-round="${ri}" role="tab" aria-selected="${ri === r}">${uitHtml(ro.label, ro.labelTr, esc)}</button>`).join("")}
+        </div>
+        <p class="ak-drill-instruction">${uitHtml(cur.instruction, cur.instructionTr, esc)}</p>
+        <p class="ak-drill-example">${esc(t("ak.eg", "z. B."))} <strong>${esc(cur.example.prompt)}</strong> → <strong>${esc(cur.example.answer)}</strong></p>
+
+        <div class="ak-stage" data-phase="${answered ? (state === "wrong" ? "gap" : "answer") : "ready"}">
+          <div class="ak-stage-dots">
+            ${cur.items.map((_, ii) => {
+              const s = scores[r][ii];
+              const cls = `${s === true ? "is-good" : s === false ? "is-bad" : ""} ${ii === i ? "is-current" : ""}`;
+              return `<button type="button" class="ak-dot ${cls}" data-jump="${ii}" aria-label="${esc(t("ak.item", "Aufgabe {n}", { n: ii + 1 }))}"></button>`;
+            }).join("")}
+          </div>
+          <p class="ak-prompt">${esc(item().prompt)} <button type="button" class="ak-write-say" data-say="prompt" aria-label="${listen}" title="${listen}">🔊</button></p>
+          <div class="ak-arrow" aria-hidden="true">↓</div>
+          <form class="ak-write-form" data-form autocomplete="off">
+            <input class="ak-write-input ${state === "right" || state === "near" ? "is-right" : state === "wrong" ? "is-wrong" : ""}"
+              data-input type="text" lang="de" spellcheck="false" autocapitalize="off" autocorrect="off"
+              value="${esc(typed)}" ${answered ? "readonly" : ""}
+              placeholder="${esc(t("ak.write.placeholder", "Schreib die Lösung …"))}"
+              aria-label="${esc(t("ak.write.placeholder", "Schreib die Lösung …"))}">
+          </form>
+          <p class="ak-write-verdict" aria-live="polite">${
+            state === "right" ? `✓ ${esc(t("ak.write.right", "Richtig!"))}` :
+            state === "near" ? `✓ ${esc(t("ak.write.near", "Richtig — achte auf Groß- und Kleinschreibung und Satzzeichen:"))} <strong>${esc(item().answer)}</strong>` :
+            state === "wrong" ? `${esc(t("ak.write.wrong", "Richtig wäre:"))} <strong>${esc(item().answer)}</strong> <button type="button" class="ak-write-say" data-say="answer" aria-label="${listen}" title="${listen}">🔊</button>` : ""
+          }</p>
+        </div>
+
+        <div class="ak-drill-actions">
+          ${answered
+            ? `<button type="button" class="ak-go" data-next>${esc(i < cur.items.length - 1 ? t("ak.go.next", "Weiter") : t("ak.write.again", "Von vorn"))}</button>`
+            : `<button type="button" class="ak-go" data-check>${esc(t("ak.write.check", "Prüfen"))}</button>`}
+        </div>
+
+        <p class="ak-drill-score">${esc(t("ak.score", "{done} / {total} bearbeitet", { done, total: cur.items.length }))}${done ? ` · ${esc(t("ak.write.score", "{n} richtig", { n: good }))}` : ""}</p>
+      </div>`;
+
+    const input = root.querySelector("[data-input]");
+    input.addEventListener("input", (e) => { typed = e.target.value; });
+    root.querySelector("[data-form]").addEventListener("submit", (e) => { e.preventDefault(); if (answered) next(); else check(); });
+    root.querySelector("[data-check]")?.addEventListener("click", check);
+    root.querySelector("[data-next]")?.addEventListener("click", next);
+    root.querySelectorAll("[data-say]").forEach((b) => b.addEventListener("click", () => {
+      const it = item();
+      const which = b.dataset.say === "answer" ? { text: it.answer, audio: it.audioAnswer } : { text: it.prompt, audio: it.audioPrompt };
+      voice?.stop();
+      voice?.say(which);
+    }));
+    root.querySelectorAll("[data-jump]").forEach((b) => b.addEventListener("click", () => { i = +b.dataset.jump; reset(); }));
+    root.querySelectorAll("[data-round]").forEach((b) => b.addEventListener("click", () => { r = +b.dataset.round; i = 0; reset(); }));
+    // Enter checks, Enter again moves on — the keyboard never has to leave the field.
+    if (answered) root.querySelector("[data-next]")?.focus({ preventScroll: true });
+    else if (root.offsetParent) input.focus({ preventScroll: true });
+  }
+
+  function reset() { state = "ask"; typed = ""; voice?.stop(); render(); }
+
+  function check() {
+    if (!typed.trim()) return;
+    const want = item().answer;
+    state = strict(typed) === strict(want) ? "right" : loose(typed) === loose(want) ? "near" : "wrong";
+    scores[r][i] = state !== "wrong";
+    if (onAnswer) onAnswer(state !== "wrong");
+    render();
+    if (state !== "wrong") voice?.say({ text: want, audio: item().audioAnswer });
+  }
+
+  function next() {
+    if (i < round().items.length - 1) i++;
+    else { i = 0; scores[r] = scores[r].map(() => null); }
+    reset();
+  }
+
+  render();
+  onUiText(render);
+  return { stop: () => voice?.stop() };
 }

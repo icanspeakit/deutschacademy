@@ -1457,3 +1457,22 @@
   .nvb-foldtab { display: none; }
   .nv-aside .nvb-collapse { display: inline-flex; }
 }
+
+/* "Zuletzt geübt" under the Dein Weg heading (LearnShell.astro): the resume card's look,
+   as a link back to the last page practised. */
+.wg-last {
+  display: block;
+  margin: 0 var(--space-2) var(--space-3);
+  padding: 10px 12px;
+  border: 1px solid var(--blue-200);
+  border-radius: var(--radius);
+  background: var(--blue-50);
+  color: inherit;
+  text-decoration: none;
+  transition: background var(--duration-fast), border-color var(--duration-fast);
+}
+.wg-last[hidden] { display: none; }
+.wg-last:hover { background: var(--blue-100); border-color: var(--blue-300); }
+.wg-last-row { display: flex; align-items: baseline; gap: 8px; }
+.wg-last-row .wg-resume-label { flex: 1; min-width: 0; }
+.wg-last-go { color: var(--brand-blue); font-weight: var(--fw-bold); }

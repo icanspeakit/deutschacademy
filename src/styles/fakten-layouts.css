@@ -1,69 +1,24 @@
 /* Leben in Deutschland: Fakten page.
-   Visual design is fixed ("minimal": flat, near-monochrome) — baked
-   into .fk-page below via the same shared custom properties (--ink, --brand-blue-dark,
-   --font-display, --radius, …) the rest of the site's components already read, so everything
-   re-themes without touching practice.css/pruefungen.css.
+   Same palette, fonts and corners as the rest of the site. This page used to carry its own
+   "minimal" look — near-monochrome, Albert Sans, 6px corners, grey monospace labels — and
+   read like a different product than the homepage one click away. Now it only maps its
+   three surface names onto the site's tokens, so light and dark mode come from global.css.
 
    The one remaining user-facing control is "Ansicht" (.fk-view-switcher): a small icon-only
    dial fixed to the bottom-right corner that swaps between three structural layouts (Tabs is
    the default). See the crossfade + sliding-indicator mechanics near the bottom of this file. */
 
-/* The "minimal" look is monochrome by design, so dark mode inverts it in place
-   instead of pulling in the teal site palette. */
-:root[data-theme="dark"] .fk-page {
-  --ink: #ededed;
-  --muted: #a0a0a0;
-  --border: #2c2c2c;
-  --border-strong: #3f3f3f;
-  --surface: #161616;
-  --brand-blue: #60a5fa;
-  --brand-blue-dark: #93c5fd;
-  --gradient-brand: #60a5fa;
-  --fk-page-bg: #0d0d0d;
-  --fk-header-bg: #121212;
-  --fk-card-bg: #161616;
-}
-
 .fk-page {
-  --ink: #111111;
-  --muted: #666666;
-  --border: #e2e2e2;
-  --border-strong: #cccccc;
-  --surface: #fafafa;
-  --brand-blue: #2563eb;
-  --brand-blue-dark: #1d4ed8;
-  --gradient-brand: #2563eb;
-  /* Albert Sans, not the site's Sora: this page keeps its own neutral voice. It used to
-     be Inter pulled from fonts.googleapis.com, which sent every reader's IP to Google
-     from a learner route and made /datenschutz's "no third-party requests" a false
-     claim. Albert Sans is already self-hosted in /public/fonts and fills the same
-     neutral-UI role, so the look survives and nothing leaves the origin. */
-  --font-display: "Albert Sans", "Segoe UI", Arial, sans-serif;
-  --font-body: "Albert Sans", "Segoe UI", Arial, sans-serif;
-  --radius-sm: 4px;
-  --radius: 6px;
-  --radius-lg: 8px;
-  --radius-pill: 6px;
-  --fk-page-bg: #ffffff;
-  --fk-header-bg: #ffffff;
-  --fk-card-bg: #ffffff;
+  --fk-page-bg: var(--page-bg);
+  --fk-header-bg: var(--page-bg);
+  --fk-card-bg: var(--surface-card);
 
   font-family: var(--font-body);
   color: var(--ink);
   background: var(--fk-page-bg);
 }
 
-.fk-page .eyebrow,
-.fk-page .fk-fact-card-count,
-.fk-page .format-note {
-  /* The mono here is three letter-spaced labels, not code or aligned columns, so it is
-     decorative: a system monospace carries it without a second webfont download. */
-  font-family: ui-monospace, "Cascadia Mono", "Segoe UI Mono", Consolas, monospace;
-  letter-spacing: .01em;
-}
-
 /* Surfaces that are hard-coded #fff in shared stylesheets — re-themed here. */
-.fk-page .practice-header { background: var(--fk-header-bg); }
 .fk-page .format-table,
 .fk-page .mock-cta { background: var(--fk-card-bg); }
 .fk-page .quiz-btn:not(.quiz-btn--primary) { background: var(--fk-card-bg); }
@@ -72,7 +27,7 @@
 
 .fk-hero { text-align: center; margin-bottom: 24px; }
 .fk-hero .eyebrow { text-align: center; }
-.fk-hero h1 { font-family: var(--font-body); font-size: clamp(1.6rem, 4vw, 2.2rem); color: var(--ink); margin: 0 0 10px; font-weight: var(--fw-regular); }
+.fk-hero h1 { font-family: var(--font-display); font-size: clamp(2rem, 5vw, 2.8rem); color: var(--ink); margin: 0 0 10px; font-weight: 700; }
 .fk-hero p { color: var(--muted); max-width: 560px; margin: 0 auto; line-height: 1.55; }
 .fk-hero p a { color: var(--brand-blue-dark); font-weight: 600; }
 
@@ -102,8 +57,8 @@
   transition: background .15s ease, color .15s ease, border-color .15s ease;
 }
 .fk-lang-btn:hover { border-color: var(--border-strong); color: var(--ink); }
-.fk-lang-btn.active { background: #ecfdf5; border-color: #6ee7b7; color: #047857; }
-.fk-lang-btn.active svg { color: #047857; }
+.fk-lang-btn.active { background: var(--blue-50); border-color: var(--brand-blue); color: var(--brand-blue-dark); }
+.fk-lang-btn.active svg { color: var(--brand-blue-dark); }
 .fk-lang-btn[data-lang="standard"].active { background: var(--surface); border-color: var(--border-strong); color: var(--ink); }
 
 /* ================= Ansicht: corner view switcher ================= */
@@ -176,7 +131,7 @@
 .fk-tab.active { background: var(--gradient-brand); color: #fff; border-color: transparent; }
 .fk-tab-panel { display: none; background: var(--fk-card-bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 28px; max-width: 780px; margin: 0 auto; }
 .fk-tab-panel.active { display: block; }
-.fk-tab-panel h3 { text-align: left; margin: 0 0 14px; font-family: var(--font-body); color: var(--ink); font-weight: var(--fw-regular); }
+.fk-tab-panel h3 { text-align: left; margin: 0 0 14px; font-family: var(--font-body); color: var(--ink); font-weight: var(--fw-semibold); }
 
 .fk-downloads-list { display: flex; flex-wrap: wrap; gap: 10px; }
 
@@ -191,7 +146,7 @@
 .fk-doc-nav a:hover { background: var(--fk-card-bg); color: var(--brand-blue-dark); }
 .fk-doc-nav-downloads a { font-weight: 500; color: var(--brand-blue-dark); font-size: .84rem; }
 .fk-doc-section { background: var(--fk-card-bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 26px 28px; margin-bottom: 18px; scroll-margin-top: 20px; }
-.fk-doc-section h3 { text-align: left; margin: 0 0 14px; font-family: var(--font-body); color: var(--ink); font-weight: var(--fw-regular); }
+.fk-doc-section h3 { text-align: left; margin: 0 0 14px; font-family: var(--font-body); color: var(--ink); font-weight: var(--fw-semibold); }
 
 @media (max-width: 720px) {
   .fk-doc-grid { grid-template-columns: 1fr; }
@@ -208,7 +163,7 @@
 .fk-fact-card { background: var(--fk-card-bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 4px 22px; }
 .fk-fact-card summary { list-style: none; cursor: pointer; display: flex; align-items: center; justify-content: space-between; padding: 18px 0; gap: 10px; }
 .fk-fact-card summary::-webkit-details-marker { display: none; }
-.fk-fact-card-title { font-family: var(--font-body); font-weight: var(--fw-regular); color: var(--ink); }
+.fk-fact-card-title { font-family: var(--font-body); font-weight: var(--fw-semibold); color: var(--ink); }
 .fk-fact-card-count { font-size: .76rem; font-weight: 700; color: var(--brand-blue-dark); background: var(--surface); border-radius: var(--radius-pill); padding: 4px 10px; white-space: nowrap; }
 .fk-fact-card[open] summary { border-bottom: 1px solid var(--border); }
 .fk-fact-card .fact-list { padding: 18px 0 20px 20px; margin: 0; }
@@ -224,4 +179,12 @@
 .fk-downloads-card .fk-downloads-list { padding-bottom: 18px; }
 
 /* ---------- Shared: Bundesland picker ---------- */
-.fk-land-select { border: 1px solid var(--border); border-radius: 10px; padding: 8px 14px; font-family: var(--font-body); font-size: .95rem; margin-bottom: 4px; background: var(--fk-card-bg); color: var(--ink); }
+.fk-land-select { border: 1px solid var(--border); border-radius: var(--radius-pill); padding: 8px 14px; font-family: var(--font-body); font-size: .95rem; margin-bottom: 4px; background: var(--fk-card-bg); color: var(--ink); }
+
+/* Phone: the nine topic tabs as one row you swipe, not five rows of pills pushing the
+   facts off the first screen. */
+@media (max-width: 640px) {
+  .fk-tabbar { flex-wrap: nowrap; justify-content: flex-start; overflow-x: auto; scrollbar-width: none; padding-bottom: 4px; margin-inline: -16px; padding-inline: 16px; }
+  .fk-tabbar::-webkit-scrollbar { display: none; }
+  .fk-tab { flex: none; white-space: nowrap; }
+}

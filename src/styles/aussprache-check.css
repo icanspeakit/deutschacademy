@@ -205,3 +205,26 @@ button.ac-w:focus-visible { outline: 2px solid var(--brand-blue); outline-offset
   .ac-btn--rec[data-state="rec"] .ac-rec-dot { animation: none; }
   .ac-score-bar span { transition: none; }
 }
+
+/* Satzmelodie (src/lib/satzmelodie.js): the two pitch contours and one tip. The chart
+   stretches to the card's width; its height stays put, so a phone gets a wide, flat
+   line rather than a tiny one. */
+.ac-melody {
+  margin-top: 14px; padding: 14px 16px;
+  border: 1px solid var(--border); border-radius: var(--radius, 12px);
+  background: var(--surface-card, #fff);
+}
+.ac-mel-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 4px 12px; margin-bottom: 8px; }
+.ac-mel-title { font-weight: 700; color: var(--ink); }
+.ac-mel-kind { font-size: .8125rem; color: var(--muted); }
+.ac-mel-svg { display: block; width: 100%; height: 120px; }
+.ac-mel-mid { stroke: var(--border); stroke-dasharray: 3 4; stroke-width: 1; }
+.ac-mel-ref, .ac-mel-you { fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; vector-effect: non-scaling-stroke; }
+.ac-mel-ref { stroke: var(--muted); opacity: .55; }
+.ac-mel-you { stroke: var(--brand-blue); }
+.ac-mel-legend { display: flex; gap: 16px; margin-top: 6px; font-size: .8125rem; color: var(--muted); }
+.ac-mel-legend span { display: inline-flex; align-items: center; gap: 6px; }
+.ac-mel-key { display: inline-block; width: 18px; height: 3px; border-radius: 2px; }
+.ac-mel-key--ref { background: var(--muted); opacity: .55; }
+.ac-mel-key--you { background: var(--brand-blue); }
+.ac-mel-tip { margin: 10px 0 0; font-size: .9375rem; line-height: 1.5; color: var(--ink); }

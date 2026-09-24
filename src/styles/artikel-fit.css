@@ -20,6 +20,9 @@
 
 @media (min-width: 1001px) {
   .vp-page--fit { padding-top: 16px; }
+  /* The sheet head is the phone's way to close the Stufen sheet; beside the work it has no job. */
+  .vp-page--fit .vp-sheet-head { display: none; }
+  .vp-page--fit .vp-rule-card > .vp-sheet-body { display: contents; }
 
   /* "Stufen ausblenden" had a row to itself. The pivot tab on the column's edge does the
      same job (≥1180px); between 1001 and 1180 there is no tab, so the pill stays there. */
@@ -32,7 +35,7 @@
     overflow: hidden;
   }
   .vp-page--fit .vp-rule-card,
-  .vp-page--fit .vp-rule-card > .nvb { height: 100%; margin-bottom: 0; }
+  .vp-page--fit .vp-rule-card .nvb { height: 100%; margin-bottom: 0; }
 
   /* The card fills the screen; the exercise takes whatever the toolbar leaves. */
   .vp-page--fit .vp-col--ex > .vp-card {

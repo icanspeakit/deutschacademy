@@ -13,6 +13,7 @@
 // Renders the page's .vp-workspace and the rule pivot, so the host must be a
 // .vp-page.vp-page--split with id="vp-page", and must not mount its own rule column.
 import ArtikelPicker from "./ArtikelPicker.astro";
+import ArtikelRegel from "./ArtikelRegel.astro";
 import LeichtToggle from "./LeichtToggle.astro";
 import "../styles/akkusativ.css";
 // The split layout the grammar topics and the Wortschatz trainer use: rule column beside
@@ -213,7 +214,21 @@ const freqChart = {
           entry. See ArtikelPicker.astro. The hero moved out of here with it — a column
           that is navigation should open with the navigation. */}
       <div class="vp-card vp-rule-card" id="vp-rule-card">
-        <ArtikelPicker counts={levelCounts} session={SESSION_SIZE} current="A1" freq={freq} packs={packs} />
+        {/* The phone sheet's head, as in the Wortschatz trainer: a name, "Einklappen" and ✕.
+            Without it the sheet had no visible way down. Hidden on a desktop (artikel-fit.css). */}
+        <div class="vp-sheet-head">
+          <div class="vp-card-label" data-i18n="ap.levels">Stufen</div>
+          <button type="button" class="vp-sheet-fold" data-sheet-close aria-label="Stufen einklappen" aria-controls="vp-rule-card">
+            <span data-i18n="vp.rule.collapseShort">Einklappen</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </button>
+          <button type="button" class="vp-sheet-x" data-sheet-close aria-label="Stufen schließen" aria-controls="vp-rule-card">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="6" y1="6" x2="18" y2="18"></line><line x1="18" y1="6" x2="6" y2="18"></line></svg>
+          </button>
+        </div>
+        <div class="vp-sheet-body vp-sheet-body--flush">
+          <ArtikelPicker counts={levelCounts} session={SESSION_SIZE} current="A1" freq={freq} packs={packs} />
+        </div>
       </div>
 
       <button
@@ -310,6 +325,10 @@ const freqChart = {
       </footer>
     </section>
   </div>
+
+  {/* The Regel opens on the right, over the exercise, while the left column stays the
+      level navigation. */}
+  <ArtikelRegel />
 
   <!-- The tab the folded column leaves behind. Outside .vp-col--rule on purpose: that
        column goes inert when it collapses (see ruleColumn.js), and a control inside it
@@ -605,6 +624,22 @@ const freqChart = {
       });
     }
 
+    const regel = document.getElementById("ap-regel");
+    const regelBtn = document.querySelector("[data-regel-open]");
+    const regelOpen = () => document.body.classList.contains("ap-regel-open");
+    function openRegel() {
+      document.body.classList.add("ap-regel-open");
+      regel.removeAttribute("inert");
+      regel.setAttribute("aria-hidden", "false");
+      regel.querySelector("[data-regel-close]")?.focus({ preventScroll: true });
+    }
+    function closeRegel() {
+      document.body.classList.remove("ap-regel-open");
+      regel.setAttribute("inert", "");
+      regel.setAttribute("aria-hidden", "true");
+      regelBtn?.focus({ preventScroll: true });
+    }
+
     function setLevel(next, { restart = true } = {}) {
       level = next;
       round = 0;
@@ -648,7 +683,7 @@ const freqChart = {
         const key = btn.dataset.rail;
         // The Regel is a pane, not a level: showing it must not throw away the session
         // the learner is in the middle of.
-        if (key === "regel") { showPane("regel"); return; }
+        if (key === "regel") { openRegel(); return; }
         setLevel(key);
       });
     });
@@ -791,12 +826,10 @@ const freqChart = {
       sheet: true,
     });
 
-    // "Regel": open the column (or the sheet, on a phone) and show the rule pane in it.
-    document.querySelector("[data-regel-open]")?.addEventListener("click", () => {
-      ruleCol.apply(false);
-      document.querySelector(".ap-nvb")?.classList.remove("collapsed");
-      showPane("regel");
-    });
+    // "Regel": the drawer on the right. The left column is left exactly as it was.
+    document.querySelector("[data-regel-open]")?.addEventListener("click", openRegel);
+    document.querySelectorAll("[data-regel-close]").forEach((b) => b.addEventListener("click", closeRegel));
+    document.addEventListener("keydown", (e) => { if (e.key === "Escape" && regelOpen()) closeRegel(); });
 
     document.querySelectorAll(".akk-mode-btn").forEach((btn) => {
       btn.addEventListener("click", () => {

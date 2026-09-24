@@ -255,3 +255,37 @@
   .ku-topic-head h1 { font-size: 1.25rem; }
   .ku-card-meta { justify-items: start; }
 }
+
+/* The quiz picker (quiz.astro): "Alle Themen" first, then five group tiles that open in
+   place. Replaces the chip row above, which is left for any page still using it. */
+.ku-pick { margin-bottom: 22px; }
+.ku-all {
+  display: flex; align-items: baseline; justify-content: space-between; gap: 12px; width: 100%;
+  margin: 0 0 12px; padding: 14px 18px; border: 1px solid var(--border); border-radius: var(--radius);
+  background: var(--surface-card); color: var(--ink); font: inherit; font-weight: 700; text-align: start; cursor: pointer;
+}
+.ku-all-n { font-weight: 500; font-size: .85rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+.ku-all.is-on { background: var(--gradient-brand); border-color: transparent; color: #fff; }
+.ku-all.is-on .ku-all-n { color: rgba(255, 255, 255, .85); }
+.ku-tiles { display: grid; gap: 10px; }
+@media (min-width: 760px) { .ku-tiles { grid-template-columns: 1fr 1fr; align-items: start; } }
+.ku-tile { border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface-card); }
+.ku-tile summary { display: flex; align-items: center; gap: 12px; padding: 14px 16px; cursor: pointer; list-style: none; }
+.ku-tile summary::-webkit-details-marker { display: none; }
+.ku-tile-ic { flex: none; display: grid; place-items: center; width: 40px; height: 40px; border-radius: 10px;
+  background: color-mix(in srgb, var(--brand-blue) 12%, transparent); color: var(--brand-blue-dark, var(--brand-blue)); }
+.ku-tile-t { flex: 1; min-width: 0; display: flex; flex-direction: column; font-weight: 700; color: var(--ink); }
+.ku-tile-t small { font-weight: 500; font-size: .8rem; color: var(--muted); }
+.ku-tile-chev { font-size: 1.4rem; line-height: 1; color: var(--muted); transition: transform .2s ease; }
+.ku-tile[open] .ku-tile-chev { transform: rotate(90deg); }
+[dir="rtl"] .ku-tile-chev { transform: scaleX(-1); }
+[dir="rtl"] .ku-tile[open] .ku-tile-chev { transform: rotate(90deg); }
+.ku-tile-list { list-style: none; margin: 0; padding: 0 8px 10px; }
+.ku-row {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px; width: 100%;
+  padding: 10px 12px; border: 0; border-radius: 8px; background: none; color: var(--ink);
+  font: inherit; font-size: .95rem; text-align: start; cursor: pointer;
+}
+.ku-row:hover { background: var(--surface, #f3f5f8); }
+.ku-row.is-on { background: color-mix(in srgb, var(--brand-blue) 10%, transparent); color: var(--brand-blue-dark, var(--brand-blue)); font-weight: 600; }
+.ku-row-lv { flex: none; font-size: 11px; font-weight: 700; color: var(--muted); padding: 2px 7px; border-radius: 6px; background: var(--surface, #f3f5f8); }

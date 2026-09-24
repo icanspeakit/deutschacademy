@@ -1,6 +1,6 @@
 /* Aktiv mode — Sehen · Hören · Sprechen · Schreiben.
  *
- * A second view of /uebungen/grammatik/<topic>, not a second page: .ak-aktiv and the
+ * A second view of /<topic>, not a second page: .ak-aktiv and the
  * topic's own .vp-workspace are the two halves of the [data-mode] switch below, and only
  * one is ever in the layout. The fourth beat has no panel — Schreiben is the exercise
  * column, one mode over.
@@ -621,7 +621,7 @@
 
 /* ------------------------------------------------------------- hub mark ---- */
 
-/* On a topic card at /uebungen/grammatik: this topic can be heard and spoken. Sits under
+/* On a topic card at /grammatik: this topic can be heard and spoken. Sits under
    the exercise count rather than replacing it — both facts matter when choosing. */
 .tool-card-aktiv {
   display: inline-flex;

@@ -230,8 +230,8 @@ const LEAD = {
     result.querySelector<HTMLElement>("[data-es-result-level]")!.textContent = level;
     setT(result.querySelector<HTMLElement>("[data-es-result-lead]")!, `placement.lead.${level}`, LEAD[level] ?? "");
     const slug = level.toLowerCase();
-    result.querySelector<HTMLAnchorElement>("[data-es-go-grammar]")!.href = `/uebungen/grammatik#niveau-${slug}`;
-    result.querySelector<HTMLAnchorElement>("[data-es-go-vocab]")!.href = `/uebungen/wortschatz/${slug}`;
+    result.querySelector<HTMLAnchorElement>("[data-es-go-grammar]")!.href = `/grammatik#niveau-${slug}`;
+    result.querySelector<HTMLAnchorElement>("[data-es-go-vocab]")!.href = `/wortschatz/${slug}`;
 
     // The neighbours, named rather than implied: a test this short can land one step off,
     // and the fix should not be "take it again".

@@ -55,7 +55,7 @@ export const prepositionVerbCount = verbenPraepositionen.concept.reference.boxes
 // Präpositionen were spread across the catalogue: Wechselpräpositionen sat unlisted
 // behind the Grammatik tile, "Verben mit Präpositionen" had a tile of its own, and a
 // learner asking "wo sind die Präpositionen?" found neither from /uebungen. They get one
-// area instead — see src/pages/uebungen/praepositionen.astro — and this is the list it
+// area instead — see src/pages/praepositionen.astro — and this is the list it
 // and the tile above it both read.
 const PRAEPOSITION_IDS = ["wechselpraepositionen", "praepositionen"];
 export const praepositionTopics = PRAEPOSITION_IDS
@@ -66,7 +66,7 @@ export const praepositionTopics = PRAEPOSITION_IDS
     name: w.name,
     level: w.level,
     subtitle: w.subtitle,
-    href: `/uebungen/grammatik/${w.slug ?? w.id}`,
+    href: `/${w.slug ?? w.id}`,
     exercises: w.exercises.length,
     tasks: taskCountOf(w),
   }));
@@ -94,11 +94,11 @@ const parts = (n) => Math.max(1, Math.ceil(n / PART_SIZE));
 export const lexiconCounts = counts();
 
 export const tools = [
-  { id: "artikel", group: "grammatik", href: "/uebungen/grammatik/artikel", icon: "target",
+  { id: "artikel", group: "grammatik", href: "/artikel", icon: "target",
     titleKey: "tool.artikel.title", title: "der/die/das-Trainer", shortKey: "group.short.artikel", short: "Artikel",
     descKey: "tool.artikel.desc", desc: "Artikel gezielt üben, mit sofortigem Feedback.",
     countKey: "tool.artikel.round", countVars: { n: ARTIKEL_ROUND }, count: `${ARTIKEL_ROUND} Nomen pro Übung` },
-  { id: "grammatik", group: "grammatik", href: "/uebungen/grammatik", icon: "book",
+  { id: "grammatik", group: "grammatik", href: "/grammatik", icon: "book",
     titleKey: "tool.grammatik.title", title: "Grammatik", shortKey: "tool.grammatik.title", short: "Grammatik",
     // Inside the Grammatik column of the menu, "Grammatik" was the row under a heading of
     // the same word pointing at the same URL — two controls, one destination, one nested
@@ -111,40 +111,40 @@ export const tools = [
     countKey: "tool.grammatik.count", countVars: { n: grammarTopicCount, q: grammarTaskCount }, count: `${grammarTopicCount} Themen · ${grammarTaskCount} Aufgaben` },
   // The tile opens the Präpositionen trainer (A1–B2 topics plus the Wechselpräpositionen);
   // the two full grammar topics are linked from inside it. Counts are the trainer's.
-  { id: "praep", group: "grammatik", href: "/uebungen/praepositionen", icon: "link",
+  { id: "praep", group: "grammatik", href: "/praepositionen", icon: "link",
     titleKey: "tool.praepositionen.title", title: "Präpositionen", shortKey: "group.short.praep", short: "Präpositionen",
     descKey: "tool.praepositionen.desc", desc: "Von mit, für und am bis aufgrund und darauf — A1 bis B2, mit den Wechselpräpositionen.",
     countKey: "tool.praepositionen.count", countVars: { n: praepTrainer.packs.length, q: praepTrainerTasks },
     count: `${praepTrainer.packs.length} Themen · ${praepTrainerTasks} Aufgaben` },
-  { id: "wortschatz", group: "woerter", href: "/uebungen/wortschatz", icon: "folder",
+  { id: "wortschatz", group: "woerter", href: "/wortschatz", icon: "folder",
     titleKey: "tool.wortschatz.title", title: "Wortschatz & Redemittel", shortKey: "group.short.wortschatz", short: "Wortschatz",
     descKey: "tool.wortschatz.desc", desc: "Karteikarten zum Umdrehen und Wiederholen.",
     countKey: "tool.wortschatz.count", countVars: { n: wortschatz.length }, count: `${wortschatz.length} Karten` },
-  { id: "aussprache", group: "woerter", href: "/uebungen/aussprache", icon: "volume",
+  { id: "aussprache", group: "woerter", href: "/aussprache", icon: "volume",
     titleKey: "tool.aussprache.title", title: "Aussprache-Training", shortKey: "group.short.aussprache", short: "Aussprache",
     descKey: "tool.aussprache.desc", desc: "Wörter anhören und im Langsam-Modus üben.",
     countKey: "tool.aussprache.count", countVars: { n: wortschatz.length + artikel.length }, count: `${wortschatz.length + artikel.length} Wörter` },
-  { id: "hoeren", group: "fertigkeiten", href: "/uebungen/hoeren", icon: "volume",
+  { id: "hoeren", group: "fertigkeiten", href: "/hoeren", icon: "volume",
     titleKey: "tool.hoeren.title", title: "Hörverstehen", shortKey: "group.short.hoeren", short: "Hören",
     descKey: "tool.hoeren.desc", desc: "Durchsagen, Telefonate und Gespräche — mit Transkript und Tempo-Regler.",
     countKey: "tool.hoeren.count", countVars: { n: hoeren.texts.length, q: hoerenQuestionCount },
     count: `${hoeren.texts.length} Hörtexte · ${hoerenQuestionCount} Fragen` },
-  { id: "sprechen", group: "fertigkeiten", href: "/uebungen/sprechen/", icon: "mic",
+  { id: "sprechen", group: "fertigkeiten", href: "/sprechen/", icon: "mic",
     titleKey: "tool.sprechen.title", title: "Sprechen", shortKey: "group.short.sprechen", short: "Sprechen",
     descKey: "tool.sprechen.desc", desc: "Vorstellen, Bild beschreiben, Kurzvortrag — mit Timer.",
     countKey: "tool.sprechen.count", countVars: { n: sprechenIndex.tasks.length },
     count: `${sprechenIndex.tasks.length} Aufgaben` },
-  { id: "lesen", group: "fertigkeiten", href: "/uebungen/lesen", icon: "book-open",
+  { id: "lesen", group: "fertigkeiten", href: "/lesen", icon: "book-open",
     titleKey: "tool.lesen.title", title: "Leseverstehen", shortKey: "group.short.lesen", short: "Lesen",
     descKey: "tool.lesen.desc", desc: "Schilder, Anzeigen, E-Mails und Artikel — A1 bis B2.",
     countKey: "tool.lesen.count", countVars: { n: lesenIndex.texts.length },
     count: `${lesenIndex.texts.length} Lesetexte` },
-  { id: "schreiben", group: "fertigkeiten", href: "/uebungen/schreiben", icon: "pencil",
+  { id: "schreiben", group: "fertigkeiten", href: "/schreiben", icon: "pencil",
     titleKey: "skill.schreiben", title: "Schreiben", shortKey: "skill.schreiben", short: "Schreiben",
     descKey: "tool.schreiben.desc", desc: "Formulare, Nachrichten und Briefe — mit Modelltext.",
     countKey: "tool.sprechen.count", countVars: { n: schreibenIndex.tasks.length },
     count: `${schreibenIndex.tasks.length} Aufgaben` },
-  { id: "kultur", group: "kultur", href: "/uebungen/kultur", icon: "map-pin",
+  { id: "kultur", group: "kultur", href: "/kultur", icon: "map-pin",
     titleKey: "tool.kultur.title", title: "Kulturwissen", shortKey: "group.short.kultur", short: "Kultur",
     descKey: "tool.kultur.desc", desc: "Wie Deutschland im Alltag funktioniert — mit Quiz.",
     countKey: "tool.kultur.count", countVars: { n: kulturTopicCount, q: kulturQuizCount },
@@ -160,7 +160,7 @@ export const tools = [
  * A landing page is not an inventory. Ten tiles is a wall a visitor reads as "a lot of
  * things" rather than as an offer, and five of the ten were one tile's worth of idea
  * split five ways: Aussprache and Hören are both "listen to German", and Sprechen, Lesen
- * and Schreiben are the three halves of the same exam that /uebungen/fertigkeiten already
+ * and Schreiben are the three halves of the same exam that /fertigkeiten already
  * presents together. Nobody arrives wanting "Schreiben" specifically; they arrive wanting
  * to know whether the four Fertigkeiten are covered.
  *
@@ -177,7 +177,7 @@ export const landingTools = (() => {
   const t = Object.fromEntries(tools.map((x) => [x.id, x]));
   const merged = {
     hoerenAussprache: {
-      id: "hoeren-aussprache", group: "fertigkeiten", href: "/uebungen/fertigkeiten#hoeren", icon: "volume",
+      id: "hoeren-aussprache", group: "fertigkeiten", href: "/fertigkeiten#hoeren", icon: "volume",
       titleKey: "tool.hoerenAussprache.title", title: "Hören & Aussprache",
       shortKey: "group.short.hoeren", short: "Hören",
       descKey: "tool.hoerenAussprache.desc",
@@ -187,7 +187,7 @@ export const landingTools = (() => {
       count: sumCount(`${hoeren.texts.length} Hörtexte`, `${wortschatz.length + artikel.length} Wörter`),
     },
     fertigkeiten: {
-      id: "fertigkeiten", group: "fertigkeiten", href: "/uebungen/fertigkeiten#sprechen", icon: "mic",
+      id: "fertigkeiten", group: "fertigkeiten", href: "/fertigkeiten#sprechen", icon: "mic",
       titleKey: "tool.fertigkeiten.title", title: "Sprechen, Lesen & Schreiben",
       shortKey: "group.short.sprechen", short: "Fertigkeiten",
       descKey: "tool.fertigkeiten.desc",
@@ -226,11 +226,11 @@ export const landingTools = (() => {
 })();
 
 export const exams = [
-  { id: "telc", group: "pruefungen", href: "/pruefungen/telc", icon: "document", title: "telc", short: "telc", count: "A1–C2" },
-  { id: "goethe", group: "pruefungen", href: "/pruefungen/goethe", icon: "landmark", title: "Goethe-Zertifikat", short: "Goethe", count: "A1–C2" },
-  { id: "testdaf", group: "pruefungen", href: "/pruefungen/testdaf", icon: "graduation-cap", title: "TestDaF", short: "TestDaF", count: "≈ B2–C1" },
-  { id: "dtz", group: "pruefungen", href: "/pruefungen/dtz", icon: "book-open", title: "DTZ", short: "DTZ", count: "A2 / B1" },
-  { id: "lid", group: "pruefungen", href: "/pruefungen/leben-in-deutschland", icon: "map-pin", title: "Leben in Deutschland", short: "Leben in DE",
+  { id: "telc", group: "pruefungen", href: "/telc", icon: "document", title: "telc", short: "telc", count: "A1–C2" },
+  { id: "goethe", group: "pruefungen", href: "/goethe", icon: "landmark", title: "Goethe-Zertifikat", short: "Goethe", count: "A1–C2" },
+  { id: "testdaf", group: "pruefungen", href: "/testdaf", icon: "graduation-cap", title: "TestDaF", short: "TestDaF", count: "≈ B2–C1" },
+  { id: "dtz", group: "pruefungen", href: "/dtz", icon: "book-open", title: "DTZ", short: "DTZ", count: "A2 / B1" },
+  { id: "lid", group: "pruefungen", href: "/leben-in-deutschland", icon: "map-pin", title: "Leben in Deutschland", short: "Leben in DE",
     countKey: "group.count.bundeslaender", countVars: { n: lid.bundeslaender.length }, count: `${lid.bundeslaender.length} Bundesländer` },
 ];
 
@@ -285,11 +285,11 @@ export const KULTUR_LEVELS = ["A1", "A2", "B1", "B2", "C1", "C2"];
 export const grammarTopics = [
   ...workspaces.map((w) => ({
     id: w.id, name: w.name, level: w.level,
-    href: `/uebungen/grammatik/${w.slug ?? w.id}`,
+    href: `/${w.slug ?? w.id}`,
   })),
   ...grammatik
     .filter((t) => !workspaceIds.has(t.id))
-    .map((t) => ({ id: t.id, name: t.name, level: t.level, href: `/uebungen/grammatik/${t.id}` })),
+    .map((t) => ({ id: t.id, name: t.name, level: t.level, href: `/${t.id}` })),
 ];
 
 /* --- The Grammatik-Werkstatt ------------------------------------------------
@@ -344,7 +344,7 @@ export const grammarWorkspaces = workspaces
     name: w.name,
     level: w.level,
     subtitle: w.subtitle,
-    href: `/uebungen/grammatik/${w.slug ?? w.id}`,
+    href: `/${w.slug ?? w.id}`,
     icon: GRAMMAR_ICON[w.id] ?? "📚",
     exercises: w.exercises.length,
     tasks: taskCountOf(w),
@@ -378,13 +378,13 @@ export const levels = NAV_LEVELS.map((level) => {
   if (genderedNouns) {
     vocab.push({ id: "artikel", icon: "target", title: "der/die/das-Trainer",
       titleKey: "tool.artikel.title",
-      href: `/uebungen/grammatik/artikel?niveau=${level}`, count: `${ARTIKEL_ROUND} Nomen pro Übung`,
+      href: `/artikel?niveau=${level}`, count: `${ARTIKEL_ROUND} Nomen pro Übung`,
       countKey: "tool.artikel.round", countVars: { n: ARTIKEL_ROUND } });
   }
   if (words) {
     vocab.push({ id: "wortschatz", icon: "folder", title: `Wortliste ${level}`,
       titleKey: "nav.vocab.listLevel", titleVars: { level },
-      href: `/uebungen/wortschatz/${slug}`, count: `${parts(words)} Runden · je ${PART_SIZE} Wörter`,
+      href: `/wortschatz/${slug}`, count: `${parts(words)} Runden · je ${PART_SIZE} Wörter`,
       countKey: "sets.rounds", countVars: { n: parts(words), size: PART_SIZE } });
   }
 
@@ -394,7 +394,7 @@ export const levels = NAV_LEVELS.map((level) => {
     slug,
     blurbKey: `level.${slug}.blurb`,
     blurb: LEVEL_BLURB[level],
-    href: `/uebungen/grammatik#niveau-${slug}`,
+    href: `/grammatik#niveau-${slug}`,
     grammar,
     vocab,
     words,
@@ -450,7 +450,7 @@ const grammarLevelView = (level) => {
       { id: "b", items: rows.slice(half) },
     ],
     more: {
-      href: `/uebungen/grammatik#niveau-${head.slug}`,
+      href: `/grammatik#niveau-${head.slug}`,
       labelKey: "nav.level.allTopics", labelVars: { n: rows.length }, label: `Alle ${rows.length} Themen`,
     },
   };
@@ -473,13 +473,13 @@ const vocabLevelView = (level) => {
   // words are coming rather than handing back another level's deck.
   const lists = [];
   if (words) {
-    lists.push({ ...levelRow(`Wortliste ${level}`, `/uebungen/wortschatz/${head.slug}`,
+    lists.push({ ...levelRow(`Wortliste ${level}`, `/wortschatz/${head.slug}`,
       `${parts(words)} Runden · je ${PART_SIZE} Wörter`),
       titleKey: "nav.vocab.listLevel", titleVars: { level },
       countKey: "sets.rounds", countVars: { n: parts(words), size: PART_SIZE } });
   }
   if (nouns) {
-    lists.push({ ...levelRow(`der/die/das · ${level}`, `/uebungen/grammatik/artikel?niveau=${level}`,
+    lists.push({ ...levelRow(`der/die/das · ${level}`, `/artikel?niveau=${level}`,
       `${ARTIKEL_ROUND} Nomen pro Übung`),
       countKey: "tool.artikel.round", countVars: { n: ARTIKEL_ROUND } });
   }
@@ -499,11 +499,11 @@ const vocabLevelView = (level) => {
       {
         id: "sets", name: "Lernsets", nameKey: "nav.vocab.sets", icon: "layers",
         items: sets.slice(0, VOCAB_SETS_PREVIEW)
-          .map((s) => ({ ...levelRow(s.title, `/uebungen/wortschatz/${s.id}`, `${s.words} Wörter`),
+          .map((s) => ({ ...levelRow(s.title, `/wortschatz/${s.id}`, `${s.words} Wörter`),
             titleKey: `ws.set.${s.id}`, countKey: "tool.aussprache.count", countVars: { n: s.words } })),
         more: sets.length > VOCAB_SETS_PREVIEW
           ? {
-              href: `/uebungen/wortschatz/${head.slug}`,
+              href: `/wortschatz/${head.slug}`,
               labelKey: "nav.vocab.allSets", labelVars: { n: sets.length }, label: `Alle ${sets.length} Lernsets`,
             }
           : null,
@@ -519,7 +519,7 @@ const vocabLevelView = (level) => {
    spans every topic, then the topics in the hub's own order. No i18n keys — topic
    titles live in kultur.json and are not translated yet, so they render as written. */
 const kulturQuizItem = {
-  id: "kultur-quiz", href: "/uebungen/kultur/quiz", icon: "target",
+  id: "kultur-quiz", href: "/kultur/quiz", icon: "target",
   title: "Quiz über alle Themen", titleKey: "nav.kultur.quizAll", count: `${kulturQuizCount} Fragen`,
   countKey: "grammatik.card.questions", countVars: { n: kulturQuizCount },
 };
@@ -529,7 +529,7 @@ const kulturQuizItem = {
    list below has no heading over it, so there it stays. */
 const kulturItem = (t, { level = true } = {}) => ({
   id: `kultur-${t.id}`,
-  href: `/uebungen/kultur/${t.id}`,
+  href: `/kultur/${t.id}`,
   icon: t.icon,
   title: t.title,
   count: level ? `${t.level} · ${t.quiz.length} Fragen` : `${t.quiz.length} Fragen`,
@@ -622,11 +622,11 @@ const indexLevels = (items, row) =>
 const SKILLS = [
   {
     id: "hoeren", name: "Hören", nameKey: "nav.skill.hoeren", icon: "volume",
-    href: "/uebungen/hoeren",
+    href: "/hoeren",
     // The count line names the task type rather than the topic, because that is what a DTZ
     // or telc Hörteil actually varies between items. The three skills below follow it.
     byLevel: indexLevels(hoeren.texts, (t) =>
-      levelRow(t.title, `/uebungen/hoeren/${t.id}`,
+      levelRow(t.title, `/hoeren/${t.id}`,
         `${hoeren.types[t.type]} · ${t.questions.length} Fragen`,
         { typeKey: `type.hoeren.${t.type}`, typeText: hoeren.types[t.type],
           countKey: "grammatik.card.questions", countVars: { n: t.questions.length },
@@ -634,9 +634,9 @@ const SKILLS = [
   },
   {
     id: "lesen", name: "Lesen", nameKey: "nav.skill.lesen", icon: "book-open",
-    href: "/uebungen/lesen",
+    href: "/lesen",
     byLevel: indexLevels(lesenIndex.texts, (t) =>
-      levelRow(t.title, `/uebungen/lesen/${t.id}`,
+      levelRow(t.title, `/lesen/${t.id}`,
         `${lesenIndex.types[t.type]} · ca. ${t.minutes} Min.`,
         { typeKey: `type.lesen.${t.type}`, typeText: lesenIndex.types[t.type],
           countKey: "meta.min", countVars: { m: t.minutes },
@@ -644,9 +644,9 @@ const SKILLS = [
   },
   {
     id: "schreiben", name: "Schreiben", nameKey: "nav.skill.schreiben", icon: "pencil",
-    href: "/uebungen/schreiben",
+    href: "/schreiben",
     byLevel: indexLevels(schreibenIndex.tasks, (t) =>
-      levelRow(t.title, `/uebungen/schreiben/${t.id}`,
+      levelRow(t.title, `/schreiben/${t.id}`,
         `${schreibenIndex.types[t.type]} · ca. ${t.minutes} Min.`,
         { typeKey: `type.schreiben.${t.type}`, typeText: schreibenIndex.types[t.type],
           countKey: "meta.min", countVars: { m: t.minutes },
@@ -654,9 +654,9 @@ const SKILLS = [
   },
   {
     id: "sprechen", name: "Sprechen", nameKey: "nav.skill.sprechen", icon: "mic",
-    href: "/uebungen/sprechen/",
+    href: "/sprechen/",
     byLevel: indexLevels(sprechenIndex.tasks, (t) =>
-      levelRow(t.title, `/uebungen/sprechen/${t.id}`,
+      levelRow(t.title, `/sprechen/${t.id}`,
         `${sprechenIndex.types[t.type]} · ${t.seconds} Sek.`,
         { typeKey: `type.sprechen.${t.type}`, typeText: sprechenIndex.types[t.type],
           countKey: "meta.sek", countVars: { s: t.seconds },
@@ -693,11 +693,11 @@ export const skills = SKILLS.map((skill) => ({
 // Grammatik" was the same URL three times in one menu (the menu button, the row, and
 // "Übersicht"), which reads as a bug even when it works.
 
-const grammatikTrainer = notSelf("/uebungen/grammatik", itemsOf("grammatik"));
-const wortschatzItems = notSelf("/uebungen/wortschatz", itemsOf("woerter"));
+const grammatikTrainer = notSelf("/grammatik", itemsOf("grammatik"));
+const wortschatzItems = notSelf("/wortschatz", itemsOf("woerter"));
 
 export const navSections = [
-  { id: "grammatik", icon: "book", href: "/uebungen/grammatik",
+  { id: "grammatik", icon: "book", href: "/grammatik",
     nameKey: "nav.subject.grammatik", name: "Grammatik",
     blurbKey: "group.grammatik.blurb", blurb: "Artikel, Fälle, Zeiten",
     // Spans the levels rather than sitting inside one: the trainer draws its nouns from
@@ -707,7 +707,7 @@ export const navSections = [
     badge: NAV_LEVELS.length,
     items: [...grammatikTrainer, ...grammarTopics.map((t) => levelRow(t.name, t.href))] },
 
-  { id: "wortschatz", icon: "folder", href: "/uebungen/wortschatz",
+  { id: "wortschatz", icon: "folder", href: "/wortschatz",
     nameKey: "nav.subject.wortschatz", name: "Wortschatz",
     blurbKey: "group.woerter.blurb", blurb: "Vokabeln hören und behalten",
     // Not level-scoped — it reads every deck at once — so it sits above the tiles too.
@@ -719,17 +719,17 @@ export const navSections = [
   // Was "Sprechen", which was simply not true of the second entry in it: "Lesen & Schreiben"
   // is a reading and writing trainer. "Fertigkeiten" is the word the Lehrwerke and the
   // Integrationskurse use for exactly this set of four.
-  // The subject's own page, not /uebungen/sprechen: clicking "Fertigkeiten" used to land
+  // The subject's own page, not /sprechen: clicking "Fertigkeiten" used to land
   // the learner inside the Bildbeschreibung trainer — one of the four skills — with the
   // other three only reachable by reopening the menu.
-  { id: "fertigkeiten", icon: "mic", href: "/uebungen/fertigkeiten",
+  { id: "fertigkeiten", icon: "mic", href: "/fertigkeiten",
     nameKey: "nav.subject.fertigkeiten", name: "Fertigkeiten",
     blurbKey: "nav.subject.fertigkeiten.blurb", blurb: "Hören, Lesen, Schreiben, Sprechen",
     skills,
     badge: skills.length,
-    items: notSelf("/uebungen/fertigkeiten", itemsOf("fertigkeiten")) },
+    items: notSelf("/fertigkeiten", itemsOf("fertigkeiten")) },
 
-  { id: "landeskunde", icon: "map-pin", href: "/uebungen/kultur",
+  { id: "landeskunde", icon: "map-pin", href: "/kultur",
     nameKey: "group.kultur.name", name: "Landeskunde",
     blurbKey: "group.kultur.blurb", blurb: "Alltag und Kultur in Deutschland",
     // The quiz spans every group, so it sits above them rather than inside one.
@@ -780,16 +780,16 @@ export const navUeben = {
   nameKey: "nav.subject.ueben",
   name: "Üben",
   columns: [
-    { id: "grammatik", icon: "book", href: "/uebungen/grammatik",
+    { id: "grammatik", icon: "book", href: "/grammatik",
       nameKey: "nav.subject.grammatik", name: "Grammatik",
       items: itemsOf("grammatik") },
-    { id: "wortschatz", icon: "folder", href: "/uebungen/wortschatz",
+    { id: "wortschatz", icon: "folder", href: "/wortschatz",
       nameKey: "nav.subject.wortschatz", name: "Wortschatz",
       items: itemsOf("woerter") },
-    { id: "fertigkeiten", icon: "mic", href: "/uebungen/fertigkeiten",
+    { id: "fertigkeiten", icon: "mic", href: "/fertigkeiten",
       nameKey: "nav.subject.fertigkeiten", name: "Fertigkeiten",
       items: skillColumnItems },
-    { id: "landeskunde", icon: "map-pin", href: "/uebungen/kultur",
+    { id: "landeskunde", icon: "map-pin", href: "/kultur",
       nameKey: "group.kultur.name", name: "Landeskunde",
       items: [...itemsOf("kultur"), kulturQuizItem] },
   ],
@@ -800,7 +800,7 @@ export const navUeben = {
   levels: levels.map((lv) => ({
     level: lv.level,
     slug: lv.slug,
-    href: `/uebungen/grammatik#niveau-${lv.slug}`,
+    href: `/grammatik#niveau-${lv.slug}`,
     blurbKey: lv.blurbKey,
     blurb: lv.blurb,
   })),
@@ -822,10 +822,10 @@ export const navUeben = {
 
 /** The short drills under Grammatik. A new one (Konjugation, Plural) is one more row. */
 export const quickTrainers = [
-  { id: "artikel", href: "/uebungen/grammatik/artikel",
+  { id: "artikel", href: "/artikel",
     titleKey: "tool.artikel.title", title: "der/die/das-Trainer",
     hintKey: "nav.hint.fiveMin", hint: "ca. 5 Min" },
-  { id: "praepositionen", href: "/uebungen/praepositionen",
+  { id: "praepositionen", href: "/praepositionen",
     titleKey: "tool.praepositionen.title", title: "Präpositionen",
     hintKey: "nav.hint.fiveMin", hint: "ca. 5 Min" },
 ];
@@ -845,36 +845,36 @@ export const navUebenMenu = {
     placement: { href: "/einstufungstest", titleKey: "nav.ueben.placement", title: "Mein Niveau testen →" },
   },
   columns: [
-    { id: "grammatik", icon: "book", href: "/uebungen/grammatik",
+    { id: "grammatik", icon: "book", href: "/grammatik",
       nameKey: "nav.subject.grammatik", name: "Grammatik",
-      primary: { href: "/uebungen/grammatik",
+      primary: { href: "/grammatik",
         titleKey: "nav.grammatik.all", title: "Alle Grammatik-Themen →",
         hintKey: "nav.grammatik.allHint", hint: "nach Niveau sortiert" },
       items: quickTrainers },
     // The same shape as Grammatik: the deck hub first, then one Wortliste per level the
     // lexicon has reached — what "Wortschatz" means to someone who knows their level, and
     // what the column had nothing of when it was a single row.
-    { id: "wortschatz", icon: "folder", href: "/uebungen/wortschatz",
+    { id: "wortschatz", icon: "folder", href: "/wortschatz",
       nameKey: "nav.subject.wortschatz", name: "Wortschatz",
-      primary: { href: "/uebungen/wortschatz",
+      primary: { href: "/wortschatz",
         titleKey: "nav.wortschatz.all", title: "Wortschatz & Redemittel →",
         hintKey: "nav.wortschatz.allHint", hint: "Karteikarten zum Wiederholen" },
       items: NAV_LEVELS.filter((level) => lexiconCounts[level]?.words).map((level) => ({
-        href: `/uebungen/wortschatz/${level.toLowerCase()}`,
+        href: `/wortschatz/${level.toLowerCase()}`,
         titleKey: "nav.vocab.listLevel", titleVars: { level }, title: `Wortliste ${level}`,
       })) },
-    { id: "fertigkeiten", icon: "mic", href: "/uebungen/fertigkeiten",
+    { id: "fertigkeiten", icon: "mic", href: "/fertigkeiten",
       nameKey: "nav.subject.fertigkeiten", name: "Fertigkeiten",
       items: [
         ...skills.map((sk) => ({ href: sk.href, titleKey: sk.nameKey, title: sk.name })),
         // Pronunciation is speaking practice, not vocabulary: it hangs under Sprechen.
-        { href: "/uebungen/aussprache", titleKey: "nav.skill.aussprache", title: "Aussprache", nested: true },
-        { href: "/uebungen/aussprache-check", titleKey: "nav.skill.ausspracheCheck", title: "Aussprache-Check", nested: true },
+        { href: "/aussprache", titleKey: "nav.skill.aussprache", title: "Aussprache", nested: true },
+        { href: "/aussprache-check", titleKey: "nav.skill.ausspracheCheck", title: "Aussprache-Check", nested: true },
       ] },
-    { id: "landeskunde", icon: "map-pin", href: "/uebungen/kultur",
+    { id: "landeskunde", icon: "map-pin", href: "/kultur",
       nameKey: "group.kultur.name", name: "Landeskunde",
       items: [
-        { href: "/uebungen/kultur", titleKey: "tool.kultur.title", title: "Kulturwissen" },
+        { href: "/kultur", titleKey: "tool.kultur.title", title: "Kulturwissen" },
         { href: kulturQuizItem.href, titleKey: "nav.kultur.quiz", title: "Landeskunde-Quiz" },
       ] },
   ],

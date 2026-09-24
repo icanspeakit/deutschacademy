@@ -16,21 +16,21 @@ const grammarQuestionCount = grammatik.reduce((sum, t) => sum + t.questions.leng
 const readingQuestionCount = lesen.groups.reduce((sum, g) => sum + g.questions.length, 0);
 
 const tools = [
-  { href: "/uebungen/grammatik/artikel", icon: "🎯", title: "der/die/das-Trainer", desc: "Artikel gezielt üben, mit sofortigem Feedback.", count: `${artikel.length} Nomen` },
-  { href: "/uebungen/grammatik", icon: "📚", title: "Grammatik-Quiz", desc: "Lückentext-Übungen zu Akkusativ, Dativ, Passiv und mehr.", count: `${grammatik.length} Themen · ${grammarQuestionCount} Fragen` },
-  { href: "/uebungen/wortschatz", icon: "🗂️", title: "Wortschatz & Redemittel", desc: "Karteikarten zum Umdrehen und Wiederholen.", count: `${wortschatz.length} Karten` },
-  { href: "/uebungen/aussprache", icon: "🔊", title: "Aussprache-Training", desc: "Wörter anhören und im Langsam-Modus üben.", count: `${wortschatz.length + artikel.length} Wörter` },
-  { href: "/uebungen/sprechen", icon: "🗣️", title: "Sprechen: Bildbeschreibung", desc: "Echte DTZ-Prüferfragen, mit 90-Sekunden-Timer.", count: `${sprechen.length} Bilder` },
-  { href: "/uebungen/lesen-schreiben", icon: "✍️", title: "Lesen & Schreiben", desc: "DTZ-Leseverstehen-Simulation plus Schreibaufgaben.", count: `${readingQuestionCount} Aufgaben` },
-  { href: "/uebungen/kultur", icon: "🗺️", title: "Kulturwissen", desc: "Einblicke aus echten Unterrichtsgesprächen.", count: `${kultur.length} Thema${kultur.length === 1 ? "" : "n"}` },
+  { href: "/artikel", icon: "🎯", title: "der/die/das-Trainer", desc: "Artikel gezielt üben, mit sofortigem Feedback.", count: `${artikel.length} Nomen` },
+  { href: "/grammatik", icon: "📚", title: "Grammatik-Quiz", desc: "Lückentext-Übungen zu Akkusativ, Dativ, Passiv und mehr.", count: `${grammatik.length} Themen · ${grammarQuestionCount} Fragen` },
+  { href: "/wortschatz", icon: "🗂️", title: "Wortschatz & Redemittel", desc: "Karteikarten zum Umdrehen und Wiederholen.", count: `${wortschatz.length} Karten` },
+  { href: "/aussprache", icon: "🔊", title: "Aussprache-Training", desc: "Wörter anhören und im Langsam-Modus üben.", count: `${wortschatz.length + artikel.length} Wörter` },
+  { href: "/sprechen", icon: "🗣️", title: "Sprechen: Bildbeschreibung", desc: "Echte DTZ-Prüferfragen, mit 90-Sekunden-Timer.", count: `${sprechen.length} Bilder` },
+  { href: "/lesen-schreiben", icon: "✍️", title: "Lesen & Schreiben", desc: "DTZ-Leseverstehen-Simulation plus Schreibaufgaben.", count: `${readingQuestionCount} Aufgaben` },
+  { href: "/kultur", icon: "🗺️", title: "Kulturwissen", desc: "Einblicke aus echten Unterrichtsgesprächen.", count: `${kultur.length} Thema${kultur.length === 1 ? "" : "n"}` },
 ];
 
 const exams = [
-  { href: "/pruefungen/telc", icon: "📄", title: "telc", level: "A1–C2" },
-  { href: "/pruefungen/goethe", icon: "🏛️", title: "Goethe-Zertifikat", level: "A1–C2" },
-  { href: "/pruefungen/testdaf", icon: "🎓", title: "TestDaF", level: "≈ B2–C1" },
-  { href: "/pruefungen/dtz", icon: "🧾", title: "DTZ", level: "A2 / B1" },
-  { href: "/pruefungen/leben-in-deutschland", icon: "🇩🇪", title: "Leben in Deutschland", level: `${lid.bundeslaender.length} Bundesländer` },
+  { href: "/telc", icon: "📄", title: "telc", level: "A1–C2" },
+  { href: "/goethe", icon: "🏛️", title: "Goethe-Zertifikat", level: "A1–C2" },
+  { href: "/testdaf", icon: "🎓", title: "TestDaF", level: "≈ B2–C1" },
+  { href: "/dtz", icon: "🧾", title: "DTZ", level: "A2 / B1" },
+  { href: "/leben-in-deutschland", icon: "🇩🇪", title: "Leben in Deutschland", level: `${lid.bundeslaender.length} Bundesländer` },
 ];
 
 const stats = [
@@ -42,9 +42,9 @@ const stats = [
 
 const byHref = (hrefs: string[]) => tools.filter((t) => hrefs.includes(t.href));
 const journey = [
-  { title: "Grammatik", desc: "Der Kern zuerst: Fälle, Zeiten, Sätze — mit durchdachten Übungen statt schnellen Tipps.", items: byHref(["/uebungen/grammatik", "/uebungen/grammatik/artikel"]) },
-  { title: "Alltagsdeutsch", desc: "Echte Szenarien statt Lehrbuchdialoge: Ämter, Wohnungssuche, der Alltag.", items: byHref(["/uebungen/wortschatz", "/uebungen/aussprache", "/uebungen/lesen-schreiben", "/uebungen/kultur"]) },
-  { title: "Sprechpraxis", desc: "Der Teil, der sonst nur im Präsenzunterricht geübt wird.", items: byHref(["/uebungen/sprechen"]) },
+  { title: "Grammatik", desc: "Der Kern zuerst: Fälle, Zeiten, Sätze — mit durchdachten Übungen statt schnellen Tipps.", items: byHref(["/grammatik", "/artikel"]) },
+  { title: "Alltagsdeutsch", desc: "Echte Szenarien statt Lehrbuchdialoge: Ämter, Wohnungssuche, der Alltag.", items: byHref(["/wortschatz", "/aussprache", "/lesen-schreiben", "/kultur"]) },
+  { title: "Sprechpraxis", desc: "Der Teil, der sonst nur im Präsenzunterricht geübt wird.", items: byHref(["/sprechen"]) },
 ];
 ---
 <Layout title="Deutsch Academy – Da für Dich!" description="Deutsch lernen mit echtem Unterrichtsmaterial: kostenlose Übungen und Prüfungsvorbereitung für telc, Goethe-Zertifikat, TestDaF, DTZ und Leben in Deutschland." noindex>
@@ -115,7 +115,7 @@ const journey = [
               </div>
               <div class="hp-preview-foot">
                 <span>Thema 1 von {grammatik.length} · {grammarQuestionCount} Fragen insgesamt</span>
-                <a href="/uebungen/grammatik">Quiz starten →</a>
+                <a href="/grammatik">Quiz starten →</a>
               </div>
             </div>
           </div>
@@ -550,7 +550,7 @@ const journey = [
                     </div>
                     <div class="hp-preview-foot">
                       <span>Thema 1 von {grammatik.length} · {grammarQuestionCount} Fragen insgesamt</span>
-                      <a href="/uebungen/grammatik">Quiz starten →</a>
+                      <a href="/grammatik">Quiz starten →</a>
                     </div>
                   </div>
                 </div>

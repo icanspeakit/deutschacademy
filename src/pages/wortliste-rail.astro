@@ -1,7 +1,7 @@
 ---
 // Sketch: the Wortschatz-A1 picker wearing the /fortschritt rail.
 //
-// Today /uebungen/wortschatz/a1 opens with a dark icon column plus a panel that lists
+// Today /wortschatz/a1 opens with a dark icon column plus a panel that lists
 // every module at once — eight headings, three of them unfolded, before the card. The
 // question this page asks is whether the exam rail answers the same need with less: one
 // fold that names where you are ("Stufe A1 · Ich & die Anderen"), one module open at a
@@ -66,7 +66,7 @@ const levels = LEVELS.map((level) => {
                 </button>
                 <div class="fs-group-items" hidden={gi !== 0}>
                   {g.sets.map((s, i) => (
-                    <a class="fs-part" href={`/uebungen/wortschatz/${s.id}`}>
+                    <a class="fs-part" href={`/wortschatz/${s.id}`}>
                       <span class="fs-dot" style="--pct:0%"></span>
                       <span class="fs-part-label">{String(i + 1).padStart(2, "0")} {s.title}</span>
                       <span class="fs-part-n">{s.words}</span>
@@ -77,7 +77,7 @@ const levels = LEVELS.map((level) => {
             ))}
           </nav>
 
-          <a class="fs-rail-result" href={`/uebungen/wortschatz/${LEVEL.toLowerCase()}`}>
+          <a class="fs-rail-result" href={`/wortschatz/${LEVEL.toLowerCase()}`}>
             <span class="fs-rail-flag">■</span><span>Alle {setCount} Lernsets</span>
           </a>
         </div>
@@ -85,7 +85,7 @@ const levels = LEVELS.map((level) => {
         <p class="fs-rail-label">Niveau</p>
         <div class="fs-examlist">
           {levels.map((l) => (
-            <a class={`fs-examitem${l.level === LEVEL ? " is-on" : ""}`} href={`/uebungen/wortschatz/${l.level.toLowerCase()}`}>
+            <a class={`fs-examitem${l.level === LEVEL ? " is-on" : ""}`} href={`/wortschatz/${l.level.toLowerCase()}`}>
               <span class="fs-examitem-name">{l.level}</span>
               <span class="fs-examitem-n">{l.sets} Sets</span>
             </a>

@@ -20,7 +20,7 @@ const topicOf = (t, kind) => ({
   key: topicKeyOf(t),
   name: t.name,
   level: t.level,
-  href: `/uebungen/grammatik/${topicKeyOf(t)}`,
+  href: `/${topicKeyOf(t)}`,
   tasks: taskCountOf(t),
   kind,
   // Whether this topic can be heard and spoken, not just read and typed. Surfaces on the

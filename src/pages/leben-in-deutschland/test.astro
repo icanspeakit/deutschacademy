@@ -1,0 +1,219 @@
+---
+// "Leben in Deutschland" as a real sitting rather than one long quiz card: the 30 federal
+// questions and your Bundesland's questions are two parts of the exam-app shell
+// (src/lib/examApp.js), with progress per part and a result section that compares your
+// score against the official pass mark.
+//
+// Question sourcing is unchanged — 30 federal questions from the Bayern-edition PDFs, plus
+// per-state questions that are sourced for Bayern and general public knowledge elsewhere
+// (see stateFactsNote in leben-in-deutschland.json).
+import Layout from "../../layouts/Layout.astro";
+import SiteNav from "../../components/SiteNav.astro";
+import ExamApp from "../../components/ExamApp.astro";
+import "../../styles/practice.css";
+import "../../styles/pruefungen.css";
+import lid from "../../data/leben-in-deutschland.json";
+
+const { questions, meta, bundeslaender } = lid;
+---
+<Layout
+  title="Leben in Deutschland: Test – DeutschAcademy"
+  description="Übungstest 'Leben in Deutschland' für alle 16 Bundesländer im Prüfungsformat: bundesweite Fragen plus dein Bundesland, mit Fortschritt je Prüfungsteil und Auswertung an der offiziellen Bestehensgrenze."
+>
+  <SiteNav active="pruefungen" />
+  <main class="practice-main practice-main--wide practice-main--trainer">
+    <a href="/fortschritt?pruefung=leben-in-deutschland" class="vp-back-link" data-i18n="exam.backToOverview">← Zurück zur Übersicht</a>
+
+    <div class="practice-hero">
+      <p class="eyebrow">Leben in Deutschland · <span data-i18n="lid.test.eyebrow">Übungstest</span></p>
+      <h1><span class="hero-exam">Leben in Deutschland</span> <span data-i18n="exam.h1.lidTest">Übungstest für dein Bundesland</span></h1>
+      <p data-i18n-html="lid.test.hero" data-i18n-vars={JSON.stringify({ n: meta.federalQuestions, t: meta.totalQuestions, m: meta.minutes, pass: meta.passScore })}>
+        {meta.federalQuestions} bundesweite Fragen aus echtem Unterrichtsmaterial, plus die Fragen zu deinem
+        Bundesland. Der echte Test hat {meta.totalQuestions} Fragen, {meta.minutes} Minuten Zeit, bestanden ab
+        {" "}{meta.passScore} richtigen Antworten. Unsicher bei den Fakten? Erst die
+        {" "}<a href="/leben-in-deutschland/fakten">Fakten-Seite</a> durchgehen.
+      </p>
+    </div>
+
+    <ExamApp brand="Leben in Deutschland" sub="Übungstest" subKey="lid.test.eyebrow" unit="Fragen" />
+  </main>
+
+  <script type="application/json" id="lid-data" set:html={JSON.stringify({ questions, meta, bundeslaender })}></script>
+  <script type="module">
+    import { mountExamApp } from "../../lib/examApp.js";
+    import { choiceCard, el, sectionHeader, escapeHtml } from "../../lib/exam/renderHelpers.js";
+    import { countAnswered, countCorrect, percent } from "../../lib/exam/scoring.js";
+    import { recordAttempt } from "../../lib/progress.js";
+    import { readyExamI18n, tx } from "../../lib/exam/i18n.js";
+
+    /* Resolved once, before the app mounts — see the note on start-deutsch-1.astro. The
+       test holds answers in progress, so its chrome is fixed at load rather than
+       re-rendered on a language switch. The questions themselves stay German. */
+    await readyExamI18n();
+    const t = (key, vars) => tx(key, key, vars);
+    const T = (key, de, vars) => tx(key, de, vars);
+
+    const { questions: federal, meta, bundeslaender } = JSON.parse(document.getElementById("lid-data").textContent);
+    const LAND_KEY = "da-lid-land";
+
+    function savedLand() {
+      try {
+        const id = localStorage.getItem(LAND_KEY);
+        if (bundeslaender.some((l) => l.id === id)) return id;
+      } catch {}
+      return "bayern";
+    }
+    let landId = savedLand();
+    const land = () => bundeslaender.find((l) => l.id === landId) ?? bundeslaender[0];
+
+    // Ids are positional and prefixed per part, so a stored answer keeps meaning when a
+    // learner switches Bundesland and back — and answers to Bayern's questions never
+    // count towards Hessen's.
+    const federalIds = federal.map((_, i) => "bund-" + (i + 1));
+    const landIds = () => land().stateQuestions.map((_, i) => "land-" + landId + "-" + (i + 1));
+
+    // Options are lettered a-d the way the real answer sheet is, and the letter is what
+    // gets stored — the option text itself can be a full sentence, which is not a badge.
+    const LETTERS = "abcdefgh";
+    function askAll(main, items, ids, ctx, labelPrefix) {
+      items.forEach((q, i) => {
+        const id = ids[i];
+        main.appendChild(
+          choiceCard({
+            qLabel: T("exam.qLabel.question", "Frage {n}", { n: i + 1 }),
+            questionText: q.prompt,
+            options: q.options.map((o, n) => ({ key: LETTERS[n], label: o })),
+            correctKey: LETTERS[q.options.indexOf(q.answer)],
+            existing: ctx.state.answers[id],
+            onAnswer: (given, correct) => ctx.record(id, given, correct),
+          })
+        );
+      });
+    }
+
+    const sections = [
+      {
+        key: "start",
+        label: "Start",
+        labelKey: "exam.sec.start",
+        ids: null,
+        render(main, ctx) {
+          sectionHeader(main, {
+            eyebrow: T("lid.test.eyebrow", "Übungstest"),
+            title: t("lid.chooseState"),
+            instruction: escapeHtml(T("lid.test.startIntro",
+              "Die bundesweiten Fragen sind für alle gleich. Dazu kommen die Fragen zu deinem Bundesland — der echte Test stellt drei davon.")),
+          });
+
+          const picker = el("div", "topic-tabs");
+          for (const l of bundeslaender) {
+            const b = el("button", "topic-tab" + (l.id === landId ? " active" : ""), l.name);
+            b.type = "button";
+            b.addEventListener("click", () => {
+              landId = l.id;
+              try { localStorage.setItem(LAND_KEY, landId); } catch {}
+              ctx.refresh();
+            });
+            picker.appendChild(b);
+          }
+          main.appendChild(picker);
+
+          const l = land();
+          main.appendChild(
+            el("p", "format-note", l.sourced
+              ? escapeHtml(T("lid.test.sourced", "{land}: {n} Fragen aus echtem DeutschAcademy-Unterrichtsmaterial.", { land: l.name, n: l.stateQuestions.length }))
+              : escapeHtml(T("lid.test.public", "{land}: {n} Fragen aus allgemein bekannten, öffentlichen Fakten — keine DeutschAcademy-Quelle.", { land: l.name, n: l.stateQuestions.length })))
+          );
+
+          const go = el("button", "quiz-btn quiz-btn--primary", t("exam.startTest"));
+          go.type = "button";
+          go.addEventListener("click", () => ctx.goTo("bund"));
+          main.appendChild(el("div", "exam-actions")).appendChild(go);
+        },
+      },
+      {
+        key: "bund",
+        label: "Bundesweit",
+        labelKey: "lid.sec.federal",
+        ids: federalIds,
+        render(main, ctx) {
+          sectionHeader(main, {
+            eyebrow: T("exam.eb.part", "Teil {n}", { n: 1 }),
+            title: t("lid.federalQuestions"),
+            instruction: escapeHtml(T("lid.test.federalIntro", "{n} Fragen, die in jedem Bundesland drankommen.", { n: federal.length })),
+          });
+          askAll(main, federal, federalIds, ctx, "Frage");
+        },
+      },
+      {
+        key: "land",
+        label: "Mein Bundesland",
+        labelKey: "lid.sec.state",
+        ids: landIds,
+        render(main, ctx) {
+          const l = land();
+          sectionHeader(main, {
+            eyebrow: T("exam.eb.part", "Teil {n}", { n: 2 }),
+            title: l.name,
+            instruction: escapeHtml(T("lid.test.stateIntro", "{n} Fragen zu {land}. Anderes Bundesland? Zurück zu „Start“.", { n: l.stateQuestions.length, land: l.name })),
+          });
+          askAll(main, l.stateQuestions, landIds(), ctx, "Frage");
+        },
+      },
+      {
+        key: "ergebnis",
+        label: "Ergebnis",
+        labelKey: "exam.sec.result",
+        ids: null,
+        render(main, ctx) {
+          const ids = [...federalIds, ...landIds()];
+          const answered = countAnswered(ids, ctx.state);
+          const correct = countCorrect(ids, ctx.state);
+          const pct = percent(correct, ids.length);
+          sectionHeader(main, { eyebrow: T("exam.result.eyebrow", "Auswertung"), title: T("exam.result.title", "Dein Ergebnis") });
+
+          const card = el("div", "exam-result");
+          if (!answered) {
+            card.appendChild(el("p", "instruction", escapeHtml(T("lid.result.empty", "Noch keine Frage beantwortet — fang bei „Bundesweit“ an, dein Ergebnis erscheint hier automatisch."))));
+          } else {
+            card.appendChild(el("div", "exam-score", `${correct} <small>${escapeHtml(T("exam.result.ofCorrect", "von {n} richtig", { n: ids.length }))}</small>`));
+            // The official rule is 17 of 33; this sitting has a different total for the
+            // states with six sourced questions, so the comparison is made on the share,
+            // and the rule it comes from is printed underneath.
+            const passPct = Math.round((meta.passScore / meta.totalQuestions) * 100);
+            const band = pct >= passPct ? ["", t("lid.abovePass")] : pct >= passPct - 12 ? ["mid", t("lid.band.near")] : ["low", t("lid.band.low")];
+            card.appendChild(el("span", "exam-band " + band[0], band[1]));
+            card.appendChild(el("p", "instruction", escapeHtml(T("lid.result.pct", "{pct}% richtig. Im echten Test: {pass} von {t} Fragen reichen zum Bestehen ({passPct}%).", { pct, pass: meta.passScore, t: meta.totalQuestions, passPct }))));
+
+            const table = el("table", "exam-breakdown");
+            table.innerHTML =
+              "<thead><tr><th>" + escapeHtml(t("format.th.part")) + "</th><th>" + escapeHtml(t("exam.th.correct")) + "</th></tr></thead><tbody>" +
+              `<tr><td>${escapeHtml(T("lid.sec.federal", "Bundesweit"))}</td><td>${countCorrect(federalIds, ctx.state)} / ${federalIds.length}</td></tr>` +
+              `<tr><td>${escapeHtml(land().name)}</td><td>${countCorrect(landIds(), ctx.state)} / ${landIds().length}</td></tr>` +
+              "</tbody>";
+            card.appendChild(table);
+
+            if (answered < ids.length) {
+              card.appendChild(el("p", "instruction", escapeHtml(T("exam.result.openQuestions", "Noch offen: {n} Fragen.", { n: ids.length - answered }))));
+            }
+          }
+          main.appendChild(card);
+
+          const actions = el("div", "exam-actions");
+          const facts = el("a", "quiz-btn", t("lid.toFacts"));
+          facts.href = "/leben-in-deutschland/fakten";
+          actions.appendChild(facts);
+          main.appendChild(actions);
+        },
+      },
+    ];
+
+    mountExamApp(document.querySelector("[data-exam-root]"), {
+      examId: "leben-in-deutschland",
+      sections,
+      unit: "Fragen",
+      unitKey: "exam.unit.questions",
+      onAnswer: (ok) => recordAttempt({ skill: "pruefungen", correct: ok }),
+    });
+  </script>
+</Layout>

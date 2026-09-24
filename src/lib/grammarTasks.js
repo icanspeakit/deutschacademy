@@ -1,7 +1,7 @@
 // How many things a grammar topic asks the learner to get right.
 //
 // Lifted out of LearnShell.astro when the standalone topic page needed the same number:
-// /dashboard shows "0 / 42" for Artikel and /uebungen/grammatik/artikel now shows it too,
+// /dashboard shows "0 / 42" for Artikel and /artikel now shows it too,
 // and two copies of this arithmetic would have disagreed the first time a new exercise
 // type landed. One slot is one gradeable answer, counted the way the five renderers in
 // grammarWorkspace.js actually consume their data.

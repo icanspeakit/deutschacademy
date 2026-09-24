@@ -1,5 +1,5 @@
 // The Aussprache-Check: the learner reads a sentence into the microphone and a
-// pronunciation service scores every word. See src/pages/uebungen/aussprache-check.astro.
+// pronunciation service scores every word. See src/pages/aussprache-check.astro.
 //
 // Nothing in this file knows which service that is. It talks to the provider-neutral
 // interface in src/lib/pronunciation/ (today backed by Azure, in ./pronunciation/azure.ts)

@@ -2,7 +2,7 @@
 // Decision and table: NAV-CTA-PROMPT.md. Checked in this order:
 //
 //   A · resume     has practised           → "Weiter üben" + the topic   → last.path
-//   B · level      took the placement test → "Mit A2 starten"            → /uebungen/grammatik#niveau-a2
+//   B · level      took the placement test → "Mit A2 starten"            → /grammatik#niveau-a2
 //   C · placement  nothing known           → "Wo stehe ich?" + "Einstufungstest" → /einstufungstest
 //
 // C is also what the server renders, so no JS, no storage and any failure here all land on
@@ -62,7 +62,7 @@ export function getNextStep(path = typeof location !== "undefined" ? location.pa
 
   const level = placementLevel();
   if (level) {
-    const href = `/uebungen/grammatik#niveau-${level.toLowerCase()}`;
+    const href = `/grammatik#niveau-${level.toLowerCase()}`;
     if (norm(href) !== here) {
       return { state: "level", labelKey: "nav.next.level", label: `Mit ${level} starten`, vars: { level }, href };
     }

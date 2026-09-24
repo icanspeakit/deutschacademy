@@ -1,0 +1,134 @@
+---
+// DTZ Lesen mock test: the four "DTZ-Simulation, Aufgabe N" reading tasks from
+// src/data/lesen.json, run as one continuous self-scored test with a combined
+// results summary — see docs/exams-hub-tier3-v1.md for sourcing.
+// Deliberately excludes the "digitales-buero" entry in lesen.json (a separate practice
+// text, not numbered as part of the DTZ-Simulation) and the form/writing tasks (Aufgabe
+// 5/6/7), which stay as their existing reveal/free-text format at /lesen-schreiben
+// rather than being force-fit into multiple-choice scoring here.
+import Layout from "../../layouts/Layout.astro";
+import SiteNav from "../../components/SiteNav.astro";
+import "../../styles/practice.css";
+import "../../styles/pruefungen.css";
+import lesen from "../../data/lesen.json";
+
+const taskIds = ["anzeigen", "zeitungsartikel", "forumsbeitraege", "interview"];
+const tasks = taskIds.map((id) => lesen.groups.find((g) => g.id === id));
+const totalQuestions = tasks.reduce((sum, t) => sum + t.questions.length, 0);
+---
+<Layout
+  title="DTZ Mock-Test: Lesen – DeutschAcademy"
+  description="Kostenloser DTZ-Leseverstehen-Mock-Test mit vier Aufgaben und Gesamtergebnis am Ende — aus echtem Unterrichtsmaterial."
+>
+  <SiteNav active="pruefungen" />
+  <main class="practice-main">
+    <div class="practice-hero">
+      <p class="eyebrow">DTZ · <span data-i18n="skill.lesen">Lesen</span> · Mock-Test</p>
+      <h1 data-i18n="dtzMock.title">Lesen-Simulation, Aufgabe 1–4</h1>
+      <p data-i18n-html="dtzMock.hero" data-i18n-vars={JSON.stringify({ n: tasks.length, q: totalQuestions })}>
+        {tasks.length} Aufgaben, {totalQuestions} Fragen, Thema „Online-Unterricht und Integration“ (Niveau B1) —
+        aus echtem DTZ-Unterrichtsmaterial. Am Ende gibt es ein Gesamtergebnis.
+        Formular-, Schreib- und Sprechaufgaben sind hier nicht enthalten — die übst du separat unter
+        <a href="/lesen-schreiben">Lesen &amp; Schreiben</a> und <a href="/sprechen/dtz-bildbeschreibung">Sprechen</a>.
+      </p>
+    </div>
+
+    <div id="mock-test-root"></div>
+  </main>
+
+  <script type="application/json" id="mock-tasks-data" set:html={JSON.stringify(tasks)}></script>
+  <script type="module">
+    import { mountQuiz } from "../../lib/quiz.js";
+    import { recordAttempt } from "../../lib/progress.js";
+    import { readyExamI18n, tx } from "../../lib/exam/i18n.js";
+
+    // Chrome only (progress line, buttons, the summary table). The reading texts and
+    // questions stay German. A task already on screen keeps its language until the next
+    // one is painted — rebuilding it would throw away the answers given so far.
+    await readyExamI18n();
+
+    const tasks = JSON.parse(document.getElementById("mock-tasks-data").textContent);
+    const root = document.getElementById("mock-test-root");
+    let taskIndex = 0;
+    let results = [];
+
+    function esc(s) {
+      const div = document.createElement("div");
+      div.textContent = s;
+      return div.innerHTML;
+    }
+
+    function renderTask() {
+      const t = tasks[taskIndex];
+      root.innerHTML = `
+        <div class="mock-progress">${esc(tx("dtzMock.progress", "Aufgabe {n} von {t}", { n: taskIndex + 1, t: tasks.length }))}</div>
+        <div class="reading-block">
+          <h3>${esc(t.title)}</h3>
+          <div class="reading-level">${esc(t.level)}</div>
+          <div class="reading-text">${esc(t.text)}</div>
+          <div class="quiz-card" id="mock-quiz"></div>
+        </div>`;
+      const quizEl = document.getElementById("mock-quiz");
+      const block = quizEl.closest(".reading-block");
+      mountQuiz(quizEl, t.questions, {
+        mode: "choice",
+        shuffle: false,
+        onAnswer: (ok) => recordAttempt({ skill: "pruefungen", correct: ok }),
+        onDone: (score, total) => {
+          results.push({ title: t.title, score, total });
+          quizEl.innerHTML = `
+            <div class="quiz-done">
+              <div class="quiz-done-score">${score} / ${total}</div>
+              <p>${esc(tx("dtzMock.taskCorrect", "richtig in dieser Aufgabe"))}</p>
+            </div>`;
+          const isLast = taskIndex + 1 >= tasks.length;
+          const btn = document.createElement("button");
+          btn.type = "button";
+          btn.className = "quiz-btn quiz-btn--primary quiz-btn--next";
+          btn.textContent = isLast ? tx("dtzMock.showTotal", "Gesamtergebnis anzeigen →") : tx("dtzMock.next", "Nächste Aufgabe →");
+          btn.addEventListener("click", () => {
+            taskIndex++;
+            if (isLast) {
+              renderSummary();
+            } else {
+              renderTask();
+            }
+          });
+          block.appendChild(btn);
+        },
+      });
+    }
+
+    function renderSummary() {
+      const total = results.reduce((s, r) => s + r.total, 0);
+      const score = results.reduce((s, r) => s + r.score, 0);
+      const pct = total ? Math.round((score / total) * 100) : 0;
+      root.innerHTML = `
+        <div class="quiz-done">
+          <div class="quiz-done-score">${score} / ${total}</div>
+          <p>${esc(tx("dtzMock.totalCorrect", "richtig insgesamt ({pct}%)", { pct }))}</p>
+        </div>
+        <div class="format-table-wrap">
+          <table class="format-table">
+            <thead><tr><th>${esc(tx("format.th.task", "Aufgabe"))}</th><th>${esc(tx("exam.sec.result", "Ergebnis"))}</th></tr></thead>
+            <tbody>
+              ${results
+                .map((r) => `<tr><td>${esc(r.title)}</td><td>${r.score} / ${r.total}</td></tr>`)
+                .join("")}
+            </tbody>
+          </table>
+        </div>
+        <div class="exam-cta">
+          <button type="button" id="mock-restart" class="quiz-btn quiz-btn--primary">${esc(tx("dtzMock.restart", "Mock-Test wiederholen"))}</button>
+          <p style="margin-top:14px;"><a href="/lesen-schreiben">${esc(tx("dtzMock.toWriting", "Weiter mit Formular- und Schreibaufgaben →"))}</a></p>
+        </div>`;
+      document.getElementById("mock-restart").addEventListener("click", () => {
+        taskIndex = 0;
+        results = [];
+        renderTask();
+      });
+    }
+
+    renderTask();
+  </script>
+</Layout>

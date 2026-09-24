@@ -12,7 +12,7 @@
 // public/assets/ by hand, with no record of where they came from, so the pages that show
 // them credit nothing and their licence cannot be checked. Unknown provenance on a public
 // page is not defensible, so they get replaced like any other picture and land under the
-// same provenance.json. They are used twice over - by /uebungen/sprechen/dtz-bildbeschreibung
+// same provenance.json. They are used twice over - by /sprechen/dtz-bildbeschreibung
 // and, through `from: "sprechen-dtz"`, by three tasks in the Fertigkeiten index - so
 // replacing the file both of them point at fixes both at once.
 //
@@ -282,7 +282,7 @@ if (!DRY && taken) {
   writeFileSync(dataFile, JSON.stringify(data, null, 2) + "\n");
   console.log(`\n${taken} Bilder geholt, ${dataFile} und ${PROV} aktualisiert.`);
   console.log("Danach: pnpm generate:sprechen-thumbs - die Karten zeigen die Thumbnails.");
-  console.log("Jetzt anschauen: pnpm dev, dann /uebungen/sprechen — ein Foto, das die Szene");
+  console.log("Jetzt anschauen: pnpm dev, dann /sprechen — ein Foto, das die Szene");
   console.log("nicht zeigt, ist schlechter als die Beschreibung. Mit --only <id> --pick N neu wählen.");
 }
 if (missed) console.log(`${missed} Aufgaben ohne Bild geblieben.`);

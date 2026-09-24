@@ -85,7 +85,7 @@ const workspaceCount = grammarWorkspaceLevels.reduce((n, row) => n + row.topics.
                   <span class="uv-wk-ic" aria-hidden="true">{t.icon}</span>
                   <span class="uv-wk-txt">
                     <b>{t.name}</b>
-                    {/* Same sentences as the /uebungen/grammatik cards, so the same keys. */}
+                    {/* Same sentences as the /grammatik cards, so the same keys. */}
                     <i data-i18n={`grammatik.${t.id}.intro`}>{t.subtitle}</i>
                   </span>
                   <span class="uv-wk-n">{t.tasks}</span>
@@ -129,7 +129,7 @@ const workspaceCount = grammarWorkspaceLevels.reduce((n, row) => n + row.topics.
                 <span class="dash-progress-label" id="dash-progress-label"></span>
               </div>
               <div class="dash-hero-actions">
-                <a class="quiz-btn quiz-btn--primary" id="dash-cta" href="/uebungen/wortschatz">Jetzt loslegen →</a>
+                <a class="quiz-btn quiz-btn--primary" id="dash-cta" href="/wortschatz">Jetzt loslegen →</a>
                 <span id="dash-goal-slot"><button class="dash-link-btn" id="dash-goal-btn" type="button">Wochenziel anpassen</button></span>
               </div>
               <span id="dash-name-slot"><button class="dash-link-btn" id="dash-name-btn" type="button">Namen hinzufügen</button></span>
@@ -236,11 +236,11 @@ const workspaceCount = grammarWorkspaceLevels.reduce((n, row) => n + row.topics.
     });
 
     const SKILLS = [
-      { key: "wortschatz", icon: "🗂️", labelKey: "dash.skill.wortschatz", href: "/uebungen/wortschatz", type: "accuracy" },
-      { key: "grammatik", icon: "📚", labelKey: "dash.skill.grammatik", href: "/uebungen/grammatik", type: "accuracy" },
-      { key: "hoeren", icon: "🔊", labelKey: "dash.skill.hoeren", href: "/uebungen/aussprache", type: "sessions" },
-      { key: "sprechen", icon: "🗣️", labelKey: "dash.skill.sprechen", href: "/uebungen/sprechen", type: "sessions" },
-      { key: "schreiben", icon: "✍️", labelKey: "dash.skill.schreiben", href: "/uebungen/lesen-schreiben", type: "accuracy" },
+      { key: "wortschatz", icon: "🗂️", labelKey: "dash.skill.wortschatz", href: "/wortschatz", type: "accuracy" },
+      { key: "grammatik", icon: "📚", labelKey: "dash.skill.grammatik", href: "/grammatik", type: "accuracy" },
+      { key: "hoeren", icon: "🔊", labelKey: "dash.skill.hoeren", href: "/aussprache", type: "sessions" },
+      { key: "sprechen", icon: "🗣️", labelKey: "dash.skill.sprechen", href: "/sprechen", type: "sessions" },
+      { key: "schreiben", icon: "✍️", labelKey: "dash.skill.schreiben", href: "/lesen-schreiben", type: "accuracy" },
     ];
 
     function esc(s) {
@@ -412,7 +412,7 @@ const workspaceCount = grammarWorkspaceLevels.reduce((n, row) => n + row.topics.
           <p class="dash-callout-eyebrow">${tr("dash.callout.startEyebrow")}</p>
           <h3>${tr("dash.callout.noDataTitle")}</h3>
           <p>${tr("dash.callout.noDataBody")}</p>
-          <a class="quiz-btn quiz-btn--primary" href="/uebungen/wortschatz">${tr("dash.cta.start")}</a>`;
+          <a class="quiz-btn quiz-btn--primary" href="/wortschatz">${tr("dash.cta.start")}</a>`;
       }
 
       renderWeekBars(data);
@@ -516,7 +516,7 @@ const workspaceCount = grammarWorkspaceLevels.reduce((n, row) => n + row.topics.
       // CTA: continue with the last-touched skill, or a sensible default
       const lastSkill = SKILLS.find((s) => s.key === data.lastSkill);
       const cta = document.getElementById("dash-cta");
-      cta.href = lastSkill ? lastSkill.href : "/uebungen/wortschatz";
+      cta.href = lastSkill ? lastSkill.href : "/wortschatz";
       cta.textContent = lastSkill ? tr("dash.cta.continue", { skill: tr(lastSkill.labelKey) }) : tr("dash.cta.start");
 
       // Stat tiles

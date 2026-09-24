@@ -1,0 +1,117 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import SiteNav from "../../components/SiteNav.astro";
+import "../../styles/practice.css";
+import sprechen from "../../data/sprechen.json";
+---
+<Layout title="Sprechen: Bildbeschreibung – DeutschAcademy">
+  <SiteNav active="fertigkeiten" />
+  <main class="practice-main practice-main--wide">
+    <div class="practice-hero">
+      <p class="eyebrow" data-i18n="sprechen.hero.eyebrow">DTZ Sprechen, Teil 2</p>
+      <h1 data-i18n="sprechen.hero.title">Bildbeschreibung üben</h1>
+      <p data-i18n="sprechen.hero.subtitle">Echte Prüferfragen aus dem Unterricht. In der echten Prüfung hast du 90 Sekunden für die Beschreibung und 90 Sekunden für die Nachfragen — so wie hier.</p>
+    </div>
+    <div class="prompt-card" id="prompt-root"></div>
+
+    <div class="mock-cta">
+      <h2 data-i18n="sprechen.dtz.ctaTitle">Schon sicher auf A2/B1?</h2>
+      <p data-i18n="sprechen.dtz.ctaText">Für die mündliche Prüfung auf B1/B2 gilt ein anderes Format: nach der Bildbeschreibung folgen ein Kurzvortrag und eine Diskussion. Drei Stufen, jede mit eigenem Timer.</p>
+      <a class="quiz-btn quiz-btn--primary" href="/sprechen-b1b2" data-i18n="sprechen.dtz.ctaBtn">Sprechen B1/B2 üben →</a>
+    </div>
+  </main>
+  <script type="application/json" id="sprechen-data" set:html={JSON.stringify(sprechen)}></script>
+  <script type="module">
+    import { recordSession } from "../../lib/progress.js";
+    import { getLang, loadDict, onLangChange } from "../../lib/i18n.js";
+
+    let dict = {};
+    function tr(key, vars) {
+      const str = dict[key];
+      if (str == null) return key;
+      if (!vars) return str;
+      return str.replace(/\{(\w+)\}/g, (m, k) => (k in vars ? String(vars[k]) : m));
+    }
+
+    const prompts = JSON.parse(document.getElementById("sprechen-data").textContent);
+    const root = document.getElementById("prompt-root");
+    let idx = 0;
+    let timerId = null;
+    let seconds = 90;
+
+    function stopTimer() {
+      if (timerId) clearInterval(timerId);
+      timerId = null;
+    }
+
+    function render() {
+      stopTimer();
+      seconds = 90;
+      const p = prompts[idx];
+      root.innerHTML = `
+        <h3>${p.title}</h3>
+        <img class="prompt-image" src="${p.image}" alt="${p.title}" />
+        <div class="prompt-timer" id="timer">90</div>
+        <button class="quiz-btn quiz-btn--primary prompt-reveal-btn" id="start-timer" type="button">${tr("sprechen.startTimer")}</button>
+        <div class="prompt-section-label">${tr("sprechen.descQuestions")}</div>
+        <ul>${p.beschreibung.map((q) => `<li>${q}</li>`).join("")}</ul>
+        <div id="persoenlich-wrap" style="display:none;">
+          <div class="prompt-section-label">${tr("sprechen.personalQuestions")}</div>
+          <ul>${p.persoenlich.map((q) => `<li>${q}</li>`).join("")}</ul>
+        </div>
+        <button class="quiz-btn prompt-reveal-btn" id="reveal-personal" type="button">${tr("sprechen.revealPersonal")}</button>
+        <div class="prompt-nav">
+          <button class="quiz-btn" id="prev-prompt" type="button">${tr("sprechen.prevImage")}</button>
+          <button class="quiz-btn" id="next-prompt" type="button">${tr("sprechen.nextImage")}</button>
+        </div>`;
+
+      // Landscape photos fill the card width; portrait ones are capped by height instead
+      // (see .prompt-image--portrait). Orientation isn't in the data, so read it off the
+      // decoded image.
+      const img = root.querySelector(".prompt-image");
+      const applyOrientation = () => {
+        if (!img.naturalWidth) return;
+        img.classList.toggle("prompt-image--portrait", img.naturalHeight > img.naturalWidth);
+      };
+      if (img.complete) applyOrientation();
+      else img.addEventListener("load", applyOrientation, { once: true });
+
+      document.getElementById("start-timer").addEventListener("click", (e) => {
+        stopTimer();
+        seconds = 90;
+        const timerEl = document.getElementById("timer");
+        e.target.disabled = true;
+        timerId = setInterval(() => {
+          seconds--;
+          timerEl.textContent = String(seconds);
+          if (seconds <= 0) {
+            stopTimer();
+            timerEl.textContent = tr("sprechen.timeUp");
+            e.target.disabled = false;
+            recordSession("sprechen");
+          }
+        }, 1000);
+      });
+      document.getElementById("reveal-personal").addEventListener("click", () => {
+        document.getElementById("persoenlich-wrap").style.display = "block";
+      });
+      document.getElementById("prev-prompt").addEventListener("click", () => {
+        idx = (idx - 1 + prompts.length) % prompts.length;
+        render();
+      });
+      document.getElementById("next-prompt").addEventListener("click", () => {
+        idx = (idx + 1) % prompts.length;
+        render();
+      });
+    }
+    async function bootI18n() {
+      dict = await loadDict(getLang());
+      render();
+    }
+    onLangChange((code, newDict) => {
+      dict = newDict;
+      render();
+    });
+    bootI18n();
+  </script>
+</Layout>

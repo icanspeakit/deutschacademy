@@ -1,0 +1,262 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import SiteNav from "../../components/SiteNav.astro";
+import "../../styles/practice.css";
+import "../../styles/aktiv.css";
+import grammatik from "../../data/grammatik.json";
+// The icons are shared with /uebungen's Grammatik-Werkstatt — two surfaces drawing the
+// same topic with two different pictures is how one catalogue becomes two.
+import { GRAMMAR_ICON } from "../../lib/catalog.js";
+
+// The hub draws from two pools, in this order of preference:
+//   - src/data/grammatik/*.json — full workspaces (concept card + up to five exercises)
+//   - grammatik.json            — quiz-only topics still waiting for a workspace
+// A workspace shadows the quiz entry with the same id, so promoting a topic is just
+// dropping in the JSON file — no change here or in [id].astro.
+const workspaceModules = import.meta.glob("../../data/grammatik/*.json", { eager: true });
+const workspaces = Object.values(workspaceModules).map((m) => m.default ?? m);
+const covered = new Set(workspaces.map((w) => w.id));
+
+const topics = [
+  ...workspaces.map((w) => ({
+    id: w.id,
+    name: w.name,
+    level: w.level,
+    intro: w.subtitle,
+    // Titles stay German — "Wechselpräpositionen" is the term being taught. The
+    // sentence under it is what a learner needs in their own language.
+    introKey: `grammatik.${w.id}.intro`,
+    href: "/" + (w.slug ?? w.id),
+    badge: w.exercises.length + " Aufgabentypen",
+    badgeKey: "grammatik.card.taskTypes",
+    badgeVars: { n: w.exercises.length },
+    isWorkspace: true,
+    // Carries the Aktiv mode — hearing and speaking, not just reading and typing. Worth a
+    // mark on the card: a learner with ten minutes and headphones is looking for exactly
+    // these, and they are otherwise indistinguishable from the silent ones.
+    aktiv: !!w.aktiv,
+  })),
+  ...grammatik
+    .filter((t) => !covered.has(t.id))
+    .map((t) => ({
+      id: t.id,
+      name: t.name,
+      level: t.level,
+      intro: t.intro,
+      introKey: `grammatik.${t.id}.intro`,
+      href: "/" + t.id,
+      badge: t.questions.length + " Fragen",
+      badgeKey: "grammatik.card.questions",
+      badgeVars: { n: t.questions.length },
+      isWorkspace: t.id === "akkusativ",
+    })),
+];
+
+
+// The guided run walks the workspaces in syllabus order (the order itself lives in
+// lauf.astro). The chooser below only needs the size of it, derived rather than typed
+// so the number cannot go stale when a workspace is added.
+const runTopics = workspaces.length;
+const runStations = workspaces.reduce((n, w) => n + w.exercises.length, 0);
+
+const LEVEL_ORDER = ["A1", "A2", "B1", "B2", "C1"];
+const levels = LEVEL_ORDER.filter((lvl) => topics.some((t) => t.level === lvl));
+
+// Every level row is padded with placeholder cards up to this width, so a level with only
+// one real topic doesn't stretch into one giant card or look lopsided next to a fuller level.
+const ROW_WIDTH = 4;
+---
+<Layout title="Grammatik – DeutschAcademy">
+  <SiteNav active="grammatik" />
+  <main class="practice-main">
+    <div class="grammatik-hero">
+      <p class="eyebrow" data-i18n="grammatik.hero.eyebrow">Grammatik üben</p>
+      <h1 data-i18n="grammatik.hero.title">Themen nach Niveau</h1>
+      <p data-i18n="grammatik.hero.subtitle">Wähle ein Thema. Die meisten haben einen eigenen Übungsraum mit Erklärung und mehreren Aufgabentypen — die übrigen übst du im Lückentext-Quiz.</p>
+    </div>
+
+    <!-- Asked once, before the wall of cards: choosing a topic is itself a skill, and a
+         learner who cannot place themselves on the CEFR scale cannot place a topic on it
+         either. The left card is for them; the right one is the page they are already on,
+         so it scrolls rather than navigates. -->
+    <div class="mode-pick">
+      <a class="mode-card mode-card--led" href="/grammatik/lauf">
+        <span class="mode-ic" aria-hidden="true">▶</span>
+        <span class="mode-txt">
+          <b data-i18n="grammatik.mode.guided">Führ mich</b>
+          <i data-i18n="grammatik.mode.guidedSub" data-i18n-vars={JSON.stringify({ n: runStations, t: runTopics })}>
+            {runStations} Aufgaben aus {runTopics} Themen, in der Reihenfolge des Lehrplans — eine nach der anderen, du wählst nichts aus.
+          </i>
+        </span>
+      </a>
+      <button class="mode-card" type="button" data-mode-free>
+        <span class="mode-ic" aria-hidden="true">☰</span>
+        <span class="mode-txt">
+          <b data-i18n="grammatik.mode.free">Ich such mir was aus</b>
+          <i data-i18n="grammatik.mode.freeSub" data-i18n-vars={JSON.stringify({ n: topics.length })}>
+            Alle {topics.length} Themen nach Niveau. Du weißt, was du üben willst.
+          </i>
+        </span>
+      </button>
+    </div>
+
+    {levels.map((level) => (
+      <section class="level-section" id={`niveau-${level.toLowerCase()}`}>
+        <div class="level-heading">
+          <span class="badge badge-info">{level}</span>
+        </div>
+        <div class="tool-grid">
+          {topics.filter((t) => t.level === level).map((t) => (
+            <a class="tool-card" href={t.href}>
+              <div class="tool-card-icon">{GRAMMAR_ICON[t.id] || "📚"}</div>
+              <h3>{t.name}</h3>
+              <p data-i18n={t.introKey}>{t.intro}</p>
+              <span class={`tool-card-count ${t.isWorkspace ? "tool-card-count--workspace" : ""}`} data-i18n={t.badgeKey} data-i18n-vars={JSON.stringify(t.badgeVars)}>{t.badge}</span>
+              {t.aktiv && <span class="tool-card-aktiv" data-i18n="grammatik.card.aktiv" data-i18n-attr="title:grammatik.card.aktivTitle" title="Mit Hör- und Sprechübungen">Hören &amp; Sprechen</span>}
+            </a>
+          ))}
+          {Array.from({ length: Math.max(0, ROW_WIDTH - topics.filter((t) => t.level === level).length) }).map(() => (
+            <div class="tool-card tool-card--placeholder" aria-hidden="true">
+              <div class="tool-card-icon tool-card-icon--placeholder">+</div>
+              <h3 data-i18n="grammatik.card.comingSoonTitle">Weiteres Thema</h3>
+              <p data-i18n="grammatik.card.comingSoonDesc">Noch nicht verfügbar.</p>
+              <span class="tool-card-count tool-card-count--placeholder" data-i18n="tool.comingSoon.count">Bald verfügbar</span>
+            </div>
+          ))}
+        </div>
+      </section>
+    ))}
+  </main>
+  <script>
+    // "Ich such mir was aus" is this page — so it moves the learner to the list rather
+    // than loading anything. With no JS the button does nothing and the list is already
+    // right there underneath it, which is the same outcome.
+    document.querySelector("[data-mode-free]")?.addEventListener("click", () => {
+      const calm = matchMedia("(prefers-reduced-motion: reduce)").matches;
+      document.querySelector(".level-section")
+        ?.scrollIntoView({ block: "start", behavior: calm ? "auto" : "smooth" });
+    });
+  </script>
+</Layout>
+
+<style>
+  /* This hub is a card index, not a reading page: widen past the shared 880px article
+     width and compact every block so more than one level fits on screen at once. */
+  .practice-main { max-width: 1160px; padding-top: 28px; padding-bottom: 56px; }
+
+  .grammatik-hero {
+    background: var(--gradient-brand);
+    border-radius: var(--radius-lg);
+    padding: 22px 28px;
+    margin-bottom: 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .grammatik-hero .eyebrow { color: rgba(255,255,255,.85); margin: 0; }
+  .grammatik-hero h1 {
+    font-family: var(--font-display);
+    font-size: clamp(1.4rem, 2.4vw, 1.9rem);
+    color: #fff;
+    margin: 0;
+  }
+  .grammatik-hero p { color: rgba(255,255,255,.92); margin: 0; max-width: 68ch; font-size: .9rem; line-height: 1.45; }
+
+  /* The chooser. Two answers, equal weight — the guided one is tinted because it is the
+     one a new learner should take, not because it is better. */
+  .mode-pick {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    margin-bottom: 28px;
+  }
+  .mode-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    text-align: left;
+    padding: 16px 18px;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border);
+    background: var(--surface-card);
+    cursor: pointer;
+    font: inherit;
+    color: inherit;
+    text-decoration: none;
+    transition: border-color .15s ease, transform .15s ease;
+  }
+  .mode-card:hover { border-color: var(--brand-blue); }
+  .mode-card:active { transform: translateY(1px); }
+  .mode-card--led { background: var(--blue-50); border-color: var(--blue-200); }
+  .mode-ic {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    flex-shrink: 0;
+    border-radius: 12px;
+    background: var(--surface);
+    color: var(--brand-blue-dark);
+    font-size: .8rem;
+  }
+  .mode-card--led .mode-ic { background: var(--brand-blue); color: #fff; }
+  .mode-txt { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+  .mode-txt b { font-size: .975rem; font-weight: var(--fw-bold); color: var(--ink); }
+  .mode-txt i { font-style: normal; font-size: .8125rem; line-height: 1.45; color: var(--muted); }
+
+  @media (max-width: 640px) {
+    .mode-pick { grid-template-columns: 1fr; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .mode-card { transition: none; }
+  }
+
+  .level-section { margin-top: 26px; }
+  .level-section:first-of-type { margin-top: 0; }
+  /* The nav links straight to a level (#niveau-b1); without this the sticky site header
+     lands on top of the badge the learner was aiming at. */
+  .level-section { scroll-margin-top: 84px; }
+  .level-heading { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+
+  /* Fixed column count (instead of the shared tool-grid's auto-fit) so every level lines up
+     the same way, whether it has 1 topic or a full row of them. */
+  .tool-grid { grid-template-columns: repeat(4, 1fr); gap: 14px; margin-top: 0; }
+  @media (max-width: 1000px) { .tool-grid { grid-template-columns: repeat(3, 1fr); } }
+  @media (max-width: 760px) { .tool-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 480px) { .tool-grid { grid-template-columns: 1fr; } }
+
+  /* Compact card: fixed icon row, description clamped to 3 lines so a long intro
+     can't stretch its whole row into a wall of text. */
+  .tool-card { padding: 16px 16px 14px; display: flex; flex-direction: column; gap: 8px; }
+  .tool-card-icon { width: 34px; height: 34px; border-radius: 12px; font-size: 1rem; margin-bottom: 2px; }
+  .tool-card h3 { margin: 0; font-size: 1rem; }
+  .tool-card p {
+    margin: 0;
+    font-size: .85rem;
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .tool-card-count { align-self: flex-start; margin-top: auto; font-size: .75rem; padding: 3px 10px; }
+  /* A full workspace earns the brand tint; a plain quiz topic stays neutral. */
+  .tool-card-count--workspace { background: var(--blue-100); color: var(--brand-blue-dark); }
+
+  .tool-card--placeholder {
+    background: var(--surface);
+    border-style: dashed;
+    border-color: var(--border-strong);
+    cursor: default;
+  }
+  .tool-card--placeholder:hover { transform: none; box-shadow: none; }
+  .tool-card--placeholder h3, .tool-card--placeholder p { color: var(--muted-soft); }
+  .tool-card-icon--placeholder {
+    background: var(--border);
+    color: var(--muted-soft);
+    font-size: 1.2rem;
+    font-weight: 700;
+  }
+  .tool-card-count--placeholder { background: var(--surface); color: var(--muted-soft); border: 1px solid var(--border-strong); }
+</style>

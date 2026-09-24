@@ -24,8 +24,8 @@ interface Props {
 const { topic, title, inline = false } = Astro.props;
 const pos = kursPosition(topic);
 const stufe = pos?.level.toLowerCase();
-const url = `/uebungen/grammatik/${topic}`;
-const topicHref = (id: string) => `/uebungen/grammatik/${id}`;
+const url = `/${topic}`;
+const topicHref = (id: string) => `/${id}`;
 ---
 {pos && (
   <nav class:list={["kb", inline && "kb--inline"]} aria-label="Dein Kurs" data-i18n-attr="aria-label:kb.course">

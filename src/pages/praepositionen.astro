@@ -1,0 +1,453 @@
+---
+// /praepositionen — the Präpositionen trainer.
+//
+// Built on the der/die/das trainer's frame (ArtikelTrainer.astro), because that is the
+// shape the rest of the grammar area has: a dark rail of levels on the left, a panel of
+// topics per level beside it, the work in the middle and the Regel one click away.
+// It replaced a two-card landing page that sent learners off to two unrelated topics.
+//
+// Prepositions are graded, so the level rail carries real content: A1 is mit/bei/von and
+// für/ohne/gegen, B2 is aufgrund/angesichts/infolge. The Wechselpräpositionen get a rail
+// entry of their own — they are the one group learners come looking for by name — and
+// the two full grammar topics (with Aktiv and the long rule) stay linked from the panel.
+//
+// Content: src/data/praepositionen-trainer.json. History: createVerlauf() in
+// src/lib/artikelVerlauf.js under its own key, so it never mixes with the noun history.
+import Layout from "../layouts/Layout.astro";
+import SiteNav from "../components/SiteNav.astro";
+import TopicBar from "../components/TopicBar.astro";
+import Icon from "../components/Icon.astro";
+import RefTable from "../components/RefTable.astro";
+import data from "../data/praepositionen-trainer.json";
+import "../styles/practice.css";
+import "../styles/akkusativ.css";
+import "../styles/verben-praepositionen.css";
+import "../styles/rule-intro.css";
+import "../styles/artikel-fit.css";
+import "../styles/artikel-t2.css";
+import "../styles/nav.css";
+import "../styles/lernset-picker.css";
+import "../styles/artikel-panel.css";
+
+const SESSION_SIZE = 25;
+const LEVELS = ["A1", "A2", "B1", "B2"] as const;
+type Pack = { id: string; level: string; cat?: string; name: string; preps: string; rule: { text: string; table?: any }; questions: any[] };
+const packs = (data as { packs: Pack[] }).packs;
+const byLevel = Object.fromEntries(LEVELS.map((l) => [l, packs.filter((p) => p.level === l)]));
+const wechsel = packs.filter((p) => p.cat === "wechsel");
+const total = packs.reduce((n, p) => n + p.questions.length, 0);
+
+// The full grammar topics these packs are a warm-up for, shown under the level they belong to.
+const MORE: Record<string, { href: string; label: string }[]> = {
+  A2: [{ href: "/wechselpraepositionen", label: "Wechselpräpositionen – ausführlich, mit Hören & Sprechen" }],
+  B1: [{ href: "/verben-praepositionen", label: "Verben mit Präpositionen – ausführlich" }],
+  B2: [{ href: "/nomen-verb-verbindungen", label: "Nomen-Verb-Verbindungen" }],
+};
+
+// Everything the client needs: questions by pack, with the pack id on each question.
+const clientPacks = packs.map((p) => ({
+  id: p.id, level: p.level, cat: p.cat ?? null, name: p.name,
+  questions: p.questions.map((q) => ({ ...q, difficulty: undefined })),
+}));
+
+// The overview that heads the Regel: which case each group takes.
+const overview = {
+  caption: "Welcher Fall nach welcher Präposition?",
+  head: ["Fall", "Präpositionen", "Beispiel"],
+  rows: [
+    ["Dativ", "aus, bei, mit, nach, seit, von, zu", "mit dem Bus"],
+    ["Akkusativ", "durch, für, gegen, ohne, um", "für den Kurs"],
+    ["Wo? Dativ · Wohin? Akk.", "an, auf, hinter, in, neben, über, unter, vor, zwischen", "im Kino · ins Kino"],
+    ["Genitiv", "wegen, trotz, während, statt …", "wegen des Regens"],
+  ],
+};
+---
+<Layout
+  title="Präpositionen – DeutschAcademy"
+  description="Präpositionen üben von A1 bis B2: mit Dativ, mit Akkusativ, Wechselpräpositionen, Verben mit Präposition und Genitiv — mit Regel zu jedem Thema."
+>
+  <SiteNav active="grammatik" />
+  <TopicBar topic="praepositionen" kind="Grammatik" title="Präpositionen" level="A1–B2" tasks={total} showKind={false} scoped />
+
+  <main class="vp-page vp-page--split vp-page--sheet akk vp-page--rule-left vp-page--fit" id="vp-page" data-rule="hidden" data-anim="off" data-topic-key="praepositionen">
+    <div class="vp-workspace">
+      <aside class="vp-col vp-col--rule" id="vp-rule">
+        <div class="vp-card vp-rule-card" id="vp-rule-card">
+          <div class="vp-sheet-head">
+            <div class="vp-card-label" data-i18n="ap.levels">Stufen</div>
+            <button type="button" class="vp-sheet-fold" data-sheet-close aria-label="Stufen einklappen" aria-controls="vp-rule-card">
+              <span data-i18n="vp.rule.collapseShort">Einklappen</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </button>
+            <button type="button" class="vp-sheet-x" data-sheet-close aria-label="Stufen schließen" aria-controls="vp-rule-card">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="6" y1="6" x2="18" y2="18"></line><line x1="18" y1="6" x2="6" y2="18"></line></svg>
+            </button>
+          </div>
+          <div class="vp-sheet-body vp-sheet-body--flush">
+            <div class="nvb ls-nvb ap-nvb" data-nvb>
+              <button type="button" class="ls-foldtab" data-nvb-collapse aria-label="Liste einklappen" data-i18n-attr="aria-label:ap.list.collapse" aria-controls="ap-pane">
+                <span class="ls-foldtab-txt" data-i18n="ap.levels">Stufen</span>
+                <svg class="ls-foldtab-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>
+              </button>
+
+              <div class="nvb-rail" role="tablist" aria-label="Stufe wählen" data-i18n-attr="aria-label:ap.chooseLevel">
+                <button type="button" class="nvb-railbtn ls-unfold" data-nvb-collapse aria-label="Liste ausklappen" data-i18n-attr="aria-label:ap.list.expand">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+                  <span class="nvb-tip" data-i18n="ap.list.expand">Liste ausklappen</span>
+                </button>
+                {LEVELS.map((level, i) => (
+                  <button type="button" role="tab" class:list={["nvb-railbtn", i === 0 && "active"]} data-rail={level} aria-selected={i === 0 ? "true" : "false"} aria-controls={`ap-pane-${level}`} aria-label={`Stufe ${level}`}>
+                    <span class="nvb-railbadge">{level}</span>
+                    <span class="nvb-tip"><span data-i18n="ap.levelName" data-i18n-vars={JSON.stringify({ level })}>Stufe {level}</span></span>
+                  </button>
+                ))}
+                <span class="ls-raildiv" aria-hidden="true"></span>
+                {/* Wechselpräpositionen: the one group learners look for by name. */}
+                <button type="button" role="tab" class="nvb-railbtn" data-rail="wechsel" aria-selected="false" aria-controls="ap-pane-wechsel" aria-label="Wechselpräpositionen">
+                  <Icon name="map-pin" size={20} />
+                  <span class="nvb-tip">Wechselpräpositionen · wo oder wohin?</span>
+                </button>
+                <button type="button" role="tab" class="nvb-railbtn" data-rail="regel" aria-selected="false" aria-controls="ap-regel" aria-label="Regel" data-i18n-attr="aria-label:ak.rule">
+                  <Icon name="book" size={20} />
+                  <span class="nvb-tip">Regel · welcher Fall nach welcher Präposition</span>
+                </button>
+              </div>
+
+              <div class="nvb-panel" id="ap-pane">
+                {LEVELS.map((level, i) => (
+                  <div class="nvb-section ap-sets" id={`ap-pane-${level}`} data-pane={level} hidden={i !== 0}>
+                    <div class="nvb-panelhead">
+                      <h3 data-i18n="ap.levelName" data-i18n-vars={JSON.stringify({ level })}>Stufe {level}</h3>
+                      <button type="button" class="nvb-collapse" data-nvb-collapse aria-label="Liste einklappen" data-i18n-attr="aria-label:ap.list.collapse">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>
+                      </button>
+                    </div>
+                    <p class="ls-lead">Übe alle Themen gemischt oder wähle eins.</p>
+                    <div class="akp ap-weiter">
+                      <button type="button" class="akk-btn akk-btn-primary akp-go" data-go={level} data-i18n="ap.continue">Weiter üben</button>
+                    </div>
+                    <section class="ap-packs">
+                      <h4 class="ap-phase-head"><span>Themen</span></h4>
+                      {byLevel[level].map((p) => (
+                        <button type="button" class="nvb-item akp-pack pr-pack" data-pack={p.id} data-level={level}>
+                          <span class="pr-pack-body">
+                            <span class="akp-pack-name">{p.name}</span>
+                            <span class="pr-pack-preps">{p.preps}</span>
+                          </span>
+                          <span class="akp-pack-state" data-pack-state>0/{p.questions.length}</span>
+                        </button>
+                      ))}
+                    </section>
+                    {MORE[level] && (
+                      <section class="ap-packs pr-more">
+                        <h4 class="ap-phase-head"><span>Ausführlich üben</span></h4>
+                        {MORE[level].map((m) => <a class="nvb-item pr-more-link" href={m.href}>{m.label} →</a>)}
+                      </section>
+                    )}
+                  </div>
+                ))}
+
+                <div class="nvb-section ap-sets" id="ap-pane-wechsel" data-pane="wechsel" hidden>
+                  <div class="nvb-panelhead">
+                    <h3>Wechselpräpositionen</h3>
+                    <button type="button" class="nvb-collapse" data-nvb-collapse aria-label="Liste einklappen" data-i18n-attr="aria-label:ap.list.collapse">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>
+                    </button>
+                  </div>
+                  <p class="ls-lead">Neun Präpositionen, zwei Fälle: <b>Wo?</b> → Dativ, <b>Wohin?</b> → Akkusativ. Im Kino ist nicht ins Kino.</p>
+                  <section class="ap-packs">
+                    {wechsel.map((p) => (
+                      <button type="button" class="nvb-item akp-pack pr-pack" data-pack={p.id} data-level={p.level}>
+                        <span class="pr-pack-body">
+                          <span class="akp-pack-name">{p.name}</span>
+                          <span class="pr-pack-preps">{p.preps}</span>
+                        </span>
+                        <span class="akp-pack-state" data-pack-state>0/{p.questions.length}</span>
+                      </button>
+                    ))}
+                  </section>
+                  <section class="ap-packs pr-more">
+                    <h4 class="ap-phase-head"><span>Ausführlich üben</span></h4>
+                    <a class="nvb-item pr-more-link" href="/wechselpraepositionen">Wechselpräpositionen – mit Hören & Sprechen →</a>
+                  </section>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <button type="button" class="vp-rule-peek" id="vp-rule-peek" data-show="Stufe wählen" data-hide="Stufen ausblenden" data-i18n-attr="data-show:ap.chooseLevel;data-hide:ap.levels.hide" data-i18n="ap.chooseLevel" aria-controls="vp-rule-card">Stufe wählen</button>
+      </aside>
+
+      <div class="vp-sheet-scrim" data-sheet-close aria-hidden="true"></div>
+
+      <section class="vp-col vp-col--ex">
+        <div class="vp-ex-toolbar">
+          <button type="button" class="vp-rule-toggle" id="vp-rule-toggle" data-show="Stufen einblenden" data-hide="Stufen ausblenden" data-i18n-attr="data-show:ap.levels.show;data-hide:ap.levels.hide">Stufen einblenden</button>
+        </div>
+
+        <div class="vp-card">
+          <div class="akk-mode-row">
+            <div class="akk-mode" role="group" aria-label="Übungsmodus" data-i18n-attr="aria-label:akk.mode.ariaLabel">
+              <button class="akk-mode-btn active" data-mode="fokus" type="button" data-i18n="akk.mode.fokus">Fokus-Modus</button>
+              <span class="akk-mode-sep">·</span>
+              <button class="akk-mode-btn" data-mode="test" type="button" data-i18n="akk.mode.test">Testmodus</button>
+            </div>
+            <button type="button" class="akk-regel-btn" data-regel-open data-i18n="ak.rule">Regel</button>
+          </div>
+          <p class="ak-now" data-now aria-live="polite"></p>
+          <div id="akk-exercise-root" data-instruction="Welche Präposition passt?"></div>
+        </div>
+
+        <footer class="akk-footer">
+          <div class="akk-session-ring">
+            <svg viewBox="0 0 56 56">
+              <circle class="akk-ring-track" cx="28" cy="28" r="24" />
+              <circle class="akk-ring-fill" id="akk-ring-fill" cx="28" cy="28" r="24" stroke-dasharray="150.8" stroke-dashoffset="150.8" />
+            </svg>
+            <span class="akk-ring-num" id="akk-ring-num">0%</span>
+          </div>
+          <div class="akk-session-text">
+            <span class="akk-session-label" data-i18n="akk.session.label">Diese Sitzung</span>
+            <p class="akk-session-stats" id="akk-session-stats">0 von {SESSION_SIZE} beantwortet · 0 richtig · 0 Hinweise</p>
+          </div>
+          <span class="akk-session-badge" data-i18n="akk.session.badge">lokal · ohne Konto</span>
+        </footer>
+      </section>
+    </div>
+
+    {/* The Regel: a drawer on the right, like Artikel's. The overview first, then the rule
+        of the topic being practised (all are rendered; the script shows the current one). */}
+    <div class="ap-drawer-scrim" data-regel-close aria-hidden="true"></div>
+    <aside class="ap-drawer" id="ap-regel" aria-labelledby="ap-regel-h" aria-hidden="true" inert>
+      <div class="ap-drawer-head">
+        <h2 id="ap-regel-h" data-i18n="ak.rule">Regel</h2>
+        <button type="button" class="ap-drawer-x" data-regel-close aria-label="Regel schließen" data-i18n-attr="aria-label:vp.rule.close">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="6" y1="6" x2="18" y2="18"></line><line x1="18" y1="6" x2="6" y2="18"></line></svg>
+        </button>
+      </div>
+      <div class="ap-drawer-body ap-regel">
+        {packs.map((p) => (
+          <section class="pr-rule" data-rule-pack={p.id} hidden>
+            <p class="pr-rule-kicker">{p.level} · {p.name}</p>
+            <p class="pr-rule-text">{p.rule.text}</p>
+            {p.rule.table && <RefTable table={p.rule.table} />}
+          </section>
+        ))}
+        <section class="pr-rule pr-rule--overview">
+          <RefTable table={overview} />
+          <p class="akk-regel-note">Die Präposition bestimmt den Fall — lern sie immer zusammen mit dem Fall: <b>mit</b> + Dativ, <b>für</b> + Akkusativ.</p>
+        </section>
+      </div>
+    </aside>
+
+    <button type="button" class="vp-rule-pivot" id="vp-rule-pivot" aria-controls="vp-rule-card" aria-expanded="true" title="Stufen einblenden" data-i18n-attr="title:ap.levels.show">
+      <span class="vp-rule-pivot-chevron" aria-hidden="true"></span>
+      <span class="vp-rule-pivot-label" data-i18n="ap.levels">Stufen</span>
+    </button>
+  </main>
+
+  <script type="application/json" id="pr-data" set:html={JSON.stringify({ packs: clientPacks, size: SESSION_SIZE })}></script>
+  <script>
+    import { mountPracticeWorkspace } from "../lib/practiceWorkspace.js";
+    import { mountRuleColumn } from "../lib/ruleColumn.js";
+    import { recordAttempt } from "../lib/progress.js";
+    import { createVerlauf } from "../lib/artikelVerlauf.js";
+    import { getLang, loadDict, onLangChange } from "../lib/i18n.js";
+
+    const { packs, size } = JSON.parse(document.getElementById("pr-data")!.textContent || "{}");
+    const verlauf = createVerlauf("da-praep-verlauf-v1");
+    const byPack = new Map<string, any>(packs.map((p: any) => [p.id, p]));
+    const exerciseRoot = document.getElementById("akk-exercise-root")!;
+    const nowLine = document.querySelector<HTMLElement>("[data-now]")!;
+    const page = document.getElementById("vp-page")!;
+
+    let dict: Record<string, string> = {};
+    const tr = (k: string, fb: string, vars?: Record<string, any>) =>
+      (dict[k] ?? fb).replace(/\{(\w+)\}/g, (m, x) => (vars && x in vars ? String(vars[x]) : m));
+
+    // What is running: a level mixed ("weiter") or one pack.
+    const LEVELS = ["A1", "A2", "B1", "B2"];
+    const wanted = (new URLSearchParams(location.search).get("niveau") || "").toUpperCase();
+    let level = LEVELS.includes(wanted) ? wanted : "A1";
+    let current: { kind: "weiter" | "pack"; id: string | null } = { kind: "weiter", id: null };
+    let mode = "fokus";
+    let practice: any = null;
+
+    const ringFill = document.getElementById("akk-ring-fill")!;
+    const ringNum = document.getElementById("akk-ring-num")!;
+    const statsText = document.getElementById("akk-session-stats")!;
+    let lastStats = { answered: 0, correct: 0, hints: 0, total: size };
+    function renderStats() {
+      const { answered, correct, hints, total } = lastStats;
+      const pct = total ? Math.round((correct / total) * 100) : 0;
+      ringFill.style.strokeDashoffset = String(150.8 * (1 - pct / 100));
+      ringNum.textContent = `${pct}%`;
+      statsText.textContent = tr("akk.session.stats", "{answered} von {total} beantwortet · {correct} richtig · {hints} Hinweise", { answered, total, correct, hints });
+    }
+    loadDict(getLang()).then((d) => { dict = d; renderStats(); paintNow(); });
+    onLangChange((_c, d) => { dict = d; renderStats(); paintNow(); });
+
+    const levelQuestions = (lv: string) => packs.filter((p: any) => p.level === lv).flatMap((p: any) => p.questions);
+
+    function mount(questions: any[]) {
+      exerciseRoot.innerHTML = "";
+      practice = mountPracticeWorkspace(exerciseRoot, questions, {
+        onSessionUpdate: (s: any) => { lastStats = s; renderStats(); },
+        onAnswer: (ok: boolean, id: string, info: any) => {
+          verlauf.record(id, ok && info?.firstTry !== false);
+          recordAttempt({ skill: "grammatik", correct: ok, id, topic: "praepositionen" });
+          dispatchEvent(new CustomEvent("da:progress", { detail: { topic: "praepositionen", correct: ok } }));
+          refresh();
+        },
+      });
+      practice.setMode(mode);
+    }
+
+    function paintNow() {
+      const pack = current.kind === "pack" ? byPack.get(current.id!) : null;
+      nowLine.textContent = pack
+        ? `${tr("ap.levelName", "Stufe {level}", { level: pack.level })} · ${pack.name}`
+        : `${tr("ap.levelName", "Stufe {level}", { level })} · ${tr("ap.mixed", "gemischt")}`;
+    }
+
+    function startSession() {
+      const pack = current.kind === "pack" ? byPack.get(current.id!) : null;
+      const pool = pack ? pack.questions : levelQuestions(level);
+      mount(verlauf.buildSession(pool, size));
+      paintNow();
+      paintRule();
+      refresh();
+    }
+
+    // "12/25" per pack row, and the topic bar's count follows the pack being practised.
+    function refresh() {
+      document.querySelectorAll<HTMLElement>("[data-pack]").forEach((btn) => {
+        const p = byPack.get(btn.dataset.pack!);
+        if (!p) return;
+        const s = verlauf.stats(p.questions.map((q: any) => q.id));
+        btn.querySelector("[data-pack-state]")!.textContent = `${s.sicher}/${s.total}`;
+        btn.classList.toggle("active", current.kind === "pack" && current.id === p.id);
+      });
+      document.querySelectorAll<HTMLElement>("[data-go]").forEach((b) => b.classList.toggle("is-on", current.kind === "weiter" && b.dataset.go === level));
+      const pack = current.kind === "pack" ? byPack.get(current.id!) : null;
+      const s = pack ? verlauf.stats(pack.questions.map((q: any) => q.id)) : { sicher: 0, total: 0 };
+      dispatchEvent(new CustomEvent("da:topic-scope", { detail: { done: s.sicher, total: s.total } }));
+    }
+
+    // The rail: levels and Wechsel swap the panel; Regel opens the drawer.
+    const railBtns = [...document.querySelectorAll<HTMLElement>(".ap-nvb [data-rail]")];
+    const panes = [...document.querySelectorAll<HTMLElement>(".ap-nvb [data-pane]")];
+    function showPane(key: string) {
+      panes.forEach((p) => { p.hidden = p.dataset.pane !== key; });
+      railBtns.forEach((b) => {
+        const on = b.dataset.rail === key;
+        b.classList.toggle("active", on);
+        b.setAttribute("aria-selected", String(on));
+      });
+    }
+
+    const compact = matchMedia("(max-width: 1000px)");
+    let ruleCol: any = null;
+    const toExercise = () => { if (compact.matches) ruleCol?.apply(true, false); };
+
+    railBtns.forEach((b) => b.addEventListener("click", () => {
+      const key = b.dataset.rail!;
+      if (key === "regel") return openRegel();
+      showPane(key);
+      if (LEVELS.includes(key)) { level = key; current = { kind: "weiter", id: null }; startSession(); }
+    }));
+    document.querySelectorAll<HTMLElement>("[data-go]").forEach((b) => b.addEventListener("click", () => {
+      level = b.dataset.go!; current = { kind: "weiter", id: null }; startSession(); toExercise();
+    }));
+    document.querySelectorAll<HTMLElement>("[data-pack]").forEach((b) => b.addEventListener("click", () => {
+      level = b.dataset.level!; current = { kind: "pack", id: b.dataset.pack! }; startSession(); toExercise();
+    }));
+
+    // The Regel drawer: the current pack's rule above the overview; in mixed practice only
+    // the overview and the level's rules.
+    const regel = document.getElementById("ap-regel")!;
+    function paintRule() {
+      regel.querySelectorAll<HTMLElement>("[data-rule-pack]").forEach((s) => {
+        const p = byPack.get(s.dataset.rulePack!);
+        s.hidden = current.kind === "pack" ? s.dataset.rulePack !== current.id : p?.level !== level;
+      });
+    }
+    const regelBtn = document.querySelector<HTMLElement>("[data-regel-open]");
+    function openRegel() {
+      document.body.classList.add("ap-regel-open");
+      regel.removeAttribute("inert");
+      regel.setAttribute("aria-hidden", "false");
+      regel.querySelector<HTMLElement>("[data-regel-close]")?.focus({ preventScroll: true });
+    }
+    function closeRegel() {
+      document.body.classList.remove("ap-regel-open");
+      regel.setAttribute("inert", "");
+      regel.setAttribute("aria-hidden", "true");
+      regelBtn?.focus({ preventScroll: true });
+    }
+    regelBtn?.addEventListener("click", openRegel);
+    document.querySelectorAll("[data-regel-close]").forEach((b) => b.addEventListener("click", closeRegel));
+    document.addEventListener("keydown", (e) => { if (e.key === "Escape" && document.body.classList.contains("ap-regel-open")) closeRegel(); });
+
+    // The fold (panel goes, rail stays), as in the Artikel trainer.
+    const apRoot = document.querySelector<HTMLElement>(".ap-nvb")!;
+    const FOLD_KEY = "da-praep-stufen-fold";
+    const foldBtns = [...apRoot.querySelectorAll<HTMLElement>("[data-nvb-collapse]")];
+    function setFold(on: boolean, persist = true) {
+      apRoot.classList.toggle("collapsed", on);
+      page.dataset.fold = on ? "1" : "";
+      foldBtns.forEach((b) => b.setAttribute("aria-expanded", on ? "false" : "true"));
+      if (persist) { try { localStorage.setItem(FOLD_KEY, on ? "1" : "0"); } catch {} }
+    }
+    let folded = false;
+    try { folded = localStorage.getItem(FOLD_KEY) === "1"; } catch {}
+    apRoot.classList.add("no-anim");
+    setFold(folded, false);
+    requestAnimationFrame(() => requestAnimationFrame(() => apRoot.classList.remove("no-anim")));
+    foldBtns.forEach((b) => b.addEventListener("click", (e) => { e.stopPropagation(); setFold(!apRoot.classList.contains("collapsed")); }));
+
+    document.querySelectorAll<HTMLElement>(".akk-mode-btn").forEach((btn) => btn.addEventListener("click", () => {
+      document.querySelectorAll(".akk-mode-btn").forEach((b) => b.classList.remove("active"));
+      btn.classList.add("active");
+      mode = btn.dataset.mode!;
+      practice?.setMode(mode);
+    }));
+
+    showPane(level);
+    startSession();
+
+    // The column holds levels and topics, not the rule — so the tour says that.
+    ruleCol = mountRuleColumn(page, {
+      storageKey: "da-praep-rule",
+      seenKey: "da-praep-rule-peek",
+      sheet: true,
+      coach: [["intro.levels.title", "intro.levels.text"]],
+      coachCompact: [["intro.levelsCompact.title", "intro.levelsCompact.text"]],
+    });
+  </script>
+</Layout>
+
+<style>
+  /* A pack row with its prepositions under the name — the list of words is what tells a
+     learner which topic is theirs. */
+  /* No icon column: the name and its prepositions take the whole row, the count the end. */
+  :global(.ap-nvb .akp-pack.pr-pack) { grid-template-columns: minmax(0, 1fr) 6ch; grid-template-areas: "name state"; }
+  .pr-pack-body { grid-area: name; display: flex; flex-direction: column; gap: 2px; min-width: 0; text-align: left; }
+  .pr-pack-body :global(.akp-pack-name) { white-space: normal; line-height: 1.3; }
+  .pr-pack-preps { font-size: .75rem; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  /* A whole sentence, not one noun: the Artikel card's word size would break it into
+     four lines on a phone. */
+  :global(#vp-page[data-topic-key="praepositionen"] .akk-focus-sentence) { font-size: clamp(1.35rem, 3vw, 2.1rem); line-height: 1.35; }
+  /* "zwischen", "angesichts", "auf den": the pills size to the word instead of the fixed
+     der/die/das width, and wrap to a second row on a phone rather than clip. */
+  :global(#vp-page[data-topic-key="praepositionen"] .akk-pills) { justify-content: center; flex-wrap: wrap !important; }
+  @media (max-width: 720px) {
+    :global(#vp-page[data-topic-key="praepositionen"] .akk-pill) { font-size: 1.15rem !important; min-height: 56px !important; min-width: calc(50% - 8px); }
+  }
+  :global(#vp-page[data-topic-key="praepositionen"] .akk-pill) { width: auto !important; min-width: 5.5em; flex: 0 1 auto !important; padding-inline: 18px !important; white-space: nowrap; }
+  .pr-more-link { font-size: .85rem; color: var(--brand-blue-dark); text-decoration: none; }
+  .pr-rule + .pr-rule { margin-top: 22px; }
+  .pr-rule-kicker { margin: 0 0 6px; font-size: .75rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--brand-blue-dark); }
+  .pr-rule-text { margin: 0 0 8px; line-height: 1.55; color: var(--ink); }
+</style>

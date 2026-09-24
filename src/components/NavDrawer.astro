@@ -84,7 +84,7 @@ const vars = (v) => (v ? JSON.stringify(v) : undefined);
           <span class="lp-drawer-levelbar-lbl" data-i18n="nav.ueben.levelShort">Niveau</span>
           <div class="lp-chiprow">
             {levels.map((lv) => (
-              <a class="lp-chip lp-chip--drawer" href={`/uebungen/grammatik#niveau-${lv.slug}`}>{lv.level}</a>
+              <a class="lp-chip lp-chip--drawer" href={`/grammatik#niveau-${lv.slug}`}>{lv.level}</a>
             ))}
           </div>
         </div>
@@ -322,7 +322,7 @@ const vars = (v) => (v ? JSON.stringify(v) : undefined);
             </a>
           ))}
           {lv.grammar.length > GRAMMAR_PREVIEW && (
-            <a class="lp-drawer-all" href={`/uebungen/grammatik#niveau-${lv.slug}`}>
+            <a class="lp-drawer-all" href={`/grammatik#niveau-${lv.slug}`}>
               <span
                 data-i18n="nav.level.allTopics"
                 data-i18n-vars={JSON.stringify({ n: lv.grammar.length })}

@@ -158,7 +158,7 @@ const isFreq = current.startsWith("haeufigkeit-");
 
     <a
       class="nvb-railbtn"
-      href="/uebungen/wortschatz"
+      href="/wortschatz"
       aria-current={current === "redemittel" ? "page" : undefined}
       aria-label="Redemittel"
       data-i18n-attr="aria-label:sets.redemittel"
@@ -234,7 +234,7 @@ const isFreq = current.startsWith("haeufigkeit-");
                 {group.sets.map((set) => (
                   <a
                     class:list={["nvb-item", set.id === current && "active"]}
-                    href={`/uebungen/wortschatz/${set.id}`}
+                    href={`/wortschatz/${set.id}`}
                     aria-current={set.id === current ? "page" : undefined}
                   >
                     <span class="nv-icon ls-num">{set.id.split("-")[1]}</span>
@@ -262,7 +262,7 @@ const isFreq = current.startsWith("haeufigkeit-");
             {teileList[level].map((teil) => (
               <a
                 class:list={["nvb-item", "ls-item--teil", "ls-item--lead", teil.id === current && "active"]}
-                href={`/uebungen/wortschatz/${teil.id}`}
+                href={`/wortschatz/${teil.id}`}
                 aria-current={teil.id === current ? "page" : undefined}
               >
                 <span class="nv-icon ls-num">{teil.index}</span>
@@ -315,7 +315,7 @@ const isFreq = current.startsWith("haeufigkeit-");
         {cohortList.map((co) => (
           <a
             class:list={["nvb-item", "ls-item--lead", co.id === current && "active"]}
-            href={`/uebungen/wortschatz/${co.id}`}
+            href={`/wortschatz/${co.id}`}
             aria-current={co.id === current ? "page" : undefined}
           >
             <span class="nv-icon ls-num">{co.index}</span>
@@ -528,7 +528,7 @@ const isFreq = current.startsWith("haeufigkeit-");
     const data = getProgress();
     const here = location.pathname.replace(/\/+$/, "");
     const mine = (resume ? [resume.last, ...resume.recents] : []).filter(
-      (r) => r && r.path.startsWith("/uebungen/wortschatz")
+      (r) => r && r.path.startsWith("/wortschatz")
     );
     const next = mine.find((r) => r.path !== here);
     const words = (data.vocabMastered || []).filter((k) => k.startsWith("wortschatz:")).length;

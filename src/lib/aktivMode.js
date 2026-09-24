@@ -1,6 +1,6 @@
 // "Aktiv" mode — the Üben · Hören · Sprechen half of a grammar topic.
 //
-// The workspaces at /uebungen/grammatik/<topic> are silent and text-only: the learner
+// The workspaces at /<topic> are silent and text-only: the learner
 // reads a rule and types endings. That trains recognition, not production. This adds the
 // two beats a Grammatik-aktiv page is actually built on — hear the form, then say it
 // under time pressure. The fourth beat, Schreiben, types the Sprechen drill (see

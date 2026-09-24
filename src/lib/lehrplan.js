@@ -2,7 +2,7 @@
 //
 // src/data/grammatik-lehrplan.json has held a deliberate order since the guided run was
 // built — within a level, what later topics build on comes first: the form, then the
-// sentence, then the refinements. But only /uebungen/grammatik/lauf read it. Everywhere
+// sentence, then the refinements. But only /grammatik/lauf read it. Everywhere
 // the learner actually browses (the Stufenübersicht, the rail, the dashboard) sorted
 // workspaces alphabetically and then tacked the quiz-only topics on the end, so A2 opened
 // on "Modalverben, Negation, Perfekt …" while the course itself teaches

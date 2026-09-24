@@ -1,0 +1,99 @@
+---
+// One Bildserie: four Bildbeschreibungen on one subject, at one level.
+//
+// The unit exists for the same reason a Wortschatz-Lernset does — a list you can finish in
+// one sitting beats a list you scroll. Four pictures at 90 to 150 seconds each, plus the
+// thinking time in between, is about twenty minutes: a session, not a library.
+//
+// "Serie starten" goes to the first picture; from there prev/next stay inside this set
+// (see neighbours() in src/lib/fertigkeiten.js), so nobody wanders out of a subject
+// halfway through.
+import Layout from "../../../layouts/Layout.astro";
+import SiteNav from "../../../components/SiteNav.astro";
+import Icon from "../../../components/Icon.astro";
+import { sprechenSets, sprechen } from "../../../lib/fertigkeiten.js";
+import { thumbFor } from "../../../lib/sprechenBilder.js";
+import "../../../styles/practice.css";
+import "../../../styles/skills.css";
+
+export function getStaticPaths() {
+  const sets = sprechenSets();
+  return sets
+    .filter((set) => set.items.length)
+    .map((set, i) => ({
+      params: { id: set.id },
+      props: { set, prev: sets[i - 1] ?? null, next: sets[i + 1] ?? null },
+    }));
+}
+
+const { set, prev, next } = Astro.props;
+const { types } = sprechen;
+const seconds = set.items.reduce((n, t) => n + t.seconds, 0);
+const pending = set.items.filter((t) => t.imageNeeded && !t.image).length;
+---
+<Layout
+  title={`${set.title} – Bildserie ${set.level} – DeutschAcademy`}
+  description={set.blurb}
+>
+  <SiteNav active="fertigkeiten" />
+  <main class="practice-main">
+    <a href="/sprechen/" class="vp-back-link">← <span data-i18n="sprechen.backAll">Alle Sprechaufgaben</span></a>
+
+    <article>
+      <header class="sk-head">
+        <span class="sk-card-ic"><Icon name="map-pin" size={22} /></span>
+        <div>
+          <p class="eyebrow" data-i18n="sprechen.set.eyebrow">Bildserie</p>
+          <h1 data-i18n={`sprechenSet.${set.id}.title`}>{set.title}</h1>
+        </div>
+        <span class="sk-badge">{set.level}</span>
+      </header>
+
+      <p class="sk-blurb">
+        <span data-i18n={`sprechenSet.${set.id}.blurb`}>{set.blurb}</span>
+        {" · "}
+        <span data-i18n="sprechen.set.meta" data-i18n-vars={JSON.stringify({ n: set.items.length, m: Math.round(seconds / 60) })}>{set.items.length} Bilder · zusammen {Math.round(seconds / 60)} Minuten reine Redezeit</span>
+      </p>
+
+      <p style="margin:0 0 30px">
+        <a class="sk-btn" href={`/sprechen/${set.items[0].id}`} data-i18n="sprechen.set.start">Serie starten →</a>
+      </p>
+
+      <section class="sk-block">
+        <h2 data-i18n="sprechen.set.pictures" data-i18n-vars={JSON.stringify({ n: set.items.length })}>Die {set.items.length} Bilder</h2>
+        <div class="sk-grid sk-grid--bilder">
+          {set.items.map((t, i) => (
+            <a class="sk-card" href={`/sprechen/${t.id}`}>
+              {/* The picture, not a pin. This is a list of pictures; showing four identical
+                  map-pin glyphs above the word "Bildbeschreibung" told a learner nothing and
+                  hid the one thing that distinguishes the four cards. Falls back to the icon
+                  for a task whose photo is not in yet — see `pending` below. */}
+              {t.image
+                ? <img class="sk-card-thumb" src={thumbFor(t.image)} alt="" loading="lazy" decoding="async" width="72" height="54" />
+                : <span class="sk-card-ic"><Icon name="map-pin" size={20} /></span>}
+              <span class="sk-card-txt">
+                <b>{i + 1}. {t.title}</b>
+                <i data-i18n={`sprechen.${t.id}.blurb`}>{t.blurb}</i>
+                <span class="sk-card-meta">
+                  <span data-i18n={`type.sprechen.${t.type}`}>{types[t.type]}</span>
+                  {" · "}
+                  <span data-i18n="meta.redezeit" data-i18n-vars={JSON.stringify({ s: t.seconds })}>{t.seconds} Sek. Redezeit</span>
+                </span>
+              </span>
+              <span class="sk-card-go" aria-hidden="true">→</span>
+            </a>
+          ))}
+        </div>
+      </section>
+
+      {pending > 0 && (
+        <p class="sk-foot" data-i18n="sprechen.set.pending" data-i18n-vars={JSON.stringify({ n: pending, total: set.items.length })}>Zu {pending} von {set.items.length} Bildern fehlt noch das Foto. Solange steht die beschriebene Szene an seiner Stelle — Aufgabe, Redemittel und Timer sind dieselben.</p>
+      )}
+
+      <nav class="sk-prevnext">
+        {prev ? <a href={`/sprechen/set/${prev.id}`}>← <span data-i18n={`sprechenSet.${prev.id}.title`}>{prev.title}</span></a> : <span />}
+        {next ? <a href={`/sprechen/set/${next.id}`}><span data-i18n={`sprechenSet.${next.id}.title`}>{next.title}</span> →</a> : <span />}
+      </nav>
+    </article>
+  </main>
+</Layout>

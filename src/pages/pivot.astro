@@ -32,22 +32,22 @@ const lexiconCounts = counts();
 const artikelNounCount = asArtikelRows({ level: ["A1", "A2"] }).length;
 
 const tools = [
-  { id: "artikel", href: "/uebungen/grammatik/artikel", icon: "target", title: "der/die/das-Trainer", short: "Artikel", desc: "Artikel gezielt üben, mit sofortigem Feedback.", count: `${artikelNounCount} Nomen` },
-  { id: "grammatik", href: "/uebungen/grammatik", icon: "book", title: "Grammatik", short: "Grammatik", desc: "Themen nach Niveau: Akkusativ, Dativ, Passiv und mehr.", count: `${grammatik.length} Themen` },
-  { id: "praep", href: "/uebungen/grammatik/verben-praepositionen", icon: "link", title: "Verben mit Präpositionen", short: "Präpositionen", desc: "Feste Präpositionen in fünf Aufgabentypen üben.", count: `${prepositionVerbCount} Verben` },
-  { id: "wortschatz", href: "/uebungen/wortschatz", icon: "folder", title: "Wortschatz & Redemittel", short: "Wortschatz", desc: "Karteikarten zum Umdrehen und Wiederholen.", count: `${wortschatz.length} Karten` },
-  { id: "aussprache", href: "/uebungen/aussprache", icon: "volume", title: "Aussprache-Training", short: "Aussprache", desc: "Wörter anhören und im Langsam-Modus üben.", count: `${wortschatz.length + artikel.length} Wörter` },
-  { id: "sprechen", href: "/uebungen/sprechen", icon: "mic", title: "Sprechen: Bildbeschreibung", short: "Sprechen", desc: "Echte DTZ-Prüferfragen, mit 90-Sekunden-Timer.", count: `${sprechen.length} Bilder` },
-  { id: "lesen", href: "/uebungen/lesen-schreiben", icon: "pencil", title: "Lesen & Schreiben", short: "Lesen", desc: "DTZ-Leseverstehen-Simulation plus Schreibaufgaben.", count: `${readingQuestionCount} Aufgaben` },
-  { id: "kultur", href: "/uebungen/kultur", icon: "map-pin", title: "Kulturwissen", short: "Kultur", desc: "Einblicke aus echten Unterrichtsgesprächen.", count: `${kultur.length} Thema${kultur.length === 1 ? "" : "n"}` },
+  { id: "artikel", href: "/artikel", icon: "target", title: "der/die/das-Trainer", short: "Artikel", desc: "Artikel gezielt üben, mit sofortigem Feedback.", count: `${artikelNounCount} Nomen` },
+  { id: "grammatik", href: "/grammatik", icon: "book", title: "Grammatik", short: "Grammatik", desc: "Themen nach Niveau: Akkusativ, Dativ, Passiv und mehr.", count: `${grammatik.length} Themen` },
+  { id: "praep", href: "/verben-praepositionen", icon: "link", title: "Verben mit Präpositionen", short: "Präpositionen", desc: "Feste Präpositionen in fünf Aufgabentypen üben.", count: `${prepositionVerbCount} Verben` },
+  { id: "wortschatz", href: "/wortschatz", icon: "folder", title: "Wortschatz & Redemittel", short: "Wortschatz", desc: "Karteikarten zum Umdrehen und Wiederholen.", count: `${wortschatz.length} Karten` },
+  { id: "aussprache", href: "/aussprache", icon: "volume", title: "Aussprache-Training", short: "Aussprache", desc: "Wörter anhören und im Langsam-Modus üben.", count: `${wortschatz.length + artikel.length} Wörter` },
+  { id: "sprechen", href: "/sprechen", icon: "mic", title: "Sprechen: Bildbeschreibung", short: "Sprechen", desc: "Echte DTZ-Prüferfragen, mit 90-Sekunden-Timer.", count: `${sprechen.length} Bilder` },
+  { id: "lesen", href: "/lesen-schreiben", icon: "pencil", title: "Lesen & Schreiben", short: "Lesen", desc: "DTZ-Leseverstehen-Simulation plus Schreibaufgaben.", count: `${readingQuestionCount} Aufgaben` },
+  { id: "kultur", href: "/kultur", icon: "map-pin", title: "Kulturwissen", short: "Kultur", desc: "Einblicke aus echten Unterrichtsgesprächen.", count: `${kultur.length} Thema${kultur.length === 1 ? "" : "n"}` },
 ];
 
 const exams = [
-  { id: "telc", href: "/pruefungen/telc", icon: "document", title: "telc", short: "telc", count: "A1–C2" },
-  { id: "goethe", href: "/pruefungen/goethe", icon: "landmark", title: "Goethe-Zertifikat", short: "Goethe", count: "A1–C2" },
-  { id: "testdaf", href: "/pruefungen/testdaf", icon: "graduation-cap", title: "TestDaF", short: "TestDaF", count: "≈ B2–C1" },
-  { id: "dtz", href: "/pruefungen/dtz", icon: "book-open", title: "DTZ", short: "DTZ", count: "A2 / B1" },
-  { id: "lid", href: "/pruefungen/leben-in-deutschland", icon: "map-pin", title: "Leben in Deutschland", short: "Leben in DE", count: `${lid.bundeslaender.length} Bundesländer` },
+  { id: "telc", href: "/telc", icon: "document", title: "telc", short: "telc", count: "A1–C2" },
+  { id: "goethe", href: "/goethe", icon: "landmark", title: "Goethe-Zertifikat", short: "Goethe", count: "A1–C2" },
+  { id: "testdaf", href: "/testdaf", icon: "graduation-cap", title: "TestDaF", short: "TestDaF", count: "≈ B2–C1" },
+  { id: "dtz", href: "/dtz", icon: "book-open", title: "DTZ", short: "DTZ", count: "A2 / B1" },
+  { id: "lid", href: "/leben-in-deutschland", icon: "map-pin", title: "Leben in Deutschland", short: "Leben in DE", count: `${lid.bundeslaender.length} Bundesländer` },
 ];
 
 // The grouping every "fewer things on screen" idea leans on. Four buckets plus the

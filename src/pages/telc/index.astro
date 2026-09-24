@@ -1,0 +1,99 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import ExamShell from "../../components/ExamShell.astro";
+import ExamPractice from "../../components/ExamPractice.astro";
+import ExamFormat from "../../components/ExamFormat.astro";
+import telcFormate from "../../data/pruefungen/telc-formate.json";
+
+// Format data is read off the telc Übungstests themselves (see the `source` field on
+// each entry) — every time, point value and task count below is from that source, not
+// estimated. The exam items themselves are © telc gGmbH and are deliberately not
+// reproduced here; only the structure of the exam is.
+const formate = telcFormate.formate;
+---
+<Layout
+  title="telc – DeutschAcademy"
+  description="telc Deutsch: Niveaustufen A1–C2, der genaue Prüfungsaufbau von telc A1 (Start Deutsch 1) und ein kostenloser Sprachbausteine-Trainer."
+>
+  <ExamShell
+    header="telc"
+    title="telc Deutsch"
+    lead="The European Language Certificates — ein modulares Prüfungssystem, das von vielen Arbeitgebern, Behörden und einigen Hochschulen anerkannt wird."
+    leadKey="telc.lead"
+    badges={["A1–C2"]}
+    practiceHeading="Für telc üben"
+    practiceHeadingKey="telc.practiceHeading"
+  >
+    <Fragment slot="info">
+      <section class="exam-section">
+        <h2 data-i18n="telc.who.title">Für wen ist telc?</h2>
+        <div class="exam-meta-row">
+          <span class="exam-meta-badge" data-i18n="telc.who.badge.level">Niveau A1–C2</span>
+          <span class="exam-meta-badge" data-i18n="telc.who.badge.modular">Modulares System</span>
+        </div>
+        <p data-i18n="telc.who.text">
+          telc-Prüfungen gibt es für fast jedes CEFR-Niveau. Sie werden häufig für Arbeitsverhältnisse,
+          Aufenthaltstitel und — bei den Hochschul-Varianten — für die Zulassung zum Studium verlangt.
+          Daneben gibt es berufs- und fachsprachliche Varianten (telc Deutsch Beruf, Pflege, Medizin);
+          die deckt diese Seite bewusst nicht ab — hier geht es um allgemeines Deutsch.
+        </p>
+      </section>
+
+      <section class="exam-section">
+        <h2 data-i18n="exam.skills.title">Geprüfte Fertigkeiten</h2>
+        <div class="skill-grid">
+          <div class="skill-card"><div class="skill-card-icon">📖</div><h4 data-i18n="skill.lesen">Lesen</h4><p data-i18n="skill.lesen.desc">Leseverstehen</p></div>
+          <div class="skill-card"><div class="skill-card-icon">🎧</div><h4 data-i18n="skill.hoeren">Hören</h4><p data-i18n="skill.hoeren.desc">Hörverstehen</p></div>
+          <div class="skill-card"><div class="skill-card-icon">🧩</div><h4 data-i18n="skill.sprachbausteine">Sprachbausteine</h4><p data-i18n="skill.sprachbausteine.desc">Grammatik und Wortschatz im Text</p></div>
+          <div class="skill-card"><div class="skill-card-icon">✍️</div><h4 data-i18n="skill.schreiben">Schreiben</h4><p data-i18n="skill.schreiben.desc">Schriftlicher Ausdruck</p></div>
+          <div class="skill-card"><div class="skill-card-icon">🗣️</div><h4 data-i18n="skill.sprechen">Sprechen</h4><p data-i18n="skill.sprechen.pairDesc">Mündliche Prüfung, meist paarweise</p></div>
+        </div>
+        <p class="format-note" data-i18n="telc.sprachbausteine.note">
+          Sprachbausteine sind die telc-Besonderheit: Grammatik und Wortschatz werden nicht in Einzelsätzen
+          abgefragt, sondern im laufenden Text. Nicht jede telc-Prüfung hat alle fünf Subtests — telc A1
+          (Start Deutsch 1) prüft Hören, Lesen und Schreiben zusammen und hat keine Sprachbausteine.
+          Ab B1 gehören sie dazu.
+        </p>
+      </section>
+
+      {formate.map((f) => <ExamFormat format={f} />)}
+
+      <section class="exam-section">
+        <h2 data-i18n="telc.moreLevels.title">Weitere Niveaus</h2>
+        <p class="format-note" data-i18n="telc.moreLevels.text">
+          Oben steht die telc-Prüfung, für die uns ein Übungstest als Quelle vorliegt. Zeiten,
+          Aufgabenzahlen und Bestehensgrenzen unterscheiden sich zwischen den Niveaus deutlich — für A2, B1,
+          B2, C1 oder C2 prüfe bitte den offiziellen telc-Modellsatz deines Moduls. Wir tragen hier nur ein,
+          was wir belegen können, statt Werte zu schätzen.
+        </p>
+      </section>
+    </Fragment>
+
+    <div class="mock-cta mock-cta--lead">
+      <h2 data-i18n="telc.sb.title">Sprachbausteine üben</h2>
+      <p data-i18n="telc.sb.text">
+        Der Prüfungsteil, den es so nur bei telc gibt: Teil 1 als Zuordnung aus dem Wortkasten,
+        Teil 2 als Multiple Choice im laufenden Text — mit Alltagstexten und sofortiger Auswertung.
+      </p>
+      <a class="quiz-btn quiz-btn--primary" href="/telc/sprachbausteine" data-i18n="telc.sb.cta">Zum Sprachbausteine-Trainer →</a>
+    </div>
+
+    <div class="mock-cta">
+      <h2 data-i18n="telc.a1.title">Kompletter Übungssatz auf A1</h2>
+      <p data-i18n="telc.a1.text">
+        telc Deutsch A1 und Goethe A1 sind dieselbe Prüfung — Start Deutsch 1. Ein ganzer Übungssatz
+        im Prüfungsformat: Hören, Lesen und Schreiben, mit Fortschritt je Prüfungsteil und Auswertung
+        an der offiziellen Bestehensgrenze.
+      </p>
+      <a class="quiz-btn quiz-btn--primary" href="/start-deutsch-1" data-i18n="exam.startSet">Übungssatz starten →</a>
+    </div>
+
+    <ExamPractice
+      heading="Weiter üben"
+      headingKey="exam.practice.heading"
+      intro="Diese Tools sind niveau- und prüfungsübergreifend nützlich. Sie stammen aus dem DTZ-Unterrichtsmaterial und prüfen allgemeine Artikel-, Grammatik- und Wortschatzkenntnisse — keine telc-spezifischen Aufgabenformate."
+      introKey="telc.practice.intro"
+      tools={["artikel", "grammatik", "wortschatz"]}
+    />
+  </ExamShell>
+</Layout>

@@ -49,16 +49,16 @@ const LEVELS = ["A1", "A2", "B1", "B2"].map((level) => {
   return {
     level,
     name: entry?.name ?? "Grammatik",
-    href: entry ? `/uebungen/grammatik/${entry.slug ?? entry.id}` : "/uebungen/grammatik",
+    href: entry ? `/${entry.slug ?? entry.id}` : "/grammatik",
     count: workspaces.filter((w) => w.level === level).length + quizOnly.filter((t) => t.level === level).length,
   };
 });
 
 const EXAMS = [
-  { label: "DTZ", href: "/pruefungen/dtz" },
-  { label: "telc B1", href: "/pruefungen/telc" },
-  { label: "Goethe B2", href: "/pruefungen/goethe" },
-  { label: "Leben in D.", href: "/pruefungen/leben-in-deutschland" },
+  { label: "DTZ", href: "/dtz" },
+  { label: "telc B1", href: "/telc" },
+  { label: "Goethe B2", href: "/goethe" },
+  { label: "Leben in D.", href: "/leben-in-deutschland" },
 ];
 
 const ROUND = [
@@ -135,7 +135,7 @@ const concepts = [
         <div class="m2-unlock" data-s-unlock hidden>
           <strong>Stark — drei von drei.</strong>
           <span>Es warten {questionCount} weitere Aufgaben in {topicCount} Themen.</span>
-          <a href="/uebungen/grammatik" class="lp-btn lp-btn--primary">Weiterüben</a>
+          <a href="/grammatik" class="lp-btn lp-btn--primary">Weiterüben</a>
         </div>
       </section>
 

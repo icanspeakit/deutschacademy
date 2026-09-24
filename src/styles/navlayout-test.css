@@ -1,0 +1,48 @@
+/* The A/B test of NavLayoutTest.astro — where the side navigation sits.
+ * Desktop only; --nl-h (one screen from where the work starts) and --nl-nav (the site
+ * nav's height) are measured by the component's script. */
+
+@media (min-width: 1001px) {
+  /* Both: the nav column and the exercise column are the same height. */
+  .vt-split[data-navlayout] .vp-workspace { align-items: stretch; }
+  .vt-split[data-navlayout] .vp-col--rule {
+    top: calc(var(--nl-nav, 69px) + 16px);
+    height: var(--nl-h);
+    max-height: var(--nl-h);
+  }
+  .vt-split[data-navlayout] .vp-rule-card,
+  .vt-split[data-navlayout] .vp-rule-card > .vp-sheet-body,
+  .vt-split[data-navlayout] .ls-nvb { height: 100%; max-height: 100%; }
+  /* The work fills the same height: the tool grows, and the card inside it takes what
+     the tabs, toolbar and buttons leave. */
+  .vt-split[data-navlayout] .vt-tool { min-height: var(--nl-h); }
+  .vt-split[data-navlayout] #vt-content { flex: 1; }
+  .vt-split[data-navlayout] #vt-content > :first-child { flex: 1; }
+  /* The flashcard itself takes the room, rather than floating in the middle of it. */
+  .vt-split[data-navlayout] .vt-content { justify-content: flex-start; }
+  .vt-split[data-navlayout] .vt-flip { flex: 1; }
+  .vt-split[data-navlayout] .vt-flip-inner { flex: 1; min-height: 320px; }
+
+  /* A: like der/die/das — no page title above; the work starts under the site nav. */
+  .vt-split[data-navlayout="a"] { padding-top: 16px; }
+  .vt-split[data-navlayout="a"] .vt-hero { display: none; }
+}
+
+/* The switch: bottom-left, like the /t2 test toggle. */
+.nlt {
+  position: fixed;
+  left: 16px;
+  bottom: 16px;
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 5px;
+  border-radius: var(--radius-pill);
+  background: var(--rail-surface, #334155);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, .2);
+}
+.nlt span { color: rgba(255, 255, 255, .6); font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; padding: 0 8px 0 10px; }
+.nlt button { border: 0; border-radius: var(--radius-pill); background: transparent; color: #fff; font: inherit; font-size: 13px; font-weight: 600; padding: 8px 14px; cursor: pointer; }
+.nlt button[aria-checked="true"] { background: var(--brand-blue); }
+@media (max-width: 1000px) { .nlt { display: none; } }

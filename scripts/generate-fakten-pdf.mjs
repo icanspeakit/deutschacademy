@@ -332,7 +332,7 @@ function buildPdf(mode) {
     const bottomMargin = doc.page.margins.bottom;
     doc.page.margins.bottom = 0;
     doc.fillColor(MUTED).font("Helvetica").fontSize(8).text(
-      `deutschacademy.com/pruefungen/leben-in-deutschland/fakten · Seite ${i + 1} von ${range.count}`,
+      `deutschacademy.com/leben-in-deutschland/fakten · Seite ${i + 1} von ${range.count}`,
       MARGIN,
       doc.page.height - 36,
       { align: "center", width: doc.page.width - MARGIN * 2 }
@@ -415,7 +415,7 @@ async function buildEdition(mode, lang) {
       `Jeder Fakt auf Deutsch, darunter auf ${ed.name} — der Test selbst ist auf Deutsch`,
       ...(help.reviewed ? [] : [`Die Übersetzung ins ${ed.name}e ist ein maschineller Entwurf, noch nicht von einer Lehrkraft geprüft`]),
       `${topics.length} Themen, ${glossary.length} Begriffe im Glossar, alle 16 Bundesländer`,
-      "Der Übungstest dazu steht kostenlos auf deutschacademy.com/pruefungen/leben-in-deutschland",
+      "Der Übungstest dazu steht kostenlos auf deutschacademy.com/leben-in-deutschland",
     ],
     footer: "Von DeutschAcademy geschrieben. Dieses PDF darfst du frei herunterladen, ausdrucken und im Unterricht weitergeben.",
   });

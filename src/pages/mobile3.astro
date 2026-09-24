@@ -64,22 +64,22 @@ const ICON = {
 };
 
 const tools = [
-  { href: "/uebungen/grammatik", icon: ICON.grammatik, title: "Grammatik", desc: "Themen nach Niveau, je mit Erklärung und Übungen.", count: `${topicCount} Themen` },
-  { href: "/uebungen/grammatik/artikel", icon: ICON.artikel, title: "der/die/das-Trainer", desc: "Artikel gezielt üben, mit sofortigem Feedback.", count: `${artikel.length} Nomen` },
-  { href: "/uebungen/wortschatz", icon: ICON.wortschatz, title: "Wortschatz", desc: "Karteikarten zum Umdrehen und Wiederholen.", count: `${wortschatz.length} Karten` },
-  { href: "/uebungen/aussprache", icon: ICON.aussprache, title: "Aussprache", desc: "Anhören, nachsprechen, sich selbst aufnehmen.", count: `${wortschatz.length + artikel.length} Wörter` },
-  { href: "/uebungen/sprechen", icon: ICON.sprechen, title: "Bildbeschreibung", desc: "Echte DTZ-Prüferfragen mit Timer.", count: `${sprechen.length} Bilder` },
-  { href: "/uebungen/lesen-schreiben", icon: ICON.lesen, title: "Lesen & Schreiben", desc: "DTZ-Leseverstehen plus Schreibaufgaben.", count: `${readingQuestionCount} Aufgaben` },
-  { href: "/uebungen/grammatik/verben-praepositionen", icon: ICON.praepositionen, title: "Verben mit Präpositionen", desc: "Feste Präpositionen in fünf Aufgabentypen.", count: "B1" },
-  { href: "/uebungen/kultur", icon: ICON.kultur, title: "Kulturwissen", desc: "Einblicke aus echten Unterrichtsgesprächen.", count: `${kultur.length} Thema${kultur.length === 1 ? "" : "n"}` },
+  { href: "/grammatik", icon: ICON.grammatik, title: "Grammatik", desc: "Themen nach Niveau, je mit Erklärung und Übungen.", count: `${topicCount} Themen` },
+  { href: "/artikel", icon: ICON.artikel, title: "der/die/das-Trainer", desc: "Artikel gezielt üben, mit sofortigem Feedback.", count: `${artikel.length} Nomen` },
+  { href: "/wortschatz", icon: ICON.wortschatz, title: "Wortschatz", desc: "Karteikarten zum Umdrehen und Wiederholen.", count: `${wortschatz.length} Karten` },
+  { href: "/aussprache", icon: ICON.aussprache, title: "Aussprache", desc: "Anhören, nachsprechen, sich selbst aufnehmen.", count: `${wortschatz.length + artikel.length} Wörter` },
+  { href: "/sprechen", icon: ICON.sprechen, title: "Bildbeschreibung", desc: "Echte DTZ-Prüferfragen mit Timer.", count: `${sprechen.length} Bilder` },
+  { href: "/lesen-schreiben", icon: ICON.lesen, title: "Lesen & Schreiben", desc: "DTZ-Leseverstehen plus Schreibaufgaben.", count: `${readingQuestionCount} Aufgaben` },
+  { href: "/verben-praepositionen", icon: ICON.praepositionen, title: "Verben mit Präpositionen", desc: "Feste Präpositionen in fünf Aufgabentypen.", count: "B1" },
+  { href: "/kultur", icon: ICON.kultur, title: "Kulturwissen", desc: "Einblicke aus echten Unterrichtsgesprächen.", count: `${kultur.length} Thema${kultur.length === 1 ? "" : "n"}` },
 ];
 
 const exams = [
-  { href: "/pruefungen/dtz", icon: ICON.dtz, title: "DTZ", level: "A2 / B1" },
-  { href: "/pruefungen/telc", icon: ICON.telc, title: "telc", level: "A1–C2" },
-  { href: "/pruefungen/goethe", icon: ICON.goethe, title: "Goethe", level: "A1–C2" },
-  { href: "/pruefungen/testdaf", icon: ICON.testdaf, title: "TestDaF", level: "≈ B2–C1" },
-  { href: "/pruefungen/leben-in-deutschland", icon: ICON.kultur, title: "Leben in D.", level: `${lid.bundeslaender.length} Länder` },
+  { href: "/dtz", icon: ICON.dtz, title: "DTZ", level: "A2 / B1" },
+  { href: "/telc", icon: ICON.telc, title: "telc", level: "A1–C2" },
+  { href: "/goethe", icon: ICON.goethe, title: "Goethe", level: "A1–C2" },
+  { href: "/testdaf", icon: ICON.testdaf, title: "TestDaF", level: "≈ B2–C1" },
+  { href: "/leben-in-deutschland", icon: ICON.kultur, title: "Leben in D.", level: `${lid.bundeslaender.length} Länder` },
 ];
 
 const userCount = 412; // actual signups so far

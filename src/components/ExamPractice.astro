@@ -29,7 +29,7 @@ const readingQuestionCount = lesen.groups.reduce((sum, g) => sum + g.questions.l
 // since this page has five translations, their own keys.
 const catalog = {
   artikel: {
-    href: "/uebungen/grammatik/artikel",
+    href: "/artikel",
     icon: "target",
     title: "der/die/das-Trainer",
     titleKey: "tool.artikel.title",
@@ -40,7 +40,7 @@ const catalog = {
     countVars: { n: artikel.length },
   },
   grammatik: {
-    href: "/uebungen/grammatik",
+    href: "/grammatik",
     icon: "book",
     title: "Grammatik",
     titleKey: "tool.grammatik.title",
@@ -51,7 +51,7 @@ const catalog = {
     countVars: { n: grammatik.length, q: grammarQuestionCount },
   },
   wortschatz: {
-    href: "/uebungen/wortschatz",
+    href: "/wortschatz",
     icon: "folder",
     title: "Wortschatz & Redemittel",
     titleKey: "tool.wortschatz.title",
@@ -62,7 +62,7 @@ const catalog = {
     countVars: { n: wortschatz.length },
   },
   sprechen: {
-    href: "/uebungen/sprechen/dtz-bildbeschreibung",
+    href: "/sprechen/dtz-bildbeschreibung",
     icon: "mic",
     title: "Sprechen: Bildbeschreibung",
     titleKey: "exam.tool.sprechen.title",
@@ -73,7 +73,7 @@ const catalog = {
     countVars: { n: sprechen.length },
   },
   lesen: {
-    href: "/uebungen/lesen-schreiben",
+    href: "/lesen-schreiben",
     icon: "pencil",
     title: "Lesen & Schreiben",
     titleKey: "lesen.hero.title.plain",

@@ -9,7 +9,7 @@ import "../../styles/exam-dashboard.css";
 const exams = [
   {
     id: "telc",
-    href: "/pruefungen/telc",
+    href: "/telc",
     icon: "document",
     title: "telc",
     level: "A1–C2",
@@ -19,7 +19,7 @@ const exams = [
   },
   {
     id: "goethe",
-    href: "/pruefungen/goethe",
+    href: "/goethe",
     icon: "landmark",
     title: "Goethe-Zertifikat",
     level: "A1–C2",
@@ -29,7 +29,7 @@ const exams = [
   },
   {
     id: "testdaf",
-    href: "/pruefungen/testdaf",
+    href: "/testdaf",
     icon: "graduation-cap",
     title: "TestDaF",
     level: "TDN 3–5 (≈ B2–C1)",
@@ -39,7 +39,7 @@ const exams = [
   },
   {
     id: "dtz",
-    href: "/pruefungen/dtz",
+    href: "/dtz",
     icon: "book-open",
     title: "DTZ",
     level: "A2 / B1",
@@ -49,7 +49,7 @@ const exams = [
   },
   {
     id: "lid",
-    href: "/pruefungen/leben-in-deutschland",
+    href: "/leben-in-deutschland",
     icon: "map-pin",
     title: "Leben in Deutschland",
     level: "Orientierungskurs / Einbürgerung",
@@ -69,52 +69,52 @@ const levels = [
     level: "A1",
     desc: "Erste Schritte — einfache, alltägliche Ausdrücke verstehen und benutzen.",
     exams: [
-      { name: "telc A1", href: "/pruefungen/telc" },
-      { name: "Goethe A1 (Start Deutsch 1)", href: "/pruefungen/goethe" },
+      { name: "telc A1", href: "/telc" },
+      { name: "Goethe A1 (Start Deutsch 1)", href: "/goethe" },
     ],
   },
   {
     level: "A2",
     desc: "Elementare Sprachverwendung — einfache, direkte Informationen austauschen.",
     exams: [
-      { name: "telc A2", href: "/pruefungen/telc" },
-      { name: "Goethe A2", href: "/pruefungen/goethe" },
-      { name: "DTZ (Ergebnis A2)", href: "/pruefungen/dtz", key: "pruefungen.level.dtzA2" },
+      { name: "telc A2", href: "/telc" },
+      { name: "Goethe A2", href: "/goethe" },
+      { name: "DTZ (Ergebnis A2)", href: "/dtz", key: "pruefungen.level.dtzA2" },
     ],
   },
   {
     level: "B1",
     desc: "Selbstständige Sprachverwendung — vertraute Themen in Alltag, Beruf und Schule.",
     exams: [
-      { name: "telc B1", href: "/pruefungen/telc" },
-      { name: "Goethe B1", href: "/pruefungen/goethe" },
-      { name: "DTZ (Ergebnis B1)", href: "/pruefungen/dtz", key: "pruefungen.level.dtzB1" },
+      { name: "telc B1", href: "/telc" },
+      { name: "Goethe B1", href: "/goethe" },
+      { name: "DTZ (Ergebnis B1)", href: "/dtz", key: "pruefungen.level.dtzB1" },
     ],
   },
   {
     level: "B2",
     desc: "Selbstständige Sprachverwendung, fortgeschritten.",
     exams: [
-      { name: "telc B2", href: "/pruefungen/telc" },
-      { name: "Goethe B2", href: "/pruefungen/goethe" },
-      { name: "TestDaF (TDN 3 ≈ B2)", href: "/pruefungen/testdaf" },
+      { name: "telc B2", href: "/telc" },
+      { name: "Goethe B2", href: "/goethe" },
+      { name: "TestDaF (TDN 3 ≈ B2)", href: "/testdaf" },
     ],
   },
   {
     level: "C1",
     desc: "Fachkundige Sprachkenntnisse — komplexe Themen, Studium und Beruf.",
     exams: [
-      { name: "telc C1", href: "/pruefungen/telc" },
-      { name: "Goethe C1", href: "/pruefungen/goethe" },
-      { name: "TestDaF (TDN 4–5 ≈ C1)", href: "/pruefungen/testdaf" },
+      { name: "telc C1", href: "/telc" },
+      { name: "Goethe C1", href: "/goethe" },
+      { name: "TestDaF (TDN 4–5 ≈ C1)", href: "/testdaf" },
     ],
   },
   {
     level: "C2",
     desc: "Annähernd muttersprachliche Kompetenz.",
     exams: [
-      { name: "telc C2", href: "/pruefungen/telc" },
-      { name: "Goethe C2", href: "/pruefungen/goethe" },
+      { name: "telc C2", href: "/telc" },
+      { name: "Goethe C2", href: "/goethe" },
     ],
   },
 ];
@@ -187,7 +187,7 @@ const comparison = [
       <p class="format-note" style="max-width:780px;margin:20px auto 0;" data-i18n-html="pruefungen.levelNote">
         „Leben in Deutschland“ hat kein CEFR-Sprachniveau — es ist ein Wissenstest zu Gesellschaft,
         Geschichte und Recht, kein Sprachtest. Deshalb erscheint er in keiner Niveau-Zeile oben; siehe
-        die <a href="/pruefungen/leben-in-deutschland">eigene Prüfungsseite</a>.
+        die <a href="/leben-in-deutschland">eigene Prüfungsseite</a>.
       </p>
     </div>
 

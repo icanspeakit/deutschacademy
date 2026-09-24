@@ -15,13 +15,13 @@
 import "../styles/exam-rail.css";
 
 const exams = [
-  { name: "Start Deutsch 1", href: "/pruefungen/start-deutsch-1", level: "A1" },
-  { name: "DTZ", href: "/pruefungen/dtz", level: "A2/B1" },
-  { name: "telc", href: "/pruefungen/telc", level: "A1–C2" },
-  { name: "Goethe-Zertifikat", href: "/pruefungen/goethe", level: "A1–C2" },
-  { name: "TestDaF", href: "/pruefungen/testdaf", level: "B2–C1" },
+  { name: "Start Deutsch 1", href: "/start-deutsch-1", level: "A1" },
+  { name: "DTZ", href: "/dtz", level: "A2/B1" },
+  { name: "telc", href: "/telc", level: "A1–C2" },
+  { name: "Goethe-Zertifikat", href: "/goethe", level: "A1–C2" },
+  { name: "TestDaF", href: "/testdaf", level: "B2–C1" },
 ];
-const lid = { name: "Leben in Deutschland", href: "/pruefungen/leben-in-deutschland" };
+const lid = { name: "Leben in Deutschland", href: "/leben-in-deutschland" };
 const here = Astro.url.pathname.replace(/\/+$/, "");
 ---
 <nav class="ex-rail" aria-label="Prüfungen" data-i18n-attr="aria-label:nav.exams">

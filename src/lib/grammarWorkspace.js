@@ -1,4 +1,4 @@
-// Engine for the grammar workspaces at /uebungen/grammatik/<topic>.
+// Engine for the grammar workspaces at /<topic>.
 //
 // Generalized from the original "Verben mit Präpositionen" page (src/lib/prepositionWorkspace.js,
 // now retired): that page's five exercise widgets are topic-agnostic, so they live here as five

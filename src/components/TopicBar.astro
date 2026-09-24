@@ -4,7 +4,7 @@
 //
 // It exists because the two ways into a topic did not look like the same product. Opening
 // "Artikel: der, die, das" inside /dashboard put it under the course strip with a live
-// "0 / 42 Aufgaben" ring; opening the very same topic at /uebungen/grammatik/artikel gave a
+// "0 / 42 Aufgaben" ring; opening the very same topic at /artikel gave a
 // bare page with no site nav and nothing to say whether any of it was being recorded. It was
 // — /dashboard just never saw it, because the page logged answers to the "grammatik" skill
 // bucket without naming the topic. That bug is fixed at the call site; this bar is the part
@@ -38,7 +38,7 @@ const { topic, kind, title, level, tasks = 0, showKind = true, scoped = false } 
 <div class:list={["tb", Astro.slots.has("end") && "tb--merged"]} data-topic-bar data-topic={topic} data-tasks={tasks}>
   <div class="tb-inner">
     <p class="tb-where">
-      {showKind && <a href="/uebungen/grammatik">{kind}</a>}
+      {showKind && <a href="/grammatik">{kind}</a>}
       {level && <span class="tb-level">{level}</span>}
       <span class="tb-sep" aria-hidden="true">·</span>
       <span class="tb-title">{title}</span>

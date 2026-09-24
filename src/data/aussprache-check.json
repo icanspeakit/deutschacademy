@@ -1,5 +1,5 @@
 {
-  "_note": "Sätze für /uebungen/aussprache-check. Jeder Satz übt eine oder mehrere Problemlaute (focus: ue, oe, ae, ch, r, en, sch-st-sp) — die IDs in src/lib/ausspracheTipps.js. `audio` setzt scripts/generate-aussprache-check-audio.mjs, sobald die Referenzaufnahme in public/audio/aussprache-check/<id>.mp3 liegt. `stress` (optional): betonte Silbe eines Wortes in Großbuchstaben, für den Satzmelodie-Tipp (src/lib/satzmelodie.js).",
+  "_note": "Sätze für /aussprache-check. Jeder Satz übt eine oder mehrere Problemlaute (focus: ue, oe, ae, ch, r, en, sch-st-sp) — die IDs in src/lib/ausspracheTipps.js. `audio` setzt scripts/generate-aussprache-check-audio.mjs, sobald die Referenzaufnahme in public/audio/aussprache-check/<id>.mp3 liegt. `stress` (optional): betonte Silbe eines Wortes in Großbuchstaben, für den Satzmelodie-Tipp (src/lib/satzmelodie.js).",
   "levels": [
     {
       "level": "A1",

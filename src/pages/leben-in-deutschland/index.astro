@@ -1,0 +1,83 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import ExamShell from "../../components/ExamShell.astro";
+import ExamPractice from "../../components/ExamPractice.astro";
+import lid from "../../data/leben-in-deutschland.json";
+
+const { meta, questions, bundeslaender } = lid;
+---
+<Layout
+  title="Leben in Deutschland – DeutschAcademy"
+  description="Der Einbürgerungstest 'Leben in Deutschland': Format, Fragenkatalog und wie du dich vorbereiten kannst."
+>
+  <ExamShell
+    header="Leben in Deutschland"
+    title="Leben in Deutschland"
+    lead="Der Einbürgerungstest: ein schriftlicher Multiple-Choice-Test zu Gesellschaft, Geschichte und Recht in Deutschland."
+    leadKey="lid.lead"
+    badges={["Wissenstest"]}
+    badgeKeys={["lid.badge.knowledgeTest"]}
+    practiceHeading="Für den Test üben"
+    practiceHeadingKey="lid.practiceHeading"
+  >
+    <Fragment slot="info">
+      <section class="exam-section">
+        <h2 data-i18n="lid.who.title">Für wen ist der Test "Leben in Deutschland"?</h2>
+        <div class="exam-meta-row">
+          <span class="exam-meta-badge" data-i18n="lid.who.badge.noCefr">Kein CEFR-Sprachniveau — Wissenstest</span>
+          <span class="exam-meta-badge" data-i18n="lid.who.badge.course">Einbürgerung / Orientierungskurs</span>
+        </div>
+        <p data-i18n="lid.who.text">
+          Anders als telc, Goethe, TestDaF oder DTZ prüft "Leben in Deutschland" kein Deutschniveau,
+          sondern Wissen über Gesellschaft, Geschichte und Rechtsordnung — er ist Voraussetzung für die
+          Einbürgerung und schließt oft den Orientierungskurs eines Integrationskurses ab.
+        </p>
+      </section>
+
+      <section class="exam-section">
+        <h2 data-i18n="exam.skills.title">Geprüfte Fertigkeiten</h2>
+        <div class="skill-grid">
+          <div class="skill-card"><div class="skill-card-icon">📖</div><h4 data-i18n="skill.lesen">Lesen</h4><p data-i18n="lid.skill.lesen.desc">Fragen lesen und verstehen</p></div>
+          <div class="skill-card skill-card--na"><div class="skill-card-icon">🎧</div><h4 data-i18n="skill.hoeren">Hören</h4><p data-i18n="lid.skill.hoeren.desc">Kein Hörverstehen im Test</p></div>
+          <div class="skill-card skill-card--na"><div class="skill-card-icon">✍️</div><h4 data-i18n="skill.schreiben">Schreiben</h4><p data-i18n="lid.skill.schreiben.desc">Kein Schreibteil — nur Ankreuzen</p></div>
+          <div class="skill-card skill-card--na"><div class="skill-card-icon">🗣️</div><h4 data-i18n="skill.sprechen">Sprechen</h4><p data-i18n="lid.skill.sprechen.desc">Kein separater Sprechteil in diesem Test</p></div>
+        </div>
+      </section>
+
+      <section class="exam-section">
+        <h2 data-i18n="exam.format.title">Format</h2>
+        <div class="format-table-wrap">
+          <table class="format-table">
+            <thead><tr><th data-i18n="format.th.part">Teil</th><th data-i18n="format.th.what">Was wird geprüft</th><th data-i18n="format.th.scope">Umfang</th></tr></thead>
+            <tbody>
+              <tr><td data-i18n="lid.fmt.federal.part">Bundesweiter Teil</td><td data-i18n="lid.fmt.federal.what">Fragen zu Demokratie, Geschichte, Grundrechten, Arbeit und Gesellschaft in Deutschland</td><td data-i18n="lid.fmt.federal.scope" data-i18n-vars={JSON.stringify({ n: meta.federalQuestions, t: meta.totalQuestions, st: meta.stateQuestions, m: meta.minutes, pass: meta.passScore, fed: questions.length, bl: bundeslaender.length, src: meta.sourceNote, facts: meta.stateFactsNote })}>{meta.federalQuestions} von insgesamt {meta.totalQuestions} Fragen</td></tr>
+              <tr><td data-i18n="lid.fmt.state.part">Landesspezifischer Teil</td><td data-i18n="lid.fmt.state.what">Fragen zum jeweiligen Bundesland</td><td data-i18n="lid.fmt.state.scope" data-i18n-vars={JSON.stringify({ n: meta.federalQuestions, t: meta.totalQuestions, st: meta.stateQuestions, m: meta.minutes, pass: meta.passScore, fed: questions.length, bl: bundeslaender.length, src: meta.sourceNote, facts: meta.stateFactsNote })}>{meta.stateQuestions} von {meta.totalQuestions} Fragen</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="format-note" data-i18n-html="lid.format.note" data-i18n-vars={JSON.stringify({ n: meta.federalQuestions, t: meta.totalQuestions, st: meta.stateQuestions, m: meta.minutes, pass: meta.passScore, fed: questions.length, bl: bundeslaender.length, src: meta.sourceNote, facts: meta.stateFactsNote })}>
+          Multiple-Choice, {meta.totalQuestions} Fragen aus dem offiziellen BAMF-Fragenkatalog, Zeitlimit {meta.minutes} Minuten, bestanden ab {meta.passScore} richtigen Antworten.
+          Unsere <a href="/leben-in-deutschland/fakten">Fakten-Seite</a> und unser <a href="/leben-in-deutschland/test">Übungstest</a> decken alle 16 Bundesländer ab: {questions.length} bundesweite Fragen aus echtem DeutschAcademy-Unterrichtsmaterial für Bayern, plus {meta.stateQuestions} Fragen zu deinem Bundesland — nicht identisch mit dem offiziellen Fragenkatalog selbst. {meta.sourceNote} {meta.stateFactsNote}
+        </p>
+      </section>
+    </Fragment>
+
+    <div class="mock-cta mock-cta--lead">
+      <h2 data-i18n="lid.cta.title" data-i18n-vars={JSON.stringify({ n: meta.federalQuestions, t: meta.totalQuestions, st: meta.stateQuestions, m: meta.minutes, pass: meta.passScore, fed: questions.length, bl: bundeslaender.length, src: meta.sourceNote, facts: meta.stateFactsNote })}>{questions.length} bundesweite + {meta.stateQuestions} Bundesland-Fragen</h2>
+      <p data-i18n="lid.cta.text" data-i18n-vars={JSON.stringify({ n: meta.federalQuestions, t: meta.totalQuestions, st: meta.stateQuestions, m: meta.minutes, pass: meta.passScore, fed: questions.length, bl: bundeslaender.length, src: meta.sourceNote, facts: meta.stateFactsNote })}>Aus echtem Unterrichtsmaterial: Demokratie, Wahlen, Grundrechte, Geschichte, Arbeit und Familie — wähle dein Bundesland ({bundeslaender.length} zur Auswahl) auf der Testseite.</p>
+      <div class="exam-meta-row">
+        <a class="quiz-btn quiz-btn--primary" href="/leben-in-deutschland/test" data-i18n="lid.cta.test">Zum Übungstest →</a>
+        <a class="quiz-btn quiz-btn--primary" href="/leben-in-deutschland/fakten" data-i18n="lid.cta.facts">Fakten lernen →</a>
+        <a class="quiz-btn" href="/downloads/leben-in-deutschland-fakten.pdf" download data-i18n="lid.cta.pdf">Fakten als PDF herunterladen ↓</a>
+      </div>
+    </div>
+
+    <ExamPractice
+      heading='Sprachlich vorbereiten'
+      headingKey="lid.practice.heading"
+      introKey="lid.practice.intro"
+      intro='"Leben in Deutschland" prüft Wissen, kein Sprachniveau — aber du musst die Fragen und Antwortoptionen verstehen können. Diese drei Tools helfen dabei sprachlich. Die Sprechen- und Lesen-&-Schreiben-Tools sind hier bewusst nicht verlinkt: sie stammen aus dem DTZ-Material (mündliche Bildbeschreibung, Schreibaufgaben) — "Leben in Deutschland" hat aber weder einen Sprech- noch einen Schreibteil, siehe die Erklärung.'
+      tools={["artikel", "grammatik", "wortschatz"]}
+    />
+  </ExamShell>
+</Layout>

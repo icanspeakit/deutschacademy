@@ -1,0 +1,373 @@
+---
+// Aussprache-Workbench. The old page was a centred 880px column of identical
+// speaker cards; this is a full-bleed rail + stage, so one phrase is the focus
+// and the set stays navigable. Layout and interaction patterns are lifted from
+// ../icanspeakit (dashboard rail, ListeningWorkbench player, ShadowRecorder).
+import Layout from "../layouts/Layout.astro";
+import SiteNav from "../components/SiteNav.astro";
+import "../styles/practice.css";
+import "../styles/nav.css";
+import "../styles/aussprache.css";
+import Icon from "../components/Icon.astro";
+import packs from "../data/artikel-packs.json";
+import phrases from "../data/wortschatz.json";
+import redemittel from "../data/redemittel.json";
+import { existsSync } from "node:fs";
+import path from "node:path";
+import { slugify, satzSlug } from "../lib/audioSlug.js";
+import { LEVELS, units, asAudioItems } from "../lib/lexicon.js";
+
+// A recording on disk, by its public path — only what scripts/generate-satz-audio.mjs has
+// actually voiced gets a button, so a half-finished run never shows a silent one.
+const onDisk = (src: string) => existsSync(path.join(process.cwd(), "public", src));
+
+type Item = {
+  text: string;
+  audioSrc: string;
+  note: string;
+  translations: Record<string, string>;
+  sentence?: { text: string; audioSrc: string };
+};
+
+// Every voiced lexicon word, one set per unit (≈15 words each), so the rail stays short
+// and the progress bar means something. Levels appear here as soon as
+// scripts/generate-wortschatz-audio.mjs voices them — nothing to wire by hand.
+// A word whose example sentence is voiced can also be heard in it ("Im Satz").
+const unitSets = units()
+  .map((u) => ({
+    ...u,
+    items: asAudioItems({ unit: u.id }).map(({ example, ...it }): Item => {
+      const src = example ? `/audio/saetze/${satzSlug(example)}.mp3` : "";
+      return src && onDisk(src) ? { ...it, sentence: { text: example, audioSrc: src } } : it;
+    }),
+  }))
+  .filter((u) => u.items.length);
+
+// The hand-picked phrases keep their own set: whole sentences, voiced by scripts/generate-audio.mjs.
+const PHRASES = "saetze";
+// Redemittel by speech act — Zustimmen, Widersprechen, Zweifel, Trösten … — one set each,
+// listed under "Sätze & Redemittel". A phrase not voiced yet has no audioSrc: the player
+// reads it with the browser's German voice and says so, until the recording exists.
+const rmSets = redemittel.sets.map((s) => ({
+  key: `rm-${s.id}`,
+  name: s.name,
+  icon: s.icon,
+  items: s.phrases.map((p): Item => {
+    const { de, ...tr } = p as Record<string, string>;
+    const src = `/audio/redemittel/${satzSlug(de)}.mp3`;
+    return onDisk(src)
+      ? { text: de, audioSrc: src, note: "", translations: tr }
+      : { text: de, audioSrc: "", note: "Noch ohne Aufnahme — dein Browser liest vor.", translations: tr };
+  }),
+}));
+const sets: Record<string, Item[]> = {
+  ...Object.fromEntries(unitSets.map((u) => [u.id, u.items])),
+  [PHRASES]: phrases.map((w) => ({
+    text: w.front,
+    audioSrc: `/audio/aussprache/${slugify(w.front)}.mp3`,
+    note: w.note ?? "",
+    translations: w.translations ?? {},
+  })),
+  ...Object.fromEntries(rmSets.map((s) => [s.key, s.items])),
+};
+
+const groups = LEVELS.map((level) => ({ level, units: unitSets.filter((u) => u.level === level) }))
+  .filter((g) => g.units.length);
+const firstSet = unitSets[0]?.id ?? PHRASES;
+const totalWords = unitSets.reduce((n, u) => n + u.items.length, 0);
+
+// The menu is the Artikel-Trainer's (ArtikelPicker.astro): a dark rail of level badges
+// beside a panel of that level's topics. Each topic row borrows its icon from the Artikel
+// pack that covers the same lexicon topic, at that level where the pack has its own.
+const iconFor = (u: { topics: string[]; level: string }) => {
+  const pack = (packs as any).topics.find((p: any) => p.topics.some((t: string) => u.topics.includes(t)));
+  return pack?.levels?.[u.level]?.icon ?? pack?.icon ?? "•";
+};
+const firstLevel = unitSets.find((u) => u.id === firstSet)?.level ?? groups[0]?.level;
+---
+<Layout title="Aussprache-Training – DeutschAcademy" description="Hören, nachsprechen und sich selbst aufnehmen — Aussprachetraining mit dem ganzen vertonten Wortschatz, nach Themen.">
+  <SiteNav active="fertigkeiten" />
+
+  <main class="pr-shell" id="pron-root">
+    <aside class="pr-rail" data-pick-open="false">
+      <div class="pr-rail-head">
+        <p class="pr-rail-eyebrow" data-i18n="aussprache.hero.eyebrow">Hören & nachsprechen</p>
+        <h1 class="pr-rail-title" data-i18n="aussprache.hero.title">Aussprache trainieren</h1>
+        <p class="pr-set-total"><span data-i18n="aussprache.set.total">Wörter mit Audio</span>: {totalWords}</p>
+      </div>
+
+      {/* Phone only: the menu is a fold under this button, so the phrase still owns the
+          first screen. The label is the topic you are on. */}
+      <button type="button" class="pr-pick-toggle" data-pick-toggle aria-expanded="false" aria-controls="pr-nvb">
+        <span class="pr-pick-toggle-label" data-i18n="aussprache.set.label">Thema</span>
+        <span class="pr-pick-toggle-name" data-pick-current></span>
+        <span class="pr-pick-toggle-chev" aria-hidden="true">▾</span>
+      </button>
+
+      <div class="nvb pr-nvb" id="pr-nvb">
+        <div class="nvb-rail" role="tablist" aria-label="Stufe wählen" data-i18n-attr="aria-label:ap.chooseLevel">
+          {groups.map((g) => (
+            <button
+              type="button"
+              role="tab"
+              class:list={["nvb-railbtn", g.level === firstLevel && "active"]}
+              data-pr-rail={g.level}
+              aria-selected={g.level === firstLevel ? "true" : "false"}
+              aria-controls={`pr-pane-${g.level}`}
+              aria-label={`Stufe ${g.level}`}
+              data-i18n-attr={`aria-label:kb.level.${g.level}`}
+            >
+              <span class="nvb-railbadge">{g.level}</span>
+              <span class="nvb-tip" data-i18n="aussprache.levelTip" data-i18n-vars={JSON.stringify({ level: g.level, n: g.units.reduce((n, u) => n + u.items.length, 0) })}>Stufe {g.level} · {g.units.reduce((n, u) => n + u.items.length, 0)} Wörter</span>
+            </button>
+          ))}
+          <span class="ls-raildiv" aria-hidden="true"></span>
+          <button
+            type="button"
+            role="tab"
+            class="nvb-railbtn"
+            data-pr-rail={PHRASES}
+            aria-selected="false"
+            aria-controls={`pr-pane-${PHRASES}`}
+            aria-label="Sätze & Redemittel"
+            data-i18n-attr="aria-label:aussprache.set.phrases"
+          >
+            <Icon name="volume" size={20} />
+            <span class="nvb-tip" data-i18n="aussprache.set.phrases">Sätze & Redemittel</span>
+          </button>
+        </div>
+
+        <div class="nvb-panel">
+          {groups.map((g) => (
+            <div class="nvb-section" id={`pr-pane-${g.level}`} data-pr-pane={g.level} hidden={g.level !== firstLevel}>
+              <div class="nvb-panelhead">
+                <h3 data-i18n="ap.levelName" data-i18n-vars={JSON.stringify({ level: g.level })}>Stufe {g.level}</h3>
+              </div>
+              <p class="pr-pane-lead" data-i18n="aussprache.levelLead" data-i18n-vars={JSON.stringify({ n: g.units.reduce((n, u) => n + u.items.length, 0) })}>{g.units.reduce((n, u) => n + u.items.length, 0)} Wörter mit Audio. Wähle ein Thema.</p>
+              <h4 class="pr-pane-sub" data-i18n="ap.byTopic">Nach Thema</h4>
+              {g.units.map((u) => (
+                <button type="button" class="nvb-item pr-pack" data-set-btn={u.id} aria-selected={u.id === firstSet ? "true" : "false"}>
+                  <span class="pr-pack-ic" aria-hidden="true">{iconFor(u)}</span>
+                  <span class="pr-pack-name" data-i18n={`ws.set.${u.id}`}>{u.title ?? u.id}</span>
+                  <span class="pr-pack-n">{u.items.length}</span>
+                </button>
+              ))}
+            </div>
+          ))}
+          <div class="nvb-section" id={`pr-pane-${PHRASES}`} data-pr-pane={PHRASES} hidden>
+            <div class="nvb-panelhead">
+              <h3 data-i18n="aussprache.set.phrases">Sätze & Redemittel</h3>
+            </div>
+            {rmSets.length > 0 && <h4 class="pr-pane-sub">Redemittel</h4>}
+            {rmSets.map((s) => (
+              <button type="button" class="nvb-item pr-pack" data-set-btn={s.key} aria-selected="false">
+                <span class="pr-pack-ic" aria-hidden="true">{s.icon}</span>
+                <span class="pr-pack-name">{s.name}</span>
+                <span class="pr-pack-n">{s.items.length}</span>
+              </button>
+            ))}
+            <h4 class="pr-pane-sub">Gemischt</h4>
+            <button type="button" class="nvb-item pr-pack" data-set-btn={PHRASES} aria-selected="false">
+              <span class="pr-pack-ic" aria-hidden="true">💬</span>
+              <span class="pr-pack-name">Erste Sätze</span>
+              <span class="pr-pack-n">{sets[PHRASES].length}</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <section class="pr-stage">
+      <div class="pr-stage-inner">
+        <p class="pr-kicker" data-kicker>1 / 1</p>
+
+        <h2 class="pr-phrase" data-phrase aria-live="polite"></h2>
+        <p class="pr-sentence" data-sentence-text hidden></p>
+        <p class="pr-translation" data-translation></p>
+
+        <div class="pr-player">
+          <button type="button" class="pr-play" data-play aria-label="Abspielen" data-i18n-attr="aria-label:aussprache.play">
+            <svg viewBox="0 0 24 24" aria-hidden="true" data-play-icon><path d="M8 5v14l11-7z"/></svg>
+          </button>
+          <div class="pr-wave" data-wave>
+            <div class="pr-wave-bars" data-wave-base></div>
+            <div class="pr-wave-bars pr-wave-bars--played" data-wave-played></div>
+          </div>
+          <div class="pr-rates" role="group" aria-label="Tempo" data-i18n-attr="aria-label:aussprache.rate.ariaLabel">
+            {[0.6, 0.8, 1].map((r) => (
+              <button type="button" class="pr-rate" data-rate={r} aria-pressed={r === 1 ? "true" : "false"}>{r}×</button>
+            ))}
+          </div>
+        </div>
+
+        <div class="pr-tools">
+          <button type="button" class="pr-tool" data-loop aria-pressed="false">
+            <span data-i18n="aussprache.loop">Schleife</span>
+          </button>
+          {/* The word in its example sentence. On, the player plays the sentence instead —
+              loop, tempo and recording work on it the same way. Hidden where no sentence
+              is voiced. */}
+          <button type="button" class="pr-tool" data-sentence aria-pressed="false" hidden>
+            <span>Im Satz hören</span>
+          </button>
+          <button type="button" class="pr-tool pr-tool--rec" data-rec data-recording="false">
+            <span class="pr-dot"></span><span data-i18n="aussprache.record">Aufnehmen</span>
+          </button>
+          <button type="button" class="pr-tool" data-play-mine disabled>
+            <span data-i18n="aussprache.playMine">Meine Aufnahme</span>
+          </button>
+        </div>
+
+        {/* The keys, right under the buttons they stand in for. */}
+        <p class="pr-hint">
+          <span class="pr-key">←</span> <span class="pr-key">→</span>
+          <span data-i18n="aussprache.hint.nav">wechseln</span> ·
+          <span class="pr-key" data-i18n="aussprache.hint.spaceKey">Leertaste</span>
+          <span data-i18n="aussprache.hint.play">abspielen</span>
+        </p>
+
+        <p class="pr-status" data-status aria-live="polite"></p>
+        <p class="pr-note" data-note></p>
+
+        <nav class="pr-nav">
+          <button type="button" class="pr-nav-btn" data-prev data-i18n="aussprache.prev">← Zurück</button>
+          <button type="button" class="pr-nav-btn" data-next data-i18n="aussprache.next">Weiter →</button>
+        </nav>
+
+        <section class="pr-words" aria-labelledby="pr-words-h">
+          <div class="pr-rail-progress">
+            <div class="pr-rail-progress-meta">
+              <span id="pr-words-h" data-i18n="aussprache.progress.label">Gehört</span>
+              <span><span data-heard-count>0</span> / <span data-heard-total>0</span></span>
+            </div>
+            <div class="pr-rail-bar"><span data-rail-bar></span></div>
+          </div>
+          <div class="pr-rail-scroll">
+            {Object.entries(sets).map(([key, items]) => (
+              <div data-rail-list={key} hidden={key !== firstSet}>
+                {items.map((item, i) => (
+                  <button type="button" class="pr-row" data-row-index={i} aria-current="false" data-heard="false">
+                    <span class="pr-row-bar"></span>
+                    {/* The article in its Wortschatz colour, as on the card above. */}
+                    <span class="pr-row-text">{(() => {
+                      const [first, ...rest] = item.text.split(" ");
+                      const art = ["der", "die", "das"].includes(first) && rest.length ? first : null;
+                      return art
+                        ? <Fragment><span class={`pr-art pr-art--${art}`}>{art}</span> {rest.join(" ")}</Fragment>
+                        : item.text;
+                    })()}</span>
+                    <span class="pr-row-heard" aria-hidden="true">✓</span>
+                  </button>
+                ))}
+              </div>
+            ))}
+          </div>
+        </section>
+      </div>
+    </section>
+  </main>
+
+  <script type="application/json" id="pron-data" set:html={JSON.stringify(sets)}></script>
+
+  <script type="module">
+    import { mountPronunciation } from "../lib/pronunciation.js";
+    import { recordSession } from "../lib/progress.js";
+    import { getLang, loadDict, onLangChange } from "../lib/i18n.js";
+
+    const raw = JSON.parse(document.getElementById("pron-data").textContent);
+    const root = document.getElementById("pron-root");
+
+    // Glosses exist for en/ar/ru/tr; any other UI language simply shows none.
+    function buildSets(lang) {
+      const pick = (item) => ({
+        ...item,
+        translation: lang === "de" ? "" : item.translations?.[lang] || "",
+      });
+      return Object.fromEntries(Object.entries(raw).map(([k, items]) => [k, items.map(pick)]));
+    }
+
+    const LAST_KEY = "aussprache.set";
+    let lastSet = null;
+    try { lastSet = localStorage.getItem(LAST_KEY); } catch {}
+
+    const FALLBACK = {
+      position: "{i} / {n}",
+      recActive: "Aufnahme läuft …",
+      recDone: "Aufgenommen — vergleiche dich mit dem Modell.",
+      recDenied: "Kein Mikrofonzugriff. Du kannst trotzdem mithören und laut nachsprechen.",
+      recUnsupported: "Dein Browser unterstützt keine Aufnahme.",
+      audioError: "Audio konnte nicht geladen werden.",
+    };
+
+    function stringsFrom(dict) {
+      return {
+        position: dict["aussprache.position"] || FALLBACK.position,
+        recActive: dict["aussprache.rec.active"] || FALLBACK.recActive,
+        recDone: dict["aussprache.rec.done"] || FALLBACK.recDone,
+        recDenied: dict["aussprache.rec.denied"] || FALLBACK.recDenied,
+        recUnsupported: dict["aussprache.rec.unsupported"] || FALLBACK.recUnsupported,
+        audioError: dict["aussprache.audioError"] || FALLBACK.audioError,
+      };
+    }
+
+    // The menu (ArtikelPicker's shape): a rail button shows that level's topics, a topic
+    // row switches the set. The row names carry data-i18n (ws.set.<unit id>), so a
+    // language switch relabels them on its own.
+    const railBtns = [...root.querySelectorAll("[data-pr-rail]")];
+    const panes = [...root.querySelectorAll("[data-pr-pane]")];
+    const aside = root.querySelector(".pr-rail");
+    const toggle = root.querySelector("[data-pick-toggle]");
+    const currentLabel = root.querySelector("[data-pick-current]");
+
+    function showPane(key) {
+      panes.forEach((p) => { p.hidden = p.dataset.prPane !== key; });
+      railBtns.forEach((b) => {
+        const on = b.dataset.prRail === key;
+        b.classList.toggle("active", on);
+        b.setAttribute("aria-selected", String(on));
+      });
+    }
+    railBtns.forEach((b) => b.addEventListener("click", () => showPane(b.dataset.prRail)));
+
+    function setOpen(open) {
+      aside.dataset.pickOpen = String(open);
+      toggle.setAttribute("aria-expanded", String(open));
+    }
+    toggle.addEventListener("click", () => setOpen(aside.dataset.pickOpen !== "true"));
+
+    function markSet(key) {
+      const row = root.querySelector(`[data-set-btn="${key}"]`);
+      root.querySelectorAll("[data-set-btn]").forEach((b) => b.classList.toggle("active", b === row));
+      if (!row) return;
+      showPane(row.closest("[data-pr-pane]").dataset.prPane);
+      currentLabel.textContent = row.querySelector(".pr-pack-name").textContent;
+    }
+
+    const lang = getLang();
+    const dict = await loadDict(lang);
+
+    let sets = buildSets(lang);
+    const app = mountPronunciation(root, {
+      sets,
+      strings: stringsFrom(dict),
+      onHeard: () => recordSession("hoeren"),
+      onSetChange: (key) => {
+        try { localStorage.setItem(LAST_KEY, key); } catch {}
+        markSet(key);
+        setOpen(false);
+      },
+    });
+    if (lastSet && raw[lastSet]) app.switchSet(lastSet);
+    else markSet(Object.keys(raw)[0]);
+
+    onLangChange((code, nextDict) => {
+      const next = buildSets(code);
+      for (const [k, items] of Object.entries(sets)) {
+        items.forEach((item, i) => (item.translation = next[k][i].translation));
+      }
+      app.refresh(stringsFrom(nextDict));
+      // The rows were relabelled by applyToDom before this runs; the phone button copies one.
+      markSet(root.querySelector("[data-set-btn].active")?.dataset.setBtn);
+    });
+  </script>
+</Layout>

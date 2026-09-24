@@ -1,0 +1,107 @@
+---
+import Layout from "../layouts/Layout.astro";
+import SiteNav from "../components/SiteNav.astro";
+import "../styles/practice.css";
+import lesen from "../data/lesen.json";
+
+const { groups, formTask, writingPrompt, errorHunt } = lesen;
+---
+<Layout title="Lesen & Schreiben – DeutschAcademy">
+  <SiteNav active="fertigkeiten" />
+  <main class="practice-main">
+    <div class="practice-hero">
+      <p class="eyebrow" data-i18n="lesen.hero.eyebrow">DTZ-Simulation</p>
+      <h1 data-i18n="lesen.hero.title">Lesen & Schreiben üben</h1>
+      <p data-i18n="lesen.hero.subtitle">Eine vollständige Leseverstehen-Simulation (Thema: Online-Unterricht und Integration, Niveau B1) mit echtem Lösungsschlüssel, plus zwei Schreibaufgaben.</p>
+    </div>
+
+    {/* Anchored by id: the Fertigkeiten menu links to one task, not to the top of a
+        page with eight of them. */}
+    {groups.map((g, gi) => (
+      <div class="reading-block" id={`lesen-${g.id}`}>
+        <h3 data-i18n={`lesenSim.title.${g.id}`}>{g.title}</h3>
+        <div class="reading-level" data-i18n={`lesenSim.level.${g.id}`}>{g.level}</div>
+        <div class="reading-text">{g.text}</div>
+        <div class="quiz-card" data-group={gi}></div>
+      </div>
+    ))}
+
+    <div class="reading-block" id="schreiben-formular">
+      <h3 data-i18n="lesenSim.title.formTask">{formTask.title}</h3>
+      <div class="reading-text">{formTask.email}</div>
+      <p data-i18n="lesen.formTask.hint">Klicke auf ein Feld, um deine Antwort mit der Lösung zu vergleichen.</p>
+      <div id="form-fields">
+        {formTask.fields.map((f, fi) => (
+          <div class="form-field" data-field={fi}>
+            <span>{f.label}</span>
+            <span class="form-field-answer">{f.answer}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <div class="reading-block" id="schreiben-brief">
+      <h3 data-i18n="lesenSim.title.writingPrompt">{writingPrompt.title}</h3>
+      <p>{writingPrompt.context}</p>
+      <div class="reading-text">{writingPrompt.email}</div>
+      <div class="prompt-section-label" data-i18n="lesen.writingPrompt.pointsLabel">Schreib etwas zu folgenden Punkten</div>
+      <ul>{writingPrompt.points.map((pt) => <li>{pt}</li>)}</ul>
+      <textarea class="writing-area" id="writing-area" placeholder="Schreib deine Antwort hier..." data-i18n-attr="placeholder:lesen.writingPrompt.placeholder"></textarea>
+      <div class="word-count" id="word-count">0 Wörter</div>
+      <div class="tips-box" data-i18n="lesenSim.tips">{writingPrompt.tips}</div>
+    </div>
+
+    <div class="reading-block" id="schreiben-fehlerjagd">
+      <h3 data-i18n="lesenSim.title.errorHunt">{errorHunt.title}</h3>
+      <p>{errorHunt.context}</p>
+      <div class="reading-text">{errorHunt.text}</div>
+    </div>
+  </main>
+
+  <script type="application/json" id="groups-data" set:html={JSON.stringify(groups)}></script>
+  <script type="module">
+    import { mountQuiz } from "../lib/quiz.js";
+    import { recordAttempt } from "../lib/progress.js";
+    import { getLang, loadDict, onLangChange } from "../lib/i18n.js";
+
+    let dict = {};
+    function tr(key, vars) {
+      const str = dict[key];
+      if (str == null) return key;
+      if (!vars) return str;
+      return str.replace(/\{(\w+)\}/g, (m, k) => (k in vars ? String(vars[k]) : m));
+    }
+
+    const groups = JSON.parse(document.getElementById("groups-data").textContent);
+    document.querySelectorAll(".quiz-card[data-group]").forEach((el) => {
+      const g = groups[+el.dataset.group];
+      mountQuiz(el, g.questions, {
+        mode: "choice",
+        shuffle: false,
+        onAnswer: (ok) => recordAttempt({ skill: "schreiben", correct: ok }),
+      });
+    });
+
+    document.querySelectorAll(".form-field").forEach((el) => {
+      el.addEventListener("click", () => el.classList.toggle("revealed"));
+    });
+
+    const textarea = document.getElementById("writing-area");
+    const wordCount = document.getElementById("word-count");
+    function renderWordCount() {
+      const words = textarea.value.trim().split(/\s+/).filter(Boolean).length;
+      wordCount.textContent = tr("lesen.wordCount", { n: words }) + (words < 60 ? ` (${tr("lesen.wordCount.goal")})` : " ✓");
+    }
+    textarea.addEventListener("input", renderWordCount);
+
+    async function bootI18n() {
+      dict = await loadDict(getLang());
+      renderWordCount();
+    }
+    onLangChange((code, newDict) => {
+      dict = newDict;
+      renderWordCount();
+    });
+    bootI18n();
+  </script>
+</Layout>

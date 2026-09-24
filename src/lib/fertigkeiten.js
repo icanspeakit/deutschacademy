@@ -11,7 +11,7 @@
 //   from: "sprechen-dtz"      one picture of src/data/sprechen.json,       by `index`
 //   from: "sprechen-telc"     one prompt of src/data/sprechen-b1b2.json,   by `index`
 //
-// Borrowing rather than copying, because /uebungen/lesen-schreiben, /uebungen/sprechen and
+// Borrowing rather than copying, because /lesen-schreiben, /sprechen and
 // the DTZ mock test all still read those files. Two copies of a Prüfungstext would drift
 // apart, and the one that drifted would be the one nobody reopened.
 //
@@ -93,7 +93,7 @@ function resolveSprechen(entry) {
         image: pic.image,
         prompt: "Beschreiben Sie das Bild. Danach stellt Ihnen die Prüferin Fragen zu Ihrer eigenen Erfahrung.",
         bullets: [...pic.beschreibung, ...pic.persoenlich],
-        href: "/uebungen/sprechen/dtz-bildbeschreibung",
+        href: "/sprechen/dtz-bildbeschreibung",
         hrefLabel: "im Bildbeschreibungs-Trainer",
       };
     }
@@ -109,7 +109,7 @@ function resolveSprechen(entry) {
         bullets: diskussion
           ? ["Nehmen Sie klar Stellung.", "Nennen Sie zwei Argumente.", "Gehen Sie auf den Einwand Ihres Gegenübers ein.", "Fassen Sie Ihre Position am Ende zusammen."]
           : [...p.beschreibung, ...p.kurzvortrag.points],
-        href: "/uebungen/sprechen-b1b2",
+        href: "/sprechen-b1b2",
         hrefLabel: "im Kurzvortrag-Trainer",
       };
     }

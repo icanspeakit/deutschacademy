@@ -1,7 +1,7 @@
 /* The Lesen, Schreiben and Sprechen libraries (src/pages/uebungen/{lesen,schreiben,sprechen}/).
  *
  * One stylesheet for three skills because they are one thing: an index grouped by level and
- * a detail page per exercise, exactly the shape /uebungen/hoeren already has. It does not
+ * a detail page per exercise, exactly the shape /hoeren already has. It does not
  * reuse hoeren.css — a `.ho-card` on a Leseverstehen page reads as a copy-paste rather than
  * a decision — but it deliberately matches its measurements, so the four skills feel like
  * four doors into one building.

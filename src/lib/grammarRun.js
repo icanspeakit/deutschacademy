@@ -1,4 +1,4 @@
-/* The guided run (/uebungen/grammatik/lauf).
+/* The guided run (/grammatik/lauf).
  *
  * The grammar hub is a wall of 27 cards across four levels. That is the right shape for
  * someone who knows what they are looking for, and the wrong shape for everyone else:

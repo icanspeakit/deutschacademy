@@ -176,7 +176,7 @@ for (const level of program.levels) {
 
 // --- legacy Redemittel cards ----------------------------------------------------------
 // Not in the lexicon: they carry en/ar/ru/tr, the lexicon ships `en` only, so
-// /uebungen/wortschatz still reads this file (docs §"Deliberately not migrated").
+// /wortschatz still reads this file (docs §"Deliberately not migrated").
 const legacy = read("src/data/wortschatz.json");
 write("lernsets.legacy-redemittel.json", {
   id: "legacy-redemittel",
@@ -184,7 +184,7 @@ write("lernsets.legacy-redemittel.json", {
   level: null,
   status: "legacy",
   note:
-    "Source: src/data/wortschatz.json, consumed by /uebungen/wortschatz. Four languages " +
+    "Source: src/data/wortschatz.json, consumed by /wortschatz. Four languages " +
     "(en/ar/ru/tr) against the lexicon's en-only, so it is deliberately not migrated. " +
     "Overlaps thematically with a2-28 (Redemittel) and a1-20 (Tiere).",
   languages: ["en", "ar", "ru", "tr"],

@@ -34,7 +34,7 @@ const bySlug = new Map(workspaces.map((w) => [w.slug ?? w.id, w]));
 // it is holding. The count is whatever that topic actually contains — exercises for
 // a workspace, questions for a quiz-only topic — never a rounded-up "lessons".
 const topicRow = (t, kind) => ({
-  href: `/uebungen/grammatik/${kind === "workspace" ? (t.slug ?? t.id) : t.id}`,
+  href: `/${kind === "workspace" ? (t.slug ?? t.id) : t.id}`,
   name: t.name,
   level: t.level,
   count: kind === "workspace" ? (t.exercises ?? []).length : (t.questions ?? []).length,
@@ -55,13 +55,13 @@ const ENTRY = [
 
 // A phone panel that scrolls is a panel nobody reads to the end of, and B1 has
 // eleven topics. So the level's own entry topic leads, four more follow, and the
-// rest live one tap further on at /uebungen/grammatik.
+// rest live one tap further on at /grammatik.
 const PANEL_TOPICS = 5;
 
 const LEVELS = ENTRY.map(({ level, slug }) => {
   const topic = bySlug.get(slug);
   if (!topic) throw new Error(`LevelFold: kein Grammatikthema mit slug "${slug}" (Einstieg für ${level})`);
-  const href = `/uebungen/grammatik/${slug}`;
+  const href = `/${slug}`;
   const all = ALL_TOPICS.filter((t) => t.level === level);
   // The lexicon stops where it stops; a level with no words gets no word row rather
   // than a link to an empty deck.
@@ -73,7 +73,7 @@ const LEVELS = ENTRY.map(({ level, slug }) => {
     count: all.length,
     slug: level.toLowerCase(),
     topics: [...all.filter((t) => t.href === href), ...all.filter((t) => t.href !== href)],
-    words: words > 0 ? { href: `/uebungen/wortschatz/${level.toLowerCase()}`, count: words } : null,
+    words: words > 0 ? { href: `/wortschatz/${level.toLowerCase()}`, count: words } : null,
   };
 });
 
@@ -85,11 +85,11 @@ const LEVELS = ENTRY.map(({ level, slug }) => {
 const unsureHref = "/einstufungstest";
 
 const EXAM_CHIPS = [
-  { label: "DTZ", href: "/pruefungen/dtz" },
-  { label: "telc", href: "/pruefungen/telc" },
-  { label: "Goethe", href: "/pruefungen/goethe" },
-  { label: "TestDaF", href: "/pruefungen/testdaf" },
-  { label: "Leben in Deutschland", href: "/pruefungen/leben-in-deutschland" },
+  { label: "DTZ", href: "/dtz" },
+  { label: "telc", href: "/telc" },
+  { label: "Goethe", href: "/goethe" },
+  { label: "TestDaF", href: "/testdaf" },
+  { label: "Leben in Deutschland", href: "/leben-in-deutschland" },
 ];
 ---
 <section class="lf" data-lf>
@@ -145,7 +145,7 @@ const EXAM_CHIPS = [
             ))}
           </div>
           {l.topics.length > PANEL_TOPICS && (
-            <a class="lf-panel-all" href={`/uebungen/grammatik#niveau-${l.slug}`} data-i18n="fold.allTopics" data-i18n-vars={JSON.stringify({ n: l.topics.length })}>
+            <a class="lf-panel-all" href={`/grammatik#niveau-${l.slug}`} data-i18n="fold.allTopics" data-i18n-vars={JSON.stringify({ n: l.topics.length })}>
               Alle {l.topics.length} Themen →
             </a>
           )}

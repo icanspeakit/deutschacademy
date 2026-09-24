@@ -114,7 +114,7 @@ async function buildLevel(level, lang = null) {
     meta: [
       `${words.length} Wörter in ${sets.length} Lernsets`,
       `${withExample} Beispielsätze`,
-      "Als Karteikarten mit Audio: deutschacademy.com/uebungen/wortschatz" + (all ? "" : "/" + level.toLowerCase()),
+      "Als Karteikarten mit Audio: deutschacademy.com/wortschatz" + (all ? "" : "/" + level.toLowerCase()),
     ],
     footer:
       "Von DeutschAcademy geschrieben — von Lehrkräften, die wirklich unterrichten. Dieses PDF darfst du frei " +

@@ -44,7 +44,7 @@ const allTopics = [
     key: topicKeyOf(w),
     name: w.name,
     level: w.level,
-    href: `/uebungen/grammatik/${w.slug ?? w.id}`,
+    href: `/${w.slug ?? w.id}`,
     tasks: taskCountOf(w),
     kind: "workspace",
   })),
@@ -54,7 +54,7 @@ const allTopics = [
       key: t.id,
       name: t.name,
       level: t.level,
-      href: `/uebungen/grammatik/${t.id}`,
+      href: `/${t.id}`,
       tasks: taskCountOf(t),
       kind: "quiz",
     })),
@@ -86,9 +86,9 @@ const railSections = [
     overview: { label: "Kursübersicht öffnen →", href: "/uebungen" },
     items: [
       { key: null, label: "Start", icon: "sparkle", href: "/uebungen", meta: "Übersicht" },
-      { key: null, label: "Grammatik-Basis", icon: "book", href: "/uebungen/grammatik", meta: `${allTopics.length} Themen` },
-      { key: null, label: "Wortschatz-Karten", icon: "folder", href: "/uebungen/wortschatz", meta: "Karten" },
-      { key: null, label: "Prüfungssimulation", icon: "document", href: "/pruefungen/dtz/uebungssatz", meta: "45 Aufgaben" },
+      { key: null, label: "Grammatik-Basis", icon: "book", href: "/grammatik", meta: `${allTopics.length} Themen` },
+      { key: null, label: "Wortschatz-Karten", icon: "folder", href: "/wortschatz", meta: "Karten" },
+      { key: null, label: "Prüfungssimulation", icon: "document", href: "/dtz/uebungssatz", meta: "45 Aufgaben" },
     ],
   },
   ...byLevel.map((g) => ({
@@ -96,7 +96,7 @@ const railSections = [
     label: `Stufe ${g.level}`,
     badge: g.level,
     icon: "book",
-    overview: { label: "Stufenübersicht öffnen →", href: `/uebungen/grammatik#niveau-${g.level.toLowerCase()}` },
+    overview: { label: "Stufenübersicht öffnen →", href: `/grammatik#niveau-${g.level.toLowerCase()}` },
     items: g.items.map((t) => ({ key: t.key, label: t.name, icon: "book", href: t.href, tasks: t.tasks })),
   })),
   {
@@ -106,10 +106,10 @@ const railSections = [
     icon: "landmark",
     overview: { label: "Alle Prüfungen öffnen →", href: "/pruefungen" },
     items: [
-      { key: null, label: "Start Deutsch 1", icon: "document", href: "/pruefungen/start-deutsch-1", meta: "A1" },
-      { key: null, label: "DTZ-Übungssatz", icon: "book-open", href: "/pruefungen/dtz/uebungssatz", meta: "A2/B1" },
-      { key: null, label: "TestDaF", icon: "graduation-cap", href: "/pruefungen/testdaf/uebungssatz", meta: "TDN" },
-      { key: null, label: "Leben in Deutschland", icon: "map-pin", href: "/pruefungen/leben-in-deutschland/test", meta: "Test" },
+      { key: null, label: "Start Deutsch 1", icon: "document", href: "/start-deutsch-1", meta: "A1" },
+      { key: null, label: "DTZ-Übungssatz", icon: "book-open", href: "/dtz/uebungssatz", meta: "A2/B1" },
+      { key: null, label: "TestDaF", icon: "graduation-cap", href: "/testdaf/uebungssatz", meta: "TDN" },
+      { key: null, label: "Leben in Deutschland", icon: "map-pin", href: "/leben-in-deutschland/test", meta: "Test" },
     ],
   },
 ];
@@ -132,7 +132,7 @@ const next = siblings[at + 1] ?? null;
         {prev
           ? <a class="nn-pn-link" href={prev.href}><span aria-hidden="true">←</span><span><i>Davor</i><b>{prev.name}</b></span></a>
           : <span class="nn-pn-link is-off"><span aria-hidden="true">←</span><span><i>Davor</i><b>Anfang der Stufe</b></span></span>}
-        <a class="nn-pn-all" href="/uebungen/grammatik">Alle {siblings.length} Themen auf {demo.level}</a>
+        <a class="nn-pn-all" href="/grammatik">Alle {siblings.length} Themen auf {demo.level}</a>
         {next
           ? <a class="nn-pn-link nn-pn-link--next" href={next.href}><span><i>Danach</i><b>{next.name}</b></span><span aria-hidden="true">→</span></a>
           : <span class="nn-pn-link nn-pn-link--next is-off"><span><i>Danach</i><b>Ende der Stufe</b></span><span aria-hidden="true">→</span></span>}
@@ -203,7 +203,7 @@ const next = siblings[at + 1] ?? null;
 
       <!-- The real topic page, unchanged. Only the furniture around it is the variable. -->
       <main class="vp-page vp-page--split nn-main" id="vp-page" data-rule="hidden" data-anim="off" data-topic-key={demoKey}>
-        <a href="/uebungen/grammatik" class="vp-back-link" data-nn-not="b ab c">← Zurück zur Übersicht</a>
+        <a href="/grammatik" class="vp-back-link" data-nn-not="b ab c">← Zurück zur Übersicht</a>
 
         <div class="vp-workspace">
           <aside class="vp-col vp-col--rule" id="vp-rule">

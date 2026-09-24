@@ -1,4 +1,4 @@
-// Voices the reference sentences of /uebungen/aussprache-check with Azure's German neural
+// Voices the reference sentences of /aussprache-check with Azure's German neural
 // voice and stamps `audio: true` on each sentence that has a file.
 //
 // Azure rather than ElevenLabs: the same key already runs the assessment, the free tier

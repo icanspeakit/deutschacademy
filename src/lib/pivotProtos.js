@@ -160,7 +160,7 @@ export function mountPivot({ data, iconHost, phone, switchEl, table, notes, stor
       return `
       ${nav}
       <div class="pvx-body">
-        <a class="pvx-resume js-pick" href="/uebungen/grammatik">
+        <a class="pvx-resume js-pick" href="/grammatik">
           <span class="pvx-resume-eyebrow">Weitermachen</span>
           <span class="pvx-resume-title">Grammatik · Perfekt</span>
           <span class="pvx-bar"><i style="width:60%"></i></span>

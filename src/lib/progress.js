@@ -7,9 +7,10 @@ const GOAL_KEY = "da_weekly_goal";
 const DEFAULT_WEEKLY_GOAL = 50;
 const DAILY_ACTIVITY_RETENTION_DAYS = 60;
 const RECENTS_MAX = 6;
-// Routes worth remembering as "where I was". Everything else (the hubs, the landing page,
-// a study route) is a place you pass through, not a place you resume.
-const RESUMABLE = /^\/(uebungen|pruefungen)\/.+/;
+// Routes worth remembering as "where I was": every page except the hubs and overviews,
+// which are places you pass through (see src/lib/routes.js). The trainers are the only
+// callers of remember(), so a page that never grades anything never lands here.
+import { NOT_RESUMABLE, flattenPath } from "./routes.js";
 
 function todayStr(d = new Date()) {
   return d.toISOString().slice(0, 10);
@@ -35,7 +36,8 @@ function load() {
         vocabMastered: data.vocabMastered || [],
         topics: data.topics || {},
         drills: data.drills || {},
-        recents: data.recents || [],
+        // Saved before the flat URLs: point old entries at the new address.
+        recents: (data.recents || []).map((r) => (r && r.path ? { ...r, path: flattenPath(r.path) } : r)),
       };
     }
   } catch {}
@@ -54,7 +56,7 @@ function save(data) {
 function remember(data) {
   if (typeof location === "undefined") return;
   const path = location.pathname.replace(/\/+$/, "") || "/";
-  if (!RESUMABLE.test(path)) return;
+  if (NOT_RESUMABLE.has(path)) return;
   // "Perfekt – Grammatik – DeutschAcademy" -> "Perfekt". The suffix is the same on every
   // page, so keeping it would make every card in the list read as the site's name.
   const title = (typeof document === "undefined" ? "" : document.title).split(/\s[–—-]\s/)[0].trim();

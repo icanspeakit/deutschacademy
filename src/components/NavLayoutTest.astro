@@ -1,0 +1,67 @@
+---
+// A/B test for where the side navigation sits — decision 1 of the Seitennavigation
+// workbook (Desktop/Seitennavigation-Entscheidungen-DeutschAcademy.pdf). Tried on the
+// Wortschatz trainer first; once one is approved it goes sitewide and this goes away.
+//
+//   A · "wie der/die/das"   no page title above the work: the nav column and the
+//                           exercise start right under the site nav and are both exactly
+//                           one screen tall.
+//   B · "Wortschatz, gleich hoch"   today's page with its title on top, but the nav column
+//                           and the exercise below it stretched to the same height.
+//
+// Switched by the pill bottom-left, or ?nav=a|b; remembered per browser. Desktop only —
+// below 1001px both are the same bottom sheet. The page's <main id="vp-page"> carries
+// data-navlayout; the layout itself is src/styles/navlayout-test.css.
+import "../styles/navlayout-test.css";
+---
+<div class="nlt" role="radiogroup" aria-label="Test: Platz der Navigation" data-nlt>
+  <span>Test · Nav</span>
+  <button type="button" data-nlt-v="a" role="radio" aria-checked="false">A · wie der/die/das</button>
+  <button type="button" data-nlt-v="b" role="radio" aria-checked="false">B · Wortschatz, gleich hoch</button>
+</div>
+
+<script>
+  const page = document.getElementById("vp-page");
+  const bar = document.querySelector<HTMLElement>("[data-nlt]");
+  const KEY = "da-navlayout-test";
+  const ws = page?.querySelector<HTMLElement>(".vp-workspace");
+
+  // One screen tall from where the work starts: measured, because the page title (B) and
+  // the site nav are whatever height they render at, and a guessed number drifts.
+  function fit() {
+    if (!page || !ws) return;
+    const top = ws.getBoundingClientRect().top + scrollY;
+    const nav = document.querySelector<HTMLElement>(".lp-nav, nav")?.getBoundingClientRect().height ?? 69;
+    // On a short screen the exercise needs more than one screen: then both columns take
+    // the exercise's own height, so they still end on the same line.
+    const tool = page.querySelector<HTMLElement>(".vt-tool");
+    let natural = 0;
+    if (tool) {
+      const was = tool.style.minHeight;
+      tool.style.minHeight = "0";
+      natural = tool.offsetHeight;
+      tool.style.minHeight = was;
+    }
+    page.style.setProperty("--nl-h", `${Math.max(420, innerHeight - top - 24, natural)}px`);
+    page.style.setProperty("--nl-nav", `${Math.round(nav)}px`);
+  }
+
+  function set(v: string, remember = true) {
+    if (!page || !bar) return;
+    page.dataset.navlayout = v;
+    bar.querySelectorAll<HTMLButtonElement>("[data-nlt-v]").forEach((b) => b.setAttribute("aria-checked", String(b.dataset.nltV === v)));
+    if (remember) { try { localStorage.setItem(KEY, v); } catch {} }
+    const u = new URL(location.href);
+    u.searchParams.set("nav", v);
+    history.replaceState(history.state, "", u);
+    requestAnimationFrame(fit);
+  }
+
+  const asked = new URL(location.href).searchParams.get("nav");
+  let saved: string | null = null;
+  try { saved = localStorage.getItem(KEY); } catch {}
+  set(asked === "a" || asked === "b" ? asked : saved === "a" ? "a" : "b", false);
+  bar?.querySelectorAll<HTMLButtonElement>("[data-nlt-v]").forEach((b) => b.addEventListener("click", () => set(b.dataset.nltV!)));
+  addEventListener("resize", fit);
+  addEventListener("load", fit);
+</script>

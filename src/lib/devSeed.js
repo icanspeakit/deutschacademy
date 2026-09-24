@@ -112,9 +112,9 @@ export function seedProgress(items = {}, { streak = 6, days = 24, seed = 7 } = {
     drills: { dativ: { said: 12, sure: 9 }, "artikel-trainer": { said: 20, sure: 14 } },
     // What the "Weitermachen" card is built from. Real routes, so the card links somewhere.
     recents: [
-      { path: "/uebungen/grammatik/dativ", title: "Dativ", n: 3, at: today },
-      { path: "/uebungen/wortschatz/a1-01", title: "Person & Vorstellung", n: 2, at: daysAgoStr(1) },
-      { path: "/uebungen/grammatik/artikel", title: "Artikel-Trainer", n: 5, at: daysAgoStr(2) },
+      { path: "/dativ", title: "Dativ", n: 3, at: today },
+      { path: "/wortschatz/a1-01", title: "Person & Vorstellung", n: 2, at: daysAgoStr(1) },
+      { path: "/artikel", title: "Artikel-Trainer", n: 5, at: daysAgoStr(2) },
     ],
   };
 
@@ -189,9 +189,9 @@ export function fillProgress(items = {}, { accuracy = 0.8, streak = 12, days = 3
     topics,
     drills: { dativ: { said: 40, sure: 36 }, "artikel-trainer": { said: 60, sure: 54 } },
     recents: [
-      { path: "/uebungen/grammatik/dativ", title: "Dativ", n: 9, at: today },
-      { path: "/uebungen/wortschatz/a1-01", title: "Person & Vorstellung", n: 7, at: today },
-      { path: "/uebungen/grammatik/artikel", title: "Artikel-Trainer", n: 12, at: daysAgoStr(1) },
+      { path: "/dativ", title: "Dativ", n: 9, at: today },
+      { path: "/wortschatz/a1-01", title: "Person & Vorstellung", n: 7, at: today },
+      { path: "/artikel", title: "Artikel-Trainer", n: 12, at: daysAgoStr(1) },
     ],
   };
 

@@ -1,0 +1,27 @@
+---
+// The curated deck: Redemittel and everyday phrases, hand-written rather than drawn from
+// the lexicon, and the only deck with all four translation languages filled in.
+// Lexicon decks — a whole level, or one Lernset — live at /wortschatz/[deck].
+// This page keeps its own URL because it is the one every CTA on the site points at, and
+// because it is the only deck with ar/ru/tr filled in.
+import Layout from "../../layouts/Layout.astro";
+import VokabelTrainer from "../../components/VokabelTrainer.astro";
+import wortschatz from "../../data/wortschatz.json";
+
+// Three of the notes explain usage ("Zustimmen — klingt natürlicher …") and are scaffolding,
+// so they carry a key for the UI language. The rest are German model answers and example
+// arguments — the language being practised — and stay as they are.
+const EXPLAINED = new Set([0, 1, 2]);
+const cards = wortschatz.map((c, i) => (EXPLAINED.has(i) ? { ...c, noteKey: `ws.redemittel.note.${i}` } : c));
+---
+<Layout title="Wortschatz & Redemittel – DeutschAcademy">
+  <VokabelTrainer
+    cards={cards}
+    heading="Redemittel & Alltagsvokabeln"
+    headingKey="wortschatz.hero.title"
+    sub="Handgeschrieben, nicht aus dem Lexikon — und als einziges Deck in vier Sprachen."
+    subParts={[{ text: "Handgeschrieben, nicht aus dem Lexikon — und als einziges Deck in vier Sprachen.", key: "ws.redemittel.sub" }]}
+    deck="redemittel"
+    langs={["en", "ar", "ru", "tr"]}
+  />
+</Layout>

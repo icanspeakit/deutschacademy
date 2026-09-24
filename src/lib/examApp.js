@@ -9,7 +9,7 @@
  * one that matters here, since most learners are on a phone.
  *
  * A page supplies its own sections; everything about scoring, persistence and navigation
- * lives here. See src/pages/pruefungen/leben-in-deutschland/test.astro for a caller.
+ * lives here. See src/pages/leben-in-deutschland/test.astro for a caller.
  *
  * Section: {
  *   key, label, labelKey?,        // labelKey: i18n key for the rail/select label

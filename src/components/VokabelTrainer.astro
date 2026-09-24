@@ -1,15 +1,16 @@
 ---
 // The flashcard trainer's shell, shared by every deck that mounts it.
 //
-// Lifted out of src/pages/uebungen/wortschatz.astro when the nav's Niveaus menu gained
-// per-level word lists: /uebungen/wortschatz (the curated Redemittel deck) and
-// /uebungen/wortschatz/a1 (the lexicon's A1 words) are the same tool over different
+// Lifted out of src/pages/wortschatz.astro when the nav's Niveaus menu gained
+// per-level word lists: /wortschatz (the curated Redemittel deck) and
+// /wortschatz/a1 (the lexicon's A1 words) are the same tool over different
 // cards, and a second copy of this markup would have drifted from the first inside a
 // week. The page decides which cards to hand over; everything below is identical.
 //
 // Cards arrive already in the engine's shape: `{ front, note, translations }`.
 import SiteNav from "./SiteNav.astro";
 import LernsetPicker from "./LernsetPicker.astro";
+import NavLayoutTest from "./NavLayoutTest.astro";
 import "../styles/practice.css";
 // The split layout itself — the grid, the sliding column, the phone collapse — is the
 // same stylesheet the grammar topics and the exam pages load. Only the width tokens and
@@ -225,6 +226,9 @@ const languages = ALL_LANGUAGES.filter((l) => langs.includes(l.code));
        the tour decides to run — the restored preference, the collapsed first paint. This
        wipes both stored flags and reloads clean. Shown on the live site too. -->
   <button type="button" class="vp-dev-reset" id="vp-dev-reset" title="Tour-Flags löschen und neu laden" data-i18n-attr="title:vp.devReset.title" data-i18n="vp.devReset">↻ Tour neu</button>
+
+  {/* Test: where the side nav sits, A or B — see NavLayoutTest.astro. Temporary. */}
+  <NavLayoutTest />
 </main>
 
 <script type="application/json" id="fc-data" set:html={JSON.stringify(cards)}></script>

@@ -1,0 +1,261 @@
+---
+// One Schreibaufgabe.
+//
+// Three editors behind one page, picked by `kind`:
+//   form    a source text and fields to transfer — the answers reveal together, at the end
+//   prompt  a situation, Leitpunkte, Redemittel, a textarea, and a Modelltext behind a fold
+//   errors  a text with mistakes to find, and no Lösungsschlüssel on purpose
+//
+// What they share is the order: write first, compare after. The Modelltext and the
+// examiner's checklist both sit inside a closed <details>, because a model answer read
+// beforehand turns every writing task into a reading task — and the thing being practised
+// is producing German, not recognising it.
+//
+// Nothing is graded. It cannot be, and pretending otherwise would be worse than admitting
+// it: a score on a Beschwerdebrief would have to come from counting words. What there is, on
+// request, is a correction: mistakes found and sorted, no mark (src/lib/schreibKorrektur.js).
+import Layout from "../../layouts/Layout.astro";
+import SiteNav from "../../components/SiteNav.astro";
+import Icon from "../../components/Icon.astro";
+import VocabList from "../../components/VocabList.astro";
+import uebersetzungen from "../../data/uebersetzungen/schreiben.json";
+import { schreiben, neighbours, SCHREIBEN_ICON } from "../../lib/fertigkeiten.js";
+import "../../styles/practice.css";
+import "../../styles/skills.css";
+
+export function getStaticPaths() {
+  return schreiben.tasks.map((task) => ({
+    params: { id: task.id },
+    props: { task, ...neighbours(schreiben.tasks, task) },
+  }));
+}
+
+const { task, prev, next } = Astro.props;
+const { types } = schreiben;
+const help = (uebersetzungen.entries as Record<string, any>)[task.id] ?? null;
+const parts = (task.source ?? "").split(/\*\*(.+?)\*\*/g);
+---
+<Layout
+  title={`${task.title} – Schreiben ${task.level} – DeutschAcademy`}
+  description={task.blurb}
+>
+  <SiteNav active="fertigkeiten" />
+  <main class="practice-main">
+    <a href="/schreiben" class="vp-back-link" data-i18n="schreiben.back">← Alle Schreibaufgaben</a>
+
+    <article>
+      <header class="sk-head">
+        <span class="sk-card-ic"><Icon name={SCHREIBEN_ICON[task.type] ?? "pencil"} size={22} /></span>
+        <div>
+          <p class="eyebrow" data-i18n={`type.schreiben.${task.type}`}>{types[task.type]}</p>
+          <h1>{task.title}</h1>
+        </div>
+        <span class="sk-badge">{task.level}</span>
+      </header>
+
+      <p class="sk-blurb"><span data-i18n={`schreiben.${task.id}.blurb`}>{task.blurb}</span> · <span data-i18n="skills.minutes" data-i18n-vars={JSON.stringify({ m: task.minutes })}>ca. {task.minutes} Minuten</span></p>
+
+      {task.situation && (
+        <section class="sk-block">
+          <h2 data-i18n="skills.h2.task">Aufgabe</h2>
+          <p>{task.situation}</p>
+        </section>
+      )}
+
+      {task.source && (
+        <section class="sk-block">
+          {task.kind === "errors"
+            ? <h2 data-i18n="schreiben.h2.errorText">Modelltext mit Fehlern</h2>
+            : <h2 data-i18n="schreiben.h2.source">Vorlage</h2>}
+          <div class="sk-text">{parts.map((p, i) => (i % 2 ? <b>{p}</b> : p))}</div>
+        </section>
+      )}
+
+      {/* After the material, before the writing: the words to understand the task and the
+          ones the answer will need. */}
+      {help?.vocab && <VocabList vocab={help.vocab} reviewed={help.reviewed} />}
+
+      {task.kind === "form" && (
+        <section class="sk-block">
+          <h2 data-i18n="schreiben.h2.form">Formular</h2>
+          <p class="sk-blurb" data-i18n="schreiben.form.hint">Übertrage die Angaben aus der Vorlage. Die Lösungen erscheinen erst, wenn du unten auf „Lösung zeigen“ klickst.</p>
+          <div class="sk-fields" id="sk-form">
+            {task.fields.map((f, i) => (
+              <div class="sk-field">
+                <label for={`sk-f${i}`}>{f.label}</label>
+                {/* The check lands in the box itself: green when it matches, the correction
+                    right under it when it does not. See the #sk-solve handler below. */}
+                <div class="sk-field-in">
+                  <input id={`sk-f${i}`} type="text" autocomplete="off" data-expect={f.answer} aria-describedby={`sk-f${i}-fb`} />
+                  <p class="sk-field-answer" id={`sk-f${i}-fb`} data-answer hidden></p>
+                </div>
+              </div>
+            ))}
+          </div>
+          <p style="margin-top:16px"><button class="sk-btn" type="button" id="sk-solve"><span data-i18n="schreiben.solve">Lösung zeigen</span><span data-i18n="schreiben.solved" hidden>Lösung steht dabei</span></button></p>
+        </section>
+      )}
+
+      {task.kind === "prompt" && (
+        <>
+          <section class="sk-block">
+            <h2 data-i18n="schreiben.h2.points">Das muss vorkommen</h2>
+            <ul class="sk-points">{task.points.map((p) => <li>{p}</li>)}</ul>
+            {task.phrases?.length > 0 && (
+              <div class="sk-phrases">{task.phrases.map((p) => <span class="sk-phrase">{p}</span>)}</div>
+            )}
+          </section>
+
+          <section class="sk-block">
+            <h2 data-i18n="schreiben.h2.yourText">Dein Text</h2>
+            <textarea
+              class="sk-write"
+              id="sk-write"
+              placeholder="Schreib hier…"
+              aria-label="Dein Text"
+              data-i18n-attr="placeholder:schreiben.placeholder;aria-label:schreiben.h2.yourText"
+            ></textarea>
+            <div class="sk-write-bar">
+              <span id="sk-count" data-i18n="skills.words.many" data-i18n-vars='{"n":0}'>0 Wörter</span>
+              <span data-i18n="schreiben.privacy">Der Text bleibt in diesem Browser. Nur „Text korrigieren“ schickt ihn zur Prüfung an LanguageTool.</span>
+            </div>
+            {/* Grammatik, Ausdruck, Satzzeichen, Rechtschreibung — see src/lib/schreibKorrektur.js. */}
+            <div class="skk" id="sk-korrektur" data-task={JSON.stringify({ type: task.type, situation: task.situation ?? "", points: task.points ?? [] })}></div>
+          </section>
+        </>
+      )}
+
+      {task.kind === "errors" && (
+        <section class="sk-block">
+          <h2 data-i18n="schreiben.h2.correction">Deine Korrektur</h2>
+          <p class="sk-blurb" data-i18n="schreiben.correction.hint">Schreib den Text richtig ab — oder notiere nur die Stellen, die dir auffallen.</p>
+          <textarea class="sk-write" id="sk-write" aria-label="Deine Korrektur" data-i18n-attr="aria-label:schreiben.h2.correction"></textarea>
+          <div class="sk-write-bar">
+            <span id="sk-count" data-i18n="skills.words.many" data-i18n-vars='{"n":0}'>0 Wörter</span>
+            <span data-i18n="schreiben.privacyShort">Der Text bleibt in diesem Browser.</span>
+          </div>
+          <div class="skk" id="sk-korrektur" data-task={JSON.stringify({ type: task.type, situation: task.situation ?? "", points: task.points ?? [] })}></div>
+        </section>
+      )}
+
+      {task.model && (
+        <details class="sk-reveal">
+          <summary data-i18n="schreiben.model">Modelltext — erst öffnen, wenn du geschrieben hast</summary>
+          <div class="sk-reveal-body"><div class="sk-model">{task.model}</div></div>
+        </details>
+      )}
+
+      {task.check?.length > 0 && (
+        <details class="sk-reveal">
+          <summary data-i18n="schreiben.check">Worauf eine Prüferin schaut</summary>
+          <div class="sk-reveal-body">
+            <ul class="sk-check">{task.check.map((c, i) => <li data-i18n={`schreiben.check.${task.id}.${i}`}>{c}</li>)}</ul>
+          </div>
+        </details>
+      )}
+
+      {task.kind === "errors" && (
+        <p class="sk-foot" data-i18n="schreiben.errors.foot">Zu dieser Aufgabe gibt es bewusst keinen Lösungsschlüssel: Die Fehler zu finden ist die Übung, und welche davon schwer wiegen, entscheidet sich im Gespräch. Nimm den Text mit in den Kurs oder zu einem Lernpartner.</p>
+      )}
+
+      <nav class="sk-prevnext">
+        {prev ? <a href={`/schreiben/${prev.id}`}>← {prev.title}</a> : <span />}
+        {next ? <a href={`/schreiben/${next.id}`}>{next.title} →</a> : <span />}
+      </nav>
+    </article>
+  </main>
+
+  <script>
+    import { recordSession } from "../../lib/progress.js";
+    import { getLang, loadDict, onLangChange } from "../../lib/i18n.js";
+    import { mountKorrektur } from "../../lib/schreibKorrektur.js";
+
+    let uiDict = null;
+    loadDict(getLang()).then((d) => { uiDict = d; }).catch(() => {});
+    onLangChange((_c, d) => { uiDict = d; });
+
+    // Word count. Nothing is graded here, but a learner writing to "60–80 Wörter" needs to
+    // know where they are without counting by hand — and in the DTZ the length is part of
+    // the task, not a detail.
+    const write = document.getElementById("sk-write");
+    const count = document.getElementById("sk-count");
+    if (write && count) {
+      let counted = false;
+      write.addEventListener("input", () => {
+        const n = write.value.trim().split(/\s+/).filter(Boolean).length;
+        // The key and its count live on the element, so the i18n pass repaints the right
+        // words after a language switch too.
+        count.dataset.i18n = n === 1 ? "skills.words.one" : "skills.words.many";
+        count.dataset.i18nVars = JSON.stringify({ n });
+        const d = uiDict?.[count.dataset.i18n];
+        count.textContent = d != null ? d.replace("{n}", String(n)) : `${n} ${n === 1 ? "Wort" : "Wörter"}`;
+        // One session per page, once the learner has actually started.
+        if (!counted && n > 4) { counted = true; recordSession("schreiben"); }
+      });
+    }
+
+    const korrektur = document.getElementById("sk-korrektur");
+    if (korrektur && write) mountKorrektur(korrektur, write as HTMLTextAreaElement, JSON.parse(korrektur.dataset.task || "{}"));
+
+    // The form task reveals every answer at once. Row by row would turn a transfer exercise
+    // into a guessing game: you would check field one, learn the pattern, and fill the rest
+    // from the answer rather than from the text.
+    //
+    // Each box is marked on its own: "ok" (matches), "near" (right apart from case, spacing
+    // or a letter or two — the correction shows which letters), "no" (wrong or empty).
+    const norm = (t) => t.trim().replace(/\s+/g, " ");
+    // Same content, other spelling: case, punctuation, "4.3." for "04.03.".
+    const loose = (t) => t.toLowerCase().replace(/(^|\D)0+(\d)/g, "$1$2").replace(/[.,\-\/\s]+/g, " ").trim();
+    function dist(a, b) {
+      const d = Array.from({ length: a.length + 1 }, (_, i) => [i, ...Array(b.length).fill(0)]);
+      for (let j = 1; j <= b.length; j++) d[0][j] = j;
+      for (let i = 1; i <= a.length; i++)
+        for (let j = 1; j <= b.length; j++)
+          d[i][j] = Math.min(d[i - 1][j] + 1, d[i][j - 1] + 1, d[i - 1][j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1));
+      return d[a.length][b.length];
+    }
+    const escHtml = (t) => t.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+    // The correction with the letters the learner got wrong marked. Aligned (longest common
+    // subsequence), not position by position, so a missing "0" in "4.3." marks the 0s only.
+    function marked(given, expect) {
+      const a = given, b = expect;
+      const L = Array.from({ length: a.length + 1 }, () => Array(b.length + 1).fill(0));
+      for (let i = a.length - 1; i >= 0; i--)
+        for (let j = b.length - 1; j >= 0; j--)
+          L[i][j] = a[i] === b[j] ? L[i + 1][j + 1] + 1 : Math.max(L[i + 1][j], L[i][j + 1]);
+      const keep = new Set();
+      for (let i = 0, j = 0; i < a.length && j < b.length; ) {
+        if (a[i] === b[j]) { keep.add(j); i++; j++; }
+        else if (L[i + 1][j] >= L[i][j + 1]) i++;
+        else j++;
+      }
+      return [...b].map((ch, k) => (keep.has(k) ? escHtml(ch) : `<mark>${escHtml(ch)}</mark>`)).join("");
+    }
+    function check(input) {
+      const expect = norm(input.dataset.expect || "");
+      const given = norm(input.value);
+      const fb = document.getElementById(input.getAttribute("aria-describedby"));
+      let state = "no";
+      if (given === expect) state = "ok";
+      else if (given && (loose(given) === loose(expect) || dist(given.toLowerCase(), expect.toLowerCase()) <= Math.max(1, Math.floor(expect.length / 6)))) state = "near";
+      input.closest(".sk-field").dataset.check = state;
+      if (state === "ok") { fb.hidden = true; fb.textContent = ""; }
+      else {
+        fb.hidden = false;
+        fb.innerHTML = `<span aria-hidden="true">→</span> ${state === "near" ? marked(given, expect) : escHtml(expect)}`;
+      }
+    }
+
+    const solve = document.getElementById("sk-solve");
+    if (solve) {
+      solve.addEventListener("click", () => {
+        for (const input of document.querySelectorAll("#sk-form input[data-expect]")) check(input);
+        solve.disabled = true;
+        const [before, after] = solve.children;
+        before.hidden = true;
+        after.hidden = false;
+        recordSession("schreiben");
+      });
+    }
+  </script>
+</Layout>

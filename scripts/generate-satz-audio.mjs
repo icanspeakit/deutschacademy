@@ -1,4 +1,4 @@
-// Sentence audio for the Aussprache page (/uebungen/aussprache), in two parts:
+// Sentence audio for the Aussprache page (/aussprache), in two parts:
 //
 //   saetze      the lexicon's example sentence for every word that already has word audio
 //               ("Ich gehe morgen zum Arzt.") → public/audio/saetze/<slug>.mp3 — played by

@@ -1,0 +1,94 @@
+---
+// /kultur — the Landeskunde hub.
+//
+// Was one page rendering one topic, with the topic's own shape (a broadcaster table)
+// hardcoded into the markup. It is now a hub over src/data/kultur.json: cards here,
+// one route per topic, and a quiz that can run over one topic or all of them.
+//
+// Two kinds of topic sit side by side and each says which it is. "unterricht" came out
+// of a real DeutschAcademy lesson; "sachwissen" is publicly checkable fact about rules,
+// institutions and amounts, written by us. Nothing here claims anything about what
+// German people are like — only about what the rules say and where practice varies.
+import Layout from "../../layouts/Layout.astro";
+import SiteNav from "../../components/SiteNav.astro";
+import Icon from "../../components/Icon.astro";
+import kultur from "../../data/kultur.json";
+import { kulturLevels } from "../../lib/catalog.js";
+import "../../styles/practice.css";
+import "../../styles/kultur.css";
+
+const { topics } = kultur;
+const quizCount = topics.reduce((n, t) => n + t.quiz.length, 0);
+
+// Grouped by level, not by subject. The eyebrows ("Alltag & Wohnen", "Behörden &
+// Gesundheit") sorted the catalogue but answered a question nobody arrives with: a learner
+// knows their Niveau, not whether Pfand counts as a housing topic or a shopping one. The
+// eyebrow still heads each topic's own page — it just no longer decides the order here.
+//
+// The levels come from the catalogue's Landeskunde list, which runs A1–C2. The site-wide
+// `levels` export stops at B2 because that is as far as the trainers reach, and using it
+// here would silently swallow every C1 and C2 topic.
+const groups = kulturLevels.map((lv) => ({
+  ...lv,
+  items: topics.filter((t) => t.level === lv.level),
+}));
+---
+<Layout
+  title="Landeskunde – DeutschAcademy"
+  description="Wie Deutschland im Alltag funktioniert: Mülltrennung, Pfand, Anmeldung, Krankenversicherung, Feiertage, Schule, Vereine — mit Quiz zu jedem Thema."
+>
+  <SiteNav active="landeskunde" />
+  <main class="practice-main practice-main--wide">
+    <div class="practice-hero">
+      <p class="eyebrow" data-i18n="kultur.hero.eyebrow">Landeskunde</p>
+      <h1 data-i18n="tool.kultur.title">Kulturwissen</h1>
+      <!-- A new key, not the old kultur.hero.subtitle: that one still says "aus echten
+           Unterrichtsgesprächen", which was true when this was one topic and is not true
+           of the fourteen written from public sources. A key with no translation yet
+           falls back to the German below, which is the behaviour we want until the five
+           locale files carry it. -->
+      <p data-i18n="kultur.hero.lead">
+        Wie Deutschland im Alltag funktioniert — Regeln, Ämter, Beträge und Abläufe, mit Quiz zu jedem Thema.
+      </p>
+    </div>
+
+    <a class="ku-quiz-cta" href="/kultur/quiz">
+      <span class="ku-quiz-cta-txt">
+        <b data-i18n="kultur.quiz.all">Quiz über alle Themen</b>
+        <i data-i18n="kultur.quiz.blurb" data-i18n-vars={JSON.stringify({ n: quizCount, t: topics.length })}>{quizCount} Fragen aus {topics.length} Themen, gemischt. Du kannst auch ein einzelnes Thema wählen.</i>
+      </span>
+      <span class="ku-quiz-cta-go" aria-hidden="true">→</span>
+    </a>
+
+    {groups.map((g) => (
+      <section class="ku-group" id={`niveau-${g.slug}`}>
+        <h2 class="ku-group-title">
+          <span class="ku-badge">{g.level}</span>
+          <span data-i18n={g.blurbKey}>{g.blurb}</span>
+        </h2>
+        <div class="ku-grid">
+          {g.items.map((t) => (
+            <a class="ku-card" href={`/kultur/${t.id}`}>
+              <span class="ku-card-ic"><Icon name={t.icon} size={20} /></span>
+              <span class="ku-card-txt">
+                <b>{t.title}</b>
+                {/* Title stays German — "Pfand" is the term being learnt. The sentence
+                    under it is what tells a non-German speaker whether to open the card. */}
+                <i data-i18n={`kultur.${t.id}.cardIntro`}>{t.intro.split(". ")[0]}.</i>
+              </span>
+              <!-- No level badge: the section heading above the grid already says it. -->
+              <span class="ku-card-meta">
+                <span class="ku-card-q" data-i18n="grammatik.card.questions" data-i18n-vars={JSON.stringify({ n: t.quiz.length })}>{t.quiz.length} Fragen</span>
+              </span>
+            </a>
+          ))}
+        </div>
+      </section>
+    ))}
+
+    <section class="ku-sourcing">
+      <h2 data-i18n="kultur.h2.sources">Woher die Themen kommen</h2>
+      <p data-i18n-html="kultur.sourcingNote" set:html={kultur.sourcingNote.replace(/\n/g, "<br>")} />
+    </section>
+  </main>
+</Layout>

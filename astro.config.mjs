@@ -5,6 +5,7 @@ import { defineConfig } from 'astro/config';
 import vercel from '@astrojs/vercel';
 import react from '@astrojs/react';
 import postcssRTLCSS from 'postcss-rtlcss';
+import { legacyRedirects } from './src/lib/routes.js';
 
 const require = createRequire(import.meta.url);
 
@@ -47,13 +48,14 @@ export default defineConfig({
   // anything already shared working instead of 404ing.
   redirects: {
     '/dashboard': '/fortschritt',
-    // The der/die/das trainer is now the Üben view of the Artikel topic (ArtikelTrainer.astro).
-    '/uebungen/artikel-trainer': '/uebungen/grammatik/artikel',
     // /v2 tested practising inside the dashboard (the focus layout). Retired with the
     // inline exercises — see FORTSCHRITT-KARTE-PROMPT.md.
     '/v2': '/fortschritt',
-    // Short address for the scored pronunciation trainer, easy to say out loud in class.
-    '/aussprache': '/uebungen/aussprache-check',
+    // The flat URLs (/uebungen/grammatik/artikel → /artikel, /pruefungen/telc → /telc …):
+    // every old address keeps working as a 301. The table lives in src/lib/routes.js.
+    // /aussprache used to redirect to the scored check; it is the Aussprache page itself now,
+    // and the check is at /aussprache-check.
+    ...legacyRedirects(),
   },
   server: {
     // Listen on every interface, not just 127.0.0.1, so the dev server is reachable

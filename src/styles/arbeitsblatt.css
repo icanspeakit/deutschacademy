@@ -1,0 +1,211 @@
+/* Worksheets for teachers (/lehrkraefte/arbeitsblaetter). Two surfaces:
+ *   .abi  the index — phone-first rows, a level chip row and a search field
+ *   .ab   one sheet — a paper-like card on screen, a clean A4 page in print
+ * The sheet has two modes (data-mode on #ab-root): "print" shows the paper and its answer
+ * key, "online" turns the same gaps into inputs to check and hides the key. Print media
+ * always gets the paper layout, whatever the mode. */
+
+/* ============================================================== index == */
+.abi { max-width: 860px; margin: 0 auto; padding: var(--space-5) 16px var(--space-12); }
+.abi-eyebrow { margin: 0 0 4px; font-family: var(--font-label); font-size: var(--text-xs); letter-spacing: .08em; text-transform: uppercase; color: var(--brand-blue); }
+.abi-title { margin: 0 0 6px; font-family: var(--font-display); font-size: var(--text-2xl); color: var(--ink); }
+.abi-lead { margin: 0 0 var(--space-4); color: var(--muted); font-size: var(--text-sm); line-height: 1.5; max-width: 60ch; }
+
+.abi-controls { display: grid; gap: 10px; margin-bottom: var(--space-4); }
+.abi-levels { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; padding: 4px; background: var(--surface); border-radius: var(--radius-pill); }
+.abi-levels button {
+  min-height: 40px; border: 0; border-radius: var(--radius-pill); background: none;
+  font: inherit; font-weight: var(--fw-bold); color: var(--muted); cursor: pointer;
+}
+.abi-levels button[aria-pressed="true"] { background: var(--surface-card); color: var(--brand-blue-dark); box-shadow: var(--shadow-sm); }
+.abi-search {
+  width: 100%; min-height: 44px; padding: 0 14px; box-sizing: border-box;
+  border: 1px solid var(--border-strong); border-radius: var(--radius-pill);
+  background: var(--surface-card); color: var(--ink); font: inherit;
+}
+.abi-search:focus-visible, .abi-levels button:focus-visible { outline: 2px solid var(--brand-blue); outline-offset: 2px; }
+
+.abi-sec { margin-top: var(--space-5); }
+.abi-h { display: flex; align-items: baseline; gap: 8px; margin: 0 0 8px; font-size: var(--text-lg); color: var(--ink); }
+.abi-h small { font-size: var(--text-xs); color: var(--muted); font-weight: var(--fw-medium); }
+.abi-list { list-style: none; margin: 0; padding: 0; border: 1px solid var(--border); border-radius: var(--radius-lg); background: var(--surface-card); overflow: hidden; }
+.abi-list li + li { border-top: 1px solid var(--border); }
+.abi-list a {
+  display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 12px;
+  min-height: 52px; padding: 8px 14px; color: var(--ink); text-decoration: none;
+}
+.abi-list a:hover { background: var(--surface); }
+.abi-list a:focus-visible { outline: 2px solid var(--brand-blue); outline-offset: -2px; }
+.abi-badge { padding: 2px 8px; border-radius: var(--radius-pill); background: var(--blue-50); color: var(--brand-blue-dark); font-size: 12px; font-weight: var(--fw-bold); }
+.abi-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: var(--fw-medium); }
+.abi-meta { font-size: 12px; color: var(--muted); white-space: nowrap; }
+.abi-empty { margin-top: var(--space-5); color: var(--muted); }
+.abi [hidden] { display: none !important; }
+
+/* ============================================================== sheet == */
+.ab { max-width: 900px; margin: 0 auto; padding: var(--space-4) 16px var(--space-12); }
+.ab [hidden] { display: none !important; }
+
+.ab-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; margin-bottom: var(--space-4); }
+.ab-back { flex-basis: 100%; color: var(--brand-blue-dark); font-size: var(--text-sm); text-decoration: none; }
+.ab-back:hover { text-decoration: underline; }
+.ab-seg, .ab-langs { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 4px; padding: 4px; background: var(--surface); border-radius: var(--radius-pill); }
+.ab-seg button, .ab-langs button {
+  min-height: 36px; padding: 0 14px; border: 0; border-radius: var(--radius-pill); background: none;
+  font: inherit; font-size: var(--text-sm); font-weight: var(--fw-semibold); color: var(--muted); cursor: pointer;
+}
+.ab-seg button[aria-pressed="true"], .ab-langs button[aria-pressed="true"] { background: var(--surface-card); color: var(--brand-blue-dark); box-shadow: var(--shadow-sm); }
+.ab-langs-label { padding: 0 6px 0 10px; font-size: 12px; color: var(--muted); }
+.ab-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+.ab-check { display: inline-flex; align-items: center; gap: 6px; font-size: var(--text-sm); color: var(--ink); }
+.ab-btn {
+  min-height: 40px; padding: 0 16px; border: 1px solid var(--border-strong); border-radius: var(--radius-pill);
+  background: var(--surface-card); color: var(--ink); font: inherit; font-weight: var(--fw-semibold); cursor: pointer;
+}
+.ab-btn--primary { border-color: transparent; background: var(--gradient-brand); color: #fff; }
+.ab-btn:focus-visible, .ab-seg button:focus-visible, .ab-langs button:focus-visible { outline: 2px solid var(--brand-blue); outline-offset: 2px; }
+.ab-score { font-weight: var(--fw-bold); color: var(--danger); }
+.ab-score[data-all="true"] { color: var(--success); }
+
+#ab-root[data-mode="print"] .ab-only-online,
+#ab-root[data-mode="online"] .ab-only-print,
+#ab-root[data-mode="online"] .ab-key { display: none; }
+
+/* One meaning language at a time. */
+.ab-m { display: none; }
+#ab-root[data-lang="en"] .ab-m[lang="en"],
+#ab-root[data-lang="ar"] .ab-m[lang="ar"],
+#ab-root[data-lang="ru"] .ab-m[lang="ru"],
+#ab-root[data-lang="tr"] .ab-m[lang="tr"] { display: inline; }
+.ab-m[dir="rtl"] { unicode-bidi: isolate; }
+
+/* The paper. Light on purpose in dark mode too: it is a sheet of paper. */
+.ab-sheet {
+  --paper-ink: #1c2b3f;
+  --paper-muted: #5b6676;
+  --paper-line: #c9ced6;
+  color: var(--paper-ink);
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 20px 16px 16px;
+  font-size: 15px;
+  line-height: 1.55;
+  /* Break a word only if it cannot fit at all (a URL in the footer), never mid-word by default. */
+  overflow-wrap: break-word;
+}
+.ab-sheet + .ab-sheet { margin-top: var(--space-5); }
+.ab-head { border-bottom: 2px solid var(--paper-ink); padding-bottom: 10px; margin-bottom: 14px; }
+.ab-eyebrow { margin: 0 0 2px; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--paper-muted); }
+.ab-title { margin: 0; font-family: var(--font-display); font-size: 1.5rem; line-height: 1.2; color: var(--paper-ink); }
+.ab-title--key { font-size: 1.2rem; }
+.ab-namerow { display: flex; flex-wrap: wrap; gap: 8px 24px; margin: 12px 0 0; font-size: 13px; }
+.ab-namerow span { display: inline-flex; align-items: flex-end; gap: 6px; flex: 1 1 160px; }
+.ab-namerow i { flex: 1; border-bottom: 1px solid var(--paper-ink); min-width: 80px; height: 1.1em; }
+#ab-root[data-mode="online"] .ab-namerow { display: none; }
+
+.ab-sec { margin: 18px 0 0; }
+.ab-h { display: flex; gap: 8px; align-items: baseline; margin: 0 0 4px; font-size: 1.02rem; color: var(--paper-ink); }
+.ab-h b {
+  flex: none; display: inline-grid; place-items: center; width: 22px; height: 22px;
+  border-radius: 50%; background: var(--paper-ink); color: #fff; font-size: 12px;
+}
+.ab-instr { margin: 0 0 8px; font-size: 13.5px; color: var(--paper-muted); }
+.ab-hint { font-size: 12.5px; color: var(--paper-muted); }
+
+.ab-rule { margin: 0 0 6px; padding: 10px 12px; border: 1px solid var(--paper-line); border-left: 4px solid var(--brand-blue); border-radius: 6px; font-size: 13.5px; }
+.ab-rule p { margin: 0 0 4px; }
+.ab-rule ul { margin: 4px 0 0; padding-left: 18px; }
+.ab-rule-title { font-weight: 700; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--paper-muted); }
+.ab-rule-ex { font-style: italic; }
+
+/* Gaps: an underline on paper, a field on screen in online mode. */
+.ab-in {
+  width: var(--w, 8ch); max-width: 100%;
+  min-height: 1.6em; padding: 0 4px; margin: 0 2px;
+  border: 0; border-bottom: 1.5px solid var(--paper-ink); border-radius: 0;
+  background: transparent; color: var(--paper-ink);
+  font: inherit; vertical-align: baseline;
+}
+.ab-in:focus-visible { outline: 2px solid var(--brand-blue); outline-offset: 1px; }
+.ab-in--letter {
+  width: 2em; min-height: 2em; text-align: center; text-transform: lowercase;
+  border: 1.5px solid var(--paper-ink); border-radius: 4px;
+}
+.ab-in--line { display: block; width: 100%; margin: 6px 0 0; min-height: 2em; }
+.ab-in--cell { width: 100%; }
+#ab-root[data-mode="online"] .ab-in { background: #f3f6f9; border-radius: 4px 4px 0 0; }
+#ab-root[data-mode="online"] .ab-in--letter { border-radius: 4px; }
+.ab-in.is-right { border-color: var(--success); background: var(--success-soft) !important; }
+.ab-in.is-wrong { border-color: var(--danger); background: var(--danger-soft) !important; }
+
+.ab-lines, .ab-build, .ab-keylist { margin: 0; padding-left: 22px; }
+.ab-lines li, .ab-build li { margin: 0 0 10px; }
+.ab-keylist li { margin: 0 0 3px; }
+.ab-keylist--cols { columns: 2 220px; column-gap: 24px; }
+.ab-keylist--cols li { break-inside: avoid; }
+
+.ab-match { display: grid; grid-template-columns: 1fr; gap: 10px 24px; }
+.ab-match ol, .ab-match ul { margin: 0; padding: 0; list-style: none; }
+.ab-match-left li { display: flex; align-items: center; gap: 10px; margin: 0 0 6px; }
+.ab-match-left { counter-reset: m; }
+.ab-match-left li::before { counter-increment: m; content: counter(m) "."; min-width: 1.6em; color: var(--paper-muted); }
+.ab-match-right li { margin: 0 0 6px; }
+.ab-match-right b { display: inline-block; min-width: 1.6em; }
+
+/* Wide enough for "Missverständnis" on one line: long nouns used to break mid-word. */
+.ab-articles { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 8px 16px; margin: 0; padding: 0; list-style: none; }
+.ab-articles li { display: flex; align-items: baseline; gap: 6px; overflow-wrap: normal; }
+
+.ab-box { display: flex; flex-wrap: wrap; gap: 6px 14px; margin: 0 0 10px; padding: 8px 12px; border: 1.5px dashed var(--paper-line); border-radius: 6px; }
+.ab-words { display: flex; flex-wrap: wrap; gap: 6px; margin: 0; }
+.ab-words span { padding: 1px 8px; border: 1px solid var(--paper-line); border-radius: 4px; }
+.ab-words .ab-hint { border: 0; padding: 0; }
+.ab-story { margin: 0; line-height: 2.1; }
+.ab-story--key { line-height: 1.6; }
+
+.ab-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+.ab-table th { text-align: left; font-size: 12px; color: var(--paper-muted); border-bottom: 1.5px solid var(--paper-ink); padding: 4px 6px; }
+.ab-table td { padding: 6px; border-bottom: 1px solid var(--paper-line); vertical-align: bottom; }
+.ab-table td:first-child { width: 55%; }
+
+.ab-muted { color: var(--paper-muted); }
+.ab-foot { margin-top: 22px; padding-top: 8px; border-top: 1px solid var(--paper-line); font-size: 11px; color: var(--paper-muted); }
+.ab-key .ab-sec { margin-top: 12px; }
+
+@media (min-width: 640px) {
+  .abi { padding-top: var(--space-7); }
+  .abi-title { font-size: var(--text-3xl); }
+  .abi-controls { grid-template-columns: 280px minmax(0, 1fr); align-items: center; }
+  .ab-back { flex-basis: auto; margin-right: auto; }
+  .ab-sheet { padding: 32px 40px 24px; }
+  .ab-title { font-size: 1.8rem; }
+  .ab-match { grid-template-columns: 1fr 1fr; }
+}
+
+/* ============================================================== print == */
+@media print {
+  @page { size: A4; margin: 14mm 14mm 12mm; }
+  /* Only the sheet: the site header, the toolbar and everything else fixed on the page
+     (demo dock, rails) stay off the paper. */
+  body > :not(:has(#ab-root)):not(#ab-root),
+  :has(> #ab-root) > :not(#ab-root),
+  .ab-bar { display: none !important; }
+  body { background: #fff !important; }
+  .ab { max-width: none; padding: 0; margin: 0; }
+  .ab-sheet { border: 0; border-radius: 0; padding: 0; font-size: 11pt; color: #000; }
+  .ab-sheet + .ab-sheet { margin-top: 0; }
+  #ab-root .ab-key { display: block; break-before: page; }
+  #ab-root[data-key="off"] .ab-key { display: none; }
+  #ab-root .ab-namerow { display: flex; }
+  .ab-in, #ab-root[data-mode="online"] .ab-in { background: transparent !important; border-color: #000 !important; }
+  .ab-in.is-right, .ab-in.is-wrong { background: transparent !important; }
+  .ab-h b { background: #000; print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+  .ab-rule { border-left-color: #000; }
+  .ab-lines li, .ab-build li, .ab-match li, .ab-articles li, .ab-table tr { break-inside: avoid; }
+  .ab-sec { break-inside: auto; }
+  .ab-h { break-after: avoid; }
+  .ab-match { grid-template-columns: 1fr 1fr; }
+  .ab-keylist--cols { columns: 2; }
+  a { color: inherit; text-decoration: none; }
+}

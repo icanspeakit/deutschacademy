@@ -1,0 +1,65 @@
+---
+// Bingo generator for group lessons: pick a level and Lernsets, get N different cards and
+// the caller's list, print. Logic: src/lib/spiele/bingo.js; shared parts: common.js.
+import Layout from "../../../layouts/Layout.astro";
+import SiteNav from "../../../components/SiteNav.astro";
+import "../../../styles/spiele.css";
+---
+<Layout
+  title="Bingo zum Ausdrucken – DeutschAcademy"
+  description="Wortschatz-Bingo für den Deutschunterricht: verschiedene Karten für jede Person, dazu die Rufliste mit Bedeutungen. Nach Niveau und Lernset, kostenlos zum Ausdrucken."
+>
+  <SiteNav active="lehrkraefte" />
+  <main class="sp-page" id="sp-root">
+    <a class="sp-back" href="/lehrkraefte/spiele" data-i18n="sp.back">← Alle Spiele</a>
+    <p class="sp-eyebrow" data-i18n="sp.eyebrow">Für Lehrkräfte · Spiele zum Ausdrucken</p>
+    <h1 class="sp-title">Bingo</h1>
+    <p class="sp-lead" data-i18n="sp.bingo.lead">Jede Person bekommt eine andere Karte. Du rufst ein Wort — auf Deutsch oder seine Bedeutung — und alle streichen es. Wer zuerst eine Reihe hat, ruft „Bingo!“.</p>
+
+    <div class="sp-gen">
+      <form class="sp-controls" data-sp-controls>
+        <label class="sp-field"><span data-i18n="sp.level">Niveau</span>
+          <select name="level"><option>A1</option><option>A2</option><option>B1</option><option>B2</option></select>
+        </label>
+        <fieldset class="sp-sets-box">
+          <legend class="sp-legend" data-i18n="sp.sets">Lernsets</legend>
+          <div class="sp-sets-tools">
+            <button type="button" class="sp-link" data-sp-all data-i18n="sp.all">alle</button>
+            <button type="button" class="sp-link" data-sp-none data-i18n="sp.none">keine</button>
+          </div>
+          <div class="sp-sets" data-sp-sets></div>
+        </fieldset>
+        <label class="sp-field"><span data-i18n="sp.bingo.count">Anzahl Karten</span>
+          <input type="number" name="n" min="1" max="60" step="1" />
+        </label>
+        <div class="sp-field"><span data-i18n="sp.bingo.size">Größe</span>
+          <div class="sp-seg">
+            <label><input type="radio" name="size" value="5" /> 5 × 5</label>
+            <label><input type="radio" name="size" value="4" /> 4 × 4</label>
+          </div>
+        </div>
+        <label class="sp-field"><span data-i18n="sp.callerLang">Rufliste mit Bedeutung auf</span>
+          <select name="lang">
+            <option value="en">English</option>
+            <option value="ar">العربية</option>
+            <option value="ru">Русский</option>
+            <option value="tr">Türkçe</option>
+          </select>
+        </label>
+        <div class="sp-actions">
+          <button type="button" class="sp-btn" data-sp-shuffle data-i18n="sp.shuffle">Neu mischen</button>
+          <button type="button" class="sp-btn sp-btn--primary" data-sp-print data-i18n="sp.print">Drucken</button>
+        </div>
+        <p class="sp-status" data-sp-status role="status"></p>
+      </form>
+      <div class="sp-preview" data-sp-preview><div class="sp-sheets" data-sp-sheets></div></div>
+    </div>
+  </main>
+
+  <script>
+    import { mountGenerator } from "../../../lib/spiele/common.js";
+    import { renderBingo } from "../../../lib/spiele/bingo.js";
+    const root = document.getElementById("sp-root");
+    if (root) mountGenerator(root, { defaults: { n: "30", size: "5", lang: "en" }, render: renderBingo });
+  </script>
+</Layout>

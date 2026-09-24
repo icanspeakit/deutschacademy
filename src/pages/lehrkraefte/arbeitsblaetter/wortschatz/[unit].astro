@@ -1,0 +1,168 @@
+---
+// A vocabulary worksheet for one Lernset: print it for a group session, or let learners
+// fill it in on screen. Data and parts: src/lib/arbeitsblatt/wortschatz.js. Behaviour
+// (modes, checking, meaning language): src/lib/arbeitsblatt/client.js.
+//
+// The paper itself stays German — it is a sheet for a German lesson, and the instructions
+// on it are the teacher's classroom language. The controls around it (mode, print, check)
+// follow the site language like every other page.
+import Layout from "../../../../layouts/Layout.astro";
+import SiteNav from "../../../../components/SiteNav.astro";
+import "../../../../styles/arbeitsblatt.css";
+import { wortschatzSheet, worksheetUnits, SHEET_LANGS, LANG_NAMES } from "../../../../lib/arbeitsblatt/wortschatz.js";
+
+export function getStaticPaths() {
+  return worksheetUnits().map((u) => ({ params: { unit: u.id } }));
+}
+
+const { unit: unitId } = Astro.params;
+const sheet = wortschatzSheet(unitId);
+const title = sheet.unit?.title ?? unitId;
+const level = sheet.unit?.level ?? "";
+const path = `/lehrkraefte/arbeitsblaetter/wortschatz/${unitId}`;
+const w = (answers: string[]) => `--w:${Math.max(4, ...answers.map((a) => a.length)) + 2}ch`;
+const json = (a: string[]) => JSON.stringify(a);
+let gap = 0;
+---
+<Layout
+  title={`Arbeitsblatt Wortschatz: ${title} (${level}) – DeutschAcademy`}
+  description={`Arbeitsblatt zum Lernset „${title}“ (${level}): Wörter und Bedeutungen verbinden, Artikel ergänzen, Lückensätze — zum Ausdrucken oder online ausfüllen, mit Lösungen.`}
+>
+  <SiteNav active="lehrkraefte" />
+
+  <main class="ab" id="ab-root" data-mode="print" data-lang="en" data-key="on">
+    <div class="ab-bar">
+      <a class="ab-back" href="/lehrkraefte/arbeitsblaetter" data-i18n="ab.back">← Alle Arbeitsblätter</a>
+      <div class="ab-seg" role="group" aria-label="Ansicht" data-i18n-attr="aria-label:ab.view">
+        <button type="button" data-ab-mode="print" aria-pressed="true" data-i18n="ab.mode.print">Zum Drucken</button>
+        <button type="button" data-ab-mode="online" aria-pressed="false" data-i18n="ab.mode.online">Online ausfüllen</button>
+      </div>
+      <div class="ab-langs" role="group" aria-label="Bedeutungen auf" data-i18n-attr="aria-label:ab.lang.label">
+        <span class="ab-langs-label" data-i18n="ab.lang.label">Bedeutungen auf</span>
+        {SHEET_LANGS.map((l) => (
+          <button type="button" data-ab-lang={l} aria-pressed={l === "en" ? "true" : "false"} lang={l}>{LANG_NAMES[l]}</button>
+        ))}
+      </div>
+      <div class="ab-actions ab-only-print">
+        <label class="ab-check"><input type="checkbox" data-ab-withkey checked /> <span data-i18n="ab.withKey">Lösungsblatt mitdrucken</span></label>
+        <button type="button" class="ab-btn ab-btn--primary" data-ab-print data-i18n="ab.print">Drucken / als PDF speichern</button>
+      </div>
+      <div class="ab-actions ab-only-online">
+        <button type="button" class="ab-btn ab-btn--primary" data-ab-check data-i18n="ab.check">Prüfen</button>
+        <button type="button" class="ab-btn" data-ab-reset data-i18n="ab.reset">Leeren</button>
+        <span class="ab-score" data-ab-score data-tpl="{n} von {total} richtig" data-i18n-attr="data-tpl:ab.score" aria-live="polite"></span>
+      </div>
+    </div>
+
+    <article class="ab-sheet" lang="de">
+      <header class="ab-head">
+        <p class="ab-eyebrow">DeutschAcademy · Arbeitsblatt Wortschatz · {level}</p>
+        <h1 class="ab-title">{title}</h1>
+        <p class="ab-namerow"><span>Name: <i></i></span><span>Datum: <i></i></span></p>
+      </header>
+
+      {sheet.match.left.length > 0 && (
+        <section class="ab-sec">
+          <h2 class="ab-h"><b>A</b> Wort und Bedeutung</h2>
+          <p class="ab-instr">Welche Bedeutung passt? Schreib den Buchstaben in das Kästchen.</p>
+          <div class="ab-match">
+            <ol class="ab-match-left">
+              {sheet.match.left.map((item, i) => (
+                <li>
+                  <input class="ab-in ab-in--letter" data-a={json([sheet.match.answers[i]])} data-kind="letter" maxlength="1" aria-label={`Buchstabe für ${item.de}`} autocomplete="off" />
+                  <span>{item.de}</span>
+                </li>
+              ))}
+            </ol>
+            <ul class="ab-match-right">
+              {sheet.match.right.map((r) => (
+                <li>
+                  <b>{r.letter})</b>
+                  {SHEET_LANGS.map((l) => <span class="ab-m" lang={l} dir={l === "ar" ? "rtl" : "ltr"}>{r.meanings[l]}</span>)}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+      )}
+
+      {sheet.nouns.length > 0 && (
+        <section class="ab-sec">
+          <h2 class="ab-h"><b>B</b> der, die oder das?</h2>
+          <p class="ab-instr">Ergänze den Artikel.</p>
+          <ul class="ab-articles">
+            {sheet.nouns.map((n) => (
+              <li>
+                <input class="ab-in" style="--w:5ch" data-a={json([n.gender])} data-kind="text" aria-label={`Artikel für ${n.lemma}`} autocomplete="off" autocapitalize="off" />
+                <span>{n.lemma}</span>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+
+      {sheet.sentences.length > 0 && (
+        <section class="ab-sec">
+          <h2 class="ab-h"><b>C</b> Lückensätze</h2>
+          <p class="ab-instr">Welches Wort fehlt? Die Wörter im Kasten helfen.</p>
+          <p class="ab-box">{sheet.box.map((b) => <span>{b}</span>)}</p>
+          <ol class="ab-lines">
+            {sheet.sentences.map((s) => (
+              <li>
+                {s.before}<input class="ab-in" style={w([s.answer])} data-a={json([s.answer])} data-kind="text" aria-label={`Lücke ${++gap}`} autocomplete="off" autocapitalize="off" />{s.after}
+              </li>
+            ))}
+          </ol>
+        </section>
+      )}
+
+      <footer class="ab-foot">DeutschAcademy · deutschacademy.com{path} · kostenlos zum Kopieren im Unterricht</footer>
+    </article>
+
+    <article class="ab-sheet ab-key" lang="de" aria-label="Lösungen">
+      <header class="ab-head">
+        <p class="ab-eyebrow">DeutschAcademy · Lösungen · {level}</p>
+        <h2 class="ab-title ab-title--key">{title}</h2>
+      </header>
+      {sheet.match.left.length > 0 && (
+        <section class="ab-sec">
+          <h3 class="ab-h"><b>A</b> Wort und Bedeutung</h3>
+          <ol class="ab-keylist ab-keylist--cols">
+            {sheet.match.left.map((item, i) => {
+              const r = sheet.match.right.find((x) => x.letter === sheet.match.answers[i]);
+              return (
+                <li>
+                  {item.de} – <b>{sheet.match.answers[i]}</b>{" "}
+                  {SHEET_LANGS.map((l) => <span class="ab-m" lang={l} dir={l === "ar" ? "rtl" : "ltr"}>({r?.meanings[l]})</span>)}
+                </li>
+              );
+            })}
+          </ol>
+        </section>
+      )}
+      {sheet.nouns.length > 0 && (
+        <section class="ab-sec">
+          <h3 class="ab-h"><b>B</b> der, die oder das?</h3>
+          <ol class="ab-keylist ab-keylist--cols">
+            {sheet.nouns.map((n) => <li><b>{n.gender}</b> {n.lemma}{n.plural && <span class="ab-muted">, die {n.plural}</span>}</li>)}
+          </ol>
+        </section>
+      )}
+      {sheet.sentences.length > 0 && (
+        <section class="ab-sec">
+          <h3 class="ab-h"><b>C</b> Lückensätze</h3>
+          <ol class="ab-keylist">
+            {sheet.sentences.map((s) => <li>{s.before}<b>{s.answer}</b>{s.after}</li>)}
+          </ol>
+        </section>
+      )}
+      <footer class="ab-foot">DeutschAcademy · deutschacademy.com{path}</footer>
+    </article>
+  </main>
+
+  <script>
+    import { mountWorksheet } from "../../../../lib/arbeitsblatt/client.js";
+    const root = document.getElementById("ab-root");
+    if (root) mountWorksheet(root);
+  </script>
+</Layout>

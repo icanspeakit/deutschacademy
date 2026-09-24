@@ -172,6 +172,8 @@ export function createRuleIntro({
 
   // Beside a tall target (the panel), below a short one (the toggle).
   function showCoach(step, r, below) {
+    // A page may tell a one-beat story (coach: [[title, text]]); there is no step 2 to show.
+    if (!script[step]) { coach?.classList.remove("is-on"); return; }
     showCoachText(script[step], r, below);
   }
   function showCoachText([title, text], r, below) {
@@ -400,14 +402,18 @@ export function createRuleIntro({
 
     if (single) {
       at(500, () => showCoach(0, ruleBtn.getBoundingClientRect(), true));
-      at(4400, () => {
+      // Phone beats (beatsCompact): things on screen beside the button, after it.
+      const d = playBeats(4400);
+      at(4400 + d, () => {
         coach?.classList.remove("is-on");
+        cursor?.classList.remove("is-on");
         overlay?.classList.remove("is-on");
         ruleBtn?.setAttribute("data-peek", "");
       });
-      at(5000, removeOverlay);
-      at(7600, () => {
+      at(5000 + d, removeOverlay);
+      at(7600 + d, () => {
         ruleBtn?.removeAttribute("data-peek");
+        leaveBeats();
         finish();
       });
       return;

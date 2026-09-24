@@ -1,0 +1,62 @@
+---
+// The printable group games for teachers: what each one is and how it runs in class, then
+// the generator. The three share their machinery (src/lib/spiele/common.js) and their data
+// (the lexicon, per level: ./woerter-[level].json.ts).
+import Layout from "../../../layouts/Layout.astro";
+import SiteNav from "../../../components/SiteNav.astro";
+import "../../../styles/spiele.css";
+
+const games = [
+  {
+    href: "/lehrkraefte/spiele/bingo",
+    title: "Bingo",
+    titleKey: null,
+    what: "Wortschatz-Bingo mit einer anderen Karte für jede Person, 4 × 4 oder 5 × 5.",
+    whatKey: "sp.index.bingo.what",
+    how: "Du rufst ein Wort — auf Deutsch oder seine Bedeutung aus der Rufliste. Alle streichen es auf ihrer Karte. Wer zuerst eine Reihe hat, ruft „Bingo!“ und liest die Wörter laut vor.",
+    howKey: "sp.index.bingo.how",
+  },
+  {
+    href: "/lehrkraefte/spiele/domino",
+    title: "Domino",
+    titleKey: null,
+    what: "Eine geschlossene Kette zum Ausschneiden: der/die/das, Plural oder Wort ↔ Bedeutung.",
+    whatKey: "sp.index.domino.what",
+    how: "In Gruppen zu dritt oder viert: Die Steine liegen verdeckt, jede Person zieht und legt an, was passt. Die Gruppe, deren Kreis sich zuerst schließt, gewinnt. Die Lösung liegt bei dir.",
+    howKey: "sp.index.domino.how",
+  },
+  {
+    href: "/lehrkraefte/spiele/erklaeren",
+    title: "Wörter erklären",
+    titleKey: "sp.erklaeren.title",
+    what: "Sprechkarten wie bei Tabu, acht pro Seite, mit verbotenen Wörtern, wo es welche gibt.",
+    whatKey: "sp.index.erklaeren.what",
+    how: "Zwei Teams, eine Minute pro Runde: Eine Person erklärt so viele Karten wie möglich, ihr Team rät. Das andere Team passt auf, dass niemand das Wort oder ein verbotenes Wort sagt.",
+    howKey: "sp.index.erklaeren.how",
+  },
+];
+---
+<Layout
+  title="Spiele zum Ausdrucken – für Lehrkräfte – DeutschAcademy"
+  description="Bingo, Domino und Wörter erklären für den Deutschunterricht: aus dem DeutschAcademy-Wortschatz erzeugt, nach Niveau und Lernset, kostenlos zum Ausdrucken."
+>
+  <SiteNav active="lehrkraefte" />
+  <main class="sp-page">
+    <p class="sp-eyebrow" data-i18n="sp.eyebrow">Für Lehrkräfte · Spiele zum Ausdrucken</p>
+    <h1 class="sp-title" data-i18n="sp.index.title">Spiele für die Gruppe</h1>
+    <p class="sp-lead" data-i18n="sp.index.lead">Wähle Niveau und Lernsets, schau dir die Vorschau an und drucke. Jede Einstellung steht im Link — öffne ihn später wieder, und du bekommst genau dieselben Blätter.</p>
+
+    <div class="sp-games">
+      {games.map((g) => (
+        <a class="sp-game" href={g.href}>
+          <h2 data-i18n={g.titleKey ?? undefined}>{g.title}</h2>
+          <p data-i18n={g.whatKey}>{g.what}</p>
+          <p class="sp-game-how" data-i18n={g.howKey}>{g.how}</p>
+          <span class="sp-game-go" data-i18n="sp.index.open">Erstellen →</span>
+        </a>
+      ))}
+    </div>
+
+    <p class="sp-note" data-i18n="sp.index.note">Alle Wörter kommen aus dem DeutschAcademy-Wortschatz (A1–B2), die Bedeutungen sind dieselben wie in den Wortlisten. Kostenlos, ohne Konto, zum Kopieren und Weitergeben im Unterricht.</p>
+  </main>
+</Layout>

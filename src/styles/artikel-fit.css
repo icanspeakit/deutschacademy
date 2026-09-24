@@ -95,3 +95,35 @@
   .vp-page--fit .akk-pills { width: 100%; flex-wrap: nowrap; gap: 8px; }
   .vp-page--fit .akk-pill { flex: 1; min-width: 0; min-height: 64px; padding: 10px 8px; font-size: 1.35rem; }
 }
+
+/* ---- Phone: the word first ------------------------------------------------------------ */
+/* On a phone the card with the word and der/die/das is the whole point of the screen, and
+   it was starting 560px down: the level button, then the Fokus · Aussprache · Sprache ·
+   Regel row wrapped into three lines, then a centred card with padding above the word.
+   Now the word comes straight after the "Stufe A1 · …" line, and the settings row moves
+   under the card, one slim line of smaller controls. Order only — the DOM (and so the
+   tab order on a desktop) is unchanged. Also serves the Präpositionen trainer. */
+@media (max-width: 720px) {
+  .vp-page--fit .vp-rule-peek {
+    display: inline-flex; width: auto; margin: 0 0 10px; padding: 6px 14px;
+  }
+  .vp-page--fit .vp-col--ex > .vp-card { display: flex; flex-direction: column; min-height: 0; padding-top: 12px; }
+  .vp-page--fit .vp-col--ex > .vp-card > [data-ak-now],
+  .vp-page--fit .vp-col--ex > .vp-card > [data-now] { order: 1; margin: 0 0 2px; }
+  .vp-page--fit .vp-col--ex > .vp-card > #akk-exercise-root { order: 2; }
+  .vp-page--fit .vp-col--ex > .vp-card > .akk-mode-row {
+    order: 3;
+    justify-content: center;
+    gap: 6px 12px;
+    margin-top: 6px;
+    padding: 12px 0 0;
+    border-bottom: 0;
+    border-top: 1px solid var(--akk-line, var(--border));
+    font-size: .8125rem;
+  }
+  .vp-page--fit .akk-mode-row .ls-switch { transform: scale(.88); transform-origin: center; margin: -2px -6px; }
+  .vp-page--fit .akk-mode-row .akk-regel-btn { min-height: 32px; padding: 4px 14px; font-size: .8125rem; }
+  .vp-page--fit .akk-focus-card { justify-content: flex-start; padding: 14px 0 8px; }
+  .vp-page--fit .akk-focus-sentence { margin-bottom: 18px; }
+  .vp-page--fit .akk-focus-instruction { margin-top: 12px; font-size: .9rem; }
+}

@@ -31,7 +31,7 @@ export function flattenPath(path) {
 }
 
 /** Pages that are hubs or overviews — places you pass through, not places you resume. */
-export const NOT_RESUMABLE = new Set(["/", "/uebungen", "/pruefungen", "/fortschritt", "/grammatik", "/wissen",
+export const NOT_RESUMABLE = new Set(["/", "/uebungen", "/pruefungen", "/fortschritt", "/grammatik", "/wissen", "/lehrkraefte", "/spiel",
   "/anmelden", "/passwort-neu", "/impressum", "/datenschutz", "/nutzungsbedingungen", "/einstufungstest",
   "/hoeren", "/lesen", "/schreiben", "/sprechen", "/kultur", "/wortschatz", "/fertigkeiten"]);
 

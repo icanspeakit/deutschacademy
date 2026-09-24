@@ -42,6 +42,8 @@ interface Props {
 const { active } = Astro.props;
 
 const WISSEN_HREF = "/wissen";
+// The teacher section: worksheets, printable games and the live quiz.
+const LEHRKRAEFTE_HREF = "/lehrkraefte";
 
 /** `data-i18n-vars` wants a string or nothing — never the literal "undefined". */
 const vars = (v) => (v ? JSON.stringify(v) : undefined);
@@ -160,6 +162,15 @@ const pruefungen = navSections.find((s) => s.id === "pruefungen");
   >
     <span data-i18n="nav.subject.wissen">Wissen</span>
   </a>
+
+  <!-- ── Für Lehrkräfte ───────────────────────────────────────────────────── -->
+  <a
+    class:list={["lp-menu-btn", "lp-menu-btn--plain", active === "lehrkraefte" && "is-active"]}
+    href={LEHRKRAEFTE_HREF}
+    role="menuitem"
+  >
+    <span data-i18n="nav.subject.lehrkraefte">Für Lehrkräfte</span>
+  </a>
 </div>
 
 <!-- No JS: the panels cannot open, so every section gets a plain link and the menus get
@@ -170,6 +181,7 @@ const pruefungen = navSections.find((s) => s.id === "pruefungen");
     {navUeben.columns.map((c) => <a href={c.href} data-i18n={c.nameKey}>{c.name}</a>)}
     <a href={pruefungen.href} data-i18n={pruefungen.nameKey}>{pruefungen.name}</a>
     <a href={WISSEN_HREF} data-i18n="nav.subject.wissen">Wissen</a>
+    <a href={LEHRKRAEFTE_HREF} data-i18n="nav.subject.lehrkraefte">Für Lehrkräfte</a>
   </div>
 </noscript>
 

@@ -1,0 +1,66 @@
+---
+// Domino generator: a closed ring of tiles (der/die/das, Plural, or Wort ↔ Bedeutung) to
+// cut out, plus the solution. Logic: src/lib/spiele/domino.js; shared parts: common.js.
+import Layout from "../../../layouts/Layout.astro";
+import SiteNav from "../../../components/SiteNav.astro";
+import "../../../styles/spiele.css";
+---
+<Layout
+  title="Domino zum Ausdrucken – DeutschAcademy"
+  description="Domino für den Deutschunterricht: der/die/das, Plural oder Wort und Bedeutung — eine geschlossene Kette zum Ausschneiden, mit Lösung. Nach Niveau und Lernset."
+>
+  <SiteNav active="lehrkraefte" />
+  <main class="sp-page" id="sp-root">
+    <a class="sp-back" href="/lehrkraefte/spiele" data-i18n="sp.back">← Alle Spiele</a>
+    <p class="sp-eyebrow" data-i18n="sp.eyebrow">Für Lehrkräfte · Spiele zum Ausdrucken</p>
+    <h1 class="sp-title">Domino</h1>
+    <p class="sp-lead" data-i18n="sp.domino.lead">Die Gruppe legt die Steine zu einer Kette: Die rechte Hälfte eines Steins passt zur linken Hälfte des nächsten. Am Ende schließt sich der Kreis.</p>
+
+    <div class="sp-gen">
+      <form class="sp-controls" data-sp-controls>
+        <label class="sp-field"><span data-i18n="sp.level">Niveau</span>
+          <select name="level"><option>A1</option><option>A2</option><option>B1</option><option>B2</option></select>
+        </label>
+        <fieldset class="sp-sets-box">
+          <legend class="sp-legend" data-i18n="sp.sets">Lernsets</legend>
+          <div class="sp-sets-tools">
+            <button type="button" class="sp-link" data-sp-all data-i18n="sp.all">alle</button>
+            <button type="button" class="sp-link" data-sp-none data-i18n="sp.none">keine</button>
+          </div>
+          <div class="sp-sets" data-sp-sets></div>
+        </fieldset>
+        <div class="sp-field"><span data-i18n="sp.domino.type">Typ</span>
+          <div class="sp-seg">
+            <label><input type="radio" name="type" value="artikel" /> der / die / das</label>
+            <label><input type="radio" name="type" value="plural" /> Plural</label>
+            <label><input type="radio" name="type" value="bedeutung" /> <span data-i18n="sp.domino.meaning">Wort ↔ Bedeutung</span></label>
+          </div>
+        </div>
+        <label class="sp-field"><span data-i18n="sp.domino.count">Anzahl Steine (12–24)</span>
+          <input type="number" name="count" min="12" max="24" step="1" />
+        </label>
+        <label class="sp-field"><span data-i18n="sp.meaningLang">Bedeutung auf</span>
+          <select name="lang">
+            <option value="en">English</option>
+            <option value="ar">العربية</option>
+            <option value="ru">Русский</option>
+            <option value="tr">Türkçe</option>
+          </select>
+        </label>
+        <div class="sp-actions">
+          <button type="button" class="sp-btn" data-sp-shuffle data-i18n="sp.shuffle">Neu mischen</button>
+          <button type="button" class="sp-btn sp-btn--primary" data-sp-print data-i18n="sp.print">Drucken</button>
+        </div>
+        <p class="sp-status" data-sp-status role="status"></p>
+      </form>
+      <div class="sp-preview" data-sp-preview><div class="sp-sheets" data-sp-sheets></div></div>
+    </div>
+  </main>
+
+  <script>
+    import { mountGenerator } from "../../../lib/spiele/common.js";
+    import { renderDomino } from "../../../lib/spiele/domino.js";
+    const root = document.getElementById("sp-root");
+    if (root) mountGenerator(root, { defaults: { type: "artikel", count: "16", lang: "en" }, render: renderDomino });
+  </script>
+</Layout>

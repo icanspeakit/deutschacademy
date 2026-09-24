@@ -23,12 +23,19 @@
         "Judikative (Rechtsprechung): Die Gerichte und Richter prüfen, ob Gesetze eingehalten werden, und entscheiden über Strafen."
       ],
       "factsEasy": [
-        "Demokratie heißt: Das Volk hat die Macht. Die Menschen wählen, wer das Land regiert.",
-        "Eine Diktatur ist das Gegenteil von Demokratie. Dort bestimmt nur eine Person oder eine kleine Gruppe.",
-        "In Deutschland gibt es drei Teile der Macht. Das heißt Gewaltenteilung.",
-        "Legislative: Bundestag und Bundesrat machen die Gesetze.",
-        "Exekutive: Die Regierung macht die Arbeit. Der Bundeskanzler oder die Bundeskanzlerin führt die Regierung.",
-        "Judikative: Gerichte und Richter kontrollieren die Gesetze. Sie entscheiden auch über Strafen."
+        "Demokratie heißt: Das Volk hat die Macht. Die Menschen wählen. So bestimmen sie, wer regiert.",
+        "Das Gegenteil ist eine Diktatur. Dort bestimmt nur eine Person. Oder eine kleine Gruppe.",
+        "In Deutschland hat nicht eine Stelle die ganze Macht. Die Macht hat drei Teile. Das heißt Gewaltenteilung.",
+        "Teil 1 macht die Gesetze. Das sind der Bundestag und der Bundesrat. (Das Wort dafür: Legislative.)",
+        "Teil 2 ist die Regierung. Sie macht die Arbeit im Land. Der Chef oder die Chefin ist der Bundeskanzler oder die Bundeskanzlerin. (Das Wort dafür: Exekutive.)",
+        "Teil 3 sind die Gerichte. Richter prüfen: Hält sich jeder an die Gesetze? Sie entscheiden auch über Strafen. (Das Wort dafür: Judikative.)"
+      ],
+      "words": [
+        { "de": "das Volk", "easy": "alle Menschen in einem Land" },
+        { "de": "die Macht", "easy": "bestimmen können, was passiert" },
+        { "de": "das Gesetz", "easy": "eine Regel für alle im Land" },
+        { "de": "die Regierung", "easy": "die Leute, die das Land führen" },
+        { "de": "das Gericht", "easy": "Dort entscheiden Richter über Recht und Strafe." }
       ]
     },
     {
@@ -44,13 +51,20 @@
         "Wahlen sind allgemein: Ab 18 Jahren darf fast jeder Erwachsene wählen, der deutscher Bürger/deutsche Bürgerin ist oder aus der EU kommt."
       ],
       "factsEasy": [
-        "Bundestagswahl: Das ist alle 4 Jahre. Die Menschen wählen die Abgeordneten für den Bundestag.",
-        "Landtagswahl: Jedes Bundesland wählt sein eigenes Parlament. In Bayern ist das zum Beispiel alle 5 Jahre.",
-        "Kommunalwahl: Die Menschen wählen den Bürgermeister und den Gemeinderat in ihrer Stadt.",
-        "Wahlen sind frei: Niemand darf dir sagen, wen du wählen musst.",
-        "Wahlen sind geheim: Niemand sieht, wen du wählst.",
-        "Wahlen sind gleich: Jede Stimme zählt gleich viel. Es ist egal, ob du arm oder reich bist.",
-        "Wahlen sind allgemein: Fast alle Erwachsenen ab 18 Jahren dürfen wählen. Sie müssen Deutsche sein oder aus der EU kommen."
+        "Alle 4 Jahre ist Bundestagswahl. Die Menschen wählen dann die Politiker für den Bundestag.",
+        "Jedes Bundesland wählt sein eigenes Parlament. Das ist die Landtagswahl. In Bayern ist sie alle 5 Jahre.",
+        "In der Stadt wählt man den Bürgermeister und den Gemeinderat. Das ist die Kommunalwahl.",
+        "Wahlen sind frei. Du wählst, wen du willst. Niemand darf dir das sagen.",
+        "Wahlen sind geheim. Niemand sieht deinen Stimmzettel.",
+        "Wahlen sind gleich. Jede Stimme zählt gleich viel. Arm oder reich: egal.",
+        "Wahlen sind allgemein. Fast alle Erwachsenen ab 18 dürfen wählen. Sie sind Deutsche. Oder sie kommen aus der EU."
+      ],
+      "words": [
+        { "de": "wählen", "easy": "mit dem Stimmzettel bestimmen, wer regiert" },
+        { "de": "die Stimme", "easy": "dein Kreuz auf dem Stimmzettel" },
+        { "de": "der Stimmzettel", "easy": "das Papier für die Wahl" },
+        { "de": "das Parlament", "easy": "Dort machen Politiker die Gesetze." },
+        { "de": "geheim", "easy": "Niemand darf es sehen." }
       ]
     },
     {
@@ -67,14 +81,21 @@
         "Pflicht: Kinder müssen zur Schule gehen — Schulpflicht in Deutschland dauert normalerweise 9 oder 10 Jahre."
       ],
       "factsEasy": [
-        "Die wichtigste Regel in Deutschland: Die Würde des Menschen ist geschützt. Niemand darf dich schlecht behandeln.",
-        "Meinungsfreiheit: Du darfst deine Meinung frei sagen und schreiben.",
-        "Versammlungsfreiheit: Du darfst dich mit anderen Menschen treffen. Ihr dürft auch zusammen demonstrieren.",
-        "Religionsfreiheit: Du darfst eine Religion haben. Du darfst auch keine Religion haben.",
-        "Gleichheit vor dem Gesetz: Alle Menschen haben die gleichen Rechte. Hautfarbe, Religion oder Geschlecht spielen keine Rolle.",
-        "Pflicht: Alle Menschen müssen die Gesetze befolgen.",
-        "Pflicht: Wenn du arbeitest, zahlst du Steuern. Der Staat bezahlt damit zum Beispiel Schulen und Straßen.",
-        "Pflicht: Kinder müssen in die Schule gehen. Das sind meistens 9 oder 10 Jahre."
+        "Die wichtigste Regel: Jeder Mensch ist wertvoll. Niemand darf dich schlecht behandeln.",
+        "Du darfst sagen, was du denkst. Du darfst es auch schreiben. Das ist Meinungsfreiheit.",
+        "Du darfst dich mit anderen treffen. Ihr dürft zusammen demonstrieren. Das ist Versammlungsfreiheit.",
+        "Du darfst eine Religion haben. Du darfst auch keine haben. Das ist Religionsfreiheit.",
+        "Alle Menschen haben die gleichen Rechte. Hautfarbe, Religion oder Mann und Frau: egal.",
+        "Pflicht: Jeder muss die Gesetze befolgen.",
+        "Pflicht: Du arbeitest und verdienst Geld. Dann zahlst du Steuern. Davon bezahlt der Staat Schulen und Straßen.",
+        "Pflicht: Kinder müssen in die Schule gehen. Meistens 9 oder 10 Jahre lang."
+      ],
+      "words": [
+        { "de": "das Recht", "easy": "Das darfst du. Der Staat schützt es." },
+        { "de": "die Pflicht", "easy": "Das musst du tun." },
+        { "de": "die Meinung", "easy": "was du denkst" },
+        { "de": "demonstrieren", "easy": "mit vielen Menschen auf der Straße zeigen, was man will" },
+        { "de": "die Steuer", "easy": "Geld, das du an den Staat zahlst" }
       ]
     },
     {
@@ -91,14 +112,21 @@
         "Wiedervereinigung: 1989 fiel die Berliner Mauer. Am 3. Oktober 1990 wurde Deutschland wieder ein Land — dieser Tag ist heute der Tag der Deutschen Einheit, ein nationaler Feiertag."
       ],
       "factsEasy": [
-        "Weimarer Republik (1919–1933): Nach dem Ersten Weltkrieg gab es die erste Demokratie in Deutschland. Es gab viele Probleme, zum Beispiel keine Arbeit und wenig Geld.",
-        "NS-Zeit (1933–1945): 1933 bekam Adolf Hitler die Macht. Die Demokratie war zu Ende. Es gab jetzt eine Diktatur ohne Grundrechte.",
-        "Die Regierung verfolgte jüdische Menschen und andere Gruppen. Das war eine sehr schlimme Zeit.",
-        "1939–1945: Der Zweite Weltkrieg. Deutschland begann den Krieg. Millionen Menschen starben.",
-        "Teilung (1945–1990): Nach dem Krieg gab es zwei deutsche Staaten. Der Westen hieß Bundesrepublik Deutschland (BRD). Dort gab es Demokratie.",
-        "Der Osten hieß Deutsche Demokratische Republik (DDR). Dort gab es eine Diktatur.",
-        "Die Berliner Mauer trennte Ost und West. Viele Menschen wollten von Ost nach West fliehen.",
-        "Wiedervereinigung: 1989 fiel die Berliner Mauer. Am 3. Oktober 1990 wurde Deutschland wieder ein Land. Dieser Tag heißt Tag der Deutschen Einheit."
+        "1919 bis 1933: Weimarer Republik. Das war die erste Demokratie in Deutschland. Es gab viele Probleme. Viele Menschen hatten keine Arbeit.",
+        "1933 bis 1945: NS-Zeit. 1933 bekam Adolf Hitler die Macht. Die Demokratie war zu Ende. Es gab eine Diktatur. Die Menschen hatten keine Grundrechte mehr.",
+        "Die Nazis haben jüdische Menschen und andere Gruppen verfolgt und getötet. Das war eine sehr schlimme Zeit.",
+        "1939 bis 1945: Zweiter Weltkrieg. Deutschland hat den Krieg angefangen. Millionen Menschen sind gestorben.",
+        "1945 bis 1990: Es gab zwei deutsche Staaten. Der Westen hieß BRD. Dort gab es Demokratie.",
+        "Der Osten hieß DDR. Dort gab es eine Diktatur.",
+        "Eine Mauer in Berlin trennte Ost und West. Viele Menschen wollten fliehen.",
+        "1989 fiel die Mauer. Am 3. Oktober 1990 wurde Deutschland wieder ein Land. Der 3. Oktober ist heute ein Feiertag: der Tag der Deutschen Einheit."
+      ],
+      "words": [
+        { "de": "der Krieg", "easy": "Länder kämpfen mit Waffen gegeneinander." },
+        { "de": "die Diktatur", "easy": "Eine Person hat die ganze Macht." },
+        { "de": "verfolgen", "easy": "Menschen jagen, fangen und bestrafen" },
+        { "de": "die Mauer", "easy": "eine hohe Wand aus Stein" },
+        { "de": "fliehen", "easy": "schnell weggehen, weil es gefährlich ist" }
       ]
     },
     {
@@ -116,15 +144,22 @@
         "Pflegeversicherung: hilft mit den Kosten, wenn du pflegebedürftig wirst."
       ],
       "factsEasy": [
-        "Es gibt einen Mindestlohn. Der Chef muss mindestens so viel Geld zahlen.",
-        "Normale Arbeitszeit: 8 Stunden pro Tag. Das sind 40 Stunden pro Woche.",
-        "Arbeitnehmer haben Urlaub. Das sind mindestens 20 Tage pro Jahr.",
-        "Kündigungsschutz: Der Chef kann dich nicht einfach kündigen. Er braucht einen guten Grund.",
-        "Deutschland ist ein Sozialstaat. Der Staat hilft Menschen in Not.",
-        "Krankenversicherung: Sie zahlt den Arzt und die Medikamente, wenn du krank bist.",
-        "Arbeitslosenversicherung: Sie zahlt Geld, wenn du deine Arbeit verlierst.",
-        "Rentenversicherung: Sie zahlt Geld, wenn du alt bist und nicht mehr arbeitest.",
-        "Pflegeversicherung: Sie hilft, wenn du Hilfe im Alltag brauchst."
+        "Es gibt einen Mindestlohn. Der Chef muss mindestens so viel Geld pro Stunde zahlen.",
+        "Normal sind 8 Stunden Arbeit am Tag. Das sind 40 Stunden in der Woche.",
+        "Jeder Arbeitnehmer hat Urlaub. Mindestens 20 Tage im Jahr.",
+        "Der Chef darf dich nicht einfach kündigen. Er braucht einen wichtigen Grund.",
+        "Deutschland ist ein Sozialstaat. Das heißt: Der Staat hilft Menschen mit Problemen.",
+        "Du bist krank? Die Krankenversicherung bezahlt den Arzt und die Medikamente.",
+        "Du hast keine Arbeit mehr? Die Arbeitslosenversicherung zahlt dir Geld.",
+        "Du bist alt und arbeitest nicht mehr? Die Rentenversicherung zahlt dir Geld. Das heißt Rente.",
+        "Du brauchst Hilfe im Alltag, zum Beispiel beim Waschen? Die Pflegeversicherung hilft."
+      ],
+      "words": [
+        { "de": "der Lohn", "easy": "das Geld für deine Arbeit" },
+        { "de": "kündigen", "easy": "Der Chef beendet deine Arbeit." },
+        { "de": "der Urlaub", "easy": "freie Tage, du bekommst trotzdem Lohn" },
+        { "de": "die Versicherung", "easy": "Du zahlst jeden Monat. Sie hilft, wenn etwas passiert." },
+        { "de": "die Rente", "easy": "Geld, wenn du alt bist" }
       ]
     },
     {
@@ -138,11 +173,18 @@
         "Eltern tragen Verantwortung für ihre Kinder: sie versorgen, erziehen und schützen sie."
       ],
       "factsEasy": [
-        "Schulpflicht: Alle Kinder müssen zur Schule gehen. Die Eltern melden ihr Kind an.",
-        "Schutz vor Gewalt: Eltern dürfen ihre Kinder nicht schlagen. Das ist verboten.",
-        "Kinderarbeit ist verboten. Ab 15 Jahren dürfen Kinder leichte Jobs machen.",
-        "In Deutschland dürfen alle Menschen heiraten. Das Geschlecht und die Religion spielen keine Rolle. Der Staat schützt Ehe und Familie.",
-        "Eltern sind verantwortlich für ihre Kinder. Sie sorgen für sie, erziehen sie und schützen sie."
+        "Alle Kinder müssen zur Schule gehen. Die Eltern melden das Kind an der Schule an.",
+        "Eltern dürfen ihre Kinder nicht schlagen. Das ist verboten.",
+        "Kinder dürfen nicht arbeiten. Ab 15 Jahren sind leichte Jobs erlaubt.",
+        "In Deutschland dürfen alle heiraten. Mann oder Frau, Religion: egal. Der Staat schützt Ehe und Familie.",
+        "Eltern sorgen für ihre Kinder. Sie erziehen und schützen sie."
+      ],
+      "words": [
+        { "de": "die Pflicht", "easy": "Das musst du tun." },
+        { "de": "schlagen", "easy": "mit der Hand hart treffen" },
+        { "de": "verboten", "easy": "Das darf man nicht." },
+        { "de": "heiraten", "easy": "Zwei Menschen werden ein Ehepaar." },
+        { "de": "erziehen", "easy": "Eltern zeigen dem Kind, wie man lebt." }
       ]
     }
   ],

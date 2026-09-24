@@ -73,6 +73,10 @@ export function mountRuleColumn(page, {
   sheet = false,
   /** Extra tour beats for what is inside the column — see `beats` in ruleIntro.js. */
   beats = [],
+  /** Beats for the phone telling. Empty by default: most columns have nothing a phone
+      tour can reach. A beat that points at something always on screen (a button in the
+      work, not in the sheet) can be played there too. */
+  beatsCompact = [],
 } = {}) {
   if (!page) return null;
   const ruleEl = page.querySelector(".vp-col--rule");
@@ -216,7 +220,7 @@ export function mountRuleColumn(page, {
     // only ever has the button to light (one). A page that overrides one should be able
     // to leave the other alone.
     coach: (compact ? coachCompact : coach) ?? undefined,
-    beats: compact ? [] : beats,
+    beats: compact ? beatsCompact : beats,
   });
 
   // Once per browser on the learner's first page of this kind. ?intro replays it on

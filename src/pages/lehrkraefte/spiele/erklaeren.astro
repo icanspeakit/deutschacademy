@@ -1,0 +1,57 @@
+---
+// "Wörter erklären" card generator (Tabu-style speaking cards). Logic:
+// src/lib/spiele/erklaeren.js; shared parts: common.js.
+import Layout from "../../../layouts/Layout.astro";
+import SiteNav from "../../../components/SiteNav.astro";
+import "../../../styles/spiele.css";
+---
+<Layout
+  title="Wörter erklären – Karten zum Ausdrucken – DeutschAcademy"
+  description="Sprechkarten für den Deutschunterricht: ein Wort erklären, ohne es zu sagen. Nach Niveau und Lernset, acht Karten pro Seite, kostenlos zum Ausdrucken."
+>
+  <SiteNav active="lehrkraefte" />
+  <main class="sp-page" id="sp-root">
+    <a class="sp-back" href="/lehrkraefte/spiele" data-i18n="sp.back">← Alle Spiele</a>
+    <p class="sp-eyebrow" data-i18n="sp.eyebrow">Für Lehrkräfte · Spiele zum Ausdrucken</p>
+    <h1 class="sp-title" data-i18n="sp.erklaeren.title">Wörter erklären</h1>
+    <p class="sp-lead" data-i18n="sp.erklaeren.lead">Eine Person zieht eine Karte und erklärt das Wort auf Deutsch, ohne es zu sagen. Die anderen raten. Stehen verbotene Wörter auf der Karte, sind auch die tabu.</p>
+
+    <div class="sp-gen">
+      <form class="sp-controls" data-sp-controls>
+        <label class="sp-field"><span data-i18n="sp.level">Niveau</span>
+          <select name="level"><option>A1</option><option>A2</option><option>B1</option><option>B2</option></select>
+        </label>
+        <fieldset class="sp-sets-box">
+          <legend class="sp-legend" data-i18n="sp.sets">Lernsets</legend>
+          <div class="sp-sets-tools">
+            <button type="button" class="sp-link" data-sp-all data-i18n="sp.all">alle</button>
+            <button type="button" class="sp-link" data-sp-none data-i18n="sp.none">keine</button>
+          </div>
+          <div class="sp-sets" data-sp-sets></div>
+        </fieldset>
+        <label class="sp-field"><span data-i18n="sp.erklaeren.count">Anzahl Karten</span>
+          <select name="count">
+            <option value="8">8</option>
+            <option value="16">16</option>
+            <option value="24">24</option>
+            <option value="32">32</option>
+            <option value="48">48</option>
+          </select>
+        </label>
+        <div class="sp-actions">
+          <button type="button" class="sp-btn" data-sp-shuffle data-i18n="sp.shuffle">Neu mischen</button>
+          <button type="button" class="sp-btn sp-btn--primary" data-sp-print data-i18n="sp.print">Drucken</button>
+        </div>
+        <p class="sp-status" data-sp-status role="status"></p>
+      </form>
+      <div class="sp-preview" data-sp-preview><div class="sp-sheets" data-sp-sheets></div></div>
+    </div>
+  </main>
+
+  <script>
+    import { mountGenerator } from "../../../lib/spiele/common.js";
+    import { renderErklaeren } from "../../../lib/spiele/erklaeren.js";
+    const root = document.getElementById("sp-root");
+    if (root) mountGenerator(root, { defaults: { count: "16" }, render: renderErklaeren });
+  </script>
+</Layout>

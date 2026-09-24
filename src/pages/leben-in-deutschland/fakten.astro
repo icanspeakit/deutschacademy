@@ -39,6 +39,8 @@ import "../../styles/pruefungen.css";
 import "../../styles/fakten-layouts.css";
 import GrammarHelp from "../../components/GrammarHelp.astro";
 import GrammarHelpText from "../../components/GrammarHelpText.astro";
+// A picture per topic, and in "In einfachem Deutsch" its few key words underneath.
+import LidGrafik from "../../components/LidGrafik.astro";
 import lid from "../../data/leben-in-deutschland.json";
 import lidHelp from "../../data/uebersetzungen/leben-in-deutschland.json";
 import { field, item } from "../../lib/helpContent.js";
@@ -133,6 +135,7 @@ const dlVars = (d: { vars?: Record<string, string> }) => (d.vars ? JSON.stringif
           <h3>{t.title}</h3>
           <GrammarHelpText text={field(topicTx(t.id).title)} />
           <ul class="fact-list">{t.facts.map((f, fi) => <li><span class="fk-std">{f}</span><span class="fk-easy">{t.factsEasy[fi]}</span><GrammarHelpText class="fk-std" text={item(topicTx(t.id).facts, fi)} /><GrammarHelpText class="fk-easy" text={item(topicTx(t.id).factsEasy, fi)} /></li>)}</ul>
+          <LidGrafik id={t.id} words={(t as any).words} />
         </div>
       ))}
 
@@ -183,6 +186,7 @@ const dlVars = (d: { vars?: Record<string, string> }) => (d.vars ? JSON.stringif
               <h3>{t.title}</h3>
           <GrammarHelpText text={field(topicTx(t.id).title)} />
               <ul class="fact-list">{t.facts.map((f, fi) => <li><span class="fk-std">{f}</span><span class="fk-easy">{t.factsEasy[fi]}</span><GrammarHelpText class="fk-std" text={item(topicTx(t.id).facts, fi)} /><GrammarHelpText class="fk-easy" text={item(topicTx(t.id).factsEasy, fi)} /></li>)}</ul>
+          <LidGrafik id={t.id} words={(t as any).words} />
             </article>
           ))}
 
@@ -216,6 +220,7 @@ const dlVars = (d: { vars?: Record<string, string> }) => (d.vars ? JSON.stringif
               <span class="fk-fact-card-count" data-i18n="lid.fk.nFacts" data-i18n-vars={JSON.stringify({ n: t.facts.length })}>{t.facts.length} Fakten</span>
             </summary>
             <ul class="fact-list">{t.facts.map((f, fi) => <li><span class="fk-std">{f}</span><span class="fk-easy">{t.factsEasy[fi]}</span><GrammarHelpText class="fk-std" text={item(topicTx(t.id).facts, fi)} /><GrammarHelpText class="fk-easy" text={item(topicTx(t.id).factsEasy, fi)} /></li>)}</ul>
+          <LidGrafik id={t.id} words={(t as any).words} />
           </details>
         ))}
       </div>

@@ -205,6 +205,18 @@ function chainOf(para) {
       last.gloss ??= gloss;
     } else steps.push({ lang, form, ...(gloss ? { gloss } : {}) });
   }
+  // Forms Wiktionary writes without a template, right behind a native label:
+  // "von [[germanisch]]: ''*fader,''", "{{goh.}} ''fater''". Vater's whole line is like that
+  // past its first step, and the tree stopped at "fater".
+  const LABELLED = new RegExp(`(?:\\[\\[|\\{\\{)(${Object.keys(NATIVE_WORD).sort((a, b) => b.length - a.length).join("|")})(?:e[nms]?)?\\.?(?:\\]\\]|\\}\\})\\s*:?\\s*''(\\*?[^'{}\\[\\]|]+?)[,;:]?''`, "gi");
+  for (const m of s.matchAll(LABELLED)) {
+    const lang = NATIVE_WORD[m[1].toLowerCase()];
+    const form = m[2].trim().replace(/[,;:]$/, "");
+    if (!lang || !form || steps.some((st) => st.lang === lang)) continue;
+    const after = s.slice(m.index + m[0].length, m.index + m[0].length + 40).replace(/'''?/g, "");
+    const g = after.match(/^[\s,:(=]*[„‚"]([^“‘"]{1,40})[“‘"]/);
+    steps.push({ lang, form, ...(g ? { gloss: g[1].trim() } : {}) });
+  }
   if (!steps.length) return null;
   // One box per language, oldest first. Modern languages without a depth (Englisch,
   // Französisch, Italienisch …) are the last hop before German and sort to the bottom.
@@ -214,6 +226,26 @@ function chainOf(para) {
     if (had) { had.form += `, ${st.form}`; had.gloss ??= st.gloss; } else seen.set(st.lang, st);
   }
   return [...seen.values()].reverse().sort((a, b) => (DEPTH[b.lang] ?? 0) - (DEPTH[a.lang] ?? 0));
+}
+
+/** Up to four synonyms of the first sense that are in our lexicon, read only up to the
+ *  line's first ";" — Wiktionary puts the pejorative and dialect ones after it. */
+function synonymsOf(wiki, lemma) {
+  const de = wiki.split(/\n== .*\(\{\{Sprache\|/).find((x) => x.startsWith("Deutsch}}")) ?? wiki;
+  const noun = de.split(/\n=== /).find((x) => /Wortart\|Substantiv\|Deutsch/.test(x)) ?? de;
+  const sec = noun.match(/\{\{Synonyme\}\}\n([\s\S]*?)(?=\n\{\{[A-ZÄÖÜ][^|}]*\}\}|\n==|$)/);
+  if (!sec) return null;
+  // The first sense only: the others are where the slang lives (Handy → "Gurke") and the
+  // senses a learner does not mean (Haus → "Gepäck", the snail's).
+  const first = sec[1].split("\n").find((l) => /^:\[1[\],]/.test(l)) ?? sec[1].split("\n")[0];
+  const head = stripRefs(first).split(";")[0].replace(/\([^)]*\)/g, "").replace(/''[^']*''/g, "");
+  const words = [...head.matchAll(/\[\[([^\]|#]+)(?:\|[^\]]*)?\]\]/g)].map((m) => m[1].trim())
+    .filter((w, i, a) => w && w !== lemma && /^[A-ZÄÖÜ]/.test(w) && w.split(" ").length <= 2 && a.indexOf(w) === i);
+  if (!words.length) return null;
+  // Only words from our own lexicon: Wiktionary's lists run from Papa to dialect (Knan),
+  // English (Daddy) and jokes (Gänsewein), and a learner cannot tell which is which.
+  const hits = words.filter((w) => KNOWN.has(w)).slice(0, 4);
+  return hits.length ? hits : null;
 }
 
 /** A compound or derivation, from the plain text: ["Schmerz", "Mittel"], ["wohnen", "-ung"]. */
@@ -235,6 +267,7 @@ function partsOf(text) {
   return parts && !parts.some((p) => GRAMMAR.test(p)) ? parts : null;
 }
 
+const KNOWN = new Set(nouns({}).map((n) => n.lemma));
 const pool = nouns({ has: "gender" }).filter((n) => ["A1", "A2", "B1", "B2"].includes(n.level));
 const out = {};
 let missing = 0;
@@ -252,12 +285,17 @@ for (const n of pool) {
   if (!text || text.length < 12 || /\{\{|\}\}|\[\[/.test(text)) { missing++; continue; }
   const chain = chainOf(para);
   const parts = chain ? null : partsOf(plain(para));
-  out[n.id] = { text, ...(chain ? { chain } : {}), ...(parts ? { parts } : {}) };
+  const syn = synonymsOf(wiki, n.lemma);
+  // What the word means today, in the learner's languages, for the tree's last box. From our
+  // own lexicon, not Wiktionary: the same gloss the rest of the site uses.
+  const mean = Object.fromEntries(["en", "ar", "ru", "tr"].filter((l) => n[l]).map((l) => [l, n[l]]));
+  out[n.id] = { text, ...(chain ? { chain } : {}), ...(parts ? { parts } : {}), ...(syn ? { syn } : {}), ...(Object.keys(mean).length ? { mean } : {}) };
 }
 
 if (DRY) {
-  for (const id of ["tisch", "name", "tag", "angst", "wasser", "haus", "wohnung", "kaution", "schmerzmittel", "bezahlung", "handy"]) console.log(id, "→", JSON.stringify(out[id]));
+  for (const id of ["vater", "tisch", "name", "tag", "angst", "wasser", "haus", "wohnung", "kaution", "schmerzmittel", "bezahlung", "handy"]) console.log(id, "→", JSON.stringify(out[id]));
   const v = Object.values(out);
+  console.log("syn", v.filter((x) => x.syn).length, "mean", v.filter((x) => x.mean).length);
   console.log("chain", v.filter((x) => x.chain).length, "parts", v.filter((x) => x.parts).length, "text only", v.filter((x) => !x.chain && !x.parts).length);
 } else {
   mkdirSync(path.dirname(OUT), { recursive: true });

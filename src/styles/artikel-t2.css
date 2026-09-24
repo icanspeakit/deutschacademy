@@ -97,16 +97,19 @@
 .ahk-word { margin: 8px 0 4px; font-size: 1.35rem; font-weight: var(--fw-semibold, 600); color: var(--ink); }
 /* The Stammbaum: a narrow column of boxes, oldest on top, joined by down-arrows, ending in
    today's word in the brand colour — the etymonline chart, in the site's own boxes. */
-.ahk-tree { list-style: none; margin: 16px 0 18px; padding: 0; display: flex; flex-direction: column; align-items: center; max-width: 360px; }
+/* The Stammbaum, drawn like a dictionary's derivation chart: one box per stage, oldest at
+   the top, the historical form in a book face, its language in colour, what it meant under
+   it — and today's word, with its meaning in the learner's language, at the bottom. */
+.ahk-tree { list-style: none; margin: 16px 0 14px; padding: 0; display: flex; flex-direction: column; max-width: 420px; }
 .ahk-node {
   position: relative;
   width: 100%;
   box-sizing: border-box;
   padding: 10px 14px;
   border: 1px solid var(--border);
-  border-radius: 12px;
+  border-radius: 10px;
   background: var(--surface-card);
-  text-align: center;
+  text-align: start;
 }
 /* The arrow into every box but the first: a line and a head, drawn in the gap. */
 .ahk-node + .ahk-node { margin-top: 30px; }
@@ -118,22 +121,18 @@
   border-right: 1.5px solid var(--border-strong); border-bottom: 1.5px solid var(--border-strong);
   transform: translateX(.75px) rotate(45deg);
 }
-.ahk-form { display: block; font-size: 1.05rem; font-weight: var(--fw-semibold, 600); color: var(--ink); overflow-wrap: anywhere; }
-.ahk-lang {
-  display: inline-block;
-  margin-top: 4px;
-  padding: 1px 8px;
-  border-radius: var(--radius-pill);
-  background: var(--surface-sunken, rgba(0, 0, 0, .05));
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: .02em;
-  color: var(--muted);
-}
-.ahk-gloss { display: block; margin-top: 4px; font-size: var(--text-sm); color: var(--muted); }
+.ahk-form { display: block; font-family: Georgia, "Times New Roman", serif; font-size: 1.15rem; color: var(--ink); overflow-wrap: anywhere; }
+.ahk-lang { display: block; margin-top: 2px; font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: #b4533a; }
+.ahk-gloss { display: block; margin-top: 3px; font-size: var(--text-sm); color: var(--muted); }
 .ahk-node--now { border-color: var(--brand-blue); background: color-mix(in srgb, var(--brand-blue) 8%, var(--surface-card)); }
-.ahk-node--now .ahk-form { font-size: 1.3rem; color: var(--brand-blue-dark, var(--brand-blue)); }
-.ahk-node--now .ahk-lang { background: color-mix(in srgb, var(--brand-blue) 14%, transparent); color: var(--brand-blue-dark, var(--brand-blue)); }
+.ahk-node--now .ahk-form { font-family: inherit; font-size: 1.3rem; font-weight: var(--fw-semibold, 600); color: var(--brand-blue-dark, var(--brand-blue)); }
+.ahk-node--now .ahk-lang { color: var(--brand-blue-dark, var(--brand-blue)); }
+.ahk-node--now .ahk-gloss { color: var(--ink); font-weight: 600; }
+.ahk-node--parts { text-align: center; }
+:root[data-theme="dark"] .ahk-lang { color: #f0a58f; }
+.ahk-syn { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 8px; margin: 0 0 14px; }
+.ahk-syn-h { font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); margin-inline-end: 4px; }
+.ahk-syn-w { padding: 3px 10px; border: 1px solid var(--border); border-radius: var(--radius-pill); font-size: var(--text-sm); color: var(--ink); background: var(--surface-card); }
 /* A compound: its parts side by side in the first box. */
 .ahk-node--parts { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 8px; }
 .ahk-part { padding: 4px 12px; border: 1px solid var(--border); border-radius: 8px; font-weight: var(--fw-semibold, 600); background: var(--page-bg); }

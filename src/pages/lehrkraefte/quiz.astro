@@ -1,0 +1,147 @@
+---
+// Live-Quiz, the projector side: a teacher picks a Lernset, the class scans the QR code
+// and plays on their phones (/spiel). Kahoot's shape, kept small: vocabulary only, no
+// accounts, no database. The page is static like every other; the game runs in this
+// tab over Supabase Realtime. Logic: src/lib/liveQuiz/host.js, protocol in protocol.js.
+import Layout from "../../layouts/Layout.astro";
+import SiteNav from "../../components/SiteNav.astro";
+import { units } from "../../lib/lexicon.js";
+import "../../styles/live-quiz.css";
+
+const LEVELS = ["A1", "A2", "B1", "B2"];
+const lernsets = units({ level: LEVELS }).filter((u) => u.words >= 4);
+---
+<Layout
+  title="Live-Quiz – DeutschAcademy"
+  description="Ein Vokabel-Quiz für den Unterricht: Die Klasse scannt den QR-Code und spielt auf dem Handy gegeneinander — ohne Konto, kostenlos."
+>
+  <SiteNav active="lehrkraefte" />
+
+  <main class="lq lq--host" id="lq-host">
+    <!-- 1. Setup -->
+    <section data-screen="setup" class="lq-setup">
+      <header class="lq-head">
+        <p class="lq-eyebrow" data-i18n="lq.host.eyebrow">Für Lehrkräfte · Live-Quiz</p>
+        <h1 class="lq-title" data-i18n="lq.host.title">Vokabel-Quiz für die ganze Klasse</h1>
+        <p class="lq-lead" data-i18n="lq.host.lead">Die Klasse scannt den QR-Code und spielt auf dem Handy gegeneinander. Kein Konto, keine App — nur dieser Bildschirm am Beamer.</p>
+      </header>
+
+      <form class="lq-card lq-form" data-setup>
+        <label class="lq-field">
+          <span data-i18n="lq.host.level">Niveau</span>
+          <select name="level" data-level>
+            {LEVELS.map((lv) => <option value={lv}>{lv}</option>)}
+          </select>
+        </label>
+        <label class="lq-field">
+          <span data-i18n="lq.host.lernset">Lernset</span>
+          <select name="unit" data-unit>
+            <option value="" data-i18n="lq.host.wholeLevel">Ganze Stufe (gemischt)</option>
+            {lernsets.map((u) => <option value={u.id} data-level={u.level}>{u.title ?? u.id} · {u.words}</option>)}
+          </select>
+        </label>
+
+        <fieldset class="lq-field lq-choice">
+          <legend data-i18n="lq.host.mode">Fragen</legend>
+          <label><input type="radio" name="mode" value="de-meaning" checked /> <span data-i18n="lq.mode.deMeaningLabel">Deutsch → Bedeutung</span></label>
+          <label><input type="radio" name="mode" value="meaning-de" /> <span data-i18n="lq.mode.meaningDeLabel">Bedeutung → Deutsch</span></label>
+        </fieldset>
+
+        <fieldset class="lq-field lq-choice">
+          <legend data-i18n="lq.host.count">Anzahl</legend>
+          {[5, 10, 15].map((n) => <label><input type="radio" name="count" value={n} checked={n === 10} /> {n}</label>)}
+        </fieldset>
+
+        <fieldset class="lq-field lq-choice">
+          <legend data-i18n="lq.host.seconds">Sekunden pro Frage</legend>
+          {[10, 20, 30].map((n) => <label><input type="radio" name="seconds" value={n} checked={n === 20} /> {n}</label>)}
+        </fieldset>
+
+        <label class="lq-field">
+          <span data-i18n="lq.host.showLang">Bedeutungen am Beamer</span>
+          <select data-show-lang>
+            <option value="en">English</option>
+            <option value="ar">العربية</option>
+            <option value="ru">Русский</option>
+            <option value="tr">Türkçe</option>
+          </select>
+          <small data-i18n="lq.host.showLangHint">Auf dem Handy sieht jede Person die Bedeutungen in ihrer eigenen Sprache.</small>
+        </label>
+
+        <p class="lq-error" data-setup-error role="alert"></p>
+        <button type="submit" class="lq-btn lq-btn--primary" data-i18n="lq.host.create">Raum öffnen</button>
+      </form>
+    </section>
+
+    <!-- 2. Lobby -->
+    <section data-screen="lobby" class="lq-lobby" hidden>
+      <div class="lq-join-card">
+        <p class="lq-join-how"><span data-i18n="lq.host.joinAt">Mitspielen auf</span> <b data-join-url></b></p>
+        <p class="lq-pin-label" data-i18n="lq.host.pinLabel">Spiel-PIN</p>
+        <p class="lq-pin" data-pin></p>
+        <div class="lq-qr" data-qr aria-label="QR-Code zum Mitspielen" data-i18n-attr="aria-label:lq.host.qrLabel"></div>
+      </div>
+      <div class="lq-card lq-roster">
+        <h2 data-lobby-count>0 Mitspieler</h2>
+        <ul data-lobby-list></ul>
+        <div class="lq-actions">
+          <button type="button" class="lq-btn lq-btn--quiet" data-end data-i18n="lq.host.cancel">Abbrechen</button>
+          <button type="button" class="lq-btn lq-btn--primary" data-start disabled data-i18n="lq.host.start">Spiel starten</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. Question -->
+    <section data-screen="question" class="lq-question" hidden>
+      <div class="lq-q-top">
+        <span data-q-n></span>
+        <span class="lq-q-count" data-q-count></span>
+        <span class="lq-q-left" data-q-left></span>
+      </div>
+      <span class="lq-timer"><span data-q-bar></span></span>
+      <p class="lq-q-kind" data-q-kind></p>
+      <p class="lq-prompt" data-q-prompt></p>
+      <div class="lq-options lq-options--host" data-q-options></div>
+      <div class="lq-actions">
+        <button type="button" class="lq-btn lq-btn--quiet" data-end data-i18n="lq.host.endGame">Spiel beenden</button>
+        <button type="button" class="lq-btn lq-btn--ghost" data-q-skip data-i18n="lq.host.skip">Auflösen</button>
+      </div>
+    </section>
+
+    <!-- 4. Reveal -->
+    <section data-screen="reveal" class="lq-reveal" hidden>
+      <p class="lq-q-kind" data-i18n="lq.host.correctWas">Richtig ist</p>
+      <p class="lq-prompt" data-r-answer dir="auto"></p>
+      <div class="lq-dists" data-r-dist></div>
+      <div class="lq-actions">
+        <button type="button" class="lq-btn lq-btn--quiet" data-end data-i18n="lq.host.endGame">Spiel beenden</button>
+        <button type="button" class="lq-btn lq-btn--primary" data-r-next>Rangliste →</button>
+      </div>
+    </section>
+
+    <!-- 5. Leaderboard -->
+    <section data-screen="board" class="lq-board-screen" hidden>
+      <h2 class="lq-title" data-i18n="lq.host.board">Rangliste</h2>
+      <ol class="lq-board" data-board></ol>
+      <div class="lq-actions">
+        <button type="button" class="lq-btn lq-btn--quiet" data-end data-i18n="lq.host.endGame">Spiel beenden</button>
+        <button type="button" class="lq-btn lq-btn--primary" data-b-next>Nächste Frage →</button>
+      </div>
+    </section>
+
+    <!-- 6. Podium -->
+    <section data-screen="podium" class="lq-podium-screen" hidden>
+      <h2 class="lq-title" data-i18n="lq.host.podium">Siegerehrung</h2>
+      <ol class="lq-podium" data-podium></ol>
+      <div class="lq-actions">
+        <button type="button" class="lq-btn lq-btn--primary" data-again data-i18n="lq.host.again">Neues Spiel</button>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    import { mountHost } from "../../lib/liveQuiz/host.js";
+    const root = document.getElementById("lq-host");
+    if (root) (window as any).__lqHost = mountHost(root);
+  </script>
+</Layout>

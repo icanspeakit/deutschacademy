@@ -22,6 +22,7 @@ import "../styles/auth.css";
 // of, so the Niveaus pane previews its first few and links to the rest.
 const GRAMMAR_PREVIEW = 5;
 const WISSEN_HREF = "/wissen";
+const LEHRKRAEFTE_HREF = "/lehrkraefte";
 
 /** `data-i18n-vars` wants a string or nothing — never the literal "undefined". */
 const vars = (v) => (v ? JSON.stringify(v) : undefined);
@@ -73,6 +74,15 @@ const vars = (v) => (v ? JSON.stringify(v) : undefined);
           <span class="lp-drawer-txt">
             <b data-i18n="nav.subject.wissen">Wissen</b>
             <i data-i18n="nav.subject.wissen.blurb">Bücher und Listen als PDF</i>
+          </span>
+          <svg class="lp-drawer-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 6 15 12 9 18"></polyline></svg>
+        </a>
+
+        <a class="lp-drawer-row" href={LEHRKRAEFTE_HREF}>
+          <span class="lp-drawer-ic"><Icon name="graduation-cap" size={18} /></span>
+          <span class="lp-drawer-txt">
+            <b data-i18n="nav.subject.lehrkraefte">Für Lehrkräfte</b>
+            <i data-i18n="nav.subject.lehrkraefte.blurb">Arbeitsblätter, Spiele, Live-Quiz</i>
           </span>
           <svg class="lp-drawer-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 6 15 12 9 18"></polyline></svg>
         </a>

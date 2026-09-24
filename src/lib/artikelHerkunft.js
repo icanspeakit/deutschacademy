@@ -64,6 +64,8 @@ const NONE = {
   uk: "Для цього слова ще немає етимології.",
   tr: "Bu kelimenin kökeni henüz eklenmedi.",
 };
+// "Ähnliche Wörter" — synonyms from Wiktionary, kept to words in our own lexicon.
+const SYN = { de: "Ähnliche Wörter", en: "Similar words", ar: "كلمات مشابهة", uk: "Схожі слова", tr: "Benzer kelimeler" };
 const CREDIT = {
   de: "Herkunft: Wiktionary, CC BY-SA 4.0",
   en: "Etymology: Wiktionary, CC BY-SA 4.0",
@@ -80,12 +82,17 @@ export function mountHerkunft(root, byId) {
   const tree = root.querySelector("[data-herkunft-tree]");
   const text = root.querySelector("[data-herkunft-text]");
   const src = root.querySelector("[data-herkunft-src]");
+  // The synonyms row lives under the tree; made here so the card's markup stays as it is.
+  const syn = document.createElement("p");
+  syn.className = "ahk-syn";
+  syn.hidden = true;
+  tree.after(syn);
   let data = null;
   let loading = null;
   let want = null;
   let open = true; // the question on the card is not answered yet
   let lang = getLang();
-  const tr = {}; // lang → { id: { text, glosses } }, once fetched
+  const tr = {}; // lang → { id: { text, gloss: { German gloss → translated } } }, once fetched
   const trLoading = {};
   const label = (de) => (lang !== "de" && LANG_LABELS[de]?.[lang]) || de;
 
@@ -111,12 +118,15 @@ export function mountHerkunft(root, byId) {
       ${gloss ? `<span class="ahk-gloss">„${esc(gloss)}“</span>` : ""}
     </li>`;
 
-  function drawTree(entry, lemma, glosses) {
-    const today = box("Deutsch, heute", lemma, null, true);
+  function drawTree(entry, lemma, glossTr) {
+    // The last box says what the word means now, in the learner's language (from our
+    // lexicon, `mean`). Ukrainian has no word translations yet, so it reads the English.
+    const meaning = lang === "de" ? null : entry.mean?.[lang] ?? entry.mean?.en ?? null;
+    const today = box("Deutsch, heute", lemma, meaning, true);
     if (entry.chain) {
-      // Glosses are translated in chain order, so the n-th gloss here is the n-th there.
-      let g = 0;
-      return entry.chain.map((s) => box(s.lang, s.form, s.gloss && mask(glosses?.[g++] || s.gloss, lemma))).join("") + today;
+      // Translated glosses are keyed by the German gloss, so a chain that gains a step
+      // keeps every translation that still applies.
+      return entry.chain.map((s) => box(s.lang, s.form, s.gloss && mask(glossTr?.[s.gloss] || s.gloss, lemma))).join("") + today;
     }
     if (entry.parts) {
       const parts = entry.parts.map((p) => `<span class="ahk-part">${esc(p)}</span>`).join(`<span class="ahk-plus" aria-hidden="true">+</span>`);
@@ -134,8 +144,13 @@ export function mountHerkunft(root, byId) {
     const entry = data[want];
     const t = typeof entry === "string" ? { text: entry } : entry;
     const x = lang !== "de" ? tr[lang]?.[want] : null;
-    const html = t ? drawTree(t, q.lemma, x?.glosses) : "";
+    const html = t ? drawTree(t, q.lemma, x?.gloss) : "";
     tree.innerHTML = html;
+    syn.hidden = !t?.syn?.length;
+    if (t?.syn?.length) {
+      syn.innerHTML = `<span class="ahk-syn-h">${esc(SYN[lang] ?? SYN.de)}</span>` +
+        t.syn.map((w) => `<span class="ahk-syn-w" lang="de">${esc(w)}</span>`).join("");
+    }
     tree.hidden = !html;
     // The tree ends in the word itself, so the heading above it would say it twice.
     word.hidden = !!html;

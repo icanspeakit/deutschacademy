@@ -1,0 +1,166 @@
+---
+// A grammar worksheet for one topic: the topic's own exercises in paper form, a compact
+// rule box on top, the answer key on its own page. Built by src/lib/arbeitsblatt/grammatik.js;
+// print/online/check behaviour in src/lib/arbeitsblatt/client.js.
+//
+// Like the vocabulary sheets, the paper is German (the exercise titles and hints are the
+// data's German instructions); only the controls around it follow the site language.
+import Layout from "../../../../layouts/Layout.astro";
+import SiteNav from "../../../../components/SiteNav.astro";
+import "../../../../styles/arbeitsblatt.css";
+import { grammarTopics, grammarSheet, topicSlug } from "../../../../lib/arbeitsblatt/grammatik.js";
+
+export function getStaticPaths() {
+  return grammarTopics.map((t) => ({ params: { id: topicSlug(t) }, props: { topic: t } }));
+}
+
+const { topic } = Astro.props;
+const sheet = grammarSheet(topic);
+const path = `/lehrkraefte/arbeitsblaetter/grammatik/${topicSlug(topic)}`;
+const w = (answers: string[]) => `--w:${Math.min(40, Math.max(4, ...answers.map((a) => a.length)) + 2)}ch`;
+const json = (a: string[]) => JSON.stringify(a);
+const LETTER = "ABCDEFGHIJKLMNOP";
+let gap = 0;
+---
+<Layout
+  title={`Arbeitsblatt Grammatik: ${topic.name} (${topic.level}) – DeutschAcademy`}
+  description={`Arbeitsblatt „${topic.name}“ (${topic.level}): Regel auf einen Blick und alle Übungen zum Ausdrucken oder online ausfüllen, mit Lösungsblatt.`}
+>
+  <SiteNav active="lehrkraefte" />
+
+  <main class="ab" id="ab-root" data-mode="print" data-key="on">
+    <div class="ab-bar">
+      <a class="ab-back" href="/lehrkraefte/arbeitsblaetter" data-i18n="ab.back">← Alle Arbeitsblätter</a>
+      <div class="ab-seg" role="group" aria-label="Ansicht" data-i18n-attr="aria-label:ab.view">
+        <button type="button" data-ab-mode="print" aria-pressed="true" data-i18n="ab.mode.print">Zum Drucken</button>
+        <button type="button" data-ab-mode="online" aria-pressed="false" data-i18n="ab.mode.online">Online ausfüllen</button>
+      </div>
+      <div class="ab-actions ab-only-print">
+        <label class="ab-check"><input type="checkbox" data-ab-withkey checked /> <span data-i18n="ab.withKey">Lösungsblatt mitdrucken</span></label>
+        <button type="button" class="ab-btn ab-btn--primary" data-ab-print data-i18n="ab.print">Drucken / als PDF speichern</button>
+      </div>
+      <div class="ab-actions ab-only-online">
+        <button type="button" class="ab-btn ab-btn--primary" data-ab-check data-i18n="ab.check">Prüfen</button>
+        <button type="button" class="ab-btn" data-ab-reset data-i18n="ab.reset">Leeren</button>
+        <span class="ab-score" data-ab-score data-tpl="{n} von {total} richtig" data-i18n-attr="data-tpl:ab.score" aria-live="polite"></span>
+      </div>
+    </div>
+
+    <article class="ab-sheet" lang="de">
+      <header class="ab-head">
+        <p class="ab-eyebrow">DeutschAcademy · Arbeitsblatt Grammatik · {topic.level}</p>
+        <h1 class="ab-title">{topic.name}</h1>
+        <p class="ab-namerow"><span>Name: <i></i></span><span>Datum: <i></i></span></p>
+      </header>
+
+      {(sheet.rule.subtitle || sheet.rule.points.length > 0) && (
+        <aside class="ab-rule">
+          <p class="ab-rule-title">Die Regel</p>
+          {sheet.rule.subtitle && <p>{sheet.rule.subtitle}</p>}
+          {sheet.rule.example && <p class="ab-rule-ex" set:html={sheet.rule.example} />}
+          {sheet.rule.points.length > 0 && <ul>{sheet.rule.points.map((p) => <li set:html={p} />)}</ul>}
+        </aside>
+      )}
+
+      {sheet.sections.map((s, si) => (
+        <section class="ab-sec">
+          <h2 class="ab-h"><b>{LETTER[si]}</b> {s.title}</h2>
+          {s.hint && <p class="ab-instr">{s.hint}</p>}
+          {s.box && <p class="ab-box">{s.box.map((b) => <span>{b}</span>)}</p>}
+
+          {s.type === "fill" && (
+            <ol class="ab-lines">
+              {s.items.map((it) => (
+                <li>
+                  {it.before}<input class="ab-in" style={w(it.answers)} data-a={json(it.answers)} data-kind="text" aria-label={`Lücke ${++gap}`} autocomplete="off" autocapitalize="off" />{it.after}
+                  {it.hint && <span class="ab-hint"> ({it.hint})</span>}
+                </li>
+              ))}
+            </ol>
+          )}
+
+          {s.type === "table" && (
+            <table class="ab-table">
+              <thead><tr>{s.columns.map((c) => <th>{c}</th>)}</tr></thead>
+              <tbody>
+                {s.items.map((it) => (
+                  <tr>
+                    <td>{it.term}</td>
+                    <td><input class="ab-in ab-in--cell" style={w(it.answers)} data-a={json(it.answers)} data-kind="text" aria-label={`Lücke ${++gap}`} autocomplete="off" autocapitalize="off" /></td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
+
+          {s.type === "match" && (
+            <div class="ab-match">
+              <ol class="ab-match-left">
+                {s.left.map((q, i) => (
+                  <li>
+                    <input class="ab-in ab-in--letter" data-a={json([s.answers[i]])} data-kind="letter" maxlength="1" aria-label={`Buchstabe für Zeile ${i + 1}`} autocomplete="off" />
+                    <span>{q}</span>
+                  </li>
+                ))}
+              </ol>
+              <ul class="ab-match-right">
+                {s.right.map((r) => <li><b>{r.letter})</b> <span>{r.text}</span></li>)}
+              </ul>
+            </div>
+          )}
+
+          {s.type === "build" && (
+            <ol class="ab-build">
+              {s.items.map((it) => (
+                <li>
+                  <p class="ab-words">{it.words.map((wd) => <span>{wd}</span>)}{it.hint && <span class="ab-hint">({it.hint})</span>}</p>
+                  <input class="ab-in ab-in--line" data-a={json(it.answers)} data-kind="sentence" aria-label={`Satz ${++gap}`} autocomplete="off" autocapitalize="off" />
+                </li>
+              ))}
+            </ol>
+          )}
+
+          {s.type === "story" && (
+            <p class="ab-story">
+              {s.segments.map((seg) =>
+                seg.blank
+                  ? <input class="ab-in" style={w(seg.answers)} data-a={json(seg.answers)} data-kind="text" aria-label={`Lücke ${++gap}`} autocomplete="off" autocapitalize="off" />
+                  : seg.text,
+              )}
+            </p>
+          )}
+        </section>
+      ))}
+
+      <footer class="ab-foot">DeutschAcademy · deutschacademy.com{path} · kostenlos zum Kopieren im Unterricht</footer>
+    </article>
+
+    <article class="ab-sheet ab-key" lang="de" aria-label="Lösungen">
+      <header class="ab-head">
+        <p class="ab-eyebrow">DeutschAcademy · Lösungen · {topic.level}</p>
+        <h2 class="ab-title ab-title--key">{topic.name}</h2>
+      </header>
+      {sheet.sections.map((s, si) => (
+        <section class="ab-sec">
+          <h3 class="ab-h"><b>{LETTER[si]}</b> {s.title}</h3>
+          {s.type === "fill" && <ol class="ab-keylist">{s.items.map((it) => <li>{it.before}<b>{it.answers.join(" / ")}</b>{it.after}</li>)}</ol>}
+          {s.type === "table" && <ol class="ab-keylist ab-keylist--cols">{s.items.map((it) => <li>{it.term} → <b>{it.answers.join(" / ")}</b></li>)}</ol>}
+          {s.type === "match" && <ol class="ab-keylist ab-keylist--cols">{s.left.map((q, i) => <li>{q} – <b>{s.answers[i]}</b></li>)}</ol>}
+          {s.type === "build" && <ol class="ab-keylist">{s.items.map((it) => <li><b>{it.answers[0]}</b></li>)}</ol>}
+          {s.type === "story" && (
+            <p class="ab-story ab-story--key">
+              {s.segments.map((seg) => (seg.blank ? <b>{seg.answers.join(" / ")}</b> : seg.text))}
+            </p>
+          )}
+        </section>
+      ))}
+      <footer class="ab-foot">DeutschAcademy · deutschacademy.com{path}</footer>
+    </article>
+  </main>
+
+  <script>
+    import { mountWorksheet } from "../../../../lib/arbeitsblatt/client.js";
+    const root = document.getElementById("ab-root");
+    if (root) mountWorksheet(root);
+  </script>
+</Layout>

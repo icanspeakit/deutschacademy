@@ -254,6 +254,7 @@ const overview = {
     import { recordAttempt } from "../lib/progress.js";
     import { createVerlauf } from "../lib/artikelVerlauf.js";
     import { getLang, loadDict, onLangChange } from "../lib/i18n.js";
+    import { t as uiT } from "../lib/uiText.js";
 
     const { packs, size } = JSON.parse(document.getElementById("pr-data")!.textContent || "{}");
     const verlauf = createVerlauf("da-praep-verlauf-v1");
@@ -417,13 +418,23 @@ const overview = {
     showPane(level);
     startSession();
 
-    // The column holds levels and topics, not the rule — so the tour says that.
+    // The column holds levels and topics, not the rule — so the tour says that, and then
+    // points at where the rule is: the "Regel" button beside the modes, which opens the
+    // drawer on the right.
+    const regelBeat = {
+      get title() { return uiT("intro.regel.title", "Die Regel, wenn du sie brauchst"); },
+      get text() { return uiT("intro.regel.text", "„Regel“ öffnet rechts, welcher Fall nach welcher Präposition kommt — die Übung bleibt, wo sie ist."); },
+      target: () => regelBtn,
+      point: () => regelBtn,
+    };
     ruleCol = mountRuleColumn(page, {
       storageKey: "da-praep-rule",
       seenKey: "da-praep-rule-peek",
       sheet: true,
       coach: [["intro.levels.title", "intro.levels.text"]],
       coachCompact: [["intro.levelsCompact.title", "intro.levelsCompact.text"]],
+      beats: [regelBeat],
+      beatsCompact: [regelBeat],
     });
   </script>
 </Layout>

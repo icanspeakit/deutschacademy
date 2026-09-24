@@ -1,0 +1,136 @@
+---
+// /lehrkraefte — the teacher section. Everything a teacher needs for a group session in
+// one place: the live quiz for the projector, worksheets to print or fill in online, and
+// printable group games. All of it is built from the site's own lexicon and grammar data,
+// so it is free to hand out, like the Wissensdatenbank.
+//
+// No sign-in anywhere here: a teacher trying this five minutes before class should not
+// meet an account wall, and students join the quiz with a PIN and a nickname.
+import Layout from "../../layouts/Layout.astro";
+import SiteNav from "../../components/SiteNav.astro";
+import Icon from "../../components/Icon.astro";
+import "../../styles/practice.css";
+
+const sections = [
+  {
+    id: "quiz",
+    icon: "sparkle",
+    title: "Live-Quiz",
+    titleKey: "lk.quiz.title",
+    text: "Wortschatz-Quiz für die ganze Gruppe: Du zeigst den QR-Code, alle spielen mit dem Handy mit. Mit Punkten, Zeit und Rangliste.",
+    textKey: "lk.quiz.text",
+    links: [
+      { href: "/lehrkraefte/quiz", label: "Quiz starten", key: "lk.quiz.start", primary: true },
+      { href: "/spiel", label: "Mitspielen (für Lernende)", key: "lk.quiz.join" },
+    ],
+  },
+  {
+    id: "arbeitsblaetter",
+    icon: "document",
+    title: "Arbeitsblätter",
+    titleKey: "lk.ab.title",
+    text: "Zu jedem Lernset und jedem Grammatikthema: ausdrucken oder online ausfüllen lassen. Mit Lösungsblatt.",
+    textKey: "lk.ab.text",
+    links: [{ href: "/lehrkraefte/arbeitsblaetter", label: "Arbeitsblätter öffnen", key: "lk.ab.open", primary: true }],
+  },
+  {
+    id: "spiele",
+    icon: "grid",
+    title: "Spiele zum Ausdrucken",
+    titleKey: "lk.sp.title",
+    text: "Bingo, Domino und Wörter-erklären-Karten — aus dem Wortschatz eines Lernsets, jedes Mal neu gemischt.",
+    textKey: "lk.sp.text",
+    links: [{ href: "/lehrkraefte/spiele", label: "Spiele öffnen", key: "lk.sp.open", primary: true }],
+  },
+  {
+    id: "wissen",
+    icon: "book-open",
+    title: "Bücher und Wortlisten",
+    titleKey: "lk.wi.title",
+    text: "Grammatik A1–B2 und die Wortlisten als PDF, auch mit Übersetzung in Englisch, Arabisch, Ukrainisch und Türkisch.",
+    textKey: "lk.wi.text",
+    links: [{ href: "/wissen", label: "Zur Wissensdatenbank", key: "lk.wi.open", primary: true }],
+  },
+];
+---
+<Layout
+  title="Für Lehrkräfte – DeutschAcademy"
+  description="Live-Quiz mit QR-Code, Arbeitsblätter zu Wortschatz und Grammatik zum Ausdrucken oder online, und Spiele für den Deutschunterricht — kostenlos, ohne Konto."
+>
+  <SiteNav active="lehrkraefte" />
+
+  <main class="lk">
+    <header class="lk-head">
+      <p class="lk-eyebrow" data-i18n="lk.eyebrow">Für Lehrkräfte</p>
+      <h1 data-i18n="lk.title">Material für den Unterricht</h1>
+      <p class="lk-lead" data-i18n="lk.lead">Für Gruppenstunden, Vertretung und Hausaufgaben: alles kostenlos, ohne Konto, und aus demselben Wortschatz und derselben Grammatik wie die Übungen hier.</p>
+    </header>
+
+    <div class="lk-grid">
+      {sections.map((s) => (
+        <section class:list={["lk-card", `lk-card--${s.id}`]} aria-labelledby={`lk-${s.id}`}>
+          <span class="lk-ic" aria-hidden="true"><Icon name={s.icon} size={22} /></span>
+          <h2 id={`lk-${s.id}`} data-i18n={s.titleKey}>{s.title}</h2>
+          <p data-i18n={s.textKey}>{s.text}</p>
+          <div class="lk-links">
+            {s.links.map((l) => (
+              <a class:list={["lk-btn", l.primary && "lk-btn--primary"]} href={l.href} data-i18n={l.key}>{l.label}</a>
+            ))}
+          </div>
+        </section>
+      ))}
+    </div>
+
+    <p class="lk-note" data-i18n="lk.note">Alles hier ist von DeutschAcademy geschrieben. Du darfst es im Unterricht frei verwenden, ausdrucken und weitergeben.</p>
+  </main>
+
+  <style>
+    .lk { max-width: 1040px; margin: 0 auto; padding: var(--space-5) 16px var(--space-12); }
+    .lk-head { margin-bottom: var(--space-5); }
+    .lk-eyebrow {
+      margin: 0 0 4px;
+      font-family: var(--font-label); font-size: var(--text-xs); letter-spacing: .08em; text-transform: uppercase;
+      color: var(--brand-blue);
+    }
+    .lk-head h1 { margin: 0 0 8px; font-family: var(--font-display); font-size: var(--text-2xl); line-height: 1.15; color: var(--ink); }
+    .lk-lead { margin: 0; max-width: 62ch; color: var(--muted); font-size: var(--text-sm); line-height: 1.55; }
+
+    .lk-grid { display: grid; grid-template-columns: 1fr; gap: 14px; }
+    .lk-card {
+      display: flex; flex-direction: column; gap: 8px;
+      padding: 18px 16px;
+      background: var(--surface-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+    }
+    .lk-card--quiz { border-color: color-mix(in srgb, var(--brand-blue) 45%, var(--border)); background: linear-gradient(180deg, var(--blue-50), var(--surface-card) 70%); }
+    .lk-ic {
+      display: grid; place-items: center;
+      width: 42px; height: 42px; border-radius: 12px;
+      background: var(--gradient-brand); color: #fff;
+    }
+    .lk-card h2 { margin: 4px 0 0; font-size: var(--text-lg); color: var(--ink); }
+    .lk-card p { margin: 0; color: var(--muted); font-size: var(--text-sm); line-height: 1.55; }
+    .lk-links { display: flex; flex-wrap: wrap; gap: 8px; margin-top: auto; padding-top: 8px; }
+    .lk-btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      min-height: 44px; padding: 0 16px;
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--border-strong);
+      color: var(--ink); font-weight: var(--fw-semibold); font-size: var(--text-sm);
+      text-decoration: none;
+    }
+    .lk-btn:hover { background: var(--surface); }
+    .lk-btn--primary { border-color: transparent; background: var(--gradient-brand); color: #fff; }
+    .lk-btn--primary:hover { background: var(--gradient-brand); filter: brightness(1.05); }
+    .lk-btn:focus-visible { outline: 2px solid var(--brand-blue); outline-offset: 2px; }
+    .lk-note { margin: var(--space-6) 4px 0; font-size: 12px; color: var(--muted); }
+
+    @media (min-width: 720px) {
+      .lk { padding-top: var(--space-8); }
+      .lk-head h1 { font-size: var(--text-3xl); }
+      .lk-grid { grid-template-columns: 1fr 1fr; gap: 18px; }
+      .lk-card { padding: 22px; }
+    }
+  </style>
+</Layout>

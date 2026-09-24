@@ -1,0 +1,94 @@
+---
+// /spiel — where a phone joins a live quiz. The QR code on the projector points here with
+// ?pin= filled in; the short address is there to be typed by whoever cannot scan.
+// Phone-first: one column, big targets, nothing to install and no account.
+// Logic: src/lib/liveQuiz/player.js.
+import Layout from "../layouts/Layout.astro";
+import "../styles/live-quiz.css";
+
+const LANGS = [
+  { code: "en", label: "English" },
+  { code: "ar", label: "العربية" },
+  { code: "ru", label: "Русский" },
+  { code: "tr", label: "Türkçe" },
+];
+---
+<Layout
+  title="Mitspielen – DeutschAcademy"
+  description="PIN eingeben und beim Vokabel-Quiz der Klasse mitspielen."
+>
+  <main class="lq lq--player" id="lq-player">
+    <a class="lq-brand" href="/">DeutschAcademy</a>
+    <p class="lq-banner" data-banner hidden role="status"></p>
+
+    <!-- Join -->
+    <section data-screen="join">
+      <h1 class="lq-title" data-i18n="lq.join.title">Mitspielen</h1>
+      <form class="lq-card lq-form" data-join novalidate>
+        <label class="lq-field">
+          <span data-i18n="lq.join.pin">Spiel-PIN</span>
+          <input name="pin" inputmode="numeric" autocomplete="off" maxlength="7" placeholder="123456" class="lq-pin-input" />
+        </label>
+        <label class="lq-field">
+          <span data-i18n="lq.join.name">Dein Name</span>
+          <input name="name" maxlength="16" autocomplete="nickname" placeholder="z. B. Ana" data-i18n-attr="placeholder:lq.join.namePh" />
+        </label>
+        <fieldset class="lq-field lq-langs">
+          <legend data-i18n="lq.join.lang">Bedeutungen auf</legend>
+          {LANGS.map((l) => (
+            <label><input type="radio" name="lang" value={l.code} checked={l.code === "en"} /> <span lang={l.code}>{l.label}</span></label>
+          ))}
+        </fieldset>
+        <p class="lq-error" data-join-error role="alert"></p>
+        <button type="submit" class="lq-btn lq-btn--primary lq-btn--block" data-i18n="lq.join.go">Los geht's</button>
+      </form>
+    </section>
+
+    <!-- Waiting -->
+    <section data-screen="wait" class="lq-wait" hidden>
+      <p class="lq-me" data-me-name></p>
+      <div class="lq-spinner" aria-hidden="true"></div>
+      <p class="lq-wait-msg" data-wait-msg role="status"></p>
+    </section>
+
+    <!-- Question -->
+    <section data-screen="question" class="lq-play" hidden>
+      <div class="lq-q-top"><span data-q-n></span><span data-me-name></span></div>
+      <span class="lq-timer"><span data-q-bar></span></span>
+      <p class="lq-q-kind" data-q-kind></p>
+      <p class="lq-prompt lq-prompt--phone" data-q-prompt></p>
+      <div class="lq-options lq-options--phone" data-q-options></div>
+      <p class="lq-sent" data-q-sent role="status" hidden></p>
+    </section>
+
+    <!-- Result of one question -->
+    <section data-screen="result" class="lq-result" hidden>
+      <div class="lq-result-card" data-result>
+        <p class="lq-res-title" data-res-title></p>
+        <p class="lq-res-points" data-res-points></p>
+      </div>
+      <p class="lq-res-score" data-res-score></p>
+      <p class="lq-wait-msg" data-i18n="lq.wait.next">Gleich kommt die nächste Frage.</p>
+    </section>
+
+    <!-- End -->
+    <section data-screen="end" class="lq-result" hidden>
+      <p class="lq-res-title" data-end-title></p>
+      <p class="lq-end-rank" data-end-rank></p>
+      <p class="lq-res-score" data-end-score></p>
+      <button type="button" class="lq-btn lq-btn--ghost lq-btn--block" data-rejoin data-i18n="lq.end.again">Neues Spiel</button>
+    </section>
+
+    <!-- Stopped: host left, room closed -->
+    <section data-screen="stopped" class="lq-result" hidden>
+      <p class="lq-res-title" data-stop-msg></p>
+      <button type="button" class="lq-btn lq-btn--primary lq-btn--block" data-rejoin data-i18n="lq.end.rejoin">Neue PIN eingeben</button>
+    </section>
+  </main>
+
+  <script>
+    import { mountPlayer } from "../lib/liveQuiz/player.js";
+    const root = document.getElementById("lq-player");
+    if (root) mountPlayer(root);
+  </script>
+</Layout>

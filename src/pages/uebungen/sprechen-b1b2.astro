@@ -3,7 +3,7 @@
 // Diskussion), each stage with its own timer. The existing /uebungen/sprechen covers the
 // DTZ shape instead (description + personal follow-ups, 90 s each), so the two don't overlap.
 import Layout from "../../layouts/Layout.astro";
-import PracticeHeader from "../../components/PracticeHeader.astro";
+import SiteNav from "../../components/SiteNav.astro";
 import "../../styles/practice.css";
 import data from "../../data/sprechen-b1b2.json";
 ---
@@ -11,15 +11,12 @@ import data from "../../data/sprechen-b1b2.json";
   title="Sprechen B1/B2: Kurzvortrag – DeutschAcademy"
   description="Mündliche Prüfung B1/B2 im telc-Format üben: Bildbeschreibung, Kurzvortrag und Diskussion — jede Stufe mit eigenem Timer."
 >
-  <PracticeHeader title="Sprechen B1/B2" />
+  <SiteNav active="fertigkeiten" />
   <main class="practice-main practice-main--wide">
     <div class="practice-hero">
-      <p class="eyebrow">Mündliche Prüfung B1/B2</p>
-      <h1>Kurzvortrag und Diskussion üben</h1>
-      <p>
-        Drei Stufen pro Thema — genau wie in der mündlichen Prüfung: erst das Bild beschreiben, dann
-        einen kurzen Vortrag halten, dann diskutieren. Jede Stufe hat ihren eigenen Timer.
-      </p>
+      <p class="eyebrow" data-i18n="sprechenB1B2.eyebrow">Mündliche Prüfung B1/B2</p>
+      <h1 data-i18n="sprechenB1B2.title">Kurzvortrag und Diskussion üben</h1>
+      <p data-i18n="sprechenB1B2.lead">Drei Stufen pro Thema — genau wie in der mündlichen Prüfung: erst das Bild beschreiben, dann einen kurzen Vortrag halten, dann diskutieren. Jede Stufe hat ihren eigenen Timer.</p>
     </div>
 
     <div class="prompt-card" id="prompt-root"></div>
@@ -30,6 +27,12 @@ import data from "../../data/sprechen-b1b2.json";
   <script type="application/json" id="sb-data" set:html={JSON.stringify(data)}></script>
   <script type="module">
     import { recordSession } from "../../lib/progress.js";
+    import { getLang, loadDict, onLangChange, translate } from "../../lib/i18n.js";
+
+    // Painted with innerHTML after the page's i18n pass, so it translates its own words.
+    // The German here is only the first frame before the dictionary lands.
+    let dict = null;
+    const t = (key, fallback, vars) => (dict && dict[key] != null ? translate(dict, key, vars) : fallback);
 
     const { stages, prompts } = JSON.parse(document.getElementById("sb-data").textContent);
     const root = document.getElementById("prompt-root");
@@ -51,7 +54,7 @@ import data from "../../data/sprechen-b1b2.json";
         return `<ul>${p.beschreibung.map((q) => `<li>${q}</li>`).join("")}</ul>`;
       }
       if (s.key === "kurzvortrag") {
-        return `<p class="prompt-topic"><strong>Thema:</strong> ${p.kurzvortrag.topic}</p>
+        return `<p class="prompt-topic"><strong>${t("sprechenB1B2.topic", "Thema:")}</strong> ${p.kurzvortrag.topic}</p>
                 <ul>${p.kurzvortrag.points.map((q) => `<li>${q}</li>`).join("")}</ul>`;
       }
       return `<p class="prompt-topic">${p.diskussion}</p>`;
@@ -68,19 +71,19 @@ import data from "../../data/sprechen-b1b2.json";
         <img class="prompt-image" src="${p.image}" alt="${p.title}" />
 
         <div class="prompt-stages">
-          ${stages.map((st, i) => `<button type="button" class="quiz-btn ${i === stage ? "quiz-btn--primary" : ""}" data-stage="${i}">${st.label}</button>`).join("")}
+          ${stages.map((st, i) => `<button type="button" class="quiz-btn ${i === stage ? "quiz-btn--primary" : ""}" data-stage="${i}">${t(`sprechenB1B2.stage.${st.key}`, st.label)}</button>`).join("")}
         </div>
 
         <div class="prompt-timer" id="timer">${fmt(seconds)}</div>
-        <button class="quiz-btn quiz-btn--primary prompt-reveal-btn" id="start-timer" type="button">Timer starten (${fmt(s.seconds)})</button>
+        <button class="quiz-btn quiz-btn--primary prompt-reveal-btn" id="start-timer" type="button">${t("sprechenB1B2.startTimer", `Timer starten (${fmt(s.seconds)})`, { time: fmt(s.seconds) })}</button>
 
-        <div class="prompt-section-label">${s.label}</div>
-        <p class="prompt-hint">${s.hint}</p>
+        <div class="prompt-section-label">${t(`sprechenB1B2.stage.${s.key}`, s.label)}</div>
+        <p class="prompt-hint">${t(`sprechenB1B2.hint.${s.key}`, s.hint)}</p>
         ${stageBody(p, s)}
 
         <div class="prompt-nav">
-          <button class="quiz-btn" id="prev-prompt" type="button">← Vorheriges Bild</button>
-          <button class="quiz-btn" id="next-prompt" type="button">Nächstes Bild →</button>
+          <button class="quiz-btn" id="prev-prompt" type="button">${t("sprechen.prevImage", "← Vorheriges Bild")}</button>
+          <button class="quiz-btn" id="next-prompt" type="button">${t("sprechen.nextImage", "Nächstes Bild →")}</button>
         </div>`;
 
       // Same orientation trick as /uebungen/sprechen: portrait photos are capped by height.
@@ -108,7 +111,7 @@ import data from "../../data/sprechen-b1b2.json";
           timerEl.textContent = fmt(Math.max(0, seconds));
           if (seconds <= 0) {
             stopTimer();
-            timerEl.textContent = "Zeit um";
+            timerEl.textContent = t("sprechenB1B2.timeUp", "Zeit um");
             e.target.disabled = false;
             recordSession("sprechen");
           }
@@ -127,5 +130,10 @@ import data from "../../data/sprechen-b1b2.json";
     }
 
     render();
+    // A language switch repaints the card — which also stops a running timer, the same as
+    // switching stage does.
+    const useDict = (d) => { dict = d; render(); };
+    loadDict(getLang()).then(useDict).catch(() => {});
+    onLangChange((_c, d) => useDict(d));
   </script>
 </Layout>

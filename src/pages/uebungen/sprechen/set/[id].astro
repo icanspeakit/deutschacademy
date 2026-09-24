@@ -9,7 +9,7 @@
 // (see neighbours() in src/lib/fertigkeiten.js), so nobody wanders out of a subject
 // halfway through.
 import Layout from "../../../../layouts/Layout.astro";
-import PracticeHeader from "../../../../components/PracticeHeader.astro";
+import SiteNav from "../../../../components/SiteNav.astro";
 import Icon from "../../../../components/Icon.astro";
 import { sprechenSets, sprechen } from "../../../../lib/fertigkeiten.js";
 import { thumbFor } from "../../../../lib/sprechenBilder.js";
@@ -35,30 +35,32 @@ const pending = set.items.filter((t) => t.imageNeeded && !t.image).length;
   title={`${set.title} – Bildserie ${set.level} – DeutschAcademy`}
   description={set.blurb}
 >
-  <PracticeHeader title="Sprechen" />
+  <SiteNav active="fertigkeiten" />
   <main class="practice-main">
-    <a href="/uebungen/sprechen/" class="vp-back-link">← Alle Sprechaufgaben</a>
+    <a href="/uebungen/sprechen/" class="vp-back-link">← <span data-i18n="sprechen.backAll">Alle Sprechaufgaben</span></a>
 
     <article>
       <header class="sk-head">
         <span class="sk-card-ic"><Icon name="map-pin" size={22} /></span>
         <div>
-          <p class="eyebrow">Bildserie</p>
-          <h1>{set.title}</h1>
+          <p class="eyebrow" data-i18n="sprechen.set.eyebrow">Bildserie</p>
+          <h1 data-i18n={`sprechenSet.${set.id}.title`}>{set.title}</h1>
         </div>
         <span class="sk-badge">{set.level}</span>
       </header>
 
       <p class="sk-blurb">
-        {set.blurb} · {set.items.length} Bilder · zusammen {Math.round(seconds / 60)} Minuten reine Redezeit
+        <span data-i18n={`sprechenSet.${set.id}.blurb`}>{set.blurb}</span>
+        {" · "}
+        <span data-i18n="sprechen.set.meta" data-i18n-vars={JSON.stringify({ n: set.items.length, m: Math.round(seconds / 60) })}>{set.items.length} Bilder · zusammen {Math.round(seconds / 60)} Minuten reine Redezeit</span>
       </p>
 
       <p style="margin:0 0 30px">
-        <a class="sk-btn" href={`/uebungen/sprechen/${set.items[0].id}`}>Serie starten →</a>
+        <a class="sk-btn" href={`/uebungen/sprechen/${set.items[0].id}`} data-i18n="sprechen.set.start">Serie starten →</a>
       </p>
 
       <section class="sk-block">
-        <h2>Die {set.items.length} Bilder</h2>
+        <h2 data-i18n="sprechen.set.pictures" data-i18n-vars={JSON.stringify({ n: set.items.length })}>Die {set.items.length} Bilder</h2>
         <div class="sk-grid sk-grid--bilder">
           {set.items.map((t, i) => (
             <a class="sk-card" href={`/uebungen/sprechen/${t.id}`}>
@@ -85,15 +87,12 @@ const pending = set.items.filter((t) => t.imageNeeded && !t.image).length;
       </section>
 
       {pending > 0 && (
-        <p class="sk-foot">
-          Zu {pending} von {set.items.length} Bildern fehlt noch das Foto. Solange steht die
-          beschriebene Szene an seiner Stelle — Aufgabe, Redemittel und Timer sind dieselben.
-        </p>
+        <p class="sk-foot" data-i18n="sprechen.set.pending" data-i18n-vars={JSON.stringify({ n: pending, total: set.items.length })}>Zu {pending} von {set.items.length} Bildern fehlt noch das Foto. Solange steht die beschriebene Szene an seiner Stelle — Aufgabe, Redemittel und Timer sind dieselben.</p>
       )}
 
       <nav class="sk-prevnext">
-        {prev ? <a href={`/uebungen/sprechen/set/${prev.id}`}>← {prev.title}</a> : <span />}
-        {next ? <a href={`/uebungen/sprechen/set/${next.id}`}>{next.title} →</a> : <span />}
+        {prev ? <a href={`/uebungen/sprechen/set/${prev.id}`}>← <span data-i18n={`sprechenSet.${prev.id}.title`}>{prev.title}</span></a> : <span />}
+        {next ? <a href={`/uebungen/sprechen/set/${next.id}`}><span data-i18n={`sprechenSet.${next.id}.title`}>{next.title}</span> →</a> : <span />}
       </nav>
     </article>
   </main>

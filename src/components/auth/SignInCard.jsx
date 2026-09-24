@@ -422,7 +422,7 @@ export default function SignInCard({ next, initialError = false }) {
                 inputMode="email"
                 autoCapitalize="none"
                 spellCheck="false"
-                placeholder="name@beispiel.de"
+                placeholder={t("auth.email.placeholder", "name@beispiel.de")}
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
@@ -491,7 +491,7 @@ export default function SignInCard({ next, initialError = false }) {
                 inputMode="email"
                 autoCapitalize="none"
                 spellCheck="false"
-                placeholder="name@beispiel.de"
+                placeholder={t("auth.email.placeholder", "name@beispiel.de")}
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />

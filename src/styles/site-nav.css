@@ -7,10 +7,13 @@
  */
 @import "./button.css";
 
+/* 45: the header is a stacking context, so its dropdown can never rise above the header
+   itself. At 20 the Themen rail (topic-rail.css, 40) painted over the open Üben menu.
+   Still under modals (50) and the phone drawer (60). */
 .lp-nav {
   position: sticky;
   top: 0;
-  z-index: 20;
+  z-index: 45;
   background: var(--surface-card);
   border-bottom: 1px solid var(--border);
 }

@@ -10,7 +10,7 @@
 // Publisher material (Hueber, Klett, Cornelsen) appears in neither list. See `rightsNote`
 // in src/data/downloads.json.
 import Layout from "../layouts/Layout.astro";
-import PracticeHeader from "../components/PracticeHeader.astro";
+import SiteNav from "../components/SiteNav.astro";
 import Icon from "../components/Icon.astro";
 import { categories, featured, files, links, rightsNote, totals } from "../lib/downloads.js";
 import "../styles/practice.css";
@@ -22,12 +22,12 @@ const mb = (totals.bytes / 1024 / 1024).toFixed(1).replace(".", ",");
   title="Wissensdatenbank – DeutschAcademy"
   description="Grammatikbücher, Wortlisten und Prüfungsmaterial als PDF — kostenlos herunterladen, ausdrucken und im Unterricht weitergeben. Ohne Konto."
 >
-  <PracticeHeader title="Wissen" />
+  <SiteNav active="wissen" />
   <main class="practice-main practice-main--wide">
     <div class="practice-hero">
-      <p class="eyebrow">Wissensdatenbank</p>
+      <p class="eyebrow" data-i18n="wissen.eyebrow">Wissensdatenbank</p>
       <h1 data-i18n="wissen.h1">Bücher und Listen zum Herunterladen</h1>
-      <p>
+      <p data-i18n="wissen.lead" data-i18n-vars={JSON.stringify({ files: totals.files, pages: totals.pages })}>
         {totals.files} PDFs, {totals.pages} Seiten, alles kostenlos und ohne Konto. Zum Ausdrucken,
         Mitnehmen und im Unterricht Weitergeben.
       </p>
@@ -42,7 +42,7 @@ const mb = (totals.bytes / 1024 / 1024).toFixed(1).replace(".", ",");
           <button class="wi-feature" type="button" data-file={f.id}>
             <span class="wi-badge">{f.level}</span>
             <b>{f.title}</b>
-            <span class="wi-meta">PDF{f.pages ? ` · ${f.pages} Seiten` : ""} · {f.size}</span>
+            <span class="wi-meta">PDF{f.pages ? <span data-i18n="wissen.pagesSuffix" data-i18n-vars={JSON.stringify({ n: f.pages })}>{` · ${f.pages} Seiten`}</span> : ""} · {f.size}</span>
             <span class="wi-dl" aria-hidden="true">↓</span>
           </button>
         ))}
@@ -53,7 +53,7 @@ const mb = (totals.bytes / 1024 / 1024).toFixed(1).replace(".", ",");
       <section class="wi-group" id={cat.id}>
         <h2 class="wi-group-title">
           <span class="wi-group-ic"><Icon name={cat.icon} size={20} /></span>
-          <span>{cat.name}</span>
+          <span data-i18n={`wissen.cat.${cat.id}.name`}>{cat.name}</span>
           <span class="wi-group-n">{cat.items.length}</span>
         </h2>
         <p class="wi-group-blurb" data-i18n={`wissen.cat.${cat.id}.blurb`}>{cat.blurb}</p>
@@ -71,7 +71,7 @@ const mb = (totals.bytes / 1024 / 1024).toFixed(1).replace(".", ",");
               <i data-i18n={`wissen.file.${f.id}.desc`}>{f.desc}</i>
               <span class="wi-card-foot">
                 <span class="wi-meta">
-                  PDF{f.pages ? ` · ${f.pages} Seiten` : ""} · {f.size}
+                  PDF{f.pages ? <span data-i18n="wissen.pagesSuffix" data-i18n-vars={JSON.stringify({ n: f.pages })}>{` · ${f.pages} Seiten`}</span> : ""} · {f.size}
                   {f.editions.length > 0 && <span class="wi-meta-eds"> · +{f.editions.map((e) => e.lang.toUpperCase()).join("/")}</span>}
                 </span>
                 <span class="wi-dl" aria-hidden="true">↓</span>
@@ -85,7 +85,7 @@ const mb = (totals.bytes / 1024 / 1024).toFixed(1).replace(".", ",");
     <section class="wi-group" id="offiziell">
       <h2 class="wi-group-title">
         <span class="wi-group-ic"><Icon name="landmark" size={20} /></span>
-        <span>Offizielle Materialien</span>
+        <span data-i18n="wissen.official.title">Offizielle Materialien</span>
         <span class="wi-group-n">{links.length}</span>
       </h2>
       <p class="wi-group-blurb" data-i18n="wissen.official.blurb">
@@ -93,11 +93,14 @@ const mb = (totals.bytes / 1024 / 1024).toFixed(1).replace(".", ",");
         deshalb verlinken wir sie dort, wo sie herausgegeben werden. Dort sind sie auch immer aktuell.
       </p>
       <ul class="wi-links">
-        {links.map((l, i) => (
+        {links.map((l) => (
           <li>
             <a href={l.href} target="_blank" rel="noopener noreferrer">
               <b>{l.title}</b>
-              <i data-i18n={`wissen.link.${i}.note`}>{l.note}</i>
+              {/* Keyed by id, not position: an index key silently pinned each note to whichever
+                  link happened to sit in that slot once a link was added above it. The
+                  titles are the publishers' own names and stay as they are. */}
+              <i data-i18n={`wissen.link.${l.id}.note`}>{l.note}</i>
               <span class="wi-source">{l.source} ↗</span>
             </a>
           </li>
@@ -108,7 +111,7 @@ const mb = (totals.bytes / 1024 / 1024).toFixed(1).replace(".", ",");
     <section class="wi-rights">
       <h2 data-i18n="wissen.h2.sources">Woher das alles kommt</h2>
       {rightsNote.split("\n\n").map((p, i) => <p data-i18n={`wissen.rights.p${i + 1}`}>{p}</p>)}
-      <p class="wi-rights-meta">
+      <p class="wi-rights-meta" data-i18n-html="wissen.rights.meta" data-i18n-vars={JSON.stringify({ files: totals.files, mb })}>
         Zusammen {totals.files} Dateien, {mb} MB. Erzeugt aus den Daten dieser Seite mit
         <code>pnpm generate:pdfs</code>.
       </p>
@@ -123,25 +126,16 @@ const mb = (totals.bytes / 1024 / 1024).toFixed(1).replace(".", ",");
         <div class="wi-sheet-body" data-sheet-for={f.id} hidden>
           <div class="wi-sheet-head">
             <span class="wi-badge">{f.level}</span>
-            <button class="wi-sheet-x" type="button" data-sheet-close aria-label="Schließen">✕</button>
+            <button class="wi-sheet-x" type="button" data-sheet-close aria-label="Schließen" data-i18n-attr="aria-label:wissen.close">✕</button>
           </div>
           <h2 id="wi-sheet-title">{f.title}</h2>
-          <p class="wi-meta">PDF{f.pages ? ` · ${f.pages} Seiten` : ""} · {f.size}</p>
-          <p class="wi-sheet-desc">{f.desc}</p>
+          <p class="wi-meta">PDF{f.pages ? <span data-i18n="wissen.pagesSuffix" data-i18n-vars={JSON.stringify({ n: f.pages })}>{` · ${f.pages} Seiten`}</span> : ""} · {f.size}</p>
+          <p class="wi-sheet-desc" data-i18n={`wissen.file.${f.id}.desc`}>{f.desc}</p>
 
-          {f.contents && f.contents.items.length > 0 && (
-            <div class="wi-sheet-toc">
-              <p class="wi-sheet-toclabel">{f.contents.label}</p>
-              <ul>{f.contents.items.map((line) => <li>{line}</li>)}</ul>
-            </div>
-          )}
-
-          <a class="wi-sheet-dl" href={f.href} download>
-            <span aria-hidden="true">↓</span>
-            <span>Jetzt herunterladen</span>
-          </a>
-          {/* The same list with the learner's language in the translation column. Each
-              language is named in itself — that is the word its reader will spot. */}
+          {/* The same book with the learner's language in the translation column. Each
+              language is named in itself — that is the word its reader will spot. First
+              in the sheet, above the contents: a learner who needs it should not have to
+              scroll past the German download to find it. */}
           {f.editions.length > 0 && (
             <div class="wi-sheet-eds">
               <p class="wi-sheet-toclabel" data-i18n="wissen.editions.label">Mit Übersetzung in deine Sprache</p>
@@ -155,7 +149,22 @@ const mb = (totals.bytes / 1024 / 1024).toFixed(1).replace(".", ",");
               </div>
             </div>
           )}
-          <p class="wi-sheet-foot">Kostenlos, ohne Konto. Zum Ausdrucken und Weitergeben.</p>
+
+          {f.contents && f.contents.items.length > 0 && (
+            <div class="wi-sheet-toc">
+              <p class="wi-sheet-toclabel" data-i18n={f.contents.labelKey} data-i18n-vars={f.contents.labelVars ? JSON.stringify(f.contents.labelVars) : undefined}>{f.contents.label}</p>
+              <ul>{f.contents.items.map((line, i) => {
+                const k = f.contents.itemKeys?.[i];
+                return <li data-i18n={k?.key} data-i18n-vars={k?.vars ? JSON.stringify(k.vars) : undefined}>{line}</li>;
+              })}</ul>
+            </div>
+          )}
+
+          <a class="wi-sheet-dl" href={f.href} download>
+            <span aria-hidden="true">↓</span>
+            <span data-i18n="wissen.download">Jetzt herunterladen</span>
+          </a>
+          <p class="wi-sheet-foot" data-i18n="wissen.sheetFoot">Kostenlos, ohne Konto. Zum Ausdrucken und Weitergeben.</p>
         </div>
       ))}
     </div>

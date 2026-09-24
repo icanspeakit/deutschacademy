@@ -1,0 +1,87 @@
+---
+// A conjugation grid in the shape of the classroom worksheets: Singular / Plural, person
+// 1–2–3, pronoun, ending, then one column per verb. It replaces a topic's rule paragraphs
+// when the topic's concept carries a `table` block (praesens.json is the first).
+//
+// Forms are written with two marks, so the JSON stays readable:
+//   "lern|st"      → stem "lern", ending "st" (the ending is coloured)
+//   "arbeit|{e}st" → {…} is the part that breaks the pattern (extra e, a → ä), highlighted
+// A verb with `irregular: true` is shown whole, in a tinted column.
+//
+// Only the headers are translated: the forms are the German the learner is here to see.
+// The translations use the same switch as every other help line (GrammarHelpText).
+import GrammarHelpText from "./GrammarHelpText.astro";
+import "../styles/conj-table.css";
+
+interface Row { pron: string; end: string }
+interface Verb { inf: string; note?: string; irregular?: boolean; forms: string[] }
+interface Props {
+  table: { caption?: string; rows: Row[]; verbs: Verb[] };
+  /** Show the translated header labels (off where a page has no help switch). */
+  help?: boolean;
+}
+const { table, help = true } = Astro.props;
+
+const L = {
+  Singular: { en: "singular", ar: "المفرد", uk: "однина", tr: "tekil" },
+  Plural: { en: "plural", ar: "الجمع", uk: "множина", tr: "çoğul" },
+  Person: { en: "person", ar: "الشخص", uk: "особа", tr: "kişi" },
+  Pronomen: { en: "pronoun", ar: "الضمير", uk: "займенник", tr: "zamir" },
+  Endung: { en: "ending", ar: "النهاية", uk: "закінчення", tr: "ek" },
+  unregelmäßig: { en: "irregular", ar: "غير منتظم", uk: "неправильне", tr: "düzensiz" },
+};
+
+const esc = (s: string) => s.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]!);
+const formHtml = (f: string, irregular?: boolean) => {
+  if (irregular) return esc(f);
+  const [stem, end = ""] = f.split("|");
+  const mark = (s: string) => esc(s).replace(/\{([^}]*)\}/g, '<mark class="ct-x">$1</mark>');
+  return `${mark(stem)}<span class="ct-end">${mark(end)}</span>`;
+};
+const half = Math.ceil(table.rows.length / 2);
+const groups = [
+  { label: "Singular" as const, rows: table.rows.slice(0, half), offset: 0 },
+  { label: "Plural" as const, rows: table.rows.slice(half), offset: half },
+];
+---
+<figure class="ct">
+  {table.caption && <figcaption class="ct-cap">{table.caption}<span class="ct-hint" aria-hidden="true" data-i18n="ct.swipe">wischen für mehr →</span></figcaption>}
+  <div class="ct-scroll">
+    <table class="ct-table">
+      <thead>
+        <tr>
+          <th class="ct-grp" scope="col"><span class="ct-sr">Zahl</span></th>
+          <th class="ct-num" scope="col">Person{help && <GrammarHelpText text={L.Person} class="ct-tr" />}</th>
+          <th class="ct-pron" scope="col">Pronomen{help && <GrammarHelpText text={L.Pronomen} class="ct-tr" />}</th>
+          <th class="ct-endcol" scope="col">Endung{help && <GrammarHelpText text={L.Endung} class="ct-tr" />}</th>
+          {table.verbs.map((v) => (
+            <th scope="col" class:list={["ct-verb", v.irregular && "ct-irr"]}>
+              {v.inf}
+              {v.irregular
+                ? <span class="ct-note">unregelmäßig{help && <GrammarHelpText text={L.unregelmäßig} class="ct-tr" />}</span>
+                : v.note && <span class="ct-note">{v.note}</span>}
+            </th>
+          ))}
+        </tr>
+      </thead>
+      {groups.map((g) => (
+        <tbody class="ct-body">
+          {/* Phones: the group is a row of its own instead of a rotated first column. */}
+          <tr class="ct-grprow"><th colspan={4 + table.verbs.length} scope="rowgroup">{g.label}{help && <GrammarHelpText text={L[g.label]} class="ct-tr" />}</th></tr>
+          {g.rows.map((r, i) => (
+            <tr>
+              {i === 0 && <th class="ct-grp" rowspan={g.rows.length} scope="rowgroup">{g.label}{help && <GrammarHelpText text={L[g.label]} class="ct-tr" />}</th>}
+              <td class="ct-num">{i + 1}</td>
+              <th class="ct-pron" scope="row">{r.pron}</th>
+              <td class="ct-endcol">{r.end}</td>
+              {table.verbs.map((v) => (
+                <td class:list={["ct-form", v.irregular && "ct-irr"]} set:html={formHtml(v.forms[g.offset + i], v.irregular)} />
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      ))}
+    </table>
+  </div>
+</figure>
+

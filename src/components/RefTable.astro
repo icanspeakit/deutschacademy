@@ -1,0 +1,49 @@
+---
+// A topic's overview table (concept.reference.tables in src/data/grammatik/*.json), drawn
+// the way ConjTable draws the Präsens grid: caption over a bordered sheet, muted header,
+// the first column as the row's name — pinned while the rest scrolls on a phone.
+//
+// Aktiv's Sehen beat shows these instead of the rule as a stack of sentences: der / ein /
+// kein across maskulin / feminin / neutral / Plural reads at a glance as a grid, and takes
+// a paragraph per line as prose. A cell that opens with an article gets the article
+// marked, like the ending in a conjugation — it is the part the eye should land on.
+import UiText from "./UiText.astro";
+import "../styles/conj-table.css";
+
+interface Props {
+  table: { caption?: string; note?: string; head: string[]; rows: string[][] };
+}
+const { table } = Astro.props;
+
+const esc = (s: string) => s.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]!);
+const ART = /^(der|die|das|dem|den|des|ein|eine|einen|einem|einer|eines|kein|keine|keinen|keinem|keiner|keines)(?=\s|$)/i;
+const markOne = (s: string) => {
+  const m = s.match(ART);
+  return m ? `<span class="ct-end">${esc(m[1])}</span>${esc(s.slice(m[1].length))}` : esc(s);
+};
+// "die Zeitung, die Freiheit, …": every item in a list gets its article marked.
+const cellHtml = (s: string) => String(s).split(", ").map(markOne).join(", ");
+// A short phrase ("der hohe Baum") reads as one unit and should not break on a phone;
+// a list of examples may.
+const short = (s: string) => String(s).length <= 24;
+---
+<figure class="ct ct--ref">
+  {table.caption && <figcaption class="ct-cap"><UiText de={table.caption} /><span class="ct-hint" aria-hidden="true" data-i18n="ct.swipe">wischen für mehr →</span></figcaption>}
+  <div class="ct-scroll">
+    <table class="ct-table">
+      <thead>
+        <tr>{table.head.map((h, i) => <th scope="col" class:list={[i === 0 && "ct-pron"]}>{h}</th>)}</tr>
+      </thead>
+      <tbody>
+        {table.rows.map((row) => (
+          <tr>
+            {row.map((cell, i) => i === 0
+              ? <th scope="row" class="ct-pron">{cell}</th>
+              : <td class:list={["ct-form", short(cell) && "ct-nowrap"]} set:html={cellHtml(cell)} />)}
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+  {table.note && <p class="ct-refnote"><UiText de={table.note} /></p>}
+</figure>

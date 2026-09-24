@@ -20,7 +20,7 @@
 // src/lib/progress.js, the exam section from src/lib/exam/registry.js. There is no
 // account, so a first visit genuinely has nothing to show and says so.
 import Layout from "../layouts/Layout.astro";
-import PracticeHeader from "../components/PracticeHeader.astro";
+import SiteNav from "../components/SiteNav.astro";
 import LearnShell from "../components/LearnShell.astro";
 import { examRegistry } from "../lib/exam/registry.js";
 import "../styles/practice.css";
@@ -30,7 +30,7 @@ import "../styles/exam-dashboard.css";
   title="Mein Fortschritt – DeutschAcademy"
   description="Dein Lernstand auf einen Blick: Grammatik, Wortschatz und Prüfungsvorbereitung nach GER-Stufe — und dein Stand in jeder Prüfung, mit Punkten und dem nächsten offenen Prüfungsteil."
 >
-  <PracticeHeader title="Mein Fortschritt" />
+  <SiteNav active="profil" />
 
   {/* Rendered with the practice tab on, because that is the default and a page whose
       first paint shows neither panel flashes empty. The script turns the other one on

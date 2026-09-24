@@ -4,7 +4,11 @@ import SiteNav from "../../../components/SiteNav.astro";
 import TopicBar from "../../../components/TopicBar.astro";
 import TopicRail from "../../../components/TopicRail.astro";
 import ArtikelTrainer from "../../../components/ArtikelTrainer.astro";
+import ArtikelDiktat from "../../../components/ArtikelDiktat.astro";
 import CourseBar from "../../../components/CourseBar.astro";
+import ModeSwitch from "../../../components/ModeSwitch.astro";
+import ConjTable from "../../../components/ConjTable.astro";
+import RefTable from "../../../components/RefTable.astro";
 import { taskCountOf, topicKeyOf } from "../../../lib/grammarTasks.js";
 import "../../../styles/practice.css";
 import "../../../styles/landing.css";
@@ -15,6 +19,9 @@ import grammatik from "../../../data/grammatik.json";
 import GrammarHelp from "../../../components/GrammarHelp.astro";
 import GrammarHelpText from "../../../components/GrammarHelpText.astro";
 import grammarHelp from "../../../data/uebersetzungen/grammatik.json";
+import UiText from "../../../components/UiText.astro";
+import { langAttrs, uiTr } from "../../../lib/grammarUi.js";
+import deDict from "../../../../public/i18n/de.json";
 
 // Two kinds of topic live on this route:
 //
@@ -48,6 +55,10 @@ const reference = concept?.reference;
 // The rule in the learner's language (src/data/uebersetzungen/grammatik.json). A topic with
 // no entry renders exactly as before: no switch, no empty blocks.
 const gx = (grammarHelp.entries as Record<string, any>)[data.id] ?? null;
+// The intro's i18n key. Workspaces name theirs; a quiz topic has one by convention when the
+// dictionary carries it. Where the intro itself turns into the UI language, its .gx-tr
+// copy in that language steps aside (grammar-help.css, .gx-tr--i18n).
+const introKey = workspace?.subtitleKey ?? ((deDict as Record<string, string>)[`grammatik.${data.id}.intro`] ? `grammatik.${data.id}.intro` : undefined);
 
 // This page used to wear PracticeHeader — a bar with four text links and no sign that it
 // belonged to the same site as everything else. Reached from the homepage it was a dead end:
@@ -72,28 +83,43 @@ const aktiv = workspace?.aktiv ?? null;
 // rather than let a learner conclude the site sounds like that on purpose. The check is
 // the data, not a flag, so the notice disappears by itself the moment the generator runs.
 const synthetic = aktiv ? !aktiv.hoeren?.items?.some((i) => i.audio) : false;
-// The collapsed rule strip's one line. Most flows are a sequence and read correctly
-// joined by an arrow, but some steps are already whole alternatives — Wechselpräpositionen
-// has ["Wohin? → Akkusativ", "Wo? → Dativ"], and arrowing those together claims Dativ
-// follows Akkusativ. A step containing its own arrow gets a separator instead.
-const flowSteps = concept?.flow?.map((s) => s.text) ?? [];
-const gist = flowSteps.join(flowSteps.some((t) => t.includes("→")) ? " · " : " → ");
+// What the page script gets: the topic, plus the translations of the instructions it
+// renders itself (Aktiv's notes, drill labels and instructions) — see uitHtml in uiText.js.
+const clientData = aktiv
+  ? {
+      ...data,
+      aktiv: {
+        ...aktiv,
+        listen: aktiv.listen?.map((l) => ({ ...l, noteTr: uiTr(l.note) })),
+        sprechen: aktiv.sprechen && {
+          ...aktiv.sprechen,
+          rounds: aktiv.sprechen.rounds?.map((r) => ({ ...r, labelTr: uiTr(r.label), instructionTr: uiTr(r.instruction) })),
+        },
+      },
+    }
+  : data;
 
 const BEATS = [
-  { id: "sehen", n: 1, label: "Sehen" },
-  { id: "hoeren", n: 2, label: "Hören" },
-  { id: "sprechen", n: 3, label: "Sprechen" },
+  { id: "sehen", n: 1, label: "Sehen", key: "ak.beat.sehen" },
+  { id: "hoeren", n: 2, label: "Hören", key: "ak.beat.hoeren" },
+  { id: "sprechen", n: 3, label: "Sprechen", key: "ak.beat.sprechen" },
   // No panel of its own: this chip hands the learner back to Üben mode, where the
   // exercises already live. See onExit in mountBeats.
-  { id: "schreiben", n: 4, label: "Schreiben" },
+  { id: "schreiben", n: 4, label: "Schreiben", key: "ak.beat.schreiben" },
 ];
 ---
 <Layout title={`${name} – DeutschAcademy`}>
   <SiteNav active="grammatik" />
   {/* One bar: the topic and its progress, then where it sits in its Stufe and the way
       back to it on the map. They were two stacked bars, a row of height for nothing. */}
-  <TopicBar topic={topicKey} kind="Grammatik" title={name} level={level} tasks={tasks}>
-    <CourseBar slot="end" inline topic={topicKey} title={`${name} – DeutschAcademy`} />
+  <TopicBar topic={topicKey} kind="Grammatik" title={name} level={level} tasks={tasks} showKind={false} scoped={isArtikel}>
+    <div slot="end" class="tb-end-row">
+      {/* Üben/Aktiv rides in this bar instead of a row of its own above the work, so the
+          exercises start higher (and on Artikel the trainer gets the height back, see
+          artikel-fit.css). */}
+      {aktiv && <ModeSwitch compact />}
+      <CourseBar inline topic={topicKey} title={`${name} – DeutschAcademy`} />
+    </div>
   </TopicBar>
 
   <!-- The dashboard's rail, folded to a 64px strip. Opening it overlays the page rather
@@ -107,60 +133,24 @@ const BEATS = [
        Collapsed is the more common state — the side column slides away on desktop,
        the rule card crops to a preview on a phone — so starting here means no
        visible re-layout on load. -->
-  <main class:list={["vp-page vp-page--split vp-page--sheet", isArtikel && "akk vp-page--rule-left"]} id="vp-page" data-rule="hidden" data-anim="off" data-topic-key={topicKey} data-mode="ueben" data-gx="off">
-    {aktiv && (
-      <div class="ak-modes" role="tablist" aria-label="Ansicht">
-        <button type="button" class="ak-mode" data-mode-btn="ueben" role="tab" aria-selected="true" title="Lesen &amp; schreiben">
-          Üben<span class="ak-mode-tip">lesen &amp; schreiben</span>
-        </button>
-        <button type="button" class="ak-mode" data-mode-btn="aktiv" role="tab" aria-selected="false" title="Hören &amp; sprechen">
-          Aktiv<span class="ak-mode-tip">hören &amp; sprechen</span>
-        </button>
-      </div>
-    )}
+  <main class:list={["vp-page vp-page--split vp-page--sheet", isArtikel && "akk vp-page--rule-left vp-page--fit"]} id="vp-page" data-rule="hidden" data-anim="off" data-topic-key={topicKey} data-mode="ueben" data-gx="off">
 
     {aktiv && (
       <div class="ak-aktiv" id="ak-aktiv">
-        <!-- The beat chips and the rule, pinned together. On a phone this pair is the
-             whole left-hand page of the book: where you are, and the rule you need. -->
+        <!-- The beat chips, pinned. The rule itself is the first beat (Sehen); a collapsed
+             one-line copy of it here was removed as noise. -->
         <div class="ak-sticky" id="ak-sticky">
-          <div class="ak-beats" role="tablist" aria-label="Phasen">
+          <div class="ak-beats" role="tablist" aria-label="Phasen" data-i18n-attr="aria-label:ak.beats">
             {BEATS.map((b) => (
               <button type="button" class="ak-beat-chip" data-beat-chip={b.id} role="tab" aria-selected="false">
-                <b>{b.n}</b>{b.label}
+                <b>{b.n}</b><span data-i18n={b.key}>{b.label}</span>
               </button>
             ))}
           </div>
-
-          {concept && (
-            <div class="ak-rule-strip">
-              <button type="button" class="ak-rule-toggle" id="ak-rule-toggle" aria-expanded="false" aria-controls="ak-rule-body">
-                Regel <span class="ak-rule-gist">{gist}</span>
-                <span class="ak-caret" aria-hidden="true">▾</span>
-              </button>
-              <div class="ak-rule-body" id="ak-rule-body">
-                <div class="ak-flow">
-                  {concept.flow?.map((step, i) => (
-                    <>
-                      {i > 0 && <span class="ak-flow-arrow">→</span>}
-                      <span class={`ak-flow-step ${step.variant ? `ak-flow-step--${step.variant}` : ""}`}>{step.text}</span>
-                    </>
-                  ))}
-                </div>
-                <div class="ak-qa">
-                  {concept.qa?.map((item, i) => (
-                    <div class="ak-qa-item"><Fragment set:html={item.html} /><GrammarHelpText text={gx?.qa?.[i]} /></div>
-                  ))}
-                </div>
-                {concept.noteHtml && <p class="ak-note" set:html={concept.noteHtml} />}
-                <GrammarHelpText text={gx?.note} />
-              </div>
-            </div>
-          )}
         </div>
 
         {synthetic && (
-          <p class="ak-proto">
+          <p class="ak-proto" data-i18n-html="ak.proto">
             <strong>Die Stimme ist noch synthetisch.</strong> Für dieses Thema gibt es noch
             keine Aufnahmen — alles wird von der deutschen Stimme deines Browsers
             vorgelesen. Auf manchen Geräten klingt das hölzern oder fehlt ganz.
@@ -168,8 +158,43 @@ const BEATS = [
         )}
 
         <section class="ak-panel" data-beat-panel="sehen">
-          <h2>Sehen</h2>
-          <p class="ak-panel-lead">Erst die Regel, dann das Ohr. Tipp auf ▶ — die Endung hört man deutlicher, als man sie liest.</p>
+          <h2 data-i18n="ak.beat.sehen">Sehen</h2>
+          <p class="ak-panel-lead" data-i18n="ak.sehen.lead">Erst die Regel, dann das Ohr. Tipp auf ▶ — die Endung hört man deutlicher, als man sie liest.</p>
+          {/* The rule's switch, here too: in Aktiv the rule card that carries the other one
+              is out of sight, and on Artikel there is no rule card at all. */}
+          {gx && concept && <GrammarHelp level={level} reviewed={gx.reviewed} />}
+
+          {concept && (
+            <div class="ak-card">
+              {/* The rule first, the heard examples after — "Erst die Regel, dann das Ohr".
+                  A topic with a `table` shows its rule as the grid, not as paragraphs. */}
+              {concept.table ? <ConjTable table={concept.table} /> : reference?.tables?.length ? (
+                <>
+                  {/* The overview tables ARE the rule at a glance; the sentences stay, folded
+                      under them, for the why — and for their translation. */}
+                  {reference.tables.map((table) => <RefTable table={table} />)}
+                  <details class="ak-rule-words">
+                    <summary data-i18n="ak.ruleWords">Die Regel in Worten</summary>
+                    <div class="ak-qa">
+                      {concept.qa?.map((item, i) => (
+                        <div class="ak-qa-item"><Fragment set:html={item.html} /><GrammarHelpText text={gx?.qa?.[i]} /></div>
+                      ))}
+                    </div>
+                    {concept.noteHtml && <p class="ak-note" set:html={concept.noteHtml} />}
+                    <GrammarHelpText text={gx?.note} />
+                  </details>
+                </>
+              ) : (
+                <div class="ak-qa">
+                  {concept.qa?.map((item, i) => (
+                    <div class="ak-qa-item"><Fragment set:html={item.html} /><GrammarHelpText text={gx?.qa?.[i]} /></div>
+                  ))}
+                </div>
+              )}
+              {!(!concept.table && reference?.tables?.length) && concept.noteHtml && <p class="ak-note" set:html={concept.noteHtml} />}
+              {!(!concept.table && reference?.tables?.length) && <GrammarHelpText text={gx?.note} />}
+            </div>
+          )}
 
           <div class="ak-card">
             <div class="ak-flow">
@@ -183,34 +208,26 @@ const BEATS = [
             <ul class="ak-listen-list" id="ak-listen"></ul>
           </div>
 
-          {concept && (
-            <div class="ak-card">
-              <div class="ak-qa">
-                {concept.qa?.map((item, i) => (
-                  <div class="ak-qa-item"><Fragment set:html={item.html} /><GrammarHelpText text={gx?.qa?.[i]} /></div>
-                ))}
-              </div>
-              {concept.noteHtml && <p class="ak-note" set:html={concept.noteHtml} />}
-              <GrammarHelpText text={gx?.note} />
-            </div>
-          )}
-
-          <button type="button" class="ak-next" data-beat-next="hoeren">Weiter → Hören</button>
+          <button type="button" class="ak-next" data-beat-next="hoeren" data-i18n="ak.next.hoeren">Weiter → Hören</button>
         </section>
 
         <section class="ak-panel" data-beat-panel="hoeren" hidden>
-          <h2>Hören</h2>
-          <p class="ak-panel-lead">{aktiv.hoeren.instruction}</p>
+          <h2 data-i18n="ak.beat.hoeren">Hören</h2>
+          <p class="ak-panel-lead"><UiText de={aktiv.hoeren.instruction} /></p>
           <div id="ak-hoeren"></div>
-          <button type="button" class="ak-next" data-beat-next="sprechen">Weiter → Sprechen</button>
+          <button type="button" class="ak-next" data-beat-next="sprechen" data-i18n="ak.next.sprechen">Weiter → Sprechen</button>
         </section>
 
         <section class="ak-panel" data-beat-panel="sprechen" hidden>
-          <h2>Sprechen</h2>
-          <p class="ak-panel-lead">Hören, kurz überlegen, laut sagen — dann kommt die Lösung. Die einzige Übung hier, bei der du die Form selbst produzieren musst.</p>
+          <h2 data-i18n="ak.beat.sprechen">Sprechen</h2>
+          <p class="ak-panel-lead" data-i18n="ak.sprechen.lead">Hören, kurz überlegen, laut sagen — dann kommt die Lösung. Die einzige Übung hier, bei der du die Form selbst produzieren musst.</p>
           <div id="ak-sprechen"></div>
-          <button type="button" class="ak-next" data-beat-next="schreiben">Weiter → Schreiben</button>
+          <button type="button" class="ak-next" data-beat-next="schreiben" data-i18n="ak.next.schreiben">Weiter → Schreiben</button>
         </section>
+
+        {/* Artikel's Schreiben is a panel, not the way back to Üben: there the trainer only
+            has taps, so the writing lives here — a Diktat. See ArtikelDiktat.astro. */}
+        {isArtikel && <ArtikelDiktat />}
       </div>
     )}
 
@@ -229,8 +246,8 @@ const BEATS = [
         <span class="badge badge-info">{level}</span>
       </div>
       <h1>{name}</h1>
-      <p data-i18n={workspace?.subtitleKey}>{intro}</p>
-      <GrammarHelpText text={gx?.intro} />
+      <p data-i18n={introKey}>{intro}</p>
+      <GrammarHelpText text={gx?.intro} class={introKey ? "gx-tr--i18n" : undefined} />
       {/* The switch sits with the rule it translates — in the rule card when there is one.
           A quiz-only topic has no card, so its switch goes under the intro here. */}
       {gx && !concept && <GrammarHelp level={level} reviewed={gx.reviewed} />}
@@ -284,9 +301,11 @@ const BEATS = [
           </div>
         )}
 
-        {concept.exampleHtml && <p class="vp-example" set:html={concept.exampleHtml} />}
+        {concept.exampleHtml && !concept.table && <p class="vp-example" set:html={concept.exampleHtml} />}
 
-        {concept.qa && (
+        {concept.table && <ConjTable table={concept.table} />}
+
+        {concept.qa && !concept.table && (
           <div class="vp-qa-grid">
             {concept.qa.map((item, i) => (
               <div class="vp-qa-item">
@@ -301,7 +320,8 @@ const BEATS = [
         {concept.noteHtml && <p class="vp-note" set:html={concept.noteHtml} />}
         <GrammarHelpText text={gx?.note} />
 
-        {reference && (
+        {/* The grid above already is the overview; a second copy behind a toggle is noise. */}
+        {reference && !concept.table && (
           <>
             <button
               type="button"
@@ -309,6 +329,9 @@ const BEATS = [
               id="vp-toggle-ref"
               data-show={reference.showLabel ?? "Referenzliste anzeigen ▼"}
               data-hide={reference.hideLabel ?? "Referenzliste ausblenden ▲"}
+              data-i18n-attr={reference.showLabel ? undefined : "data-show:vp.toggleRef.show;data-hide:vp.toggleRef.hide"}
+              {...langAttrs("show", reference.showLabel)}
+              {...langAttrs("hide", reference.hideLabel)}
             >{reference.open
                 ? (reference.hideLabel ?? "Referenzliste ausblenden ▲")
                 : (reference.showLabel ?? "Referenzliste anzeigen ▼")}</button>
@@ -317,7 +340,7 @@ const BEATS = [
             <div id="vp-ref-panel" hidden={!reference.open}>
               {reference.tables?.map((table) => (
                 <div class="vp-ref-table-wrap">
-                  {table.caption && <p class="vp-ref-table-caption">{table.caption}</p>}
+                  {table.caption && <p class="vp-ref-table-caption"><UiText de={table.caption} /></p>}
                   <div class="vp-ref-table-scroll">
                     <table class:list={["vp-ref-table", table.compact && "vp-ref-table--compact"]}>
                       <thead>
@@ -330,7 +353,7 @@ const BEATS = [
                       </tbody>
                     </table>
                   </div>
-                  {table.note && <p class="vp-ref-table-note">{table.note}</p>}
+                  {table.note && <p class="vp-ref-table-note"><UiText de={table.note} /></p>}
                 </div>
               ))}
 
@@ -338,7 +361,7 @@ const BEATS = [
                 <div class="vp-ref-grid">
                   {reference.boxes.map((box) => (
                     <div class={`vp-ref-box vp-ref-box--${box.variant ?? "akk"}`}>
-                      <span class={`badge ${box.variant === "dat" ? "badge-info" : "badge-brand"}`}>{box.badge}</span>
+                      <span class={`badge ${box.variant === "dat" ? "badge-info" : "badge-brand"}`}><UiText de={box.badge} /></span>
                       <ul>{box.items.map((item) => <li>{item}</li>)}</ul>
                     </div>
                   ))}
@@ -362,6 +385,8 @@ const BEATS = [
         id="vp-rule-peek"
         data-show="Regel anzeigen"
         data-hide="Regel einklappen"
+        data-i18n-attr="data-show:vp.rule.peekShow;data-hide:vp.rule.peekHide"
+        data-i18n="vp.rule.peekShow"
         aria-controls="vp-rule-card"
       >Regel anzeigen</button>
     )}
@@ -380,6 +405,7 @@ const BEATS = [
         id="vp-rule-toggle"
         data-show="Regel einblenden"
         data-hide="Regel ausblenden"
+        data-i18n-attr="data-show:vp.rule.show;data-hide:vp.rule.hide"
       >Regel einblenden</button>
     </div>
 
@@ -389,7 +415,7 @@ const BEATS = [
         <div class="vp-card">
           <div class="vp-ex-head">
             <span class="badge badge-neutral">{i + 1}</span>
-            <h3>{ex.title}</h3>
+            <h3><UiText de={ex.title} /></h3>
 
             {/* Same control as the column's "Regel einblenden", at this exercise's
                 height: the learner asks for the rule where they are, not at the top
@@ -402,11 +428,12 @@ const BEATS = [
                 data-ex-rule={i}
                 data-show="Regel"
                 data-hide="Regel ausblenden"
+                data-i18n-attr="data-show:ak.rule;data-hide:vp.rule.hide"
                 aria-controls={`vp-ex-rule-${i}`}
               >Regel</button>
             )}
           </div>
-          {ex.hint && <p class="vp-ex-hint">{ex.hint}</p>}
+          {ex.hint && <p class="vp-ex-hint"><UiText de={ex.hint} /></p>}
 
           {/* Per-exercise rule. The topic's own rule card is one level up and covers the
               whole page; an exercise that asks the learner to apply ONE narrow rule needs
@@ -416,7 +443,7 @@ const BEATS = [
               `open: true` for the case where the exercise is impossible without it. */}
           {ex.rule && (
             <div class="vp-ex-rule" id={`vp-ex-rule-${i}`} hidden>
-              {ex.rule.label && <p class="vp-ex-rule-label">{ex.rule.label}</p>}
+              {ex.rule.label && <p class="vp-ex-rule-label"><UiText de={ex.rule.label} /></p>}
               <div class="vp-ex-rule-body">
                 {ex.rule.groups?.map((g) => (
                   <div class="vp-ex-rule-group">
@@ -436,8 +463,8 @@ const BEATS = [
                     it has still been told not to trust the table. */}
                 {ex.rule.disclaimer && (
                   <details class="vp-ex-rule-warn">
-                    <summary>{ex.rule.disclaimer.label}</summary>
-                    <div set:html={ex.rule.disclaimer.html} />
+                    <summary><UiText de={ex.rule.disclaimer.label} /></summary>
+                    <UiText de={ex.rule.disclaimer.html} html />
                   </details>
                 )}
               </div>
@@ -451,7 +478,7 @@ const BEATS = [
       <div class="vp-card">
         <div class="vp-ex-head">
           <span class="badge badge-neutral">1</span>
-          <h3>Lückentext: Ergänzen Sie.</h3>
+          <h3 data-i18n="vp.quiz.title">Lückentext: Ergänzen Sie.</h3>
         </div>
         <div id="quiz-root"></div>
       </div>
@@ -467,12 +494,10 @@ const BEATS = [
          collapsed first paint, the scroll position it measures from). This wipes both
          stored flags and reloads clean, so the same browser gets to be a new user
          again. Shown on the live site too. -->
-    <button type="button" class="vp-dev-reset" id="vp-dev-reset" title="Tour-Flags löschen und neu laden">
-      ↻ Tour neu
-    </button>
+    <button type="button" class="vp-dev-reset" id="vp-dev-reset" title="Tour-Flags löschen und neu laden" data-i18n-attr="title:vp.devReset.title" data-i18n="vp.devReset">↻ Tour neu</button>
   </main>
 
-  <script type="application/json" id="topic-data" set:html={JSON.stringify(workspace ?? topic)}></script>
+  <script type="application/json" id="topic-data" set:html={JSON.stringify(clientData)}></script>
   <script type="module">
     import { mountGrammarWorkspace } from "../../../lib/grammarWorkspace.js";
     import { mountRuleColumn, mountRefToggle } from "../../../lib/ruleColumn.js";
@@ -529,9 +554,9 @@ const BEATS = [
       const page = document.getElementById("vp-page");
       const voice = makeVoice();
 
-      // Read before mountBeats: it writes the opening beat into the hash, so asking
-      // afterwards always finds one and every first visit would land in Aktiv.
-      const askedForBeat = ["sehen", "hoeren", "sprechen"].includes(location.hash.slice(1));
+      // Aktiv opens only when the address asks for it: #aktiv, or an older link to one of
+      // its steps. Never from memory — a topic always opens in Üben.
+      const askedForAktiv = ["aktiv", "sehen", "hoeren", "sprechen"].includes(location.hash.slice(1));
 
       mountListen(document.getElementById("ak-listen"), data.aktiv.listen, voice);
       mountHoeren(document.getElementById("ak-hoeren"), data.aktiv.hoeren, { voice, notify: onAnswer });
@@ -555,19 +580,18 @@ const BEATS = [
 
       const setMode = (mode) => {
         page.dataset.mode = mode;
-        page.querySelectorAll("[data-mode-btn]").forEach((b) => {
+        document.querySelectorAll("[data-mode-btn]").forEach((b) => {
           const on = b.dataset.modeBtn === mode;
           b.classList.toggle("is-active", on);
           b.setAttribute("aria-selected", String(on));
         });
         if (mode !== "aktiv") voice.stop();
-        // The address says which step you are on only in Aktiv (see mountBeats): leaving it
-        // takes the step off, entering it puts the current one back.
+        // #aktiv while Aktiv is on screen, nothing in Üben — so a shared link opens what
+        // the sender was looking at, and a plain link always opens Üben.
         if (history.replaceState) {
           const url = location.pathname + location.search;
-          history.replaceState(null, "", mode === "aktiv" && page.dataset.beat ? `${url}#${page.dataset.beat}` : url);
+          history.replaceState(null, "", mode === "aktiv" ? `${url}#aktiv` : url);
         }
-        try { localStorage.setItem("da-grammatik-mode", mode); } catch (e) {}
       };
 
       mountBeats(page, {
@@ -577,25 +601,12 @@ const BEATS = [
         anchor: document.getElementById("ak-sticky"),
       });
 
-      page.querySelectorAll("[data-mode-btn]").forEach((b) =>
+      document.querySelectorAll("[data-mode-btn]").forEach((b) =>
         b.addEventListener("click", () => setMode(b.dataset.modeBtn))
       );
 
-      const ruleBtn = document.getElementById("ak-rule-toggle");
-      if (ruleBtn) {
-        ruleBtn.addEventListener("click", () => {
-          const open = page.dataset.aktivRule === "open";
-          page.dataset.aktivRule = open ? "closed" : "open";
-          ruleBtn.setAttribute("aria-expanded", String(!open));
-        });
-      }
-
-      // A link to #sprechen means "open the drill", not "scroll past the exercises", so
-      // the hash decides the mode. Otherwise the learner's last choice wins, and Üben —
-      // the mode every topic has — is the default for anyone who has never picked.
-      let saved = null;
-      try { saved = localStorage.getItem("da-grammatik-mode"); } catch (e) {}
-      setMode(askedForBeat || saved === "aktiv" ? "aktiv" : "ueben");
+      // Üben by default, always. Aktiv only when the address says #aktiv.
+      setMode(askedForAktiv ? "aktiv" : "ueben");
     }
   </script>
 </Layout>

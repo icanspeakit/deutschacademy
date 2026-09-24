@@ -45,3 +45,25 @@
   .vp-page--split .vp-hero .gx-tr,
   .vp-page--split .vp-hero .gx-bar { display: none; }
 }
+
+/* A translated table or list (Kultur, Sprechen) — small, and allowed to scroll sideways
+   inside its own box on a phone instead of pushing the page. */
+.gx-tr-l ul { margin: 4px 0 0; padding-inline-start: 18px; }
+.gx-tablewrap { overflow-x: auto; margin-top: 6px; }
+.gx-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
+.gx-table th, .gx-table td { padding: 5px 8px; border-bottom: 1px solid var(--border); text-align: start; vertical-align: top; }
+.gx-table th { font-weight: var(--fw-semibold); color: var(--ink); }
+/* Each cell takes its direction from its own text: German ad text such as "650 € kalt"
+   inside an Arabic table must not be reordered to "kalt € 650". */
+.gx-table th, .gx-table td { unicode-bidi: plaintext; }
+
+/* A block whose German already turns into the UI language through i18n (a topic's intro):
+   its translation in that same language would say it twice, so it steps aside. It still
+   shows when the learner reads the help in a language other than the UI's. */
+:root[lang="en"] [data-gx-lang="en"] .gx-tr--i18n,
+:root[lang="ar"] [data-gx-lang="ar"] .gx-tr--i18n,
+:root[lang="uk"] [data-gx-lang="uk"] .gx-tr--i18n,
+:root[lang="tr"] [data-gx-lang="tr"] .gx-tr--i18n { display: none; }
+
+/* The bar is only the draft note now, shown while a translation is (textHelp.js). */
+.gx-bar[hidden] { display: none; }

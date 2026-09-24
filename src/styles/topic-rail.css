@@ -33,6 +33,30 @@
 .tr-wrap.no-anim .nvb,
 .tr-wrap.no-anim .nvb-panel { transition: none !important; }
 
+/* The der/die/das look (artikel-t2.css): the rail outlined and filled with the page
+   colour instead of a dark slate bar, and the panel head as a tinted block. The rail only
+   exists above 1100px (see the bottom of this file), so there is no phone case to keep
+   dark. Keep the values in step with artikel-t2.css. */
+.tr-wrap .nvb-rail {
+  background: var(--page-bg);
+  border: 1px solid var(--border-strong);
+  border-right-color: var(--border);
+  border-radius: var(--radius) 0 0 var(--radius);
+  box-sizing: border-box;
+}
+.tr-wrap .nvb.collapsed .nvb-rail { border-radius: var(--radius); }
+.tr-wrap .nvb-railbtn { color: var(--muted); }
+.tr-wrap .nvb-railbtn:hover { color: var(--ink); background: var(--surface-sunken, rgba(0, 0, 0, .05)); }
+.tr-wrap .nvb-railbtn.active { color: #fff; background: var(--brand-blue); }
+.tr-wrap .nvb-panelhead {
+  margin-bottom: 10px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: var(--gradient-brand-soft);
+}
+.tr-wrap .nvb-panelhead h3 { flex: 1; text-align: left; font-size: 1.1rem; font-weight: var(--fw-bold, 700); color: var(--brand-blue-dark); }
+.tr-wrap .nvb-collapse { color: var(--brand-blue); }
+
 /* Tall levels (B1 has 14 topics) scroll inside the panel rather than past the screen. */
 .tr-wrap .nvb { max-height: calc(100vh - var(--tr-top, 96px) - 16px); }
 .tr-wrap .nvb-panel { overflow-y: auto; overscroll-behavior: contain; }

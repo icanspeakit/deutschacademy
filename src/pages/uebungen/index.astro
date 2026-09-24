@@ -9,7 +9,7 @@
 // from real localStorage activity via src/lib/progress.js) still lives behind the
 // "Mein Fortschritt" toggle.
 import Layout from "../../layouts/Layout.astro";
-import PracticeHeader from "../../components/PracticeHeader.astro";
+import SiteNav from "../../components/SiteNav.astro";
 import PracticePicker from "../../components/PracticePicker.astro";
 import Icon from "../../components/Icon.astro";
 import "../../styles/practice.css";
@@ -24,7 +24,7 @@ const workspaceCount = grammarWorkspaceLevels.reduce((n, row) => n + row.topics.
 ---
 <Layout title="Übungen – DeutschAcademy">
   <div class="uv">
-    <PracticeHeader active="ueben" />
+    <SiteNav active="ueben" />
 
     <main class="uv-main">
       <div class="topic-tabs uv-mode-tabs" id="hub-mode-tabs">
@@ -64,7 +64,7 @@ const workspaceCount = grammarWorkspaceLevels.reduce((n, row) => n + row.topics.
             {workspaceCount} Themen mit Erklärung und mehreren Aufgabentypen. Wähle dein Niveau.
           </p>
 
-          <div class="topic-tabs uv-lvl-tabs" role="tablist" aria-label="Niveau">
+          <div class="topic-tabs uv-lvl-tabs" role="tablist" aria-label="Niveau" data-i18n-attr="aria-label:pruefungen.compare.level">
             {grammarWorkspaceLevels.map((row, i) => (
               <button
                 class:list={["topic-tab", i === 0 && "active"]}

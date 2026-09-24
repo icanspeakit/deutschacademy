@@ -5,7 +5,6 @@
 //
 // On a phone there is no "beside": the translation goes under each paragraph, set smaller
 // and quieter, so the German still leads.
-import { HELP_LANGS } from "../lib/textHelp.js";
 import "../styles/help-langs.css";
 
 interface Props {
@@ -41,16 +40,11 @@ const lines: Record<string, string[]> | null = paragraphs
 ---
 <div class="tt" data-tt data-translation="off">
   {paragraphs && (
-    <div class="tt-bar">
+    <div class="tt-bar" hidden>
       <button type="button" class="tt-toggle" data-tt-toggle aria-pressed="false">
-        <span class="tt-toggle-on">Übersetzung ausblenden</span>
-        <span class="tt-toggle-off">Übersetzung zeigen</span>
+        <span class="tt-toggle-on" data-i18n="tt.hide">Übersetzung ausblenden</span>
+        <span class="tt-toggle-off" data-i18n="tt.show">Übersetzung zeigen</span>
       </button>
-      <div class="help-langs" role="group" aria-label="Sprache der Übersetzung">
-        {HELP_LANGS.map((l) => (
-          <button type="button" class="help-lang" data-help-lang={l.code} lang={l.code} aria-pressed="false">{l.label}</button>
-        ))}
-      </div>
     </div>
   )}
 
@@ -64,7 +58,7 @@ const lines: Record<string, string[]> | null = paragraphs
   </div>
 
   {paragraphs && !reviewed && (
-    <p class="help-draft">Übersetzung: maschineller Entwurf, noch nicht von einer Lehrkraft geprüft.</p>
+    <p class="help-draft" data-i18n="gx.draft">Übersetzung: maschineller Entwurf, noch nicht von einer Lehrkraft geprüft.</p>
   )}
 
   {paragraphs && (

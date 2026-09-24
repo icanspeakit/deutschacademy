@@ -19,6 +19,24 @@
       }
     ],
     "exampleHtml": "lernen → ich lern<span class=\"vp-verb\">e</span>, du lern<span class=\"vp-verb\">st</span>, er lern<span class=\"vp-verb\">t</span>, wir lern<span class=\"vp-verb\">en</span>, ihr lern<span class=\"vp-verb\">t</span>, sie lern<span class=\"vp-verb\">en</span>",
+    "table": {
+      "caption": "Präsens: die Endungen",
+      "rows": [
+        { "pron": "ich", "end": "-e" },
+        { "pron": "du", "end": "-st" },
+        { "pron": "er/sie/es", "end": "-t" },
+        { "pron": "wir", "end": "-en" },
+        { "pron": "ihr", "end": "-t" },
+        { "pron": "sie/Sie", "end": "-en" }
+      ],
+      "verbs": [
+        { "inf": "lernen", "forms": ["lern|e", "lern|st", "lern|t", "lern|en", "lern|t", "lern|en"] },
+        { "inf": "arbeiten", "note": "-t/-d: + e", "forms": ["arbeit|e", "arbeit|{e}st", "arbeit|{e}t", "arbeit|en", "arbeit|{e}t", "arbeit|en"] },
+        { "inf": "fahren", "note": "a → ä", "forms": ["fahr|e", "f{ä}hr|st", "f{ä}hr|t", "fahr|en", "fahr|t", "fahr|en"] },
+        { "inf": "sein", "irregular": true, "forms": ["bin", "bist", "ist", "sind", "seid", "sind"] },
+        { "inf": "haben", "irregular": true, "forms": ["habe", "hast", "hat", "haben", "habt", "haben"] }
+      ]
+    },
     "qa": [
       {
         "html": "Die Endungen: <strong>ich -e, du -st, er/sie/es -t, wir -en, ihr -t, sie/Sie -en</strong>. Sie gelten für fast alle Verben.",
@@ -383,7 +401,7 @@
           ]
         },
         {
-          "prompt": "Sie ___ gern Bücher.",
+          "prompt": "Anna ___ gern Bücher.",
           "hint": "lesen",
           "answer": [
             "liest"

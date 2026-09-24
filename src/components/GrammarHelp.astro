@@ -1,29 +1,23 @@
 ---
-// The switch for a grammar topic's rule in the learner's own language — see
-// mountGrammarHelp in src/lib/textHelp.js. The translations themselves are rendered next
-// to each German block by GrammarHelpText.astro; this is only the control, and it binds to
-// the page root so one switch drives every block on the page, in both Üben and Aktiv.
-import { HELP_LANGS } from "../lib/textHelp.js";
-import "../styles/help-langs.css";
+// Wires a page's help blocks (GrammarHelpText.astro) to the language menu in the site
+// header — see mountGrammarHelp in src/lib/textHelp.js. There is no switch and no language
+// row here any more: the header decides, for every page at once. What is left is the one
+// thing the learner should know while reading a translation — that it is a machine draft.
+//
+// Used by grammar topics and by Leben in Deutschland, Kultur, Hören and Sprechen; `root`
+// names the element whose blocks it drives.
 import "../styles/grammar-help.css";
 
 interface Props {
-  level: string;
+  level?: string;
   /** False while the translation is a draft nobody has checked. */
   reviewed?: boolean;
+  /** id of the element holding the .gx-tr blocks. */
+  root?: string;
 }
-const { level, reviewed = false } = Astro.props;
+const { reviewed = false, root = "vp-page" } = Astro.props;
 ---
-<div class="gx-bar" data-gx-bar data-level={level}>
-  <button type="button" class="gx-toggle" data-gx-toggle aria-pressed="false">
-    <span class="gx-toggle-dot" aria-hidden="true"></span>
-    <span data-i18n="gx.toggle">Regel in meiner Sprache</span>
-  </button>
-  <div class="help-langs" role="group" aria-label="Sprache der Erklärung">
-    {HELP_LANGS.map((l) => (
-      <button type="button" class="help-lang" data-help-lang={l.code} lang={l.code} aria-pressed="false">{l.label}</button>
-    ))}
-  </div>
+<div class="gx-bar" data-gx-bar data-root={root} hidden>
   {!reviewed && (
     <p class="help-draft gx-draft" data-i18n="gx.draft">Übersetzung: maschineller Entwurf, noch nicht von einer Lehrkraft geprüft.</p>
   )}
@@ -31,7 +25,15 @@ const { level, reviewed = false } = Astro.props;
 
 <script>
   import { mountGrammarHelp } from "../lib/textHelp.js";
-  const bar = document.querySelector<HTMLElement>("[data-gx-bar]");
-  const root = document.getElementById("vp-page");
-  if (bar && root) mountGrammarHelp(root, bar, { level: bar.dataset.level });
+  // A page can carry the bar more than once (Artikel: in the Regel pane and the lesson);
+  // every bar on the same root is driven together.
+  const byRoot = new Map<string, HTMLElement[]>();
+  document.querySelectorAll<HTMLElement>("[data-gx-bar]").forEach((bar) => {
+    const id = bar.dataset.root ?? "vp-page";
+    byRoot.set(id, [...(byRoot.get(id) ?? []), bar]);
+  });
+  byRoot.forEach((bars, id) => {
+    const root = document.getElementById(id);
+    if (root) mountGrammarHelp(root, bars);
+  });
 </script>

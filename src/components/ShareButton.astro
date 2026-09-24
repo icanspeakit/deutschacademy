@@ -6,8 +6,13 @@
 // The glyph is the box-with-arrow, not a chain link. A link says "copy an address",
 // which on a phone is a dead end: the learner then has to open WhatsApp and paste. On a
 // touch device the button opens the system share sheet, and WhatsApp and Telegram are
-// right there. That is how this audience passes things on. With a mouse, the desktop
-// share sheets are clumsy, so there it copies the link and says so in place.
+// right there. That is how this audience passes things on.
+//
+// With a mouse there is no such sheet worth opening (Windows' is clumsy, most desktop
+// browsers have none), and a bare "copied" left the learner guessing what had happened.
+// So the desktop gets the phone's choices as a small menu: WhatsApp, Telegram, E-Mail,
+// Link kopieren — and "Weitere Apps…" when the browser does have a share sheet. The icon
+// alone did not say what it was either, hence the "Teilen" label on hover.
 //
 // `url` defaults to the current path without its query. A trainer's ?stufe=a2 is the
 // sender's state, not the page. Pages that embed an exercise somewhere else
@@ -29,7 +34,8 @@ const href = url ?? Astro.url.pathname;
   data-share-url={href}
   data-share-title={title}
   aria-label="Teilen"
-  title="Teilen"
+  aria-haspopup="menu"
+  aria-expanded="false"
 >
   <svg class="share-btn-icon share-btn-icon--share" viewBox="0 0 24 24" aria-hidden="true">
     <path d="M12 3.5v11" />
@@ -40,19 +46,142 @@ const href = url ?? Astro.url.pathname;
     <path d="m5.5 12.5 4 4 9-9" />
   </svg>
   <span class="share-btn-text" data-share-text>Teilen</span>
+  <span class="share-btn-tip" data-share-tip aria-hidden="true">Teilen</span>
   <span class="share-btn-live" aria-live="polite"></span>
 </button>
 
 <script>
+  import { getLang, onLangChange } from "../lib/i18n.js";
+
+  // The menu is built in script, so its words live here rather than in public/i18n —
+  // eight short strings, one per UI language.
+  const L: Record<string, Record<string, string>> = {
+    de: { share: "Teilen", copy: "Link kopieren", copied: "Link kopiert", mail: "E-Mail", more: "Weitere Apps…", prompt: "Link kopieren:" },
+    en: { share: "Share", copy: "Copy link", copied: "Link copied", mail: "Email", more: "More apps…", prompt: "Copy link:" },
+    ar: { share: "مشاركة", copy: "نسخ الرابط", copied: "تم نسخ الرابط", mail: "البريد الإلكتروني", more: "تطبيقات أخرى…", prompt: "انسخ الرابط:" },
+    tr: { share: "Paylaş", copy: "Bağlantıyı kopyala", copied: "Bağlantı kopyalandı", mail: "E-posta", more: "Diğer uygulamalar…", prompt: "Bağlantıyı kopyala:" },
+    uk: { share: "Поділитися", copy: "Копіювати посилання", copied: "Посилання скопійовано", mail: "Ел. пошта", more: "Інші застосунки…", prompt: "Копіювати посилання:" },
+  };
+  const tr = (k: string) => (L[getLang()] || L.de)[k] || L.de[k];
+
+  const ICONS: Record<string, string> = {
+    whatsapp: '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#25D366" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Z"/><path fill="#fff" d="M17.3 14.4c-.3-.1-1.7-.8-1.9-.9-.3-.1-.5-.1-.7.1l-.9 1.1c-.2.2-.3.2-.6.1a7.6 7.6 0 0 1-3.7-3.3c-.3-.5.3-.4.8-1.4.1-.2 0-.3 0-.5l-.9-2c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.4s1 2.8 1.2 3c.1.2 2 3.1 4.9 4.3 1.8.8 2.5.8 3.4.7.6-.1 1.7-.7 1.9-1.4.2-.7.2-1.2.2-1.4-.1-.1-.3-.2-.6-.3Z"/></svg>',
+    telegram: '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#229ED9"/><path fill="#fff" d="m6.2 11.7 9.9-3.8c.5-.2.9.1.7.8l-1.7 7.9c-.1.6-.5.7-1 .4l-2.6-1.9-1.3 1.2c-.1.1-.3.3-.6.3l.2-2.7 4.9-4.4c.2-.2 0-.3-.3-.1l-6 3.8-2.6-.8c-.6-.2-.6-.6.1-.9Z"/></svg>',
+    mail: '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m4 7 8 6 8-6"/></svg>',
+    copy: '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></svg>',
+    more: '<svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><circle cx="6" cy="12" r="1.7"/><circle cx="12" cy="12" r="1.7"/><circle cx="18" cy="12" r="1.7"/></svg>',
+  };
+
   // Delegated once, so any number of buttons (and ones rendered later) share it.
   const w = window as any;
   if (!w.__daShare) {
     w.__daShare = true;
     const touch = matchMedia("(pointer: coarse)").matches;
+    let menu: HTMLDivElement | null = null;
+    let owner: HTMLButtonElement | null = null;
+
+    const relabel = () => {
+      document.querySelectorAll<HTMLButtonElement>("[data-share]").forEach((b) => {
+        b.setAttribute("aria-label", tr("share"));
+        b.querySelectorAll("[data-share-text], [data-share-tip]").forEach((el) => {
+          if (!b.classList.contains("is-done")) el.textContent = tr("share");
+        });
+      });
+    };
+    relabel();
+    onLangChange(() => { relabel(); close(); });
+
+    function close(refocus = false) {
+      if (!menu) return;
+      menu.remove();
+      menu = null;
+      if (owner) {
+        owner.setAttribute("aria-expanded", "false");
+        owner.classList.remove("is-open");
+        if (refocus) owner.focus();
+      }
+      owner = null;
+    }
+
+    function flashDone(btn: HTMLButtonElement) {
+      const text = btn.querySelector("[data-share-text]");
+      const live = btn.querySelector(".share-btn-live");
+      btn.classList.add("is-done");
+      if (text) text.textContent = tr("copied");
+      if (live) live.textContent = tr("copied");
+      clearTimeout((btn as any)._t);
+      (btn as any)._t = setTimeout(() => {
+        btn.classList.remove("is-done");
+        if (text) text.textContent = tr("share");
+        if (live) live.textContent = "";
+      }, 1800);
+    }
+
+    function open(btn: HTMLButtonElement, url: string, title: string) {
+      close();
+      const msg = `${title} ${url}`;
+      const items: { id: string; label: string; href?: string; run?: () => void }[] = [
+        { id: "whatsapp", label: "WhatsApp", href: `https://wa.me/?text=${encodeURIComponent(msg)}` },
+        { id: "telegram", label: "Telegram", href: `https://t.me/share/url?url=${encodeURIComponent(url)}&text=${encodeURIComponent(title)}` },
+        { id: "mail", label: tr("mail"), href: `mailto:?subject=${encodeURIComponent(title)}&body=${encodeURIComponent(url)}` },
+        {
+          id: "copy", label: tr("copy"), run: async () => {
+            try { await navigator.clipboard.writeText(url); flashDone(btn); }
+            catch { prompt(tr("prompt"), url); }
+          },
+        },
+      ];
+      if (navigator.share) {
+        items.push({ id: "more", label: tr("more"), run: () => { navigator.share({ title, url }).catch(() => {}); } });
+      }
+
+      menu = document.createElement("div");
+      menu.className = "share-menu";
+      menu.setAttribute("role", "menu");
+      menu.setAttribute("aria-label", tr("share"));
+      menu.dir = document.documentElement.dir || "ltr";
+      menu.innerHTML = items.map((it) => it.href
+        ? `<a role="menuitem" class="share-menu-item" href="${it.href}" target="_blank" rel="noopener" data-id="${it.id}">${ICONS[it.id]}<span>${it.label}</span></a>`
+        : `<button role="menuitem" type="button" class="share-menu-item" data-id="${it.id}">${ICONS[it.id]}<span>${it.label}</span></button>`
+      ).join("");
+      document.body.appendChild(menu);
+
+      menu.addEventListener("click", (ev) => {
+        const el = (ev.target as Element).closest<HTMLElement>(".share-menu-item");
+        if (!el) return;
+        items.find((it) => it.id === el.dataset.id)?.run?.();
+        close(true);
+      });
+      menu.addEventListener("keydown", (ev) => {
+        const all = Array.from(menu!.querySelectorAll<HTMLElement>(".share-menu-item"));
+        const i = all.indexOf(document.activeElement as HTMLElement);
+        if (ev.key === "ArrowDown") { ev.preventDefault(); all[(i + 1) % all.length].focus(); }
+        else if (ev.key === "ArrowUp") { ev.preventDefault(); all[(i - 1 + all.length) % all.length].focus(); }
+        else if (ev.key === "Escape") { ev.preventDefault(); close(true); }
+        else if (ev.key === "Tab") close();
+      });
+
+      // Under the button, its right edge on the button's, kept inside the viewport.
+      const r = btn.getBoundingClientRect();
+      const m = menu.getBoundingClientRect();
+      const left = Math.min(Math.max(8, r.right - m.width), innerWidth - m.width - 8);
+      const below = r.bottom + 6 + m.height <= innerHeight - 8;
+      menu.style.left = `${left}px`;
+      menu.style.top = `${below ? r.bottom + 6 : Math.max(8, r.top - 6 - m.height)}px`;
+
+      owner = btn;
+      btn.setAttribute("aria-expanded", "true");
+      btn.classList.add("is-open");
+      menu.querySelector<HTMLElement>(".share-menu-item")?.focus();
+    }
 
     document.addEventListener("click", async (e) => {
       const btn = (e.target as Element).closest<HTMLButtonElement>("[data-share]");
-      if (!btn) return;
+      if (!btn) {
+        if (menu && !menu.contains(e.target as Node)) close();
+        return;
+      }
+      if (btn === owner) { close(); return; }
       const url = new URL(btn.dataset.shareUrl || location.pathname, location.origin).href;
       const title = btn.dataset.shareTitle || document.title;
 
@@ -60,30 +189,18 @@ const href = url ?? Astro.url.pathname;
         try { await navigator.share({ title, url }); } catch { /* dismissed */ }
         return;
       }
-      try {
-        await navigator.clipboard.writeText(url);
-      } catch {
-        prompt("Link kopieren:", url);
-        return;
-      }
-      const text = btn.querySelector("[data-share-text]");
-      const live = btn.querySelector(".share-btn-live");
-      btn.classList.add("is-done");
-      if (text) text.textContent = "Kopiert";
-      if (live) live.textContent = "Link kopiert";
-      clearTimeout((btn as any)._t);
-      (btn as any)._t = setTimeout(() => {
-        btn.classList.remove("is-done");
-        if (text) text.textContent = "Teilen";
-        if (live) live.textContent = "";
-      }, 1800);
+      open(btn, url, title);
     });
+    document.addEventListener("keydown", (e) => { if (e.key === "Escape" && menu) close(true); });
+    addEventListener("resize", () => close());
+    addEventListener("scroll", () => close(), { passive: true, capture: true });
   }
 </script>
 
 <style>
   .share-btn {
     --share-size: 40px;
+    position: relative;
     flex: none;
     display: inline-flex; align-items: center; justify-content: center; gap: 6px;
     min-width: var(--share-size); height: var(--share-size);
@@ -95,7 +212,7 @@ const href = url ?? Astro.url.pathname;
     -webkit-tap-highlight-color: transparent;
   }
   .share-btn--sm { --share-size: 36px; }
-  .share-btn:hover { background: var(--surface); color: var(--ink); }
+  .share-btn:hover, .share-btn.is-open { background: var(--surface); color: var(--ink); }
   .share-btn:focus-visible { outline: 2px solid var(--brand-blue); outline-offset: 2px; }
   .share-btn:active { transform: scale(.94); }
 
@@ -115,10 +232,51 @@ const href = url ?? Astro.url.pathname;
     .share-btn--label .share-btn-text { display: inline; }
   }
 
+  /* The hover label: says what the bare icon is. Mouse only — a touch has no hover, and
+     the label would stick after the tap. Hidden while the menu is open. */
+  .share-btn-tip {
+    position: absolute; top: calc(100% + 6px); left: 50%;
+    transform: translate(-50%, -2px);
+    padding: 4px 9px; border-radius: 6px;
+    background: var(--ink); color: var(--surface-card, #fff);
+    font-size: 12px; font-weight: 600; white-space: nowrap;
+    pointer-events: none; opacity: 0;
+    transition: opacity .12s, transform .12s;
+    z-index: 30;
+  }
+  @media (hover: hover) {
+    .share-btn:not(.is-open):hover .share-btn-tip,
+    .share-btn:not(.is-open):focus-visible .share-btn-tip { opacity: 1; transform: translate(-50%, 0); transition-delay: .25s; }
+  }
+  .share-btn--label .share-btn-tip { display: none; }
+
   .share-btn-live { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
 
   @keyframes share-pop { from { transform: scale(.6); opacity: 0; } }
   @media (prefers-reduced-motion: reduce) {
-    .share-btn, .share-btn-icon--done { transition: none; animation: none; }
+    .share-btn, .share-btn-icon--done, .share-btn-tip { transition: none; animation: none; }
   }
+
+  /* The menu is appended to <body>, outside this component, so its rules are global. */
+  :global(.share-menu) {
+    position: fixed; z-index: 1000;
+    min-width: 200px; padding: 6px;
+    background: var(--surface-card, #fff);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    box-shadow: var(--shadow-hover, 0 12px 28px rgba(28,43,63,.1));
+    animation: share-menu-in .12s ease;
+  }
+  :global(.share-menu-item) {
+    display: flex; align-items: center; gap: 10px;
+    width: 100%; padding: 9px 10px;
+    border: 0; border-radius: 8px; background: none;
+    color: var(--ink); font: inherit; font-size: var(--text-sm); font-weight: 500;
+    text-align: start; text-decoration: none; cursor: pointer;
+  }
+  :global(.share-menu-item:hover), :global(.share-menu-item:focus-visible) { background: var(--surface); outline: none; }
+  :global(.share-menu-item svg) { flex: none; width: 20px; height: 20px; }
+  :global(.share-menu-item[data-id="copy"]) { margin-top: 5px; box-shadow: 0 -1px 0 var(--border); }
+  @keyframes share-menu-in { from { opacity: 0; transform: translateY(-4px); } }
+  @media (prefers-reduced-motion: reduce) { :global(.share-menu) { animation: none; } }
 </style>

@@ -14,7 +14,8 @@
 //
 // Not legal advice. Have it reviewed before relying on it.
 import Layout from "../layouts/Layout.astro";
-import PracticeHeader from "../components/PracticeHeader.astro";
+import SiteNav from "../components/SiteNav.astro";
+import LegalTranslation from "../components/LegalTranslation.astro";
 import { LEGAL } from "../lib/legal.js";
 import "../styles/practice.css";
 import "../styles/legal.css";
@@ -23,61 +24,62 @@ import "../styles/legal.css";
   title="Nutzungsbedingungen – DeutschAcademy"
   description="Bedingungen für die Nutzung von DeutschAcademy: kostenlose Übungen, Konten und Inhalte."
 >
-  <PracticeHeader title="Nutzungsbedingungen" />
+  <SiteNav />
   <main class="legal-main">
+    <LegalTranslation page="nutzungsbedingungen" />
     <div class="legal-head">
-      <h1>Nutzungsbedingungen</h1>
-      <p class="legal-updated">Stand: {LEGAL.lastUpdated}</p>
+      <h1 data-lx="title">Nutzungsbedingungen</h1>
+      <p data-lx="updated" class="legal-updated">Stand: {LEGAL.lastUpdated}</p>
     </div>
 
     <div class="legal-body">
-      <h2>Das Angebot</h2>
-      <p>
+      <h2 data-lx="h.offer">Das Angebot</h2>
+      <p data-lx="p.offer1">
         DeutschAcademy stellt kostenlose Materialien zum Deutschlernen bereit: Übungen zu
         Grammatik und Wortschatz, Übungssätze zur Prüfungsvorbereitung (DTZ, telc, Goethe,
         TestDaF, Leben in Deutschland) sowie PDFs zum Herunterladen. Die Nutzung ist kostenlos
         und ohne Konto möglich.
       </p>
-      <p>
+      <p data-lx="p.offer2">
         Wir entwickeln die Seite laufend weiter. Einzelne Übungen, Seiten oder Funktionen können
         sich ändern oder wegfallen. Einen Anspruch auf ständige Verfügbarkeit gibt es nicht.
       </p>
 
-      <h2>Konten</h2>
-      <p>
+      <h2 data-lx="h.accounts">Konten</h2>
+      <p data-lx="p.accounts">
         Ein Konto ist freiwillig. Es dient allein dazu, deinen Lernfortschritt auf mehreren
         Geräten fortzusetzen. Du kannst dich mit Google oder per E-Mail anmelden.
       </p>
       <ul>
-        <li>Die Angaben bei der Anmeldung müssen zutreffend sein.</li>
-        <li>Gib deine Zugangsdaten nicht weiter.</li>
-        <li>Ein Konto ist für Personen ab 16 Jahren gedacht.</li>
-        <li>Du kannst dein Konto jederzeit löschen. Damit werden auch die gespeicherten Daten gelöscht.</li>
+        <li data-lx="li.acc1">Die Angaben bei der Anmeldung müssen zutreffend sein.</li>
+        <li data-lx="li.acc2">Gib deine Zugangsdaten nicht weiter.</li>
+        <li data-lx="li.acc3">Ein Konto ist für Personen ab 16 Jahren gedacht.</li>
+        <li data-lx="li.acc4">Du kannst dein Konto jederzeit löschen. Damit werden auch die gespeicherten Daten gelöscht.</li>
       </ul>
 
-      <h2>Zulässige Nutzung</h2>
-      <p>Nicht erlaubt ist insbesondere:</p>
+      <h2 data-lx="h.use">Zulässige Nutzung</h2>
+      <p data-lx="p.useIntro">Nicht erlaubt ist insbesondere:</p>
       <ul>
-        <li>die Seite automatisiert in einem Umfang abzurufen, der den Betrieb beeinträchtigt;</li>
-        <li>Sicherheitsvorkehrungen zu umgehen oder fremde Konten zu nutzen;</li>
-        <li>Inhalte der Seite gewerblich weiterzuverkaufen;</li>
-        <li>die Seite für rechtswidrige Zwecke zu nutzen.</li>
+        <li data-lx="li.use1">die Seite automatisiert in einem Umfang abzurufen, der den Betrieb beeinträchtigt;</li>
+        <li data-lx="li.use2">Sicherheitsvorkehrungen zu umgehen oder fremde Konten zu nutzen;</li>
+        <li data-lx="li.use3">Inhalte der Seite gewerblich weiterzuverkaufen;</li>
+        <li data-lx="li.use4">die Seite für rechtswidrige Zwecke zu nutzen.</li>
       </ul>
 
-      <h2>Deine Inhalte</h2>
-      <p>
+      <h2 data-lx="h.yours">Deine Inhalte</h2>
+      <p data-lx="p.yours">
         Texte, die du in Schreibaufgaben verfasst, gehören dir. Wir nutzen sie nicht für eigene
         Zwecke und geben sie nicht weiter. Sie werden gespeichert, damit du an ihnen
         weiterarbeiten kannst — im Browser und, wenn du angemeldet bist, zusätzlich auf dem
         Server.
       </p>
 
-      <h2>Unsere Inhalte</h2>
-      <p>
+      <h2 data-lx="h.ours">Unsere Inhalte</h2>
+      <p data-lx="p.ours1">
         Die von uns erstellten Übungen, Wortlisten und PDFs darfst du kostenlos nutzen,
         ausdrucken und im eigenen Unterricht weitergeben. Nicht erlaubt ist der Weiterverkauf.
       </p>
-      <p>
+      <p data-lx="p.ours2">
         Prüfungsnamen und Prüfungsmaterialien Dritter (telc, Goethe-Institut, TestDaF-Institut,
         BAMF) gehören den jeweiligen Rechteinhabern. Unsere Übungssätze orientieren sich am
         veröffentlichten Prüfungsformat, sind aber eigene Materialien und <strong>kein
@@ -85,8 +87,8 @@ import "../styles/legal.css";
         Anbieter sie selbst veröffentlichen.
       </p>
 
-      <h2>Keine Gewähr für Prüfungserfolg</h2>
-      <p>
+      <h2 data-lx="h.noGuarantee">Keine Gewähr für Prüfungserfolg</h2>
+      <p data-lx="p.noGuarantee">
         Die Inhalte werden sorgfältig erstellt, ersetzen aber weder einen Kurs noch eine
         Beratung. Wir sichern kein bestimmtes Prüfungsergebnis und keine bestimmte
         Niveaustufe zu. Ergebnisse aus dem Einstufungstest sind eine Orientierung, keine
@@ -94,8 +96,8 @@ import "../styles/legal.css";
         Prüfungsanbieter.
       </p>
 
-      <h2>Haftung</h2>
-      <p>
+      <h2 data-lx="h.liability">Haftung</h2>
+      <p data-lx="p.liab1">
         Wir haften unbeschränkt für Vorsatz und grobe Fahrlässigkeit sowie bei Verletzung von
         Leben, Körper oder Gesundheit. Bei einfacher Fahrlässigkeit haften wir nur bei
         Verletzung einer wesentlichen Vertragspflicht — also einer Pflicht, deren Erfüllung die
@@ -103,29 +105,29 @@ import "../styles/legal.css";
         darfst — und der Höhe nach begrenzt auf den vertragstypischen, vorhersehbaren Schaden.
         Ansprüche nach dem Produkthaftungsgesetz bleiben unberührt.
       </p>
-      <p>
+      <p data-lx="p.liab2">
         Für den Verlust von Lernfortschritt, der ausschließlich in deinem Browser gespeichert
         ist, können wir nicht einstehen: Auf diese Daten haben wir keinen Zugriff, und sie
         werden gelöscht, sobald du deine Browserdaten löschst. Wer seinen Fortschritt sichern
         möchte, meldet sich an.
       </p>
 
-      <h2>Änderungen und Beendigung</h2>
-      <p>
+      <h2 data-lx="h.changes">Änderungen und Beendigung</h2>
+      <p data-lx="p.changes">
         Wir können diese Bedingungen ändern, wenn sich das Angebot oder die Rechtslage ändert.
         Das Datum oben zeigt den Stand. Du kannst dein Konto jederzeit ohne Angabe von Gründen
         löschen. Wir können ein Konto sperren, wenn es erheblich gegen diese Bedingungen
         verstößt.
       </p>
 
-      <h2>Anwendbares Recht</h2>
-      <p>
+      <h2 data-lx="h.law">Anwendbares Recht</h2>
+      <p data-lx="p.law">
         Es gilt deutsches Recht. Zwingende Verbraucherschutzvorschriften des Staates, in dem du
         deinen gewöhnlichen Aufenthalt hast, bleiben davon unberührt.
       </p>
 
-      <h2>Kontakt</h2>
-      <p>
+      <h2 data-lx="h.contact">Kontakt</h2>
+      <p data-lx="p.contact">
         Fragen zu diesen Bedingungen:{" "}
         <a href={`mailto:${LEGAL.contactEmail}`}>{LEGAL.contactEmail}</a>. Die vollständigen
         Anbieterangaben stehen im <a href="/impressum">Impressum</a>.

@@ -21,7 +21,7 @@
     "exampleHtml": "du kommst → <span class=\"vp-verb\">Komm</span>! · ihr kommt → <span class=\"vp-verb\">Kommt</span>! · Sie kommen → <span class=\"vp-verb\">Kommen</span> <span class=\"vp-prep\">Sie</span>!",
     "qa": [
       {
-        "html": "<strong>du</strong>: die du-Form ohne <em>du</em> und ohne <em>-st</em>: <em>du trinkst → Trink! du nimmst → Nimm!</em>",
+        "html": "<strong>du</strong>: die du-Form ohne <em>du</em> und ohne <em>-st</em>: <em>du trinkst → Trink! du nimmst → Nimm!</em> Nach <em>s</em> fällt nur das <em>-t</em> weg: <em>du liest → Lies! du isst → Iss!</em>",
         "tag": "du"
       },
       {
@@ -253,7 +253,7 @@
     {
       "type": "table",
       "title": "Von der du-Form zum Imperativ.",
-      "hint": "du und -st fallen weg. a → ä kommt nicht mit, e → i schon.",
+      "hint": "du und -st fallen weg (nach s nur -t: liest → Lies). a → ä kommt nicht mit, e → i schon.",
       "columns": [
         "du-Form",
         "Imperativ"
@@ -428,21 +428,19 @@
         },
         {
           "id": "im4",
-          "hint": "lesen · ihr",
+          "hint": "vorlesen · ihr",
           "correct": [
             "Lest",
             "den",
             "Text",
-            "noch",
-            "einmal",
+            "vor",
             "!"
           ],
           "shuffled": [
-            "einmal",
             "Text",
-            "Lest",
-            "noch",
+            "vor",
             "!",
+            "Lest",
             "den"
           ]
         }
@@ -471,7 +469,7 @@
         },
         {
           "q": "Ich bin so müde.",
-          "a": "Schlaf ein bisschen!"
+          "a": "Trink einen Kaffee!"
         }
       ]
     }

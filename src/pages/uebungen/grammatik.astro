@@ -1,6 +1,6 @@
 ---
 import Layout from "../../layouts/Layout.astro";
-import PracticeHeader from "../../components/PracticeHeader.astro";
+import SiteNav from "../../components/SiteNav.astro";
 import "../../styles/practice.css";
 import "../../styles/aktiv.css";
 import grammatik from "../../data/grammatik.json";
@@ -67,7 +67,7 @@ const levels = LEVEL_ORDER.filter((lvl) => topics.some((t) => t.level === lvl));
 const ROW_WIDTH = 4;
 ---
 <Layout title="Grammatik – DeutschAcademy">
-  <PracticeHeader title="Grammatik" />
+  <SiteNav active="grammatik" />
   <main class="practice-main">
     <div class="grammatik-hero">
       <p class="eyebrow" data-i18n="grammatik.hero.eyebrow">Grammatik üben</p>

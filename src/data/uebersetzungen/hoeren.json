@@ -1,0 +1,609 @@
+{
+  "_note": "Hilfe in der eigenen Sprache für /uebungen/hoeren/[id]: Übersetzung des Transkripts, je Sprache genau ein Eintrag pro script-Turn, gleiche Reihenfolge. reviewed: false = maschineller Entwurf, auf der Seite als ungeprüft markiert.",
+  "entries": {
+    "a1-ansage-bahnhof": {
+      "reviewed": false,
+      "script": {
+        "en": [
+          "Attention, platform four. The regional train to Stuttgart, departing at 12:20, is about ten minutes late today.",
+          "Today the train does not leave from platform four, but from platform seven. I repeat: platform seven. We apologise for the inconvenience."
+        ],
+        "ar": [
+          "انتباه على الرصيف رقم أربعة. القطار الإقليمي المتجه إلى Stuttgart، موعد مغادرته الساعة 12:20، متأخر اليوم نحو عشر دقائق.",
+          "لن يغادر القطار اليوم من الرصيف رقم أربعة، بل من الرصيف رقم سبعة. أكرر: الرصيف رقم سبعة. نعتذر عن ذلك."
+        ],
+        "uk": [
+          "Увага, колія четверта. Регіональний поїзд до Stuttgart, відправлення о 12:20, сьогодні запізнюється приблизно на десять хвилин.",
+          "Сьогодні поїзд відправляється не з четвертої колії, а з сьомої. Повторюю: колія сьома. Просимо вибачення."
+        ],
+        "tr": [
+          "Dört numaralı perona dikkat. Saat 12:20'de kalkacak olan Stuttgart bölgesel treni bugün yaklaşık on dakika gecikmeli.",
+          "Tren bugün dört numaralı perondan değil, yedi numaralı perondan kalkıyor. Tekrar ediyorum: yedi numaralı peron. Özür dileriz."
+        ]
+      }
+    },
+    "a1-anruf-arzt": {
+      "reviewed": false,
+      "script": {
+        "en": [
+          "Hello, Ms Nowak. This is Dr Berger's practice, my name is Hoffmann.",
+          "You have an appointment on Wednesday at 14:00. Unfortunately, Dr Berger is ill on Wednesday.",
+          "Can you come on Friday at nine o'clock? Please give us a quick call. Our number: 0711 3324. Thank you very much and goodbye."
+        ],
+        "ar": [
+          "مساء الخير، السيدة Nowak. معكِ عيادة الدكتور Berger، اسمي Hoffmann.",
+          "لديكِ موعد يوم الأربعاء الساعة 14:00. للأسف الدكتور Berger مريض يوم الأربعاء.",
+          "هل يمكنكِ المجيء يوم الجمعة الساعة التاسعة؟ من فضلكِ اتصلي بنا اتصالًا قصيرًا. رقمنا: 0711 3324. شكرًا جزيلًا ومع السلامة."
+        ],
+        "uk": [
+          "Добрий день, пані Nowak. Це практика лікаря Berger, мене звати Hoffmann.",
+          "У вас запис на середу о 14:00. На жаль, у середу лікар Berger хворий.",
+          "Чи можете ви прийти в п'ятницю о дев'ятій? Будь ласка, коротко зателефонуйте нам. Наш номер: 0711 3324. Дуже дякую і до побачення."
+        ],
+        "tr": [
+          "İyi günler, Nowak Hanım. Burası Doktor Berger'in muayenehanesi, benim adım Hoffmann.",
+          "Çarşamba saat 14:00'te randevunuz var. Maalesef Doktor Berger çarşamba günü hasta.",
+          "Cuma günü saat dokuzda gelebilir misiniz? Lütfen bizi kısaca arayın. Numaramız: 0711 3324. Çok teşekkürler, hoşça kalın."
+        ]
+      }
+    },
+    "a1-supermarkt": {
+      "reviewed": false,
+      "script": {
+        "en": [
+          "Excuse me, where can I find milk?",
+          "The milk is at the back on the right, next to the cheese. Just go straight ahead to the end.",
+          "Thank you. And do you have fresh bread too?",
+          "Bread is right here at the front on the left. But unfortunately we have no more bread rolls today.",
+          "No problem. Thank you very much!"
+        ],
+        "ar": [
+          "عفوًا، أين أجد الحليب؟",
+          "الحليب في الخلف على اليمين، بجانب الجبن. امشِ إلى الأمام مباشرةً حتى النهاية.",
+          "شكرًا. وهل عندكم خبز طازج أيضًا؟",
+          "الخبز هنا في الأمام على اليسار. لكن للأسف لم يعد عندنا خبز صغير (Brötchen) اليوم.",
+          "لا مشكلة. شكرًا جزيلًا!"
+        ],
+        "uk": [
+          "Перепрошую, де я можу знайти молоко?",
+          "Молоко ззаду праворуч, поруч із сиром. Просто йдіть прямо до кінця.",
+          "Дякую. А свіжий хліб у вас теж є?",
+          "Хліб тут, спереду ліворуч. Але булочок, на жаль, сьогодні вже немає.",
+          "Нічого страшного. Щиро дякую!"
+        ],
+        "tr": [
+          "Affedersiniz, sütü nerede bulabilirim?",
+          "Süt arkada sağda, peynirin yanında. Sadece sonuna kadar düz gidin.",
+          "Teşekkürler. Taze ekmeğiniz de var mı?",
+          "Ekmek hemen burada, önde solda. Ama maalesef bugün hiç küçük ekmeğimiz (Brötchen) kalmadı.",
+          "Sorun değil. Çok teşekkürler!"
+        ]
+      }
+    },
+    "a1-verabredung": {
+      "reviewed": false,
+      "script": {
+        "en": [
+          "Hi Maria, it's Lena. Have you got a minute?",
+          "Hi Lena! Yes, sure. What's up?",
+          "Shall we meet at the café tomorrow? At 16:00?",
+          "Unfortunately I can't at 16:00, I work until five. Is 18:00 okay too?",
+          "Yes, that works. At 18:00 then. But not at the café — come to my place instead.",
+          "Great, see you tomorrow!"
+        ],
+        "ar": [
+          "مرحبًا Maria، معكِ Lena. هل عندكِ وقت قليل؟",
+          "مرحبًا Lena! نعم، طبعًا. ما الأمر؟",
+          "هل نلتقي غدًا في المقهى؟ الساعة 16:00؟",
+          "للأسف لا أستطيع الساعة 16:00، أعمل حتى الخامسة. هل يناسبكِ الساعة 18:00؟",
+          "نعم، هذا مناسب. إذن الساعة 18:00. لكن ليس في المقهى — تعالي إلى بيتي.",
+          "رائع، إلى اللقاء غدًا!"
+        ],
+        "uk": [
+          "Привіт, Maria, це Lena. Маєш хвилинку?",
+          "Привіт, Lena! Так, звісно. Що таке?",
+          "Зустрінемося завтра в кафе? О 16:00?",
+          "О 16:00, на жаль, не можу, я працюю до п'ятої. А о 18:00 можна?",
+          "Так, підходить. Тоді о 18:00. Але не в кафе — приходь краще до мене додому.",
+          "Супер, до завтра!"
+        ],
+        "tr": [
+          "Merhaba Maria, ben Lena. Biraz vaktin var mı?",
+          "Merhaba Lena! Evet, tabii. Ne var ne yok?",
+          "Yarın kafede buluşalım mı? Saat 16:00'da?",
+          "Maalesef saat 16:00'da olmaz, beşe kadar çalışıyorum. Saat 18:00 da olur mu?",
+          "Evet, uyar. O zaman saat 18:00'de. Ama kafede değil — bana, eve gel.",
+          "Süper, yarın görüşürüz!"
+        ]
+      }
+    },
+    "a2-amt-termin": {
+      "reviewed": false,
+      "script": {
+        "en": [
+          "Immigration office, department three, Weber speaking. What can I do for you?",
+          "Hello, Mr Weber. My name is Amina Khalil. I have an appointment on Thursday, but unfortunately I have to reschedule it.",
+          "No problem. Do you have your customer number?",
+          "Yes, one moment — 4892.",
+          "Thank you. I can see the appointment. The next free one is on 18 March at 10:30. Does that suit you?",
+          "Yes, that suits me well. Do I need to bring anything?",
+          "Your passport, the registration certificate and the rental contract. Without the registration certificate we can't process the application.",
+          "All right. Thank you very much!"
+        ],
+        "ar": [
+          "دائرة شؤون الأجانب، القسم الثالث، معك Weber. كيف يمكنني مساعدتك؟",
+          "مرحبًا، السيد Weber. اسمي Amina Khalil. عندي موعد يوم الخميس، لكن للأسف يجب أن أؤجّله.",
+          "لا مشكلة. هل معكِ رقم العميل الخاص بكِ؟",
+          "نعم، لحظة — 4892.",
+          "شكرًا. أرى الموعد. الموعد الشاغر التالي في الثامن عشر من مارس الساعة 10:30. هل يناسبكِ ذلك؟",
+          "نعم، هذا يناسبني جيدًا. هل يجب أن أُحضر شيئًا؟",
+          "جواز سفركِ، وشهادة تسجيل السكن، وعقد الإيجار. بدون شهادة تسجيل السكن لا نستطيع معالجة الطلب.",
+          "حسنًا. شكرًا جزيلًا!"
+        ],
+        "uk": [
+          "Відомство у справах іноземців, відділ три, Weber. Чим можу допомогти?",
+          "Добрий день, пане Weber. Мене звати Amina Khalil. У мене запис на четвер, але, на жаль, мені треба його перенести.",
+          "Без проблем. У вас є ваш номер клієнта?",
+          "Так, хвилинку — 4892.",
+          "Дякую. Бачу ваш запис. Наступний вільний — вісімнадцятого березня о 10:30. Вам підходить?",
+          "Так, це добре підходить. Мені треба щось принести?",
+          "Ваш паспорт, довідку про реєстрацію місця проживання і договір оренди. Без довідки про реєстрацію ми не можемо опрацювати заяву.",
+          "Зрозуміло. Щиро дякую!"
+        ],
+        "tr": [
+          "Yabancılar Dairesi, üçüncü birim, ben Weber. Size nasıl yardımcı olabilirim?",
+          "İyi günler, Weber Bey. Benim adım Amina Khalil. Perşembe günü randevum var, ama maalesef onu ertelemem gerekiyor.",
+          "Sorun değil. Müşteri numaranız yanınızda mı?",
+          "Evet, bir dakika — 4892.",
+          "Teşekkürler. Randevuyu görüyorum. Bir sonraki boş randevu 18 Mart saat 10:30'da. Size uyar mı?",
+          "Evet, gayet uyar. Yanımda bir şey getirmem gerekiyor mu?",
+          "Pasaportunuzu, ikamet kaydı belgesini (Meldebescheinigung) ve kira sözleşmesini. İkamet kaydı belgesi olmadan başvuruyu işleme alamayız.",
+          "Tamam. Çok teşekkürler!"
+        ]
+      }
+    },
+    "a2-wohnungsbesichtigung": {
+      "reviewed": false,
+      "script": {
+        "en": [
+          "So, this is the living room, and back there is the kitchen. The flat is sixty-two square metres.",
+          "Nice and bright. How much is the rent?",
+          "The basic rent is 650 euros. On top of that there are 180 euros of additional costs.",
+          "Is electricity already included in that?",
+          "No, you have to register for electricity yourself. The additional costs include heating, water and rubbish collection.",
+          "And the deposit?",
+          "Three months' basic rent, so 1,950 euros. You get it back when you move out.",
+          "Good. And from when is the flat available?",
+          "From the first of June."
+        ],
+        "ar": [
+          "إذن، هذه غرفة الجلوس، وهناك في الخلف المطبخ. مساحة الشقة اثنان وستون مترًا مربعًا.",
+          "جميلة ومضيئة. كم الإيجار؟",
+          "الإيجار الأساسي 650 يورو. ويُضاف إليه 180 يورو تكاليف إضافية.",
+          "هل الكهرباء مشمولة في ذلك؟",
+          "لا، يجب أن تسجّلي الكهرباء بنفسكِ. التكاليف الإضافية تشمل التدفئة والماء والقمامة.",
+          "والتأمين (الكفالة)؟",
+          "ثلاثة أضعاف الإيجار الأساسي، أي 1950 يورو. تستعيدينها عندما تخرجين من الشقة.",
+          "جيد. ومن متى تكون الشقة فارغة؟",
+          "من الأول من يونيو."
+        ],
+        "uk": [
+          "Отже, це вітальня, а там, позаду, кухня. Площа квартири — шістдесят два квадратні метри.",
+          "Гарно й світло. Яка орендна плата?",
+          "Базова оренда — 650 євро. До цього додаються 180 євро комунальних витрат.",
+          "Електрика вже входить у це?",
+          "Ні, електрику вам треба оформити самостійно. У комунальні витрати входять опалення, вода і вивіз сміття.",
+          "А застава?",
+          "Три базові орендні плати, тобто 1950 євро. Ви отримаєте їх назад, коли виїдете.",
+          "Добре. А з якого часу квартира вільна?",
+          "З першого червня."
+        ],
+        "tr": [
+          "Evet, burası oturma odası, arkada da mutfak. Daire altmış iki metrekare.",
+          "Çok aydınlık, güzel. Kira ne kadar?",
+          "Çıplak kira 650 avro. Buna 180 avro yan gider ekleniyor.",
+          "Elektrik buna dahil mi?",
+          "Hayır, elektriği kendiniz kaydettirmeniz gerekiyor. Yan giderlere ısınma, su ve çöp dahil.",
+          "Peki depozito?",
+          "Üç aylık çıplak kira, yani 1.950 avro. Taşındığınızda geri alırsınız.",
+          "Güzel. Daire ne zamandan itibaren boş?",
+          "Bir Haziran'dan itibaren."
+        ]
+      }
+    },
+    "a2-radio-wetter-verkehr": {
+      "reviewed": false,
+      "script": {
+        "en": [
+          "And now the weather for Baden-Württemberg. Still rain this morning, getting drier in the afternoon. Highs between eleven and fourteen degrees.",
+          "At night it cools down to three degrees. Caution: roads may be icy in the early morning hours.",
+          "Traffic: on the A8 towards Munich there is a five-kilometre traffic jam between Stuttgart and Esslingen. The reason is a broken-down lorry.",
+          "In the opposite direction the road is clear. Please drive carefully."
+        ],
+        "ar": [
+          "والآن حالة الطقس في Baden-Württemberg. مطر هذا الصباح، وفي فترة بعد الظهر يصبح الجو أكثر جفافًا. درجات الحرارة العليا بين إحدى عشرة وأربع عشرة درجة.",
+          "في الليل تنخفض الحرارة إلى ثلاث درجات. انتبهوا: قد تكون الطرق زلقة في ساعات الصباح الباكر.",
+          "حركة المرور: على الطريق السريع A8 باتجاه ميونخ يوجد ازدحام بطول خمسة كيلومترات بين Stuttgart وEsslingen. السبب شاحنة متعطلة.",
+          "في الاتجاه المعاكس الطريق سالك. من فضلكم قودوا بحذر."
+        ],
+        "uk": [
+          "А тепер погода для Baden-Württemberg. Сьогодні вранці ще дощ, після обіду стане сухіше. Максимальна температура від одинадцяти до чотирнадцяти градусів.",
+          "Уночі похолоднішає до трьох градусів. Увага: рано-вранці може бути ожеледиця.",
+          "Про ситуацію на дорогах: на автобані A8 у напрямку Мюнхена між Stuttgart і Esslingen затор довжиною п'ять кілометрів. Причина — зламана вантажівка.",
+          "У зворотному напрямку дорога вільна. Будь ласка, їдьте обережно."
+        ],
+        "tr": [
+          "Ve şimdi Baden-Württemberg için hava durumu. Bu sabah hâlâ yağmur var, öğleden sonra hava daha kuru olacak. En yüksek sıcaklıklar on bir ile on dört derece arasında.",
+          "Gece hava üç dereceye kadar soğuyor. Dikkat: sabahın erken saatlerinde yollar buzlu olabilir.",
+          "Trafik durumu: A8 otoyolunda Münih yönünde Stuttgart ile Esslingen arasında beş kilometrelik bir trafik sıkışıklığı var. Sebebi arızalanan bir kamyon.",
+          "Karşı yönde yol açık. Lütfen dikkatli sürün."
+        ]
+      }
+    },
+    "a2-paketdienst": {
+      "reviewed": false,
+      "script": {
+        "en": [
+          "First message. Hello, this is the parcel service. We came to your home today at eleven o'clock, but you were not at home.",
+          "Your parcel is now at the parcel shop at Bahnhofstraße 12. You can collect it until Saturday. Please bring an ID with you.",
+          "Second message. Hello Mr Ilić, this is Krause plumbing company. About the heating: our colleague can come on Tuesday between eight and twelve o'clock.",
+          "If the appointment doesn't suit you, please send us a short message. Otherwise we will come on Tuesday. Goodbye."
+        ],
+        "ar": [
+          "الرسالة الأولى. مرحبًا، معكم خدمة الطرود. جئنا إليكم اليوم الساعة الحادية عشرة، لكنكم لم تكونوا في البيت.",
+          "طردكم الآن في محل الطرود في Bahnhofstraße 12. يمكنكم استلامه حتى يوم السبت. من فضلكم أحضروا معكم بطاقة هوية.",
+          "الرسالة الثانية. مرحبًا السيد Ilić، معك شركة Krause للأعمال الصحية (السباكة). بخصوص التدفئة: زميلنا يستطيع أن يأتي يوم الثلاثاء بين الساعة الثامنة والثانية عشرة.",
+          "إذا لم يناسبك الموعد، من فضلك أرسل لنا رسالة قصيرة. وإلا سنأتي يوم الثلاثاء. مع السلامة."
+        ],
+        "uk": [
+          "Перше повідомлення. Добрий день, це служба доставки посилок. Ми були у вас сьогодні об одинадцятій, але вас не було вдома.",
+          "Ваша посилка зараз у пункті видачі на Bahnhofstraße 12. Ви можете забрати її до суботи. Будь ласка, візьміть із собою посвідчення особи.",
+          "Друге повідомлення. Добрий день, пане Ilić, це фірма Krause, сантехніка. Щодо опалення: наш колега може прийти у вівторок між восьмою і дванадцятою.",
+          "Якщо цей час вам не підходить, будь ласка, напишіть нам коротке повідомлення. Інакше ми прийдемо у вівторок. До побачення."
+        ],
+        "tr": [
+          "Birinci mesaj. İyi günler, burası kargo servisi. Bugün saat on birde size geldik, ama evde değildiniz.",
+          "Paketiniz şimdi Bahnhofstraße 12'deki kargo noktasında. Cumartesiye kadar teslim alabilirsiniz. Lütfen yanınızda bir kimlik getirin.",
+          "İkinci mesaj. Merhaba Ilić Bey, burası Krause Tesisat firması. Kalorifer için: meslektaşımız salı günü saat sekiz ile on iki arasında gelebilir.",
+          "Bu saat size uymazsa lütfen bize kısa bir mesaj yazın. Yoksa salı günü geliyoruz. Hoşça kalın."
+        ]
+      }
+    },
+    "b1-krankmeldung": {
+      "reviewed": false,
+      "script": {
+        "en": [
+          "HR office, Lindner speaking, good morning.",
+          "Good morning, Ms Lindner, this is Tarek Mansour from logistics. Unfortunately I have to call in sick.",
+          "I'm sorry to hear that. Do you already know how long you'll be off?",
+          "The doctor has signed me off until Friday for now. If it doesn't get better, he'll extend it.",
+          "All right. Please remember: we need the sick note by the fourth day at the latest. It's best to send it right away.",
+          "The practice now reports that electronically to the health insurance fund. Isn't that enough?",
+          "For the insurance fund, yes, for us not quite — we do fetch the report ourselves, but you still have to inform us immediately that you are ill. And you've just done that.",
+          "Good. And what about my shift on Thursday?",
+          "I'll take care of that. Get well soon, Mr Mansour."
+        ],
+        "ar": [
+          "مكتب شؤون الموظفين، Lindner، صباح الخير.",
+          "صباح الخير، السيدة Lindner، معكِ Tarek Mansour من قسم اللوجستيات. للأسف يجب أن أبلّغ عن مرضي.",
+          "يؤسفني ذلك. هل تعرف منذ الآن كم ستغيب؟",
+          "الطبيب أعطاني إجازة مرضية حتى يوم الجمعة مبدئيًا. إذا لم تتحسّن حالتي، سيمدّدها.",
+          "حسنًا. من فضلك تذكّر: نحتاج شهادة العجز عن العمل في اليوم الرابع على الأكثر. الأفضل أن ترسلها فورًا.",
+          "العيادة صارت تبلّغ صندوق التأمين الصحي بذلك إلكترونيًا. أليس هذا كافيًا؟",
+          "لصندوق التأمين نعم، لنا ليس تمامًا — صحيح أننا نستلم البلاغ بأنفسنا، لكن يجب عليك مع ذلك أن تخبرنا فورًا بأنك مريض. وهذا ما فعلته الآن.",
+          "جيد. وماذا عن نوبتي يوم الخميس؟",
+          "سأهتم بذلك. أتمنى لك الشفاء العاجل، السيد Mansour."
+        ],
+        "uk": [
+          "Відділ кадрів, Lindner, доброго ранку.",
+          "Доброго ранку, пані Lindner, це Tarek Mansour із логістики. На жаль, мушу повідомити, що я захворів.",
+          "Мені шкода. Ви вже знаєте, як довго вас не буде?",
+          "Лікар поки що дав мені лікарняний до п'ятниці. Якщо не стане краще, він продовжить.",
+          "Гаразд. Будь ласка, пам'ятайте: довідка про непрацездатність потрібна нам не пізніше четвертого дня. Найкраще надішліть її одразу.",
+          "Практика тепер передає це електронно до лікарняної каси. Хіба цього недостатньо?",
+          "Для каси — так, для нас не зовсім: ми хоч і самі отримуємо це повідомлення, але ви все одно мусите одразу повідомити нас, що захворіли. Це ви зараз і зробили.",
+          "Добре. А моя зміна в четвер?",
+          "Про це я подбаю. Одужуйте, пане Mansour."
+        ],
+        "tr": [
+          "Personel bürosu, Lindner, günaydın.",
+          "Günaydın Lindner Hanım, ben lojistikten Tarek Mansour. Maalesef hastalık bildirimi yapmam gerekiyor.",
+          "Çok geçmiş olsun. Ne kadar süre işe gelemeyeceğinizi biliyor musunuz?",
+          "Doktor şimdilik cumaya kadar rapor verdi. İyileşmezsem uzatacak.",
+          "Tamam. Lütfen şunu unutmayın: iş göremezlik raporuna en geç dördüncü gün ihtiyacımız var. En iyisi hemen gönderin.",
+          "Muayenehane artık bunu elektronik olarak sağlık sigortasına bildiriyor. Bu yetmiyor mu?",
+          "Sigorta için evet, bizim için tam değil — bildirimi gerçi kendimiz alıyoruz, ama yine de hasta olduğunuzu bize hemen haber vermeniz gerekiyor. Bunu da şimdi yaptınız.",
+          "Güzel. Peki perşembe günkü vardiyam?",
+          "Onunla ben ilgilenirim. Geçmiş olsun, Mansour Bey."
+        ]
+      }
+    },
+    "b1-elterngespraech": {
+      "reviewed": false,
+      "script": {
+        "en": [
+          "Nice that you could come, Mr Petrov. I wanted to talk to you about how Dimitri is getting on.",
+          "Gladly. At home he always says it's going well.",
+          "In maths it really is going well, he's one of the best there. What's difficult at the moment is German — above all writing.",
+          "He actually speaks well. Why is that?",
+          "That's exactly the pattern: confident when speaking, unsure when writing. He lacks the set phrases you need in a text. You don't pick that up on the side, you have to practise it.",
+          "And the homework? He sits over it for two hours every day.",
+          "Two hours is a lot. I'd rather say shorter, but regularly — and I recommend the extra support lesson on Wednesday. It's free, in small groups.",
+          "We'll do that. Do I have to register him?",
+          "I'll register him, you just need to sign the form quickly."
+        ],
+        "ar": [
+          "يسعدني أنك جئت، السيد Petrov. أردت أن أتحدث معك عن تطوّر Dimitri.",
+          "بكل سرور. في البيت يقول دائمًا إن الأمور تسير على ما يرام.",
+          "في الرياضيات الأمور تسير فعلًا بشكل جيد، فهو من أفضل التلاميذ فيها. الصعب حاليًا هو الألمانية — وخصوصًا الكتابة.",
+          "لكنه في الحقيقة يتكلم جيدًا. ما السبب في ذلك؟",
+          "هذا بالضبط هو النمط: واثق في الكلام، غير واثق في الكتابة. تنقصه العبارات الثابتة التي يحتاجها المرء في النص. هذا لا يُتعلَّم عَرَضًا، بل يجب التدرّب عليه.",
+          "والواجبات المنزلية؟ إنه يجلس عليها ساعتين كل يوم.",
+          "ساعتان وقت طويل. أفضّل أن أقول: وقت أقصر لكن بانتظام — وأنصح بحصة الدعم يوم الأربعاء. إنها مجانية وفي مجموعات صغيرة.",
+          "سنفعل ذلك. هل يجب أن أسجّله؟",
+          "أنا أسجّله، وأنت فقط توقّع على الاستمارة."
+        ],
+        "uk": [
+          "Добре, що ви прийшли, пане Petrov. Я хотіла поговорити з вами про те, як розвивається Dimitri.",
+          "Залюбки. Удома він завжди каже, що все добре.",
+          "З математики справді все добре, там він один із найкращих. Складно зараз із німецькою — насамперед із письмом.",
+          "Говорить він, власне, добре. У чому причина?",
+          "Саме така закономірність: усно впевнено, письмово невпевнено. Йому бракує сталих формулювань, які потрібні в тексті. Цього не навчишся мимохідь, це треба тренувати.",
+          "А домашні завдання? Він сидить над ними щодня по дві години.",
+          "Дві години — це багато. Я б радила коротше, але регулярно — і рекомендую додаткове заняття в середу. Воно безкоштовне, у малих групах.",
+          "Так і зробимо. Мені треба його записати?",
+          "Я його запишу, ви лише коротко підпишете формуляр."
+        ],
+        "tr": [
+          "Geldiğinize sevindim, Petrov Bey. Sizinle Dimitri'nin gelişimi hakkında konuşmak istedim.",
+          "Memnuniyetle. Evde hep her şeyin iyi gittiğini söylüyor.",
+          "Matematikte gerçekten iyi gidiyor, orada en iyilerden biri. Şu anda zor olan Almanca — özellikle yazma.",
+          "Aslında iyi konuşabiliyor. Bunun sebebi ne?",
+          "İşte tam da bu tablo: sözlü olarak kendinden emin, yazılı olarak emin değil. Bir metinde gereken kalıp ifadeler eksik. Bunu kendiliğinden öğrenemezsiniz, çalışmak gerekir.",
+          "Peki ödevler? Her gün iki saat oturuyor.",
+          "İki saat çok. Ben daha kısa ama düzenli derdim — ve çarşamba günkü destek dersini tavsiye ederim. Ücretsiz, küçük gruplar halinde.",
+          "Öyle yapalım. Onu kaydettirmem gerekiyor mu?",
+          "Ben kaydettiririm, siz sadece formu kısaca imzalarsınız."
+        ]
+      }
+    },
+    "b1-radio-muelltrennung": {
+      "reviewed": false,
+      "script": {
+        "en": [
+          "Germany has been separating its rubbish for more than thirty years, and yet every year around a third of packaging ends up in the wrong bin. We asked why that is.",
+          "The most common mistake concerns the yellow bin. Many people think everything made of plastic goes in there. The truth is: only packaging. A broken plastic toy is not packaging, it belongs in the general waste.",
+          "And the yoghurt pot? Do you have to rinse it out?",
+          "No, you don't have to rinse it — that only wastes water. Scraped clean with a spoon is enough. It's more important to separate the lid and the pot, because they are made of different materials.",
+          "A second topic is the deposit. Almost all single-use bottles and cans carry 25 cents, reusable bottles eight or fifteen.",
+          "And you can return single-use bottles anywhere that sells the same type of packaging — not only in the shop where you bought them. Surprisingly few people know that."
+        ],
+        "ar": [
+          "تفرز ألمانيا نفاياتها منذ أكثر من ثلاثين عامًا، ومع ذلك ينتهي كل عام نحو ثلث مواد التغليف في الحاوية الخطأ. سألنا عن سبب ذلك.",
+          "الخطأ الأكثر شيوعًا يتعلق بالحاوية الصفراء. كثير من الناس يظنون أن كل ما هو مصنوع من البلاستيك يوضع فيها. والصحيح: مواد التغليف فقط. لعبة بلاستيكية مكسورة ليست مادة تغليف، مكانها في النفايات العامة.",
+          "وعلبة اللبن الزبادي؟ هل يجب شطفها؟",
+          "لا، لا حاجة إلى شطفها — هذا يستهلك الماء فقط. يكفي أن تُفرَغ بالملعقة. الأهم هو فصل الغطاء عن العلبة، لأنهما مصنوعان من مواد مختلفة.",
+          "الموضوع الثاني هو مبلغ التأمين (Pfand). على كل الزجاجات والعلب ذات الاستخدام الواحد تقريبًا خمسة وعشرون سنتًا، وعلى الزجاجات القابلة لإعادة الاستخدام ثمانية أو خمسة عشر.",
+          "ويمكن إرجاع الزجاجات ذات الاستخدام الواحد في أي مكان يبيع نفس نوع التغليف — وليس فقط في المحل الذي اشتريتها منه. وقليلون جدًا يعرفون ذلك، على نحو مدهش."
+        ],
+        "uk": [
+          "Німеччина сортує сміття вже понад тридцять років, і все одно щороку приблизно третина упаковок потрапляє не в той контейнер. Ми запитали, чому так.",
+          "Найпоширеніша помилка стосується жовтого контейнера. Багато людей думають, що туди можна все пластикове. Насправді — тільки упаковки. Зламана пластикова іграшка — це не упаковка, її місце в загальному смітті.",
+          "А стаканчик з-під йогурту? Його треба споліскувати?",
+          "Ні, споліскувати не треба — це лише витрата води. Достатньо вишкребти ложкою. Важливіше відокремити кришку від стаканчика, бо вони з різних матеріалів.",
+          "Друга тема — застава (Pfand). Майже на всі одноразові пляшки й банки — двадцять п'ять центів, на багаторазові пляшки — вісім або п'ятнадцять.",
+          "А одноразові пляшки можна здати будь-де, де продають такий самий вид упаковки, — не тільки в магазині, де їх купили. Про це знає напрочуд мало людей."
+        ],
+        "tr": [
+          "Almanya otuz yılı aşkın süredir çöpünü ayrıştırıyor, buna rağmen her yıl ambalajların yaklaşık üçte biri yanlış çöp kutusuna gidiyor. Bunun nedenini sorduk.",
+          "En yaygın yanılgı sarı çöp kutusuyla ilgili. Birçok kişi plastikten olan her şeyin oraya atılacağını düşünüyor. Doğrusu: sadece ambalajlar. Kırık bir plastik oyuncak ambalaj değildir, o evsel atığa gider.",
+          "Peki yoğurt kabı? Onu çalkalamak gerekiyor mu?",
+          "Hayır, çalkalamak gerekmiyor — bu sadece su israfı. Kaşıkla sıyırmak yeterli. Daha önemlisi kapağı ve kabı ayırmak, çünkü farklı malzemelerden yapılmışlar.",
+          "İkinci bir konu da depozito (Pfand). Neredeyse tüm tek kullanımlık şişe ve kutularda yirmi beş sent, depozitolu cam şişelerde sekiz ya da on beş sent.",
+          "Tek kullanımlık şişeleri aynı ambalaj türünün satıldığı her yere iade edebilirsiniz — sadece satın aldığınız dükkâna değil. Bunu şaşırtıcı derecede az kişi biliyor."
+        ]
+      }
+    },
+    "b1-durchsage-ersatzverkehr": {
+      "reviewed": false,
+      "script": {
+        "en": [
+          "Dear passengers, due to a signal box fault there are considerable restrictions on the S3 line.",
+          "There are currently no trains between the main station and Vaihingen. We are setting up a replacement bus service. The buses leave from the bus station, north exit, every ten minutes.",
+          "Passengers travelling towards the airport, please take the S2 line to Rohr and change there. S3 tickets are of course also valid on the replacement service.",
+          "We expect the fault to be fixed by around 18:00. Please allow at least thirty minutes of extra travel time."
+        ],
+        "ar": [
+          "حضرات الركاب الكرام، بسبب عطل في مركز التحويل (الإشارات) توجد قيود كبيرة على خط S3.",
+          "لا توجد حاليًا قطارات بين المحطة الرئيسية وVaihingen. نحن ننظّم نقلًا بديلًا بالحافلات. تنطلق الحافلات من محطة الحافلات، المخرج الشمالي، كل عشر دقائق.",
+          "الركاب المتجهون إلى المطار، يُرجى استخدام خط S2 حتى Rohr والتبديل هناك. تذاكر S3 صالحة طبعًا في النقل البديل أيضًا.",
+          "نتوقع إصلاح العطل حتى الساعة 18:00 تقريبًا. من فضلكم احسبوا ثلاثين دقيقة إضافية على الأقل لمدة الرحلة."
+        ],
+        "uk": [
+          "Шановні пасажири, через несправність на централізаційному посту на лінії S3 значні обмеження руху.",
+          "Між головним вокзалом і Vaihingen зараз не курсують поїзди. Ми організовуємо заміну автобусами. Автобуси відправляються від автовокзалу, північний вихід, кожні десять хвилин.",
+          "Пасажири в напрямку аеропорту, будь ласка, їдьте лінією S2 до Rohr і пересідайте там. Квитки на S3, звісно, дійсні й на замінних автобусах.",
+          "Ми розраховуємо, що несправність усунуть приблизно до 18:00. Будь ласка, закладіть щонайменше на тридцять хвилин більше часу на дорогу."
+        ],
+        "tr": [
+          "Sayın yolcularımız, bir makas-sinyal merkezi arızası nedeniyle S3 hattında ciddi aksaklıklar yaşanmaktadır.",
+          "Şu anda Merkez İstasyon ile Vaihingen arasında tren seferi yapılmıyor. Otobüslerle aktarma servisi düzenliyoruz. Otobüsler otobüs terminalinin kuzey çıkışından on dakikada bir kalkıyor.",
+          "Havalimanı yönüne gidecek yolcularımız lütfen S2 hattıyla Rohr'a kadar gidip orada aktarma yapsın. S3 biletleri elbette aktarma servisinde de geçerlidir.",
+          "Arızanın yaklaşık saat 18:00'e kadar giderilmesini bekliyoruz. Lütfen yolculuğunuz için en az otuz dakika fazladan süre hesaplayın."
+        ]
+      }
+    },
+    "b2-diskussion-homeoffice": {
+      "reviewed": false,
+      "script": {
+        "en": [
+          "We need to set a new home-office policy by the end of the month. At the moment every department does it differently, and that regularly leads to conflicts.",
+          "From my point of view, there is a lot to be said for leaving it as it is. The teams are different — support has to be reachable, development needs peace and quiet. A uniform rule wouldn't do justice to either.",
+          "I understand that argument, but it overlooks something: if every department decides for itself, in reality the manager decides. And then it depends on which boss you have. That is exactly the inequality people are complaining about.",
+          "You're right there. I was concerned less with the department's freedom than with the matter itself.",
+          "Then I propose a framework, not a fixed number: everyone may work from home up to three days, but each team sets one shared office day. That way support is covered and development has its quiet days.",
+          "I could live with that. The only thing important to me is that the office day is put down in writing and not renegotiated every week.",
+          "Agreed. I would just add that we check after six months whether it's working.",
+          "Good. Then I'll note down: a framework of three days, one fixed office day per team, in writing, review after six months."
+        ],
+        "ar": [
+          "يجب أن نحدّد من جديد نظام العمل من المنزل حتى نهاية الشهر. حاليًا كل قسم يفعل ذلك بطريقة مختلفة، وهذا يؤدي باستمرار إلى خلافات.",
+          "من وجهة نظري، هناك أسباب كثيرة للإبقاء على الوضع كما هو. الفرق مختلفة — الدعم الفني يجب أن يكون متاحًا للتواصل، والتطوير يحتاج بالأحرى إلى الهدوء. قاعدة موحّدة لن تنصف أيًّا منهما.",
+          "أفهم هذه الحجة، لكنها تغفل أمرًا: إذا قرّر كل قسم بنفسه، فالذي يقرّر في الحقيقة هو المدير. وعندها يتوقف الأمر على أي رئيس لديك. وهذا بالضبط هو عدم المساواة الذي يشتكي منه الناس.",
+          "معكِ حق في ذلك. لم يكن همّي حرية القسم بقدر ما كان جوهر المسألة.",
+          "إذن أقترح إطارًا، لا رقمًا ثابتًا: يحق للجميع العمل من المنزل حتى ثلاثة أيام، لكن كل فريق يحدّد يومًا مشتركًا للحضور إلى المكتب. بذلك يكون الدعم الفني مغطّى، ويحصل التطوير على أيام الهدوء.",
+          "يمكنني قبول ذلك. المهم عندي فقط أن يُثبَّت يوم المكتب كتابيًا ولا يُعاد التفاوض عليه كل أسبوع.",
+          "موافق. أودّ فقط أن أضيف أن نراجع بعد ستة أشهر ما إذا كان النظام ينجح.",
+          "جيد. إذن أسجّل: إطار من ثلاثة أيام، يوم مكتب ثابت لكل فريق، كتابيًا، ومراجعة بعد نصف سنة."
+        ],
+        "uk": [
+          "До кінця місяця нам треба по-новому врегулювати роботу з дому. Зараз кожен відділ робить це по-своєму, і це регулярно призводить до конфліктів.",
+          "На мою думку, багато що говорить за те, щоб залишити все як є. Команди різні: підтримка має бути на зв'язку, розробці радше потрібна тиша. Єдине правило не відповідало б потребам ні тих, ні інших.",
+          "Цей аргумент я розумію, але він дещо упускає: якщо кожен відділ вирішує сам, то насправді вирішує керівник. І тоді все залежить від того, який у тебе начальник. Це саме та нерівність, на яку скаржаться люди.",
+          "Тут ви маєте рацію. Мені йшлося не стільки про свободу відділу, скільки про саму справу.",
+          "Тоді я пропоную рамку, а не фіксоване число: усі можуть працювати з дому до трьох днів, але кожна команда встановлює один спільний офісний день. Так підтримка забезпечена, а розробка має свої спокійні дні.",
+          "З цим я могла б погодитися. Для мене важливо лише, щоб офісний день був зафіксований письмово і не обговорювався щотижня заново.",
+          "Згоден. Я б лише додав, що через шість місяців ми перевіримо, чи це працює.",
+          "Добре. Тоді фіксую: рамка з трьох днів, один фіксований офісний день на команду, письмово, перевірка через пів року."
+        ],
+        "tr": [
+          "Evden çalışma düzenlemesini ay sonuna kadar yeniden belirlememiz gerekiyor. Şu anda her departman bunu farklı yapıyor ve bu düzenli olarak çatışmalara yol açıyor.",
+          "Bana göre her şeyi olduğu gibi bırakmanın birçok gerekçesi var. Ekipler farklı — destek ekibine ulaşılabilmeli, geliştirme ekibinin ise daha çok sessizliğe ihtiyacı var. Tek tip bir kural ikisine de hakkını vermez.",
+          "Bu argümanı anlıyorum ama bir şeyi gözden kaçırıyor: her departman kendisi karar verirse, gerçekte yönetici karar verir. O zaman da her şey hangi şefe sahip olduğunuza bağlı olur. İnsanların şikâyet ettiği eşitsizlik tam da bu.",
+          "Orada haklısınız. Benim için mesele departmanın özgürlüğünden çok işin kendisiydi.",
+          "O halde sabit bir sayı değil, bir çerçeve öneriyorum: herkes haftada üç güne kadar evden çalışabilir, ama her ekip ortak bir ofis günü belirler. Böylece destek ekibi karşılanmış olur, geliştirme ekibi de sakin günlerine sahip olur.",
+          "Bununla yaşayabilirim. Benim için önemli olan tek şey, ofis gününün yazılı olarak kayda geçirilmesi ve her hafta yeniden pazarlık konusu olmaması.",
+          "Katılıyorum. Sadece altı ay sonra işleyip işlemediğini kontrol etmemizi eklemek isterim.",
+          "Güzel. O zaman not ediyorum: üç günlük çerçeve, ekip başına bir sabit ofis günü, yazılı, altı ay sonra değerlendirme."
+        ]
+      }
+    },
+    "b2-interview-anerkennung": {
+      "reviewed": false,
+      "script": {
+        "en": [
+          "Dr Ahrens, many immigrants arrive with a completed vocational qualification and still work below their level. Where does it go wrong?",
+          "Not with the qualification, but with the procedure. Anyone who wants to work in a regulated profession — nursing, medicine, teaching — absolutely needs recognition. In all other professions you may start working straight away; recognition is then voluntary.",
+          "And what exactly is assessed?",
+          "What is assessed is equivalence, not sameness. So the question is not whether the training was identical, but whether the essential differences are so big that they become relevant. Small deviations in the curriculum are completely normal.",
+          "What is the most common mistake?",
+          "That people start too late. The procedure takes three to four months on average, and the deadline only starts running once the documents are complete. Anyone who only starts translating and certifying after arriving can easily lose half a year.",
+          "And if the result is only partial recognition?",
+          "Then the notice states exactly which differences have to be made up. That is not a rejection but a set of directions — usually via an adaptation qualification or an exam. Unfortunately many people read it as a no and give up."
+        ],
+        "ar": [
+          "دكتور Ahrens، كثير من المهاجرين يأتون ومعهم تأهيل مهني مكتمل، ومع ذلك يعملون دون مستواهم. أين تكمن المشكلة؟",
+          "ليس في التأهيل، بل في الإجراءات. من يريد العمل في مهنة منظَّمة قانونيًا — التمريض، الطب، التدريس — يحتاج حتمًا إلى الاعتراف. أما في كل المهن الأخرى فيجوز العمل فورًا، والاعتراف عندئذ اختياري.",
+          "وما الذي يُفحص فعلًا في ذلك؟",
+          "يُفحص التكافؤ، لا التطابق. فالسؤال ليس هل كان التأهيل مطابقًا، بل هل الفروق الجوهرية كبيرة إلى حدّ أن تصبح ذات أهمية. الانحرافات الصغيرة في المنهج أمر طبيعي تمامًا.",
+          "ما الخطأ الأكثر شيوعًا؟",
+          "أن يبدأ الناس متأخرين. تستغرق الإجراءات في المتوسط ثلاثة إلى أربعة أشهر، ولا تبدأ المهلة إلا عندما تكتمل الوثائق. من لا يبدأ بالترجمة والتصديق إلا بعد الوصول، يخسر بسهولة نصف سنة.",
+          "وإذا كانت النتيجة اعترافًا جزئيًا فقط؟",
+          "عندئذ يذكر القرار بالضبط أيّ الفروق يجب تعويضها. هذا ليس رفضًا، بل وصف للطريق — غالبًا عن طريق تأهيل تكميلي أو امتحان. للأسف كثيرون يقرؤون ذلك على أنه «لا» ويتوقفون."
+        ],
+        "uk": [
+          "Пане докторе Ahrens, багато мігрантів мають закінчену професійну освіту і все одно працюють нижче свого рівня. У чому проблема?",
+          "Не в кваліфікації, а в процедурі. Хто хоче працювати в регульованій професії — догляд, медицина, викладання в школі, — обов'язково потребує визнання. У всіх інших професіях можна працювати одразу, тоді визнання добровільне.",
+          "А що, власне, при цьому перевіряють?",
+          "Перевіряють рівноцінність, а не тотожність. Тобто питання не в тому, чи була освіта ідентичною, а в тому, чи суттєві відмінності настільки великі, що вони мають значення. Невеликі розбіжності в навчальній програмі — цілком нормальне явище.",
+          "Яка найпоширеніша помилка?",
+          "Те, що люди починають надто пізно. Процедура триває в середньому три-чотири місяці, і строк починається лише тоді, коли документи подано повністю. Хто починає перекладати й засвідчувати документи лише після в'їзду, легко втрачає пів року.",
+          "А якщо результат — лише часткове визнання?",
+          "Тоді в рішенні точно написано, які відмінності треба компенсувати. Це не відмова, а опис шляху — зазвичай через адаптаційне навчання або іспит. На жаль, багато хто сприймає це як «ні» і здається."
+        ],
+        "tr": [
+          "Doktor Ahrens, pek çok göçmen tamamlanmış bir meslek eğitimiyle geliyor ve yine de kendi seviyesinin altında çalışıyor. Sorun nerede?",
+          "Nitelikte değil, süreçte. Düzenlenmiş bir meslekte — bakım, tıp, öğretmenlik — çalışmak isteyen herkesin mutlaka denklik tanınmasına ihtiyacı var. Diğer tüm mesleklerde hemen çalışabilirsiniz, tanınma o zaman isteğe bağlıdır.",
+          "Peki bu sırada tam olarak ne inceleniyor?",
+          "İncelenen eşdeğerliktir, aynılık değil. Yani soru, eğitimin birebir aynı olup olmadığı değil, temel farkların önem kazanacak kadar büyük olup olmadığıdır. Müfredattaki küçük farklılıklar tamamen normaldir.",
+          "En sık yapılan hata nedir?",
+          "İnsanların çok geç başlaması. Süreç ortalama üç ila dört ay sürüyor ve süre ancak belgeler eksiksiz olduğunda başlıyor. Çeviri ve onaylatma işine ancak ülkeye geldikten sonra başlayan kişi kolayca yarım yıl kaybeder.",
+          "Peki sonuç sadece kısmi bir tanınma olursa?",
+          "O zaman kararda hangi farkların kapatılması gerektiği tam olarak yazıyor. Bu bir ret değil, bir yol tarifi — genellikle bir uyum eğitimi ya da bir sınav yoluyla. Ne yazık ki birçok kişi bunu bir \"hayır\" olarak okuyup vazgeçiyor."
+        ]
+      }
+    },
+    "b2-beschwerde-versicherung": {
+      "reviewed": false,
+      "script": {
+        "en": [
+          "Customer service, you're speaking to Mr Falk. What can I do for you?",
+          "Hello. It's about my water damage, claim number 4721. I received the rejection yesterday and, to be honest, I don't understand the reasoning.",
+          "One moment … It says here that the damage was caused by backflow, and backflow is not covered by your policy.",
+          "That's exactly the point. The assessor was never in the flat. It wasn't backflow, but a burst hose on the washing machine — that's also what it says in the tradesman's report, which I sent you on the twelfth.",
+          "Unfortunately there's no record of the report here.",
+          "Then I'd ask you to reopen the case. I'll send you the report again today, and I would like written confirmation that it has been received.",
+          "I can promise you that. I'll put the case on resubmission and you'll get the confirmation of receipt by email.",
+          "And if the rejection stands: how long do I have to object?",
+          "One month from receipt of the decision. But hopefully it won't come to that."
+        ],
+        "ar": [
+          "خدمة العملاء، أنتِ تتحدثين مع السيد Falk. كيف يمكنني مساعدتكِ؟",
+          "مرحبًا. الأمر يتعلق بضرر المياه عندي، رقم الضرر 4721. استلمت الرفض أمس، وبصراحة لا أفهم التعليل.",
+          "لحظة … مكتوب هنا أن الضرر نشأ عن ارتداد مياه الصرف، وارتداد المياه غير مشمول بالتأمين في تعرفتكِ.",
+          "هذه هي النقطة بالضبط. الخبير المقيِّم لم يأتِ إلى الشقة أبدًا. لم يكن ارتداد مياه، بل خرطوم غسالة منفجر — وهذا مكتوب أيضًا في تقرير الحِرَفي الذي أرسلته إليكم في الثاني عشر.",
+          "للأسف التقرير غير مسجّل هنا.",
+          "إذن أرجو منك أن تعيد فتح الملف. سأرسل إليك التقرير اليوم مرة أخرى، وأودّ الحصول على تأكيد كتابي بأنه وصل.",
+          "أستطيع أن أعدكِ بذلك. سأضع الملف للمراجعة مجددًا، وستحصلين على تأكيد الاستلام بالبريد الإلكتروني.",
+          "وإذا بقي الرفض: كم من الوقت لديّ للاعتراض؟",
+          "شهر واحد من تاريخ استلام القرار. لكن نأمل ألّا يصل الأمر إلى ذلك."
+        ],
+        "uk": [
+          "Служба підтримки клієнтів, з вами говорить пан Falk. Чим можу допомогти?",
+          "Добрий день. Ідеться про мій страховий випадок із пошкодженням водою, номер 4721. Учора я отримала відмову і, чесно кажучи, не розумію обґрунтування.",
+          "Хвилинку … Тут написано, що шкода виникла через зворотний потік із каналізації, а він у вашому тарифі не застрахований.",
+          "Саме в цьому справа. Експерт жодного разу не був у квартирі. Це був не зворотний потік, а шланг пральної машини, що лопнув, — так написано і у звіті майстра, який я надіслала вам дванадцятого.",
+          "На жаль, звіт тут не зафіксований.",
+          "Тоді я попросила б вас ще раз відкрити справу. Я сьогодні знову надішлю вам звіт і хотіла б отримати письмове підтвердження, що його отримано.",
+          "Це я можу вам пообіцяти. Я поставлю справу на повторний розгляд, і ви отримаєте підтвердження отримання електронною поштою.",
+          "А якщо відмова залишиться: скільки в мене часу, щоб її оскаржити?",
+          "Один місяць від дня отримання рішення. Але, сподіваюся, до цього не дійде."
+        ],
+        "tr": [
+          "Müşteri hizmetleri, Falk Bey ile görüşüyorsunuz. Size nasıl yardımcı olabilirim?",
+          "İyi günler. Su hasarımla ilgili arıyorum, hasar numarası 4721. Dün ret yazısını aldım ve açıkçası gerekçeyi anlamıyorum.",
+          "Bir dakika … Burada hasarın kanalizasyon geri tepmesinden kaynaklandığı yazıyor ve geri tepme sizin tarifenizde sigorta kapsamında değil.",
+          "Tam da mesele bu. Eksper daireye hiç gelmedi. Geri tepme değildi, çamaşır makinesinin hortumu patladı — ayın on ikisinde size gönderdiğim ustanın raporunda da böyle yazıyor.",
+          "Maalesef rapor burada kayıtlı görünmüyor.",
+          "O halde dosyayı yeniden açmanızı rica ederim. Raporu bugün size tekrar gönderiyorum ve ulaştığına dair yazılı bir onay istiyorum.",
+          "Bunu size söz verebilirim. Dosyayı yeniden incelemeye alıyorum, alındı onayını e-postayla alacaksınız.",
+          "Peki ret kararı değişmezse: itiraz etmek için ne kadar zamanım var?",
+          "Kararın size ulaşmasından itibaren bir ay. Ama umarım iş oraya varmaz."
+        ]
+      }
+    },
+    "b2-vortrag-ehrenamt": {
+      "reviewed": false,
+      "script": {
+        "en": [
+          "About twenty-eight million people in Germany volunteer — in sports clubs, in the volunteer fire brigade, in neighbourhood help. That is more than a third of the population, and the figure has remained remarkably stable over the years.",
+          "What has changed is the form. In the past you joined a club and stayed for thirty years. Today people get involved on a project basis: half a year for a particular undertaking, then something else again.",
+          "For clubs this is a real difficulty. Anyone who has to fill a post — treasurer, chair — can hardly find anyone any more, because these are posts for years. So the willingness to take part hasn't fallen; it has only lost its commitment.",
+          "On top of that comes a second point that is often overlooked: volunteering is unequally distributed. People who earn well and are well educated volunteer considerably more often. That is not down to attitude but to time — someone with two jobs has no evening left over for a meeting.",
+          "So if we want more engagement, appealing to morality helps little. It helps more to lower the barriers: short formats, clear tasks, and clubs that can also work with people who only stay for three months."
+        ],
+        "ar": [
+          "نحو ثمانية وعشرين مليون شخص في ألمانيا يمارسون العمل التطوعي — في النوادي الرياضية، وفي فرق الإطفاء التطوعية، وفي مساعدة الجيران. هذا أكثر من ثلث السكان، وقد بقي هذا الرقم مستقرًا بشكل لافت على مرّ السنين.",
+          "ما تغيّر هو الشكل. في الماضي كان المرء ينضمّ إلى جمعية ويبقى فيها ثلاثين عامًا. أما اليوم فيشارك الناس بحسب المشروع: نصف سنة لمشروع معيّن، ثم شيء آخر.",
+          "بالنسبة إلى الجمعيات هذه صعوبة حقيقية. من يحتاج إلى شغل منصب — أمين الصندوق، الرئاسة — بالكاد يجد أحدًا، لأن هذه مناصب تمتد لسنوات. إذن الاستعداد للمشاركة لم ينخفض، لكنه فقد طابع الالتزام.",
+          "ويُضاف إلى ذلك أمر ثانٍ كثيرًا ما يُغفَل: العمل التطوعي موزّع بشكل غير متساوٍ. من يكسب جيدًا وتعليمه جيد يتطوع بشكل أكثر بكثير. والسبب ليس الموقف، بل الوقت — من لديه وظيفتان لا يبقى له في المساء وقت لاجتماع.",
+          "فإذا أردنا مزيدًا من المشاركة، فلن يفيد كثيرًا أن نناشد الأخلاق. الأنفع هو تخفيض العقبات: صيغ قصيرة، ومهام واضحة، وجمعيات تستطيع العمل أيضًا مع أشخاص لا يبقون إلا ثلاثة أشهر."
+        ],
+        "uk": [
+          "Близько двадцяти восьми мільйонів людей у Німеччині займаються волонтерством — у спортивних клубах, у добровільній пожежній охороні, у сусідській допомозі. Це понад третина населення, і ця цифра впродовж років залишається напрочуд стабільною.",
+          "Змінилася форма. Раніше людина вступала до об'єднання і залишалася там тридцять років. Сьогодні люди долучаються під конкретні проєкти: пів року для певної справи, потім знову щось інше.",
+          "Для об'єднань це справжня проблема. Хто має заповнити посаду — скарбника, голови, — майже нікого не знаходить, бо це посади на роки. Отже, готовність долучатися не зменшилася, вона лише втратила свою зобов'язальність.",
+          "До цього додається другий момент, який часто не помічають: волонтерство розподілене нерівномірно. Люди з добрим заробітком і доброю освітою долучаються значно частіше. Причина не в ставленні, а в часі: хто має дві роботи, у того ввечері вже не залишається часу на засідання.",
+          "Тож якщо ми хочемо більше залученості, заклики до моралі мало допомагають. Більше допомагає знизити бар'єри: короткі формати, чіткі завдання та об'єднання, які можуть працювати і з людьми, що залишаються лише на три місяці."
+        ],
+        "tr": [
+          "Almanya'da yaklaşık yirmi sekiz milyon kişi gönüllü olarak çalışıyor — spor kulüplerinde, gönüllü itfaiyede, komşu yardımlaşmasında. Bu, nüfusun üçte birinden fazlası ve bu sayı yıllar içinde dikkat çekici biçimde sabit kaldı.",
+          "Değişen şey, biçimi. Eskiden insan bir derneğe girer ve otuz yıl orada kalırdı. Bugün insanlar proje bazında katılıyor: belirli bir iş için yarım yıl, sonra yine başka bir şey.",
+          "Dernekler için bu gerçek bir zorluk. Bir görevi doldurması gereken — sayman, başkanlık — neredeyse kimseyi bulamıyor, çünkü bunlar yıllarca sürecek görevler. Yani katılma isteği azalmadı, sadece bağlayıcılığını yitirdi.",
+          "Buna sıkça gözden kaçan ikinci bir nokta ekleniyor: gönüllülük eşit dağılmış değil. İyi kazanan ve iyi eğitimli olanlar çok daha sık gönüllü oluyor. Bunun nedeni tutum değil, zaman — iki işte çalışan birinin akşamları toplantıya ayıracak vakti kalmıyor.",
+          "Dolayısıyla daha fazla katılım istiyorsak, ahlaka seslenmenin pek faydası yok. Engelleri düşürmek daha çok işe yarar: kısa formatlar, net görevler ve sadece üç ay kalan insanlarla da çalışabilen dernekler."
+        ]
+      }
+    }
+  }
+}

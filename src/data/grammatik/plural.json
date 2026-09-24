@@ -2,7 +2,7 @@
   "id": "plural",
   "name": "Plural: ein Buch, zwei Bücher",
   "level": "A1",
-  "subtitle": "Im Plural heißt der Artikel immer die — aber das Nomen hat fünf Arten, mehr zu werden: -e, -er, -(e)n, -s oder gar keine Endung, oft mit Umlaut.",
+  "subtitle": "Im Plural heißt der Artikel immer die — aber das Nomen hat fünf verschiedene Plural-Endungen: -e, -er, -(e)n, -s oder gar keine Endung, oft mit Umlaut.",
   "source": "Eigenes Material, A1-Lehrplan",
   "concept": {
     "flow": [
@@ -33,11 +33,11 @@
         "tag": "—"
       },
       {
-        "html": "Kurze maskuline Nomen bekommen oft <strong>-e</strong>, kurze neutrale oft <strong>-er</strong> — beide gern mit Umlaut: <em>der Tisch → die Tische, der Stuhl → die Stühle, das Buch → die Bücher, das Kind → die Kinder</em>.",
+        "html": "Kurze maskuline und neutrale Nomen bekommen oft <strong>-e</strong> (<em>der Tisch → die Tische, das Jahr → die Jahre</em>), manche kurze neutrale <strong>-er</strong> — beide gern mit Umlaut: <em>der Tisch → die Tische, der Stuhl → die Stühle, das Buch → die Bücher, das Kind → die Kinder</em>.",
         "tag": "-e / -er"
       },
       {
-        "html": "Wörter aus anderen Sprachen und Wörter auf Vokal bekommen oft <strong>-s</strong>: <em>das Auto → die Autos, das Handy → die Handys, das Hotel → die Hotels</em>.",
+        "html": "Wörter aus anderen Sprachen und Wörter auf <em>-a, -i, -o, -u, -y</em> bekommen oft <strong>-s</strong>: <em>das Auto → die Autos, das Handy → die Handys, das Hotel → die Hotels</em>.",
         "tag": "-s"
       }
     ],
@@ -290,6 +290,30 @@
           "term": "das Zimmer",
           "answer": "Zimmer"
         }
+      ],
+      "choices": [
+        "Frauen",
+        "Tische",
+        "Kinder",
+        "Autos",
+        "Lehrer",
+        "Lampen",
+        "Bücher",
+        "Stühle",
+        "Tomaten",
+        "Fotos",
+        "Äpfel",
+        "Zimmer",
+        "Frause",
+        "Tischer",
+        "Kinde",
+        "Autoe",
+        "Lehrern",
+        "Lampes",
+        "Buchs",
+        "Stuhle",
+        "Tomates",
+        "Äpfeln"
       ]
     },
     {
@@ -393,6 +417,22 @@
             "Nachbarinnen"
           ]
         }
+      ],
+      "choices": [
+        "Brüder",
+        "Äpfel",
+        "Stühle",
+        "Kinder",
+        "Handys",
+        "Eier",
+        "Nachbarinnen",
+        "Bruders",
+        "Apfeln",
+        "Stuhle",
+        "Kinds",
+        "Handyen",
+        "Eis",
+        "Nachbarinen"
       ]
     },
     {
@@ -493,6 +533,22 @@
         {
           "text": " (Kartoffel) sind billig."
         }
+      ],
+      "choices": [
+        "Tomaten",
+        "Gurken",
+        "Eier",
+        "Kinder",
+        "Bananen",
+        "Äpfel",
+        "Kartoffeln",
+        "Tomates",
+        "Gurkes",
+        "Eis",
+        "Kinds",
+        "Bananas",
+        "Apfel",
+        "Kartoffels"
       ]
     }
   ]

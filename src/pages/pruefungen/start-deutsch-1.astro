@@ -12,7 +12,7 @@
 // via src/data/pruefungen/{goethe,telc}-formate.json. Same precedent as the DTZ
 // Übungssatz. The sourcing note is in the data file and repeated on the Start section.
 import Layout from "../../layouts/Layout.astro";
-import PracticeHeader from "../../components/PracticeHeader.astro";
+import SiteNav from "../../components/SiteNav.astro";
 import ExamApp from "../../components/ExamApp.astro";
 import "../../styles/practice.css";
 import "../../styles/pruefungen.css";
@@ -22,14 +22,14 @@ import satz from "../../data/pruefungen/start-deutsch-1/uebungssatz-1.json";
   title="Start Deutsch 1 (Goethe A1 / telc A1): Übungssatz – DeutschAcademy"
   description="Kompletter Übungssatz für Start Deutsch 1 — die A1-Prüfung von Goethe-Institut und telc: Hören, Lesen und Schreiben im Prüfungsformat, mit Fortschritt je Prüfungsteil und Auswertung."
 >
-  <PracticeHeader title="Start Deutsch 1" />
+  <SiteNav active="pruefungen" />
   <main class="practice-main practice-main--wide practice-main--trainer">
     <a href="/fortschritt?pruefung=start-deutsch-1" class="vp-back-link" data-i18n="exam.backToOverview">← Zurück zur Übersicht</a>
 
     <div class="practice-hero">
       <p class="eyebrow">Goethe A1 · telc A1</p>
       <h1><span class="hero-exam">Start Deutsch 1</span> <span data-i18n="exam.h1.set">Übungssatz</span></h1>
-      <p>
+      <p data-i18n="sd1.hero.text">
         Goethe A1 und telc A1 sind dieselbe Prüfung — wer hier übt, übt für beide. Hören, Lesen und
         Schreiben im Prüfungsformat. Die Einzelheiten stehen im Teil „Start“.
       </p>
@@ -44,7 +44,7 @@ import satz from "../../data/pruefungen/start-deutsch-1/uebungssatz-1.json";
     import { choiceCard, el, sectionHeader, escapeHtml, practiceToggle } from "../../lib/exam/renderHelpers.js";
     import { countAnswered, countCorrect, percent } from "../../lib/exam/scoring.js";
     import { recordAttempt } from "../../lib/progress.js";
-    import { getLang, loadDict, translate } from "../../lib/i18n.js";
+    import { readyExamI18n, tx } from "../../lib/exam/i18n.js";
 
     /* Resolved once, before the app mounts, rather than re-rendered on every language
        change like the other surfaces. This page is a running exam: its sections are built
@@ -53,8 +53,12 @@ import satz from "../../data/pruefungen/start-deutsch-1/uebungssatz-1.json";
        surrounding page (header, drawer, footer) still re-translates instantly via
        data-i18n; the simulator's own chrome follows on the next visit.
        Exam CONTENT is untouched here — prompts, options and transcripts stay German. */
-    const dict = await loadDict(getLang());
-    const t = (key, vars) => translate(dict, key, vars);
+    /* (Since src/lib/exam/i18n.js the dictionary is live: a section painted after a
+       language switch comes up in the new language; the open one is not rebuilt.) */
+    await readyExamI18n();
+    const t = (key, vars) => tx(key, key, vars);
+    // Same, with the German fallback inline.
+    const T = (key, de, vars) => tx(key, de, vars);
 
     const data = JSON.parse(document.getElementById("sd1-data").textContent);
     const { hoeren, lesen, schreiben } = data;
@@ -107,27 +111,28 @@ import satz from "../../data/pruefungen/start-deutsch-1/uebungssatz-1.json";
       body.hidden = true;
       btn.addEventListener("click", () => {
         body.hidden = !body.hidden;
-        btn.textContent = body.hidden ? "Text anzeigen" : "Text verbergen";
+        btn.textContent = body.hidden ? t("exam.showText") : T("exam.hideTextShort", "Text verbergen");
       });
       wrap.appendChild(btn);
       wrap.appendChild(body);
       return wrap;
     }
 
-    function hoerSection({ key, label, eyebrow, title, part, kind, offset }) {
+    function hoerSection({ key, label, labelKey, eyebrow, title, part, kind, offset }) {
       return {
         key,
         label,
+        labelKey,
         ids: idsOf(part),
         render(main, ctx) {
-          sectionHeader(main, { eyebrow, title, instruction: escapeHtml(part.instruction) });
+          sectionHeader(main, { eyebrow: T(eyebrow[0], eyebrow[1]), title: T(title[0], title[1]), instruction: escapeHtml(part.instruction) });
           main.appendChild(
             el("p", "format-note",
-              "Für diesen Übungssatz gibt es noch keine Tonaufnahmen. Bis dahin steht der Text zu jeder Aufgabe darunter — lies ihn erst, wenn du geantwortet hast.")
+              escapeHtml(T("sd1.noAudio", "Für diesen Übungssatz gibt es noch keine Tonaufnahmen. Bis dahin steht der Text zu jeder Aufgabe darunter — lies ihn erst, wenn du geantwortet hast.")))
           );
           part.items.forEach((item, i) => {
             const card = el("div", "hoer-item");
-            (kind === "rf" ? trueFalseCard : abcCard)(card, item, ctx, { qLabel: "Aufgabe " + (offset + i + 1) });
+            (kind === "rf" ? trueFalseCard : abcCard)(card, item, ctx, { qLabel: T("exam.qLabel.task", "Aufgabe {n}", { n: offset + i + 1 }) });
             card.appendChild(hoerText(item));
             main.appendChild(card);
           });
@@ -139,10 +144,11 @@ import satz from "../../data/pruefungen/start-deutsch-1/uebungssatz-1.json";
       {
         key: "start",
         label: "Start",
+        labelKey: "exam.sec.start",
         ids: null,
         render(main, ctx) {
           sectionHeader(main, {
-            eyebrow: "Übungssatz",
+            eyebrow: t("exam.h1.set"),
             title: t("sd1.title"),
             instruction: t("sd1.instruction"),
           });
@@ -157,7 +163,7 @@ import satz from "../../data/pruefungen/start-deutsch-1/uebungssatz-1.json";
             "</tbody>";
           main.appendChild(el("div", "exam-result")).appendChild(facts);
 
-          main.appendChild(el("p", "format-note", escapeHtml(data.sourcing)));
+          main.appendChild(el("p", "format-note", escapeHtml(T("sd1.sourcing", data.sourcing))));
 
           const go = el("button", "quiz-btn quiz-btn--primary", t("exam.startSet"));
           go.type = "button";
@@ -166,16 +172,17 @@ import satz from "../../data/pruefungen/start-deutsch-1/uebungssatz-1.json";
         },
       },
 
-      hoerSection({ key: "hoeren1", label: "Hören 1", eyebrow: "Hören · Teil 1", title: "Kurze Gespräche", part: hoeren.teil1, kind: "abc", offset: 0 }),
-      hoerSection({ key: "hoeren2", label: "Hören 2", eyebrow: "Hören · Teil 2", title: "Durchsagen", part: hoeren.teil2, kind: "rf", offset: 6 }),
-      hoerSection({ key: "hoeren3", label: "Hören 3", eyebrow: "Hören · Teil 3", title: "Ansagen am Telefon", part: hoeren.teil3, kind: "abc", offset: 10 }),
+      hoerSection({ key: "hoeren1", label: "Hören 1", labelKey: "exam.sec.hoeren1", eyebrow: ["exam.eb.hoeren1", "Hören · Teil 1"], title: ["sd1.t.hoeren1", "Kurze Gespräche"], part: hoeren.teil1, kind: "abc", offset: 0 }),
+      hoerSection({ key: "hoeren2", label: "Hören 2", labelKey: "exam.sec.hoeren2", eyebrow: ["exam.eb.hoeren2", "Hören · Teil 2"], title: ["sd1.t.hoeren2", "Durchsagen"], part: hoeren.teil2, kind: "rf", offset: 6 }),
+      hoerSection({ key: "hoeren3", label: "Hören 3", labelKey: "exam.sec.hoeren3", eyebrow: ["exam.eb.hoeren3", "Hören · Teil 3"], title: ["sd1.t.hoeren3", "Ansagen am Telefon"], part: hoeren.teil3, kind: "abc", offset: 10 }),
 
       {
         key: "lesen1",
         label: "Lesen 1",
+        labelKey: "exam.sec.lesen1",
         ids: idsOf(lesen.teil1),
         render(main, ctx) {
-          sectionHeader(main, { eyebrow: "Lesen · Teil 1", title: "Zwei kurze Texte", instruction: escapeHtml(lesen.teil1.instruction) });
+          sectionHeader(main, { eyebrow: T("exam.eb.lesen1", "Lesen · Teil 1"), title: T("sd1.t.lesen1", "Zwei kurze Texte"), instruction: escapeHtml(lesen.teil1.instruction) });
           // Both texts up top, then the five items — the way the real answer sheet
           // works, where you read once and answer five questions against it.
           for (const t of lesen.teil1.texts) {
@@ -186,7 +193,7 @@ import satz from "../../data/pruefungen/start-deutsch-1/uebungssatz-1.json";
           }
           lesen.teil1.items.forEach((item, i) => {
             trueFalseCard(main, item, ctx, {
-              qLabel: "Aufgabe " + (i + 1),
+              qLabel: T("exam.qLabel.task", "Aufgabe {n}", { n: i + 1 }),
               context: lesen.teil1.texts[item.textRef]?.label,
             });
           });
@@ -195,13 +202,14 @@ import satz from "../../data/pruefungen/start-deutsch-1/uebungssatz-1.json";
       {
         key: "lesen2",
         label: "Lesen 2",
+        labelKey: "exam.sec.lesen2",
         ids: idsOf(lesen.teil2),
         render(main, ctx) {
-          sectionHeader(main, { eyebrow: "Lesen · Teil 2", title: "Anzeigen", instruction: escapeHtml(lesen.teil2.instruction) });
+          sectionHeader(main, { eyebrow: T("exam.eb.lesen2", "Lesen · Teil 2"), title: T("sd1.t.lesen2", "Anzeigen"), instruction: escapeHtml(lesen.teil2.instruction) });
           lesen.teil2.items.forEach((item, i) => {
             main.appendChild(
               choiceCard({
-                qLabel: "Aufgabe " + (i + 6),
+                qLabel: T("exam.qLabel.task", "Aufgabe {n}", { n: i + 6 }),
                 questionText: item.situation,
                 options: item.options,
                 correctKey: item.answer,
@@ -215,13 +223,14 @@ import satz from "../../data/pruefungen/start-deutsch-1/uebungssatz-1.json";
       {
         key: "lesen3",
         label: "Lesen 3",
+        labelKey: "exam.sec.lesen3",
         ids: idsOf(lesen.teil3),
         render(main, ctx) {
-          sectionHeader(main, { eyebrow: "Lesen · Teil 3", title: "Schilder und Hinweise", instruction: escapeHtml(lesen.teil3.instruction) });
+          sectionHeader(main, { eyebrow: T("exam.eb.lesen3", "Lesen · Teil 3"), title: T("sd1.t.lesen3", "Schilder und Hinweise"), instruction: escapeHtml(lesen.teil3.instruction) });
           lesen.teil3.items.forEach((item, i) => {
             const box = el("div", "lese-sign", escapeHtml(item.sign).replace(/\n/g, "<br>"));
             main.appendChild(box);
-            trueFalseCard(main, item, ctx, { qLabel: "Aufgabe " + (i + 11) });
+            trueFalseCard(main, item, ctx, { qLabel: T("exam.qLabel.task", "Aufgabe {n}", { n: i + 11 }) });
           });
         },
       },
@@ -229,19 +238,20 @@ import satz from "../../data/pruefungen/start-deutsch-1/uebungssatz-1.json";
       {
         key: "schreiben",
         label: "Schreiben",
+        labelKey: "skill.schreiben",
         // Not scored: a form and a free text cannot be graded here, so they carry a
         // "geübt" mark instead and stay out of the Hören/Lesen point count.
         ids: ["s-formular", "s-nachricht"],
         render(main, ctx) {
           sectionHeader(main, {
-            eyebrow: "Schreiben",
-            title: "Formular und Nachricht",
-            instruction: "Diese beiden Aufgaben bewertet in der echten Prüfung ein Mensch. Hier vergleichst du selbst — mit der Lösung und der Checkliste darunter.",
+            eyebrow: t("skill.schreiben"),
+            title: T("sd1.t.schreiben", "Formular und Nachricht"),
+            instruction: escapeHtml(T("sd1.schreiben.intro", "Diese beiden Aufgaben bewertet in der echten Prüfung ein Mensch. Hier vergleichst du selbst — mit der Lösung und der Checkliste darunter.")),
           });
 
           /* Teil 1 — the form. The filled rows are given; the five gaps are the task. */
           const t1 = schreiben.teil1;
-          main.appendChild(el("h3", "sub-title", "Teil 1 — Formular"));
+          main.appendChild(el("h3", "sub-title", escapeHtml(T("sd1.sub.form", "Teil 1 — Formular"))));
           main.appendChild(el("p", "instruction", escapeHtml(t1.instruction)));
           main.appendChild(el("p", "lese-text-body", escapeHtml(t1.context)));
 
@@ -283,7 +293,7 @@ import satz from "../../data/pruefungen/start-deutsch-1/uebungssatz-1.json";
 
           /* Teil 2 — the short message. */
           const t2 = schreiben.teil2;
-          main.appendChild(el("h3", "sub-title", "Teil 2 — Kurze Nachricht"));
+          main.appendChild(el("h3", "sub-title", escapeHtml(T("sd1.sub.message", "Teil 2 — Kurze Nachricht"))));
           main.appendChild(el("p", "instruction", escapeHtml(t2.instruction)));
           main.appendChild(el("p", "lese-text-body", escapeHtml(t2.task)));
 
@@ -293,8 +303,8 @@ import satz from "../../data/pruefungen/start-deutsch-1/uebungssatz-1.json";
 
           const box = el("textarea", "write-box");
           box.rows = 7;
-          box.placeholder = "Schreibe deine Nachricht hier …";
-          box.setAttribute("aria-label", "Deine Nachricht");
+          box.placeholder = T("sd1.write.placeholder", "Schreibe deine Nachricht hier …");
+          box.setAttribute("aria-label", T("sd1.write.aria", "Deine Nachricht"));
           // Kept in this browser only, and only so a half-written message survives a
           // tab switch — the exam state itself stores nothing but the "geübt" mark.
           try {
@@ -305,7 +315,7 @@ import satz from "../../data/pruefungen/start-deutsch-1/uebungssatz-1.json";
 
           const words = el("p", "word-count");
           const countWords = () => (box.value.trim() ? box.value.trim().split(/\s+/).length : 0);
-          const paintWords = () => { words.textContent = countWords() + " Wörter (circa 30 sind gefragt)"; };
+          const paintWords = () => { words.textContent = T("sd1.write.words", "{n} Wörter (circa 30 sind gefragt)", { n: countWords() }); };
           paintWords();
           box.addEventListener("input", paintWords);
           main.appendChild(words);
@@ -317,7 +327,7 @@ import satz from "../../data/pruefungen/start-deutsch-1/uebungssatz-1.json";
           model.appendChild(el("p", "lese-text-body", escapeHtml(t2.model).replace(/\n/g, "<br>")));
           const check = el("ul", "task-points");
           for (const c of t2.checklist) check.appendChild(el("li", null, escapeHtml(c)));
-          model.appendChild(el("p", "lese-text-label", "Checkliste"));
+          model.appendChild(el("p", "lese-text-label", escapeHtml(T("exam.checklist", "Checkliste"))));
           model.appendChild(check);
           modelBtn.addEventListener("click", () => {
             model.hidden = !model.hidden;
@@ -337,6 +347,7 @@ import satz from "../../data/pruefungen/start-deutsch-1/uebungssatz-1.json";
       {
         key: "ergebnis",
         label: "Ergebnis",
+        labelKey: "exam.sec.result",
         ids: null,
         render(main, ctx) {
           // Only the auto-graded parts count: Hören and Lesen, 15 points each. Schreiben
@@ -349,18 +360,18 @@ import satz from "../../data/pruefungen/start-deutsch-1/uebungssatz-1.json";
           const correct = countCorrect(ids, ctx.state);
           const pct = percent(correct, ids.length);
 
-          sectionHeader(main, { eyebrow: "Auswertung", title: "Dein Ergebnis" });
+          sectionHeader(main, { eyebrow: T("exam.result.eyebrow", "Auswertung"), title: T("exam.result.title", "Dein Ergebnis") });
 
           const card = el("div", "exam-result");
           if (!answered) {
-            card.appendChild(el("p", "instruction", "Noch keine Aufgabe beantwortet — fang bei „Hören 1“ an, dein Ergebnis erscheint hier automatisch."));
+            card.appendChild(el("p", "instruction", escapeHtml(T("sd1.result.empty", "Noch keine Aufgabe beantwortet — fang bei „Hören 1“ an, dein Ergebnis erscheint hier automatisch."))));
           } else {
-            card.appendChild(el("div", "exam-score", correct + " <small>von " + ids.length + " richtig</small>"));
+            card.appendChild(el("div", "exam-score", correct + " <small>" + escapeHtml(T("exam.result.ofCorrect", "von {n} richtig", { n: ids.length })) + "</small>"));
             // 36 of 60 is the pass line for the whole exam; Hören and Lesen are 30 of
             // those 60, so the comparison is made on the share and the rule is printed.
-            const band = pct >= 60 ? ["", "Über der Bestehensgrenze"] : pct >= 48 ? ["mid", "Knapp darunter"] : ["low", "Noch zu wenig"];
+            const band = pct >= 60 ? ["", T("exam.band.pass", "Über der Bestehensgrenze")] : pct >= 48 ? ["mid", T("exam.band.near", "Knapp darunter")] : ["low", T("exam.band.low", "Noch zu wenig")];
             card.appendChild(el("span", "exam-band " + band[0], band[1]));
-            card.appendChild(el("p", "instruction", pct + "% richtig in Hören und Lesen. Bestanden ist die ganze Prüfung ab 36 von 60 Punkten, also 60%."));
+            card.appendChild(el("p", "instruction", escapeHtml(T("sd1.result.pct", "{pct}% richtig in Hören und Lesen. Bestanden ist die ganze Prüfung ab 36 von 60 Punkten, also 60%.", { pct }))));
 
             const table = el("table", "exam-breakdown");
             table.innerHTML =
@@ -371,16 +382,16 @@ import satz from "../../data/pruefungen/start-deutsch-1/uebungssatz-1.json";
             card.appendChild(table);
 
             if (answered < ids.length) {
-              card.appendChild(el("p", "instruction", "Noch offen: " + (ids.length - answered) + " Aufgaben."));
+              card.appendChild(el("p", "instruction", escapeHtml(T("exam.result.openTasks", "Noch offen: {n} Aufgaben.", { n: ids.length - answered }))));
             }
           }
           main.appendChild(card);
-          main.appendChild(el("p", "format-note", escapeHtml(data.passNote)));
+          main.appendChild(el("p", "format-note", escapeHtml(T("sd1.passNote", data.passNote))));
 
           const actions = el("div", "exam-actions");
-          const telc = el("a", "quiz-btn", "Zur telc-Übersicht");
+          const telc = el("a", "quiz-btn", escapeHtml(T("sd1.toTelc", "Zur telc-Übersicht")));
           telc.href = "/pruefungen/telc";
-          const goethe = el("a", "quiz-btn", "Zur Goethe-Übersicht");
+          const goethe = el("a", "quiz-btn", escapeHtml(T("sd1.toGoethe", "Zur Goethe-Übersicht")));
           goethe.href = "/pruefungen/goethe";
           actions.appendChild(telc);
           actions.appendChild(goethe);
@@ -392,6 +403,7 @@ import satz from "../../data/pruefungen/start-deutsch-1/uebungssatz-1.json";
     mountExamApp(document.querySelector("[data-exam-root]"), {
       examId: "start-deutsch-1",
       unit: "Aufgaben",
+      unitKey: "exam.unit.tasks",
       sections,
       onAnswer: (ok) => recordAttempt({ skill: "pruefungen", correct: ok }),
     });

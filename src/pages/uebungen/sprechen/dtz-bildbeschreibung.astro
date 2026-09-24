@@ -1,11 +1,11 @@
 ---
 import Layout from "../../../layouts/Layout.astro";
-import PracticeHeader from "../../../components/PracticeHeader.astro";
+import SiteNav from "../../../components/SiteNav.astro";
 import "../../../styles/practice.css";
 import sprechen from "../../../data/sprechen.json";
 ---
 <Layout title="Sprechen: Bildbeschreibung – DeutschAcademy">
-  <PracticeHeader title="Sprechen: Bildbeschreibung" />
+  <SiteNav active="fertigkeiten" />
   <main class="practice-main practice-main--wide">
     <div class="practice-hero">
       <p class="eyebrow" data-i18n="sprechen.hero.eyebrow">DTZ Sprechen, Teil 2</p>
@@ -15,12 +15,9 @@ import sprechen from "../../../data/sprechen.json";
     <div class="prompt-card" id="prompt-root"></div>
 
     <div class="mock-cta">
-      <h2>Schon sicher auf A2/B1?</h2>
-      <p>
-        Für die mündliche Prüfung auf B1/B2 gilt ein anderes Format: nach der Bildbeschreibung folgen
-        ein Kurzvortrag und eine Diskussion. Drei Stufen, jede mit eigenem Timer.
-      </p>
-      <a class="quiz-btn quiz-btn--primary" href="/uebungen/sprechen-b1b2">Sprechen B1/B2 üben →</a>
+      <h2 data-i18n="sprechen.dtz.ctaTitle">Schon sicher auf A2/B1?</h2>
+      <p data-i18n="sprechen.dtz.ctaText">Für die mündliche Prüfung auf B1/B2 gilt ein anderes Format: nach der Bildbeschreibung folgen ein Kurzvortrag und eine Diskussion. Drei Stufen, jede mit eigenem Timer.</p>
+      <a class="quiz-btn quiz-btn--primary" href="/uebungen/sprechen-b1b2" data-i18n="sprechen.dtz.ctaBtn">Sprechen B1/B2 üben →</a>
     </div>
   </main>
   <script type="application/json" id="sprechen-data" set:html={JSON.stringify(sprechen)}></script>

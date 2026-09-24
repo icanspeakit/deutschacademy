@@ -50,7 +50,15 @@
  */
 import { createRuleIntro } from "./ruleIntro.js";
 import { createCardCollapse } from "./cardCollapse.js";
-import { onLangChange } from "./i18n.js";
+import { getLang, onLangChange } from "./i18n.js";
+
+// A label from data-show / data-hide, or its copy for the UI language where the page
+// rendered one (data-show-en, data-hide-ar …) — labels that come from a topic's data rather
+// than from the i18n dictionary. i18n rewrites the plain attributes itself.
+function label(btn, which, lang = getLang()) {
+  const own = btn.dataset[which + lang.charAt(0).toUpperCase() + lang.slice(1)];
+  return own ?? btn.dataset[which];
+}
 
 const WIDE = "(min-width: 1001px)";
 
@@ -122,10 +130,10 @@ export function mountRuleColumn(page, {
   // column: the labels live in data-show / data-hide, which i18n rewrites in place, and
   // rewriting an attribute does not touch the text already painted from it.
   function paintLabels(next) {
-    if (ruleBtn) ruleBtn.textContent = next ? ruleBtn.dataset.show : ruleBtn.dataset.hide;
+    if (ruleBtn) ruleBtn.textContent = label(ruleBtn, next ? "show" : "hide");
     // The sheet's opener keeps its word: while the sheet is up the button is behind the
     // scrim, and the control the learner reaches for is the sheet's own ✕.
-    if (peekBtn && !sheet) peekBtn.textContent = next ? peekBtn.dataset.show : peekBtn.dataset.hide;
+    if (peekBtn && !sheet) peekBtn.textContent = label(peekBtn, next ? "show" : "hide");
   }
 
   function apply(next, persist = true) {
@@ -330,8 +338,10 @@ export function mountRuleColumn(page, {
  * wires it identically. */
 export function mountRefToggle(btn, panel) {
   if (!btn || !panel) return;
-  const paint = () => { btn.textContent = panel.hidden ? btn.dataset.show : btn.dataset.hide; };
+  const paint = () => { btn.textContent = label(btn, panel.hidden ? "show" : "hide"); };
   btn.setAttribute("aria-expanded", String(!panel.hidden));
+  // A label from the topic's data may have a copy for the UI language already on the page.
+  if (btn.dataset.showEn || btn.dataset.hideEn) paint();
   btn.addEventListener("click", () => {
     panel.hidden = !panel.hidden;
     paint();

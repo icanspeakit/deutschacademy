@@ -1,0 +1,10 @@
+/* UiText.astro: the German shows unless the UI language has its own version. */
+.uit-l { display: none; }
+:root[lang="en"] .uit:has(> .uit-l[lang="en"]) > .uit-de,
+:root[lang="ar"] .uit:has(> .uit-l[lang="ar"]) > .uit-de,
+:root[lang="uk"] .uit:has(> .uit-l[lang="uk"]) > .uit-de,
+:root[lang="tr"] .uit:has(> .uit-l[lang="tr"]) > .uit-de { display: none; }
+:root[lang="en"] .uit > .uit-l[lang="en"],
+:root[lang="ar"] .uit > .uit-l[lang="ar"],
+:root[lang="uk"] .uit > .uit-l[lang="uk"],
+:root[lang="tr"] .uit > .uit-l[lang="tr"] { display: revert; }

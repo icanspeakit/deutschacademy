@@ -7,6 +7,8 @@
 // the switch leaves that question's explanation as it is.
 // `difficulty` is optional — when absent, all questions form a single implicit group.
 
+import { t, onUiText } from "./uiText.js";
+
 const KNOWN_DIFFICULTY_ORDER = ["leicht", "mittel", "schwer"];
 const WRONG_ATTEMPTS_BEFORE_REVEAL = 2;
 const CORRECT_ADVANCE_DELAY_MS = 550;
@@ -59,18 +61,23 @@ export function setSoundOn(on) {
 function hearHtml(question, { slow = false } = {}) {
   if (!question.audioSrc) return "";
   const slowBtn = slow
-    ? `<button type="button" class="akk-slow" data-slow-toggle aria-pressed="${slowOn}" title="Langsamer vorlesen"><span class="akk-slow-track" aria-hidden="true"><span class="akk-slow-knob"></span></span>Langsam</button>`
+    ? `<button type="button" class="akk-slow" data-slow-toggle aria-pressed="${slowOn}" title="${attr(t("pw.slow.title", "Langsamer vorlesen"))}"><span class="akk-slow-track" aria-hidden="true"><span class="akk-slow-knob"></span></span>${t("pw.slow", "Langsam")}</button>`
     : "";
   // One group, so a long noun on a phone takes the controls to the next line together
   // instead of leaving the speaker stranded under the word.
   return `<span class="akk-hear-group">${slowBtn}<button type="button" class="akk-hear" data-sound-toggle aria-pressed="${soundOn}"
-    title="${soundOn ? "Nach der Antwort hörst du das Wort. Tippen: Ton aus" : "Ton ist aus. Tippen: Ton an"}"
-    aria-label="Aussprache nach der Antwort">${soundOn ? SPEAKER_SVG : MUTED_SVG}</button></span>`;
+    title="${attr(soundTitle())}"
+    aria-label="${attr(t("pw.sound.aria", "Aussprache nach der Antwort"))}">${soundOn ? SPEAKER_SVG : MUTED_SVG}</button></span>`;
+}
+function soundTitle() {
+  return soundOn
+    ? t("pw.sound.on", "Nach der Antwort hörst du das Wort. Tippen: Ton aus")
+    : t("pw.sound.off", "Ton ist aus. Tippen: Ton an");
 }
 function syncSoundMarks(scope = document) {
   scope.querySelectorAll(".akk-hear").forEach((b) => {
     b.setAttribute("aria-pressed", String(soundOn));
-    b.title = soundOn ? "Nach der Antwort hörst du das Wort. Tippen: Ton aus" : "Ton ist aus. Tippen: Ton an";
+    b.title = soundTitle();
     b.innerHTML = soundOn ? SPEAKER_SVG : MUTED_SVG;
   });
 }
@@ -103,11 +110,11 @@ function whyHtml(question) {
     : "";
   return `
     <div class="akk-why">
-      <span class="akk-tag">WARUM?</span>
+      <span class="akk-tag">${t("pw.why", "WARUM?")}</span>
       <p class="akk-why-text" data-ls="${attr(question.explain)}"${leicht}>${question.explain}</p>
       ${
         question.audioSrc
-          ? `<button type="button" class="akk-why-chip akk-why-chip--audio" data-speak="${attr(question.id)}" aria-label="${attr(question.change)} anhören">${SPEAKER_SVG}<span>${question.change}</span></button>`
+          ? `<button type="button" class="akk-why-chip akk-why-chip--audio" data-speak="${attr(question.id)}" aria-label="${attr(t("pw.listenTo", "{x} anhören", { x: question.change }))}">${SPEAKER_SVG}<span>${question.change}</span></button>`
           : `<span class="akk-why-chip">${question.change}</span>`
       }
     </div>`;
@@ -188,7 +195,7 @@ export function mountPracticeWorkspace(root, allQuestions, { onSessionUpdate, on
   function progressRailHtml(set, currentIdx) {
     return `
       <div class="akk-focus-progress">
-        <button type="button" class="akk-back" id="akk-zurueck" aria-label="Vorherige Frage" title="Vorherige Frage"${currentIdx === 0 ? " disabled" : ""}>
+        <button type="button" class="akk-back" id="akk-zurueck" aria-label="${attr(t("pw.prev", "Vorherige Frage"))}" title="${attr(t("pw.prev", "Vorherige Frage"))}"${currentIdx === 0 ? " disabled" : ""}>
           <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>
         </button>
         <div class="akk-rail">
@@ -212,10 +219,10 @@ export function mountPracticeWorkspace(root, allQuestions, { onSessionUpdate, on
       return `
         <div class="akk-focus-done akk-anim-in">
           <div class="akk-focus-done-score">${correct} / ${set.length}</div>
-          <p>richtig${hasTiers ? ` in „${state.group}“` : ""}</p>
+          <p>${hasTiers ? t("pw.done.inGroup", "richtig in „{g}“", { g: t(`akk.diff.${state.group}`, state.group) }) : t("pw.done", "richtig")}</p>
           <div class="akk-focus-done-actions">
-            <button class="akk-btn" id="akk-zurueck" type="button">← Zurück</button>
-            <button class="akk-btn akk-btn-primary" id="akk-focus-restart" type="button">Nochmal üben</button>
+            <button class="akk-btn" id="akk-zurueck" type="button">${t("pw.back", "← Zurück")}</button>
+            <button class="akk-btn akk-btn-primary" id="akk-focus-restart" type="button">${t("quiz.restart", "Nochmal üben")}</button>
           </div>
         </div>`;
     }
@@ -240,19 +247,19 @@ export function mountPracticeWorkspace(root, allQuestions, { onSessionUpdate, on
               })
               .join("")}
           </div>
-          <p class="akk-focus-instruction" data-ls="Wähle den passenden Artikel." data-ls-leicht="Was passt: der, die oder das? Klicke auf ein Wort.">Wähle den passenden Artikel.</p>
+          <p class="akk-focus-instruction" data-ls="${attr(t("pw.instruction", "Wähle den passenden Artikel."))}" data-ls-leicht="${attr(t("pw.instruction.leicht", "Was passt: der, die oder das? Klicke auf ein Wort."))}">${t("pw.instruction", "Wähle den passenden Artikel.")}</p>
           <div class="akk-feedback" id="akk-focus-feedback">
             ${
               revealed
                 ? `<div class="akk-feedback-row">
-                     <span class="akk-feedback--incorrect">Die richtige Form ist „${q.answer}“.</span>
-                     <button class="akk-btn akk-btn-primary" id="akk-weiter" type="button">Weiter →</button>
+                     <span class="akk-feedback--incorrect">${t("pw.correctForm", "Die richtige Form ist „{a}“.", { a: q.answer })}</span>
+                     <button class="akk-btn akk-btn-primary" id="akk-weiter" type="button">${t("quiz.next", "Weiter →")}</button>
                    </div>
                    ${whyHtml(q)}`
                 : solved
                 ? `<div class="akk-feedback-row">
-                     <span class="akk-feedback--correct">Richtig.</span>
-                     <button class="akk-btn akk-btn-primary" id="akk-weiter" type="button">Weiter →</button>
+                     <span class="akk-feedback--correct">${t("pw.right", "Richtig.")}</span>
+                     <button class="akk-btn akk-btn-primary" id="akk-weiter" type="button">${t("quiz.next", "Weiter →")}</button>
                    </div>
                    ${whyHtml(q)}`
                 : ""
@@ -310,7 +317,7 @@ export function mountPracticeWorkspace(root, allQuestions, { onSessionUpdate, on
           pills.forEach((b) => {
             if (b !== btn) b.classList.add("akk-pill--dim");
           });
-          root.querySelector("#akk-focus-feedback").innerHTML = `<span class="akk-feedback--correct">Richtig.</span>`;
+          root.querySelector("#akk-focus-feedback").innerHTML = `<span class="akk-feedback--correct">${t("pw.right", "Richtig.")}</span>`;
           speak(question);
           if (onAnswer) onAnswer(true, question.id, { firstTry: p.wrongCount === 0 });
           updateSession();
@@ -347,7 +354,7 @@ export function mountPracticeWorkspace(root, allQuestions, { onSessionUpdate, on
     return `
       <div>
         <div class="akk-test-toolbar akk-anim-in">
-          <span class="akk-test-count">${solved} / ${set.length} gelöst</span>
+          <span class="akk-test-count">${t("pw.solved", "{n} / {total} gelöst", { n: solved, total: set.length })}</span>
           <div class="akk-test-rail"><span class="akk-test-rail-fill" style="width:${pct}%"></span></div>
         </div>
         <div class="akk-test-list">
@@ -392,7 +399,7 @@ export function mountPracticeWorkspace(root, allQuestions, { onSessionUpdate, on
     const pct = set.length ? Math.round((solved / set.length) * 100) : 0;
     const toolbar = root.querySelector(".akk-test-toolbar");
     if (!toolbar) return;
-    toolbar.querySelector(".akk-test-count").textContent = `${solved} / ${set.length} gelöst`;
+    toolbar.querySelector(".akk-test-count").textContent = t("pw.solved", "{n} / {total} gelöst", { n: solved, total: set.length });
     toolbar.querySelector(".akk-test-rail-fill").style.width = `${pct}%`;
   }
 
@@ -466,6 +473,10 @@ export function mountPracticeWorkspace(root, allQuestions, { onSessionUpdate, on
   }
 
   render();
+  // Words follow the UI language. One subscription per root: the Artikel-Trainer remounts
+  // into the same element for every round.
+  root._practiceUiOff?.();
+  root._practiceUiOff = onUiText(() => { if (root._practiceQuestions === allQuestions) render(); });
 
   return { setDifficulty, setMode, groups, hasTiers };
 }

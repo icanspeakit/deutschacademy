@@ -8,12 +8,13 @@ import { HELP_LANGS } from "../lib/textHelp.js";
 interface Props {
   /** `{ en, ar, uk, tr }` — HTML, with the German examples left German inside it. */
   text?: Record<string, string | null> | null;
+  class?: string;
 }
-const { text } = Astro.props;
+const { text, class: cls } = Astro.props;
 const langs = text ? HELP_LANGS.filter((l) => text[l.code]) : [];
 ---
 {langs.length > 0 && (
-  <div class="gx-tr">
-    {langs.map((l) => <p class="gx-tr-l" lang={l.code} dir={l.dir} set:html={text![l.code]} />)}
+  <div class:list={["gx-tr", cls]}>
+    {langs.map((l) => <div class="gx-tr-l" lang={l.code} dir={l.dir} set:html={text![l.code]} />)}
   </div>
 )}

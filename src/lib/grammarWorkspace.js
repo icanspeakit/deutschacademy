@@ -10,6 +10,8 @@
 // click, so typing never blows away caret position or focus. match and build have no text
 // inputs, so they can safely re-render on every click.
 
+import { t } from "./uiText.js";
+
 function normalize(s) {
   return String(s || "")
     .trim()
@@ -88,7 +90,7 @@ function pillsHtml(options, idx, value, checked, answer) {
 
 /** The shared word bank, rendered once above the items. */
 function bankHtml(options, selected) {
-  return `<div class="vp-bank" role="group" aria-label="Wortliste">${options
+  return `<div class="vp-bank" role="group" aria-label="${escapeHtml(t("vp.wordBank", "Wortliste"))}">${options
     .map((o) => `<button type="button" class="vp-bankword${selected === o ? " is-selected" : ""}" data-bank="${escapeHtml(o)}" aria-pressed="${selected === o}">${escapeHtml(o)}</button>`)
     .join("")}</div>`;
 }
@@ -122,16 +124,18 @@ function wireBank(root, state, render) {
 const POP = "vp-pop .3s ease";
 const SHAKE = "vp-shake .35s ease";
 
+// In the UI language (uiText.js). The three buttons also carry data-i18n, so a language
+// switch repaints them in place; a feedback line follows on the next answer.
 const LABEL = {
-  check: "Prüfen",
-  reset: "Zurücksetzen",
-  retry: "Nochmal",
-  correct: "✓ Richtig!",
-  wrongIs: (a) => `✗ Richtig wäre: „${escapeHtml(a)}“`,
-  allPairs: "✓ Alle Paare gefunden!",
-  allCorrect: "✓ Alles richtig!",
-  someWrong: "Noch nicht alles richtig — markierte Lücken prüfen.",
-  wrongOrder: "✗ Reihenfolge nicht korrekt — versuch's nochmal.",
+  get check() { return `<span data-i18n="quiz.check">${escapeHtml(t("quiz.check", "Prüfen"))}</span>`; },
+  get reset() { return `<span data-i18n="vp.reset">${escapeHtml(t("vp.reset", "Zurücksetzen"))}</span>`; },
+  get retry() { return `<span data-i18n="vp.retry">${escapeHtml(t("vp.retry", "Nochmal"))}</span>`; },
+  get correct() { return escapeHtml(t("quiz.correct", "✓ Richtig!")); },
+  wrongIs: (a) => escapeHtml(t("vp.wrongIs", "✗ Richtig wäre: „{a}“", { a })),
+  get allPairs() { return escapeHtml(t("vp.allPairs", "✓ Alle Paare gefunden!")); },
+  get allCorrect() { return escapeHtml(t("vp.allCorrect", "✓ Alles richtig!")); },
+  get someWrong() { return escapeHtml(t("vp.someWrong", "Noch nicht alles richtig — markierte Lücken prüfen.")); },
+  get wrongOrder() { return escapeHtml(t("vp.wrongOrder", "✗ Reihenfolge nicht korrekt — versuch's nochmal.")); },
 };
 
 /* ---------------------------------------------------------------- fill ---- */

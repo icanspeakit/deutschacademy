@@ -1,0 +1,327 @@
+{
+  "_note": "Übersetzungen für /impressum, /datenschutz und /nutzungsbedingungen, je Seite und Element-Schlüssel (data-lx im Markup). Verbindlich ist allein die deutsche Fassung; die Seite sagt das oben in der Sprache der Oberfläche und bietet die deutsche Fassung per Schalter an. Klartext mit **fett**, *kursiv*, [Linktext](url) und den Platzhaltern {email}, {region}, {date} — src/lib/legalTranslation.js macht daraus HTML. Namen, Anschriften, E-Mail, Firmen- und Behördennamen sowie Normzitate (DSGVO Art. …, § …) bleiben unverändert. reviewed: false = maschineller Entwurf, weder juristisch noch muttersprachlich geprüft.",
+  "reviewed": false,
+  "common": {
+    "dt.name": { "en": "Name", "ar": "الاسم", "tr": "Ad", "uk": "Ім'я" },
+    "dt.address": { "en": "Address", "ar": "العنوان", "tr": "Adres", "uk": "Адреса" },
+    "dt.email": { "en": "Email", "ar": "البريد الإلكتروني", "tr": "E-posta", "uk": "Електронна пошта" },
+    "dt.phone": { "en": "Phone", "ar": "الهاتف", "tr": "Telefon", "uk": "Телефон" },
+    "dt.rep": { "en": "Represented by", "ar": "يمثّلها", "tr": "Temsilci", "uk": "Представник" },
+    "dt.register": { "en": "Register entry", "ar": "القيد في السجل", "tr": "Sicil kaydı", "uk": "Запис у реєстрі" },
+    "dt.vat": { "en": "VAT ID", "ar": "رقم التعريف الضريبي (USt-IdNr.)", "tr": "KDV kimlik no. (USt-IdNr.)", "uk": "Номер платника ПДВ (USt-IdNr.)" },
+    "dt.responsible": { "en": "Responsible for content", "ar": "المسؤول عن المحتوى", "tr": "İçerikten sorumlu", "uk": "Відповідальний за зміст" }
+  },
+  "pages": {
+    "impressum": {
+      "title": { "en": "Legal notice (Impressum)", "ar": "بيانات الناشر (Impressum)", "tr": "Künye (Impressum)", "uk": "Вихідні дані (Impressum)" },
+      "updated": { "en": "Information pursuant to § 5 DDG", "ar": "البيانات وفقًا لـ § 5 DDG", "tr": "§ 5 DDG uyarınca bilgiler", "uk": "Відомості згідно з § 5 DDG" },
+      "h.provider": { "en": "Service provider", "ar": "مقدّم الخدمة", "tr": "Hizmet sağlayıcı", "uk": "Постачальник послуг" },
+      "h.contact": { "en": "Contact", "ar": "التواصل", "tr": "İletişim", "uk": "Контакт" },
+      "p.contact": {
+        "en": "Questions about the content, an account or your data are answered fastest by email to {email}.",
+        "ar": "أسرع طريقة لطرح الأسئلة حول المحتوى أو الحساب أو بياناتك هي البريد الإلكتروني إلى {email}.",
+        "tr": "İçerik, hesap veya verilerinle ilgili soruların için en hızlı yol {email} adresine e-posta göndermektir.",
+        "uk": "Питання щодо змісту, облікового запису чи твоїх даних найшвидше надсилати електронною поштою на {email}."
+      },
+      "h.dispute": { "en": "Dispute resolution", "ar": "تسوية النزاعات", "tr": "Uyuşmazlık çözümü", "uk": "Врегулювання спорів" },
+      "p.dispute": {
+        "en": "We are neither willing nor obliged to take part in dispute resolution proceedings before a consumer arbitration board.",
+        "ar": "لسنا مستعدين ولا ملزمين بالمشاركة في إجراءات تسوية النزاعات أمام هيئة تحكيم للمستهلكين.",
+        "tr": "Bir tüketici hakem kurulu önündeki uyuşmazlık çözüm süreçlerine katılmaya ne istekliyiz ne de yükümlüyüz.",
+        "uk": "Ми не готові й не зобов'язані брати участь у процедурах врегулювання спорів перед органом зі споживчого арбітражу."
+      },
+      "h.liabilityContent": { "en": "Liability for content", "ar": "المسؤولية عن المحتوى", "tr": "İçerikten sorumluluk", "uk": "Відповідальність за зміст" },
+      "p.liability1": {
+        "en": "The exercises, word lists and exam information on this site are created to the best of our knowledge. However, we cannot guarantee that the content is correct, complete or up to date. Only the information provided by the respective exam providers is binding.",
+        "ar": "نُعِدّ التمارين وقوائم المفردات ومعلومات الامتحانات على هذا الموقع بأفضل ما لدينا من معرفة. لكننا لا نضمن صحة المحتوى أو اكتماله أو حداثته. المُلزِم هو فقط ما تنشره الجهات المنظِّمة للامتحانات.",
+        "tr": "Bu sitedeki alıştırmalar, kelime listeleri ve sınav bilgileri en iyi bilgimizle hazırlanır. Ancak içeriğin doğruluğu, eksiksizliği ve güncelliği için garanti veremeyiz. Bağlayıcı olan yalnızca ilgili sınav kurumlarının bilgileridir.",
+        "uk": "Вправи, списки слів та інформацію про іспити на цьому сайті ми створюємо сумлінно. Проте ми не можемо гарантувати правильність, повноту й актуальність змісту. Обов'язковими є лише відомості відповідних організаторів іспитів."
+      },
+      "p.liability2": {
+        "en": "Exam formats, exam names and exam materials of third parties (telc, Goethe-Institut, TestDaF-Institut, BAMF) are the property of their respective rights holders. The exercises on this site are our own materials, modelled on the published format, and are not official exam material.",
+        "ar": "صيغ الامتحانات وأسماؤها ومواد الامتحانات الخاصة بجهات أخرى (telc وGoethe-Institut وTestDaF-Institut وBAMF) ملكٌ لأصحاب الحقوق المعنيين. التمارين على هذا الموقع مواد خاصة بنا تستند إلى الصيغة المنشورة، وليست مواد امتحان رسمية.",
+        "tr": "Üçüncü tarafların (telc, Goethe-Institut, TestDaF-Institut, BAMF) sınav formatları, sınav adları ve sınav materyalleri ilgili hak sahiplerine aittir. Bu sitedeki alıştırmalar, yayımlanmış formatı örnek alan kendi materyallerimizdir ve resmî sınav materyali değildir.",
+        "uk": "Формати, назви та матеріали іспитів третіх сторін (telc, Goethe-Institut, TestDaF-Institut, BAMF) належать відповідним правовласникам. Вправи на цьому сайті — наші власні матеріали, що орієнтуються на опублікований формат, і не є офіційними екзаменаційними матеріалами."
+      },
+      "h.links": { "en": "Liability for links", "ar": "المسؤولية عن الروابط", "tr": "Bağlantılardan sorumluluk", "uk": "Відповідальність за посилання" },
+      "p.links": {
+        "en": "This site links to external websites, for example to the exam providers' official model tests. We have no influence over their content and accept no liability for it. The provider of a linked page is always responsible for its content.",
+        "ar": "يضم هذا الموقع روابط إلى مواقع خارجية، مثل نماذج الامتحانات الرسمية لدى الجهات المنظِّمة. لا تأثير لنا على محتواها ولا نتحمّل أي مسؤولية عنه. المسؤول عن محتوى الصفحات المرتبطة هو دائمًا مُقدِّمها.",
+        "tr": "Bu site harici web sitelerine, örneğin sınav kurumlarının resmî örnek sınavlarına bağlantı verir. Bu sitelerin içeriği üzerinde hiçbir etkimiz yoktur ve bunun için sorumluluk kabul etmeyiz. Bağlantı verilen sayfaların içeriğinden her zaman o sayfanın sağlayıcısı sorumludur.",
+        "uk": "Цей сайт містить посилання на зовнішні вебсайти, наприклад на офіційні зразки тестів організаторів іспитів. Ми не маємо впливу на їхній зміст і не несемо за нього відповідальності. За зміст сторінок, на які ведуть посилання, завжди відповідає їхній власник."
+      },
+      "h.copyright": { "en": "Copyright", "ar": "حقوق النشر", "tr": "Telif hakkı", "uk": "Авторське право" },
+      "p.copyright": {
+        "en": "The content we create on this site is subject to German copyright law. The PDFs offered for download may be used, printed and passed on freely for your own teaching and your own learning.",
+        "ar": "يخضع المحتوى الذي ننشئه على هذا الموقع لقانون حقوق النشر الألماني. يجوز استخدام ملفات PDF المتاحة للتنزيل وطباعتها ومشاركتها بحرية لأغراض التدريس والتعلّم الخاصة بك.",
+        "tr": "Bu sitede bizim oluşturduğumuz içerikler Alman telif hukukuna tabidir. İndirmeye sunulan PDF'ler kendi dersin ve kendi öğrenmen için serbestçe kullanılabilir, yazdırılabilir ve paylaşılabilir.",
+        "uk": "Створений нами зміст цього сайту охороняється німецьким авторським правом. PDF-файли для завантаження можна вільно використовувати, друкувати й передавати іншим для власного викладання та навчання."
+      }
+    },
+    "datenschutz": {
+      "title": { "en": "Privacy policy", "ar": "سياسة الخصوصية", "tr": "Gizlilik politikası", "uk": "Політика конфіденційності" },
+      "updated": { "en": "Last updated: {date}", "ar": "آخر تحديث: {date}", "tr": "Son güncelleme: {date}", "uk": "Станом на: {date}" },
+      "h.essentials": { "en": "The essentials first", "ar": "الأهم أولًا", "tr": "Önce en önemlisi", "uk": "Найголовніше спершу" },
+      "p.e1": {
+        "en": "DeutschAcademy works without an account. If you do not create an account, your learning progress never leaves your browser: streak, practised tasks, learned words and started exams are stored exclusively in your device's *localStorage*. We cannot see them, and they are gone as soon as you delete your browser data.",
+        "ar": "يعمل DeutschAcademy دون حساب. إذا لم تُنشئ حسابًا فلن يغادر تقدّمك في التعلّم متصفحك: السلسلة والمهام التي تدربت عليها والكلمات التي تعلّمتها والامتحانات التي بدأتها تُحفَظ حصريًا في *localStorage* على جهازك. نحن لا نراها، وتختفي بمجرد حذف بيانات المتصفح.",
+        "tr": "DeutschAcademy hesap olmadan çalışır. Hesap oluşturmazsan öğrenme ilerlemen tarayıcından hiç çıkmaz: seri, çalışılan görevler, öğrenilen kelimeler ve başlanan sınavlar yalnızca cihazının *localStorage* alanında durur. Biz bunları göremeyiz ve tarayıcı verilerini sildiğin anda silinirler.",
+        "uk": "DeutschAcademy працює без облікового запису. Якщо ти не створюєш обліковий запис, твій навчальний прогрес не залишає браузер: серія, виконані завдання, вивчені слова та розпочаті іспити зберігаються виключно в *localStorage* твого пристрою. Ми їх не бачимо, і вони зникають, щойно ти видаляєш дані браузера."
+      },
+      "p.e2": {
+        "en": "Only when you sign in is the same learning progress also stored on a server, so that you can continue on another device. This server is located in {region}.",
+        "ar": "فقط عند تسجيل الدخول يُحفَظ التقدّم نفسه أيضًا على خادم، كي تتمكن من المتابعة على جهاز آخر. يقع هذا الخادم في {region}.",
+        "tr": "Ancak giriş yaptığında aynı öğrenme durumu, başka bir cihazda devam edebilmen için ayrıca bir sunucuda da saklanır. Bu sunucu şurada bulunur: {region}.",
+        "uk": "Лише коли ти входиш в обліковий запис, той самий навчальний прогрес додатково зберігається на сервері, щоб ти міг продовжити на іншому пристрої. Цей сервер розташований тут: {region}."
+      },
+      "p.e3": {
+        "en": "We do not use any analytics or advertising services. There is no Google Analytics, no tracking pixel and no advertising cookies on this site.",
+        "ar": "لا نستخدم أي خدمات تحليل أو إعلان. لا يوجد على هذا الموقع Google Analytics ولا بكسل تتبّع ولا ملفات تعريف ارتباط إعلانية.",
+        "tr": "Hiçbir analiz veya reklam hizmeti kullanmıyoruz. Bu sitede Google Analytics, izleme pikseli veya reklam çerezi yoktur.",
+        "uk": "Ми не використовуємо жодних аналітичних чи рекламних сервісів. На цьому сайті немає Google Analytics, пікселів відстеження та рекламних cookie."
+      },
+      "h.controller": { "en": "Controller", "ar": "المسؤول عن معالجة البيانات", "tr": "Veri sorumlusu", "uk": "Відповідальна особа" },
+      "p.controller": {
+        "en": "The controller responsible for data processing on this site is:",
+        "ar": "المسؤول عن معالجة البيانات على هذا الموقع هو:",
+        "tr": "Bu sitedeki veri işlemeden sorumlu kişi:",
+        "uk": "Відповідальним за обробку даних на цьому сайті є:"
+      },
+      "h.data": { "en": "What data we process", "ar": "ما البيانات التي نعالجها", "tr": "Hangi verileri işliyoruz", "uk": "Які дані ми обробляємо" },
+      "th.data": { "en": "Data", "ar": "البيانات", "tr": "Veri", "uk": "Дані" },
+      "th.when": { "en": "When", "ar": "متى", "tr": "Ne zaman", "uk": "Коли" },
+      "th.where": { "en": "Where stored", "ar": "مكان الحفظ", "tr": "Nerede saklanır", "uk": "Де зберігаються" },
+      "td.browserServer": {
+        "en": "Always in the browser; additionally on the server if you are signed in",
+        "ar": "دائمًا في المتصفح؛ وأيضًا على الخادم إذا كنت مسجّل الدخول",
+        "tr": "Her zaman tarayıcıda; giriş yaptıysan ayrıca sunucuda",
+        "uk": "Завжди в браузері; додатково на сервері, якщо ти увійшов в обліковий запис"
+      },
+      "r1.data": {
+        "en": "Learning progress: streak, number of practised tasks, learned words, recently visited exercises",
+        "ar": "التقدّم في التعلّم: السلسلة، عدد المهام التي تدربت عليها، الكلمات المتعلَّمة، آخر التمارين التي زرتها",
+        "tr": "Öğrenme ilerlemesi: seri, çalışılan görev sayısı, öğrenilen kelimeler, en son ziyaret edilen alıştırmalar",
+        "uk": "Навчальний прогрес: серія, кількість виконаних завдань, вивчені слова, нещодавно відкриті вправи"
+      },
+      "r1.when": { "en": "As soon as you solve a task", "ar": "بمجرد أن تحلّ مهمة", "tr": "Bir görevi çözdüğün anda", "uk": "Щойно ти розв'язуєш завдання" },
+      "r2.data": { "en": "Started exams and writing drafts", "ar": "الامتحانات التي بدأتها ومسودات الكتابة", "tr": "Başlanan sınavlar ve yazma taslakları", "uk": "Розпочаті іспити та чернетки письмових завдань" },
+      "r2.when": { "en": "During an exam simulation", "ar": "أثناء محاكاة امتحان", "tr": "Bir sınav simülasyonu sırasında", "uk": "Під час симуляції іспиту" },
+      "r3.data": { "en": "Settings: display name, weekly goal, language, light/dark theme", "ar": "الإعدادات: اسم العرض، الهدف الأسبوعي، اللغة، التصميم الفاتح/الداكن", "tr": "Ayarlar: görünen ad, haftalık hedef, dil, açık/koyu tema", "uk": "Налаштування: відображуване ім'я, тижнева мета, мова, світла/темна тема" },
+      "r3.when": { "en": "When you change them", "ar": "عندما تغيّرها", "tr": "Değiştirdiğinde", "uk": "Коли ти їх змінюєш" },
+      "r4.data": { "en": "Account data: email address; with Google sign-in also name and profile picture", "ar": "بيانات الحساب: عنوان البريد الإلكتروني؛ وعند تسجيل الدخول عبر Google أيضًا الاسم وصورة الملف الشخصي", "tr": "Hesap verileri: e-posta adresi; Google ile girişte ayrıca ad ve profil fotoğrafı", "uk": "Дані облікового запису: адреса електронної пошти; при вході через Google також ім'я та фото профілю" },
+      "r4.when": { "en": "Only when you sign in", "ar": "فقط عند تسجيل الدخول", "tr": "Yalnızca giriş yaptığında", "uk": "Лише під час входу" },
+      "r4.where": { "en": "Server ({region})", "ar": "الخادم ({region})", "tr": "Sunucu ({region})", "uk": "Сервер ({region})" },
+      "r5.data": { "en": "The host's server log data (IP address, time, page requested)", "ar": "بيانات سجلّ الخادم لدى مزوّد الاستضافة (عنوان IP، الوقت، الصفحة المطلوبة)", "tr": "Barındırma sağlayıcısının sunucu kayıt verileri (IP adresi, zaman, açılan sayfa)", "uk": "Серверні журнали хостинг-провайдера (IP-адреса, час, запитана сторінка)" },
+      "r5.when": { "en": "On every page request", "ar": "عند كل طلب لصفحة", "tr": "Her sayfa açılışında", "uk": "Під час кожного відкриття сторінки" },
+      "r5.where": { "en": "With the host, briefly", "ar": "لدى مزوّد الاستضافة، لفترة قصيرة", "tr": "Barındırma sağlayıcısında, kısa süreliğine", "uk": "У хостинг-провайдера, недовго" },
+      "p.noAsk": {
+        "en": "We do not ask for an address, date of birth, ID data or payment data. The exercises themselves do not require your real name.",
+        "ar": "لا نطلب عنوانًا ولا تاريخ ميلاد ولا بيانات هوية ولا بيانات دفع. والتمارين نفسها لا تتطلب اسمك الحقيقي.",
+        "tr": "Adres, doğum tarihi, kimlik bilgisi veya ödeme bilgisi istemiyoruz. Alıştırmaların kendisi gerçek adını gerektirmez.",
+        "uk": "Ми не запитуємо адресу, дату народження, дані документів чи платіжні дані. Самі вправи не вимагають справжнього імені."
+      },
+      "h.legalBasis": { "en": "Legal bases", "ar": "الأسس القانونية", "tr": "Hukuki dayanaklar", "uk": "Правові підстави" },
+      "li.basisB": {
+        "en": "**Art. 6 Abs. 1 lit. b DSGVO** (performance of a contract) — for the account, sign-in and the synchronisation of your learning progress. Without this data the feature \"learning progress on several devices\" cannot be offered.",
+        "ar": "**Art. 6 Abs. 1 lit. b DSGVO** (تنفيذ العقد) — للحساب وتسجيل الدخول ومزامنة تقدّمك في التعلّم. بدون هذه البيانات لا يمكن تقديم ميزة «التقدّم في التعلّم على عدة أجهزة».",
+        "tr": "**Art. 6 Abs. 1 lit. b DSGVO** (sözleşmenin ifası) — hesap, giriş ve öğrenme durumunun senkronizasyonu için. Bu veriler olmadan „birden fazla cihazda öğrenme durumu” özelliği sunulamaz.",
+        "uk": "**Art. 6 Abs. 1 lit. b DSGVO** (виконання договору) — для облікового запису, входу та синхронізації твого навчального прогресу. Без цих даних функцію «навчальний прогрес на кількох пристроях» неможливо надати."
+      },
+      "li.basisF": {
+        "en": "**Art. 6 Abs. 1 lit. f DSGVO** (legitimate interest) — for the technically necessary operation of the site, in particular the host's server log data for delivering and securing the site.",
+        "ar": "**Art. 6 Abs. 1 lit. f DSGVO** (المصلحة المشروعة) — للتشغيل الضروري تقنيًا للموقع، ولا سيما بيانات سجلّ الخادم لدى مزوّد الاستضافة لتقديم الموقع وتأمينه.",
+        "tr": "**Art. 6 Abs. 1 lit. f DSGVO** (meşru menfaat) — sitenin teknik olarak gerekli işletimi için, özellikle sitenin sunulması ve güvenliği amacıyla barındırma sağlayıcısının sunucu kayıt verileri.",
+        "uk": "**Art. 6 Abs. 1 lit. f DSGVO** (законний інтерес) — для технічно необхідної роботи сайту, зокрема серверних журналів хостинг-провайдера для доставки та захисту сайту."
+      },
+      "p.noPersonal": {
+        "en": "Learning progress without an account is not processing of personal data by us: it does not leave your device and is not transmitted to us.",
+        "ar": "التقدّم في التعلّم دون حساب لا يُعدّ معالجةً لبيانات شخصية من جهتنا: فهو لا يغادر جهازك ولا يُرسَل إلينا.",
+        "tr": "Hesapsız öğrenme ilerlemesi, bizim tarafımızdan kişisel veri işlenmesi sayılmaz: cihazından çıkmaz ve bize iletilmez.",
+        "uk": "Навчальний прогрес без облікового запису не є обробкою персональних даних з нашого боку: він не залишає твій пристрій і не передається нам."
+      },
+      "h.cookies": { "en": "Cookies and local storage", "ar": "ملفات تعريف الارتباط والتخزين المحلي", "tr": "Çerezler ve yerel depolama", "uk": "Cookie та локальне сховище" },
+      "p.cookies": {
+        "en": "This site uses no advertising or analytics cookies and therefore shows no cookie banner. The only things used are:",
+        "ar": "لا يستخدم هذا الموقع ملفات تعريف ارتباط إعلانية أو تحليلية، ولذلك لا يعرض لافتة ملفات تعريف الارتباط. يُستخدم فقط:",
+        "tr": "Bu site reklam veya analiz çerezi kullanmaz, bu yüzden çerez bildirimi de göstermez. Yalnızca şunlar kullanılır:",
+        "uk": "Цей сайт не використовує рекламних чи аналітичних cookie, тому й не показує банер про cookie. Використовуються виключно:"
+      },
+      "li.localStorage": {
+        "en": "**localStorage** for your learning progress and your settings. This is not a transfer to us but storage space in your own browser.",
+        "ar": "**localStorage** لتقدّمك في التعلّم وإعداداتك. هذا ليس نقلًا للبيانات إلينا، بل مساحة تخزين في متصفحك أنت.",
+        "tr": "Öğrenme ilerlemen ve ayarların için **localStorage**. Bu bize bir aktarım değil, kendi tarayıcındaki depolama alanıdır.",
+        "uk": "**localStorage** для твого навчального прогресу та налаштувань. Це не передача даних нам, а місце для зберігання у твоєму власному браузері."
+      },
+      "li.cookie": {
+        "en": "**A technically necessary sign-in cookie**, once you are signed in. It keeps your session alive. If you sign out, it is deleted.",
+        "ar": "**ملف تعريف ارتباط ضروري تقنيًا لتسجيل الدخول** بمجرد أن تسجّل الدخول. يحافظ على جلستك. عند تسجيل الخروج يُحذَف.",
+        "tr": "Giriş yaptığında **teknik olarak gerekli bir oturum çerezi**. Oturumunu açık tutar. Çıkış yaptığında silinir.",
+        "uk": "**Технічно необхідний cookie для входу**, щойно ти увійшов. Він підтримує твій сеанс. Коли ти виходиш, його буде видалено."
+      },
+      "h.recipients": { "en": "Recipients and processors", "ar": "المستلمون ومعالجو البيانات", "tr": "Alıcılar ve veri işleyenler", "uk": "Одержувачі та обробники даних" },
+      "li.supabase": {
+        "en": "**Supabase** — sign-in and database for signed-in users. The data is stored in {region}.",
+        "ar": "**Supabase** — تسجيل الدخول وقاعدة البيانات للمستخدمين المسجّلين. تُحفَظ البيانات في {region}.",
+        "tr": "**Supabase** — giriş yapmış kullanıcılar için oturum açma ve veritabanı. Veriler şurada durur: {region}.",
+        "uk": "**Supabase** — вхід і база даних для зареєстрованих користувачів. Дані зберігаються тут: {region}."
+      },
+      "li.vercel": {
+        "en": "**Vercel** — hosting and delivery of the site. This produces the server log data mentioned above.",
+        "ar": "**Vercel** — استضافة الموقع وتقديمه. وينتج عن ذلك بيانات سجلّ الخادم المذكورة أعلاه.",
+        "tr": "**Vercel** — sitenin barındırılması ve sunulması. Bu sırada yukarıda belirtilen sunucu kayıt verileri oluşur.",
+        "uk": "**Vercel** — хостинг і доставка сайту. При цьому виникають згадані вище серверні журнали."
+      },
+      "li.google": {
+        "en": "**Google** — only if you choose \"Sign in with Google\". Google then transmits your name, email address and profile picture to us. Processing by Google is governed by [Google's privacy policy](https://policies.google.com/privacy).",
+        "ar": "**Google** — فقط إذا اخترت «تسجيل الدخول عبر Google». عندها يرسل إلينا Google الاسم وعنوان البريد الإلكتروني وصورة الملف الشخصي. تخضع معالجة Google للبيانات لـ[سياسة خصوصية Google](https://policies.google.com/privacy).",
+        "tr": "**Google** — yalnızca „Google ile giriş yap” seçeneğini seçersen. Google bu durumda bize adını, e-posta adresini ve profil fotoğrafını iletir. Google'ın yaptığı işleme [Google gizlilik politikasına](https://policies.google.com/privacy) tabidir.",
+        "uk": "**Google** — лише якщо ти обираєш «Увійти через Google». Тоді Google передає нам ім'я, адресу електронної пошти та фото профілю. Обробка даних Google регулюється [політикою конфіденційності Google](https://policies.google.com/privacy)."
+      },
+      "li.brevo": {
+        "en": "**Brevo** — sending the sign-in emails (magic link, password reset). For this, Brevo receives your email address.",
+        "ar": "**Brevo** — إرسال رسائل تسجيل الدخول (الرابط السحري، إعادة تعيين كلمة المرور). ولهذا يتلقى Brevo عنوان بريدك الإلكتروني.",
+        "tr": "**Brevo** — giriş e-postalarının gönderimi (sihirli bağlantı, şifre sıfırlama). Bunun için Brevo e-posta adresini alır.",
+        "uk": "**Brevo** — надсилання листів для входу (magic link, скидання пароля). Для цього Brevo отримує твою адресу електронної пошти."
+      },
+      "p.noSell": {
+        "en": "We do not sell data and do not pass it on for advertising purposes.",
+        "ar": "نحن لا نبيع البيانات ولا نمررها لأغراض إعلانية.",
+        "tr": "Verileri satmıyoruz ve reklam amacıyla başkalarına vermiyoruz.",
+        "uk": "Ми не продаємо дані й не передаємо їх для рекламних цілей."
+      },
+      "h.retention": { "en": "Storage period", "ar": "مدة الحفظ", "tr": "Saklama süresi", "uk": "Строк зберігання" },
+      "li.ret1": { "en": "Data in the browser remains until you delete your browser data.", "ar": "تبقى البيانات في المتصفح حتى تحذف بيانات متصفحك.", "tr": "Tarayıcıdaki veriler, tarayıcı verilerini silene kadar kalır.", "uk": "Дані в браузері залишаються, доки ти не видалиш дані браузера." },
+      "li.ret2": {
+        "en": "Account data and synchronised learning progress remain as long as your account exists. If you delete your account, they are deleted with it.",
+        "ar": "تبقى بيانات الحساب والتقدّم المُزامَن ما دام حسابك موجودًا. إذا حذفت حسابك تُحذَف معه.",
+        "tr": "Hesap verileri ve senkronize edilen öğrenme durumu, hesabın var olduğu sürece kalır. Hesabını silersen onlar da silinir.",
+        "uk": "Дані облікового запису та синхронізований прогрес зберігаються, доки існує твій обліковий запис. Якщо ти видалиш обліковий запис, їх буде видалено разом із ним."
+      },
+      "li.ret3": { "en": "Server log data is kept by the host only briefly.", "ar": "يحتفظ مزوّد الاستضافة ببيانات سجلّ الخادم لفترة قصيرة فقط.", "tr": "Sunucu kayıt verileri barındırma sağlayıcısında yalnızca kısa süre tutulur.", "uk": "Серверні журнали зберігаються у хостинг-провайдера лише недовго." },
+      "h.rights": { "en": "Your rights", "ar": "حقوقك", "tr": "Hakların", "uk": "Твої права" },
+      "p.rightsIntro": { "en": "Under the DSGVO (GDPR) you have the right at any time to:", "ar": "بموجب DSGVO (اللائحة العامة لحماية البيانات) يحق لك في أي وقت:", "tr": "DSGVO (GDPR) uyarınca her zaman şu haklara sahipsin:", "uk": "Згідно з DSGVO (GDPR) ти маєш у будь-який час право на:" },
+      "li.r15": { "en": "access to the data stored about you (Art. 15)", "ar": "الاطلاع على البيانات المحفوظة عنك (Art. 15)", "tr": "hakkında saklanan verilere erişim (Art. 15)", "uk": "доступ до даних, що зберігаються про тебе (Art. 15)" },
+      "li.r16": { "en": "rectification of inaccurate data (Art. 16)", "ar": "تصحيح البيانات غير الصحيحة (Art. 16)", "tr": "yanlış verilerin düzeltilmesi (Art. 16)", "uk": "виправлення неправильних даних (Art. 16)" },
+      "li.r17": { "en": "erasure (Art. 17)", "ar": "الحذف (Art. 17)", "tr": "silme (Art. 17)", "uk": "видалення (Art. 17)" },
+      "li.r18": { "en": "restriction of processing (Art. 18)", "ar": "تقييد المعالجة (Art. 18)", "tr": "işlemenin kısıtlanması (Art. 18)", "uk": "обмеження обробки (Art. 18)" },
+      "li.r20": { "en": "data portability (Art. 20)", "ar": "نقل البيانات (Art. 20)", "tr": "veri taşınabilirliği (Art. 20)", "uk": "перенесення даних (Art. 20)" },
+      "li.r21": { "en": "object to processing based on legitimate interests (Art. 21)", "ar": "الاعتراض على المعالجة القائمة على المصالح المشروعة (Art. 21)", "tr": "meşru menfaate dayanan işlemeye itiraz (Art. 21)", "uk": "заперечення проти обробки на підставі законних інтересів (Art. 21)" },
+      "p.rightsEmail": { "en": "An informal email to {email} is all it takes.", "ar": "يكفي لذلك بريد إلكتروني بسيط إلى {email}.", "tr": "Bunun için {email} adresine gönderilecek basit bir e-posta yeterlidir.", "uk": "Для цього достатньо довільного листа на {email}." },
+      "p.complaint": {
+        "en": "You can also lodge a complaint with a data protection supervisory authority (Art. 77 DSGVO). The authority of your place of residence or that of the controller is responsible.",
+        "ar": "يمكنك أيضًا تقديم شكوى إلى سلطة رقابية لحماية البيانات (Art. 77 DSGVO). السلطة المختصة هي سلطة مكان إقامتك أو سلطة المسؤول عن المعالجة.",
+        "tr": "Ayrıca bir veri koruma denetim makamına şikâyette bulunabilirsin (Art. 77 DSGVO). Yetkili makam, ikamet yerinin veya veri sorumlusunun bağlı olduğu makamdır.",
+        "uk": "Також ти можеш подати скаргу до наглядового органу із захисту даних (Art. 77 DSGVO). Компетентним є орган за місцем твого проживання або за місцем відповідальної особи."
+      },
+      "h.children": { "en": "Children and young people", "ar": "الأطفال والمراهقون", "tr": "Çocuklar ve gençler", "uk": "Діти та підлітки" },
+      "p.children": {
+        "en": "An account is intended for people aged 16 and over. Younger learners can use the site fully without an account — in that case no data is transmitted to us anyway.",
+        "ar": "الحساب مخصّص للأشخاص من عمر 16 عامًا فما فوق. يمكن للمتعلّمين الأصغر سنًّا استخدام الموقع بالكامل دون حساب — وفي هذه الحالة لا تُرسَل إلينا أي بيانات أصلًا.",
+        "tr": "Hesap 16 yaş ve üzeri kişiler için düşünülmüştür. Daha küçük öğrenciler siteyi hesap olmadan tamamen kullanabilir — bu durumda zaten bize hiçbir veri iletilmez.",
+        "uk": "Обліковий запис призначений для осіб від 16 років. Молодші учні можуть повноцінно користуватися сайтом без облікового запису — тоді нам і так не передаються жодні дані."
+      },
+      "h.changes": { "en": "Changes", "ar": "التغييرات", "tr": "Değişiklikler", "uk": "Зміни" },
+      "p.changes": {
+        "en": "If the processing changes, we change this page and update the date at the top.",
+        "ar": "إذا تغيّرت المعالجة، نعدّل هذه الصفحة ونحدّث التاريخ في الأعلى.",
+        "tr": "İşleme değişirse bu sayfayı değiştirir ve yukarıdaki tarihi güncelleriz.",
+        "uk": "Якщо обробка зміниться, ми змінимо цю сторінку й оновимо дату вгорі."
+      }
+    },
+    "nutzungsbedingungen": {
+      "title": { "en": "Terms of use", "ar": "شروط الاستخدام", "tr": "Kullanım koşulları", "uk": "Умови використання" },
+      "updated": { "en": "Last updated: {date}", "ar": "آخر تحديث: {date}", "tr": "Son güncelleme: {date}", "uk": "Станом на: {date}" },
+      "h.offer": { "en": "The service", "ar": "الخدمة", "tr": "Hizmet", "uk": "Пропозиція" },
+      "p.offer1": {
+        "en": "DeutschAcademy provides free materials for learning German: grammar and vocabulary exercises, practice sets for exam preparation (DTZ, telc, Goethe, TestDaF, Leben in Deutschland) and PDFs to download. Use is free of charge and possible without an account.",
+        "ar": "يوفّر DeutschAcademy موادَّ مجانية لتعلّم الألمانية: تمارين في القواعد والمفردات، ومجموعات تدريبية للتحضير للامتحانات (DTZ وtelc وGoethe وTestDaF وLeben in Deutschland)، وملفات PDF للتنزيل. الاستخدام مجاني وممكن دون حساب.",
+        "tr": "DeutschAcademy Almanca öğrenmek için ücretsiz materyaller sunar: dil bilgisi ve kelime alıştırmaları, sınav hazırlığı için alıştırma setleri (DTZ, telc, Goethe, TestDaF, Leben in Deutschland) ve indirilebilir PDF'ler. Kullanım ücretsizdir ve hesap olmadan mümkündür.",
+        "uk": "DeutschAcademy надає безкоштовні матеріали для вивчення німецької: вправи з граматики й лексики, тренувальні набори для підготовки до іспитів (DTZ, telc, Goethe, TestDaF, Leben in Deutschland) та PDF-файли для завантаження. Користування безкоштовне й можливе без облікового запису."
+      },
+      "p.offer2": {
+        "en": "We keep developing the site. Individual exercises, pages or features may change or be removed. There is no entitlement to constant availability.",
+        "ar": "نطوّر الموقع باستمرار. قد تتغيّر بعض التمارين أو الصفحات أو الوظائف أو تُزال. لا يوجد حق في التوفّر الدائم.",
+        "tr": "Siteyi sürekli geliştiriyoruz. Tek tek alıştırmalar, sayfalar veya özellikler değişebilir ya da kaldırılabilir. Sürekli erişilebilirlik hakkı yoktur.",
+        "uk": "Ми постійно розвиваємо сайт. Окремі вправи, сторінки чи функції можуть змінюватися або зникати. Права на постійну доступність немає."
+      },
+      "h.accounts": { "en": "Accounts", "ar": "الحسابات", "tr": "Hesaplar", "uk": "Облікові записи" },
+      "p.accounts": {
+        "en": "An account is voluntary. Its only purpose is to let you continue your learning progress on several devices. You can sign in with Google or by email.",
+        "ar": "الحساب اختياري. غرضه الوحيد أن تتابع تقدّمك في التعلّم على عدة أجهزة. يمكنك تسجيل الدخول عبر Google أو بالبريد الإلكتروني.",
+        "tr": "Hesap isteğe bağlıdır. Tek amacı, öğrenme ilerlemeni birden fazla cihazda sürdürmendir. Google ile veya e-postayla giriş yapabilirsin.",
+        "uk": "Обліковий запис добровільний. Він потрібен лише для того, щоб продовжувати навчальний прогрес на кількох пристроях. Увійти можна через Google або електронною поштою."
+      },
+      "li.acc1": { "en": "The information you give when signing up must be accurate.", "ar": "يجب أن تكون البيانات المقدَّمة عند التسجيل صحيحة.", "tr": "Kayıt sırasında verilen bilgiler doğru olmalıdır.", "uk": "Дані, які ти вказуєш під час реєстрації, мають бути правдивими." },
+      "li.acc2": { "en": "Do not share your login details.", "ar": "لا تشارك بيانات الدخول الخاصة بك مع أحد.", "tr": "Giriş bilgilerini kimseyle paylaşma.", "uk": "Не передавай нікому свої дані для входу." },
+      "li.acc3": { "en": "An account is intended for people aged 16 and over.", "ar": "الحساب مخصّص للأشخاص من عمر 16 عامًا فما فوق.", "tr": "Hesap 16 yaş ve üzeri kişiler için düşünülmüştür.", "uk": "Обліковий запис призначений для осіб від 16 років." },
+      "li.acc4": { "en": "You can delete your account at any time. This also deletes the stored data.", "ar": "يمكنك حذف حسابك في أي وقت. وبذلك تُحذَف أيضًا البيانات المحفوظة.", "tr": "Hesabını istediğin zaman silebilirsin. Bu, saklanan verileri de siler.", "uk": "Ти можеш будь-коли видалити обліковий запис. Разом із ним видаляються й збережені дані." },
+      "h.use": { "en": "Permitted use", "ar": "الاستخدام المسموح", "tr": "İzin verilen kullanım", "uk": "Допустиме використання" },
+      "p.useIntro": { "en": "In particular, it is not permitted:", "ar": "يُمنَع على وجه الخصوص:", "tr": "Özellikle şunlara izin verilmez:", "uk": "Зокрема, заборонено:" },
+      "li.use1": { "en": "to access the site automatically to an extent that impairs its operation;", "ar": "الوصول إلى الموقع آليًا بقدرٍ يعيق تشغيله؛", "tr": "siteye, işleyişini bozacak ölçüde otomatik erişmek;", "uk": "автоматично звертатися до сайту в обсязі, що порушує його роботу;" },
+      "li.use2": { "en": "to circumvent security measures or use other people's accounts;", "ar": "التحايل على إجراءات الأمان أو استخدام حسابات الآخرين؛", "tr": "güvenlik önlemlerini aşmak veya başkalarının hesaplarını kullanmak;", "uk": "обходити засоби безпеки або користуватися чужими обліковими записами;" },
+      "li.use3": { "en": "to resell the site's content commercially;", "ar": "إعادة بيع محتوى الموقع تجاريًا؛", "tr": "sitenin içeriğini ticari amaçla yeniden satmak;", "uk": "комерційно перепродавати вміст сайту;" },
+      "li.use4": { "en": "to use the site for unlawful purposes.", "ar": "استخدام الموقع لأغراض مخالفة للقانون.", "tr": "siteyi hukuka aykırı amaçlarla kullanmak.", "uk": "використовувати сайт із протиправною метою." },
+      "h.yours": { "en": "Your content", "ar": "محتواك", "tr": "Senin içeriğin", "uk": "Твій вміст" },
+      "p.yours": {
+        "en": "Texts you write in writing tasks belong to you. We do not use them for our own purposes and do not pass them on. They are stored so that you can keep working on them — in the browser and, if you are signed in, additionally on the server.",
+        "ar": "النصوص التي تكتبها في مهام الكتابة ملكٌ لك. لا نستخدمها لأغراضنا ولا نمررها لغيرنا. تُحفَظ كي تتمكن من مواصلة العمل عليها — في المتصفح، وإذا كنت مسجّل الدخول أيضًا على الخادم.",
+        "tr": "Yazma görevlerinde yazdığın metinler sana aittir. Onları kendi amaçlarımız için kullanmayız ve başkalarına vermeyiz. Üzerinde çalışmaya devam edebilmen için saklanırlar — tarayıcıda ve giriş yaptıysan ayrıca sunucuda.",
+        "uk": "Тексти, які ти пишеш у письмових завданнях, належать тобі. Ми не використовуємо їх для власних цілей і нікому не передаємо. Вони зберігаються, щоб ти міг продовжити роботу над ними, — у браузері, а якщо ти увійшов, то й на сервері."
+      },
+      "h.ours": { "en": "Our content", "ar": "محتوانا", "tr": "Bizim içeriğimiz", "uk": "Наш вміст" },
+      "p.ours1": {
+        "en": "You may use, print and pass on in your own teaching the exercises, word lists and PDFs we create, free of charge. Reselling them is not permitted.",
+        "ar": "يمكنك استخدام التمارين وقوائم المفردات وملفات PDF التي ننشئها مجانًا، وطباعتها ومشاركتها في تدريسك الخاص. إعادة بيعها غير مسموحة.",
+        "tr": "Oluşturduğumuz alıştırmaları, kelime listelerini ve PDF'leri ücretsiz kullanabilir, yazdırabilir ve kendi dersinde dağıtabilirsin. Yeniden satılmaları yasaktır.",
+        "uk": "Створені нами вправи, списки слів і PDF-файли ти можеш безкоштовно використовувати, друкувати й роздавати на власних заняттях. Перепродаж заборонено."
+      },
+      "p.ours2": {
+        "en": "Exam names and exam materials of third parties (telc, Goethe-Institut, TestDaF-Institut, BAMF) belong to their respective rights holders. Our practice sets are modelled on the published exam format but are our own materials and **not official exam material**. We link to official model tests where the providers publish them themselves.",
+        "ar": "أسماء الامتحانات ومواد الامتحانات الخاصة بجهات أخرى (telc وGoethe-Institut وTestDaF-Institut وBAMF) ملكٌ لأصحاب الحقوق المعنيين. مجموعاتنا التدريبية تستند إلى صيغة الامتحان المنشورة، لكنها مواد خاصة بنا و**ليست مواد امتحان رسمية**. نضع روابط لنماذج الامتحانات الرسمية حيث تنشرها الجهات المنظِّمة بنفسها.",
+        "tr": "Üçüncü tarafların (telc, Goethe-Institut, TestDaF-Institut, BAMF) sınav adları ve sınav materyalleri ilgili hak sahiplerine aittir. Alıştırma setlerimiz yayımlanmış sınav formatını örnek alır, ancak kendi materyallerimizdir ve **resmî sınav materyali değildir**. Resmî örnek sınavlara, kurumlar bunları kendileri yayımladığı yerlerde bağlantı veririz.",
+        "uk": "Назви та матеріали іспитів третіх сторін (telc, Goethe-Institut, TestDaF-Institut, BAMF) належать відповідним правовласникам. Наші тренувальні набори орієнтуються на опублікований формат іспиту, але є нашими власними матеріалами і **не є офіційними екзаменаційними матеріалами**. На офіційні зразки тестів ми посилаємося там, де їх публікують самі організатори."
+      },
+      "h.noGuarantee": { "en": "No guarantee of exam success", "ar": "لا ضمان للنجاح في الامتحان", "tr": "Sınav başarısı garantisi yoktur", "uk": "Жодних гарантій успіху на іспиті" },
+      "p.noGuarantee": {
+        "en": "The content is created carefully but replaces neither a course nor advice. We do not promise any particular exam result or level. Results of the placement test are a guide, not a certification. Only the information and assessments of the official exam providers are binding.",
+        "ar": "يُعَدّ المحتوى بعناية، لكنه لا يغني عن دورة دراسية ولا عن الاستشارة. لا نضمن نتيجة امتحان معيّنة ولا مستوى معيّنًا. نتائج اختبار تحديد المستوى إرشادية وليست شهادة. المُلزِم هو فقط بيانات الجهات الرسمية المنظِّمة للامتحانات وتقييماتها.",
+        "tr": "İçerikler özenle hazırlanır, ancak ne bir kursun ne de danışmanlığın yerini tutar. Belirli bir sınav sonucu veya seviye taahhüt etmeyiz. Seviye belirleme testinin sonuçları bir yön göstergesidir, sertifika değildir. Bağlayıcı olan yalnızca resmî sınav kurumlarının bilgileri ve değerlendirmeleridir.",
+        "uk": "Зміст створюється ретельно, але не замінює ні курсу, ні консультації. Ми не гарантуємо певного результату іспиту чи певного рівня. Результати тесту на визначення рівня — це орієнтир, а не сертифікація. Обов'язковими є лише відомості та оцінки офіційних організаторів іспитів."
+      },
+      "h.liability": { "en": "Liability", "ar": "المسؤولية", "tr": "Sorumluluk", "uk": "Відповідальність" },
+      "p.liab1": {
+        "en": "We are liable without limitation for intent and gross negligence and for injury to life, body or health. In the case of simple negligence, we are liable only for breach of an essential contractual obligation — that is, an obligation whose fulfilment makes proper use possible in the first place and on whose observance you may rely — and limited in amount to the foreseeable damage typical for the contract. Claims under the Produkthaftungsgesetz (Product Liability Act) remain unaffected.",
+        "ar": "نتحمّل المسؤولية دون حدود في حالات العمد والإهمال الجسيم، وكذلك عند الإضرار بالحياة أو الجسد أو الصحة. في حالة الإهمال البسيط نتحمّل المسؤولية فقط عند الإخلال بالتزام تعاقدي جوهري — أي التزام يجعل الاستخدام السليم ممكنًا أصلًا ويحق لك الاعتماد على الوفاء به — وفي حدود الضرر المتوقَّع المعتاد في هذا النوع من العقود. لا تتأثر المطالبات بموجب Produkthaftungsgesetz (قانون مسؤولية المنتج).",
+        "tr": "Kast ve ağır ihmal hâlinde ve hayat, beden veya sağlığın zarar görmesi durumunda sınırsız sorumluyuz. Basit ihmal hâlinde yalnızca temel bir sözleşme yükümlülüğünün ihlalinde sorumluyuz — yani yerine getirilmesi usulüne uygun kullanımı ancak mümkün kılan ve uyulacağına güvenebileceğin bir yükümlülük — ve miktar olarak sözleşmeye özgü, öngörülebilir zararla sınırlı olarak. Produkthaftungsgesetz (Ürün Sorumluluğu Kanunu) kapsamındaki talepler saklıdır.",
+        "uk": "Ми несемо необмежену відповідальність за умисел і грубу необережність, а також у разі шкоди життю, тілу чи здоров'ю. У разі простої необережності ми відповідаємо лише за порушення суттєвого договірного обов'язку — тобто обов'язку, виконання якого взагалі уможливлює належне користування і на дотримання якого ти можеш покладатися, — і в розмірі, обмеженому типовою для договору передбачуваною шкодою. Вимоги за Produkthaftungsgesetz (Законом про відповідальність за продукцію) залишаються незмінними."
+      },
+      "p.liab2": {
+        "en": "We cannot be held responsible for the loss of learning progress that is stored only in your browser: we have no access to this data, and it is deleted as soon as you delete your browser data. Anyone who wants to back up their progress should sign in.",
+        "ar": "لا يمكننا تحمّل المسؤولية عن فقدان تقدّم التعلّم المحفوظ في متصفحك فقط: لا نملك وصولًا إلى هذه البيانات، وتُحذَف بمجرد أن تحذف بيانات متصفحك. من يريد حفظ تقدّمه فليسجّل الدخول.",
+        "tr": "Yalnızca tarayıcında saklanan öğrenme ilerlemesinin kaybından sorumlu tutulamayız: bu verilere erişimimiz yoktur ve tarayıcı verilerini sildiğin anda silinirler. İlerlemesini güvenceye almak isteyen giriş yapmalıdır.",
+        "uk": "Ми не можемо відповідати за втрату навчального прогресу, що зберігається лише у твоєму браузері: ми не маємо доступу до цих даних, і вони видаляються, щойно ти видаляєш дані браузера. Хто хоче зберегти свій прогрес, має увійти в обліковий запис."
+      },
+      "h.changes": { "en": "Changes and termination", "ar": "التغييرات وإنهاء الاستخدام", "tr": "Değişiklikler ve sona erme", "uk": "Зміни та припинення" },
+      "p.changes": {
+        "en": "We may change these terms if the service or the legal situation changes. The date at the top shows the current version. You can delete your account at any time without giving reasons. We may suspend an account if it seriously breaches these terms.",
+        "ar": "يجوز لنا تعديل هذه الشروط إذا تغيّرت الخدمة أو الوضع القانوني. يُظهر التاريخ في الأعلى تاريخ النسخة الحالية. يمكنك حذف حسابك في أي وقت دون ذكر الأسباب. يجوز لنا إيقاف حساب إذا خالف هذه الشروط مخالفة جسيمة.",
+        "tr": "Hizmet veya hukuki durum değişirse bu koşulları değiştirebiliriz. Yukarıdaki tarih geçerli sürümü gösterir. Hesabını istediğin zaman gerekçe göstermeden silebilirsin. Bu koşulları ciddi şekilde ihlal eden bir hesabı askıya alabiliriz.",
+        "uk": "Ми можемо змінювати ці умови, якщо змінюється пропозиція або правова ситуація. Дата вгорі показує актуальну редакцію. Ти можеш будь-коли видалити обліковий запис без пояснення причин. Ми можемо заблокувати обліковий запис, якщо він суттєво порушує ці умови."
+      },
+      "h.law": { "en": "Applicable law", "ar": "القانون المطبَّق", "tr": "Uygulanacak hukuk", "uk": "Застосовне право" },
+      "p.law": {
+        "en": "German law applies. Mandatory consumer protection provisions of the country in which you have your habitual residence remain unaffected.",
+        "ar": "يسري القانون الألماني. ولا تتأثر الأحكام الإلزامية لحماية المستهلك في الدولة التي تقيم فيها عادةً.",
+        "tr": "Alman hukuku geçerlidir. Mutat meskeninin bulunduğu ülkenin emredici tüketici koruma hükümleri saklıdır.",
+        "uk": "Застосовується право Німеччини. Імперативні норми захисту прав споживачів держави, де ти звичайно проживаєш, залишаються чинними."
+      },
+      "h.contact": { "en": "Contact", "ar": "التواصل", "tr": "İletişim", "uk": "Контакт" },
+      "p.contact": {
+        "en": "Questions about these terms: {email}. The full provider details are in the [legal notice (Impressum)](/impressum).",
+        "ar": "للأسئلة حول هذه الشروط: {email}. بيانات مقدّم الخدمة الكاملة موجودة في [بيانات الناشر (Impressum)](/impressum).",
+        "tr": "Bu koşullarla ilgili sorular: {email}. Sağlayıcının tüm bilgileri [künyede (Impressum)](/impressum) yer alır.",
+        "uk": "Питання щодо цих умов: {email}. Повні відомості про постачальника наведено у [вихідних даних (Impressum)](/impressum)."
+      }
+    }
+  }
+}

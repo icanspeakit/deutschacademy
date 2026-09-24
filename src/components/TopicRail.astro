@@ -32,9 +32,10 @@ const railSections = [
   {
     id: "weg",
     label: "Dein Weg",
+    key: "fortschritt.sec.weg.label",
     badge: null,
     icon: "sparkle",
-    overview: { label: "Kursübersicht öffnen →", href: "/uebungen" },
+    overview: { label: "Kursübersicht öffnen →", key: "tr.ov.course", href: "/uebungen" },
     // No items: this pane reports rather than navigates — see the progress block in the
     // panel below, which the script fills from the same store as the level bars.
     progress: true,
@@ -43,17 +44,20 @@ const railSections = [
   ...NAV_LEVELS.map((level) => ({
     id: level.toLowerCase(),
     label: `Stufe ${level}`,
+    key: `fortschritt.sec.${level.toLowerCase()}.label`,
     badge: level,
     icon: "book",
-    overview: { label: "Stufenübersicht öffnen →", href: `/uebungen/grammatik#niveau-${level.toLowerCase()}` },
+    // No "Stufenübersicht öffnen" button: the panel already is the level's list of
+    // topics, and a full-width gradient button above it outweighed the topics themselves.
     items: grammarAt(level).map((t) => ({ key: t.key, label: t.name, icon: "book", href: t.href, tasks: t.tasks })),
   })),
   {
     id: "pruefungen",
     label: "Prüfungen",
+    key: "fortschritt.sec.pruefungen.label",
     badge: null,
     icon: "landmark",
-    overview: { label: "Alle Prüfungen öffnen →", href: "/pruefungen" },
+    overview: { label: "Alle Prüfungen öffnen →", key: "tr.ov.exams", href: "/pruefungen" },
     items: [
       { key: null, label: "Start Deutsch 1", icon: "document", href: "/pruefungen/start-deutsch-1", meta: "A1" },
       { key: null, label: "DTZ-Übungssatz", icon: "book-open", href: "/pruefungen/dtz/uebungssatz", meta: "A2/B1" },
@@ -69,7 +73,7 @@ const openSection = grammarByKey(current)?.level?.toLowerCase() ?? "weg";
 ---
 <aside class="tr-wrap" data-rail data-tr-state="open">
   <div class="nvb" data-nvb>
-    <div class="nvb-rail" role="tablist" aria-label="Bereich">
+    <div class="nvb-rail" role="tablist" aria-label="Bereich" data-i18n-attr="aria-label:tr.area">
       {railSections.map((sec) => (
         <button
           type="button"
@@ -77,10 +81,11 @@ const openSection = grammarByKey(current)?.level?.toLowerCase() ?? "weg";
           data-rail-sec={sec.id}
           role="tab"
           aria-label={sec.label}
+          data-i18n-attr={`aria-label:${sec.key}`}
         >
           {sec.badge ? <span class="nvb-railbadge">{sec.badge}</span> : <Icon name={sec.icon} size={20} />}
           <span class="nvb-raildot" data-rail-secdot={sec.id}></span>
-          <span class="nvb-tip">{sec.label}</span>
+          <span class="nvb-tip" data-i18n={sec.key}>{sec.label}</span>
         </button>
       ))}
     </div>
@@ -89,8 +94,8 @@ const openSection = grammarByKey(current)?.level?.toLowerCase() ?? "weg";
       {railSections.map((sec) => (
         <div class="nvb-section" data-rail-secview={sec.id} hidden={sec.id !== openSection}>
           <div class="nvb-panelhead">
-            <h3>{sec.label}</h3>
-            <button type="button" class="nvb-collapse" data-rail-collapse aria-label="Liste einklappen" title="Einklappen">
+            <h3 data-i18n={sec.key}>{sec.label}</h3>
+            <button type="button" class="nvb-collapse" data-rail-collapse aria-label="Liste einklappen" title="Einklappen" data-i18n-attr="aria-label:ap.list.collapse;title:vp.rule.collapseShort">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>
             </button>
           </div>
@@ -104,18 +109,18 @@ const openSection = grammarByKey(current)?.level?.toLowerCase() ?? "weg";
             <div class="tr-prog" data-tr-prog>
               {/* Written by the script — all of it comes from localStorage, so a
                   server-rendered number would be a guess about a stranger. */}
-              <p class="tr-prog-empty" data-tr-prog-empty>Noch nichts geübt.</p>
+              <p class="tr-prog-empty" data-tr-prog-empty data-i18n="tr.prog.empty">Noch nichts geübt.</p>
               <div class="tr-prog-body" data-tr-prog-body hidden>
                 <a class="tr-prog-next" data-tr-prog-next hidden>
-                  <span class="tr-prog-kicker">Weitermachen</span>
+                  <span class="tr-prog-kicker" data-i18n="tr.prog.next">Weitermachen</span>
                   <b data-tr-prog-next-title></b>
                 </a>
                 <div class="tr-prog-week" data-tr-prog-week hidden>
-                  <p><span>Diese Woche</span><span data-tr-prog-weekn></span></p>
+                  <p><span data-i18n="tr.prog.week">Diese Woche</span><span data-tr-prog-weekn></span></p>
                   <span class="tr-prog-bar"><span data-tr-prog-weekbar style="width:0%"></span></span>
                 </div>
                 <p class="tr-prog-streak" data-tr-prog-streak hidden></p>
-                <p class="tr-prog-label">Grammatik nach Stufe</p>
+                <p class="tr-prog-label" data-i18n="tr.prog.byLevel">Grammatik nach Stufe</p>
                 {NAV_LEVELS.map((level) => (
                   <button type="button" class="tr-prog-level" data-rail-sec={level.toLowerCase()}>
                     <span class="tr-prog-level-name">{level}</span>
@@ -127,7 +132,7 @@ const openSection = grammarByKey(current)?.level?.toLowerCase() ?? "weg";
             </div>
           )}
 
-          <a class="nvb-overview" href={sec.overview.href}>{sec.overview.label}</a>
+          {sec.overview && <a class="nvb-overview" href={sec.overview.href} data-i18n={sec.overview.key}>{sec.overview.label}</a>}
 
           {sec.items.map((item) => (
             <a
@@ -156,8 +161,9 @@ const openSection = grammarByKey(current)?.level?.toLowerCase() ?? "weg";
     aria-expanded="true"
     aria-label="Themen ausblenden"
     title="Themen ausblenden"
+    data-i18n-attr="aria-label:tr.hide;title:tr.hide"
   >
-    <span class="tr-pivot-label">Themen</span>
+    <span class="tr-pivot-label" data-i18n="tr.topics">Themen</span>
     <span class="tr-pivot-chevron" aria-hidden="true"></span>
   </button>
 
@@ -183,6 +189,7 @@ const openSection = grammarByKey(current)?.level?.toLowerCase() ?? "weg";
   // Numbers come from the same store the dashboard reads, so the two surfaces cannot
   // disagree about how far a topic got.
   import { getTopicProgress, getProgress, getResume } from "../lib/progress.js";
+  import { t, onUiText } from "../lib/uiText.js";
 
   const rail = document.querySelector<HTMLElement>("[data-rail]");
   const nvb = rail?.querySelector<HTMLElement>("[data-nvb]");
@@ -272,9 +279,12 @@ const openSection = grammarByKey(current)?.level?.toLowerCase() ?? "weg";
       const streakEl = box.querySelector<HTMLElement>("[data-tr-prog-streak]");
       if (streakEl) {
         streakEl.hidden = !streak;
-        streakEl.textContent = streak === 1 ? "1 Tag in Folge" : `${streak} Tage in Folge`;
+        streakEl.textContent = streak === 1 ? t("fortschritt.weg.streak1", "1 Tag in Folge") : t("fortschritt.weg.streak", "{n} Tage in Folge", { n: streak });
       }
     }
+
+    // The streak line is written here, so a language switch rewrites it.
+    onUiText(() => paintWeg());
 
     // Folding, both ways, with something to watch in each.
     //
@@ -311,9 +321,10 @@ const openSection = grammarByKey(current)?.level?.toLowerCase() ?? "weg";
       if (pivot) {
         const away = next === "hidden";
         pivot.setAttribute("aria-expanded", String(!away));
-        const label = away ? "Themen einblenden" : "Themen ausblenden";
+        const label = away ? t("tr.show", "Themen einblenden") : t("tr.hide", "Themen ausblenden");
         pivot.setAttribute("aria-label", label);
         pivot.title = label;
+        pivot.setAttribute("data-i18n-attr", away ? "aria-label:tr.show;title:tr.show" : "aria-label:tr.hide;title:tr.hide");
       }
       try { localStorage.setItem(KEY, next); } catch {}
     }

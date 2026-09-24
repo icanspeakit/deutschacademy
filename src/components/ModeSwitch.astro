@@ -1,0 +1,17 @@
+---
+// Üben / Aktiv on a grammar topic. Every topic carries it `compact`, inside the topic bar
+// next to the progress; the full-size variant is kept for a page without that bar. The page script finds the buttons across the whole document, so
+// either home works. Styles: src/styles/aktiv.css.
+interface Props {
+  compact?: boolean;
+}
+const { compact = false } = Astro.props;
+---
+<div class:list={["ak-modes", compact && "ak-modes--compact"]} role="tablist" aria-label="Ansicht" data-i18n-attr="aria-label:ak.view">
+  <button type="button" class="ak-mode" data-mode-btn="ueben" role="tab" aria-selected="true" title="Lesen &amp; schreiben" data-i18n-attr="title:ak.mode.uebenTitle">
+    <span data-i18n="ak.mode.ueben">Üben</span><span class="ak-mode-tip" data-i18n="ak.mode.uebenTip">lesen &amp; schreiben</span>
+  </button>
+  <button type="button" class="ak-mode" data-mode-btn="aktiv" role="tab" aria-selected="false" title="Hören &amp; sprechen" data-i18n-attr="title:ak.mode.aktivTitle">
+    <span data-i18n="ak.mode.aktiv">Aktiv</span><span class="ak-mode-tip" data-i18n="ak.mode.aktivTip">hören &amp; sprechen</span>
+  </button>
+</div>

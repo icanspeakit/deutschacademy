@@ -1,0 +1,156 @@
+/* The Artikel trainer, dressed as the /t2 "C · Mix" mockup the learner picked.
+ * ---------------------------------------------------------------------------
+ * artikel-fit.css sizes the layout (one screen tall, question centred); this is the look
+ * on top of it, and only for this page — the rail, the switches and the rows are shared
+ * with Wortschatz and the grammar topics, so every rule is scoped to .vp-page--fit.
+ *
+ *   - The rail: page-coloured with a grey outline instead of a dark slate bar.
+ *   - The panel head: the tinted "Stufe A1" block, a size up.
+ *   - The pack rows: name, then its state underneath, like the mockup's list.
+ *   - The toolbar: the two switches as small pills, one line each.
+ *   - The question and the three answers: the mockup's sizes.
+ *   - "Woher kommt das Wort?": the etymology card above "Wie oft hört man das?".
+ */
+
+/* ---- Rail: outline, not a filled bar ------------------------------------------------- */
+/* Desktop only. On a phone the rail is the row of levels across the top of the bottom
+   sheet, and there it keeps its dark fill: a light row on a light sheet lost the A1–B2
+   buttons against the panel under them. */
+@media (min-width: 1001px) {
+  .vp-page--fit .ap-nvb .nvb-rail {
+    background: var(--page-bg);
+    border: 1px solid var(--border-strong);
+    border-right-color: var(--border);
+    border-radius: var(--radius) 0 0 var(--radius);
+    box-sizing: border-box;
+  }
+  .vp-page--fit .ap-nvb.collapsed .nvb-rail { border-radius: var(--radius); }
+  .vp-page--fit .ap-nvb .nvb-railbtn { color: var(--muted); }
+  .vp-page--fit .ap-nvb .nvb-railbtn:hover { color: var(--ink); background: var(--surface-sunken, rgba(0, 0, 0, .05)); }
+  .vp-page--fit .ap-nvb .nvb-railbtn.active { color: #fff; background: var(--brand-blue); }
+  .vp-page--fit .ap-nvb .ls-raildiv { background: var(--border); border-color: var(--border); }
+  .vp-page--fit .vp-rule-card { border-color: var(--border-strong); }
+
+  /* Floating, like the Themen rail on the other grammar topics (topic-rail.css): the same
+     drop shadow, and only that — its dark fill and colours stay theirs. The column clips
+     its overflow (artikel-fit.css), which would cut the shadow off — and the "Stufen" fold
+     tab, which hangs off the card's right edge. Nothing is clipped here: the panel inside
+     scrolls on its own, so the card never needs to. */
+  .vp-page--fit .vp-col--rule { overflow: visible; }
+  .vp-page--fit .vp-rule-card { box-shadow: 0 18px 44px -20px rgba(15, 23, 42, .55); }
+}
+
+/* ---- Panel ---------------------------------------------------------------------------- */
+.vp-page--fit .ap-nvb .nvb-panelhead { padding: 14px 16px; margin-bottom: 10px; }
+.vp-page--fit .ap-nvb .nvb-panelhead h3 { font-size: 1.1rem; font-weight: var(--fw-bold, 700); }
+.vp-page--fit .ap-nvb .ls-lead { font-size: var(--text-sm); line-height: 1.45; color: var(--muted); }
+.vp-page--fit .ap-nvb .akp-go { min-height: 52px; font-size: 1.05rem; font-weight: var(--fw-bold, 700); border-radius: var(--radius-pill); }
+.vp-page--fit .ap-nvb .akp-progress-text { font-size: var(--text-sm); color: var(--ink); }
+.vp-page--fit .ap-nvb .ap-phase-head { font-size: 12px; letter-spacing: .08em; color: var(--brand-blue); }
+
+/* One line per pack: name, then "0/45" / "12/45" right-aligned in a fixed column so the
+   counts line up down the list. Stacking the state under the name doubled the list's
+   height and left the counts ragged against the names above them. */
+.vp-page--fit .ap-nvb .akp-pack {
+  grid-template-columns: 30px minmax(0, 1fr) 6ch;
+  grid-template-areas: "ic name state";
+  padding: 9px 10px;
+}
+.vp-page--fit .ap-nvb .akp-pack-ic { font-size: 18px; }
+.vp-page--fit .ap-nvb .akp-pack-name { font-size: var(--text-sm); font-weight: var(--fw-semibold, 600); }
+.vp-page--fit .ap-nvb .akp-pack-state { text-align: right; font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums; }
+
+/* ---- Toolbar: two small pills --------------------------------------------------------- */
+.vp-page--fit .akk-mode-row { gap: 8px 16px; padding-bottom: 12px; }
+.vp-page--fit .akk-mode-btn { font-size: var(--text-sm); }
+.vp-page--fit .ls-switch { gap: 6px; padding: 5px 12px; }
+.vp-page--fit .ls-switch-track { display: none; }
+.vp-page--fit .ls-switch-txt { flex-direction: row; align-items: baseline; gap: 5px; }
+.vp-page--fit .ls-switch-kicker {
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--muted);
+}
+.vp-page--fit .ls-switch-kicker::after { content: " ·"; }
+.vp-page--fit .ls-switch-state { font-size: 12px; font-weight: 400; color: var(--muted); }
+.vp-page--fit .ls-switch[aria-pressed="true"] { border-color: color-mix(in srgb, var(--brand-blue) 45%, transparent); }
+.vp-page--fit .ls-switch[aria-pressed="true"] .ls-switch-state { color: var(--brand-blue-dark); font-weight: 600; }
+.vp-page--fit .ak-now { font-size: 12px; letter-spacing: .08em; }
+
+/* ---- The question --------------------------------------------------------------------- */
+.vp-page--fit .akk-focus-sentence { font-size: clamp(2.4rem, 6vw, 4rem); }
+.vp-page--fit .akk-pills { gap: 12px; margin-top: 12px; }
+.vp-page--fit .akk-pill { min-width: 140px; min-height: 76px; font-size: 1.6rem; }
+@media (max-width: 720px) {
+  .vp-page--fit .akk-focus-sentence { font-size: clamp(2rem, 10vw, 2.8rem); }
+  .vp-page--fit .akk-pill { min-width: 0; min-height: 64px; font-size: 1.4rem; }
+}
+
+/* ---- Woher kommt das Wort? ------------------------------------------------------------ */
+/* artikel-fit.css makes `.vp-col--ex > .vp-card` one screen tall — meant for the exercise
+   card, but the two cards under it are .vp-card children too and were stretched with it. */
+.vp-page--fit .vp-col--ex > :is(.ahk, .afc) { min-height: 0; display: block; }
+.ahk { margin-top: 16px; padding: 18px 20px 16px; }
+.ahk-word { margin: 8px 0 4px; font-size: 1.35rem; font-weight: var(--fw-semibold, 600); color: var(--ink); }
+/* The Stammbaum: a narrow column of boxes, oldest on top, joined by down-arrows, ending in
+   today's word in the brand colour — the etymonline chart, in the site's own boxes. */
+.ahk-tree { list-style: none; margin: 16px 0 18px; padding: 0; display: flex; flex-direction: column; align-items: center; max-width: 360px; }
+.ahk-node {
+  position: relative;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 10px 14px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--surface-card);
+  text-align: center;
+}
+/* The arrow into every box but the first: a line and a head, drawn in the gap. */
+.ahk-node + .ahk-node { margin-top: 30px; }
+.ahk-node + .ahk-node::before,
+.ahk-node + .ahk-node::after { content: ""; position: absolute; left: 50%; }
+.ahk-node + .ahk-node::before { top: -27px; height: 20px; width: 0; border-left: 1.5px solid var(--border-strong); }
+.ahk-node + .ahk-node::after {
+  top: -10px; width: 7px; height: 7px; margin-left: -3.5px;
+  border-right: 1.5px solid var(--border-strong); border-bottom: 1.5px solid var(--border-strong);
+  transform: translateX(.75px) rotate(45deg);
+}
+.ahk-form { display: block; font-size: 1.05rem; font-weight: var(--fw-semibold, 600); color: var(--ink); overflow-wrap: anywhere; }
+.ahk-lang {
+  display: inline-block;
+  margin-top: 4px;
+  padding: 1px 8px;
+  border-radius: var(--radius-pill);
+  background: var(--surface-sunken, rgba(0, 0, 0, .05));
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .02em;
+  color: var(--muted);
+}
+.ahk-gloss { display: block; margin-top: 4px; font-size: var(--text-sm); color: var(--muted); }
+.ahk-node--now { border-color: var(--brand-blue); background: color-mix(in srgb, var(--brand-blue) 8%, var(--surface-card)); }
+.ahk-node--now .ahk-form { font-size: 1.3rem; color: var(--brand-blue-dark, var(--brand-blue)); }
+.ahk-node--now .ahk-lang { background: color-mix(in srgb, var(--brand-blue) 14%, transparent); color: var(--brand-blue-dark, var(--brand-blue)); }
+/* A compound: its parts side by side in the first box. */
+.ahk-node--parts { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 8px; }
+.ahk-part { padding: 4px 12px; border: 1px solid var(--border); border-radius: 8px; font-weight: var(--fw-semibold, 600); background: var(--page-bg); }
+.ahk-plus { color: var(--muted); font-weight: 600; }
+
+.ahk-text { margin: 0; font-size: var(--text-sm); line-height: 1.6; color: var(--muted); max-width: 68ch; }
+.ahk-text.is-empty { color: var(--muted); font-size: var(--text-sm); }
+/* The licence credit, reduced to an (i) in the card's corner: CC BY-SA wants it on the card,
+   not a citation line under every word. Title and aria-label carry the full credit. */
+.ahk { position: relative; }
+.ahk-src { position: absolute; top: 14px; right: 14px; margin: 0; }
+.ahk-credit {
+  display: inline-grid; place-items: center; width: 22px; height: 22px;
+  border: 1px solid var(--border); border-radius: 50%;
+  font: italic 600 12px/1 Georgia, "Times New Roman", serif;
+  color: var(--muted); text-decoration: none; opacity: .7;
+}
+.ahk-credit:hover, .ahk-credit:focus-visible { opacity: 1; color: var(--brand-blue); border-color: var(--brand-blue); }
+[dir="rtl"] .ahk-src { right: auto; left: 14px; }
+@media (max-width: 600px) { .ahk { padding: 14px 14px 12px; } }

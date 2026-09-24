@@ -1,0 +1,72 @@
+/* The conjugation grid — see src/components/ConjTable.astro. */
+.ct { margin: var(--space-4, 16px) 0 0; container-type: inline-size; }
+.ct-hint { display: none; margin-left: auto; font-weight: 600; letter-spacing: 0; text-transform: none; color: var(--brand-blue-dark, var(--brand-blue)); }
+.ct-cap { display: flex; align-items: baseline; gap: 8px; margin: 0 0 8px; font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+/* The grid scrolls inside itself on a phone; the page never does. */
+.ct-scroll { overflow-x: auto; border: 1px solid var(--border); border-radius: var(--radius, 12px); background: var(--surface-card); }
+.ct-table { width: 100%; border-collapse: collapse; font-size: 1rem; }
+.ct-table th, .ct-table td { padding: 9px 11px; text-align: left; border-bottom: 1px solid var(--border); white-space: nowrap; vertical-align: middle; }
+.ct-table thead th { font-size: 12px; font-weight: 700; letter-spacing: .04em; color: var(--muted); background: var(--surface, #f3f5f8); vertical-align: bottom; }
+.ct-table tbody + tbody tr:first-child:not(.ct-grprow) > *, .ct-table tbody + tbody .ct-grprow + tr > * { border-top: 2px solid var(--border-strong); }
+.ct-table tbody:last-child tr:last-child > * { border-bottom: 0; }
+.ct-grp { font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--brand-blue-dark, var(--brand-blue)); background: var(--surface, #f3f5f8); }
+/* Set vertically, as in the margin of a worksheet: the label names the block of three
+   rows beside it and should not cost a column's width to do it. */
+tbody .ct-grp { writing-mode: vertical-rl; transform: rotate(180deg); text-align: center !important; padding: 10px 6px; width: 1%; }
+tbody .ct-grp .gx-tr-l { margin: 0 2px 0 0; }
+.ct-num { color: var(--muted); text-align: center !important; width: 1%; }
+.ct-pron { font-weight: 600; color: var(--ink); }
+.ct-endcol { font-weight: 700; color: var(--brand-blue-dark, var(--brand-blue)); }
+.ct-verb { color: var(--ink) !important; font-size: 14px !important; letter-spacing: 0 !important; }
+.ct-note { display: block; margin-top: 2px; font-size: 11px; font-weight: 600; color: var(--muted); }
+.ct-form { font-size: 1.05rem; color: var(--ink); }
+.ct-end { font-weight: 700; color: var(--brand-blue-dark, var(--brand-blue)); }
+.ct-x { background: color-mix(in srgb, #f59e0b 28%, transparent); color: inherit; border-radius: 3px; padding: 0 1px; }
+.ct-irr { background: color-mix(in srgb, #f59e0b 8%, transparent); }
+thead .ct-irr { background: color-mix(in srgb, #f59e0b 14%, var(--surface, #f3f5f8)); }
+.ct-grprow { display: none; }
+.ct-tr { font-weight: 500; letter-spacing: 0; text-transform: none; }
+.ct-tr .gx-tr-l { margin: 2px 0 0; padding: 0; border: 0; font-size: 11px; color: var(--muted); }
+.ct-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+
+/* Narrow (a phone, or the Üben side column): no number column, the group as its own
+   row, the pronoun pinned while the verbs scroll. By the table's width, not the
+   screen's — the side column is narrow on the widest monitor. */
+@container (max-width: 700px) {
+  .ct-hint { display: inline; }
+  .ct-table { font-size: .95rem; }
+  .ct-table th, .ct-table td { padding: 8px 10px; }
+  .ct-grp, .ct-num { display: none; }
+  .ct-grprow { display: table-row; }
+  .ct-grprow th { text-align: left; font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--brand-blue-dark, var(--brand-blue)); background: var(--surface, #f3f5f8); padding: 6px 10px; }
+  [data-gx="on"] .ct-grprow th .ct-tr { display: inline; margin-left: 6px; }
+  .ct-grprow th .ct-tr .gx-tr-l { display: none; }
+  [data-gx-lang="en"] .ct-grprow .gx-tr-l[lang="en"], [data-gx-lang="ar"] .ct-grprow .gx-tr-l[lang="ar"], [data-gx-lang="uk"] .ct-grprow .gx-tr-l[lang="uk"], [data-gx-lang="tr"] .ct-grprow .gx-tr-l[lang="tr"] { display: inline; }
+  .ct-pron { position: sticky; left: 0; z-index: 1; background: var(--surface-card); box-shadow: 1px 0 0 var(--border); }
+  thead .ct-pron { background: var(--surface, #f3f5f8); }
+}
+
+/* RefTable.astro: the same sheet for a topic's overview tables. Their cells are phrases
+   ("die Zeitung, die Freiheit …"), not single forms, so long ones may wrap. */
+.ct--ref + .ct--ref { margin-top: 20px; }
+/* No min-width: a 24em floor made every cell ≥384px, so a five-column table ("der Mann",
+   "die Frau" …) grew to 1,650px and scrolled sideways even on a desktop. Short forms fit
+   as they are; long phrases wrap between words. */
+.ct--ref .ct-table td { white-space: normal; }
+.ct--ref .ct-table td.ct-nowrap { white-space: nowrap; }
+.ct--ref .ct-form { font-size: 1rem; }
+.ct--ref .ct-pron { white-space: nowrap; }
+/* Narrow: the overview tables squeeze instead of scrolling — "der Mann" may break onto
+   two lines, the row labels too. Only the verb grids (not .ct--ref) keep the swipe. */
+@container (max-width: 700px) {
+  .ct--ref .ct-table th, .ct--ref .ct-table td,
+  .ct--ref .ct-table td.ct-nowrap, .ct--ref .ct-pron { white-space: normal; padding: 7px 5px; }
+  .ct--ref .ct-table, .ct--ref .ct-form { font-size: .875rem; }
+  .ct--ref .ct-pron { position: static; box-shadow: none; hyphens: auto; -webkit-hyphens: auto; }
+  .ct--ref .ct-hint { display: none; }
+}
+.ct-refnote { margin: 8px 0 0; font-size: .875rem; color: var(--muted); }
+/* The rule in words, folded under the tables (grammatik/[id].astro, Sehen). */
+.ak-rule-words { margin-top: 18px; }
+.ak-rule-words > summary { cursor: pointer; font-weight: 600; color: var(--brand-blue-dark, var(--brand-blue)); }
+.ak-rule-words[open] > summary { margin-bottom: 10px; }

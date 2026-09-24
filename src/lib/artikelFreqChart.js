@@ -25,8 +25,13 @@ function layout(width) {
   Y1 = H - PAD.b;
 }
 
+import { t, onUiText } from "./uiText.js";
+const tr = t;
+
 const esc = (s) => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
 const fmt = (n) => n.toLocaleString("de-DE");
+// Band names in the UI language; `label` stays the German, for callers that want it.
+const bandLabel = (b) => t(`afc.band.${b.key}`, b.label);
 
 /** Plain-words band for a place in the order. The thresholds are where the Lernkurve's
  *  phases already cut it (Woche 1 ≈ the first 125, Monat 3 ends at 1 621). */
@@ -62,7 +67,7 @@ export function mountFreqChart(root, { curve, total, maxCount, minCount }) {
       ${ticks.map((t) => `<line x1="${X0}" x2="${X1}" y1="${ly(t)}" y2="${ly(t)}"/>`).join("")}
     </g>
     <g class="afc-axis">
-      ${ticks.map((t) => `<text x="${X0 - 6}" y="${ly(t) + 3}" text-anchor="end">${t >= 1000 ? t / 1000 + " Tsd." : t}</text>`).join("")}
+      ${ticks.map((t) => `<text x="${X0 - 6}" y="${ly(t) + 3}" text-anchor="end">${t >= 1000 ? t / 1000 + " " + tr("afc.thousand", "Tsd.") : t}</text>`).join("")}
       <text x="${X0}" y="${H - 8}">Platz 1</text>
       <text x="${X1}" y="${H - 8}" text-anchor="end">Platz ${fmt(total)}</text>
       <text x="${LX0 + LANE / 2}" y="${H - 8}" text-anchor="middle">nicht gezählt</text>
@@ -122,7 +127,7 @@ export function mountFreqChart(root, { curve, total, maxCount, minCount }) {
     if (cur) labels.push({ p: cur, text: word(cur.q), cls: "is-current" });
     // A lane word has no count to rank it by, so it is not "the rarest" — it is one of the
     // words too rare to be counted at all. Say that.
-    if (rarest && rarest !== cur) labels.push({ p: rarest, text: `${rarest.q.freqPos ? "seltenstes" : "Rarität"}: ${word(rarest.q)}`, cls: "is-rare" });
+    if (rarest && rarest !== cur) labels.push({ p: rarest, text: `${rarest.q.freqPos ? t("afc.rarest", "seltenstes") : t("afc.band.raritaet", "Rarität")}: ${word(rarest.q)}`, cls: "is-rare" });
     labelsG.innerHTML = labels
       .map(({ p, text, cls }, i) => {
         // Lane words label to the left of the lane, above the curve's tail, not across it.
@@ -142,15 +147,20 @@ export function mountFreqChart(root, { curve, total, maxCount, minCount }) {
   const word = (q) => q.lemma;
   function bandText(q) {
     const b = band(q, total);
-    return q.freqPos ? `Platz ${fmt(q.freqPos)} · ${b.label}` : "nicht unter den häufigsten · Rarität";
+    return q.freqPos
+      ? t("afc.place", "Platz {n} · {band}", { n: fmt(q.freqPos), band: bandLabel(b) })
+      : t("afc.unranked", "nicht unter den häufigsten · Rarität");
   }
   function headFor(q) {
     const b = band(q, total);
     if (!q.freqPos) {
-      return `<b>${esc(q.lemma)}</b> ist nicht unter den ${fmt(total)} häufigsten Nomen — eine <b>Rarität</b>. Gut zu kennen, aber kein Wort für die erste Woche.`;
+      return t("afc.head.rare", "<b>{word}</b> ist nicht unter den {total} häufigsten Nomen — eine <b>Rarität</b>. Gut zu kennen, aber kein Wort für die erste Woche.", { word: esc(q.lemma), total: fmt(total) });
     }
     const top = Math.max(1, Math.round((q.freqPos / total) * 100));
-    return `<b>${esc(q.lemma)}</b> steht auf Platz <b>${fmt(q.freqPos)}</b> von ${fmt(total)} — ${b.label}${top <= 50 ? `, unter den ersten ${top} %` : ""}.`;
+    const vars = { word: esc(q.lemma), n: fmt(q.freqPos), total: fmt(total), band: bandLabel(b), top };
+    return top <= 50
+      ? t("afc.head.top", "<b>{word}</b> steht auf Platz <b>{n}</b> von {total} — {band}, unter den ersten {top} %.", vars)
+      : t("afc.head", "<b>{word}</b> steht auf Platz <b>{n}</b> von {total} — {band}.", vars);
   }
   function roundSummary() {
     const counts = { oft: 0, mittel: 0, selten: 0 };
@@ -160,7 +170,7 @@ export function mountFreqChart(root, { curve, total, maxCount, minCount }) {
       else if (k === "mittel") counts.mittel++;
       else counts.selten++;
     }
-    return `Diese Übung: <b>${counts.oft}</b> häufige, <b>${counts.mittel}</b> gelegentliche und <b>${counts.selten}</b> seltene Wörter.`;
+    return t("afc.summary", "Diese Übung: <b>{oft}</b> häufige, <b>{mittel}</b> gelegentliche und <b>{selten}</b> seltene Wörter.", counts);
   }
 
   // Tooltip: hover on a pointer, tap on a phone, focus from the keyboard.
@@ -170,7 +180,7 @@ export function mountFreqChart(root, { curve, total, maxCount, minCount }) {
     const c = g.querySelector(".afc-mark");
     const box = svg.getBoundingClientRect();
     const k = box.width / W || 1;
-    tip.innerHTML = `<b>${esc(word(q))}</b><span>${esc(bandText(q))}</span>${q.freq ? `<span>${fmt(q.freq)}× im Korpus</span>` : ""}`;
+    tip.innerHTML = `<b>${esc(word(q))}</b><span>${esc(bandText(q))}</span>${q.freq ? `<span>${esc(t("afc.corpus", "{n}× im Korpus", { n: fmt(q.freq) }))}</span>` : ""}`;
     tip.hidden = false;
     const x = Number(c.getAttribute("cx")) * k, y = Number(c.getAttribute("cy")) * k;
     const tw = tip.offsetWidth;
@@ -196,6 +206,9 @@ export function mountFreqChart(root, { curve, total, maxCount, minCount }) {
     lastW = W;
     draw();
   }).observe(svg.parentElement);
+
+  // The words are the UI language's: redraw on a switch.
+  onUiText(() => { drawStatic(); if (questions.length) draw(); });
 
   return {
     setRound(qs) { questions = qs; currentId = null; draw(); },

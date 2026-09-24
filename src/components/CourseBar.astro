@@ -28,24 +28,26 @@ const url = `/uebungen/grammatik/${topic}`;
 const topicHref = (id: string) => `/uebungen/grammatik/${id}`;
 ---
 {pos && (
-  <nav class:list={["kb", inline && "kb--inline"]} aria-label="Dein Kurs">
+  <nav class:list={["kb", inline && "kb--inline"]} aria-label="Dein Kurs" data-i18n-attr="aria-label:kb.course">
     <div class="kb-inner">
-      <a class="kb-back" href={`/fortschritt?stufe=${stufe}&thema=${topic}`}>
-        <span aria-hidden="true">←</span>
-        <span class="kb-long">Dein Kurs</span><span class="kb-short">Kurs</span>
+      {/* Inline (in the topic bar) the link is its Stufe badge alone — the words cost the
+          bar its room. The name stays for screen readers and as the tooltip. */}
+      <a class="kb-back" href={`/fortschritt?stufe=${stufe}&thema=${topic}`} aria-label={inline ? `Dein Kurs, Stufe ${pos.level}` : undefined} title={inline ? "Dein Kurs" : undefined} data-i18n-attr={inline ? `aria-label:kb.courseLevel.${pos.level};title:kb.course` : undefined}>
+        {!inline && <span aria-hidden="true">←</span>}
+        {!inline && <><span class="kb-long" data-i18n="kb.course">Dein Kurs</span><span class="kb-short" data-i18n="kb.courseShort">Kurs</span></>}
         <span class="kb-level">{pos.level}</span>
       </a>
 
       <span class="kb-pos">
-        <span class="kb-long">Thema {pos.index} von {pos.total}</span><span class="kb-short">{pos.index}/{pos.total}</span>
+        <span class="kb-long" data-i18n="kb.pos" data-i18n-vars={JSON.stringify({ n: pos.index, total: pos.total })}>Thema {pos.index} von {pos.total}</span><span class="kb-short">{pos.index}/{pos.total}</span>
       </span>
 
       <span class="kb-steps">
         {pos.prev
-          ? <a class="kb-step" href={topicHref(pos.prev.id)} rel="prev" aria-label={`Vorheriges Thema: ${pos.prev.name}`} title={pos.prev.name}>‹</a>
+          ? <a class="kb-step" href={topicHref(pos.prev.id)} rel="prev" aria-label={`Vorheriges Thema: ${pos.prev.name}`} data-i18n-attr="aria-label:kb.prev" title={pos.prev.name}>‹</a>
           : <span class="kb-step kb-step--none" aria-hidden="true">‹</span>}
         {pos.next
-          ? <a class="kb-step" href={topicHref(pos.next.id)} rel="next" aria-label={`Nächstes Thema: ${pos.next.name}`} title={pos.next.name}>›</a>
+          ? <a class="kb-step" href={topicHref(pos.next.id)} rel="next" aria-label={`Nächstes Thema: ${pos.next.name}`} data-i18n-attr="aria-label:kb.next" title={pos.next.name}>›</a>
           : <span class="kb-step kb-step--none" aria-hidden="true">›</span>}
       </span>
 

@@ -10,7 +10,7 @@
   class="theme-toggle"
   data-theme-toggle
   aria-label="Dunkles Design einschalten"
-  data-i18n-attr="aria-label:theme.toDark"
+  data-i18n-attr="aria-label:theme.toDark;title:theme.lightDark"
   title="Hell / Dunkel"
 >
   <svg class="theme-toggle-icon theme-toggle-icon--sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" aria-hidden="true">
@@ -66,8 +66,9 @@
   function reflect(theme = getTheme()) {
     const key = theme === "dark" ? "theme.toLight" : "theme.toDark";
     buttons.forEach((btn) => {
-      btn.setAttribute("data-i18n-attr", "aria-label:" + key);
+      btn.setAttribute("data-i18n-attr", "aria-label:" + key + ";title:theme.lightDark");
       btn.setAttribute("aria-label", dict[key] ?? FALLBACK[key]);
+      btn.setAttribute("title", dict["theme.lightDark"] ?? "Hell / Dunkel");
     });
   }
 

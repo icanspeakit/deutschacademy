@@ -3,11 +3,19 @@
 // Deutsch" (A1–A2) version built from the same data's *Easy fields. Re-run after editing that
 // file or this script:
 //   node scripts/generate-fakten-pdf.mjs
+//
+// Both versions also go out in en/ar/uk/tr (…-fakten-en.pdf, …-fakten-einfach-ar.pdf):
+// every German fact followed by its translation from src/data/uebersetzungen/
+// leben-in-deutschland.json — the file the facts page reads. Those editions are drawn with
+// scripts/lib/pdf-brand.mjs, whose Noto fonts can draw Arabic and Cyrillic; Helvetica here
+// cannot. A language that misses a single fact gets no edition.
 import PDFDocument from "pdfkit";
 import { createWriteStream, mkdirSync, existsSync, readFileSync, writeFileSync, statSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import path from "node:path";
 import lid from "../src/data/leben-in-deutschland.json" with { type: "json" };
+import help from "../src/data/uebersetzungen/leben-in-deutschland.json" with { type: "json" };
+import { createDoc } from "./lib/pdf-brand.mjs";
 
 const { meta, topics, glossary, bundeslaender } = lid;
 
@@ -348,4 +356,132 @@ function buildPdf(mode) {
   };
   if (stream) stream.on("finish", record);
   else record();
+}
+
+// --- Translated editions ------------------------------------------------------
+
+const EDITIONS = {
+  en: { name: "Englisch", cover: "Facts for the “Leben in Deutschland” test, explained in English" },
+  ar: { name: "Arabisch", rtl: true, cover: "حقائق اختبار «الحياة في ألمانيا» مع الشرح بالعربية" },
+  uk: { name: "Ukrainisch", cover: "Факти до тесту «Leben in Deutschland» з поясненнями українською" },
+  tr: { name: "Türkisch", cover: "„Leben in Deutschland“ testi için bilgiler, Türkçe açıklamalarla" },
+};
+
+/** Every German string this mode prints, paired with where its translation lives. The
+    edition is built only if each one has it — half a translation reads as broken. */
+function missingIn(mode, lang) {
+  const easy = mode === MODES.easy;
+  const miss = [];
+  const has = (obj, i) => (i == null ? obj?.[lang] : obj?.[lang]?.[i]);
+  if (!has(help.meta?.[easy ? "sourceNoteEasy" : "sourceNote"])) miss.push("sourceNote");
+  if (!has(help.meta?.[easy ? "stateFactsNoteEasy" : "stateFactsNote"])) miss.push("stateFactsNote");
+  for (const t of topics) {
+    const tx = help.topics?.[t.id];
+    if (!has(tx?.title)) miss.push(`${t.id}.title`);
+    t[mode.factsKey].forEach((_, i) => { if (!has(tx?.[mode.factsKey], i)) miss.push(`${t.id}.${i}`); });
+  }
+  for (const g of glossary) if (!has(help.glossary?.[g.term]?.[mode.defKey])) miss.push(g.term);
+  const bayern = bundeslaender.find((l) => l.id === "bayern");
+  (bayern?.[mode.sourceFactsKey] ?? []).forEach((_, i) => {
+    if (!has(help.bayern?.[mode.sourceFactsKey], i)) miss.push(`bayern.${i}`);
+  });
+  return miss;
+}
+
+async function buildEdition(mode, lang) {
+  const ed = EDITIONS[lang];
+  const fileName = mode.fileName.replace(/\.pdf$/, `-${lang}.pdf`);
+  const missing = missingIn(mode, lang);
+  if (missing.length) {
+    console.log(`${fileName.padEnd(46)} übersprungen: ${missing.length} Texte ohne ${ed.name}`);
+    return;
+  }
+  const easy = mode === MODES.easy;
+  const outPath = path.join(outDir, fileName);
+  const pdf = createDoc({
+    outPath,
+    runningHead: `LEBEN IN DEUTSCHLAND · FAKTEN${easy ? " · EINFACH" : ""} · DEUTSCH–${ed.name.toUpperCase()}`,
+    unicode: true,
+  });
+  const tr = (text) => pdf.translation(text, { rtl: ed.rtl });
+
+  pdf.cover({
+    eyebrow: `${mode.eyebrow} · DEUTSCH–${ed.name.toUpperCase()}`,
+    title: easy ? "Leben in Deutschland: Fakten (einfach)" : mode.title,
+    subtitle: mode.subtitle,
+    subtitleTranslated: ed.cover,
+    subtitleRtl: ed.rtl,
+    meta: [
+      `Jeder Fakt auf Deutsch, darunter auf ${ed.name} — der Test selbst ist auf Deutsch`,
+      ...(help.reviewed ? [] : [`Die Übersetzung ins ${ed.name}e ist ein maschineller Entwurf, noch nicht von einer Lehrkraft geprüft`]),
+      `${topics.length} Themen, ${glossary.length} Begriffe im Glossar, alle 16 Bundesländer`,
+      "Der Übungstest dazu steht kostenlos auf deutschacademy.com/pruefungen/leben-in-deutschland",
+    ],
+    footer: "Von DeutschAcademy geschrieben. Dieses PDF darfst du frei herunterladen, ausdrucken und im Unterricht weitergeben.",
+  });
+
+  pdf.doc.addPage();
+  pdf.h2("Über die Quelle");
+  pdf.paragraph(mode.sourceNote, { size: 9.5, color: MUTED });
+  tr(help.meta[easy ? "sourceNoteEasy" : "sourceNote"][lang]);
+
+  pdf.h2("Testformat");
+  pdf.table(["Teil", "Umfang"], [
+    ["Bundesweiter Teil", `${meta.federalQuestions} von ${meta.totalQuestions} Fragen`],
+    ["Landesspezifischer Teil", `${meta.stateQuestions} von ${meta.totalQuestions} Fragen`],
+    ["Zeit", `${meta.minutes} Minuten`],
+    ["Bestehen ab", `${meta.passScore} richtigen Antworten`],
+  ]);
+
+  for (const t of topics) {
+    const tx = help.topics[t.id];
+    pdf.section(t.title);
+    tr(tx.title[lang]);
+    t[mode.factsKey].forEach((f, i) => {
+      pdf.bullet(f);
+      tr(tx[mode.factsKey][lang][i]);
+    });
+  }
+
+  pdf.section("Glossar");
+  for (const g of glossary) {
+    pdf.ensureSpace(60);
+    pdf.paragraph(g.term, { bold: true, paragraphGap: 1 });
+    pdf.paragraph(g[mode.defKey], { paragraphGap: 2 });
+    tr(help.glossary[g.term][mode.defKey][lang]);
+  }
+
+  // The Bundesländer table is names and numbers — it stays German, the note above it does not.
+  pdf.doc.addPage({ size: "A4", layout: "landscape" });
+  pdf.h2("Die 16 Bundesländer");
+  pdf.paragraph(mode.stateFactsNote, { size: 9, color: MUTED });
+  tr(help.meta[easy ? "stateFactsNoteEasy" : "stateFactsNote"][lang]);
+  pdf.table(
+    ["Bundesland", "Hauptstadt", "Typ", "Einwohner", "Grenzt an (Ausland)", "Landesparlament", "Regierungschef/in"],
+    bundeslaender.map((l) => [
+      l.sourced ? `${l.name} *` : l.name, l.capital, l.type, l.population,
+      l.borderCountries.length ? l.borderCountries.join(", ") : "—", l.parliamentName, l.executiveTitle,
+    ]),
+    { fontSize: 8 }
+  );
+  pdf.paragraph("* Grunddaten aus echtem DeutschAcademy-Unterrichtsmaterial (Bayern). Alle anderen Bundesländer: allgemein bekannte, öffentliche Fakten.", { size: 8, color: MUTED });
+
+  const bayern = bundeslaender.find((l) => l.id === "bayern");
+  const bayernFacts = bayern?.[mode.sourceFactsKey];
+  if (bayernFacts?.length) {
+    pdf.doc.addPage({ size: "A4", layout: "portrait" });
+    pdf.h2("Vertiefung: Bayern");
+    bayernFacts.forEach((f, i) => {
+      pdf.bullet(f);
+      tr(help.bayern[mode.sourceFactsKey][lang][i]);
+    });
+  }
+
+  await pdf.finish();
+  console.log(`${fileName.padEnd(46)} ${Math.round(statSync(outPath).size / 1024)} KB`);
+}
+
+// Last, so EDITIONS above is initialised.
+for (const mode of Object.values(MODES)) {
+  for (const lang of Object.keys(EDITIONS)) await buildEdition(mode, lang);
 }

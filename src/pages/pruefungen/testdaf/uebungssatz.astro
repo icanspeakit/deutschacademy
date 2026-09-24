@@ -11,7 +11,7 @@
 // missing recording; at C1, where the task is following an academic lecture, reading it
 // is a different exercise wearing the same name. It comes when there is audio.
 import Layout from "../../../layouts/Layout.astro";
-import PracticeHeader from "../../../components/PracticeHeader.astro";
+import SiteNav from "../../../components/SiteNav.astro";
 import ExamApp from "../../../components/ExamApp.astro";
 import "../../../styles/practice.css";
 import "../../../styles/pruefungen.css";
@@ -21,20 +21,20 @@ import satz from "../../../data/pruefungen/testdaf/uebungssatz-1.json";
   title="TestDaF: Leseverstehen üben – DeutschAcademy"
   description="TestDaF-Leseverstehen im Prüfungsformat üben: Zuordnung, Multiple Choice und Ja/Nein/Text-sagt-dazu-nichts, dazu der Schreibauftrag zur Grafik — mit Fortschritt je Aufgabe und Auswertung."
 >
-  <PracticeHeader title="TestDaF" />
+  <SiteNav active="pruefungen" />
   <main class="practice-main practice-main--wide practice-main--trainer">
     <a href="/pruefungen/testdaf" class="vp-back-link" data-i18n="exam.backToTestdaf">← Zurück zur TestDaF-Seite</a>
 
     <div class="practice-hero">
-      <p class="eyebrow">TestDaF · Übungssatz</p>
+      <p class="eyebrow">TestDaF · <span data-i18n="exam.h1.set">Übungssatz</span></p>
       <h1><span class="hero-exam">TestDaF</span> <span data-i18n="exam.h1.readWrite">Leseverstehen und Schreiben</span></h1>
-      <p>
+      <p data-i18n="tdf.hero.text">
         Drei Leseaufgaben im TestDaF-Format, dazu der Schreibauftrag zur Grafik. Wie die Aufgaben
         entstanden sind, steht im Teil „Start“ — bitte einmal lesen.
       </p>
     </div>
 
-    <ExamApp brand="TestDaF" sub="Leseverstehen · Schreiben" unit="Aufgaben" />
+    <ExamApp brand="TestDaF" sub="Leseverstehen · Schreiben" subKey="tdf.sub" unit="Aufgaben" />
   </main>
 
   <script type="application/json" id="tdaf-data" set:html={JSON.stringify(satz)}></script>
@@ -43,7 +43,7 @@ import satz from "../../../data/pruefungen/testdaf/uebungssatz-1.json";
     import { choiceCard, el, sectionHeader, escapeHtml, practiceToggle } from "../../../lib/exam/renderHelpers.js";
     import { countAnswered, countCorrect, percent } from "../../../lib/exam/scoring.js";
     import { recordAttempt } from "../../../lib/progress.js";
-    import { getLang, loadDict, translate } from "../../../lib/i18n.js";
+    import { readyExamI18n, tx } from "../../../lib/exam/i18n.js";
 
     /* Resolved once, before the app mounts, rather than re-rendered on every language
        change. This page is a running exam: its sections are built from one config array
@@ -51,8 +51,9 @@ import satz from "../../../data/pruefungen/testdaf/uebungssatz-1.json";
        table header would be a poor trade. The surrounding page still re-translates
        instantly via data-i18n; the simulator's own chrome follows on the next visit.
        Exam CONTENT is untouched — prompts, options and transcripts stay German. */
-    const dict = await loadDict(getLang());
-    const t = (key, vars) => translate(dict, key, vars);
+    await readyExamI18n();
+    const t = (key, vars) => tx(key, key, vars);
+    const T = (key, de, vars) => tx(key, de, vars);
 
     const data = JSON.parse(document.getElementById("tdaf-data").textContent);
     const { leseverstehen: lv, schreiben } = data;
@@ -68,12 +69,12 @@ import satz from "../../../data/pruefungen/testdaf/uebungssatz-1.json";
        words it is four phone screens, and once you have read it you want it out of the
        way — but it must still be reachable while answering, so it collapses in place
        rather than disappearing. */
-    function readingText(t) {
+    function readingText(text) {
       const box = el("div", "lese-text lese-text--long");
-      box.appendChild(el("p", "lese-text-label", escapeHtml(t.label)));
-      if (t.title) box.appendChild(el("h3", "lese-text-title", escapeHtml(t.title)));
+      box.appendChild(el("p", "lese-text-label", escapeHtml(text.label)));
+      if (text.title) box.appendChild(el("h3", "lese-text-title", escapeHtml(text.title)));
       const body = el("div", "lese-text-body");
-      for (const para of t.body.split("\n\n")) body.appendChild(el("p", null, escapeHtml(para)));
+      for (const para of text.body.split("\n\n")) body.appendChild(el("p", null, escapeHtml(para)));
       box.appendChild(body);
 
       const toggle = el("button", "quiz-btn quiz-btn--ghost", t("exam.hideText"));
@@ -90,13 +91,14 @@ import satz from "../../../data/pruefungen/testdaf/uebungssatz-1.json";
       {
         key: "start",
         label: "Start",
+        labelKey: "exam.sec.start",
         ids: null,
         render(main, ctx) {
           sectionHeader(main, {
-            eyebrow: "Übungssatz",
-            title: "TestDaF — Leseverstehen und Schreiben",
-            instruction:
-              "TestDaF kennt kein Niveau, das man bucht: Alle schreiben dieselbe Prüfung, und jede Fertigkeit wird einzeln als TDN 3, 4 oder 5 bewertet.",
+            eyebrow: t("exam.h1.set"),
+            title: "TestDaF — " + T("exam.h1.readWrite", "Leseverstehen und Schreiben"),
+            instruction: escapeHtml(T("tdf.start.intro",
+              "TestDaF kennt kein Niveau, das man bucht: Alle schreiben dieselbe Prüfung, und jede Fertigkeit wird einzeln als TDN 3, 4 oder 5 bewertet.")),
           });
 
           const facts = el("table", "exam-breakdown");
@@ -111,11 +113,11 @@ import satz from "../../../data/pruefungen/testdaf/uebungssatz-1.json";
 
           // The sourcing note is not a footnote here. This is the one exam on the site
           // with no source material at all, so it goes above the start button.
-          main.appendChild(el("p", "format-note format-note--loud", escapeHtml(data.sourcing)));
-          main.appendChild(el("p", "format-note", escapeHtml(data.scoringNote)));
+          main.appendChild(el("p", "format-note format-note--loud", escapeHtml(T("tdf.sourcing", data.sourcing))));
+          main.appendChild(el("p", "format-note", escapeHtml(T("tdf.scoringNote", data.scoringNote))));
           main.appendChild(
-            el("p", "format-note",
-              "Hörverstehen fehlt in diesem Übungssatz: Dafür brauchen wir Tonaufnahmen. Einen Vortrag zu lesen statt zu hören wäre eine andere Übung unter demselben Namen.")
+            el("p", "format-note", escapeHtml(T("tdf.noListening",
+              "Hörverstehen fehlt in diesem Übungssatz: Dafür brauchen wir Tonaufnahmen. Einen Vortrag zu lesen statt zu hören wäre eine andere Übung unter demselben Namen.")))
           );
 
           const go = el("button", "quiz-btn quiz-btn--primary", t("exam.startSet"));
@@ -128,10 +130,11 @@ import satz from "../../../data/pruefungen/testdaf/uebungssatz-1.json";
       {
         key: "lesen1",
         label: "Lesen 1",
+        labelKey: "exam.sec.lesen1",
         ids: a1Ids,
         render(main, ctx) {
           const a = lv.aufgabe1;
-          sectionHeader(main, { eyebrow: "Leseverstehen · Aufgabe 1", title: a.title, instruction: escapeHtml(a.instruction) });
+          sectionHeader(main, { eyebrow: T("tdf.eb.lesen", "Leseverstehen · Aufgabe {n}", { n: 1 }), title: a.title, instruction: escapeHtml(a.instruction) });
 
           // The eight ads, then the ten people. Each ad is its own small card rather
           // than one block of prose: you scan these, you do not read them through.
@@ -154,7 +157,7 @@ import satz from "../../../data/pruefungen/testdaf/uebungssatz-1.json";
           a.items.forEach((item, i) => {
             main.appendChild(
               choiceCard({
-                qLabel: "Aufgabe " + (i + 1),
+                qLabel: T("exam.qLabel.task", "Aufgabe {n}", { n: i + 1 }),
                 questionText: item.situation,
                 options,
                 correctKey: item.answer,
@@ -170,15 +173,16 @@ import satz from "../../../data/pruefungen/testdaf/uebungssatz-1.json";
       {
         key: "lesen2",
         label: "Lesen 2",
+        labelKey: "exam.sec.lesen2",
         ids: a2Ids,
         render(main, ctx) {
           const a = lv.aufgabe2;
-          sectionHeader(main, { eyebrow: "Leseverstehen · Aufgabe 2", title: a.title, instruction: escapeHtml(a.instruction) });
+          sectionHeader(main, { eyebrow: T("tdf.eb.lesen", "Leseverstehen · Aufgabe {n}", { n: 2 }), title: a.title, instruction: escapeHtml(a.instruction) });
           main.appendChild(readingText(a.text));
           a.items.forEach((item, i) => {
             main.appendChild(
               choiceCard({
-                qLabel: "Aufgabe " + (i + 11),
+                qLabel: T("exam.qLabel.task", "Aufgabe {n}", { n: i + 11 }),
                 questionText: item.prompt,
                 options: item.options.map((o, n) => ({ key: LETTERS[n], label: o })),
                 correctKey: LETTERS[item.options.indexOf(item.answer)],
@@ -193,10 +197,11 @@ import satz from "../../../data/pruefungen/testdaf/uebungssatz-1.json";
       {
         key: "lesen3",
         label: "Lesen 3",
+        labelKey: "exam.sec.lesen3",
         ids: a3Ids,
         render(main, ctx) {
           const a = lv.aufgabe3;
-          sectionHeader(main, { eyebrow: "Leseverstehen · Aufgabe 3", title: a.title, instruction: escapeHtml(a.instruction) });
+          sectionHeader(main, { eyebrow: T("tdf.eb.lesen", "Leseverstehen · Aufgabe {n}", { n: 3 }), title: a.title, instruction: escapeHtml(a.instruction) });
           main.appendChild(readingText(a.text));
           const options = [
             { key: "j", label: "Ja" },
@@ -206,7 +211,7 @@ import satz from "../../../data/pruefungen/testdaf/uebungssatz-1.json";
           a.items.forEach((item, i) => {
             main.appendChild(
               choiceCard({
-                qLabel: "Aufgabe " + (i + 21),
+                qLabel: T("exam.qLabel.task", "Aufgabe {n}", { n: i + 21 }),
                 questionText: item.prompt,
                 options,
                 correctKey: item.answer,
@@ -222,12 +227,13 @@ import satz from "../../../data/pruefungen/testdaf/uebungssatz-1.json";
       {
         key: "schreiben",
         label: "Schreiben",
+        labelKey: "skill.schreiben",
         // Not auto-graded — a chart description is marked by a human. It carries a
         // "geübt" mark so it counts as done without pretending to be scored.
         ids: ["tdaf-schreiben"],
         render(main, ctx) {
           sectionHeader(main, {
-            eyebrow: "Schriftlicher Ausdruck",
+            eyebrow: T("tdf.eb.schreiben", "Schriftlicher Ausdruck"),
             title: schreiben.thema,
             instruction: escapeHtml(schreiben.instruction),
           });
@@ -281,15 +287,15 @@ import satz from "../../../data/pruefungen/testdaf/uebungssatz-1.json";
             "</tbody>";
           main.appendChild(el("div", "exam-result")).appendChild(tbl);
 
-          main.appendChild(el("h3", "sub-title", "Ihre Aufgabe"));
+          main.appendChild(el("h3", "sub-title", escapeHtml(T("tdf.yourTask", "Ihre Aufgabe"))));
           const task = el("ul", "task-points");
           for (const t of schreiben.aufgabe) task.appendChild(el("li", null, escapeHtml(t)));
           main.appendChild(task);
 
           const box = el("textarea", "write-box");
           box.rows = 12;
-          box.placeholder = "Schreibe deinen Text hier …";
-          box.setAttribute("aria-label", "Dein Text");
+          box.placeholder = T("tdf.write.placeholder", "Schreibe deinen Text hier …");
+          box.setAttribute("aria-label", T("tdf.write.aria", "Dein Text"));
           try {
             box.value = localStorage.getItem("da-tdaf-schreiben") ?? "";
             box.addEventListener("input", () => localStorage.setItem("da-tdaf-schreiben", box.value));
@@ -299,7 +305,7 @@ import satz from "../../../data/pruefungen/testdaf/uebungssatz-1.json";
           const words = el("p", "word-count");
           const paint = () => {
             const n = box.value.trim() ? box.value.trim().split(/\s+/).length : 0;
-            words.textContent = n + " Wörter";
+            words.textContent = T("tdf.write.words", "{n} Wörter", { n });
           };
           paint();
           box.addEventListener("input", paint);
@@ -308,22 +314,22 @@ import satz from "../../../data/pruefungen/testdaf/uebungssatz-1.json";
           /* Aufbau, Redemittel and the checklist are help, not task — so they are
              behind one button rather than three screens of scaffolding above the box
              the learner is supposed to be writing in. */
-          const helpBtn = el("button", "quiz-btn quiz-btn--ghost", "Aufbau, Redemittel und Checkliste zeigen");
+          const helpBtn = el("button", "quiz-btn quiz-btn--ghost", escapeHtml(T("tdf.help.show", "Aufbau, Redemittel und Checkliste zeigen")));
           helpBtn.type = "button";
           const help = el("div", "model-answer");
           help.hidden = true;
 
-          help.appendChild(el("p", "lese-text-label", "Aufbau"));
+          help.appendChild(el("p", "lese-text-label", escapeHtml(T("tdf.help.structure", "Aufbau"))));
           const steps = el("ol", "task-points");
           for (const a of schreiben.aufbau) steps.appendChild(el("li", null, escapeHtml(a)));
           help.appendChild(steps);
 
-          help.appendChild(el("p", "lese-text-label", "Redemittel"));
+          help.appendChild(el("p", "lese-text-label", escapeHtml(T("tdf.help.phrases", "Redemittel"))));
           const rm = el("ul", "task-points");
           for (const r of schreiben.redemittel) rm.appendChild(el("li", null, escapeHtml(r)));
           help.appendChild(rm);
 
-          help.appendChild(el("p", "lese-text-label", "Checkliste"));
+          help.appendChild(el("p", "lese-text-label", escapeHtml(T("exam.checklist", "Checkliste"))));
           const ck = el("ul", "task-points");
           for (const c of schreiben.checklist) ck.appendChild(el("li", null, escapeHtml(c)));
           help.appendChild(ck);
@@ -331,8 +337,8 @@ import satz from "../../../data/pruefungen/testdaf/uebungssatz-1.json";
           helpBtn.addEventListener("click", () => {
             help.hidden = !help.hidden;
             helpBtn.textContent = help.hidden
-              ? "Aufbau, Redemittel und Checkliste zeigen"
-              : "Aufbau, Redemittel und Checkliste verbergen";
+              ? T("tdf.help.show", "Aufbau, Redemittel und Checkliste zeigen")
+              : T("tdf.help.hide", "Aufbau, Redemittel und Checkliste verbergen");
           });
           main.appendChild(el("div", "exam-actions")).appendChild(helpBtn);
           main.appendChild(help);
@@ -349,19 +355,20 @@ import satz from "../../../data/pruefungen/testdaf/uebungssatz-1.json";
       {
         key: "ergebnis",
         label: "Ergebnis",
+        labelKey: "exam.sec.result",
         ids: null,
         render(main, ctx) {
           const answered = countAnswered(allLeseIds, ctx.state);
           const correct = countCorrect(allLeseIds, ctx.state);
           const pct = percent(correct, allLeseIds.length);
 
-          sectionHeader(main, { eyebrow: "Auswertung", title: "Dein Ergebnis im Leseverstehen" });
+          sectionHeader(main, { eyebrow: T("exam.result.eyebrow", "Auswertung"), title: T("tdf.result.title", "Dein Ergebnis im Leseverstehen") });
 
           const card = el("div", "exam-result");
           if (!answered) {
-            card.appendChild(el("p", "instruction", "Noch keine Aufgabe beantwortet — fang bei „Lesen 1“ an."));
+            card.appendChild(el("p", "instruction", escapeHtml(T("tdf.result.empty", "Noch keine Aufgabe beantwortet — fang bei „Lesen 1“ an."))));
           } else {
-            card.appendChild(el("div", "exam-score", correct + " <small>von " + allLeseIds.length + " richtig</small>"));
+            card.appendChild(el("div", "exam-score", correct + " <small>" + escapeHtml(T("exam.result.ofCorrect", "von {n} richtig", { n: allLeseIds.length })) + "</small>"));
             // Explicitly not a TDN. TestDaF grades each skill separately and every
             // university sets its own requirement, so a percentage here is feedback on
             // this practice set and nothing more.
@@ -369,26 +376,26 @@ import satz from "../../../data/pruefungen/testdaf/uebungssatz-1.json";
               : pct >= 60 ? ["mid", t("tdf.verdict.mid")]
               : ["low", t("tdf.verdict.low")];
             card.appendChild(el("span", "exam-band " + band[0], band[1]));
-            card.appendChild(el("p", "instruction", pct + "% richtig. Das ist keine TDN-Einstufung — siehe den Hinweis darunter."));
+            card.appendChild(el("p", "instruction", escapeHtml(T("tdf.result.pct", "{pct}% richtig. Das ist keine TDN-Einstufung — siehe den Hinweis darunter.", { pct }))));
 
             const table = el("table", "exam-breakdown");
             table.innerHTML =
               "<thead><tr><th>" + escapeHtml(t("format.th.task")) + "</th><th>" + escapeHtml(t("exam.th.correct")) + "</th></tr></thead><tbody>" +
-              "<tr><td>1 · Zuordnung</td><td>" + countCorrect(a1Ids, ctx.state) + " / " + a1Ids.length + "</td></tr>" +
+              "<tr><td>1 · " + escapeHtml(T("tdf.type.matching", "Zuordnung")) + "</td><td>" + countCorrect(a1Ids, ctx.state) + " / " + a1Ids.length + "</td></tr>" +
               "<tr><td>2 · Multiple Choice</td><td>" + countCorrect(a2Ids, ctx.state) + " / " + a2Ids.length + "</td></tr>" +
-              "<tr><td>3 · Ja/Nein/nichts</td><td>" + countCorrect(a3Ids, ctx.state) + " / " + a3Ids.length + "</td></tr>" +
+              "<tr><td>3 · " + escapeHtml(T("tdf.type.yesno", "Ja/Nein/nichts")) + "</td><td>" + countCorrect(a3Ids, ctx.state) + " / " + a3Ids.length + "</td></tr>" +
               "</tbody>";
             card.appendChild(table);
 
             if (answered < allLeseIds.length) {
-              card.appendChild(el("p", "instruction", "Noch offen: " + (allLeseIds.length - answered) + " Aufgaben."));
+              card.appendChild(el("p", "instruction", escapeHtml(T("exam.result.openTasks", "Noch offen: {n} Aufgaben.", { n: allLeseIds.length - answered }))));
             }
           }
           main.appendChild(card);
-          main.appendChild(el("p", "format-note", escapeHtml(data.scoringNote)));
+          main.appendChild(el("p", "format-note", escapeHtml(T("tdf.scoringNote", data.scoringNote))));
 
           const actions = el("div", "exam-actions");
-          const back = el("a", "quiz-btn", "Zur TestDaF-Seite");
+          const back = el("a", "quiz-btn", escapeHtml(T("tdf.toPage", "Zur TestDaF-Seite")));
           back.href = "/pruefungen/testdaf";
           actions.appendChild(back);
           main.appendChild(actions);
@@ -399,6 +406,7 @@ import satz from "../../../data/pruefungen/testdaf/uebungssatz-1.json";
     mountExamApp(document.querySelector("[data-exam-root]"), {
       examId: "testdaf",
       unit: "Aufgaben",
+      unitKey: "exam.unit.tasks",
       sections,
       onAnswer: (ok) => recordAttempt({ skill: "pruefungen", correct: ok }),
     });

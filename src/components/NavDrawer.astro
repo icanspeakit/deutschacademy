@@ -175,7 +175,7 @@ const vars = (v) => (v ? JSON.stringify(v) : undefined);
                   <a class="lp-drawer-row" href={item.href}>
                     <span class="lp-drawer-ic"><Icon name={item.icon} size={18} /></span>
                     <span class="lp-drawer-txt">
-                      <b data-i18n={item.titleKey} data-i18n-vars={vars(item.titleVars)}>{item.title}</b>
+                      {item.titleKey ? <b data-i18n={item.titleKey} data-i18n-vars={vars(item.titleVars)}>{item.title}</b> : <b><bdi>{item.title}</bdi></b>}
                       <i data-i18n={item.countKey} data-i18n-vars={vars(item.countVars)}>{item.count}</i>
                     </span>
                     <svg class="lp-drawer-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 6 15 12 9 18"></polyline></svg>
@@ -211,8 +211,10 @@ const vars = (v) => (v ? JSON.stringify(v) : undefined);
                 {col.items.length ? col.items.map((it) => (
                   <a class="lp-drawer-row lp-drawer-row--compact" href={it.href}>
                     <span class="lp-drawer-txt">
-                      <b data-i18n={it.titleKey} data-i18n-vars={vars(it.titleVars)}>{it.title}</b>
-                      {it.count && <i data-i18n={it.countKey} data-i18n-vars={vars(it.countVars)}>{it.count}</i>}
+                      {it.titleKey ? <b data-i18n={it.titleKey} data-i18n-vars={vars(it.titleVars)}>{it.title}</b> : <b><bdi>{it.title}</bdi></b>}
+                      {it.meta
+                        ? <i><span data-i18n={it.meta.typeKey}>{it.meta.typeText}</span> · <span data-i18n={it.meta.countKey} data-i18n-vars={vars(it.meta.countVars)}>{it.meta.countText}</span></i>
+                        : it.count && <i data-i18n={it.countKey} data-i18n-vars={vars(it.countVars)}>{it.count}</i>}
                     </span>
                     <svg class="lp-drawer-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 6 15 12 9 18"></polyline></svg>
                   </a>
@@ -258,8 +260,8 @@ const vars = (v) => (v ? JSON.stringify(v) : undefined);
                 {lv.items.length ? lv.items.map((it) => (
                   <a class="lp-drawer-row lp-drawer-row--compact" href={it.href}>
                     <span class="lp-drawer-txt">
-                      <b data-i18n={it.titleKey} data-i18n-vars={vars(it.titleVars)}>{it.title}</b>
-                      <i data-i18n={it.countKey} data-i18n-vars={vars(it.countVars)}>{it.count}</i>
+                      {it.titleKey ? <b data-i18n={it.titleKey} data-i18n-vars={vars(it.titleVars)}>{it.title}</b> : <b><bdi>{it.title}</bdi></b>}
+                      {it.meta ? <i><span data-i18n={it.meta.typeKey}>{it.meta.typeText}</span> · <span data-i18n={it.meta.countKey} data-i18n-vars={vars(it.meta.countVars)}>{it.meta.countText}</span></i> : <i data-i18n={it.countKey} data-i18n-vars={vars(it.countVars)}>{it.count}</i>}
                     </span>
                     <svg class="lp-drawer-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 6 15 12 9 18"></polyline></svg>
                   </a>

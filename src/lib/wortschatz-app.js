@@ -1,7 +1,12 @@
-// Unified engine for the Wortschatz page (Karteikarten / Lernen / Testen / Wortliste), matching
+// Unified engine for the Wortschatz page (Karteikarten / Lernen / Wortliste), matching
 // the "Wortschatz Prototyp" design: one shared deck position, one results map keyed
 // `${mode}:${cardIndex}`, and a selection-based custom round ("Auswahl testen") that flows
-// from Wortliste into Testen. Kept page-local (not the shared quiz.js/flashcards.js engines)
+// from Wortliste into the cards.
+//
+// Testing is the card deck itself: flip, then say whether you knew it (Richtig / Falsch).
+// There used to be a separate Testen tab where the answer was typed. Typing tested
+// spelling and umlauts on a phone keyboard more than it tested the word, and it split one
+// habit — see a word, recall it, check — across two tabs. Kept page-local (not the shared quiz.js/flashcards.js engines)
 // because those are reused by other practice pages with a different, simpler visual language.
 
 import { getLang, loadDict, translate, onLangChange } from "./i18n.js";
@@ -40,7 +45,7 @@ export function mountWortschatzApp(els, cards, languages, { onAnswer, onSessionS
 
   /* The eyebrow names the tab you are on, so it reuses the tab buttons' own keys
      (wortschatz.tab.*) rather than a parallel set that could drift out of step with them. */
-  const eyebrowKeys = { cards: "wortschatz.tab.cards", learn: "wortschatz.tab.learn", test: "wortschatz.tab.test", list: "wortschatz.tab.list" };
+  const eyebrowKeys = { cards: "wortschatz.tab.cards", learn: "wortschatz.tab.learn", list: "wortschatz.tab.list" };
 
   const state = {
     mode: "cards",
@@ -50,12 +55,10 @@ export function mountWortschatzApp(els, cards, languages, { onAnswer, onSessionS
     dir: "toDe",
     flipped: false,
     pick: null,
-    input: "",
-    checked: false,
     results: {},
     // Latest verdict per card index, whichever mode produced it. `results` stays keyed by
-    // mode because Testen scores its own run; the Wortliste wants "how does this word
-    // stand right now", and a word answered in Lernen and then in Testen has one standing.
+    // mode because the cards keep their own score; the Wortliste wants "how does this word
+    // stand right now", and a word answered in Lernen and then on a card has one standing.
     lastResult: {},
     selected: {},
     filter: null,
@@ -145,6 +148,13 @@ export function mountWortschatzApp(els, cards, languages, { onAnswer, onSessionS
     return languages.find((l) => l.code === state.lang) || languages[0] || {};
   }
 
+  /* The vocabulary language named in the INTERFACE language: "Englisch" on a German page,
+     "English" on an English one. meta.deName is the German name and stays the fallback. */
+  function langName(meta = langMeta()) {
+    const key = `vt.lang.${meta.code}`;
+    return uiDict[key] != null ? t(key) : meta.deName ?? meta.label ?? "";
+  }
+
   function foreignText(card) {
     const tr = state.lang ? card.translations?.[state.lang] : null;
     return tr && tr.trim() ? tr : t("vt.translationPending");
@@ -203,13 +213,6 @@ export function mountWortschatzApp(els, cards, languages, { onAnswer, onSessionS
      wrong without costing the point — it was never asked for, and a learner who is
      punished for a rule the exercise did not announce stops trusting the score. The
      feedback names the full form either way, so the gender is still taught. */
-  const stripArt = (t) => norm(t).replace(/^(der|die|das)\s+/, "");
-  function answerOk(card, input) {
-    const expected = back(card);
-    if (isDeSide("back") && card.gender) return stripArt(input) === stripArt(expected);
-    return norm(input) === norm(expected);
-  }
-
   function record(ok) {
     state.results[`${state.mode}:${state.idx}`] = ok;
     state.lastResult[state.idx] = ok;
@@ -219,7 +222,7 @@ export function mountWortschatzApp(els, cards, languages, { onAnswer, onSessionS
   function reset(extra) {
     state.tick++;
     state._learnOptions = null;
-    Object.assign(state, { flipped: false, pick: null, input: "", checked: false }, extra);
+    Object.assign(state, { flipped: false, pick: null }, extra);
   }
 
   function go(d) {
@@ -242,8 +245,11 @@ export function mountWortschatzApp(els, cards, languages, { onAnswer, onSessionS
     // .vt-flip-inner created via innerHTML already starts in its target rotation, so the
     // CSS transition never has a "from" state to animate — the flip just snaps instantly.
     const inner = state.mode === "cards" ? contentEl.querySelector(".vt-flip-inner") : null;
-    if (inner) inner.classList.toggle("is-flipped", state.flipped);
-    else render();
+    if (inner) {
+      inner.classList.toggle("is-flipped", state.flipped);
+      // The Richtig/Falsch pair only makes sense once the answer is showing.
+      contentEl.querySelector("#vt-nav-row")?.classList.toggle("is-flipped", state.flipped);
+    } else render();
   }
 
   function setMode(mode) {
@@ -261,15 +267,13 @@ export function mountWortschatzApp(els, cards, languages, { onAnswer, onSessionS
     render();
   }
 
-  function check() {
-    if (state.checked) { go(1); return; }
-    const ok = answerOk(cards[state.idx], state.input);
-    state.checked = true;
+  /* The self-check on a flipped card: the verdict is recorded, and the next card comes
+     up — the same step a learner would take with a paper Karteikarte. */
+  function judge(ok) {
+    if (!state.flipped) return;
     record(ok);
-    render();
+    go(1);
   }
-
-  function skip() { go(1); }
 
   function toggleDir() {
     reset({ dir: state.dir === "toDe" ? "fromDe" : "toDe" });
@@ -346,8 +350,8 @@ export function mountWortschatzApp(els, cards, languages, { onAnswer, onSessionS
   function startSelection() {
     const ids = selectedIds();
     if (!ids.length) return;
-    reset({ filter: ids, idx: ids[0], mode: "test" });
-    state.lastMode = "test";
+    reset({ filter: ids, idx: ids[0], mode: "cards" });
+    state.lastMode = "cards";
     render();
   }
 
@@ -476,7 +480,7 @@ export function mountWortschatzApp(els, cards, languages, { onAnswer, onSessionS
     });
 
     const meta = langMeta();
-    const deName = meta.deName ?? meta.label ?? "";
+    const deName = langName(meta);
     dirSwitch.checked = state.dir === "toDe";
     dirLabel.textContent = t(state.dir === "toDe" ? "vt.dir.toDe" : "vt.dir.fromDe", { lang: deName });
 
@@ -502,25 +506,37 @@ export function mountWortschatzApp(els, cards, languages, { onAnswer, onSessionS
     [...tabsEl.children].forEach((btn) => btn.classList.toggle("active", btn.dataset.tab === state.mode));
   }
 
+  /** Right and wrong in the deck on screen, from the card self-checks. */
+  function cardScore() {
+    const dk = deck();
+    const vals = dk.map((i) => state.results[`cards:${i}`]).filter((v) => v !== undefined);
+    const right = vals.filter(Boolean).length;
+    return { right, wrong: vals.length - right };
+  }
+
   function renderCards() {
     const card = cards[state.idx];
     const meta = langMeta();
     const isRtl = !!meta.rtl;
     const toDe = state.dir === "toDe";
     const deLabel = card.cat ? t("vt.card.deCat", { cat: card.cat }) : t("vt.card.de");
-    const frontLabel = toDe ? meta.deName ?? meta.label : deLabel;
-    const backLabel = toDe ? deLabel : meta.deName ?? meta.label;
+    const frontLabel = toDe ? langName(meta) : deLabel;
+    const backLabel = toDe ? deLabel : langName(meta);
     const frontRtl = toDe && isRtl;
     const backRtl = !toDe && isRtl;
+    /* Each face reads in its word's direction: the Arabic side sits on the right, the
+       German side on the left, whatever direction the page itself is in. Only for an RTL
+       language — for tr/ru/uk both faces are LTR and follow the page as before. */
+    const faceDirClass = (rtl) => (isRtl ? (rtl ? "vt-face--rtl" : "vt-face--ltr") : "");
     const flipHint = state.flipped
       ? t("vt.card.flipBack")
-      : t("vt.card.flipTo", { lang: toDe ? t("vt.card.de") : meta.deName ?? meta.label });
+      : t("vt.card.flipTo", { lang: toDe ? t("vt.card.de") : langName(meta) });
 
     contentEl.innerHTML = `
       <div class="vt-content ${swapClass()}">
         <div class="vt-flip" id="vt-flip">
           <div class="vt-flip-inner ${state.flipped ? "is-flipped" : ""}">
-            <div class="vt-face">
+            <div class="vt-face ${faceDirClass(frontRtl)}">
               <span class="vt-face-eyebrow">${escapeHtml(frontLabel)}</span>
               <span class="vt-prompt ${frontRtl ? "vt-rtl" : ""}"><span class="vt-face-word">${sideHtml(card, "front", { plural: true })}</span></span>
               <span class="vt-face-foot">
@@ -528,7 +544,7 @@ export function mountWortschatzApp(els, cards, languages, { onAnswer, onSessionS
                 <span class="vt-hint">${escapeHtml(flipHint)}</span>
               </span>
             </div>
-            <div class="vt-face vt-face--back">
+            <div class="vt-face vt-face--back ${faceDirClass(backRtl)}">
               <span class="vt-face-eyebrow">${escapeHtml(backLabel)}</span>
               <span class="vt-answer ${backRtl ? "vt-rtl" : ""}"><span class="vt-face-word">${sideHtml(card, "back", { plural: true })}</span></span>
               <span class="vt-face-foot">
@@ -538,11 +554,16 @@ export function mountWortschatzApp(els, cards, languages, { onAnswer, onSessionS
             </div>
           </div>
         </div>
-        <div class="vt-nav-row">
+        <div class="vt-nav-row ${state.flipped ? "is-flipped" : ""}" id="vt-nav-row">
           <button type="button" class="vt-nav-link" id="vt-prev">${escapeHtml(t("vt.card.prev"))}</button>
           <button type="button" class="vt-nav-flip" id="vt-flip-btn">${escapeHtml(t("vt.card.flip"))}</button>
+          <span class="vt-judge">
+            <button type="button" class="vt-judge-btn vt-judge-btn--no" id="vt-judge-no">${escapeHtml(t("vt.mark.wrong"))}</button>
+            <button type="button" class="vt-judge-btn vt-judge-btn--ok" id="vt-judge-ok">${escapeHtml(t("vt.mark.right"))}</button>
+          </span>
           <button type="button" class="vt-nav-next" id="vt-next">${escapeHtml(t("vt.card.next"))}</button>
         </div>
+        <p class="vt-card-score">${escapeHtml(t("vt.test.score", cardScore()))}</p>
         <p class="vt-kbd-hint">
           <span class="vt-hint-touch">${escapeHtml(t("vt.card.hintTouch"))}</span>
           <span class="vt-hint-keys">${escapeHtml(t("vt.card.hintKeys"))}</span>
@@ -565,6 +586,8 @@ export function mountWortschatzApp(els, cards, languages, { onAnswer, onSessionS
     });
     attachSwipe(flipEl);
     contentEl.querySelector("#vt-flip-btn").addEventListener("click", flip);
+    contentEl.querySelector("#vt-judge-ok").addEventListener("click", () => judge(true));
+    contentEl.querySelector("#vt-judge-no").addEventListener("click", () => judge(false));
     contentEl.querySelector("#vt-prev").addEventListener("click", () => go(-1));
     contentEl.querySelector("#vt-next").addEventListener("click", () => go(1));
   }
@@ -656,7 +679,9 @@ export function mountWortschatzApp(els, cards, languages, { onAnswer, onSessionS
     if (answered) {
       const title = ok ? t("vt.learn.right") : t("vt.learn.wrong");
       const expected = isDeSide("back") ? fullDe(card) : tr;
-      const text = ok ? card.note || "" : `${t("vt.feedback.expected", { answer: expected })} ${card.note || ""}`.trim();
+      // A note that explains usage may carry a key for the UI language (see wortschatz.astro).
+      const note = card.noteKey && uiDict[card.noteKey] != null ? t(card.noteKey) : card.note || "";
+      const text = ok ? note : `${t("vt.feedback.expected", { answer: expected })} ${note}`.trim();
       feedbackHtml = `
         <div class="vt-feedback ${ok ? "is-ok" : "is-no"}">
           <div class="vt-feedback-title">${escapeHtml(title)}</div>
@@ -694,67 +719,6 @@ export function mountWortschatzApp(els, cards, languages, { onAnswer, onSessionS
       btn.addEventListener("click", () => pickOption(options[+btn.dataset.i]));
     });
     contentEl.querySelector("#vt-next-card").addEventListener("click", () => { state._learnOptions = null; go(1); });
-  }
-
-  function renderTest() {
-    const card = cards[state.idx];
-    const tr = back(card);
-    const toDe = state.dir === "toDe";
-    const meta = langMeta();
-    const dk = deck();
-    const pos = Math.max(0, dk.indexOf(state.idx));
-    const answered = state.checked;
-    const ok = answerOk(card, state.input);
-
-    const values = Object.keys(state.results)
-      .filter((k) => k.indexOf("test:") === 0)
-      .map((k) => state.results[k]);
-    const right = values.filter(Boolean).length;
-    const wrong = values.length - right;
-
-    let feedbackHtml = "";
-    if (answered) {
-      const title = ok ? t("vt.learn.right") : t("vt.test.wrong");
-      // Right answer, article missing or wrong: the point stands and the full form is
-      // named anyway — that is the whole teaching moment for gender.
-      const full = isDeSide("back") ? fullDe(card) : tr;
-      // Shown whenever the word was right but the article was left off OR got wrong —
-      // both are the moment to name the full form.
-      const taughtArticle = ok && isDeSide("back") && card.gender && norm(state.input) !== norm(full);
-      const text = ok
-        ? [taughtArticle ? full : "", card.note || ""].filter(Boolean).join(" · ")
-        : `${t("vt.feedback.expected", { answer: full })} ${card.note || ""}`.trim();
-      feedbackHtml = `
-        <div class="vt-feedback ${ok ? "is-ok" : "is-no"}">
-          <div class="vt-feedback-title">${escapeHtml(title)}</div>
-          <div class="vt-feedback-text">${escapeHtml(text)}</div>
-        </div>`;
-    }
-
-    contentEl.innerHTML = `
-      <div class="vt-content ${swapClass()}">
-        <div class="vt-test-head">
-          <span>${escapeHtml(t("vt.test.question", { n: pos + 1, total: dk.length }))}</span>
-          <span class="vt-score-mono">${escapeHtml(t("vt.test.score", { right, wrong }))}</span>
-        </div>
-        <div class="vt-progress-track"><div class="vt-progress-fill" style="width:${Math.round(((pos + 1) / dk.length) * 100)}%"></div></div>
-        <div class="vt-test-label">${escapeHtml(t("vt.test.translateInto", { lang: toDe ? t("vt.test.intoDe") : meta.deInto ?? meta.label ?? "" }))}</div>
-        <div class="vt-test-prompt">${sideHtml(card, "front")}</div>
-        <input type="text" class="vt-input" id="vt-input" placeholder="${escapeHtml(t("vt.test.placeholder"))}" value="${escapeHtml(state.input)}" ${answered ? "disabled" : ""} autocomplete="off">
-        ${feedbackHtml}
-        <div class="vt-nav-row">
-          <button type="button" class="vt-nav-link" id="vt-skip">${escapeHtml(t("vt.test.skip"))}</button>
-          <button type="button" class="vt-primary-btn" id="vt-primary">${escapeHtml(t(answered ? "vt.test.continue" : "vt.test.check"))}</button>
-        </div>
-        <p class="vt-kbd-hint">${escapeHtml(t("vt.test.kbdHint"))}</p>
-      </div>`;
-
-    const input = contentEl.querySelector("#vt-input");
-    input.addEventListener("input", (e) => { state.input = e.target.value; });
-    input.addEventListener("keydown", (e) => { if (e.key === "Enter") check(); });
-    if (!answered) input.focus();
-    contentEl.querySelector("#vt-skip").addEventListener("click", skip);
-    contentEl.querySelector("#vt-primary").addEventListener("click", check);
   }
 
   /* ---- Wortliste ----------------------------------------------------------
@@ -925,7 +889,6 @@ export function mountWortschatzApp(els, cards, languages, { onAnswer, onSessionS
     if (!sessionStarted) { sessionStarted = true; if (onSessionStart) onSessionStart(); }
     if (state.mode === "cards") renderCards();
     else if (state.mode === "learn") renderLearn();
-    else if (state.mode === "test") renderTest();
     else renderList();
   }
 
@@ -945,6 +908,7 @@ export function mountWortschatzApp(els, cards, languages, { onAnswer, onSessionS
     // Space is the flip only on a card. In the Wortliste it belongs to the focused
     // row button, and swallowing it there would break keyboard selection.
     if (e.code === "Space") { if (state.mode === "cards") { e.preventDefault(); flip(); } }
+    else if (state.mode === "cards" && state.flipped && (e.key === "1" || e.key === "2")) judge(e.key === "2");
     else if (state.mode === "list") return;
     else if (e.key === "ArrowLeft") go(-1);
     else if (e.key === "ArrowRight") go(1);

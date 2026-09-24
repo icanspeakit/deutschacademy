@@ -415,3 +415,9 @@
   .help-langs { gap: 4px; }
   .help-lang { padding: 5px 9px; font-size: .8125rem; }
 }
+
+/* The header language decides (textHelp.js): with a German UI there is no translation to
+   offer, so the bar, the empty cells and the draft note all go. */
+.tt-bar[hidden] { display: none; }
+.tt[data-tt-lang=""] .tt-tr,
+.tt[data-tt-lang=""] .help-draft { display: none; }

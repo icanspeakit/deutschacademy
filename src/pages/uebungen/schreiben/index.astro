@@ -5,7 +5,7 @@
 // what a writing task is: nobody practises "schreiben", they practise a Formular, eine
 // Absage, einen Beschwerdebrief.
 import Layout from "../../../layouts/Layout.astro";
-import PracticeHeader from "../../../components/PracticeHeader.astro";
+import SiteNav from "../../../components/SiteNav.astro";
 import Icon from "../../../components/Icon.astro";
 import { schreiben, byLevel, SCHREIBEN_ICON } from "../../../lib/fertigkeiten.js";
 import { levels as siteLevels } from "../../../lib/catalog.js";
@@ -21,16 +21,12 @@ const minutes = tasks.reduce((n, t) => n + t.minutes, 0);
   title="Schreiben – DeutschAcademy"
   description="Schreiben von A1 bis B2: Formulare ausfüllen, Nachrichten und E-Mails schreiben, Briefe für DTZ und telc — jede Aufgabe mit Leitpunkten, Redemitteln und Modelltext."
 >
-  <PracticeHeader title="Schreiben" />
+  <SiteNav active="fertigkeiten" />
   <main class="practice-main practice-main--wide">
     <div class="practice-hero">
-      <p class="eyebrow">Schreiben</p>
+      <p class="eyebrow" data-i18n="skill.schreiben">Schreiben</p>
       <h1 data-i18n="skill.schreiben.h1">Schreiben üben</h1>
-      <p>
-        {tasks.length} Schreibaufgaben von A1 bis B2 — Formulare, Nachrichten, E-Mails und
-        Briefe in den Formaten aus DTZ und telc. Mit Leitpunkten, Redemitteln und einem
-        Modelltext zum Vergleichen.
-      </p>
+      <p data-i18n="schreiben.hub.lead" data-i18n-vars={JSON.stringify({ n: tasks.length })}>{tasks.length} Schreibaufgaben von A1 bis B2 — Formulare, Nachrichten, E-Mails und Briefe in den Formaten aus DTZ und telc. Mit Leitpunkten, Redemitteln und einem Modelltext zum Vergleichen.</p>
     </div>
 
     {groups.map((g) => (

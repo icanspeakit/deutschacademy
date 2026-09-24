@@ -8,7 +8,7 @@
 // Every clip here is voiced with ElevenLabs from a script written for this site — see the
 // note at the top of src/data/hoeren.json for why none of it comes off a Lehrwerk-CD.
 import Layout from "../../../layouts/Layout.astro";
-import PracticeHeader from "../../../components/PracticeHeader.astro";
+import SiteNav from "../../../components/SiteNav.astro";
 import Icon from "../../../components/Icon.astro";
 import hoeren from "../../../data/hoeren.json";
 import { levels as siteLevels } from "../../../lib/catalog.js";
@@ -31,7 +31,7 @@ const rendered = texts.filter((t) => hasClip(t.id)).length;
   title="Hörverstehen – DeutschAcademy"
   description="Hörverstehen von A1 bis B2: Durchsagen, Telefonate, Gespräche, Radiobeiträge und Vorträge — mit Fragen, Transkript und langsamer Wiedergabe."
 >
-  <PracticeHeader title="Hören" />
+  <SiteNav active="fertigkeiten" />
   <main class="practice-main practice-main--wide">
     <div class="practice-hero">
       <p class="eyebrow" data-i18n="hoeren.hero.eyebrow">Hörverstehen</p>
@@ -43,10 +43,7 @@ const rendered = texts.filter((t) => hasClip(t.id)).length;
     </div>
 
     {rendered === 0 && (
-      <p class="ho-pending">
-        Die Audiodateien sind noch nicht gerendert — <code>pnpm generate:hoeren</code> erzeugt sie.
-        Bis dahin lassen sich die Texte als Lesetexte mit denselben Fragen üben.
-      </p>
+      <p class="ho-pending" data-i18n-html="hoeren.pendingAll">Die Audiodateien sind noch nicht gerendert — <code>pnpm generate:hoeren</code> erzeugt sie. Bis dahin lassen sich die Texte als Lesetexte mit denselben Fragen üben.</p>
     )}
 
     {groups.map((g) => (
@@ -80,9 +77,6 @@ const rendered = texts.filter((t) => hasClip(t.id)).length;
       </section>
     ))}
 
-    <p class="ho-foot">
-      {texts.length} Hörtexte · {questionCount} Fragen · alle Stimmen synthetisch, alle Skripte für
-      diese Seite geschrieben.
-    </p>
+    <p class="ho-foot" data-i18n="hoeren.foot" data-i18n-vars={JSON.stringify({ n: texts.length, q: questionCount })}>{texts.length} Hörtexte · {questionCount} Fragen · alle Stimmen synthetisch, alle Skripte für diese Seite geschrieben.</p>
   </main>
 </Layout>

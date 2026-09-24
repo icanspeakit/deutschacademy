@@ -12,7 +12,8 @@
  * lives here. See src/pages/pruefungen/leben-in-deutschland/test.astro for a caller.
  *
  * Section: {
- *   key, label,
+ *   key, label, labelKey?,        // labelKey: i18n key for the rail/select label
+ *                                 // (label stays the German fallback); a function works too
  *   ids,                         // array | () => array | null  (null = no scored items)
  *   render(main, ctx),           // paint the section into `main`
  * }
@@ -21,10 +22,12 @@
 import { loadExamState, saveExamState, freshExamState } from "./exam/state.js";
 import { countAnswered, countCorrect, percent } from "./exam/scoring.js";
 import { el } from "./exam/renderHelpers.js";
+import { tx } from "./exam/i18n.js";
+import { onLangChange } from "./i18n.js";
 
 const calm = matchMedia("(prefers-reduced-motion: reduce)");
 
-export function mountExamApp(root, { examId, sections, onAnswer, unit = "Fragen" }) {
+export function mountExamApp(root, { examId, sections, onAnswer, unit = "Fragen", unitKey }) {
   if (!root) return null;
   const topFill = root.querySelector("[data-exam-topfill]");
   const topCount = root.querySelector("[data-exam-topcount]");
@@ -37,6 +40,7 @@ export function mountExamApp(root, { examId, sections, onAnswer, unit = "Fragen"
   const hash = location.hash.slice(1);
   let currentKey = sections.some((s) => s.key === hash) ? hash : sections[0].key;
 
+  const labelOf = (s) => (typeof s.label === "function" ? s.label() : s.labelKey ? tx(s.labelKey, s.label) : s.label);
   const idsOfSection = (s) => (typeof s.ids === "function" ? s.ids() : s.ids) ?? [];
   const allIds = () => sections.flatMap(idsOfSection);
 
@@ -78,7 +82,7 @@ export function mountExamApp(root, { examId, sections, onAnswer, unit = "Fragen"
       dot = '<span class="navdot ' + cls + '" style="--pct:' + percent(done, ids.length) + '%"></span>';
       frac = '<span class="navfrac">' + done + "/" + ids.length + "</span>";
     }
-    btn.innerHTML = dot + "<span>" + section.label + "</span>" + frac;
+    btn.innerHTML = dot + "<span>" + labelOf(section) + "</span>" + frac;
     btn.addEventListener("click", () => goTo(section.key));
     return btn;
   }
@@ -87,7 +91,7 @@ export function mountExamApp(root, { examId, sections, onAnswer, unit = "Fragen"
     sidebarEl.innerHTML = "";
     for (const s of sections) sidebarEl.appendChild(navButton(s));
 
-    const reset = el("button", "reset-link", "Fortschritt zurücksetzen");
+    const reset = el("button", "reset-link", tx("exam.resetProgress", "Fortschritt zurücksetzen"));
     reset.type = "button";
     reset.addEventListener("click", () => {
       // No confirm() — a browser dialog on a phone is a modal that blocks the page,
@@ -105,12 +109,12 @@ export function mountExamApp(root, { examId, sections, onAnswer, unit = "Fragen"
     if (!mobileNavEl) return;
     mobileNavEl.innerHTML = "";
     const select = el("select", "mobile-nav-select");
-    select.setAttribute("aria-label", "Zu einem Prüfungsteil springen");
+    select.setAttribute("aria-label", tx("exam.jumpToPart", "Zu einem Prüfungsteil springen"));
     for (const s of sections) {
       const ids = idsOfSection(s);
       const opt = document.createElement("option");
       opt.value = s.key;
-      opt.textContent = ids.length ? `${s.label} (${countAnswered(ids, state)}/${ids.length})` : s.label;
+      opt.textContent = ids.length ? `${labelOf(s)} (${countAnswered(ids, state)}/${ids.length})` : labelOf(s);
       opt.selected = s.key === currentKey;
       select.appendChild(opt);
     }
@@ -122,7 +126,7 @@ export function mountExamApp(root, { examId, sections, onAnswer, unit = "Fragen"
     const ids = allIds();
     const done = countAnswered(ids, state);
     if (topFill) topFill.style.width = percent(done, ids.length) + "%";
-    if (topCount) topCount.textContent = `${done} / ${ids.length} ${unit}`;
+    if (topCount) topCount.textContent = `${done} / ${ids.length} ${unitKey ? tx(unitKey, unit) : unit}`;
   }
 
   function paintMain() {
@@ -151,5 +155,10 @@ export function mountExamApp(root, { examId, sections, onAnswer, unit = "Fragen"
   }
 
   ctx.refresh();
+  // A language switch repaints the rail, the select and the counter at once. The open
+  // section is left alone — it may hold a half-written Schreiben text — and picks up the
+  // new language the next time it is painted (the page's strings read the same live
+  // dictionary through tx()).
+  onLangChange(() => { paintSidebar(); paintTopbar(); });
   return ctx;
 }

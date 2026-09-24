@@ -1,0 +1,40 @@
+{
+  "_note": "Sätze für /uebungen/aussprache-check. Jeder Satz übt eine oder mehrere Problemlaute (focus: ue, oe, ae, ch, r, en, sch-st-sp) — die IDs in src/lib/ausspracheTipps.js. `audio` setzt scripts/generate-aussprache-check-audio.mjs, sobald die Referenzaufnahme in public/audio/aussprache-check/<id>.mp3 liegt.",
+  "levels": [
+    {
+      "level": "A1",
+      "sentences": [
+        { "id": "a1-broetchen", "text": "Ich möchte zwei Brötchen, bitte.", "focus": ["oe", "ch"] },
+        { "id": "a1-tuer", "text": "Die Tür ist grün.", "focus": ["ue", "r"] },
+        { "id": "a1-wohnung", "text": "Wir wohnen in einer schönen Wohnung.", "focus": ["oe", "en"] },
+        { "id": "a1-fussball", "text": "Am Sonntag spielen wir Fußball.", "focus": ["sch-st-sp", "en"] },
+        { "id": "a1-deutsch", "text": "Ich spreche ein bisschen Deutsch.", "focus": ["ch", "sch-st-sp"] },
+        { "id": "a1-maedchen", "text": "Das Mädchen trinkt gern Tee.", "focus": ["ae", "ch", "r"] },
+        { "id": "a1-stuttgart", "text": "Mein Bruder fährt nach Stuttgart.", "focus": ["r", "ae", "sch-st-sp"] }
+      ]
+    },
+    {
+      "level": "A2",
+      "sentences": [
+        { "id": "a2-muenchen", "text": "Morgen früh fahre ich mit dem Zug nach München.", "focus": ["ue", "r", "ch"] },
+        { "id": "a2-strasse", "text": "Die Straße ist im Winter sehr schön.", "focus": ["sch-st-sp", "oe"] },
+        { "id": "a2-sport", "text": "Ich habe leider keine Zeit für Sport.", "focus": ["sch-st-sp", "r", "ue"] },
+        { "id": "a2-rechnung", "text": "Können Sie mir bitte die Rechnung schicken?", "focus": ["oe", "ch", "en"] },
+        { "id": "a2-fruehling", "text": "Im Frühling blühen die Blumen im Garten.", "focus": ["ue", "en"] },
+        { "id": "a2-husten", "text": "Der Arzt hat mir Tabletten gegen Husten gegeben.", "focus": ["en", "sch-st-sp", "r"] },
+        { "id": "a2-kueche", "text": "Wir müssen die Küche noch aufräumen.", "focus": ["ue", "ch", "ae"] }
+      ]
+    },
+    {
+      "level": "B1",
+      "sentences": [
+        { "id": "b1-erfahrungen", "text": "Ich würde gern über meine Erfahrungen sprechen.", "focus": ["ue", "r", "sch-st-sp"] },
+        { "id": "b1-spazieren", "text": "Obwohl es regnet, gehen wir spazieren.", "focus": ["en", "sch-st-sp", "r"] },
+        { "id": "b1-oeffnungszeiten", "text": "Die Öffnungszeiten stehen auf der Rückseite.", "focus": ["oe", "sch-st-sp", "ue"] },
+        { "id": "b1-beworben", "text": "Er hat sich bei der Firma schriftlich beworben.", "focus": ["ch", "sch-st-sp", "en"] },
+        { "id": "b1-problem", "text": "Ehrlich gesagt verstehe ich das Problem nicht.", "focus": ["ch", "sch-st-sp", "r"] },
+        { "id": "b1-geschaeft", "text": "Das Geschäft schließt schon um achtzehn Uhr.", "focus": ["sch-st-sp", "ae", "ch"] }
+      ]
+    }
+  ]
+}

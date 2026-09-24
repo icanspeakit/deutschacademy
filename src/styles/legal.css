@@ -77,3 +77,32 @@
     font-size: var(--text-xs);
   }
 }
+
+/* Translation note (LegalTranslation.astro): shown only when the UI language is not German.
+   It says, in that language, that the German text is the binding one, and carries the switch
+   back to the German original. Quiet but unmissable — it sits above the heading. */
+.legal-lang {
+  margin: 0 0 1.75rem;
+  padding: .8rem 1rem;
+  border: 1px solid color-mix(in srgb, var(--brand-blue) 35%, transparent);
+  border-radius: .6rem;
+  background: color-mix(in srgb, var(--brand-blue) 7%, transparent);
+  font-size: var(--text-sm);
+  line-height: 1.55;
+}
+.legal-lang[hidden] { display: none; }
+.legal-lang-note { margin: 0; font-weight: 600; }
+.legal-lang-draft { margin: .3rem 0 0; opacity: .75; }
+.legal-lang-toggle {
+  margin-top: .6rem;
+  min-height: 2.5rem;
+  padding: .4rem .9rem;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--brand-blue);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+.legal-lang-toggle[aria-pressed="true"] { background: color-mix(in srgb, var(--brand-blue) 12%, transparent); }

@@ -80,7 +80,8 @@ export function buildArtikelPacks(lexNouns) {
   for (const [i, level] of LEVELS.entries()) {
     const here = lexNouns.filter((n) => n.level === level);
     const topics = config.topics
-      .map((p) => ({ id: p.id, name: p.name, icon: p.icon, ids: here.filter((n) => nounTopic[n.id] === p.id).map((n) => n.id) }))
+      // `levels` renames a pack per level: the same lexicon topic holds other nouns at A2.
+      .map((p) => ({ id: p.id, name: p.levels?.[level]?.name ?? p.name, icon: p.levels?.[level]?.icon ?? p.icon, ids: here.filter((n) => nounTopic[n.id] === p.id).map((n) => n.id) }))
       .filter((p) => p.ids.length >= config.minPack);
     // A rule is taught with every noun up to this level: A2 has no "der" nouns of its own
     // to show it with, and a B1 learner still meets the A1 weekdays.

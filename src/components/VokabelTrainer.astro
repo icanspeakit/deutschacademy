@@ -8,7 +8,7 @@
 // week. The page decides which cards to hand over; everything below is identical.
 //
 // Cards arrive already in the engine's shape: `{ front, note, translations }`.
-import PracticeHeader from "./PracticeHeader.astro";
+import SiteNav from "./SiteNav.astro";
 import LernsetPicker from "./LernsetPicker.astro";
 import "../styles/practice.css";
 // The split layout itself — the grid, the sliding column, the phone collapse — is the
@@ -63,7 +63,7 @@ const languages = ALL_LANGUAGES.filter((l) => langs.includes(l.code));
 <!-- No title. The bar carried "Wortliste A1" directly above an <h1> reading "Wortschatz
      A1" — the same deck named twice, 50px apart, and the bar does not stick, so the copy
      up here was read once and scrolled past. The <h1> keeps the name. -->
-<PracticeHeader />
+<SiteNav active="wortschatz" />
 
 <!-- The same split layout the grammar topics use (src/lib/ruleColumn.js): a column that
      is sticky beside the work on a desktop and collapses behind one button on a phone.
@@ -100,12 +100,13 @@ const languages = ALL_LANGUAGES.filter((l) => langs.includes(l.code));
              the ✕, so the way out is never a scroll away no matter how far down the list
              the learner has gone. -->
         <div class="vp-sheet-head">
-          <div class="vp-card-label">Lernsets</div>
+          <div class="vp-card-label" data-i18n="sets.lernsets">Lernsets</div>
           <button
             type="button"
             class="vp-sheet-fold"
             data-sheet-close
             aria-label="Lernsets einklappen"
+            data-i18n-attr="aria-label:sets.collapse"
             aria-controls="vp-rule-card"
           >
             <span data-i18n="vp.rule.collapseShort">Einklappen</span>
@@ -137,6 +138,8 @@ const languages = ALL_LANGUAGES.filter((l) => langs.includes(l.code));
         id="vp-rule-peek"
         data-show="Lernset wechseln"
         data-hide="Lernsets ausblenden"
+        data-i18n-attr="data-show:sets.switch;data-hide:sets.hide"
+        data-i18n="sets.switch"
         aria-controls="vp-rule-card"
       >Lernset wechseln</button>
     </aside>
@@ -155,13 +158,12 @@ const languages = ALL_LANGUAGES.filter((l) => langs.includes(l.code));
              shows. Above the line it reads as what it is: page chrome, at the same
              altitude as the tabs.
 
-             #vt-tabs stays its own element with exactly the four tabs inside it:
+             #vt-tabs stays its own element with exactly the three tabs inside it:
              wortschatz-app.js iterates tabsEl.children to set the active one. -->
         <div class="vt-tabrow">
           <div class="vt-tabs" id="vt-tabs">
             <button class="vt-tab active" type="button" data-tab="cards" data-i18n="wortschatz.tab.cards">Karteikarten</button>
             <button class="vt-tab" type="button" data-tab="learn" data-i18n="wortschatz.tab.learn">Lernen</button>
-            <button class="vt-tab" type="button" data-tab="test" data-i18n="wortschatz.tab.test">Testen</button>
             <button class="vt-tab" type="button" data-tab="list" data-i18n="wortschatz.tab.list">Wortliste</button>
           </div>
 
@@ -173,6 +175,7 @@ const languages = ALL_LANGUAGES.filter((l) => langs.includes(l.code));
             id="vp-rule-toggle"
             data-show="Lernsets einblenden"
             data-hide="Lernsets ausblenden"
+            data-i18n-attr="data-show:sets.show;data-hide:sets.hide"
           >Lernsets einblenden</button>
         </div>
 
@@ -210,9 +213,10 @@ const languages = ALL_LANGUAGES.filter((l) => langs.includes(l.code));
     aria-controls="vp-rule-card"
     aria-expanded="true"
     title="Lernsets einblenden"
+    data-i18n-attr="title:sets.show"
   >
     <span class="vp-rule-pivot-chevron" aria-hidden="true"></span>
-    <span class="vp-rule-pivot-label">Lernsets</span>
+    <span class="vp-rule-pivot-label" data-i18n="sets.lernsets">Lernsets</span>
   </button>
 
   <!-- Dev only, same as the grammar topics: the tour runs once per browser and there is
@@ -220,9 +224,7 @@ const languages = ALL_LANGUAGES.filter((l) => langs.includes(l.code));
        than intro.play(), because the interesting part is everything that happens BEFORE
        the tour decides to run — the restored preference, the collapsed first paint. This
        wipes both stored flags and reloads clean. Shown on the live site too. -->
-  <button type="button" class="vp-dev-reset" id="vp-dev-reset" title="Tour-Flags löschen und neu laden">
-    ↻ Tour neu
-  </button>
+  <button type="button" class="vp-dev-reset" id="vp-dev-reset" title="Tour-Flags löschen und neu laden" data-i18n-attr="title:vp.devReset.title" data-i18n="vp.devReset">↻ Tour neu</button>
 </main>
 
 <script type="application/json" id="fc-data" set:html={JSON.stringify(cards)}></script>

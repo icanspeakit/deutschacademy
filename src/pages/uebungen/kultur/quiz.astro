@@ -6,7 +6,7 @@
 // and the thing you most often want is "all of them" — a chip row shows that as the
 // selected state instead of hiding it behind a menu.
 import Layout from "../../../layouts/Layout.astro";
-import PracticeHeader from "../../../components/PracticeHeader.astro";
+import SiteNav from "../../../components/SiteNav.astro";
 import kultur from "../../../data/kultur.json";
 import "../../../styles/practice.css";
 import "../../../styles/kultur.css";
@@ -20,7 +20,9 @@ const pool = topics.flatMap((t) =>
   t.quiz.map((q) => ({
     ...q,
     topic: t.id,
-    explain: `${q.explain ?? ""} <a class="ku-quiz-src" href="/uebungen/kultur/${t.id}">Mehr zu „${t.title}“ →</a>`,
+    // "Mehr zu" is a placeholder token, swapped for the UI language's words in the script
+    // below — the explanation is painted by quiz.js long after the page's i18n pass ran.
+    explain: `${q.explain ?? ""} <a class="ku-quiz-src" href="/uebungen/kultur/${t.id}">{{MORE}} „${t.title}“ →</a>`,
   }))
 );
 ---
@@ -28,18 +30,18 @@ const pool = topics.flatMap((t) =>
   title="Landeskunde-Quiz – DeutschAcademy"
   description="Quiz über Alltag und Regeln in Deutschland: Mülltrennung, Pfand, Anmeldung, Krankenversicherung, Feiertage, Schule, Vereine und mehr."
 >
-  <PracticeHeader title="Landeskunde-Quiz" />
+  <SiteNav active="landeskunde" />
   <main class="practice-main">
-    <a href="/uebungen/kultur" class="vp-back-link">← Alle Themen</a>
+    <a href="/uebungen/kultur" class="vp-back-link" data-i18n="kultur.back">← Alle Themen</a>
 
     <div class="practice-hero">
-      <p class="eyebrow">Landeskunde</p>
+      <p class="eyebrow" data-i18n="kultur.hero.eyebrow">Landeskunde</p>
       <h1>Quiz</h1>
-      <p>{total} Fragen aus {topics.length} Themen. Wähle ein Thema oder nimm alle gemischt.</p>
+      <p data-i18n="kultur.quiz.lead" data-i18n-vars={JSON.stringify({ n: total, t: topics.length })}>{total} Fragen aus {topics.length} Themen. Wähle ein Thema oder nimm alle gemischt.</p>
     </div>
 
     <div class="ku-chips" data-ku-chips>
-      <button class="ku-chip is-on" type="button" data-topic="alle">Alle Themen <span>{total}</span></button>
+      <button class="ku-chip is-on" type="button" data-topic="alle"><span data-i18n="kultur.quiz.allChip">Alle Themen</span> <span>{total}</span></button>
       {topics.map((t) => (
         <button class="ku-chip" type="button" data-topic={t.id}>{t.title} <span>{t.quiz.length}</span></button>
       ))}
@@ -53,7 +55,16 @@ const pool = topics.flatMap((t) =>
     import { mountQuiz } from "../../../lib/quiz.js";
     import { recordAttempt } from "../../../lib/progress.js";
 
+    import { getLang, loadDict, onLangChange } from "../../../lib/i18n.js";
+
     const pool = JSON.parse(document.getElementById("ku-pool").textContent);
+    const rawExplain = pool.map((q) => q.explain);
+    // Rewritten in place, so a quiz already mounted picks the words up at its next question.
+    const setMore = (word) => pool.forEach((q, i) => { q.explain = rawExplain[i].replace("{{MORE}}", word); });
+    setMore("Mehr zu");
+    const useDict = (d) => { if (d && d["kultur.quiz.more"]) setMore(d["kultur.quiz.more"]); };
+    loadDict(getLang()).then(useDict).catch(() => {});
+    onLangChange((_c, d) => useDict(d));
     const root = document.getElementById("ku-quiz");
     const chips = document.querySelector("[data-ku-chips]");
 

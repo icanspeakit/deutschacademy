@@ -338,8 +338,10 @@ body.wi-sheet-open { overflow: hidden; }
 }
 .wi-sheet-dl:hover { filter: brightness(1.05); }
 /* The translated editions: secondary to the main button, one tap each. */
-.wi-sheet-eds { margin-top: 16px; }
+.wi-sheet-eds { margin: 0 0 20px; }
 .wi-sheet-eds-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(96px, 1fr)); gap: 8px; }
+/* Two per row on a phone: four editions wrapped 3 + 1 there, leaving one button alone. */
+@media (max-width: 480px) { .wi-sheet-eds-row { grid-template-columns: repeat(2, 1fr); } }
 .wi-sheet-ed {
   display: flex; flex-direction: column; align-items: center; gap: 2px;
   min-height: 44px; padding: 8px 10px;
@@ -369,4 +371,9 @@ body.wi-sheet-open { overflow: hidden; }
     to { transform: none; opacity: 1; }
   }
   .wi-sheet-toc ul { max-height: 180px; }
+  /* The RTL build step mirrors the desktop centring into a [dir="rtl"] rule —
+     translate(50%, -50%) and its own keyframes — which outranks the plain
+     `transform: none` above, so in Arabic the phone sheet slid half off-screen.
+     One notch more specific than that generated rule puts it back. */
+  html .wi-sheet.wi-sheet { transform: none; animation-name: wi-sheet-up; }
 }

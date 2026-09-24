@@ -16,7 +16,7 @@
 // verdict. A learner who thinks it landed too high or too low can take the level next to
 // it straight from the result — the whole point is to get them into an exercise.
 import Layout from "../layouts/Layout.astro";
-import PracticeHeader from "../components/PracticeHeader.astro";
+import SiteNav from "../components/SiteNav.astro";
 import einstufung from "../data/einstufung.json";
 import { NAV_LEVELS } from "../lib/catalog.js";
 import "../styles/practice.css";
@@ -35,13 +35,13 @@ const LEAD = {
   title="Einstufungstest: Welches Niveau habe ich? – DeutschAcademy"
   description="In zwei Minuten herausfinden, wo du stehst: kurzer Einstufungstest von A1 bis B2, ohne Konto. Der Test wird schwerer, solange du richtig liegst, und sagt dir am Ende, womit du anfängst."
 >
-  <PracticeHeader />
+  <SiteNav />
   <main class="practice-main" id="es-root" data-levels={JSON.stringify(LEVELS)} data-per={PER_LEVEL}>
     <div class="practice-hero practice-hero--tight">
-      <p class="eyebrow">Einstufung</p>
-      <h1>Wo stehst du?</h1>
+      <p class="eyebrow" data-i18n="placement.eyebrow">Einstufung</p>
+      <h1 data-i18n="fold.ask">Wo stehst du?</h1>
       <!-- Describes the test, so it goes once the test is over. -->
-      <p data-es-intro>
+      <p data-es-intro data-i18n="placement.intro">
         Höchstens acht Fragen, ungefähr zwei Minuten. Es wird schwerer, solange du richtig
         liegst, und hört auf, sobald klar ist, wo du anfängst. Kein Konto, keine Note.
       </p>
@@ -70,23 +70,23 @@ const LEAD = {
       <p class="quiz-progress" data-es-level></p>
       <p class="quiz-prompt" data-es-prompt></p>
       <div class="quiz-choices" data-es-options></div>
-      <button class="quiz-btn quiz-btn--ghost" type="button" data-es-skip>Weiß ich nicht →</button>
+      <button class="quiz-btn quiz-btn--ghost" type="button" data-es-skip data-i18n="placement.skip">Weiß ich nicht →</button>
     </section>
 
     <section class="quiz-card es-result" data-es-result hidden>
-      <p class="quiz-progress">Dein Einstieg</p>
+      <p class="quiz-progress" data-i18n="placement.result">Dein Einstieg</p>
       <p class="es-result-level" data-es-result-level></p>
       <p class="es-result-lead" data-es-result-lead></p>
       <div class="es-actions">
-        <a class="quiz-btn quiz-btn--primary" data-es-go-grammar>Grammatik anfangen →</a>
-        <a class="quiz-btn" data-es-go-vocab>Wortschatz anfangen →</a>
+        <a class="quiz-btn quiz-btn--primary" data-es-go-grammar data-i18n="placement.goGrammar">Grammatik anfangen →</a>
+        <a class="quiz-btn" data-es-go-vocab data-i18n="placement.goVocab">Wortschatz anfangen →</a>
       </div>
       <p class="es-nudge">
-        Zu leicht oder zu schwer? <button type="button" class="es-link" data-es-down></button>
+        <span data-i18n="placement.nudge">Zu leicht oder zu schwer?</span> <button type="button" class="es-link" data-es-down></button>
         <span data-es-or hidden> · </span>
         <button type="button" class="es-link" data-es-up></button>
       </p>
-      <button class="quiz-btn quiz-btn--ghost" type="button" data-es-again>Test noch einmal machen</button>
+      <button class="quiz-btn quiz-btn--ghost" type="button" data-es-again data-i18n="placement.again">Test noch einmal machen</button>
     </section>
   </main>
 </Layout>
@@ -122,6 +122,18 @@ const LEAD = {
 </style>
 
 <script>
+  import { getLang, loadDict, onLangChange, translate } from "../lib/i18n.js";
+
+  // The questions are German on purpose — they are the test. Everything the script
+  // writes around them follows the UI language: each such element carries its key in
+  // data-i18n, so the language switcher's own DOM pass re-translates it later too.
+  let dict: Record<string, string> = {};
+  function setT(el: HTMLElement, key: string, fallback: string, vars?: Record<string, string | number>) {
+    el.dataset.i18n = key;
+    if (vars) el.dataset.i18nVars = JSON.stringify(vars); else delete el.dataset.i18nVars;
+    el.textContent = dict[key] != null ? translate(dict, key, vars) : fallback;
+  }
+
   const root = document.getElementById("es-root");
   const LEVELS: string[] = JSON.parse(root.dataset.levels!);
   const PER = Number(root.dataset.per);
@@ -170,7 +182,7 @@ const LEAD = {
     const done = rung * PER + at;
     stepsEl.innerHTML = Array.from({ length: done + 1 })
       .map((_, i) => `<span class="quiz-dot ${i < done ? "quiz-dot--done" : "quiz-dot--now"}"></span>`).join("");
-    levelEl.textContent = `Frage ${done + 1}`;
+    setT(levelEl, "placement.question", `Frage ${done + 1}`, { n: done + 1 });
     promptEl.textContent = item.prompt;
     optionsEl.className = "quiz-choices";
     optionsEl.innerHTML = shuffle(item.options)
@@ -216,7 +228,7 @@ const LEAD = {
     result.hidden = false;
     root.querySelector<HTMLElement>("[data-es-intro]")!.hidden = true;
     result.querySelector<HTMLElement>("[data-es-result-level]")!.textContent = level;
-    result.querySelector<HTMLElement>("[data-es-result-lead]")!.textContent = LEAD[level] ?? "";
+    setT(result.querySelector<HTMLElement>("[data-es-result-lead]")!, `placement.lead.${level}`, LEAD[level] ?? "");
     const slug = level.toLowerCase();
     result.querySelector<HTMLAnchorElement>("[data-es-go-grammar]")!.href = `/uebungen/grammatik#niveau-${slug}`;
     result.querySelector<HTMLAnchorElement>("[data-es-go-vocab]")!.href = `/uebungen/wortschatz/${slug}`;
@@ -230,8 +242,8 @@ const LEAD = {
     down.hidden = i === 0;
     up.hidden = i === LEVELS.length - 1;
     or.hidden = down.hidden || up.hidden;
-    if (!down.hidden) { down.textContent = `Lieber ${LEVELS[i - 1]}`; down.onclick = () => finish(LEVELS[i - 1]); }
-    if (!up.hidden) { up.textContent = `Lieber ${LEVELS[i + 1]}`; up.onclick = () => finish(LEVELS[i + 1]); }
+    if (!down.hidden) { setT(down, "placement.prefer", `Lieber ${LEVELS[i - 1]}`, { level: LEVELS[i - 1] }); down.onclick = () => finish(LEVELS[i - 1]); }
+    if (!up.hidden) { setT(up, "placement.prefer", `Lieber ${LEVELS[i + 1]}`, { level: LEVELS[i + 1] }); up.onclick = () => finish(LEVELS[i + 1]); }
     result.scrollIntoView({ behavior: "smooth", block: "nearest" });
   }
 
@@ -245,4 +257,13 @@ const LEAD = {
   });
 
   drawLevel();
+  // The first question is drawn before the dictionary arrives, and the page-wide i18n
+  // pass may already have run by then — so re-translate what the script tagged.
+  loadDict(getLang()).then((d) => {
+    dict = d;
+    for (const el of root.querySelectorAll<HTMLElement>("[data-es-level][data-i18n], [data-es-result-lead][data-i18n], [data-es-down][data-i18n], [data-es-up][data-i18n]")) {
+      if (d[el.dataset.i18n!] != null) el.textContent = translate(d, el.dataset.i18n!, el.dataset.i18nVars ? JSON.parse(el.dataset.i18nVars) : undefined);
+    }
+  });
+  onLangChange((_code, d) => { dict = d; });
 </script>

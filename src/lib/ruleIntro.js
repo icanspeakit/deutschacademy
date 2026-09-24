@@ -40,7 +40,7 @@
  * halfway through.
  */
 
-import { onLangChange } from "./i18n.js";
+import { getLang, loadDict, onLangChange } from "./i18n.js";
 
 const CURSOR_SVG =
   '<svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true">' +
@@ -61,7 +61,18 @@ let dict = {
   "intro.ruleCompact.text": "Sie ist eingeklappt, damit die Übungen sofort beginnen — sie geht nicht verloren.",
   "intro.toggleCompact.text": "Ein Tippen zeigt sie ganz, ein zweites klappt sie wieder ein. Deine Wahl wird gemerkt.",
 };
-onLangChange((_code, d) => { dict = d; });
+// Coach marks painted before a dictionary arrived, so they can be repainted when it does.
+// The seed above only carries the grammar tour's keys: a tour with its own copy (the
+// Wortschatz Lernsets tour, intro.sets.*) could play before applyLang() had resolved and
+// showed the raw key. So the dictionary is also fetched here, on import, instead of
+// waiting for the page's i18n pass to broadcast it.
+const painted = new Set();
+function useDict(d) {
+  dict = d;
+  for (const repaint of painted) repaint();
+}
+onLangChange((_code, d) => useDict(d));
+loadDict(getLang()).then((d) => { if (d && Object.keys(d).length) useDict(d); }).catch(() => {});
 const say = (k) => dict[k] ?? k;
 
 // Two beats: what the panel is, then where the control for it lives. The second
@@ -166,8 +177,14 @@ export function createRuleIntro({
   function showCoachText([title, text], r, below) {
     if (!coach) return;
     const gap = 20;
-    coach.querySelector(".ri-coach-title").textContent = say(title);
-    coach.querySelector(".ri-coach-text").textContent = say(text);
+    const el = coach;
+    const paint = () => {
+      el.querySelector(".ri-coach-title").textContent = say(title);
+      el.querySelector(".ri-coach-text").textContent = say(text);
+    };
+    paint();
+    painted.clear();
+    painted.add(paint);
     // The card is narrower than 300px on a small phone, so ask it rather than
     // assume — every clamp below is in terms of its real width.
     const w = coach.offsetWidth;

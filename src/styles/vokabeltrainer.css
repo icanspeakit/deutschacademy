@@ -281,6 +281,23 @@
 }
 .vt-face-word { position: relative; }
 .vt-face .vt-plural { position: absolute; left: 0; top: 100%; white-space: nowrap; }
+/* With an RTL translation language each face takes its word's direction, so the Arabic
+   word and its reveal sit on the right edge and the German one on the left — in an Arabic
+   UI as much as a German one. Items shrink to their content instead of stretching, and the
+   UI-language lines (eyebrow, hint) keep their own direction, so a German hint on the
+   Arabic face lines up right without its full stop jumping to the wrong end. */
+/* Ignored by postcss-rtlcss: these ARE the direction, so mirroring them would swap the two
+   faces in an Arabic UI. The German face's plural keeps hanging from the word's left edge
+   instead of taking the page's mirrored rule. */
+/* rtl:begin:ignore */
+.vt-face--rtl { direction: rtl; align-items: flex-start; }
+.vt-face--ltr { direction: ltr; align-items: flex-start; }
+.vt-face.vt-face--ltr .vt-plural { left: 0; right: auto; }
+/* rtl:end:ignore */
+.vt-face--rtl .vt-face-eyebrow,
+.vt-face--rtl .vt-hint,
+.vt-face--ltr .vt-face-eyebrow,
+.vt-face--ltr .vt-hint { unicode-bidi: plaintext; }
 .vt-face-eyebrow { font-size: .6875rem; font-weight: 500; letter-spacing: .08em; text-transform: uppercase; color: var(--vt-muted); }
 .vt-face--back .vt-face-eyebrow { color: var(--brand-blue-dark); }
 .vt-prompt { font-size: clamp(1.4rem, 4.5vw, 2.125rem); font-weight: 400; letter-spacing: -.015em; line-height: 1.25; color: var(--vt-ink); }
@@ -582,3 +599,18 @@
 /* In the Wortliste the article sits in the same column as the word and must not push the
  * translation around, so it is the row's own small type. */
 .vt-list-de .vt-art { font-size: .95em; }
+
+/* Self-check on a flipped card (wortschatz-app.js judge()): Umdrehen gives way to
+   Falsch / Richtig once the answer is showing. Big targets — this is the tap made 25
+   times per set, on a phone. */
+.vt-judge { display: none; gap: 10px; flex: 1; justify-content: center; }
+.vt-nav-row.is-flipped .vt-judge { display: flex; }
+.vt-nav-row.is-flipped .vt-nav-flip { display: none; }
+.vt-judge-btn {
+  flex: 1; max-width: 180px; min-height: 44px; padding: 10px 16px;
+  border-radius: 999px; border: 1.5px solid; background: none;
+  font: inherit; font-size: .9375rem; font-weight: 600; cursor: pointer;
+}
+.vt-judge-btn--no { border-color: #dc2626; color: #b91c1c; }
+.vt-judge-btn--ok { border-color: var(--brand-blue); background: var(--brand-blue); color: #fff; }
+.vt-card-score { margin: 10px 0 0; text-align: center; font-size: .8125rem; color: var(--vt-muted, var(--muted)); font-variant-numeric: tabular-nums; }

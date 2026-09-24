@@ -164,13 +164,16 @@ details[open] > .akp-more-sum::after { content: "▴"; }
 .akp-intro-ex li { padding: 6px 12px; border-radius: var(--radius-pill); border: 1px solid var(--border); font-size: 15px; }
 
 /* --- The packs inside the old level rail (ArtikelPicker.astro) ---------------
-   One line per pack, like the Runde rows they replaced: icon, name, dots, count. */
+   One line per pack, like the Runde rows they replaced: icon, name, count. There were
+   five dots before the count as well — a 20%-step meter that said what "0/45" says,
+   too small to read, and each row sized its own auto column, so a wide count pushed its
+   dots out of line with the rows around it. The count now sits in a fixed column. */
 .ap-nvb .ap-weiter { gap: 8px; margin: 0 var(--space-2) var(--space-4); }
 
 .ap-nvb .ap-packs { margin-top: var(--space-2); }
 .ap-nvb .akp-pack {
-  grid-template-columns: 30px minmax(0, 1fr) auto auto;
-  grid-template-areas: "ic name dots state";
+  grid-template-columns: 30px minmax(0, 1fr) 6ch;
+  grid-template-areas: "ic name state";
   column-gap: 8px;
   padding: 7px 10px;
   border: none;
@@ -180,5 +183,24 @@ details[open] > .akp-more-sum::after { content: "▴"; }
 .ap-nvb .akp-pack.active { background: var(--blue-50); border-left-color: var(--brand-blue); }
 .ap-nvb .akp-pack.active .akp-pack-name { font-weight: var(--fw-bold); color: var(--brand-blue-dark); }
 .ap-nvb .akp-pack-ic { font-size: 16px; }
-.ap-nvb .akp-pack-state { min-width: 30px; text-align: right; font-variant-numeric: tabular-nums; }
+.ap-nvb .akp-pack-state { text-align: right; font-variant-numeric: tabular-nums; }
 .ap-nvb .akp-pack-art { justify-self: start; width: auto; min-width: 30px; padding: 2px 4px; font-size: 11px; }
+
+/* The Regel pane in full (ArtikelPicker.astro): tables, the rule in sentences, and the two
+   boxes — compound nouns, no article at all. */
+.ap-regel .ct { margin-top: 14px; }
+.ap-regel-qa { margin-top: 16px; display: grid; gap: 8px; }
+.ap-regel-box { margin-top: 14px; padding: 12px 14px; border-radius: var(--radius, 12px); border: 1px solid var(--border); background: var(--surface, #f7f8fa); }
+.ap-regel-box--akk { border-inline-start: 3px solid var(--brand-blue); }
+.ap-regel-box--dat { border-inline-start: 3px solid #f59e0b; }
+.ap-regel-box-title { margin: 0 0 6px; font-weight: 700; font-size: .9rem; color: var(--ink); }
+.ap-regel-box ul { margin: 0; padding-inline-start: 18px; display: grid; gap: 3px; font-size: .9rem; }
+
+/* The Regel button in the card's top row — the same pill as the other topics' "Regel". */
+.akk-regel-btn {
+  min-height: 36px; padding: 6px 16px;
+  border: 1px solid var(--brand-blue); border-radius: 999px;
+  background: none; color: var(--brand-blue-dark, var(--brand-blue));
+  font: inherit; font-size: .875rem; font-weight: 600; cursor: pointer;
+}
+.akk-regel-btn:hover { background: var(--brand-blue); color: #fff; }

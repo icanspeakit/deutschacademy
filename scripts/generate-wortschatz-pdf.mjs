@@ -46,9 +46,8 @@ const POS_LABEL = {
    to the person it is for; everything else stays German, because German is the subject.
 
    A level only gets an edition in a language that covers EVERY word in it: a list with
-   holes in the translation column reads as a broken file. B2's sidecars are partial, so
-   B2 has no editions until they are filled — the same rule langsOf() applies to the
-   trainer's language tabs. */
+   holes in the translation column reads as a broken file — the same rule langsOf()
+   applies to the trainer's language tabs. */
 const EDITIONS = {
   ar: {
     column: "Arabisch",

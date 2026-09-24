@@ -95,6 +95,8 @@ export function makeVoice() {
 
 const wait = (ms) => new Promise((r) => setTimeout(r, ms));
 
+import { t, i18nAttrs, uitHtml, onUiText } from "./uiText.js";
+
 const esc = (s) =>
   String(s).replace(/[&<>"']/g, (c) => ({
     "&": "&amp;",
@@ -143,9 +145,9 @@ export function mountBeats(root, { onLeave, onExit, anchor } = {}) {
       c.setAttribute("aria-selected", String(on));
     });
     panels.forEach((p) => { p.hidden = p.dataset.beatPanel !== beat; });
-    // Only while Aktiv is what is on screen. The first show() runs on load in Üben too,
-    // and writing #sehen then made every reload or shared link open in Aktiv.
-    if (history.replaceState && root.dataset.mode === "aktiv") history.replaceState(null, "", "#" + beat);
+    // The step is not written into the address: the page's mode switch writes #aktiv, and
+    // that is the only hash Aktiv has. Old links to #sehen / #hoeren / #sprechen still
+    // open on that step (see `wanted` below).
 
     // scrollIntoView on the page root puts the top of the page under the site nav and
     // leaves the new panel's first rows hidden behind the sticky bar. Scroll to the point
@@ -177,12 +179,12 @@ export function mountListen(root, items, voice) {
     .map(
       (it, i) => `
       <li class="ak-listen-row">
-        <button type="button" class="ak-play" data-say="${i}" aria-label="Vorlesen: ${esc(it.text)}">
+        <button type="button" class="ak-play" data-say="${i}" aria-label="${esc(t("ak.say", "Vorlesen"))}: ${esc(it.text)}">
           <span class="ak-play-icon" aria-hidden="true"></span>
         </button>
         <div>
           <p class="ak-listen-text">${esc(it.text)}</p>
-          ${it.note ? `<p class="ak-listen-note">${esc(it.note)}</p>` : ""}
+          ${it.note ? `<p class="ak-listen-note">${uitHtml(it.note, it.noteTr, esc)}</p>` : ""}
         </div>
       </li>`
     )
@@ -225,15 +227,15 @@ export function mountHoeren(root, data, { voice, notify } = {}) {
         return `
           <div class="ak-hear-item ${checked ? "is-done" : ""}">
             <div class="ak-hear-head">
-              <button type="button" class="ak-play ak-play--lg" data-play="${i}" aria-label="Satz ${i + 1} abspielen">
+              <button type="button" class="ak-play ak-play--lg" data-play="${i}" aria-label="${esc(t("ak.hear.play", "Satz {n} abspielen", { n: i + 1 }))}">
                 <span class="ak-play-icon" aria-hidden="true"></span>
               </button>
-              <span class="ak-hear-num">Satz ${i + 1}</span>
-              ${state.plays[i] ? `<span class="ak-hear-plays">${state.plays[i]}× gehört</span>` : ""}
+              <span class="ak-hear-num"${i18nAttrs("ak.hear.num", { n: i + 1 })}>${esc(t("ak.hear.num", "Satz {n}", { n: i + 1 }))}</span>
+              ${state.plays[i] ? `<span class="ak-hear-plays">${esc(t("ak.hear.plays", "{n}× gehört", { n: state.plays[i] }))}</span>` : ""}
             </div>
             <div class="ak-opts">${opts}</div>
             <p class="ak-transcript ${checked ? "" : "is-blurred"}" ${checked ? "" : 'aria-hidden="true"'}>${esc(item.text)}</p>
-            ${checked ? "" : `<button type="button" class="ak-check" data-check="${i}" ${picked == null ? "disabled" : ""}>Prüfen</button>`}
+            ${checked ? "" : `<button type="button" class="ak-check" data-check="${i}" ${picked == null ? "disabled" : ""}${i18nAttrs("quiz.check")}>${esc(t("quiz.check", "Prüfen"))}</button>`}
           </div>`;
       })
       .join("");
@@ -247,8 +249,9 @@ export function mountHoeren(root, data, { voice, notify } = {}) {
         b.classList.remove("is-playing");
         const head = b.parentElement;
         const badge = head.querySelector(".ak-hear-plays");
-        if (badge) badge.textContent = `${state.plays[i]}× gehört`;
-        else head.insertAdjacentHTML("beforeend", `<span class="ak-hear-plays">${state.plays[i]}× gehört</span>`);
+        const heard = t("ak.hear.plays", "{n}× gehört", { n: state.plays[i] });
+        if (badge) badge.textContent = heard;
+        else head.insertAdjacentHTML("beforeend", `<span class="ak-hear-plays">${esc(heard)}</span>`);
       })
     );
     root.querySelectorAll("[data-o]").forEach((b) =>
@@ -264,6 +267,7 @@ export function mountHoeren(root, data, { voice, notify } = {}) {
     );
   }
   render();
+  onUiText(render);
 }
 
 /* -------------------------------------------------------------- sprechen ---- */
@@ -306,11 +310,11 @@ export function mountSprechen(root, data, { voice, onRate } = {}) {
       <div class="ak-drill">
         <div class="ak-round-tabs" role="tablist">
           ${rounds
-            .map((ro, ri) => `<button type="button" class="ak-round-tab ${ri === r ? "is-active" : ""}" data-round="${ri}" role="tab" aria-selected="${ri === r}">${esc(ro.label)}</button>`)
+            .map((ro, ri) => `<button type="button" class="ak-round-tab ${ri === r ? "is-active" : ""}" data-round="${ri}" role="tab" aria-selected="${ri === r}">${uitHtml(ro.label, ro.labelTr, esc)}</button>`)
             .join("")}
         </div>
-        <p class="ak-drill-instruction">${esc(cur.instruction)}</p>
-        <p class="ak-drill-example">z.&nbsp;B. <strong>${esc(cur.example.prompt)}</strong> → <strong>${esc(cur.example.answer)}</strong></p>
+        <p class="ak-drill-instruction">${uitHtml(cur.instruction, cur.instructionTr, esc)}</p>
+        <p class="ak-drill-example">${esc(t("ak.eg", "z. B."))} <strong>${esc(cur.example.prompt)}</strong> → <strong>${esc(cur.example.answer)}</strong></p>
 
         <div class="ak-stage" data-phase="${phase}">
           <div class="ak-stage-dots">
@@ -321,16 +325,16 @@ export function mountSprechen(root, data, { voice, onRate } = {}) {
                 // moment it becomes the one you are on.
                 const s = scores[r][ii];
                 const cls = `${s === true ? "is-good" : s === false ? "is-bad" : ""} ${ii === i ? "is-current" : ""}`;
-                return `<button type="button" class="ak-dot ${cls}" data-jump="${ii}" aria-label="Aufgabe ${ii + 1}"></button>`;
+                return `<button type="button" class="ak-dot ${cls}" data-jump="${ii}" aria-label="${esc(t("ak.item", "Aufgabe {n}", { n: ii + 1 }))}"></button>`;
               })
               .join("")}
           </div>
 
           <p class="ak-stage-label">${
-            phase === "ready" ? "Bereit?" :
-            phase === "prompt" ? "Hör zu" :
-            phase === "gap" ? "Du bist dran — laut sagen!" :
-            phase === "answer" ? "So geht es" : "Und? Richtig gesagt?"
+            esc(phase === "ready" ? t("ak.phase.ready", "Bereit?") :
+            phase === "prompt" ? t("ak.phase.prompt", "Hör zu") :
+            phase === "gap" ? t("ak.phase.gap", "Du bist dran — laut sagen!") :
+            phase === "answer" ? t("ak.phase.answer", "So geht es") : t("ak.phase.rate", "Und? Richtig gesagt?"))
           }</p>
 
           <p class="ak-prompt">${esc(item().prompt)}</p>
@@ -345,28 +349,28 @@ export function mountSprechen(root, data, { voice, onRate } = {}) {
         <div class="ak-drill-actions">
           ${
             phase === "rate"
-              ? `<button type="button" class="ak-rate ak-rate--no" data-rate="0">Nochmal</button>
-                 <button type="button" class="ak-rate ak-rate--yes" data-rate="1">Konnte ich</button>`
+              ? `<button type="button" class="ak-rate ak-rate--no" data-rate="0">${esc(t("ak.rate.no", "Nochmal"))}</button>
+                 <button type="button" class="ak-rate ak-rate--yes" data-rate="1">${esc(t("ak.rate.yes", "Konnte ich"))}</button>`
               : phase === "ready"
-                ? `<button type="button" class="ak-go" data-go>${fresh ? "Drill starten" : "Weiter"}</button>`
+                ? `<button type="button" class="ak-go" data-go>${esc(fresh ? t("ak.go.start", "Drill starten") : t("ak.go.next", "Weiter"))}</button>`
                 // Running, and stoppable. A drill that chains into the next item on its own
                 // has to offer a way out that is not "leave the page" — the learner who
                 // needs to rewind, or answer the door, taps this.
-                : `<button type="button" class="ak-go ak-go--stop" data-stop>Stopp</button>`
+                : `<button type="button" class="ak-go ak-go--stop" data-stop>${esc(t("ak.go.stop", "Stopp"))}</button>`
           }
         </div>
 
         <div class="ak-drill-foot">
           <label class="ak-switch">
             <input type="checkbox" data-hands ${hands ? "checked" : ""}>
-            <span>Freihändig<em>läuft durch, ohne Bewertung</em></span>
+            <span>${esc(t("ak.hands", "Freihändig"))}<em>${esc(t("ak.hands.sub", "läuft durch, ohne Bewertung"))}</em></span>
           </label>
-          <div class="ak-speeds" role="group" aria-label="Tempo">
+          <div class="ak-speeds" role="group" aria-label="${esc(t("ak.speed", "Tempo"))}">
             ${[0.75, 1, 1.25].map((v) => `<button type="button" class="ak-speed ${v === speed ? "is-active" : ""}" data-speed="${v}">${v}×</button>`).join("")}
           </div>
         </div>
 
-        <p class="ak-drill-score">${done} / ${cur.items.length} bearbeitet${done ? ` · ${good} sicher` : ""}</p>
+        <p class="ak-drill-score">${esc(t("ak.score", "{done} / {total} bearbeitet", { done, total: cur.items.length }))}${done ? ` · ${esc(t("ak.score.sure", "{n} sicher", { n: good }))}` : ""}</p>
       </div>`;
 
     const go = root.querySelector("[data-go]");
@@ -441,5 +445,6 @@ export function mountSprechen(root, data, { voice, onRate } = {}) {
   }
 
   render();
+  onUiText(render);
   return { stop };
 }

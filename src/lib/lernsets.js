@@ -270,7 +270,30 @@ export function counts() {
 //    progress.js records mastery per word, so a learner's history survives the reshuffle —
 //    but it does mean a cohort id must never be treated as a permanent address for a
 //    particular set of words the way "a1-04" is.
-const COHORT_SIZE = 20;
+const COHORT_SIZE = 25;
+
+/**
+ * A few words that name a round: what a learner sees in the list instead of "Wörter 41-60".
+ * A range is a place in a list nobody has seen; "Haus · Wasser · Kind" is something you
+ * can picture. Nouns first — they are the tangible ones — in frequency order, then verbs,
+ * then adjectives if a round is short of nouns. Function words (und, nicht, zu) never lead:
+ * they are in every round and name none of them.
+ */
+// The three share one line in a side column, so a long word ("Vergangenheit") is passed
+// over for a shorter one rather than cut to "Vergangenhe…".
+const LEAD_MAX = 24;
+function leadWords(items, n = 3) {
+  const byRank = [...items].sort((a, b) => (a.rank ?? 1e9) - (b.rank ?? 1e9));
+  const picked = [];
+  const fits = (w) => [...picked, w].join(" · ").length <= LEAD_MAX;
+  for (const pos of ["noun", "verb", "adj"]) {
+    for (const w of byRank) {
+      if (picked.length >= n) break;
+      if (w.pos === pos && !picked.includes(w.lemma) && fits(w.lemma)) picked.push(w.lemma);
+    }
+  }
+  return picked;
+}
 
 const RANKED = all()
   .filter((w) => w.rank != null && w.en != null)
@@ -295,6 +318,7 @@ for (let i = 0; i < RANKED.length; i += COHORT_SIZE) {
     from: i + 1,
     to: i + items.length,
     title: `Wörter ${i + 1}-${i + items.length}`,
+    lead: leadWords(items),
     words: items.length,
     // Which levels these words were banded into. A frequency cohort cuts across levels by
     // construction, and saying so is the honest version of a level badge.
@@ -357,7 +381,7 @@ export function frequencyCounts() {
 
 
 // ---------------------------------------------------------------------------
-// Portionen — the level deck, cut into sittings of 20
+// Portionen — the level deck, cut into sittings of 25
 // ---------------------------------------------------------------------------
 //
 // "Alle A1" is 650 cards behind one link, and B1 is 1150. On a phone that is not a deck,
@@ -367,12 +391,10 @@ export function frequencyCounts() {
 // A Lernset already solves this thematically, but only for someone who wants to study
 // "Haus & Räume". Someone who has simply chosen a level and wants to work through it in
 // order has, until now, had nothing between one card and the whole level. A Portion is
-// that middle rung: the level's own list, in the level's own order, cut every 20 words.
+// that middle rung: the level's own list, in the level's own order, cut every 25 words.
 //
-// Why 20 and not 25 (the Lernset size): a Portion is a cut across the level, not a topic,
-// so it is not competing with a Lernset for the same job — and 20 is the size the
-// frequency cohorts already use for exactly the same "one sitting, no theme" role. One
-// number for both keeps "eine Portion" meaning one thing on this site.
+// 25, the Lernset size: a round is a round wherever it comes from, and a learner who is
+// used to 25 cards should not meet 20 here and 25 there. The frequency cohorts use it too.
 //
 // Boundaries are deliberately *not* snapped to unit edges. Snapping would just reproduce
 // the Lernsets with a different name; the point of the Portion is that it is a ruler laid
@@ -382,7 +404,7 @@ export function frequencyCounts() {
 //
 // Only words with a translation are counted, the same filter asVokabelCards() applies, so
 // a Portion's word count and the cards it actually opens with can never disagree.
-const PORTION_SIZE = 20;
+const PORTION_SIZE = 25;
 
 // Two digits, not the cohorts' three: the longest level is 58 Portionen, and "a1-teil-004"
 // would promise a thousand of them.
@@ -404,6 +426,7 @@ for (const level of LEVELS) {
       from: i + 1,
       to: i + items.length,
       title: `${level} Teil ${index}`,
+      lead: leadWords(items),
       words: items.length,
       // The topics this cut lands in — "Familie & Beziehungen · Gefühle" when it straddles
       // two. This is what a Portion has instead of a name of its own.

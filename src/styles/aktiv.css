@@ -101,6 +101,24 @@
   .ak-mode { padding: 10px var(--space-3); font-size: var(--text-sm); }
 }
 
+/* Compact: the switch inside the topic bar (Artikel — see ModeSwitch.astro). Same thumb,
+   bar-sized, and the tooltip opens below the bar rather than into it. */
+.tb-end-row { display: flex; align-items: center; gap: var(--space-4); min-width: 0; }
+.ak-modes--compact { min-width: 0; margin: 0; padding: 3px; flex: none; }
+.ak-modes--compact::before { top: 3px; left: 3px; width: calc(50% - 3px); height: calc(100% - 6px); }
+.ak-modes--compact .ak-mode { padding: 6px var(--space-4); font-size: var(--text-sm); min-height: 32px; }
+.tb-end-row > .kb { min-width: 0; }
+@media (max-width: 720px) {
+  .tb-end-row { gap: var(--space-2); }
+  .ak-modes--compact { width: auto; margin: 0; }
+  .ak-modes--compact .ak-mode { padding: 6px 10px; }
+}
+/* Below 400px the row cannot hold switch, course link, position and arrows; the position
+   ("1/8") goes first — the arrows beside it still step through the Stufe. */
+@media (max-width: 400px) {
+  .tb-end-row:has(.ak-modes--compact) .kb-pos { display: none; }
+}
+
 .vp-page[data-mode="aktiv"] .vp-workspace,
 .vp-page[data-mode="aktiv"] .vp-hero,
 .vp-page[data-mode="ueben"] .ak-aktiv { display: none; }

@@ -2,6 +2,7 @@
 // scoring.js, this file and the .exam-app chrome in src/styles/exam-app.css) that a
 // new exam page builds on. Ported from Pflegeplace's src/lib/exam/render-helpers.ts,
 // rewritten against this project's plain-JS + design-token style.
+import { tx } from "./i18n.js";
 
 export function el(tag, cls, html) {
   const e = document.createElement(tag);
@@ -52,8 +53,8 @@ export function choiceCard({ qLabel, questionText, context, options, correctKey,
     fb.className = "feedback " + (ok ? "correct" : "incorrect");
     const right = options.find((o) => o.key === correctKey);
     fb.innerHTML = ok
-      ? CHECK + " <span>Richtig.</span>"
-      : CROSS + " <span>Nicht ganz — richtig ist <b>" + escapeHtml(right ? right.label : correctKey) + "</b>.</span>";
+      ? CHECK + " <span>" + escapeHtml(tx("exam.fb.correct", "Richtig.")) + "</span>"
+      : CROSS + " <span>" + tx("exam.fb.wrong", "Nicht ganz — richtig ist <b>{a}</b>.", { a: escapeHtml(right ? right.label : correctKey) }) + "</span>";
   }
 
   if (existing) lock(existing.given);
@@ -81,8 +82,8 @@ export function practiceToggle({ existing, onToggle }) {
   function paint() {
     btn.classList.toggle("marked", marked);
     btn.innerHTML = marked
-      ? CHECK + " <span>Als geübt markiert</span>"
-      : '<span class="practice-toggle-dot"></span><span>Als geübt markieren</span>';
+      ? CHECK + " <span>" + escapeHtml(tx("exam.practiced.done", "Als geübt markiert")) + "</span>"
+      : '<span class="practice-toggle-dot"></span><span>' + escapeHtml(tx("exam.practiced.mark", "Als geübt markieren")) + "</span>";
   }
   paint();
   btn.addEventListener("click", () => {

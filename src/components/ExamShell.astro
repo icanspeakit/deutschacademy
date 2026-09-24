@@ -15,7 +15,8 @@
 // Unlike a grammar topic, the explanation is NOT a prerequisite here — you do not need
 // the scoring rules to start an Übungssatz — so the collapsed default is the honest one
 // rather than a space-saving compromise, and the preference is remembered per browser.
-import PracticeHeader from "./PracticeHeader.astro";
+import SiteNav from "./SiteNav.astro";
+import ExamRail from "./ExamRail.astro";
 import "../styles/practice.css";
 import "../styles/pruefungen.css";
 import "../styles/verben-praepositionen.css";
@@ -40,19 +41,23 @@ interface Props {
   titleKey?: string;
   leadKey?: string;
   practiceHeadingKey?: string;
+  /** i18n keys for `badges`, same order; a missing entry leaves that badge untranslated
+      (level codes like "A1–C2" need none). */
+  badgeKeys?: (string | undefined)[];
 }
 const {
   header, title, lead, badges = [], practiceHeading = "Üben",
-  titleKey, leadKey, practiceHeadingKey = "exam.practiceHeading",
+  titleKey, leadKey, practiceHeadingKey = "exam.practiceHeading", badgeKeys = [],
 } = Astro.props;
 ---
-<PracticeHeader title={header} />
+<SiteNav active="pruefungen" />
 
 <!-- Rendered collapsed, then opened by the script if this learner asked for it.
      Collapsed is the more common state, so starting here means no visible re-layout
      on load. -->
 <main class="vp-page vp-page--split vp-page--sheet" id="vp-page" data-rule="hidden" data-anim="off">
-  <a href="/pruefungen" class="vp-back-link" data-i18n="exam.backToAll">← Alle Prüfungen</a>
+  {/* The way back up ("Übersicht") and sideways to the other exams, in one row. */}
+  <ExamRail />
 
   <div class="vp-workspace">
     <!-- First in the DOM so that on a phone — where scroll order is the only hierarchy
@@ -62,7 +67,7 @@ const {
       <div class="vp-hero">
         <div class="vp-hero-badges">
           <span class="badge badge-brand" data-i18n="exam.badge">Prüfung</span>
-          {badges.map((b) => <span class="badge badge-info">{b}</span>)}
+          {badges.map((b, i) => <span class="badge badge-info" data-i18n={badgeKeys[i]}>{b}</span>)}
         </div>
         <h1 data-i18n={titleKey}>{title}</h1>
         <p data-i18n={leadKey}>{lead}</p>
@@ -113,6 +118,7 @@ const {
         data-show="Was ist das für eine Prüfung?"
         data-hide="Erklärung einklappen"
         data-i18n-attr="data-show:exam.whatIsThis;data-hide:exam.collapseInfo"
+        data-i18n="exam.whatIsThis"
         aria-controls="vp-rule-card"
       >Was ist das für eine Prüfung?</button>
     </aside>
@@ -141,7 +147,7 @@ const {
   <!-- Dev only, same as the grammar pages: the tour is once per browser, so once you
        have seen it you can no longer see it the way a learner does. This wipes both
        stored flags and reloads clean. Shown on the live site too. -->
-  <button type="button" class="vp-dev-reset" id="vp-dev-reset" title="Tour-Flags löschen und neu laden">
+  <button type="button" class="vp-dev-reset" id="vp-dev-reset" title="Tour-Flags löschen und neu laden" data-i18n-attr="title:exam.devReset.title">
     ↻ Tour neu
   </button>
 </main>

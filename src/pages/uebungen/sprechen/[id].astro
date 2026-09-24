@@ -9,9 +9,18 @@
 //
 // Nothing is recorded and nothing is uploaded. There is no scoring here for the same reason
 // as on the Schreiben pages: it cannot be done honestly in a browser.
+//
+// The task and its talking points also come in the learner's language
+// (src/data/uebersetzungen/sprechen.json): not understanding the instruction is no reason
+// to fail a speaking task. The Redemittel and the model answer stay German — they are
+// what is being practised.
 import Layout from "../../../layouts/Layout.astro";
-import PracticeHeader from "../../../components/PracticeHeader.astro";
+import SiteNav from "../../../components/SiteNav.astro";
 import Icon from "../../../components/Icon.astro";
+import GrammarHelp from "../../../components/GrammarHelp.astro";
+import GrammarHelpText from "../../../components/GrammarHelpText.astro";
+import sprechenHelp from "../../../data/uebersetzungen/sprechen.json";
+import { field, list } from "../../../lib/helpContent.js";
 import { sprechen, neighbours, sprechenSets, SPRECHEN_ICON } from "../../../lib/fertigkeiten.js";
 import { photoSourceOf } from "../../../lib/sprechenBilder.js";
 import "../../../styles/practice.css";
@@ -30,25 +39,39 @@ const { types } = sprechen;
 // null unless this photo was fetched by scripts/fetch-sprechen-bilder.mjs AND its library
 // asks to be named — the three borrowed from the older trainers are in neither case.
 const credit = photoSourceOf(task);
+const tx = (sprechenHelp.entries as Record<string, any>)[task.id] ?? null;
 // Inside a set the way back is to the set, not to the whole library: that is where the
 // learner came from and where the other three pictures are.
 const back = set
-  ? { href: `/uebungen/sprechen/set/${set.id}`, label: `← ${set.title}` }
-  : { href: "/uebungen/sprechen/", label: "← Alle Sprechaufgaben" };
+  ? { href: `/uebungen/sprechen/set/${set.id}`, label: set.title, key: `sprechenSet.${set.id}.title` }
+  : { href: "/uebungen/sprechen/", label: "Alle Sprechaufgaben", key: "sprechen.backAll" };
+// The exam line under a task is one of a handful of fixed sentences — keyed by its text, so
+// a sentence with no key yet simply stays German.
+const EXAM_KEYS: Record<string, string> = {
+  "Erster Teil im Sprechen bei Start Deutsch 1, telc A1 und DTZ.": "sprechen.exam.vorstellen",
+  "Aufgabenform aus dem Sprechteil des DTZ.": "sprechen.exam.dtz",
+  "Aufgabenform aus dem Sprechteil von telc B1/B2.": "sprechen.exam.telcB1B2",
+  "Aufgabenform aus dem Sprechteil von telc B2.": "sprechen.exam.telcB2",
+  "Aufgabenform aus dem gemeinsamen Sprechteil von telc B1 und B2.": "sprechen.exam.telcPair",
+};
+const ALSO_KEYS: Record<string, string> = {
+  "/uebungen/sprechen/dtz-bildbeschreibung": "sprechen.alsoIn.dtz",
+  "/uebungen/sprechen-b1b2": "sprechen.alsoIn.telc",
+};
 ---
 <Layout
   title={`${task.title} – Sprechen ${task.level} – DeutschAcademy`}
   description={task.blurb}
 >
-  <PracticeHeader title="Sprechen" />
-  <main class="practice-main">
-    <a href={back.href} class="vp-back-link">{back.label}</a>
+  <SiteNav active="fertigkeiten" />
+  <main class="practice-main" id="sk-page" data-gx="off">
+    <a href={back.href} class="vp-back-link">← <span data-i18n={back.key}>{back.label}</span></a>
 
     <article>
       <header class="sk-head">
         <span class="sk-card-ic"><Icon name={SPRECHEN_ICON[task.type] ?? "mic"} size={22} /></span>
         <div>
-          <p class="eyebrow">{set ? set.title : types[task.type]}</p>
+          <p class="eyebrow" data-i18n={set ? `sprechenSet.${set.id}.title` : `type.sprechen.${task.type}`}>{set ? set.title : types[task.type]}</p>
           <h1>{task.title}</h1>
         </div>
         <span class="sk-badge">{task.level}</span>
@@ -73,62 +96,65 @@ const back = set
       ) : task.imageNeeded ? (
         <section class="sk-block">
           <p class="sk-photo-pending">
-            <b>Das Bild:</b> {task.imageNeeded}<br />
-            Das Foto zu dieser Aufgabe fehlt noch. Beschreibe die Szene so, wie sie hier steht —
-            die Aufgabe, der Timer und die Redemittel sind dieselben.
+            <b data-i18n="sprechen.pending.label">Das Bild:</b> {task.imageNeeded}<br />
+            <span data-i18n="sprechen.pending.text">Das Foto zu dieser Aufgabe fehlt noch. Beschreibe die Szene so, wie sie hier steht — die Aufgabe, der Timer und die Redemittel sind dieselben.</span>
           </p>
         </section>
       ) : null}
 
       <section class="sk-block">
-        <h2>Aufgabe</h2>
+        <h2 data-i18n="skills.h2.task">Aufgabe</h2>
+        {tx && <GrammarHelp level={task.level} root="sk-page" reviewed={tx.reviewed} />}
         <p>{task.prompt}</p>
+        <GrammarHelpText text={field(tx?.prompt)} />
       </section>
 
       <section class="sk-block">
-        <h2>Redezeit</h2>
+        <h2 data-i18n="sprechen.h2.time">Redezeit</h2>
         <div class="sk-timer">
           <span class="sk-timer-clock" id="sk-clock" data-seconds={task.seconds}></span>
-          <button class="sk-btn" type="button" id="sk-start">Start</button>
-          <button class="sk-btn" type="button" id="sk-reset">Zurücksetzen</button>
+          {/* Both words are in the button and the script only swaps which one shows, so
+              the i18n pass can translate each without undoing the running state. */}
+          <button class="sk-btn" type="button" id="sk-start"><span data-i18n="sprechen.timer.start">Start</span><span data-i18n="sprechen.timer.pause" hidden>Pause</span></button>
+          <button class="sk-btn" type="button" id="sk-reset" data-i18n="skills.reset">Zurücksetzen</button>
         </div>
       </section>
 
       <section class="sk-block">
-        <h2>Darüber sollst du sprechen</h2>
+        <h2 data-i18n="sprechen.h2.points">Darüber sollst du sprechen</h2>
         <ul class="sk-points">{task.bullets.map((b) => <li>{b}</li>)}</ul>
+        <GrammarHelpText text={list(tx?.bullets)} />
       </section>
 
       {task.phrases?.length > 0 && (
         <section class="sk-block">
-          <h2>Redemittel</h2>
+          <h2 data-i18n="skills.h2.phrases">Redemittel</h2>
           <div class="sk-phrases">{task.phrases.map((p) => <span class="sk-phrase">{p}</span>)}</div>
         </section>
       )}
 
       {task.model && (
         <details class="sk-reveal">
-          <summary>Modellantwort — erst öffnen, wenn du gesprochen hast</summary>
+          <summary data-i18n="sprechen.model">Modellantwort — erst öffnen, wenn du gesprochen hast</summary>
           <div class="sk-reveal-body"><div class="sk-model">{task.model}</div></div>
         </details>
       )}
 
       {task.check?.length > 0 && (
         <details class="sk-reveal">
-          <summary>Worauf eine Prüferin hört</summary>
+          <summary data-i18n="sprechen.check">Worauf eine Prüferin hört</summary>
           <div class="sk-reveal-body">
-            <ul class="sk-check">{task.check.map((c) => <li>{c}</li>)}</ul>
+            <ul class="sk-check">{task.check.map((c, i) => <li data-i18n={`sprechen.check.${task.id}.${i}`}>{c}</li>)}</ul>
           </div>
         </details>
       )}
 
       {(task.exam || task.href) && (
         <p class="sk-foot">
-          {task.exam}
+          {task.exam && <span data-i18n={EXAM_KEYS[task.exam]}>{task.exam}</span>}
           {task.exam && task.href && " "}
           {task.href && (
-            <>Dieses Bild liegt auch <a href={task.href}>{task.hrefLabel}</a>, dort mit allen
-            anderen hintereinander.</>
+            <span data-i18n-html={ALSO_KEYS[task.href]} data-i18n-vars={JSON.stringify({ href: task.href })}>Dieses Bild liegt auch <a href={task.href}>{task.hrefLabel}</a>, dort mit allen anderen hintereinander.</span>
           )}
         </p>
       )}
@@ -158,13 +184,15 @@ const back = set
     };
     show();
 
-    const stop = () => { window.clearInterval(timer); timer = 0; start.textContent = "Start"; };
+    const [startWord, pauseWord] = start.children;
+    const running = (on) => { startWord.hidden = on; pauseWord.hidden = !on; };
+    const stop = () => { window.clearInterval(timer); timer = 0; running(false); };
 
     start.addEventListener("click", () => {
       if (timer) { stop(); return; }
       if (left === 0) left = total;
       recordSession("sprechen");
-      start.textContent = "Pause";
+      running(true);
       timer = window.setInterval(() => {
         left = Math.max(0, left - 1);
         show();

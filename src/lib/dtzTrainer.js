@@ -114,6 +114,21 @@ function tfRow(qid, given, solved, correct) {
    match the shape is left exactly as authored. */
 const PART_LABEL_RE = /^(Hören|Lesen|Schreiben) *· *Teil *([0-9]+)$/;
 const SKILL_KEY = { "Hören": "skill.hoeren", "Lesen": "skill.lesen", "Schreiben": "skill.schreiben" };
+/* A part's title ("Ansagen am Telefon … verstehen") says what the part tests — exam
+   information, so it is translated; the key is derived from the German title itself
+   ("dtz.pt.<hash>"), so the data files stay as authored. The instruction under it is the
+   exam's own German rubric and is left alone. */
+function hashKey(prefix, s) {
+  let h = 0x811c9dc5;
+  for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 0x01000193) >>> 0; }
+  return prefix + h.toString(16);
+}
+function tOr(key, fallback, vars) {
+  return dict[key] != null ? translate(dict, key, vars) : fallback;
+}
+function partTitle(title) {
+  return title ? tOr(hashKey("dtz.pt.", title), title) : "";
+}
 function partLabel(label) {
   const m = PART_LABEL_RE.exec(label || "");
   if (!m) return label;
@@ -164,7 +179,7 @@ function renderDialog(part, state, solved) {
         })
         .join("");
       return `<div class="dtz-group">
-        <details class="dtz-transcript" ${gi === 0 ? "open" : ""}><summary>Gespräch ${gi + 1} lesen</summary>${lines}</details>
+        <details class="dtz-transcript" ${gi === 0 ? "open" : ""}><summary>${escapeHtml(tOr("dtz.readDialog", `Gespräch ${gi + 1} lesen`, { n: gi + 1 }))}</summary>${lines}</details>
         ${qs}
       </div>`;
     })
@@ -424,7 +439,7 @@ export function mountDtzTrainer(root, data, { onAnswer } = {}) {
 
   function renderBody() {
     if (current === data.parts.length) {
-      body.innerHTML = `<div class="dtz-part"><h3>Schreiben</h3>${renderSchreiben()}</div>`;
+      body.innerHTML = `<div class="dtz-part"><h3>${escapeHtml(t("skill.schreiben"))}</h3>${renderSchreiben()}</div>`;
       body.querySelectorAll("[data-task]").forEach((b) =>
         b.addEventListener("click", () => {
           state.schreiben.task = b.dataset.task;
@@ -451,8 +466,8 @@ export function mountDtzTrainer(root, data, { onAnswer } = {}) {
     const renderPart = RENDERERS[part.type];
     body.innerHTML = `<div class="dtz-part">
       <div class="dtz-part-head">
-        <span class="badge badge-info">${escapeHtml(part.group)}</span>
-        <h3>${escapeHtml(part.title)}</h3>
+        <span class="badge badge-info">${escapeHtml(SKILL_KEY[part.group] ? t(SKILL_KEY[part.group]) : part.group)}</span>
+        <h3>${escapeHtml(partTitle(part.title))}</h3>
       </div>
       <p class="dtz-instruction">${escapeHtml(part.instruction)}</p>
       ${renderPart ? renderPart(part, state, solved) : ""}

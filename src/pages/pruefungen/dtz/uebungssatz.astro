@@ -3,7 +3,7 @@
 // Übungssätze are JSON files in src/data/pruefungen/dtz/ — adding one registers it
 // here automatically and turns on the set picker.
 import Layout from "../../../layouts/Layout.astro";
-import PracticeHeader from "../../../components/PracticeHeader.astro";
+import SiteNav from "../../../components/SiteNav.astro";
 import "../../../styles/practice.css";
 import "../../../styles/pruefungen.css";
 import "../../../styles/dtz.css";
@@ -18,15 +18,15 @@ const first = saetze[0];
   title="DTZ-Übungssatz – DeutschAcademy"
   description="Kompletter DTZ-Übungssatz im Prüfungsformat: Hören und Lesen mit 45 Aufgaben und automatischer Auswertung nach den offiziellen Punktegrenzen, plus die Schreibaufgabe."
 >
-  <PracticeHeader title="DTZ-Übungssatz" />
+  <SiteNav active="pruefungen" />
 
   <main class="practice-main practice-main--wide practice-main--trainer dtz-trainer" id="dtz-root">
     <a href="/pruefungen/dtz" class="vp-back-link" data-i18n="exam.backToDtz">← Zurück zur DTZ-Übersicht</a>
 
     <div class="practice-hero">
-      <p class="eyebrow">Prüfung simulieren</p>
-      <h1><span class="hero-exam">DTZ</span> {first.meta.title.replace(/^DTZ-/, "")}</h1>
-      <p>
+      <p class="eyebrow" data-i18n="dtzSet.eyebrow">Prüfung simulieren</p>
+      <h1><span class="hero-exam">DTZ</span> <span data-i18n={first.meta.title === "DTZ-Übungssatz 1" ? "exam.h1.set1" : undefined}>{first.meta.title.replace(/^DTZ-/, "")}</span></h1>
+      <p data-i18n="dtzSet.hero">
         Neun Prüfungsteile, 45 bewertete Aufgaben — wie in der echten Prüfung. Die Auswertung nutzt
         die offiziellen DTZ-Punktegrenzen: ab 33 Punkten B1, ab 20 Punkten A2.
       </p>
@@ -41,7 +41,7 @@ const first = saetze[0];
     )}
 
     <div class="dtz-audio-note">
-      <strong>Kein Ton?</strong> {first.meta.audioNote}
+      <strong data-i18n="dtzSet.noAudio.title">Kein Ton?</strong> <span data-i18n="dtzSet.noAudio.text">{first.meta.audioNote}</span>
     </div>
 
     <div class="dtz-nav" data-dtz-nav></div>

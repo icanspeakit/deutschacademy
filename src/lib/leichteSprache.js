@@ -25,6 +25,8 @@
  * them, so a caller that forgets does not silently get half a page.
  */
 
+import { t, onUiText } from "./uiText.js";
+
 const KEY = "da-leichte-sprache";
 
 let on = false;
@@ -90,8 +92,9 @@ export function mountLeichteSprache(root = document) {
     const paint = () => {
       btn.setAttribute("aria-pressed", String(on));
       const label = btn.querySelector("[data-ls-toggle-state]");
-      if (label) label.textContent = on ? "Leichte Sprache" : "Normal";
+      if (label) label.textContent = on ? t("ls.state.leicht", "Leichte Sprache") : t("ls.state.normal", "Normal");
     };
+    onUiText(paint);
     btn.addEventListener("click", () => { setLeicht(!on, root); paint(); });
     paint();
   }

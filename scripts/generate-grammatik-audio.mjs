@@ -12,6 +12,12 @@
 //   pnpm generate:grammatik-audio --except a,b                   leave these for later
 //   pnpm generate:grammatik-audio --dry-run                      what it would cost
 //   pnpm generate:grammatik-audio --stamp-only                   re-sync JSON with disk
+//   pnpm generate:grammatik-audio --provider azure               Microsoft neural voices
+//
+// --provider azure uses the Azure Speech key that already runs the Aussprache-Check
+// (AZURE_SPEECH_KEY / AZURE_SPEECH_REGION): Katja asks, Conrad answers. Its free tier is
+// 0.5 M characters a month, so it voices the topics the ElevenLabs quota has not reached
+// without touching that quota. Existing files are kept either way.
 //
 // Resumable: a line whose file already exists is skipped, so an interrupted run is just
 // re-run. Budget is roughly 1,000 characters per topic — about 21,000 for all of them,
@@ -34,23 +40,36 @@ const ONLY_TOPIC = flag("topic");
 // cheaper than a run that dies four files into topic nineteen.
 const EXCEPT = new Set(String(flag("except") || "").split(",").filter(Boolean));
 
+const AZURE = flag("provider") === "azure";
 const API_KEY = process.env.ELEVENLABS_API_KEY;
-if (!API_KEY && !DRY_RUN && !STAMP_ONLY) {
-  console.error("Missing ELEVENLABS_API_KEY. Add it to .env.local and re-run.");
-  process.exit(1);
+const AZURE_KEY = process.env.AZURE_SPEECH_KEY;
+const AZURE_REGION = process.env.AZURE_SPEECH_REGION;
+if (!DRY_RUN && !STAMP_ONLY) {
+  if (AZURE && (!AZURE_KEY || !AZURE_REGION)) {
+    console.error("Missing AZURE_SPEECH_KEY / AZURE_SPEECH_REGION. Add them to .env.local and re-run.");
+    process.exit(1);
+  }
+  if (!AZURE && !API_KEY) {
+    console.error("Missing ELEVENLABS_API_KEY. Add it to .env.local and re-run.");
+    process.exit(1);
+  }
 }
 
 // Same default voice as the rest of the site, so a sentence does not change speaker
 // between the Aussprache page and a grammar drill.
-const VOICE_ID = process.env.ELEVENLABS_VOICE_ID || "EXAVITQu4vr4xnSDxMaL";
+const VOICE_ID = AZURE
+  ? process.env.AZURE_TTS_VOICE || "de-DE-KatjaNeural"
+  : process.env.ELEVENLABS_VOICE_ID || "EXAVITQu4vr4xnSDxMaL";
 // The drill's answering voice. Falls back to the main voice, which still works — you just
 // lose the turn-taking cue, so set it before a real run.
-const ANSWER_VOICE_ID = process.env.ELEVENLABS_ANSWER_VOICE_ID || VOICE_ID;
+const ANSWER_VOICE_ID = AZURE
+  ? process.env.AZURE_TTS_ANSWER_VOICE || "de-DE-ConradNeural"
+  : process.env.ELEVENLABS_ANSWER_VOICE_ID || VOICE_ID;
 const MODEL_ID = process.env.ELEVENLABS_MODEL_ID || "eleven_multilingual_v2";
 // Sentences, not single words, but the same speech-grade bitrate the wortschatz files use:
 // ~5 KB a line, and nobody can hear the 128 kbps version of a four-word noun phrase.
 const OUTPUT_FORMAT = process.env.ELEVENLABS_OUTPUT_FORMAT || "mp3_22050_32";
-const CONCURRENCY = Number(process.env.ELEVENLABS_CONCURRENCY) || 4;
+const CONCURRENCY = Number(process.env.ELEVENLABS_CONCURRENCY) || (AZURE ? 2 : 4);
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const dataDir = path.join(__dirname, "..", "src", "data", "grammatik");
@@ -95,7 +114,13 @@ function planTopic(topic) {
   // speakers; without the tag both roles resolve to one file, one of them is never
   // generated, and the drill loses the turn-taking it exists for. Twelve of the current
   // topics have at least one such line.
-  const tag = (voice) => (voice === VOICE_ID ? "" : `--${voice.slice(0, 6).toLowerCase()}`);
+  // An Azure name ("de-DE-ConradNeural") shares its first six letters with every other
+  // German voice, so it is tagged by the speaker's name instead.
+  const tag = (voice) => {
+    if (voice === VOICE_ID) return "";
+    const azureName = voice.match(/^[a-z]{2}-[A-Z]{2}-(\w+?)Neural$/);
+    return `--${(azureName ? azureName[1] : voice.slice(0, 6)).toLowerCase()}`;
+  };
   const add = (text, voice, set) => {
     if (!text) return;
     lines.push({ text, voice, set, file: `${fileStem(text)}${tag(voice)}.mp3` });
@@ -125,7 +150,32 @@ function planTopic(topic) {
 
 /* ------------------------------------------------------------------- api ---- */
 
+const xml = (t) => t.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+
+/* Same request and output as scripts/generate-aussprache-check-audio.mjs: a little under
+   normal speed, because these are learners, and a small mono mp3. */
+async function synthesiseAzure(text, voice) {
+  const ssml = `<speak version="1.0" xml:lang="de-DE"><voice name="${voice}"><prosody rate="-8%">${xml(text)}</prosody></voice></speak>`;
+  const res = await fetch(`https://${AZURE_REGION}.tts.speech.microsoft.com/cognitiveservices/v1`, {
+    method: "POST",
+    headers: {
+      "Ocp-Apim-Subscription-Key": AZURE_KEY,
+      "Content-Type": "application/ssml+xml",
+      "X-Microsoft-OutputFormat": "audio-24khz-48kbitrate-mono-mp3",
+      "User-Agent": "deutschacademy-grammatik-audio",
+    },
+    body: ssml,
+  });
+  if (res.status === 429) {
+    await new Promise((r) => setTimeout(r, 3000));
+    return synthesiseAzure(text, voice);
+  }
+  if (!res.ok) throw new Error(`Azure ${res.status} ${res.statusText} — ${await res.text()}`);
+  return Buffer.from(await res.arrayBuffer());
+}
+
 async function synthesise(text, voiceId) {
+  if (AZURE) return synthesiseAzure(text, voiceId);
   const res = await fetch(
     `https://api.elevenlabs.io/v1/text-to-speech/${voiceId}?output_format=${OUTPUT_FORMAT}`,
     {
@@ -162,7 +212,19 @@ for (const file of files) {
   if (!lines.length) continue;
 
   const outDir = path.join(audioRoot, topic.id);
-  if (!DRY_RUN) mkdirSync(outDir, { recursive: true });
+  // One topic, one pair of voices. A topic ElevenLabs already voiced keeps them: Azure
+  // would otherwise add its own answer lines (their file names differ) and a drill would
+  // switch speakers halfway. `.voice` marks a topic Azure started, so a resumed run
+  // carries on with it.
+  const marker = path.join(outDir, ".voice");
+  const hasMp3 = existsSync(outDir) && readdirSync(outDir).some((f) => f.endsWith(".mp3"));
+  const madeBy = existsSync(marker) ? readFileSync(marker, "utf8").trim() : hasMp3 ? "elevenlabs" : null;
+  if (AZURE && madeBy === "elevenlabs") continue;
+  if (!AZURE && madeBy === "azure") continue;
+  if (!DRY_RUN) {
+    mkdirSync(outDir, { recursive: true });
+    if (!STAMP_ONLY && !madeBy) writeFileSync(marker, AZURE ? "azure" : "elevenlabs");
+  }
 
   const todo = lines.filter((l) => !existsSync(path.join(outDir, l.file)));
   const unique = [...new Map(todo.map((l) => [l.file, l])).values()];

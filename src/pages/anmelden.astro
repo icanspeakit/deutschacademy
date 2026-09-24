@@ -8,7 +8,7 @@
 export const prerender = false;
 
 import Layout from "../layouts/Layout.astro";
-import PracticeHeader from "../components/PracticeHeader.astro";
+import SiteNav from "../components/SiteNav.astro";
 import SignInCard from "../components/auth/SignInCard.jsx";
 import "../styles/practice.css";
 import "../styles/auth.css";
@@ -35,7 +35,7 @@ const failed = Astro.url.searchParams.get("fehler") === "auth";
       this URL is a redirect. */}
   <meta slot="head" name="robots" content="noindex, nofollow" />
 
-  <PracticeHeader title="Anmelden" />
+  <SiteNav />
   <main class="da-auth-page">
     {/* client:load, not client:idle. This island *is* the page — deferring it to idle
         would leave a visitor looking at an empty card frame on a slow phone, which is

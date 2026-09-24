@@ -79,6 +79,7 @@ function contentsOf(entry) {
     const topics = grammarTopics.filter((t) => !level || t.level === level);
     return {
       label: level ? "Themen in diesem Band" : "Alle 27 Themen, nach Niveau",
+      labelKey: level ? "wissen.toc.topicsInBand" : "wissen.toc.allTopics",
       items: topics.map((t) => (level ? t.name : `${t.level} · ${t.name}`)),
     };
   }
@@ -86,16 +87,23 @@ function contentsOf(entry) {
     const sets = lernsets({ level: entry.level, status: "built" });
     return {
       label: `${sets.length} Lernsets`,
+      labelKey: "wissen.toc.sets", labelVars: { n: sets.length },
       items: sets.map((s) => `${s.title} · ${s.words} Wörter`),
+      // The set's name stays German (it is what the PDF prints); the count follows the UI.
+      itemKeys: sets.map((s) => ({ key: "wissen.toc.setRow", vars: { title: s.title, n: s.words } })),
     };
   }
   if (entry.category === "pruefungen") {
     // The Bayern booklets are the Landesfragen; the two Fakten bands are the topic
     // chapters. Both are answered by what the file's own name says it is.
     if (entry.file.includes("bayern")) {
-      return { label: "Landesteil Bayern", items: ["10 Landesfragen mit Lösungen", "Karte und Kurzprofil des Bundeslands"] };
+      return {
+        label: "Landesteil Bayern", labelKey: "wissen.toc.bayern",
+        items: ["10 Landesfragen mit Lösungen", "Karte und Kurzprofil des Bundeslands"],
+        itemKeys: [{ key: "wissen.toc.bayern.q" }, { key: "wissen.toc.bayern.map" }],
+      };
     }
-    return { label: `${lid.topics.length} Kapitel`, items: lid.topics.map((t) => t.title) };
+    return { label: `${lid.topics.length} Kapitel`, labelKey: "wissen.toc.chapters", labelVars: { n: lid.topics.length }, items: lid.topics.map((t) => t.title) };
   }
   return null;
 }

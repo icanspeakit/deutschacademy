@@ -88,6 +88,15 @@ type Item = {
   done?: number;
   minutes?: number;
   meta?: string;
+  /* i18n: the German fields above stay the server text and the fallback; these keys are
+     what the other languages read (public/i18n/<lang>.json). A grammar topic's own name
+     has no key — topic names stay German everywhere in the nav. */
+  labelKey?: string;
+  eyebrowKey?: string;
+  eyebrowVars?: Record<string, string | number>;
+  leadKey?: string;
+  leadVars?: Record<string, string | number>;
+  metaKey?: string;
   // "quiz"      — a single Lückentext from grammatik.json
   // "workspace" — the full rule card plus four or five exercises
   // "trainer" — the real Artikel-Trainer (practiceWorkspace.js)
@@ -110,6 +119,9 @@ type Section = {
   blurb: string;
   focus: string[];
   items: Item[];
+  /** i18n vars for `fortschritt.sec.<id>.blurb` / `.focus.<n>`; the keys follow from the id. */
+  blurbVars?: Record<string, string | number>;
+  focusVars?: (Record<string, string | number> | undefined)[];
 };
 
 // Nothing is pre-filled. Every number on this page starts at zero and is filled
@@ -130,7 +142,9 @@ const grammarItem = (t: (typeof grammatik)[number], level: string): Item => ({
   level,
   levelSource: "data",
   eyebrow: `Grammatik · ${level}`,
+  eyebrowKey: "fortschritt.eyebrow.grammar", eyebrowVars: { level },
   lead: t.intro,
+  leadKey: `grammatik.${t.id}.intro`,
   tasks: t.questions.length,
   done: doneOf(t.id),
   minutes: Math.round(t.questions.length * 1.5),
@@ -168,7 +182,9 @@ const workspaceItem = (w: any): Item => {
     level: w.level,
     levelSource: "data",
     eyebrow: `Grammatik · ${w.level}`,
+    eyebrowKey: "fortschritt.eyebrow.grammar", eyebrowVars: { level: w.level },
     lead: w.subtitle ?? "",
+    leadKey: `grammatik.${id}.intro`,
     tasks,
     done: doneOf(id),
     minutes: Math.max(8, Math.round(tasks * 0.8)),
@@ -197,12 +213,12 @@ const allGrammarMinutes = allGrammarItems.reduce((a, i) => a + (i.minutes ?? 0),
    that file holds only the seven quiz-only topics now, and counting it alone would advertise
    37 Aufgaben two centimetres above a blurb that says 664. One number, one source. */
 const scaleChips = [
-  { label: "Grammatik", value: `${de(allGrammarTasks)} Aufgaben`, href: "/uebungen/grammatik", icon: "book" as const },
-  { label: "Wortschatz", value: `${de(lexiconCounts().total)} Wörter`, href: "/uebungen/wortschatz", icon: "folder" as const },
-  { label: "Hören", value: `${hoeren.texts.length} Hörtexte`, href: "/uebungen/hoeren", icon: "volume" as const },
-  { label: "Landeskunde", value: `${kultur.topics.length} Themen`, href: "/uebungen/kultur", icon: "map-pin" as const },
-  { label: "Prüfungen", value: `${exams.length} Formate`, href: "/pruefungen", icon: "graduation-cap" as const },
-  { label: "Downloads", value: `${downloadFiles.length} PDFs`, href: "/wissen", icon: "document" as const },
+  { label: "Grammatik", labelKey: "tool.grammatik.title", value: `${de(allGrammarTasks)} Aufgaben`, valueKey: "dash.taskCount", n: allGrammarTasks, href: "/uebungen/grammatik", icon: "book" as const },
+  { label: "Wortschatz", labelKey: "fortschritt.scale.wortschatz", value: `${de(lexiconCounts().total)} Wörter`, valueKey: "tool.aussprache.count", n: lexiconCounts().total, href: "/uebungen/wortschatz", icon: "folder" as const },
+  { label: "Hören", labelKey: "nav.skill.hoeren", value: `${hoeren.texts.length} Hörtexte`, valueKey: "fortschritt.scale.hoerenCount", n: hoeren.texts.length, href: "/uebungen/hoeren", icon: "volume" as const },
+  { label: "Landeskunde", labelKey: "group.kultur.name", value: `${kultur.topics.length} Themen`, valueKey: "nav.level.topicCount", n: kultur.topics.length, href: "/uebungen/kultur", icon: "map-pin" as const },
+  { label: "Prüfungen", labelKey: "nav.exams", value: `${exams.length} Formate`, valueKey: "fortschritt.scale.formats", n: exams.length, href: "/pruefungen", icon: "graduation-cap" as const },
+  { label: "Downloads", labelKey: "fortschritt.scale.downloads", value: `${downloadFiles.length} PDFs`, valueKey: "fortschritt.scale.pdfs", n: downloadFiles.length, href: "/wissen", icon: "document" as const },
 ];
 
 // ── The grammar module, handed out in portions ───────────────────────────
@@ -308,6 +324,9 @@ const portions = packedPortions.map((parts, idx) => {
     id: `portion-${idx + 1}`,
     level: head.level,
     label: names.length > 1 ? `${base} + ${names.slice(1).join(" + ")}` : base,
+    // The pieces of the label, so the client can say "Teil 1 von 2" in the UI language.
+    // The topic names themselves stay German.
+    name: head.topicLabel, nth, of, extra: names.slice(1),
     href: head.href,
     topic: head.topic,
     tasks,
@@ -325,18 +344,20 @@ const sections: Section[] = [
     icon: "sparkle",
     kind: "kurs",
     blurb: `Dein aktueller Kurs — nach Reihenfolge sortiert, nicht nach Stufe. Erst die Grammatik, dann der Wortschatz, dann der komplette Probelauf. Die Grammatik kommt in ${portions.length} Portionen von je 10 bis 30 Aufgaben; du siehst immer die, die dran ist.`,
+    blurbVars: { n: portions.length },
     focus: [`Grammatik von A1 bis B2 — ${portions.length} Portionen, ${allGrammarTasks} Aufgaben`, "Redemittel für den Alltag", "Ein kompletter DTZ-Übungssatz"],
+    focusVars: [{ n: portions.length, t: allGrammarTasks }],
     items: [
-      { id: "start", label: "Start", icon: "sparkle", href: "/uebungen", level: "A1–B1", levelSource: "—", eyebrow: "Übersicht", lead: "Dein Einstieg: wo du stehst, was als Nächstes ansteht und wie viel bis zur Prüfung fehlt.", meta: "Übersicht", practice: "picker" },
+      { id: "start", label: "Start", labelKey: "fortschritt.item.start.label", icon: "sparkle", href: "/uebungen", level: "A1–B1", levelSource: "—", eyebrow: "Übersicht", eyebrowKey: "fortschritt.meta.overview", lead: "Dein Einstieg: wo du stehst, was als Nächstes ansteht und wie viel bis zur Prüfung fehlt.", leadKey: "fortschritt.item.start.lead", meta: "Übersicht", metaKey: "fortschritt.meta.overview", practice: "picker" },
       // Not the whole grammar catalogue any more: the portion the learner is on.
       // The row, its bar and its count all speak about that one sitting, and
       // repaint() moves them to the next as soon as this one is finished. The
       // full figure still stands in the section's blurb, where it is context
       // rather than a target.
       { id: "grammatik-basis", label: firstPortion.label, icon: "book", href: firstPortion.href, level: firstPortion.level, levelSource: "data", eyebrow: `Modul 1 · Portion 1 von ${portions.length}`, lead: `Portion 1 von ${portions.length} aus ${allGrammarItems.length} Grammatikthemen von A1 bis B2 — Regelkarte und Übungen, ${firstPortion.tasks} Aufgaben in einem Durchgang.`, tasks: firstPortion.tasks, done: 0, minutes: firstPortion.minutes, practice: "picker" },
-      { id: "wortschatz-kurs", label: "Wortschatz-Karten", icon: "folder", href: "/uebungen/wortschatz", level: "A1–B1", levelSource: "abgeleitet", eyebrow: "Modul 2", lead: "Redemittel für Amt, Wohnungssuche und Alltag — als Karteikarten zum Umdrehen.", tasks: wortschatz.length, done: 0, minutes: 15, practice: "cards" },
-      { id: "probelauf", label: "Prüfungssimulation", icon: "document", href: "/pruefungen/dtz/uebungssatz", level: "A2/B1", levelSource: "abgeleitet", eyebrow: "Modul 3", lead: "Ein kompletter DTZ-Übungssatz im echten Format: neun Prüfungsteile, 45 bewertete Aufgaben.", tasks: 45, done: 0, minutes: 54, practice: "dtz" },
-      { id: "ergebnis", label: "Ergebnis", icon: "graduation-cap", href: "/pruefungen/dtz", level: "A2/B1", levelSource: "—", eyebrow: "Abschluss", lead: "Deine Auswertung nach Stufe — live aus dem, was du auf dieser Seite geübt hast.", meta: "Am Ende", practice: "result" },
+      { id: "wortschatz-kurs", label: "Wortschatz-Karten", labelKey: "fortschritt.item.wortschatz-kurs.label", icon: "folder", href: "/uebungen/wortschatz", level: "A1–B1", levelSource: "abgeleitet", eyebrow: "Modul 2", eyebrowKey: "fortschritt.eyebrow.module", eyebrowVars: { n: 2 }, lead: "Redemittel für Amt, Wohnungssuche und Alltag — als Karteikarten zum Umdrehen.", leadKey: "fortschritt.item.wortschatz-kurs.lead", tasks: wortschatz.length, done: 0, minutes: 15, practice: "cards" },
+      { id: "probelauf", label: "Prüfungssimulation", labelKey: "fortschritt.item.probelauf.label", icon: "document", href: "/pruefungen/dtz/uebungssatz", level: "A2/B1", levelSource: "abgeleitet", eyebrow: "Modul 3", eyebrowKey: "fortschritt.eyebrow.module", eyebrowVars: { n: 3 }, lead: "Ein kompletter DTZ-Übungssatz im echten Format: neun Prüfungsteile, 45 bewertete Aufgaben.", leadKey: "fortschritt.item.probelauf.lead", tasks: 45, done: 0, minutes: 54, practice: "dtz" },
+      { id: "ergebnis", label: "Ergebnis", labelKey: "fortschritt.item.ergebnis.label", icon: "graduation-cap", href: "/pruefungen/dtz", level: "A2/B1", levelSource: "—", eyebrow: "Abschluss", eyebrowKey: "fortschritt.eyebrow.final", lead: "Deine Auswertung nach Stufe — live aus dem, was du auf dieser Seite geübt hast.", leadKey: "fortschritt.item.ergebnis.lead", meta: "Am Ende", metaKey: "fortschritt.meta.atEnd", practice: "result" },
     ],
   },
   {
@@ -349,7 +370,7 @@ const sections: Section[] = [
     focus: ["Artikel: der, die, das", "Akkusativ nach Verben", "Grundwortschatz"],
     items: [
       ...grammarAt("A1"),
-      { id: "artikel-trainer", label: "der/die/das-Trainer", icon: "target", href: "/uebungen/grammatik/artikel", level: "A1", levelSource: "abgeleitet", eyebrow: "Übung · A1", lead: `Artikel gezielt trainieren — ${ARTIKEL_NOUNS} Nomen aus dem Lexikon, Fokus- oder Testmodus, mit sofortigem Feedback nach jeder Antwort.`, tasks: ARTIKEL_SESSION, done: doneOf("artikel-trainer"), minutes: 8, practice: "trainer" },
+      { id: "artikel-trainer", label: "der/die/das-Trainer", labelKey: "tool.artikel.title", icon: "target", href: "/uebungen/grammatik/artikel", level: "A1", levelSource: "abgeleitet", eyebrow: "Übung · A1", eyebrowKey: "fortschritt.eyebrow.exercise", eyebrowVars: { level: "A1" }, lead: `Artikel gezielt trainieren — ${ARTIKEL_NOUNS} Nomen aus dem Lexikon, Fokus- oder Testmodus, mit sofortigem Feedback nach jeder Antwort.`, leadKey: "fortschritt.item.artikel-trainer.lead", leadVars: { n: ARTIKEL_NOUNS }, tasks: ARTIKEL_SESSION, done: doneOf("artikel-trainer"), minutes: 8, practice: "trainer" },
     ],
   },
   {
@@ -400,8 +421,8 @@ const sections: Section[] = [
     blurb: "Übungen, deren Inhalt echt über mehrere Stufen läuft — die Karteikarten reichen von „Wie geht's dir?“ bis „Ich bin der Meinung, dass …“.",
     focus: ["Redemittel A1 bis B1", "Aussprache im Langsam-Modus"],
     items: [
-      { id: "wortschatz", label: "Wortschatz & Redemittel", icon: "folder", href: "/uebungen/wortschatz", level: "A1–B1", levelSource: "abgeleitet", eyebrow: "Übung · A1–B1", lead: `${wortschatz.length} Karteikarten, von „Wie geht's dir?“ (A1) bis „Ich bin der Meinung, dass …“ (B1).`, tasks: wortschatz.length, done: 0, minutes: 15, practice: "cards" },
-      { id: "aussprache", label: "Aussprache-Training", icon: "volume", href: "/uebungen/aussprache", level: "A1–B1", levelSource: "abgeleitet", eyebrow: "Übung · A1–B1", lead: `Alle ${ausspracheWordCount} Wörter aus Wortschatz und Artikel-Trainer anhören und im Langsam-Modus nachsprechen.`, tasks: ausspracheWordCount, done: 0, minutes: 12, practice: "audio" },
+      { id: "wortschatz", label: "Wortschatz & Redemittel", labelKey: "tool.wortschatz.title", icon: "folder", href: "/uebungen/wortschatz", level: "A1–B1", levelSource: "abgeleitet", eyebrow: "Übung · A1–B1", eyebrowKey: "fortschritt.eyebrow.exercise", eyebrowVars: { level: "A1–B1" }, lead: `${wortschatz.length} Karteikarten, von „Wie geht's dir?“ (A1) bis „Ich bin der Meinung, dass …“ (B1).`, leadKey: "fortschritt.item.wortschatz.lead", leadVars: { n: wortschatz.length }, tasks: wortschatz.length, done: 0, minutes: 15, practice: "cards" },
+      { id: "aussprache", label: "Aussprache-Training", labelKey: "tool.aussprache.title", icon: "volume", href: "/uebungen/aussprache", level: "A1–B1", levelSource: "abgeleitet", eyebrow: "Übung · A1–B1", eyebrowKey: "fortschritt.eyebrow.exercise", eyebrowVars: { level: "A1–B1" }, lead: `Alle ${ausspracheWordCount} Wörter aus Wortschatz und Artikel-Trainer anhören und im Langsam-Modus nachsprechen.`, leadKey: "fortschritt.item.aussprache.lead", leadVars: { n: ausspracheWordCount }, tasks: ausspracheWordCount, done: 0, minutes: 12, practice: "audio" },
     ],
   },
   {
@@ -415,11 +436,11 @@ const sections: Section[] = [
     blurb: "Prüfungen sind keine Stufe, sondern ein Ziel — deshalb eine eigene Gruppe, sortiert nach Einstiegsniveau statt nach Fortschritt. Dazu die DTZ-Prüfungsteile zum Üben.",
     focus: ["Format und Dauer", "Was zum Bestehen reicht", "DTZ üben: Lesen, Bildbeschreibung, Landeskunde"],
     items: [
-      { id: "dtz", label: "DTZ", icon: "document", href: "/pruefungen/dtz", level: "A2/B1", levelSource: "data", eyebrow: "Prüfung", lead: "Deutsch-Test für Zuwanderer: Hören, Lesen, Schreiben, Sprechen — 45 bewertete Aufgaben plus Schreibteil.", tasks: 45, done: 0, minutes: 54, practice: "dtz" },
-      { id: "lid", label: "Leben in Deutschland", icon: "map-pin", href: "/pruefungen/leben-in-deutschland", level: "kein GER", levelSource: "data", eyebrow: "Prüfung", lead: `33 Fragen aus dem offiziellen Katalog, dazu die Landesfragen aller ${lid.bundeslaender.length} Bundesländer — Wissenstest, keine Sprachprüfung.`, tasks: lid.questions.length, done: 0, minutes: 20, practice: "choice" },
-      { id: "telc", label: "telc", icon: "document", href: "/pruefungen/telc", level: "A1–C2", levelSource: "data", eyebrow: "Prüfung", lead: "Sprachbausteine — der Prüfungsteil, den es so nur bei telc gibt: Grammatik im laufenden Text.", tasks: 20, done: 0, minutes: 20, practice: "bausteine" },
-      { id: "goethe", label: "Goethe-Zertifikat", icon: "landmark", href: "/pruefungen/goethe", level: "A1–C2", levelSource: "data", eyebrow: "Prüfung", lead: "Die Goethe-Zertifikate decken A1 bis C2 ab — hier alle Themen, nach Stufe sortiert.", meta: "A1–C2", practice: "picker" },
-      { id: "testdaf", label: "TestDaF", icon: "graduation-cap", href: "/pruefungen/testdaf", level: "B2–C1", levelSource: "data", eyebrow: "Prüfung", lead: "TestDaF setzt B2–C1 voraus — hier die Themen dieser Stufen.", meta: "B2–C1", practice: "picker" },
+      { id: "dtz", label: "DTZ", icon: "document", href: "/pruefungen/dtz", level: "A2/B1", levelSource: "data", eyebrow: "Prüfung", eyebrowKey: "exam.badge", lead: "Deutsch-Test für Zuwanderer: Hören, Lesen, Schreiben, Sprechen — 45 bewertete Aufgaben plus Schreibteil.", leadKey: "fortschritt.item.dtz.lead", tasks: 45, done: 0, minutes: 54, practice: "dtz" },
+      { id: "lid", label: "Leben in Deutschland", icon: "map-pin", href: "/pruefungen/leben-in-deutschland", level: "kein GER", levelSource: "data", eyebrow: "Prüfung", eyebrowKey: "exam.badge", lead: `33 Fragen aus dem offiziellen Katalog, dazu die Landesfragen aller ${lid.bundeslaender.length} Bundesländer — Wissenstest, keine Sprachprüfung.`, leadKey: "fortschritt.item.lid.lead", leadVars: { n: lid.bundeslaender.length }, tasks: lid.questions.length, done: 0, minutes: 20, practice: "choice" },
+      { id: "telc", label: "telc", icon: "document", href: "/pruefungen/telc", level: "A1–C2", levelSource: "data", eyebrow: "Prüfung", eyebrowKey: "exam.badge", lead: "Sprachbausteine — der Prüfungsteil, den es so nur bei telc gibt: Grammatik im laufenden Text.", leadKey: "fortschritt.item.telc.lead", tasks: 20, done: 0, minutes: 20, practice: "bausteine" },
+      { id: "goethe", label: "Goethe-Zertifikat", icon: "landmark", href: "/pruefungen/goethe", level: "A1–C2", levelSource: "data", eyebrow: "Prüfung", eyebrowKey: "exam.badge", lead: "Die Goethe-Zertifikate decken A1 bis C2 ab — hier alle Themen, nach Stufe sortiert.", leadKey: "fortschritt.item.goethe.lead", meta: "A1–C2", practice: "picker" },
+      { id: "testdaf", label: "TestDaF", icon: "graduation-cap", href: "/pruefungen/testdaf", level: "B2–C1", levelSource: "data", eyebrow: "Prüfung", eyebrowKey: "exam.badge", lead: "TestDaF setzt B2–C1 voraus — hier die Themen dieser Stufen.", leadKey: "fortschritt.item.testdaf.lead", meta: "B2–C1", practice: "picker" },
 
       /* DTZ skill practice, moved here out of Stufe B1. These are exam formats —
          Bildbeschreibung with real examiner questions, the Leseverstehen simulation,
@@ -427,9 +448,9 @@ const sections: Section[] = [
          DTZ level, which made the biggest group three entries bigger still and put
          exam rehearsal in the middle of a grammar syllabus. This group is explicitly
          "ein Ziel, keine Stufe", which is exactly what they are. */
-      { id: "sprechen", label: "Sprechen: Bildbeschreibung", icon: "mic", href: "/uebungen/sprechen", level: "A2/B1", levelSource: "abgeleitet", eyebrow: "Übung · B1", lead: "Bildbeschreibung mit echten DTZ-Prüferfragen und 90-Sekunden-Timer — dieselbe Aufgabenform wie im Prüfungsteil Sprechen.", tasks: sprechen.length, done: 0, minutes: 15, practice: "speak" },
-      { id: "lesen", label: "Lesen & Schreiben", icon: "pencil", href: "/uebungen/lesen-schreiben", level: "A2/B1", levelSource: "abgeleitet", eyebrow: "Übung · B1", lead: `DTZ-Leseverstehen-Simulation mit ${readingQuestionCount} Aufgaben in vier Teilen, dazu Schreibaufgaben.`, tasks: readingQuestionCount, done: 0, minutes: 25, practice: "choice" },
-      { id: "kultur", label: "Kulturwissen", icon: "map-pin", href: "/uebungen/kultur", level: "B1", levelSource: "abgeleitet", eyebrow: "Übung · B1", lead: "Diskussionsthemen aus echten Unterrichtsgesprächen — mit Pro- und Kontra-Argumenten zum Nachsprechen.", tasks: kultur.topics.length, done: 0, minutes: 10, practice: "read" },
+      { id: "sprechen", label: "Sprechen: Bildbeschreibung", labelKey: "fortschritt.item.sprechen.label", icon: "mic", href: "/uebungen/sprechen", level: "A2/B1", levelSource: "abgeleitet", eyebrow: "Übung · B1", eyebrowKey: "fortschritt.eyebrow.exercise", eyebrowVars: { level: "B1" }, lead: "Bildbeschreibung mit echten DTZ-Prüferfragen und 90-Sekunden-Timer — dieselbe Aufgabenform wie im Prüfungsteil Sprechen.", leadKey: "fortschritt.item.sprechen.lead", tasks: sprechen.length, done: 0, minutes: 15, practice: "speak" },
+      { id: "lesen", label: "Lesen & Schreiben", labelKey: "fortschritt.item.lesen.label", icon: "pencil", href: "/uebungen/lesen-schreiben", level: "A2/B1", levelSource: "abgeleitet", eyebrow: "Übung · B1", eyebrowKey: "fortschritt.eyebrow.exercise", eyebrowVars: { level: "B1" }, lead: `DTZ-Leseverstehen-Simulation mit ${readingQuestionCount} Aufgaben in vier Teilen, dazu Schreibaufgaben.`, leadKey: "fortschritt.item.lesen.lead", leadVars: { n: readingQuestionCount }, tasks: readingQuestionCount, done: 0, minutes: 25, practice: "choice" },
+      { id: "kultur", label: "Kulturwissen", labelKey: "tool.kultur.title", icon: "map-pin", href: "/uebungen/kultur", level: "B1", levelSource: "abgeleitet", eyebrow: "Übung · B1", eyebrowKey: "fortschritt.eyebrow.exercise", eyebrowVars: { level: "B1" }, lead: "Diskussionsthemen aus echten Unterrichtsgesprächen — mit Pro- und Kontra-Argumenten zum Nachsprechen.", leadKey: "fortschritt.item.kultur.lead", tasks: kultur.topics.length, done: 0, minutes: 10, practice: "read" },
     ],
   },
 ];
@@ -470,18 +491,31 @@ const nextOf = (s: Section): Item =>
 const nextKicker = (s: Section) =>
   s.items.some((i) => (i.done ?? 0) > 0) ? "Weiter mit" : "Fang an mit";
 
+/* i18n keys, derived from the ids so the data above stays readable. `fortschritt.sec.<id>.*`
+   for a section's own words; the kind decides the generic nouns around it. */
+const secKey = (s: Section, part: string) => `fortschritt.sec.${s.id}.${part}`;
+const kindKey = (s: Section) => `fortschritt.kind.${s.kind}`;
+const vars = (v?: Record<string, unknown>) => (v ? JSON.stringify(v) : undefined);
+/** A row's level-and-size line, as one template so word order can follow the language. */
+const rowMeta = (i: Item) =>
+  i.tasks && i.minutes
+    ? { key: "fortschritt.row.meta", vars: { level: i.level, n: i.tasks, m: i.minutes } }
+    : null;
+
 // Handed to the client: one flat item table, the sections, and what the course
 // strip and the portions are counted from. No exercise content — nothing is
 // practised on the map.
 const clientData = {
   items: Object.fromEntries(sections.flatMap((s) => s.items.map((i) => [i.id, {
     label: i.label, eyebrow: i.eyebrow, lead: i.lead, href: i.href,
+    labelKey: i.labelKey ?? null, eyebrowKey: i.eyebrowKey ?? null, eyebrowVars: i.eyebrowVars ?? null,
+    leadKey: i.leadKey ?? null, leadVars: i.leadVars ?? null,
     level: i.level, levelSource: i.levelSource,
     tasks: i.tasks ?? null, done: i.done ?? 0, minutes: i.minutes ?? null,
     practice: i.practice ?? null, derived: i.derived ?? null,
     section: sectionOf[i.id].id, sectionLabel: sectionOf[i.id].label,
   }]))),
-  sections: Object.fromEntries(sections.map((s) => [s.id, { label: s.label, badge: s.badge, items: s.items.map((i) => i.id) }])),
+  sections: Object.fromEntries(sections.map((s) => [s.id, { label: s.label, labelKey: secKey(s, "label"), badge: s.badge, items: s.items.map((i) => i.id) }])),
   // Which coarse skill bucket each kind of exercise reports into, so /uebungen's
   // existing per-skill stats keep working alongside the per-topic numbers.
   skillOf: Object.fromEntries(sections.flatMap((s) => s.items.map((i) => [i.id,
@@ -536,8 +570,8 @@ const defaultVariant = variants[0];
     )}
 
     <div class="nv-strip">
-      <span class="nv-strip-title">Dein Kurs</span>
-      <span class="nv-strip-sub">DTZ-Vorbereitung</span>
+      <span class="nv-strip-title" data-i18n="fortschritt.strip.title">Dein Kurs</span>
+      <span class="nv-strip-sub" data-i18n="fortschritt.strip.sub">DTZ-Vorbereitung</span>
       <span class="nv-strip-track"><span class="nv-strip-fill" data-strip-fill style={`width:${courseStats.pct}%`}></span></span>
       <span class="nv-strip-points" data-strip-label>0 % · Portion 1 von {portions.length} · 0 / {firstPortion.tasks} Aufgaben</span>
     </div>
@@ -585,16 +619,16 @@ const defaultVariant = variants[0];
 
       <!-- ── Variante B · Icon-Rail + Panel ────────────────────────────── -->
       {showVariant("b") && (
-      <aside class="nv-aside" data-variant-pane="b" aria-label="Seitennavigation, Variante Icon-Rail" hidden>
+      <aside class="nv-aside" data-variant-pane="b" aria-label="Seitennavigation, Variante Icon-Rail" data-i18n-attr="aria-label:fortschritt.aside.aria" hidden>
         <div class="nvb" data-nvb>
           <!-- Hangs off the right edge of the card, like the tab on a Karteiordner: one
                control that both folds the list away and brings it back, and the only part
                of it still on screen once it has. -->
-          <button type="button" class="nvb-foldtab" data-nvb-collapse aria-label="Liste einklappen">
-            <span class="nvb-foldtab-txt">Stufen</span>
+          <button type="button" class="nvb-foldtab" data-nvb-collapse aria-label="Liste einklappen" data-i18n-attr="aria-label:fortschritt.fold.collapse">
+            <span class="nvb-foldtab-txt" data-i18n="fortschritt.fold.label">Stufen</span>
             <svg class="nvb-foldtab-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>
           </button>
-          <div class="nvb-rail" role="tablist" aria-label="Stufe">
+          <div class="nvb-rail" role="tablist" aria-label="Stufe" data-i18n-attr="aria-label:fortschritt.kind.stufe">
             {/* A level chip reads itself — "A1" needs no caption. An icon does not, and
                 the sparkle and the landmark were the only two rail buttons with nothing
                 to read: "what does the star mean?" is a question they earned.
@@ -611,12 +645,13 @@ const defaultVariant = variants[0];
                 data-section-btn={section.id}
                 role="tab"
                 aria-label={section.label}
+                data-i18n-attr={`aria-label:${secKey(section, "label")}`}
               >
                 {section.kind === "stufe"
                   ? <span class="nvb-railbadge">{section.badge}</span>
                   : <Icon name={section.icon} size={20} />}
                 {sectionStats[section.id].pct !== null && <span class="nvb-raildot" data-raildot={section.id}></span>}
-                <span class="nvb-tip">{section.label}</span>
+                <span class="nvb-tip" data-i18n={secKey(section, "label")}>{section.label}</span>
               </button>
             ))}
           </div>
@@ -624,8 +659,8 @@ const defaultVariant = variants[0];
             {sections.map((section) => (
               <div class="nvb-section" data-rail-section={section.id} hidden>
                 <div class="nvb-panelhead">
-                  <h3>{section.label}</h3>
-                  <button type="button" class="nvb-collapse" data-nvb-collapse aria-label="Liste einklappen">
+                  <h3 data-i18n={secKey(section, "label")}>{section.label}</h3>
+                  <button type="button" class="nvb-collapse" data-nvb-collapse aria-label="Liste einklappen" data-i18n-attr="aria-label:fortschritt.fold.collapse">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>
                   </button>
                 </div>
@@ -650,6 +685,7 @@ const defaultVariant = variants[0];
                         : section.kind === "kurs" ? "Kursübersicht"
                         : "Übersicht"
                     } ${section.kind === "stufe" ? section.badge : section.label} öffnen`}
+                    data-i18n-attr={`aria-label:${secKey(section, "ovAria")}`}
                   >
                     {/* The label is spelled out above because the two spans below sit on
                         separate lines with no whitespace between them, so the computed name
@@ -657,7 +693,7 @@ const defaultVariant = variants[0];
                     <span class="nvb-ov-txt">
                       {/* The kind decides the noun, so a level reads "Stufenübersicht" and
                           the two groups that are not levels do not claim to be one. */}
-                      <span class="nvb-ov-kicker">{
+                      <span class="nvb-ov-kicker" data-i18n={`fortschritt.ov.${section.kind}`}>{
                         section.kind === "stufe" ? "Stufenübersicht"
                           : section.kind === "kurs" ? "Kursübersicht"
                           : "Übersicht"
@@ -665,10 +701,12 @@ const defaultVariant = variants[0];
                       {/* A level names itself by its badge (A1, A1–B1) — that is the word
                           the rail, the card and the chips all use for it. Everything else
                           carries its own name. */}
-                      <span class="nvb-ov-name">{section.kind === "stufe" ? section.badge : section.label}</span>
+                      {section.kind === "stufe"
+                        ? <span class="nvb-ov-name">{section.badge}</span>
+                        : <span class="nvb-ov-name" data-i18n={secKey(section, "label")}>{section.label}</span>}
                     </span>
                   </button>
-                  <span class="nvb-tip nvb-tip--wide" id={`nvb-ovtip-${section.id}`} role="tooltip">
+                  <span class="nvb-tip nvb-tip--wide" id={`nvb-ovtip-${section.id}`} role="tooltip" data-i18n={`fortschritt.ovtip.${section.kind}`}>
                     Zeigt rechts wieder {section.kind === "stufe" ? "die ganze Stufe"
                       : section.kind === "kurs" ? "den ganzen Kurs"
                       : section.kind === "ziel" ? "alle Prüfungen"
@@ -687,14 +725,14 @@ const defaultVariant = variants[0];
                      mountWegPanel() from the same localStorage the trainers write. */
                   <div class="wg" data-weg-panel>
                     <button type="button" class="wg-resume" data-weg-resume hidden>
-                      <span class="wg-resume-kicker">Weitermachen</span>
+                      <span class="wg-resume-kicker" data-i18n="picker.resume.eyebrow">Weitermachen</span>
                       <span class="wg-resume-label" data-weg-resume-label></span>
                       <span class="wg-resume-meta" data-weg-resume-meta></span>
                     </button>
 
                     <div class="wg-week" data-weg-week>
                       <div class="wg-row">
-                        <span class="wg-h">Letzte 7 Tage</span>
+                        <span class="wg-h" data-i18n="fortschritt.weg.week">Letzte 7 Tage</span>
                         <span class="wg-streak" data-weg-streak></span>
                       </div>
                       <div class="wg-days" data-weg-days></div>
@@ -702,7 +740,7 @@ const defaultVariant = variants[0];
 
                     <div class="wg-block">
                       <div class="wg-row">
-                        <span class="wg-h">Stufen</span>
+                        <span class="wg-h" data-i18n="fortschritt.fold.label">Stufen</span>
                         <span class="wg-sub" data-weg-levelsum></span>
                       </div>
                       <div data-weg-levels></div>
@@ -710,7 +748,7 @@ const defaultVariant = variants[0];
 
                     <div class="wg-block" data-weg-skillblock hidden>
                       <div class="wg-row">
-                        <span class="wg-h">Treffsicherheit</span>
+                        <span class="wg-h" data-i18n="fortschritt.weg.accuracy">Treffsicherheit</span>
                         <span class="wg-sub" data-weg-skillsum></span>
                       </div>
                       <div data-weg-skills></div>
@@ -718,13 +756,13 @@ const defaultVariant = variants[0];
 
                     <div class="wg-block wg-block--speak" data-weg-speakblock hidden>
                       <div class="wg-row">
-                        <span class="wg-h">Laut gesprochen</span>
+                        <span class="wg-h" data-i18n="fortschritt.weg.spoken">Laut gesprochen</span>
                         <span class="wg-sub" data-weg-speaksum></span>
                       </div>
                       <p class="wg-speak-note" data-weg-speaknote></p>
                     </div>
 
-                    <p class="wg-empty" data-weg-empty hidden>
+                    <p class="wg-empty" data-weg-empty hidden data-i18n="fortschritt.weg.empty">
                       Noch nichts geübt. Sobald du die erste Aufgabe beantwortest, steht hier
                       dein Fortschritt — nach Stufe, nach Woche und nach Treffsicherheit.
                     </p>
@@ -733,8 +771,10 @@ const defaultVariant = variants[0];
                   section.items.map((item) => (
                     <button type="button" class="nvb-item" data-nav-item={item.id} data-row={item.id}>
                       <span class="nv-icon"><Icon name={item.icon} size={16} /></span>
-                      <span>{item.label}</span>
-                      <span class="nv-count" data-count={item.id}>{item.meta ?? `${item.done ?? 0}/${item.tasks}`}</span>
+                      <span data-i18n={item.labelKey}>{item.label}</span>
+                      {item.meta
+                        ? <span class="nv-count" data-count={item.id} data-i18n={item.metaKey}>{item.meta}</span>
+                        : <span class="nv-count" data-count={item.id}>{`${item.done ?? 0}/${item.tasks}`}</span>}
                     </button>
                   ))
                 )}
@@ -786,14 +826,16 @@ const defaultVariant = variants[0];
             <div class="nv-view" data-section-view={section.id} hidden>
               <section class="nv-detail">
                 <div>
-                  <p class="nv-detail-eyebrow">{section.kind === "stufe" ? "Stufe" : section.kind === "ziel" ? "Ziel" : section.kind === "uebergreifend" ? "Übergreifend" : "Kurs"}</p>
-                  <h1>{section.label}</h1>
+                  <p class="nv-detail-eyebrow" data-i18n={kindKey(section)}>{section.kind === "stufe" ? "Stufe" : section.kind === "ziel" ? "Ziel" : section.kind === "uebergreifend" ? "Übergreifend" : "Kurs"}</p>
+                  <h1 data-i18n={secKey(section, "label")}>{section.label}</h1>
                   <p class="nv-detail-level">
-                    <span class="nv-levelchip nv-levelchip--lg">{section.badge}</span>
-                    <span class="nv-detail-levelsrc">{section.items.length} Einträge{st.tasks ? ` · ${st.tasks} Aufgaben` : ""}{st.minutes ? ` · ca. ${st.minutes} Min.` : ""}</span>
+                    <span class="nv-levelchip nv-levelchip--lg" data-i18n={section.badge === "Ziel" ? "fortschritt.kind.ziel" : section.badge === "Kurs" ? "fortschritt.kind.kurs" : undefined}>{section.badge}</span>
+                    {st.tasks && st.minutes
+                      ? <span class="nv-detail-levelsrc" data-i18n="fortschritt.sec.meta" data-i18n-vars={vars({ n: section.items.length, t: st.tasks, m: st.minutes })}>{section.items.length} Einträge · {st.tasks} Aufgaben · ca. {st.minutes} Min.</span>
+                      : <span class="nv-detail-levelsrc">{section.items.length} Einträge{st.tasks ? ` · ${st.tasks} Aufgaben` : ""}{st.minutes ? ` · ca. ${st.minutes} Min.` : ""}</span>}
                   </p>
-                  <p>{section.blurb}</p>
-                  <ul class="nv-focus">{section.focus.map((f) => <li>{f}</li>)}</ul>
+                  <p data-i18n={secKey(section, "blurb")} data-i18n-vars={vars(section.blurbVars)}>{section.blurb}</p>
+                  <ul class="nv-focus">{section.focus.map((f, k) => <li data-i18n={secKey(section, `focus.${k}`)} data-i18n-vars={vars(section.focusVars?.[k])}>{f}</li>)}</ul>
                   {/* "Stufe starten" said nothing: every level had the same button, it
                       did not say what starting would open, and on a level already half
                       done "starten" was simply wrong. The button now names the module it
@@ -828,7 +870,7 @@ const defaultVariant = variants[0];
                   the learner opened the level to see its contents, and a trainer card at the top
                   pushed that list under the fold. "Direkt üben" stays — one scroll further down. */}
               <section class="nv-panel">
-                <h2>{section.kind === "kurs" ? "Module" : section.kind === "ziel" ? "Prüfungen" : section.kind === "uebergreifend" ? "Diese Übungen" : "Inhalte dieser Stufe"}</h2>
+                <h2 data-i18n={`fortschritt.panel.${section.kind}`}>{section.kind === "kurs" ? "Module" : section.kind === "ziel" ? "Prüfungen" : section.kind === "uebergreifend" ? "Diese Übungen" : "Inhalte dieser Stufe"}</h2>
                 {/* Each row IS the control, rather than a div with a button in its last
                     cell: the only hit target used to be a 60px word three quarters of the
                     way across a 1000px row. As a <button> the whole row also takes keyboard
@@ -837,20 +879,22 @@ const defaultVariant = variants[0];
                   <button type="button" class="nv-modrow" style={`--i:${n}`} data-modrow={item.id} data-nav-item={item.id}>
                     <span class="nv-modnum">{n + 1}</span>
                     <span>
-                      <span class="nv-modname">{item.label}</span><br />
-                      <span class="nv-modmeta">
-                        {item.level}
-                        {item.tasks ? ` · ${item.tasks} Aufgaben` : ""}
-                        {item.minutes ? ` · ca. ${item.minutes} Min.` : ""}
-                      </span>
+                      <span class="nv-modname" data-i18n={item.id === "grammatik-basis" ? undefined : item.labelKey}>{item.label}</span><br />
+                      {rowMeta(item) && item.id !== "grammatik-basis"
+                        ? <span class="nv-modmeta" data-i18n={rowMeta(item)!.key} data-i18n-vars={vars(rowMeta(item)!.vars)}>{item.level} · {item.tasks} Aufgaben · ca. {item.minutes} Min.</span>
+                        : <span class="nv-modmeta">
+                            {item.level}
+                            {item.tasks ? ` · ${item.tasks} Aufgaben` : ""}
+                            {item.minutes ? ` · ca. ${item.minutes} Min.` : ""}
+                          </span>}
                     </span>
                     {itemPct(item) === null
-                      ? <span class="nv-modmeta">{item.meta}</span>
+                      ? <span class="nv-modmeta" data-i18n={item.metaKey}>{item.meta}</span>
                       : <span class="nv-modtrack"><span data-itembar={item.id} style={`width:${itemPct(item)}%`}></span></span>}
                     <span class="nv-modpoints" data-itempoints={item.id}>{item.tasks ? `${item.done ?? 0} / ${item.tasks}` : ""}</span>
                     {/* A label now, not a control: the row around it is the button. Kept
                         because it is the only thing that says what a click will do. */}
-                    <span class="nv-modlink" aria-hidden="true">Ansehen →</span>
+                    <span class="nv-modlink" aria-hidden="true" data-i18n="fortschritt.row.view">Ansehen →</span>
                   </button>
                 ))}
               </section>
@@ -874,7 +918,7 @@ const defaultVariant = variants[0];
                   The label follows progress — see paintStart(). */}
               <div class="nv-detail-actions">
                 <a class="nv-btn nv-btn--primary" href="#" data-detail-start>Übungen starten →</a>
-                <button type="button" class="nv-btn nv-btn--ghost" data-back>Zurück zur Stufe</button>
+                <button type="button" class="nv-btn nv-btn--ghost" data-back data-i18n="fortschritt.detail.back">Zurück zur Stufe</button>
               </div>
             </div>
             <div class="nv-ring-card" data-itemringcard>
@@ -894,13 +938,13 @@ const defaultVariant = variants[0];
 
         <!-- How much else is here, at the foot of the page. Scrolls sideways on a phone
              and wraps on a desktop; every chip is a link to that part of the site. -->
-        <nav class="nv-scale nv-scale--foot" aria-label="Was diese Seite enthält">
+        <nav class="nv-scale nv-scale--foot" aria-label="Was diese Seite enthält" data-i18n-attr="aria-label:fortschritt.scale.aria">
           {scaleChips.map((chip) => (
             <a class="nv-scale-chip" href={chip.href}>
               <span class="nv-scale-ic"><Icon name={chip.icon} size={15} /></span>
               <span class="nv-scale-txt">
-                <b>{chip.value}</b>
-                <i>{chip.label}</i>
+                <b data-i18n={chip.valueKey} data-i18n-vars={vars({ n: chip.n })}>{chip.value}</b>
+                <i data-i18n={chip.labelKey}>{chip.label}</i>
               </span>
             </a>
           ))}
@@ -918,6 +962,16 @@ const defaultVariant = variants[0];
     import { getTopicProgress, resetProgress } from "../lib/progress.js";
     import { mountWegPanel, paintWegPanel } from "../lib/wegPanel.js";
     import { createRuleIntro } from "../lib/ruleIntro.js";
+    import { getLang, loadDict, onLangChange } from "../lib/i18n.js";
+
+    /* Everything this script paints is text the server could not know yet (progress,
+       the current portion), so it is translated here rather than by [data-i18n]. The
+       German string at each call site is the first paint and the fallback. */
+    let DICT: Record<string, string> = {};
+    const t = (key: string, de: string, vars?: Record<string, unknown>) => {
+      const s = DICT[key] ?? de;
+      return vars ? s.replace(/\{(\w+)\}/g, (m, k) => (k in vars ? String(vars[k]) : m)) : s;
+    };
 
     const DATA = JSON.parse(document.getElementById("nv-data")!.textContent!);
     const ITEMS: Record<string, any> = DATA.items;
@@ -1047,6 +1101,18 @@ const defaultVariant = variants[0];
       return PORTIONS.find((p) => portionDone(p) < p.tasks) ?? PORTIONS[PORTIONS.length - 1];
     }
 
+    /** "Artikel: der, die, das · Teil 1 von 2" — the topic names stay German. */
+    function portionLabel(p: any) {
+      const base = p.of > 1 ? t("fortschritt.portion.part", "{name} · Teil {n} von {of}", { name: p.name, n: p.nth, of: p.of }) : p.name;
+      return p.extra?.length ? `${base} + ${p.extra.join(" + ")}` : base;
+    }
+    const itemLabel = (id: string) => {
+      const it = ITEMS[id];
+      return it?.labelKey ? t(it.labelKey, it.label) : it?.label ?? "";
+    };
+    const rowMetaText = (level: string, n: number, m: number) =>
+      t("fortschritt.row.meta", "{level} · {n} Aufgaben · ca. {m} Min.", { level, n, m });
+
     // Move the grammar module onto whichever portion is now current. Called from
     // repaint, so finishing one hands over the next without a reload.
     function paintPortion() {
@@ -1055,21 +1121,25 @@ const defaultVariant = variants[0];
       const nth = PORTIONS.indexOf(cur) + 1;
       const it = ITEMS["grammatik-basis"];
       if (!it) return;
-      it.label = cur.label;
+      const label = portionLabel(cur);
+      it.label = label;
+      it.labelKey = null;
       it.href = cur.href;
       it.level = cur.level;
       it.tasks = cur.tasks;
       it.minutes = cur.minutes;
-      it.eyebrow = `Modul 1 · Portion ${nth} von ${PORTIONS.length}`;
-      it.lead = `Portion ${nth} von ${PORTIONS.length}: ${cur.label}. ${cur.tasks} Aufgaben, ca. ${cur.minutes} Min.`;
+      it.eyebrow = t("fortschritt.eyebrow.portion", "Modul 1 · Portion {n} von {of}", { n: nth, of: PORTIONS.length });
+      it.eyebrowKey = null;
+      it.lead = t("fortschritt.item.grammatik-basis.lead", "Portion {n} von {of}: {label}. {tasks} Aufgaben, ca. {m} Min.", { n: nth, of: PORTIONS.length, label, tasks: cur.tasks, m: cur.minutes });
+      it.leadKey = null;
       progress["grammatik-basis"] = portionDone(cur);
 
-      $$('[data-modrow="grammatik-basis"] .nv-modname').forEach((e) => (e.textContent = cur.label));
+      $$('[data-modrow="grammatik-basis"] .nv-modname').forEach((e) => (e.textContent = label));
       $$('[data-modrow="grammatik-basis"] .nv-modmeta').forEach((e) => {
-        e.textContent = `${cur.level} · ${cur.tasks} Aufgaben · ca. ${cur.minutes} Min. · Portion ${nth} von ${PORTIONS.length}`;
+        e.textContent = t("fortschritt.row.metaPortion", "{level} · {n} Aufgaben · ca. {m} Min. · Portion {p} von {of}", { level: cur.level, n: cur.tasks, m: cur.minutes, p: nth, of: PORTIONS.length });
       });
       $$('[data-row="grammatik-basis"] > span:not(.nv-count):not(.nv-icon):not(.nva-dot)')
-        .forEach((e) => (e.textContent = cur.label));
+        .forEach((e) => (e.textContent = label));
     }
 
     // The group's main button. It names a module, so it has to move when that module is
@@ -1088,8 +1158,8 @@ const defaultVariant = variants[0];
         const label = $(`[data-cta-label="${sid}"]`);
         // Nothing left anywhere in the group: say so instead of inviting them into a
         // module whose bar is already full.
-        if (kicker) kicker.textContent = !open ? "Alles geschafft ·" : anyDone ? "Weiter mit" : "Fang an mit";
-        if (label) label.textContent = `${ITEMS[target]?.label ?? ""} →`;
+        if (kicker) kicker.textContent = !open ? t("fortschritt.cta.done", "Alles geschafft ·") : anyDone ? t("fortschritt.cta.continue", "Weiter mit") : t("fortschritt.cta.start", "Fang an mit");
+        if (label) label.textContent = `${itemLabel(target)} →`;
       });
     }
 
@@ -1107,8 +1177,9 @@ const defaultVariant = variants[0];
       paintWegPanel(wegRoot, {
         levels,
         resume: cur
-          ? { label: cur.label, meta: `${cur.level} · ${cur.tasks} Aufgaben · ca. ${cur.minutes} Min.` }
+          ? { label: portionLabel(cur), meta: rowMetaText(cur.level, cur.tasks, cur.minutes) }
           : null,
+        t,
       });
     }
 
@@ -1138,7 +1209,7 @@ const defaultVariant = variants[0];
         $$(`[data-secbar="${sid}"]`).forEach((b) => (b.style.width = st.pct + "%"));
         $$(`[data-secpct="${sid}"]`).forEach((e) => (e.textContent = st.pct + " %"));
         const label = $(`[data-secringlabel="${sid}"]`);
-        if (label) label.textContent = `${st.done} von ${st.tasks} Aufgaben`;
+        if (label) label.textContent = t("fortschritt.ring.label", "{done} von {tasks} Aufgaben", { done: st.done, tasks: st.tasks });
         const dot = $(`[data-raildot="${sid}"]`);
         if (dot) dot.dataset.state = st.pct === 100 ? "done" : st.pct > 0 ? "current" : "todo";
         const ladderBtn = $(`[data-ladder="${sid}"]`);
@@ -1167,8 +1238,8 @@ const defaultVariant = variants[0];
       const cur = PORTIONS.length ? currentPortion() : null;
       if (stripLabel && course.pct !== null) {
         stripLabel.textContent = cur
-          ? `${course.pct} % · Portion ${PORTIONS.indexOf(cur) + 1} von ${PORTIONS.length} · ${portionDone(cur)} / ${cur.tasks} Aufgaben`
-          : `${course.pct} % · ${course.done} / ${course.tasks} Aufgaben`;
+          ? t("fortschritt.strip.portion", "{pct} % · Portion {n} von {of} · {done} / {tasks} Aufgaben", { pct: course.pct, n: PORTIONS.indexOf(cur) + 1, of: PORTIONS.length, done: portionDone(cur), tasks: cur.tasks })
+          : t("fortschritt.strip.all", "{pct} % · {done} / {tasks} Aufgaben", { pct: course.pct, done: course.done, tasks: course.tasks });
       }
     }
 
@@ -1218,11 +1289,10 @@ const defaultVariant = variants[0];
 
     // ── The content views ─────────────────────────────────────────────
     const current = { section: "weg", item: null as string | null };
-    const LEVEL_SOURCE_TEXT: Record<string, string> = {
-      data: "Stufe aus den Daten",
-      abgeleitet: "Stufe aus dem Inhalt abgeleitet — noch kein level-Feld",
-      "—": "",
-    };
+    const levelSourceText = (src: string) =>
+      src === "data" ? t("fortschritt.levelsrc.data", "Stufe aus den Daten")
+        : src === "abgeleitet" ? t("fortschritt.levelsrc.derived", "Stufe aus dem Inhalt abgeleitet — noch kein level-Feld")
+        : "";
 
     let railShown: string | null = null;
 
@@ -1329,13 +1399,7 @@ const defaultVariant = variants[0];
         }
       });
 
-      const set = (sel: string, text: string) => { const el = $(sel); if (el) el.textContent = text; };
-      set("[data-detail-eyebrow]", it.eyebrow);
-      set("[data-detail-title]", it.label);
-      set("[data-detail-level]", it.level);
-      set("[data-detail-levelsrc]", LEVEL_SOURCE_TEXT[it.levelSource] || "");
-      set("[data-detail-lead]", it.lead);
-      paintStart(id);
+      paintDetail(id);
       paintItemRing(id, true);
       // The list rows, the level bar and the course strip only repainted when a LEVEL was
       // picked, so landing straight on a topic — now possible by link, ?thema=artikel — left
@@ -1355,12 +1419,25 @@ const defaultVariant = variants[0];
     // The item card's one action. Where it goes never changes; what it says follows the
     // learner — "starten" on an untouched topic, "Weiter üben" once anything is answered,
     // and "Öffnen" for an entry with nothing to count (an overview, an exam page).
+    /** The item view's words — on selection, and again when the language changes. */
+    function paintDetail(id: string) {
+      const it = ITEMS[id];
+      if (!it) return;
+      const set = (sel: string, text: string) => { const el = $(sel); if (el) el.textContent = text; };
+      set("[data-detail-eyebrow]", it.eyebrowKey ? t(it.eyebrowKey, it.eyebrow, it.eyebrowVars) : it.eyebrow);
+      set("[data-detail-title]", itemLabel(id));
+      set("[data-detail-level]", it.level === "kein GER" ? t("fortschritt.level.noCefr", "kein GER") : it.level);
+      set("[data-detail-levelsrc]", levelSourceText(it.levelSource));
+      set("[data-detail-lead]", it.leadKey ? t(it.leadKey, it.lead, it.leadVars) : it.lead);
+      paintStart(id);
+    }
+
     function paintStart(id: string) {
       const it = ITEMS[id];
       const start = $<HTMLAnchorElement>("[data-detail-start]");
       if (!start) return;
       start.href = it.href;
-      start.textContent = !it.tasks ? "Öffnen →" : (progress[id] ?? 0) > 0 ? "Weiter üben →" : "Übungen starten →";
+      start.textContent = !it.tasks ? t("fortschritt.detail.open", "Öffnen →") : (progress[id] ?? 0) > 0 ? t("fortschritt.detail.continue", "Weiter üben →") : t("fortschritt.detail.start", "Übungen starten →");
     }
 
     function paintItemRing(id: string, sweep = false) {
@@ -1375,7 +1452,9 @@ const defaultVariant = variants[0];
       }
       const label = $("[data-detail-ringlabel]");
       if (label) label.textContent = it.tasks
-        ? `${progress[id]} von ${it.tasks} Aufgaben` + (it.minutes ? ` · ca. ${it.minutes} Min.` : "")
+        ? (it.minutes
+          ? t("fortschritt.ring.labelMin", "{done} von {tasks} Aufgaben · ca. {m} Min.", { done: progress[id], tasks: it.tasks, m: it.minutes })
+          : t("fortschritt.ring.label", "{done} von {tasks} Aufgaben", { done: progress[id], tasks: it.tasks }))
         : "";
       // An item with no countable tasks (an overview, the Ergebnis page) hides the ring
       // instead of showing an empty one. This card is shared by every item, so it is
@@ -1450,11 +1529,11 @@ const defaultVariant = variants[0];
     });
     $$("[data-reset-progress]").forEach((b) =>
       b.addEventListener("click", () => {
-        if (!confirm("Deinen gesamten Fortschritt löschen? Das lässt sich nicht rückgängig machen.")) return;
+        if (!confirm(t("fortschritt.reset.confirm", "Deinen gesamten Fortschritt löschen? Das lässt sich nicht rückgängig machen."))) return;
         try { resetProgress(); } catch (e) {}
         Object.keys(progress).forEach((k) => (progress[k] = 0));
         repaint(true);
-        toast("Fortschritt zurückgesetzt");
+        toast(t("fortschritt.reset.done", "Fortschritt zurückgesetzt"));
       }));
     // Still live for the card's own "Zurück zur Stufe" button.
     $$("[data-back]").forEach((b) => b.addEventListener("click", () => { selectSection(current.section); syncUrl(); }));
@@ -1553,5 +1632,14 @@ const defaultVariant = variants[0];
     // The demo dock (DemoDock.astro, rendered by Layout) seeds whatever the page publishes
     // here — the items already on screen, so it fills bars that exist rather than inventing
     // slugs, and a renamed topic stays empty instead of becoming a phantom row.
+    /* Repaint the script-painted text in the UI language: once the dictionary is in, and
+       on every switch. [data-i18n] has already done the server-rendered rest. */
+    const relabel = () => {
+      repaint();
+      if (current.item) { paintDetail(current.item); paintItemRing(current.item); }
+    };
+    loadDict(getLang()).then((d: Record<string, string>) => { DICT = d; relabel(); }).catch(() => {});
+    onLangChange((_code: string, d: Record<string, string>) => { DICT = d; relabel(); });
+
     (window as any).__daDemoItems = ITEMS;
   </script>

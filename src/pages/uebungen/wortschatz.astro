@@ -7,13 +7,20 @@
 import Layout from "../../layouts/Layout.astro";
 import VokabelTrainer from "../../components/VokabelTrainer.astro";
 import wortschatz from "../../data/wortschatz.json";
+
+// Three of the notes explain usage ("Zustimmen — klingt natürlicher …") and are scaffolding,
+// so they carry a key for the UI language. The rest are German model answers and example
+// arguments — the language being practised — and stay as they are.
+const EXPLAINED = new Set([0, 1, 2]);
+const cards = wortschatz.map((c, i) => (EXPLAINED.has(i) ? { ...c, noteKey: `ws.redemittel.note.${i}` } : c));
 ---
 <Layout title="Wortschatz & Redemittel – DeutschAcademy">
   <VokabelTrainer
-    cards={wortschatz}
+    cards={cards}
     heading="Redemittel & Alltagsvokabeln"
     headingKey="wortschatz.hero.title"
     sub="Handgeschrieben, nicht aus dem Lexikon — und als einziges Deck in vier Sprachen."
+    subParts={[{ text: "Handgeschrieben, nicht aus dem Lexikon — und als einziges Deck in vier Sprachen.", key: "ws.redemittel.sub" }]}
     deck="redemittel"
     langs={["en", "ar", "ru", "tr"]}
   />

@@ -312,7 +312,8 @@ const firstC = CULTURE[0];
         const q = ROUND[index];
         position.textContent = t("home.mock.position", "Frage {i} von {n}", { i: index + 1, n: ROUND.length });
         kicker.textContent = `${q.topic} · ${q.level}`;
-        hint.textContent = q.hint;
+        // The hint explains the rule, so it follows the UI language; the sentence stays German.
+        hint.textContent = t(`home.mock.hint.${index}`, q.hint);
 
         // The blank fills in with the word once it is right — the small payoff
         // that makes the card feel like an exercise rather than a picture of one.
@@ -394,7 +395,7 @@ const firstC = CULTURE[0];
         const item = PRON[index];
         position.textContent = t("home.mock.phrasePosition", "Phrase {i} von {n}", { i: index + 1, n: PRON.length });
         text.textContent = item.text;
-        note.textContent = item.note;
+        note.textContent = t(`home.mock.pronNote.${index}`, item.note);
         if (!audio.src.endsWith(item.audio)) {
           stopAudio();
           audio.src = item.audio;

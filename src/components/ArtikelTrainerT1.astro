@@ -77,7 +77,7 @@ const pool = lexNouns.map((n) => ({
   // does not reach — the rarities.
   lemma: n.lemma,
   freq: freqPos.has(n.id) ? haeufigkeit[n.id] : null,
-  prompt: `___ ${n.lemma}?`,
+  prompt: `___ ${n.lemma}`,
   options: ["der", "die", "das"],
   answer: n.gender,
   explain: explainArtikel(n.lemma, n.gender),

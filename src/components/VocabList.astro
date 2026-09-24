@@ -3,7 +3,6 @@
 // Folded by default — it is there for the learner who needs it, not a wall in front of the
 // text for the one who does not. "Abdecken & üben" hides the meanings so the same list works
 // as a quick self-test: tap a row to check it.
-import { HELP_LANGS } from "../lib/textHelp.js";
 import "../styles/help-langs.css";
 
 interface Props {
@@ -16,14 +15,9 @@ const { vocab, reviewed = false, open = false } = Astro.props;
 ---
 {vocab?.length > 0 && (
   <details class="sk-reveal vl" data-vl data-cover="off" open={open}>
-    <summary>Wortliste · {vocab.length} Wörter mit Übersetzung</summary>
+    <summary data-i18n="vl.summary" data-i18n-vars={JSON.stringify({ n: vocab.length })}>Wortliste · {vocab.length} Wörter mit Übersetzung</summary>
     <div class="sk-reveal-body">
       <div class="vl-bar">
-        <div class="help-langs" role="group" aria-label="Sprache der Übersetzung">
-          {HELP_LANGS.map((l) => (
-            <button type="button" class="help-lang" data-help-lang={l.code} lang={l.code} aria-pressed="false">{l.label}</button>
-          ))}
-        </div>
         <button type="button" class="vl-cover" data-vl-cover aria-pressed="false">Abdecken &amp; üben</button>
       </div>
 
@@ -36,7 +30,7 @@ const { vocab, reviewed = false, open = false } = Astro.props;
         ))}
       </ul>
 
-      {!reviewed && <p class="help-draft">Maschineller Entwurf, noch nicht von einer Lehrkraft geprüft.</p>}
+      {!reviewed && <p class="help-draft" data-i18n="vl.draft">Maschineller Entwurf, noch nicht von einer Lehrkraft geprüft.</p>}
       <script type="application/json" data-vl-data set:html={JSON.stringify(vocab)}></script>
     </div>
   </details>
@@ -44,8 +38,27 @@ const { vocab, reviewed = false, open = false } = Astro.props;
 
 <script>
   import { mountVocabList } from "../lib/textHelp.js";
+  import { getLang, loadDict, onLangChange } from "../lib/i18n.js";
+
+  // The cover button's label is rewritten in German by textHelp.js on every click. This
+  // listener is added after that one, so it runs second and puts the UI language's words
+  // back — and again on every language switch.
+  let dict: Record<string, string> = {};
+  const covers: HTMLElement[] = [];
+  const paintCover = (btn: HTMLElement) => {
+    const key = btn.getAttribute("aria-pressed") === "true" ? "vl.uncover" : "vl.cover";
+    if (dict[key] != null) btn.textContent = dict[key];
+  };
   document.querySelectorAll<HTMLElement>("[data-vl]").forEach((root) => {
     const data = root.querySelector("[data-vl-data]");
     if (data) mountVocabList(root, JSON.parse(data.textContent ?? "[]"));
+    const cover = root.querySelector<HTMLElement>("[data-vl-cover]");
+    if (cover) {
+      covers.push(cover);
+      cover.addEventListener("click", () => paintCover(cover));
+    }
   });
+  const useDict = (d: Record<string, string>) => { dict = d; covers.forEach(paintCover); };
+  loadDict(getLang()).then(useDict).catch(() => {});
+  onLangChange((_c, d) => useDict(d));
 </script>

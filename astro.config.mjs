@@ -52,6 +52,8 @@ export default defineConfig({
     // /v2 tested practising inside the dashboard (the focus layout). Retired with the
     // inline exercises — see FORTSCHRITT-KARTE-PROMPT.md.
     '/v2': '/fortschritt',
+    // Short address for the scored pronunciation trainer, easy to say out loud in class.
+    '/aussprache': '/uebungen/aussprache-check',
   },
   server: {
     // Listen on every interface, not just 127.0.0.1, so the dev server is reachable

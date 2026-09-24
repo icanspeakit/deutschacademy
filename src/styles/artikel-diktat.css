@@ -1,0 +1,90 @@
+/* The Artikel Diktat — Schreiben's panel on the Artikel topic (ArtikelDiktat.astro).
+   The card and the lead are aktiv.css's; this is the drill inside. Phone first. */
+
+.akd-card { display: flex; flex-direction: column; gap: 16px; padding: 20px; }
+.akd-top { display: flex; justify-content: space-between; font-size: var(--text-sm); color: var(--muted); font-variant-numeric: tabular-nums; }
+.akd-score { color: var(--brand-blue-dark, var(--brand-blue)); font-weight: 600; }
+
+.akd-listen { display: flex; align-items: center; justify-content: center; gap: 12px; padding: 8px 0; }
+.akd-play {
+  display: grid;
+  place-items: center;
+  width: 72px;
+  height: 72px;
+  border: 1px solid var(--blue-200, var(--border));
+  border-radius: 50%;
+  background: var(--blue-50, var(--surface));
+  cursor: pointer;
+}
+.akd-play:hover { background: var(--blue-100, var(--surface)); }
+.akd-play .ak-play-icon { transform: scale(1.5); margin-left: 6px; }
+.akd-slow {
+  min-height: 36px;
+  padding: 6px 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  background: none;
+  font: inherit;
+  font-size: var(--text-sm);
+  color: var(--muted);
+  cursor: pointer;
+}
+.akd-slow[aria-pressed="true"] { border-color: var(--brand-blue); color: var(--brand-blue-dark, var(--brand-blue)); font-weight: 600; }
+
+.akd-form { display: flex; flex-direction: column; gap: 10px; }
+.akd-form[hidden] { display: none; }
+.akd-input {
+  width: 100%;
+  box-sizing: border-box;
+  min-height: 60px;
+  padding: 12px 16px;
+  border: 1.5px solid var(--border-strong);
+  border-radius: 14px;
+  background: var(--page-bg);
+  font: inherit;
+  font-size: 1.5rem;
+  color: var(--ink);
+  text-align: center;
+}
+.akd-input:focus { outline: none; border-color: var(--brand-blue); box-shadow: 0 0 0 3px color-mix(in srgb, var(--brand-blue) 18%, transparent); }
+.akd-input.is-ok { border-color: var(--success, #16a34a); }
+.akd-input.is-no { border-color: #dc2626; }
+.akd-keys { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; }
+.akd-keys button {
+  min-width: 40px;
+  min-height: 40px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface-card);
+  font: inherit;
+  font-size: 1.05rem;
+  color: var(--ink);
+  cursor: pointer;
+}
+.akd-keys button:hover { border-color: var(--brand-blue); }
+
+.akd-check, .akd-next {
+  min-height: 52px;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: var(--gradient-brand, var(--brand-blue));
+  font: inherit;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #fff;
+  cursor: pointer;
+}
+.akd-next[hidden] { display: none; }
+
+.akd-feedback { padding: 14px 16px; border-radius: 12px; font-size: var(--text-sm); line-height: 1.5; }
+.akd-feedback[hidden] { display: none; }
+.akd-feedback.is-ok { background: color-mix(in srgb, var(--success, #16a34a) 10%, transparent); }
+.akd-feedback.is-no { background: color-mix(in srgb, #dc2626 8%, transparent); }
+.akd-feedback p { margin: 0; font-size: 1rem; }
+.akd-feedback b { font-size: 1.15rem; }
+.akd-feedback ul { margin: 8px 0 0; padding-left: 18px; color: var(--ink); }
+
+.akd-done { text-align: center; display: flex; flex-direction: column; gap: 10px; }
+.akd-done[hidden] { display: none; }
+.akd-done-title { margin: 0; font-size: 1.3rem; font-weight: 600; color: var(--ink); }
+.akd-done-text { margin: 0 0 6px; color: var(--muted); font-size: var(--text-sm); }

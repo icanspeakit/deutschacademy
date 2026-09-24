@@ -11,7 +11,7 @@
 // practise the wrong one, so the page says which is which before it lists them — that
 // orientation is the reason this page exists rather than being a second level index.
 import Layout from "../../layouts/Layout.astro";
-import PracticeHeader from "../../components/PracticeHeader.astro";
+import SiteNav from "../../components/SiteNav.astro";
 import "../../styles/practice.css";
 import { praepositionTopics, GRAMMAR_ICON } from "../../lib/catalog.js";
 
@@ -25,7 +25,9 @@ const ASKS = {
 };
 ---
 <Layout title="Präpositionen – DeutschAcademy">
-  <PracticeHeader title="Präpositionen" active="grammatik" />
+  {/* The same nav as the grammar topics it leads into, so the step from here into one
+      of them does not swap the whole header. */}
+  <SiteNav active="grammatik" />
   <main class="practice-main praep-main">
     <div class="praep-hero">
       <p class="eyebrow" data-i18n="praep.hero.eyebrow">Grammatik üben</p>

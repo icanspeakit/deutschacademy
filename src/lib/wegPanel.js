@@ -24,6 +24,8 @@ const SKILL_LABEL = {
   sprechen: "Sprechen",
   aussprache: "Aussprache",
   artikel: "Artikel",
+  kultur: "Kultur",
+  pruefungen: "Prüfungen",
 };
 
 const DAY = ["Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"];
@@ -65,7 +67,10 @@ const pct = (done, total) => (total ? Math.round((done / total) * 100) : 0);
  * copies would disagree the first time a topic moved.
  * `resume` is the portion the course is currently on, already labelled.
  */
-export function paintWegPanel(root, { levels = [], resume = null } = {}) {
+/** No dictionary handed in: the German default, with {vars} filled. */
+const deT = (key, de, vars) => (vars ? de.replace(/\{(\w+)\}/g, (m, k) => (k in vars ? String(vars[k]) : m)) : de);
+
+export function paintWegPanel(root, { levels = [], resume = null, t = deT } = {}) {
   if (!root) return;
   const $ = (sel) => root.querySelector(sel);
 
@@ -123,7 +128,7 @@ export function paintWegPanel(root, { levels = [], resume = null } = {}) {
         // one without needing a number on a 28px square.
         const level = n === 0 ? 0 : n < 5 ? 1 : n < 15 ? 2 : n < 40 ? 3 : 4;
         return `<span class="wg-day" data-state="${state}" data-level="${level}"${d.today ? ' data-today="1"' : ""}
-          title="${esc(d.label)}: ${n} ${n === 1 ? "Antwort" : "Antworten"}"><i></i>${esc(d.label)}</span>`;
+          title="${esc(t(`fortschritt.day.${d.label}`, d.label))}: ${esc(n === 1 ? t("fortschritt.weg.answer", "1 Antwort") : t("fortschritt.weg.answers", "{n} Antworten", { n }))}"><i></i>${esc(t(`fortschritt.day.${d.label}`, d.label))}</span>`;
       })
       .join("");
   }
@@ -132,8 +137,8 @@ export function paintWegPanel(root, { levels = [], resume = null } = {}) {
   if (streakEl) {
     const s = data.streak || 0;
     streakEl.textContent = s > 0
-      ? `${s} ${s === 1 ? "Tag" : "Tage"} in Folge`
-      : `${active} von 7 Tagen`;
+      ? (s === 1 ? t("fortschritt.weg.streak1", "1 Tag in Folge") : t("fortschritt.weg.streak", "{n} Tage in Folge", { n: s }))
+      : t("fortschritt.weg.activeDays", "{n} von 7 Tagen", { n: active });
     streakEl.dataset.hot = s >= 3 ? "1" : "0";
   }
 
@@ -160,8 +165,8 @@ export function paintWegPanel(root, { levels = [], resume = null } = {}) {
     const done = levels.reduce((n, l) => n + (l.done || 0), 0);
     const total = levels.reduce((n, l) => n + (l.tasks || 0), 0);
     sum.textContent = started.length
-      ? `${done} von ${total} Aufgaben`
-      : "noch keine begonnen";
+      ? t("fortschritt.ring.label", "{done} von {tasks} Aufgaben", { done, tasks: total })
+      : t("fortschritt.weg.noneStarted", "noch keine begonnen");
   }
 
   /* --------------------------------------------------------------- skills -- */
@@ -177,7 +182,7 @@ export function paintWegPanel(root, { levels = [], resume = null } = {}) {
         // of a figure the learner would read as a verdict.
         const thin = (s.attempts || 0) < 10;
         return `<div class="wg-skill" data-band="${p >= 80 ? "good" : p >= 60 ? "ok" : "low"}"${thin ? ' data-thin="1"' : ""}>
-          <span class="wg-skill-name">${esc(SKILL_LABEL[id] || id)}</span>
+          <span class="wg-skill-name">${esc(SKILL_LABEL[id] ? t(`fortschritt.skill.${id}`, SKILL_LABEL[id]) : id)}</span>
           <span class="wg-skill-bar"><i style="width:${p}%"></i></span>
           <span class="wg-skill-num">${thin ? `${s.correct || 0}/${s.attempts}` : `${p} %`}</span>
         </div>`;
@@ -188,7 +193,7 @@ export function paintWegPanel(root, { levels = [], resume = null } = {}) {
   if (skillSum) {
     // "157 von 209 richtig" wraps beside the heading in a 250px column; the slash reads
     // the same and fits on one line.
-    skillSum.textContent = attempts ? `${correct}/${attempts} richtig` : "";
+    skillSum.textContent = attempts ? t("fortschritt.weg.correct", "{c}/{a} richtig", { c: correct, a: attempts }) : "";
   }
 
   /* ---------------------------------------------------------------- spoken -- */
@@ -201,9 +206,11 @@ export function paintWegPanel(root, { levels = [], resume = null } = {}) {
     const s = $("[data-weg-speaksum]");
     const note = $("[data-weg-speaknote]");
     const topics = Object.keys(drills).length;
-    if (s) s.textContent = `${said} ${said === 1 ? "Satz" : "Sätze"}`;
+    if (s) s.textContent = said === 1 ? t("fortschritt.weg.sentence1", "1 Satz") : t("fortschritt.weg.sentences", "{n} Sätze", { n: said });
     if (note) {
-      note.textContent = `${sure} davon saßen sofort — aus ${topics} ${topics === 1 ? "Thema" : "Themen"}. Selbst eingeschätzt, nicht gemessen.`;
+      note.textContent = topics === 1
+        ? t("fortschritt.weg.speakNote1", "{n} davon saßen sofort — aus 1 Thema. Selbst eingeschätzt, nicht gemessen.", { n: sure })
+        : t("fortschritt.weg.speakNote", "{n} davon saßen sofort — aus {k} Themen. Selbst eingeschätzt, nicht gemessen.", { n: sure, k: topics });
     }
   }
 }

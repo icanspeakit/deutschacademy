@@ -12,7 +12,7 @@
 // the set titles and the word counts come from the same lernsets() the live picker uses,
 // so the list is as long here as it is there. Not linked from the nav; noindex.
 import Layout from "../layouts/Layout.astro";
-import PracticeHeader from "../components/PracticeHeader.astro";
+import SiteNav from "../components/SiteNav.astro";
 import { modules, lernsetCards } from "../lib/lernsets.js";
 import { LEVELS } from "../lib/lexicon.js";
 import "../styles/practice.css";
@@ -38,7 +38,7 @@ const levels = LEVELS.map((level) => {
   title="Wortliste im Fortschritt-Design – DeutschAcademy"
   description="Skizze: der Wortschatz-Bereich mit dem Rail aus /fortschritt."
 >
-  <PracticeHeader title="Wortliste · Rail-Skizze" />
+  <SiteNav />
   <main class="practice-main practice-main--wide">
     <div class="fs-topbar">
       <span class="fs-topbar-brand">Wortschatz {LEVEL} <small>{setCount} Lernsets · {wordCount} Wörter</small></span>

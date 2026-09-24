@@ -551,3 +551,7 @@
   text-decoration: none;
 }
 .ls-prog-more:hover { text-decoration: underline; }
+
+/* A round named by its own words ("Haus · Tür · Zimmer") rather than a range. */
+.ls-lead-words { font-weight: 500; }
+.ls-item--lead .nv-count { font-variant-numeric: tabular-nums; }

@@ -82,7 +82,7 @@ const kulturQuizCount = kultur.topics.reduce((n, t) => n + t.quiz.length, 0);
    can look at and think "that, I can do". The totals are not hidden — they are on the deck
    pages and in the picker, where someone asking "how big is A1?" goes looking. */
 const PART_SIZE = 25;
-const ARTIKEL_ROUND = 25; // SESSION_SIZE in uebungen/artikel-trainer.astro
+const ARTIKEL_ROUND = 25; // SESSION_SIZE in components/ArtikelTrainer.astro
 
 /** How many sittings a pile of `n` breaks into. "Runde" rather than "Teil": Teil is taken
     — a Portion route (a1-teil-03) is a named 20-word cut of a level — and Runde is already
@@ -131,14 +131,17 @@ export const tools = [
   { id: "sprechen", group: "fertigkeiten", href: "/uebungen/sprechen/", icon: "mic",
     titleKey: "tool.sprechen.title", title: "Sprechen", shortKey: "group.short.sprechen", short: "Sprechen",
     descKey: "tool.sprechen.desc", desc: "Vorstellen, Bild beschreiben, Kurzvortrag — mit Timer.",
+    countKey: "tool.sprechen.count", countVars: { n: sprechenIndex.tasks.length },
     count: `${sprechenIndex.tasks.length} Aufgaben` },
   { id: "lesen", group: "fertigkeiten", href: "/uebungen/lesen", icon: "book-open",
     titleKey: "tool.lesen.title", title: "Leseverstehen", shortKey: "group.short.lesen", short: "Lesen",
     descKey: "tool.lesen.desc", desc: "Schilder, Anzeigen, E-Mails und Artikel — A1 bis B2.",
+    countKey: "tool.lesen.count", countVars: { n: lesenIndex.texts.length },
     count: `${lesenIndex.texts.length} Lesetexte` },
   { id: "schreiben", group: "fertigkeiten", href: "/uebungen/schreiben", icon: "pencil",
-    title: "Schreiben", short: "Schreiben",
-    desc: "Formulare, Nachrichten und Briefe — mit Modelltext.",
+    titleKey: "skill.schreiben", title: "Schreiben", shortKey: "skill.schreiben", short: "Schreiben",
+    descKey: "tool.schreiben.desc", desc: "Formulare, Nachrichten und Briefe — mit Modelltext.",
+    countKey: "tool.sprechen.count", countVars: { n: schreibenIndex.tasks.length },
     count: `${schreibenIndex.tasks.length} Aufgaben` },
   { id: "kultur", group: "kultur", href: "/uebungen/kultur", icon: "map-pin",
     titleKey: "tool.kultur.title", title: "Kulturwissen", shortKey: "group.short.kultur", short: "Kultur",
@@ -495,7 +498,8 @@ const vocabLevelView = (level) => {
       {
         id: "sets", name: "Lernsets", nameKey: "nav.vocab.sets", icon: "layers",
         items: sets.slice(0, VOCAB_SETS_PREVIEW)
-          .map((s) => levelRow(s.title, `/uebungen/wortschatz/${s.id}`, `${s.words} Wörter`)),
+          .map((s) => ({ ...levelRow(s.title, `/uebungen/wortschatz/${s.id}`, `${s.words} Wörter`),
+            titleKey: `ws.set.${s.id}`, countKey: "tool.aussprache.count", countVars: { n: s.words } })),
         more: sets.length > VOCAB_SETS_PREVIEW
           ? {
               href: `/uebungen/wortschatz/${head.slug}`,
@@ -515,7 +519,8 @@ const vocabLevelView = (level) => {
    titles live in kultur.json and are not translated yet, so they render as written. */
 const kulturQuizItem = {
   id: "kultur-quiz", href: "/uebungen/kultur/quiz", icon: "target",
-  title: "Quiz über alle Themen", count: `${kulturQuizCount} Fragen`,
+  title: "Quiz über alle Themen", titleKey: "nav.kultur.quizAll", count: `${kulturQuizCount} Fragen`,
+  countKey: "grammatik.card.questions", countVars: { n: kulturQuizCount },
 };
 
 /* `level: false` drops the level out of the count line: inside a level section the heading
@@ -527,6 +532,8 @@ const kulturItem = (t, { level = true } = {}) => ({
   icon: t.icon,
   title: t.title,
   count: level ? `${t.level} · ${t.quiz.length} Fragen` : `${t.quiz.length} Fragen`,
+  countKey: level ? "nav.kultur.levelQuestions" : "grammatik.card.questions",
+  countVars: level ? { level: t.level, n: t.quiz.length } : { n: t.quiz.length },
 });
 
 /* Fifteen topics in one list is a wall: the menu needed a scrollbar in both directions and
@@ -861,6 +868,7 @@ export const navUebenMenu = {
         ...skills.map((sk) => ({ href: sk.href, titleKey: sk.nameKey, title: sk.name })),
         // Pronunciation is speaking practice, not vocabulary: it hangs under Sprechen.
         { href: "/uebungen/aussprache", titleKey: "nav.skill.aussprache", title: "Aussprache", nested: true },
+        { href: "/uebungen/aussprache-check", titleKey: "nav.skill.ausspracheCheck", title: "Aussprache-Check", nested: true },
       ] },
     { id: "landeskunde", icon: "map-pin", href: "/uebungen/kultur",
       nameKey: "group.kultur.name", name: "Landeskunde",

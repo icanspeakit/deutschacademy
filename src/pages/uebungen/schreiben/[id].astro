@@ -14,7 +14,7 @@
 // Nothing is graded. It cannot be, and pretending otherwise would be worse than admitting
 // it: a score on a Beschwerdebrief would have to come from counting words.
 import Layout from "../../../layouts/Layout.astro";
-import PracticeHeader from "../../../components/PracticeHeader.astro";
+import SiteNav from "../../../components/SiteNav.astro";
 import Icon from "../../../components/Icon.astro";
 import VocabList from "../../../components/VocabList.astro";
 import uebersetzungen from "../../../data/uebersetzungen/schreiben.json";
@@ -38,32 +38,34 @@ const parts = (task.source ?? "").split(/\*\*(.+?)\*\*/g);
   title={`${task.title} – Schreiben ${task.level} – DeutschAcademy`}
   description={task.blurb}
 >
-  <PracticeHeader title="Schreiben" />
+  <SiteNav active="fertigkeiten" />
   <main class="practice-main">
-    <a href="/uebungen/schreiben" class="vp-back-link">← Alle Schreibaufgaben</a>
+    <a href="/uebungen/schreiben" class="vp-back-link" data-i18n="schreiben.back">← Alle Schreibaufgaben</a>
 
     <article>
       <header class="sk-head">
         <span class="sk-card-ic"><Icon name={SCHREIBEN_ICON[task.type] ?? "pencil"} size={22} /></span>
         <div>
-          <p class="eyebrow">{types[task.type]}</p>
+          <p class="eyebrow" data-i18n={`type.schreiben.${task.type}`}>{types[task.type]}</p>
           <h1>{task.title}</h1>
         </div>
         <span class="sk-badge">{task.level}</span>
       </header>
 
-      <p class="sk-blurb">{task.blurb} · ca. {task.minutes} Minuten</p>
+      <p class="sk-blurb"><span data-i18n={`schreiben.${task.id}.blurb`}>{task.blurb}</span> · <span data-i18n="skills.minutes" data-i18n-vars={JSON.stringify({ m: task.minutes })}>ca. {task.minutes} Minuten</span></p>
 
       {task.situation && (
         <section class="sk-block">
-          <h2>Aufgabe</h2>
+          <h2 data-i18n="skills.h2.task">Aufgabe</h2>
           <p>{task.situation}</p>
         </section>
       )}
 
       {task.source && (
         <section class="sk-block">
-          <h2>{task.kind === "errors" ? "Modelltext mit Fehlern" : "Vorlage"}</h2>
+          {task.kind === "errors"
+            ? <h2 data-i18n="schreiben.h2.errorText">Modelltext mit Fehlern</h2>
+            : <h2 data-i18n="schreiben.h2.source">Vorlage</h2>}
           <div class="sk-text">{parts.map((p, i) => (i % 2 ? <b>{p}</b> : p))}</div>
         </section>
       )}
@@ -74,11 +76,8 @@ const parts = (task.source ?? "").split(/\*\*(.+?)\*\*/g);
 
       {task.kind === "form" && (
         <section class="sk-block">
-          <h2>Formular</h2>
-          <p class="sk-blurb">
-            Übertrage die Angaben aus der Vorlage. Die Lösungen erscheinen erst, wenn du
-            unten auf „Lösung zeigen“ klickst.
-          </p>
+          <h2 data-i18n="schreiben.h2.form">Formular</h2>
+          <p class="sk-blurb" data-i18n="schreiben.form.hint">Übertrage die Angaben aus der Vorlage. Die Lösungen erscheinen erst, wenn du unten auf „Lösung zeigen“ klickst.</p>
           <div class="sk-fields" id="sk-form">
             {task.fields.map((f, i) => (
               <>
@@ -90,14 +89,14 @@ const parts = (task.source ?? "").split(/\*\*(.+?)\*\*/g);
               </>
             ))}
           </div>
-          <p style="margin-top:16px"><button class="sk-btn" type="button" id="sk-solve">Lösung zeigen</button></p>
+          <p style="margin-top:16px"><button class="sk-btn" type="button" id="sk-solve"><span data-i18n="schreiben.solve">Lösung zeigen</span><span data-i18n="schreiben.solved" hidden>Lösung steht dabei</span></button></p>
         </section>
       )}
 
       {task.kind === "prompt" && (
         <>
           <section class="sk-block">
-            <h2>Das muss vorkommen</h2>
+            <h2 data-i18n="schreiben.h2.points">Das muss vorkommen</h2>
             <ul class="sk-points">{task.points.map((p) => <li>{p}</li>)}</ul>
             {task.phrases?.length > 0 && (
               <div class="sk-phrases">{task.phrases.map((p) => <span class="sk-phrase">{p}</span>)}</div>
@@ -105,16 +104,17 @@ const parts = (task.source ?? "").split(/\*\*(.+?)\*\*/g);
           </section>
 
           <section class="sk-block">
-            <h2>Dein Text</h2>
+            <h2 data-i18n="schreiben.h2.yourText">Dein Text</h2>
             <textarea
               class="sk-write"
               id="sk-write"
               placeholder="Schreib hier…"
               aria-label="Dein Text"
+              data-i18n-attr="placeholder:schreiben.placeholder;aria-label:schreiben.h2.yourText"
             ></textarea>
             <div class="sk-write-bar">
-              <span id="sk-count">0 Wörter</span>
-              <span>Der Text bleibt in diesem Browser — er wird nirgendwohin geschickt.</span>
+              <span id="sk-count" data-i18n="skills.words.many" data-i18n-vars='{"n":0}'>0 Wörter</span>
+              <span data-i18n="schreiben.privacy">Der Text bleibt in diesem Browser — er wird nirgendwohin geschickt.</span>
             </div>
           </section>
         </>
@@ -122,40 +122,34 @@ const parts = (task.source ?? "").split(/\*\*(.+?)\*\*/g);
 
       {task.kind === "errors" && (
         <section class="sk-block">
-          <h2>Deine Korrektur</h2>
-          <p class="sk-blurb">
-            Schreib den Text richtig ab — oder notiere nur die Stellen, die dir auffallen.
-          </p>
-          <textarea class="sk-write" id="sk-write" aria-label="Deine Korrektur"></textarea>
+          <h2 data-i18n="schreiben.h2.correction">Deine Korrektur</h2>
+          <p class="sk-blurb" data-i18n="schreiben.correction.hint">Schreib den Text richtig ab — oder notiere nur die Stellen, die dir auffallen.</p>
+          <textarea class="sk-write" id="sk-write" aria-label="Deine Korrektur" data-i18n-attr="aria-label:schreiben.h2.correction"></textarea>
           <div class="sk-write-bar">
-            <span id="sk-count">0 Wörter</span>
-            <span>Der Text bleibt in diesem Browser.</span>
+            <span id="sk-count" data-i18n="skills.words.many" data-i18n-vars='{"n":0}'>0 Wörter</span>
+            <span data-i18n="schreiben.privacyShort">Der Text bleibt in diesem Browser.</span>
           </div>
         </section>
       )}
 
       {task.model && (
         <details class="sk-reveal">
-          <summary>Modelltext — erst öffnen, wenn du geschrieben hast</summary>
+          <summary data-i18n="schreiben.model">Modelltext — erst öffnen, wenn du geschrieben hast</summary>
           <div class="sk-reveal-body"><div class="sk-model">{task.model}</div></div>
         </details>
       )}
 
       {task.check?.length > 0 && (
         <details class="sk-reveal">
-          <summary>Worauf eine Prüferin schaut</summary>
+          <summary data-i18n="schreiben.check">Worauf eine Prüferin schaut</summary>
           <div class="sk-reveal-body">
-            <ul class="sk-check">{task.check.map((c) => <li>{c}</li>)}</ul>
+            <ul class="sk-check">{task.check.map((c, i) => <li data-i18n={`schreiben.check.${task.id}.${i}`}>{c}</li>)}</ul>
           </div>
         </details>
       )}
 
       {task.kind === "errors" && (
-        <p class="sk-foot">
-          Zu dieser Aufgabe gibt es bewusst keinen Lösungsschlüssel: Die Fehler zu finden ist
-          die Übung, und welche davon schwer wiegen, entscheidet sich im Gespräch. Nimm den
-          Text mit in den Kurs oder zu einem Lernpartner.
-        </p>
+        <p class="sk-foot" data-i18n="schreiben.errors.foot">Zu dieser Aufgabe gibt es bewusst keinen Lösungsschlüssel: Die Fehler zu finden ist die Übung, und welche davon schwer wiegen, entscheidet sich im Gespräch. Nimm den Text mit in den Kurs oder zu einem Lernpartner.</p>
       )}
 
       <nav class="sk-prevnext">
@@ -167,6 +161,11 @@ const parts = (task.source ?? "").split(/\*\*(.+?)\*\*/g);
 
   <script>
     import { recordSession } from "../../../lib/progress.js";
+    import { getLang, loadDict, onLangChange } from "../../../lib/i18n.js";
+
+    let uiDict = null;
+    loadDict(getLang()).then((d) => { uiDict = d; }).catch(() => {});
+    onLangChange((_c, d) => { uiDict = d; });
 
     // Word count. Nothing is graded here, but a learner writing to "60–80 Wörter" needs to
     // know where they are without counting by hand — and in the DTZ the length is part of
@@ -177,7 +176,12 @@ const parts = (task.source ?? "").split(/\*\*(.+?)\*\*/g);
       let counted = false;
       write.addEventListener("input", () => {
         const n = write.value.trim().split(/\s+/).filter(Boolean).length;
-        count.textContent = `${n} ${n === 1 ? "Wort" : "Wörter"}`;
+        // The key and its count live on the element, so the i18n pass repaints the right
+        // words after a language switch too.
+        count.dataset.i18n = n === 1 ? "skills.words.one" : "skills.words.many";
+        count.dataset.i18nVars = JSON.stringify({ n });
+        const d = uiDict?.[count.dataset.i18n];
+        count.textContent = d != null ? d.replace("{n}", String(n)) : `${n} ${n === 1 ? "Wort" : "Wörter"}`;
         // One session per page, once the learner has actually started.
         if (!counted && n > 4) { counted = true; recordSession("schreiben"); }
       });
@@ -191,7 +195,9 @@ const parts = (task.source ?? "").split(/\*\*(.+?)\*\*/g);
       solve.addEventListener("click", () => {
         for (const el of document.querySelectorAll("[data-answer]")) el.hidden = false;
         solve.disabled = true;
-        solve.textContent = "Lösung steht dabei";
+        const [before, after] = solve.children;
+        before.hidden = true;
+        after.hidden = false;
         recordSession("schreiben");
       });
     }

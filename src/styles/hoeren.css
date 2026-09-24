@@ -248,3 +248,6 @@
 }
 .ho-prevnext a { color: var(--brand-blue-dark); text-decoration: none; }
 .ho-prevnext a:hover { text-decoration: underline; }
+
+/* A turn's translation (uebersetzungen/hoeren.json) belongs to the turn above it. */
+.ho-script .gx-tr { margin: -4px 0 12px; }

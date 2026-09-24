@@ -16,7 +16,7 @@
 // Built from the same `skills` the nav panel reads (src/lib/catalog.js), so the counts and
 // the level coverage here cannot drift from the menu: both are measured from the material.
 import Layout from "../../layouts/Layout.astro";
-import PracticeHeader from "../../components/PracticeHeader.astro";
+import SiteNav from "../../components/SiteNav.astro";
 import Icon from "../../components/Icon.astro";
 import { skills } from "../../lib/catalog.js";
 import "../../styles/practice.css";
@@ -96,7 +96,7 @@ const opening = views.reduce((best, s) => (s.total > best.total ? s : best), vie
   title="Fertigkeiten üben: Hören, Lesen, Schreiben, Sprechen – DeutschAcademy"
   description="Die vier Fertigkeiten an einem Ort: Hörverstehen von A1 bis B2, DTZ-Leseverstehen, die Schreibteile des DTZ und Sprechen mit echten Prüferfragen — mit Niveau zu jeder Übung."
 >
-  <PracticeHeader active="fertigkeiten" />
+  <SiteNav active="fertigkeiten" />
   <main class="practice-main practice-main--wide">
     <div class="practice-hero practice-hero--tight">
       <p class="eyebrow" data-i18n="nav.subject.fertigkeiten">Fertigkeiten</p>
@@ -106,7 +106,7 @@ const opening = views.reduce((best, s) => (s.total > best.total ? s : best), vie
       </p>
     </div>
 
-    <div class="fk-grid" role="tablist" aria-label="Fertigkeiten">
+    <div class="fk-grid" role="tablist" aria-label="Fertigkeiten" data-i18n-attr="aria-label:nav.subject.fertigkeiten">
       {views.map((skill) => (
         <button
           class:list={["fk-card", skill.id === opening.id && "is-on"]}
@@ -198,7 +198,7 @@ const opening = views.reduce((best, s) => (s.total > best.total ? s : best), vie
             ))}
           </div>
         ) : (
-          <p class="fk-empty">Übungen für diese Fertigkeit folgen.</p>
+          <p class="fk-empty" data-i18n="fertigkeiten.empty">Übungen für diese Fertigkeit folgen.</p>
         )}
       </section>
     ))}

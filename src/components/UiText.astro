@@ -1,0 +1,30 @@
+---
+// A German instruction with its translations beside it, one visible at a time: the page's
+// <html lang> (set by i18n.js) picks which, so switching the UI language switches these
+// without any script. No translation for the current language → the German stays.
+// Translations: src/data/uebersetzungen/grammatik-ui.json, keyed by the German text.
+//
+// For scaffolding only — instructions, captions, notes. Never for the German being learnt.
+import { uiTr, UI_LANGS } from "../lib/grammarUi.js";
+import "../styles/ui-text.css";
+
+interface Props {
+  de: string;
+  /** The German (and its translations) is HTML — rendered as a block. */
+  html?: boolean;
+}
+const { de, html = false } = Astro.props;
+const t = uiTr(de);
+const langs = t ? UI_LANGS.filter((l) => t[l]) : [];
+const Tag = html ? "div" : "span";
+---
+{langs.length === 0
+  ? (html ? <Fragment set:html={de} /> : de)
+  : (
+    <Tag class="uit">
+      {html ? <div class="uit-de" lang="de" set:html={de} /> : <span class="uit-de" lang="de">{de}</span>}
+      {langs.map((l) => html
+        ? <div class="uit-l" lang={l} dir={l === "ar" ? "rtl" : "ltr"} set:html={t![l]} />
+        : <span class="uit-l" lang={l} dir={l === "ar" ? "rtl" : "ltr"}>{t![l]}</span>)}
+    </Tag>
+  )}

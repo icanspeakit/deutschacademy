@@ -155,7 +155,7 @@ const EXAM_CHIPS = [
               <p class="lf-panel-label" data-i18n="fold.panel.words">Wortschatz</p>
               <div class="lf-rows">
                 <a class="lf-row" href={l.words.href}>
-                  <span class="lf-row-t">Wortliste {l.level}</span>
+                  <span class="lf-row-t" data-i18n="fold.wordList" data-i18n-vars={JSON.stringify({ level: l.level })}>Wortliste {l.level}</span>
                   <span class="lf-row-n" data-i18n="fold.row.words" data-i18n-vars={JSON.stringify({ n: l.words.count })}>{l.words.count} Wörter</span>
                 </a>
               </div>

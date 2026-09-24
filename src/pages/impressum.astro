@@ -9,7 +9,8 @@
 // Not legal advice. Drafted from the structure of colevitate.com's legal pages and the
 // facts of this codebase; have it reviewed before relying on it.
 import Layout from "../layouts/Layout.astro";
-import PracticeHeader from "../components/PracticeHeader.astro";
+import SiteNav from "../components/SiteNav.astro";
+import LegalTranslation from "../components/LegalTranslation.astro";
 import { LEGAL, legalComplete, filled } from "../lib/legal.js";
 import "../styles/practice.css";
 import "../styles/legal.css";
@@ -20,11 +21,12 @@ const ready = legalComplete();
   title="Impressum – DeutschAcademy"
   description="Anbieterkennzeichnung und Kontaktdaten von DeutschAcademy."
 >
-  <PracticeHeader title="Impressum" />
+  <SiteNav />
   <main class="legal-main">
+    <LegalTranslation page="impressum" />
     <div class="legal-head">
-      <h1>Impressum</h1>
-      <p class="legal-updated">Angaben gemäß § 5 DDG</p>
+      <h1 data-lx="title">Impressum</h1>
+      <p data-lx="updated" class="legal-updated">Angaben gemäß § 5 DDG</p>
     </div>
 
     {!ready && (
@@ -37,61 +39,61 @@ const ready = legalComplete();
     )}
 
     <div class="legal-body">
-      <h2>Diensteanbieter</h2>
+      <h2 data-lx="h.provider">Diensteanbieter</h2>
       <dl class="legal-rows">
-        <dt>Name</dt><dd>{LEGAL.operatorName}</dd>
-        <dt>Anschrift</dt>
+        <dt data-lx="dt.name">Name</dt><dd>{LEGAL.operatorName}</dd>
+        <dt data-lx="dt.address">Anschrift</dt>
         <dd>
           {LEGAL.operatorStreet}<br />
           {LEGAL.operatorPostcode} {LEGAL.operatorCity}<br />
           {LEGAL.operatorCountry}
         </dd>
-        <dt>E-Mail</dt>
+        <dt data-lx="dt.email">E-Mail</dt>
         <dd><a href={`mailto:${LEGAL.contactEmail}`}>{LEGAL.contactEmail}</a></dd>
-        {filled(LEGAL.operatorPhone) && (<><dt>Telefon</dt><dd>{LEGAL.operatorPhone}</dd></>)}
-        {LEGAL.managingDirector && (<><dt>Vertreten durch</dt><dd>{LEGAL.managingDirector}</dd></>)}
-        {LEGAL.register && (<><dt>Registereintrag</dt><dd>{LEGAL.register}</dd></>)}
-        {LEGAL.vatId && (<><dt>USt-IdNr.</dt><dd>{LEGAL.vatId}</dd></>)}
+        {filled(LEGAL.operatorPhone) && (<><dt data-lx="dt.phone">Telefon</dt><dd>{LEGAL.operatorPhone}</dd></>)}
+        {LEGAL.managingDirector && (<><dt data-lx="dt.rep">Vertreten durch</dt><dd>{LEGAL.managingDirector}</dd></>)}
+        {LEGAL.register && (<><dt data-lx="dt.register">Registereintrag</dt><dd>{LEGAL.register}</dd></>)}
+        {LEGAL.vatId && (<><dt data-lx="dt.vat">USt-IdNr.</dt><dd>{LEGAL.vatId}</dd></>)}
         {LEGAL.responsibleForContent && (
-          <><dt>Inhaltlich verantwortlich</dt><dd>{LEGAL.responsibleForContent}</dd></>
+          <><dt data-lx="dt.responsible">Inhaltlich verantwortlich</dt><dd>{LEGAL.responsibleForContent}</dd></>
         )}
       </dl>
 
-      <h2>Kontakt</h2>
-      <p>
+      <h2 data-lx="h.contact">Kontakt</h2>
+      <p data-lx="p.contact">
         Fragen zu den Inhalten, zu einem Konto oder zu deinen Daten gehen am schnellsten per
         E-Mail an <a href={`mailto:${LEGAL.contactEmail}`}>{LEGAL.contactEmail}</a>.
       </p>
 
-      <h2>Streitbeilegung</h2>
-      <p>
+      <h2 data-lx="h.dispute">Streitbeilegung</h2>
+      <p data-lx="p.dispute">
         Wir sind weder bereit noch verpflichtet, an Streitbeilegungsverfahren vor einer
         Verbraucherschlichtungsstelle teilzunehmen.
       </p>
 
-      <h2>Haftung für Inhalte</h2>
-      <p>
+      <h2 data-lx="h.liabilityContent">Haftung für Inhalte</h2>
+      <p data-lx="p.liability1">
         Die Übungen, Wortlisten und Prüfungsinformationen auf dieser Seite werden nach bestem
         Wissen erstellt. Für die Richtigkeit, Vollständigkeit und Aktualität der Inhalte können
         wir jedoch keine Gewähr übernehmen. Verbindlich sind allein die Angaben der jeweiligen
         Prüfungsanbieter.
       </p>
-      <p>
+      <p data-lx="p.liability2">
         Prüfungsformate, Prüfungsnamen und Prüfungsmaterialien Dritter (telc, Goethe-Institut,
         TestDaF-Institut, BAMF) sind Eigentum der jeweiligen Rechteinhaber. Die Übungen auf
         dieser Seite sind eigene Materialien, die sich am veröffentlichten Format orientieren,
         und sind kein offizielles Prüfungsmaterial.
       </p>
 
-      <h2>Haftung für Links</h2>
-      <p>
+      <h2 data-lx="h.links">Haftung für Links</h2>
+      <p data-lx="p.links">
         Diese Seite verlinkt auf externe Webseiten, etwa auf die offiziellen Modellsätze der
         Prüfungsanbieter. Auf deren Inhalte haben wir keinen Einfluss und übernehmen dafür
         keine Haftung. Für die Inhalte verlinkter Seiten ist stets deren Anbieter verantwortlich.
       </p>
 
-      <h2>Urheberrecht</h2>
-      <p>
+      <h2 data-lx="h.copyright">Urheberrecht</h2>
+      <p data-lx="p.copyright">
         Die von uns erstellten Inhalte auf dieser Seite unterliegen dem deutschen Urheberrecht.
         Die zum Download angebotenen PDFs dürfen für den eigenen Unterricht und das eigene
         Lernen frei genutzt, ausgedruckt und weitergegeben werden.

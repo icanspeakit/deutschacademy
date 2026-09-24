@@ -172,6 +172,9 @@
 
 /* Mode control: visually secondary, sits below the tabs */
 .akk-mode-row { padding: 0 20px 16px; border-bottom: 1px solid var(--akk-line); }
+/* Inside the Artikel card on a phone the card already pads 28px; 20px more squeezed the
+   controls to ~260px of a 358px card and out of line with the "Stufe" header. */
+@media (max-width: 480px) { .vp-card > .akk-mode-row { padding-inline: 0; } }
 .akk-mode {
   display: inline-flex;
   align-items: center;

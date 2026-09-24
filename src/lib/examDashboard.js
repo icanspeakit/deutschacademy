@@ -20,10 +20,25 @@ import { getLang, loadDict, translate, onLangChange } from "./i18n.js";
 /* The markup here is built by module-level helpers (railHtml, headHtml, tableHtml,
    cardsHtml), not by a closure inside the mount, so the dictionary has to live at module
    level too. mountExamDashboard() fills it and repaints; until then t() returns the key,
-   which only the very first frame can see. Exam titles, part labels and pass notes are
-   NOT translated here — they come from exam/registry.js and are content, not chrome. */
+   which only the very first frame can see. Exam titles are names and stay as they are.
+   Part labels ("Hören · Teil 1", "Bundesweit") and subtitles are chrome: locLabel() and
+   locSub() translate the shapes registry.js uses and leave anything else as authored. */
 let dict = {};
 const t = (key, vars) => translate(dict, key, vars);
+const tOr = (key, fallback, vars) => (dict[key] != null ? translate(dict, key, vars) : fallback);
+
+const SKILL_KEY = { "Hören": "skill.hoeren", "Lesen": "skill.lesen", "Schreiben": "skill.schreiben" };
+const PLAIN_LABEL_KEY = { "Schreiben": "skill.schreiben", "Bundesweit": "lid.sec.federal", "Mein Bundesland": "lid.sec.state" };
+const SUB_KEY = { "Leseverstehen · Schreiben": "tdf.sub", "Einbürgerungstest": "lid.sub", "Übungssatz 1": "exam.h1.set1" };
+export function locLabel(label) {
+  const m = /^(Hören|Lesen|Schreiben) · (Teil|Aufgabe) ([0-9]+)$/.exec(label || "");
+  if (m) {
+    const part = m[2] === "Teil" ? tOr("exam.eb.part", `Teil ${m[3]}`, { n: m[3] }) : tOr("exam.qLabel.task", `Aufgabe ${m[3]}`, { n: m[3] });
+    return `${tOr(SKILL_KEY[m[1]], m[1])} · ${part}`;
+  }
+  return PLAIN_LABEL_KEY[label] ? tOr(PLAIN_LABEL_KEY[label], label) : label;
+}
+const locSub = (s) => (SUB_KEY[s] ? tOr(SUB_KEY[s], s) : s);
 
 /* An arrow carries its direction in its shape, so CSS mirroring cannot fix it: in Arabic
    a "carry on" arrow has to become ←. Read the live dir rather than the language code —
@@ -80,11 +95,11 @@ export function moduleStats(exam, mod, state) {
   const ids = resolveIds(exam, mod);
   const manual = manualDone(exam, mod, state);
   if (manual !== null) {
-    return { key: mod.key, label: mod.label, scored: false, total: 1, done: manual ? 1 : 0, correct: 0 };
+    return { key: mod.key, label: locLabel(mod.label), scored: false, total: 1, done: manual ? 1 : 0, correct: 0 };
   }
   const done = ids.filter((id) => state.answers[id] != null).length;
   const correct = ids.filter((id) => state.answers[id]?.correct).length;
-  return { key: mod.key, label: mod.label, scored: mod.scored !== false, total: ids.length, done, correct };
+  return { key: mod.key, label: locLabel(mod.label), scored: mod.scored !== false, total: ids.length, done, correct };
 }
 
 /** Everything the view needs about one exam, in one pass over its modules. */
@@ -243,7 +258,7 @@ function headHtml(s) {
     <div class="fs-head">
       <div class="fs-head-main">
         <p class="fs-eyebrow">${esc(t("fs.eyebrow"))}</p>
-        <h2 class="fs-exam-title">${esc(s.exam.title)} <small>${esc(s.exam.subtitle)}</small></h2>
+        <h2 class="fs-exam-title">${esc(s.exam.title)} <small>${esc(locSub(s.exam.subtitle))}</small></h2>
         <p class="fs-points">${t("fs.points", { points: `<b>${s.points}</b>`, max: s.maxPoints })}</p>
         ${bar(s.answered, s.maxPoints, "fs-bar--wide")}
         <p class="fs-sub">${esc(t("fs.sub", { pct: s.donePct, started: s.started, total: s.moduleCount }))}</p>

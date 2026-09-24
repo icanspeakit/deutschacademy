@@ -1,0 +1,94 @@
+/* The Artikel trainer, fitted to the screen — the layout tested as "C · Mix" on /t2.
+ * ---------------------------------------------------------------------------
+ * Above the work there is now only the topic bar, which also carries Üben/Aktiv
+ * (ModeSwitch compact). The rail + panel and the exercise card below it are both exactly
+ * one screen tall, so they start and end on the same lines, and the question sits in the
+ * middle of its card at a size that reads from across the room: the word is the task,
+ * not a line of body copy under a toolbar.
+ *
+ * Everything else — the frequency chart, the session footer — stays, one scroll down.
+ * Desktop only: below 1001px the column is a bottom sheet and the page scrolls as before,
+ * apart from the question, which centres and grows on a phone too.
+ */
+
+.vp-page--fit {
+  /* Viewport minus the sticky site nav, the topic bar, and this page's top and bottom
+     gutters. Measured, not guessed: the nav is 69px, the bar with the switch in it 53px. */
+  --fit-nav: 69px;
+  --fit-h: calc(100svh - var(--fit-nav) - 53px - 16px - 24px);
+}
+
+@media (min-width: 1001px) {
+  .vp-page--fit { padding-top: 16px; }
+
+  /* "Stufen ausblenden" had a row to itself. The pivot tab on the column's edge does the
+     same job (≥1180px); between 1001 and 1180 there is no tab, so the pill stays there. */
+  .vp-page--fit .vp-col--ex .vp-ex-toolbar { margin-bottom: var(--space-4); }
+
+  .vp-page--fit .vp-col--rule {
+    top: calc(var(--fit-nav) + 16px);
+    height: var(--fit-h);
+    max-height: var(--fit-h);
+    overflow: hidden;
+  }
+  .vp-page--fit .vp-rule-card,
+  .vp-page--fit .vp-rule-card > .nvb { height: 100%; margin-bottom: 0; }
+
+  /* The card fills the screen; the exercise takes whatever the toolbar leaves. */
+  .vp-page--fit .vp-col--ex > .vp-card {
+    min-height: var(--fit-h);
+    display: flex;
+    flex-direction: column;
+  }
+}
+/* 1001–1179: the pill row stays, so the card gives its height back to end level with the rail. */
+@media (min-width: 1001px) and (max-width: 1179px) {
+  .vp-page--fit .vp-col--ex > .vp-card { min-height: calc(var(--fit-h) - 46px); }
+}
+@media (min-width: 1180px) {
+  .vp-page--fit .vp-col--ex .vp-ex-toolbar { display: none; }
+}
+
+/* ---- The question, centred and large ------------------------------------------------ */
+.vp-page--fit #akk-exercise-root { flex: 1; display: flex; flex-direction: column; }
+.vp-page--fit #akk-exercise-root > .akk-anim-in { flex: 1; display: flex; flex-direction: column; }
+.vp-page--fit .akk-focus-card {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: var(--space-6) 0;
+}
+.vp-page--fit .akk-focus-sentence {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 8px 14px;
+  margin: 0 0 var(--space-6);
+  font-size: clamp(2.2rem, 4.2vw, 3.75rem);
+  font-weight: var(--fw-medium, 500);
+  line-height: 1.15;
+}
+.vp-page--fit .akk-focus-sentence .akk-blank { min-width: 1.8em; border-bottom-width: 4px; }
+.vp-page--fit .akk-focus-sentence .akk-hear-group { margin-left: 0; font-size: 1rem; }
+.vp-page--fit .akk-pills { justify-content: center; gap: 12px; }
+.vp-page--fit .akk-pill {
+  min-width: 132px;
+  min-height: 72px;
+  padding: 12px 28px;
+  font-size: 1.5rem;
+}
+.vp-page--fit .akk-focus-instruction { margin-top: var(--space-6); font-size: 1rem; }
+.vp-page--fit .akk-feedback { width: 100%; max-width: 620px; text-align: center; }
+.vp-page--fit .akk-why { text-align: left; }
+.vp-page--fit .akk-feedback-row { justify-content: center; }
+.vp-page--fit .akk-focus-done-actions { justify-content: center; }
+
+@media (max-width: 720px) {
+  .vp-page--fit .akk-focus-sentence { font-size: clamp(1.9rem, 9vw, 2.6rem); }
+  .vp-page--fit .akk-pills { width: 100%; flex-wrap: nowrap; gap: 8px; }
+  .vp-page--fit .akk-pill { flex: 1; min-width: 0; min-height: 64px; padding: 10px 8px; font-size: 1.35rem; }
+}

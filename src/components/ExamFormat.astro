@@ -10,15 +10,24 @@ interface Props {
   headingPrefix?: string;
 }
 const { format: f, headingPrefix = "Format" } = Astro.props;
+// Every table string gets a key derived from its own German text ("format.t.<hash>"), so
+// the data files stay plain German and the translations live in public/i18n/<lang>.json.
+// Exam names, level codes and numbers-only cells come through unchanged in every language.
+function tk(s) {
+  if (s == null || s === "") return undefined;
+  let h = 0x811c9dc5;
+  for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 0x01000193) >>> 0; }
+  return "format.t." + h.toString(16);
+}
 ---
 <section class="exam-section">
-  <h2>{headingPrefix}: {f.exam}</h2>
+  <h2 data-i18n="format.heading" data-i18n-vars={JSON.stringify({ exam: f.exam })}>{headingPrefix}: {f.exam}</h2>
   <div class="exam-meta-row">
     <span class="exam-meta-badge" data-i18n="format.badge.level" data-i18n-vars={JSON.stringify({ level: f.level })}>Niveau {f.level}</span>
     {f.alt && <span class="exam-meta-badge">{f.alt}</span>}
     {f.totalPoints && <span class="exam-meta-badge" data-i18n="format.badge.points" data-i18n-vars={JSON.stringify({ n: f.totalPoints })}>{f.totalPoints} Punkte gesamt</span>}
   </div>
-  {f.intro && <p>{f.intro}</p>}
+  {f.intro && <p data-i18n={tk(f.intro)}>{f.intro}</p>}
 
   {f.blocks.map((block) => {
     const hasType = block.rows.some((r) => r.type);
@@ -28,7 +37,7 @@ const { format: f, headingPrefix = "Format" } = Astro.props;
         <table class="format-table">
           <thead>
             <tr>
-              <th>{block.label}</th>
+              <th data-i18n={tk(block.label)}>{block.label}</th>
               <th data-i18n="format.th.what">Was wird geprüft</th>
               {hasType && <th data-i18n="format.th.type">Aufgabentyp</th>}
               <th data-i18n="format.th.time">Zeit</th>
@@ -38,19 +47,19 @@ const { format: f, headingPrefix = "Format" } = Astro.props;
           <tbody>
             {block.rows.map((r) => (
               <tr>
-                <td>{r.part}</td>
-                <td>{r.what}</td>
-                {hasType && <td>{r.type ?? ""}</td>}
-                <td>{r.time ?? ""}</td>
+                <td data-i18n={tk(r.part)}>{r.part}</td>
+                <td data-i18n={tk(r.what)}>{r.what}</td>
+                {hasType && <td data-i18n={tk(r.type)}>{r.type ?? ""}</td>}
+                <td data-i18n={tk(r.time)}>{r.time ?? ""}</td>
                 {hasPoints && <td>{r.points ?? ""}</td>}
               </tr>
             ))}
             {block.total && (
               <tr>
-                <td><strong>Gesamt</strong></td>
+                <td><strong data-i18n="format.total">Gesamt</strong></td>
                 <td></td>
                 {hasType && <td></td>}
-                <td><strong>{block.total.time ?? ""}</strong></td>
+                <td><strong data-i18n={tk(block.total.time)}>{block.total.time ?? ""}</strong></td>
                 {hasPoints && <td><strong>{block.total.points ?? ""}</strong></td>}
               </tr>
             )}
@@ -63,15 +72,15 @@ const { format: f, headingPrefix = "Format" } = Astro.props;
   {f.grading && (
     <div class="format-table-wrap">
       <table class="format-table">
-        <thead><tr><th>{f.grading.columns?.[0] ?? "Ergebnispunkte"}</th><th>{f.grading.columns?.[1] ?? "Prädikat"}</th></tr></thead>
+        <thead><tr><th data-i18n={tk(f.grading.columns?.[0] ?? "Ergebnispunkte")}>{f.grading.columns?.[0] ?? "Ergebnispunkte"}</th><th data-i18n={tk(f.grading.columns?.[1] ?? "Prädikat")}>{f.grading.columns?.[1] ?? "Prädikat"}</th></tr></thead>
         <tbody>
           {f.grading.rows.map((row) => (
-            <tr><td>{row[0]}</td><td>{row[1]}</td></tr>
+            <tr><td data-i18n={tk(row[0])}>{row[0]}</td><td data-i18n={tk(row[1])}>{row[1]}</td></tr>
           ))}
         </tbody>
       </table>
     </div>
   )}
 
-  <p class="format-note">Quelle: {f.source}.</p>
+  <p class="format-note"><span data-i18n="format.source">Quelle:</span> {f.source}.</p>
 </section>

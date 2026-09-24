@@ -1,11 +1,11 @@
 ---
 import Layout from "../../../layouts/Layout.astro";
-import PracticeHeader from "../../../components/PracticeHeader.astro";
+import SiteNav from "../../../components/SiteNav.astro";
 import "../../../styles/practice.css";
 import grammatik from "../../../data/grammatik.json";
 ---
 <Layout title="Grammatik-Quiz – DeutschAcademy">
-  <PracticeHeader title="Grammatik-Quiz" />
+  <SiteNav active="grammatik" />
   <main class="practice-main">
     <a href="/uebungen/grammatik" class="practice-back-link" data-i18n="header.back">← Zurück zur Übersicht</a>
     <div class="practice-hero">
@@ -38,6 +38,7 @@ import grammatik from "../../../data/grammatik.json";
   <script type="module">
     import { mountQuiz, withChoices } from "../../../lib/quiz.js";
     import { recordAttempt } from "../../../lib/progress.js";
+    import { t } from "../../../lib/uiText.js";
     const topics = JSON.parse(document.getElementById("topics-data").textContent);
     const tabsEl = document.getElementById("topic-tabs");
     const introEl = document.getElementById("topic-intro");
@@ -49,7 +50,11 @@ import grammatik from "../../../data/grammatik.json";
     function loadTopic(index) {
       const topic = topics[index];
       [...tabsEl.children].forEach((btn, i) => btn.classList.toggle("active", i === index));
-      introEl.textContent = topic.intro;
+      // The intro is the topic's rule in one line: in the UI language where the dictionary
+      // has it (grammatik.<id>.intro), and i18n repaints it on a switch.
+      const introKey = `grammatik.${topic.id}.intro`;
+      introEl.textContent = t(introKey, topic.intro);
+      introEl.setAttribute("data-i18n", introKey);
       crosslinkEl.hidden = topic.id !== "passiv";
       crosslinkAkkusativEl.hidden = topic.id !== "akkusativ";
       crosslinkPraepositionenEl.hidden = topic.id !== "praepositionen";

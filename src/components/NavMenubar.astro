@@ -52,7 +52,7 @@ const UEBEN_ACTIVE = ["ueben", "grammatik", "wortschatz", "fertigkeiten", "lande
 const pruefungen = navSections.find((s) => s.id === "pruefungen");
 ---
 <!-- Desktop menu bar. Hidden below 1080px, where the drawer takes over. -->
-<div class="lp-menubar" data-menubar role="menubar" aria-label="Hauptnavigation">
+<div class="lp-menubar" data-menubar role="menubar" aria-label="Hauptnavigation" data-i18n-attr="aria-label:nav.mainNav">
   <!-- ── Üben ─────────────────────────────────────────────────────────────── -->
   <div class="lp-menu" data-menu="ueben">
     <a
@@ -109,7 +109,7 @@ const pruefungen = navSections.find((s) => s.id === "pruefungen");
               {col.items.map((item) => (
                 <li class:list={[item.nested && "lp-mega-nested"]}>
                   <a href={item.href} role="menuitem">
-                    <b data-i18n={item.titleKey} data-i18n-vars={vars(item.titleVars)}>{item.title}</b>
+                    {item.titleKey ? <b data-i18n={item.titleKey} data-i18n-vars={vars(item.titleVars)}>{item.title}</b> : <b><bdi>{item.title}</bdi></b>}
                     {item.hint && <i data-i18n={item.hintKey}>{item.hint}</i>}
                   </a>
                 </li>
@@ -135,7 +135,7 @@ const pruefungen = navSections.find((s) => s.id === "pruefungen");
       <span data-i18n={pruefungen.nameKey}>{pruefungen.name}</span>
       <svg class="lp-menu-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
     </a>
-    <div class="lp-panel lp-panel--exams" id="lp-panel-pruefungen" data-menu-panel role="menu" aria-label={pruefungen.name} hidden>
+    <div class="lp-panel lp-panel--exams" id="lp-panel-pruefungen" data-menu-panel role="menu" aria-label={pruefungen.name} data-i18n-attr={`aria-label:${pruefungen.nameKey}`} hidden>
       <ul class="lp-panel-list">
         {pruefungen.items.map((item) => (
           <li>

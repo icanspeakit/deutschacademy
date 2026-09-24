@@ -10,7 +10,7 @@
 // institutions and amounts, written by us. Nothing here claims anything about what
 // German people are like — only about what the rules say and where practice varies.
 import Layout from "../../../layouts/Layout.astro";
-import PracticeHeader from "../../../components/PracticeHeader.astro";
+import SiteNav from "../../../components/SiteNav.astro";
 import Icon from "../../../components/Icon.astro";
 import kultur from "../../../data/kultur.json";
 import { kulturLevels } from "../../../lib/catalog.js";
@@ -37,7 +37,7 @@ const groups = kulturLevels.map((lv) => ({
   title="Landeskunde – DeutschAcademy"
   description="Wie Deutschland im Alltag funktioniert: Mülltrennung, Pfand, Anmeldung, Krankenversicherung, Feiertage, Schule, Vereine — mit Quiz zu jedem Thema."
 >
-  <PracticeHeader title="Landeskunde" />
+  <SiteNav active="landeskunde" />
   <main class="practice-main practice-main--wide">
     <div class="practice-hero">
       <p class="eyebrow" data-i18n="kultur.hero.eyebrow">Landeskunde</p>
@@ -54,7 +54,7 @@ const groups = kulturLevels.map((lv) => ({
 
     <a class="ku-quiz-cta" href="/uebungen/kultur/quiz">
       <span class="ku-quiz-cta-txt">
-        <b>Quiz über alle Themen</b>
+        <b data-i18n="kultur.quiz.all">Quiz über alle Themen</b>
         <i data-i18n="kultur.quiz.blurb" data-i18n-vars={JSON.stringify({ n: quizCount, t: topics.length })}>{quizCount} Fragen aus {topics.length} Themen, gemischt. Du kannst auch ein einzelnes Thema wählen.</i>
       </span>
       <span class="ku-quiz-cta-go" aria-hidden="true">→</span>
@@ -88,7 +88,7 @@ const groups = kulturLevels.map((lv) => ({
 
     <section class="ku-sourcing">
       <h2 data-i18n="kultur.h2.sources">Woher die Themen kommen</h2>
-      <p set:html={kultur.sourcingNote.replace(/\n/g, "<br>")} />
+      <p data-i18n-html="kultur.sourcingNote" set:html={kultur.sourcingNote.replace(/\n/g, "<br>")} />
     </section>
   </main>
 </Layout>

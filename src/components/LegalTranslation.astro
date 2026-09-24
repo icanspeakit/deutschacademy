@@ -1,0 +1,105 @@
+---
+// The legal pages in the learner's language — without ever letting the translation pass for
+// the binding text.
+//
+// The German stays what the server renders, byte for byte. When the UI language is en/ar/tr/uk
+// this swaps each [data-lx] element for its translation (src/data/uebersetzungen/rechtliches.json,
+// via src/lib/legalTranslation.js) and puts a note on top saying, in that language, that only
+// the German version is binding. One button flips back to the German original and again to
+// the translation. In German the note stays hidden and nothing is touched.
+import { legalPayload, legalReviewed } from "../lib/legalTranslation.js";
+
+interface Props {
+  /** Page key in rechtliches.json: "impressum" | "datenschutz" | "nutzungsbedingungen". */
+  page: string;
+}
+const { page } = Astro.props;
+// "<" escaped so no string in the payload can close the <script> it sits in.
+const payload = JSON.stringify(legalPayload(page)).replace(/</g, "\\u003c");
+---
+<div class="legal-lang" data-legal-note hidden>
+  <p class="legal-lang-note" data-i18n="legal.note.binding">
+    Verbindlich ist allein die deutsche Fassung. Die Übersetzung dient nur dem Verständnis.
+  </p>
+  {!legalReviewed && (
+    <p class="legal-lang-draft" data-i18n="legal.note.draft">
+      Maschinelle Übersetzung, noch nicht juristisch geprüft.
+    </p>
+  )}
+  <button type="button" class="legal-lang-toggle" data-legal-toggle aria-pressed="false">
+    Deutsche Fassung anzeigen
+  </button>
+</div>
+<script type="application/json" data-legal-tx set:html={payload}></script>
+
+<script>
+  import { getLang, loadDict, onLangChange } from "../lib/i18n.js";
+
+  const note = document.querySelector<HTMLElement>("[data-legal-note]");
+  const toggle = document.querySelector<HTMLButtonElement>("[data-legal-toggle]");
+  const main = document.querySelector<HTMLElement>(".legal-main");
+  const blob = document.querySelector("[data-legal-tx]");
+
+  if (note && toggle && main && blob) {
+    const tx: Record<string, Record<string, string>> = JSON.parse(blob.textContent || "{}");
+    const nodes = [...main.querySelectorAll<HTMLElement>("[data-lx]")];
+    const original = new Map(nodes.map((el) => [el, el.innerHTML]));
+    const originalTitle = document.title;
+    let showGerman = false;
+    let current = { code: "de", dict: {} as Record<string, string> };
+    let seen = false;
+
+    // The phone table turns each cell into a card labelled from data-label; keep those in step
+    // with whatever the column headings now say.
+    const relabel = () => {
+      main.querySelectorAll("table").forEach((t) => {
+        const heads = [...t.querySelectorAll("thead th")].map((th) => th.textContent?.trim() ?? "");
+        t.querySelectorAll("tbody tr").forEach((tr) =>
+          [...tr.children].forEach((td, i) => heads[i] && td.setAttribute("data-label", heads[i]))
+        );
+      });
+    };
+
+    const render = () => {
+      const { code, dict } = current;
+      const translate = code !== "de" && !showGerman;
+      note.hidden = code === "de";
+      for (const el of nodes) {
+        const html = translate ? tx[el.dataset.lx!]?.[code] : undefined;
+        el.innerHTML = html ?? original.get(el)!;
+      }
+      relabel();
+      // The German original inside an Arabic page still reads left to right, and says it is German.
+      main.lang = translate ? code : "de";
+      main.dir = translate && code === "ar" ? "rtl" : code === "ar" ? "ltr" : "";
+      if (!main.dir) main.removeAttribute("dir");
+      note.dir = code === "ar" ? "rtl" : "ltr";
+      note.lang = code;
+      const title = translate ? tx.title?.[code] : undefined;
+      document.title = title ? `${title.replace(/<[^>]+>/g, "")} – DeutschAcademy` : originalTitle;
+      toggle.setAttribute("aria-pressed", String(showGerman));
+      toggle.textContent =
+        dict[showGerman ? "legal.toggle.translation" : "legal.toggle.german"] ??
+        (showGerman ? "Übersetzung anzeigen" : "Deutsche Fassung anzeigen");
+    };
+
+    toggle.addEventListener("click", () => {
+      showGerman = !showGerman;
+      render();
+    });
+
+    onLangChange((code, dict) => {
+      seen = true;
+      current = { code, dict };
+      render();
+    });
+    // initI18n() in the layout may already have run before this listener existed.
+    const code = getLang();
+    loadDict(code).then((dict) => {
+      if (!seen && code !== "de") {
+        current = { code, dict };
+        render();
+      }
+    });
+  }
+</script>

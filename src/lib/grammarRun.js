@@ -19,6 +19,7 @@
  */
 import { recordAttempt } from "./progress.js";
 import { mountGrammarWorkspace } from "./grammarWorkspace.js";
+import { t, onUiText, uitHtml } from "./uiText.js";
 
 const CURSOR_KEY = "da-grammatik-lauf";
 
@@ -90,19 +91,19 @@ export function mountGrammarRun(root, topics) {
 
     // The counter is stations, not percent: "7 von 42" is a place you can hold in your
     // head, and the bar underneath is the same number drawn.
-    count.textContent = `Station ${cursor + 1} von ${stations.length}`;
+    count.textContent = t("run.station", "Station {n} von {total}", { n: cursor + 1, total: stations.length });
     bar.style.width = `${((cursor + 1) / stations.length) * 100}%`;
 
-    eyebrow.textContent = `${topic.level} · Thema ${station.topicIndex + 1} von ${topics.length}`;
+    eyebrow.textContent = `${topic.level} · ${t("kb.pos", "Thema {n} von {total}", { n: station.topicIndex + 1, total: topics.length })}`;
     title.textContent = topic.name;
 
     // A new topic gets its one sentence; the exercises inside it do not repeat it.
     intro.hidden = !station.first;
-    if (station.first) lead.textContent = topic.subtitle ?? "";
+    if (station.first) lead.textContent = topic.subtitleKey ? t(topic.subtitleKey, topic.subtitle ?? "") : topic.subtitle ?? "";
 
     stage.innerHTML = `
-      <p class="run-ex-title">${esc(ex.title ?? "")}</p>
-      ${ex.hint ? `<p class="run-ex-hint">${esc(ex.hint)}</p>` : ""}
+      <p class="run-ex-title">${uitHtml(ex.title ?? "", ex.titleTr, esc)}</p>
+      ${ex.hint ? `<p class="run-ex-hint">${uitHtml(ex.hint, ex.hintTr, esc)}</p>` : ""}
       <div data-ex-index="${station.exIndex}"></div>`;
 
     // The engine pairs [data-ex-index] slots with data.exercises by index, so handing it
@@ -119,7 +120,7 @@ export function mountGrammarRun(root, topics) {
       },
     });
 
-    nextBtn.textContent = cursor === stations.length - 1 ? "Lauf beenden" : "Weiter →";
+    nextBtn.textContent = cursor === stations.length - 1 ? t("run.finish", "Lauf beenden") : t("quiz.next", "Weiter →");
     nextBtn.setAttribute("data-quiet", "");
     skipBtn.hidden = !!station.last && station.first;
     doneEl.hidden = true;
@@ -134,7 +135,7 @@ export function mountGrammarRun(root, topics) {
       intro.hidden = true;
       nextBtn.hidden = true;
       skipBtn.hidden = true;
-      count.textContent = `${stations.length} von ${stations.length} Stationen`;
+      count.textContent = t("run.stationsDone", "{n} von {n} Stationen", { n: stations.length });
       bar.style.width = "100%";
       saveCursor(0);
       return;
@@ -163,4 +164,18 @@ export function mountGrammarRun(root, topics) {
   });
 
   paint();
+
+  // A language switch relabels the chrome without remounting the exercise in progress.
+  onUiText(() => {
+    if (!doneEl.hidden) {
+      count.textContent = t("run.stationsDone", "{n} von {n} Stationen", { n: stations.length });
+      return;
+    }
+    const station = stations[cursor];
+    const topic = topicOf(cursor);
+    count.textContent = t("run.station", "Station {n} von {total}", { n: cursor + 1, total: stations.length });
+    eyebrow.textContent = `${topic.level} · ${t("kb.pos", "Thema {n} von {total}", { n: station.topicIndex + 1, total: topics.length })}`;
+    if (station.first) lead.textContent = topic.subtitleKey ? t(topic.subtitleKey, topic.subtitle ?? "") : topic.subtitle ?? "";
+    nextBtn.textContent = cursor === stations.length - 1 ? t("run.finish", "Lauf beenden") : t("quiz.next", "Weiter →");
+  });
 }

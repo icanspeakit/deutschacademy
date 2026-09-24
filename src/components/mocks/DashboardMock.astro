@@ -28,6 +28,7 @@ const quiz = [
     choices: ["der", "den", "das"],
     answer: "den",
     note: "Maskulin im Akkusativ: der wird zu den.",
+    noteKey: "home.mock.note.akk",
   },
   {
     kicker: "Dativ",
@@ -37,6 +38,7 @@ const quiz = [
     choices: ["dem", "den", "der"],
     answer: "dem",
     note: "mit steht immer mit Dativ: der wird zu dem.",
+    noteKey: "home.mock.note.dat",
   },
   {
     kicker: "Perfekt",
@@ -46,6 +48,7 @@ const quiz = [
     choices: ["habe", "bin", "war"],
     answer: "bin",
     note: "Bewegungsverben bilden das Perfekt mit sein.",
+    noteKey: "home.mock.note.perf",
   },
 ];
 
@@ -59,15 +62,15 @@ const vocab = [
 ];
 
 const speaking = [
-  { title: "Termin beim Amt", level: "B1", line: "Guten Tag, ich möchte einen Termin vereinbaren." },
-  { title: "Sich vorstellen", level: "A2", line: "Ich heiße Ana und komme aus Brasilien." },
-  { title: "Beim Arzt", level: "A2", line: "Ich habe seit drei Tagen Halsschmerzen." },
+  { title: "Termin beim Amt", key: "home.mock.speak.amt", level: "B1", line: "Guten Tag, ich möchte einen Termin vereinbaren." },
+  { title: "Sich vorstellen", key: "home.mock.speak.intro", level: "A2", line: "Ich heiße Ana und komme aus Brasilien." },
+  { title: "Beim Arzt", key: "home.mock.speak.arzt", level: "A2", line: "Ich habe seit drei Tagen Halsschmerzen." },
 ];
 
 const exams = [
-  { name: "DTZ", sub: "A2–B1 · Zuwanderer", premium: false },
-  { name: "telc B1", sub: "Beruf & Alltag", premium: false },
-  { name: "Goethe B2", sub: "Vorbereitungssatz", premium: true },
+  { name: "DTZ", sub: "A2–B1 · Zuwanderer", subKey: "home.mock.exam.dtzSub", premium: false },
+  { name: "telc B1", sub: "Beruf & Alltag", subKey: "home.mock.exam.telcSub", premium: false },
+  { name: "Goethe B2", sub: "Vorbereitungssatz", subKey: "home.mock.exam.goetheSub", premium: true },
 ];
 
 const weekdays = ["Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"];
@@ -108,9 +111,9 @@ const weekdays = ["Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"];
         </div>
 
         <div class="lp-progress-card">
-          <div class="lp-progress-row"><span>Level B1 · Selbstständig</span><span class="pct">62%</span></div>
+          <div class="lp-progress-row"><span data-i18n="home.mock.levelLine">Level B1 · Selbstständig</span><span class="pct">62%</span></div>
           <div class="lp-progress-track"><div class="lp-progress-fill" style="width:62%"></div></div>
-          <div class="lp-progress-note">18 von 29 Lektionen · als Nächstes: Termin beim Amt</div>
+          <div class="lp-progress-note" data-i18n="home.mock.lessonsNote">18 von 29 Lektionen · als Nächstes: Termin beim Amt</div>
         </div>
 
         <div class="lp-mini-grid">
@@ -135,23 +138,23 @@ const weekdays = ["Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"];
 
         <!-- Past the bottom of the frame: what makes the body worth scrolling. -->
         <div class="dm-block">
-          <div class="dm-block-head"><strong>Diese Woche</strong><span>5 Tage in Folge</span></div>
+          <div class="dm-block-head"><strong data-i18n="dash.thisWeek">Diese Woche</strong><span data-i18n="home.mock.streak5">5 Tage in Folge</span></div>
           <div class="dm-streak">
             {weekdays.map((d, i) => (
               <div class:list={["dm-day", i < 5 && "dm-day--done", i === 5 && "dm-day--today"]}>
-                <span>{d}</span><i></i>
+                <span data-i18n={`home.mock.wd.${i}`}>{d}</span><i></i>
               </div>
             ))}
           </div>
         </div>
 
         <div class="dm-block">
-          <div class="dm-block-head"><strong>Zuletzt geübt</strong><span>7 Themen</span></div>
+          <div class="dm-block-head"><strong data-i18n="picker.resume.recents">Zuletzt geübt</strong><span data-i18n="home.mock.topics7">7 Themen</span></div>
           <ul class="dm-list">
-            <li><span class="dm-list-name">Akkusativ</span><span class="dm-list-meta">12 / 12 · gestern</span></li>
-            <li><span class="dm-list-name">Verben mit Präpositionen</span><span class="dm-list-meta">8 / 14 · vor 2 Tagen</span></li>
-            <li><span class="dm-list-name">Wortschatz: Behörden</span><span class="dm-list-meta">31 Karten · vor 3 Tagen</span></li>
-            <li><span class="dm-list-name">Aussprache: ü / ö</span><span class="dm-list-meta">6 Runden · letzte Woche</span></li>
+            <li><span class="dm-list-name">Akkusativ</span><span class="dm-list-meta" data-i18n="home.mock.recent1">12 / 12 · gestern</span></li>
+            <li><span class="dm-list-name">Verben mit Präpositionen</span><span class="dm-list-meta" data-i18n="home.mock.recent2">8 / 14 · vor 2 Tagen</span></li>
+            <li><span class="dm-list-name" data-i18n="home.mock.recent3.name">Wortschatz: Behörden</span><span class="dm-list-meta" data-i18n="home.mock.recent3">31 Karten · vor 3 Tagen</span></li>
+            <li><span class="dm-list-name" data-i18n="home.mock.recent4.name">Aussprache: ü / ö</span><span class="dm-list-meta" data-i18n="home.mock.recent4">6 Runden · letzte Woche</span></li>
           </ul>
         </div>
       </section>
@@ -161,7 +164,7 @@ const weekdays = ["Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"];
         <div class="lp-dash-header">
           <div class="lp-dash-greeting">
             <strong data-i18n="tool.grammatik.title">Grammatik</strong>
-            <span>Akkusativ, Dativ, Perfekt · antworte direkt hier</span>
+            <span data-i18n="home.mock.grammarSub">Akkusativ, Dativ, Perfekt · antworte direkt hier</span>
           </div>
           <div class="dm-score" data-dm-score>0 / {quiz.length}</div>
         </div>
@@ -181,7 +184,7 @@ const weekdays = ["Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"];
                 >{c}</button>
               ))}
             </div>
-            <p class="dm-note" data-dm-note hidden>{q.note}</p>
+            <p class="dm-note" data-dm-note hidden data-i18n={q.noteKey}>{q.note}</p>
           </div>
         ))}
       </section>
@@ -191,16 +194,16 @@ const weekdays = ["Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"];
         <div class="lp-dash-header">
           <div class="lp-dash-greeting">
             <strong data-i18n="home.mock.wortschatzShort">Wortschatz</strong>
-            <span>Behörden &amp; Beruf · tippe auf eine Karte</span>
+            <span data-i18n="home.mock.vocabSub">Behörden &amp; Beruf · tippe auf eine Karte</span>
           </div>
         </div>
         <div class="dm-cards">
-          {vocab.map((w) => (
+          {vocab.map((w, i) => (
             <button type="button" class="dm-card" data-dm-card aria-expanded="false">
               <span class="dm-card-de">{w.de}</span>
-              <span class="dm-card-cue">Bedeutung zeigen</span>
+              <span class="dm-card-cue" data-i18n="home.mock.showMeaning">Bedeutung zeigen</span>
               <span class="dm-card-back">
-                <em>{w.en}</em>
+                <em data-i18n={`home.mock.gloss.${i}`}>{w.en}</em>
                 <span>{w.ex}</span>
               </span>
             </button>
@@ -213,19 +216,19 @@ const weekdays = ["Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"];
         <div class="lp-dash-header">
           <div class="lp-dash-greeting">
             <strong data-i18n="home.mock.sprechenShort">Sprechen</strong>
-            <span>Nachsprechen · 3 Situationen</span>
+            <span data-i18n="home.mock.speakSub">Nachsprechen · 3 Situationen</span>
           </div>
         </div>
         {speaking.map((s) => (
           <div class="dm-speak">
             <div class="dm-speak-head">
-              <strong>{s.title}</strong>
+              <strong data-i18n={s.key}>{s.title}</strong>
               <span class="dm-level">{s.level}</span>
             </div>
             <p class="dm-speak-line">{s.line}</p>
             <button type="button" class="dm-rec" data-dm-rec>
               <i></i>
-              <span class="dm-rec-label">Aufnehmen</span>
+              <span class="dm-rec-label" data-i18n="home.mock.record">Aufnehmen</span>
               <span class="dm-wave" aria-hidden="true"><b></b><b></b><b></b><b></b><b></b><b></b><b></b></span>
             </button>
           </div>
@@ -237,7 +240,7 @@ const weekdays = ["Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"];
         <div class="lp-dash-header">
           <div class="lp-dash-greeting">
             <strong data-i18n="nav.exams">Prüfungen</strong>
-            <span>Übungssätze nach Prüfungsformat</span>
+            <span data-i18n="home.mock.examSub">Übungssätze nach Prüfungsformat</span>
           </div>
         </div>
         <div class="dm-exams">
@@ -245,19 +248,19 @@ const weekdays = ["Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"];
             <div class:list={["dm-exam", e.premium && "dm-exam--locked"]}>
               <div>
                 <strong>{e.name}</strong>
-                <span>{e.sub}</span>
+                <span data-i18n={e.subKey}>{e.sub}</span>
               </div>
-              <span class="dm-tag">{e.premium ? "Premium" : "Frei"}</span>
+              <span class="dm-tag" data-i18n={e.premium ? "home.word.premium" : "home.mock.free"}>{e.premium ? "Premium" : "Frei"}</span>
             </div>
           ))}
         </div>
         <div class="dm-block">
-          <div class="dm-block-head"><strong>Prüfungsteile</strong><span>DTZ</span></div>
+          <div class="dm-block-head"><strong data-i18n="fs.partsAria">Prüfungsteile</strong><span>DTZ</span></div>
           <ul class="dm-list">
-            <li><span class="dm-list-name">Hören</span><span class="dm-list-meta">3 Teile · 25 Min</span></li>
-            <li><span class="dm-list-name">Lesen</span><span class="dm-list-meta">5 Teile · 45 Min</span></li>
-            <li><span class="dm-list-name">Schreiben</span><span class="dm-list-meta">1 Brief · 30 Min</span></li>
-            <li><span class="dm-list-name">Sprechen</span><span class="dm-list-meta">3 Teile · 16 Min</span></li>
+            <li><span class="dm-list-name" data-i18n="skill.hoeren">Hören</span><span class="dm-list-meta" data-i18n="home.mock.part.hoeren">3 Teile · 25 Min</span></li>
+            <li><span class="dm-list-name" data-i18n="skill.lesen">Lesen</span><span class="dm-list-meta" data-i18n="home.mock.part.lesen">5 Teile · 45 Min</span></li>
+            <li><span class="dm-list-name" data-i18n="skill.schreiben">Schreiben</span><span class="dm-list-meta" data-i18n="home.mock.part.schreiben">1 Brief · 30 Min</span></li>
+            <li><span class="dm-list-name" data-i18n="skill.sprechen">Sprechen</span><span class="dm-list-meta" data-i18n="home.mock.part.sprechen">3 Teile · 16 Min</span></li>
           </ul>
         </div>
       </section>

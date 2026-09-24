@@ -26,13 +26,19 @@ interface Props {
   level?: string;
   /** Gradeable answers in this topic; 0 hides the counter rather than showing "0 / 0". */
   tasks?: number;
+  /** false drops the section link ("Grammatik") — the site nav already leads there. */
+  showKind?: boolean;
+  /** The page has decks of its own (the Artikel trainer) and says through `da:topic-scope`
+      which one is running. The counter and track then stay hidden until a deck is chosen,
+      and hide again for mixed practice: "0 / 386" in front of a beginner is a wall, not a goal. */
+  scoped?: boolean;
 }
-const { topic, kind, title, level, tasks = 0 } = Astro.props;
+const { topic, kind, title, level, tasks = 0, showKind = true, scoped = false } = Astro.props;
 ---
 <div class:list={["tb", Astro.slots.has("end") && "tb--merged"]} data-topic-bar data-topic={topic} data-tasks={tasks}>
   <div class="tb-inner">
     <p class="tb-where">
-      <a href="/uebungen/grammatik">{kind}</a>
+      {showKind && <a href="/uebungen/grammatik">{kind}</a>}
       {level && <span class="tb-level">{level}</span>}
       <span class="tb-sep" aria-hidden="true">·</span>
       <span class="tb-title">{title}</span>
@@ -40,15 +46,15 @@ const { topic, kind, title, level, tasks = 0 } = Astro.props;
 
     {tasks > 0 && (
       <>
-        <span class="tb-track"><span class="tb-fill" data-topic-fill style="width:0%"></span></span>
-        <span class="tb-count" data-topic-count>0 / {tasks} Aufgaben</span>
+        <span class="tb-track" data-topic-track hidden={scoped}><span class="tb-fill" data-topic-fill style="width:0%"></span></span>
+        <span class="tb-count" data-topic-count hidden={scoped}>0 / {tasks} Aufgaben</span>
       </>
     )}
 
     <!-- Says where progress lives, not just that it exists. "Gespeichert" alone would imply
          an account; there is none, and a learner who clears their browser should know that
          before they lose six weeks of it. -->
-    <a class="tb-saved" href="/fortschritt" data-topic-saved title="Fortschritt wird auf diesem Gerät gespeichert">
+    <a class="tb-saved" href="/fortschritt" data-topic-saved title="Fortschritt wird auf diesem Gerät gespeichert" data-i18n-attr="title:topic.savedLocally">
       <svg viewBox="0 0 24 24" aria-hidden="true" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 12 10 18 20 6"></polyline></svg>
       <span data-topic-saved-text data-i18n="topic.savedLocally">Fortschritt wird auf diesem Gerät gespeichert</span>
     </a>
@@ -127,6 +133,7 @@ const { topic, kind, title, level, tasks = 0 } = Astro.props;
   }
   @media (prefers-reduced-motion: reduce) { .tb-fill { transition: none; } }
 
+  .tb-track[hidden], .tb-count[hidden] { display: none; }
   .tb-count {
     font-size: 12.5px;
     font-weight: 600;
@@ -190,7 +197,7 @@ const { topic, kind, title, level, tasks = 0 } = Astro.props;
   const bar = document.querySelector<HTMLElement>("[data-topic-bar]");
   if (bar) {
     const topic = bar.dataset.topic!;
-    const tasks = Number(bar.dataset.tasks || 0);
+    let tasks = Number(bar.dataset.tasks || 0);
     const fill = bar.querySelector<HTMLElement>("[data-topic-fill]");
     const count = bar.querySelector<HTMLElement>("[data-topic-count]");
     const saved = bar.querySelector<HTMLElement>("[data-topic-saved]");
@@ -233,9 +240,25 @@ const { topic, kind, title, level, tasks = 0 } = Astro.props;
 
     // `correct` is what moves the bar; a wrong answer is still recorded (it counts toward
     // accuracy and the streak) and still proves the saving is live, so it flashes too.
+    // A page whose exercise has decks of its own (the Artikel trainer) says which one is
+    // running and how far it is; from then on that, not the topic total, is the count.
+    let scoped = false;
+    // `total: 0` means no deck is running (mixed practice): the count and track step aside.
+    const track = bar.querySelector<HTMLElement>("[data-topic-track]");
+    addEventListener("da:topic-scope", (e) => {
+      const d = (e as CustomEvent).detail ?? {};
+      scoped = true;
+      if (track) track.hidden = !d.total;
+      if (count) count.hidden = !d.total;
+      if (!d.total) return;
+      tasks = d.total;
+      done = Math.min(d.done ?? 0, tasks);
+      paint();
+    });
+
     addEventListener("da:progress", (e) => {
       const ok = (e as CustomEvent).detail?.correct;
-      if (ok && tasks) done = Math.min(done + 1, tasks);
+      if (ok && tasks && !scoped) done = Math.min(done + 1, tasks);
       paint();
       if (!saved) return;
       saved.classList.remove("is-idle");

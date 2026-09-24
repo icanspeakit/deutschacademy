@@ -1,17 +1,16 @@
-/* Help for a German text in the learner's own language: a translation beside the text, and
- * a word list under it. Both live on the Lesen and Schreiben pages.
+/* Help in the learner's own language: a grammar rule or an explanation under the German
+ * (mountGrammarHelp), a translation beside a Lesetext (mountTextTranslation), and a word
+ * list (mountVocabList).
  *
- * The site's UI language (i18n.js) only swaps the chrome — buttons, headings. The content
- * stays German on purpose, and so does this: the translation is something you switch on,
- * per text, and the German is always the thing on the left.
- *
- * One language for both helpers. A learner who reads the text in Ukrainian and then opens
- * the word list wants Ukrainian there too, so the choice is shared (localStorage + an event)
- * rather than held by each widget. It starts from the UI language when that is one we
- * translate into, and from English otherwise — German UI is the default, and German is no
- * help here.
+ * ONE control decides the language, and it is the language menu in the site header. There
+ * used to be a second one — a row of English / العربية / Українська / Türkçe chips and an
+ * "in meiner Sprache" switch on every block — which meant a learner could have the site in
+ * Arabic and the rule in English. The header choice is now all-encompassing:
+ *   UI in en / ar / uk / tr  →  every help text shows, in that language, at every level;
+ *   UI in German             →  German only; nothing is translated.
+ * It follows the menu live, on every page, without a reload.
  */
-import { getLang } from "./i18n.js";
+import { getLang, onLangChange } from "./i18n.js";
 
 export const HELP_LANGS = [
   { code: "en", label: "English", dir: "ltr" },
@@ -19,34 +18,20 @@ export const HELP_LANGS = [
   { code: "uk", label: "Українська", dir: "ltr" },
   { code: "tr", label: "Türkçe", dir: "ltr" },
 ];
-const LANG_KEY = "da-text-help-lang";
 const SHOW_KEY = "da-text-translation";
-const EVENT = "da-text-help-lang";
 
 const isHelpLang = (c) => HELP_LANGS.some((l) => l.code === c);
 const dirOf = (c) => HELP_LANGS.find((l) => l.code === c)?.dir ?? "ltr";
 
-function readLang() {
-  try {
-    const saved = localStorage.getItem(LANG_KEY);
-    if (isHelpLang(saved)) return saved;
-  } catch {}
-  const ui = getLang();
-  return isHelpLang(ui) ? ui : "en";
+/** The language help is shown in: the header's, or null when that is German. */
+export function helpLang(code = getLang()) {
+  return isHelpLang(code) ? code : null;
 }
 
-function writeLang(code) {
-  try { localStorage.setItem(LANG_KEY, code); } catch {}
-  window.dispatchEvent(new CustomEvent(EVENT, { detail: code }));
-}
-
-/** The chip row both widgets carry. Marks the current one and reports clicks. */
-function wireChips(root, current) {
-  const chips = [...root.querySelectorAll("[data-help-lang]")];
-  const paint = (code) => chips.forEach((c) => c.setAttribute("aria-pressed", String(c.dataset.helpLang === code)));
-  chips.forEach((c) => c.addEventListener("click", () => writeLang(c.dataset.helpLang)));
-  paint(current);
-  return paint;
+/** Runs `fn(helpLang)` now and on every change of the header language. */
+function followUi(fn) {
+  fn(helpLang());
+  onLangChange((code) => fn(helpLang(code)));
 }
 
 /** `**Heading**` → <b>, the same convention the German text uses. */
@@ -66,35 +51,34 @@ function fillRich(el, str) {
  */
 export function mountTextTranslation(root, paragraphs) {
   const toggle = root.querySelector("[data-tt-toggle]");
+  const bar = root.querySelector(".tt-bar");
   const cells = [...root.querySelectorAll(".tt-tr")];
-  let lang = readLang();
 
-  function paint() {
-    const list = paragraphs[lang] ?? [];
+  function paint(lang) {
+    // German UI: no translation, and no button offering one — the text reads as one column.
+    if (bar) bar.hidden = !lang;
+    if (!lang) root.dataset.translation = "off";
+    else setShown(shown, false);
+    root.dataset.ttLang = lang ?? "";
+    const list = (lang && paragraphs[lang]) || [];
     cells.forEach((cell) => {
       fillRich(cell, list[Number(cell.dataset.i)] ?? "");
-      cell.lang = lang;
+      cell.lang = lang ?? "";
       cell.dir = dirOf(lang);
     });
-    paintChips(lang);
   }
 
+  // Reading the German is the exercise here, so the translation beside it stays something
+  // you open — the header says which language, this button only says whether.
+  let shown = false;
+  try { shown = localStorage.getItem(SHOW_KEY) === "1"; } catch {}
   function setShown(on, persist = true) {
     root.dataset.translation = on ? "on" : "off";
     toggle.setAttribute("aria-pressed", String(on));
-    if (persist) { try { localStorage.setItem(SHOW_KEY, on ? "1" : "0"); } catch {} }
+    if (persist) { shown = on; try { localStorage.setItem(SHOW_KEY, on ? "1" : "0"); } catch {} }
   }
-
-  const paintChips = wireChips(root, lang);
   toggle.addEventListener("click", () => setShown(root.dataset.translation !== "on"));
-  // Picking a language is asking to see it.
-  root.querySelectorAll("[data-help-lang]").forEach((c) => c.addEventListener("click", () => setShown(true)));
-  window.addEventListener(EVENT, (e) => { lang = e.detail; paint(); });
-
-  let shown = false;
-  try { shown = localStorage.getItem(SHOW_KEY) === "1"; } catch {}
-  paint();
-  setShown(shown, false);
+  followUi(paint);
 }
 
 /**
@@ -105,19 +89,17 @@ export function mountTextTranslation(root, paragraphs) {
 export function mountVocabList(root, vocab) {
   const cells = [...root.querySelectorAll(".vl-tr")];
   const cover = root.querySelector("[data-vl-cover]");
-  let lang = readLang();
 
-  function paint() {
+  // A gloss has to be in some language: with a German UI the list falls back to English
+  // rather than showing German words next to nothing.
+  followUi((lang) => {
+    const code = lang ?? "en";
     cells.forEach((cell) => {
-      cell.textContent = vocab[Number(cell.dataset.i)]?.[lang] ?? "";
-      cell.lang = lang;
-      cell.dir = dirOf(lang);
+      cell.textContent = vocab[Number(cell.dataset.i)]?.[code] ?? "";
+      cell.lang = code;
+      cell.dir = dirOf(code);
     });
-    paintChips(lang);
-  }
-
-  const paintChips = wireChips(root, lang);
-  window.addEventListener(EVENT, (e) => { lang = e.detail; paint(); });
+  });
 
   cover.addEventListener("click", () => {
     const on = root.dataset.cover !== "on";
@@ -134,43 +116,19 @@ export function mountVocabList(root, vocab) {
     });
   });
 
-  paint();
 }
 
 /**
- * The grammar topics' rule, explained in the learner's language. Unlike a Lesetext, where
- * reading the German IS the exercise, a rule is scaffolding: an A1 learner cannot learn the
- * accusative from a German explanation of the accusative. So this starts ON at A1–A2 and
- * OFF at B1–B2 — by then the explanation in German is itself good reading — and an explicit
- * choice either way is remembered across topics.
- *
- * Every language is server-rendered (GrammarHelp.astro, .gx-tr); this only sets two
- * attributes on `root`, and CSS shows the one block that matches.
+ * A rule or explanation in the learner's language, under each German block. Every language
+ * is server-rendered (GrammarHelpText.astro, .gx-tr); this only sets two attributes on
+ * `root` and CSS shows the block that matches. `bar` (one or several) carries just the
+ * "machine draft" note and hides along with the translations.
  */
-const GX_SHOW_KEY = "da-grammar-help";
-export function mountGrammarHelp(root, bar, { level }) {
-  const toggle = bar.querySelector("[data-gx-toggle]");
-  let lang = readLang();
-
-  function setShown(on, persist = true) {
-    root.dataset.gx = on ? "on" : "off";
-    toggle.setAttribute("aria-pressed", String(on));
-    if (persist) { try { localStorage.setItem(GX_SHOW_KEY, on ? "1" : "0"); } catch {} }
-  }
-  function setLang(code) {
-    lang = code;
-    root.dataset.gxLang = code;
-    paintChips(code);
-  }
-
-  const paintChips = wireChips(bar, lang);
-  toggle.addEventListener("click", () => setShown(root.dataset.gx !== "on"));
-  bar.querySelectorAll("[data-help-lang]").forEach((c) => c.addEventListener("click", () => setShown(true)));
-  window.addEventListener(EVENT, (e) => setLang(e.detail));
-
-  let saved = null;
-  try { saved = localStorage.getItem(GX_SHOW_KEY); } catch {}
-  const shown = saved === null ? /^A[12]/.test(level ?? "") : saved === "1";
-  setLang(lang);
-  setShown(shown, false);
+export function mountGrammarHelp(root, bar) {
+  const bars = (bar instanceof Element ? [bar] : [...(bar ?? [])]).filter(Boolean);
+  followUi((lang) => {
+    root.dataset.gx = lang ? "on" : "off";
+    if (lang) root.dataset.gxLang = lang;
+    bars.forEach((b) => { b.hidden = !lang; });
+  });
 }

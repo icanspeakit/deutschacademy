@@ -4,7 +4,7 @@
 // and the set stays navigable. Layout and interaction patterns are lifted from
 // ../icanspeakit (dashboard rail, ListeningWorkbench player, ShadowRecorder).
 import Layout from "../../layouts/Layout.astro";
-import PracticeHeader from "../../components/PracticeHeader.astro";
+import SiteNav from "../../components/SiteNav.astro";
 import "../../styles/practice.css";
 import "../../styles/aussprache.css";
 import phrases from "../../data/wortschatz.json";
@@ -36,7 +36,7 @@ const firstSet = unitSets[0]?.id ?? PHRASES;
 const totalWords = unitSets.reduce((n, u) => n + u.items.length, 0);
 ---
 <Layout title="Aussprache-Training – DeutschAcademy" description="Hören, nachsprechen und sich selbst aufnehmen — Aussprachetraining mit dem ganzen vertonten Wortschatz, nach Themen.">
-  <PracticeHeader title="Aussprache-Training" titleKey="aussprache.hero.title" />
+  <SiteNav active="fertigkeiten" />
 
   <main class="pr-shell" id="pron-root">
     <aside class="pr-rail">
@@ -49,7 +49,7 @@ const totalWords = unitSets.reduce((n, u) => n + u.items.length, 0);
             {groups.map((g) => (
               <optgroup label={g.level}>
                 {g.units.map((u) => (
-                  <option value={u.id} selected={u.id === firstSet}>{u.title ?? u.id} · {u.items.length}</option>
+                  <option value={u.id} selected={u.id === firstSet} data-count={u.items.length}>{u.title ?? u.id} · {u.items.length}</option>
                 ))}
               </optgroup>
             ))}
@@ -177,8 +177,19 @@ const totalWords = unitSets.reduce((n, u) => n + u.items.length, 0);
       };
     }
 
+    // The topic names in the picker are the Wortschatz Lernset names (ws.set.<unit id>).
+    // An <option> can only hold text, so it cannot carry a data-i18n span for the name and
+    // keep its count — it is relabelled here instead, and again on every language switch.
+    function labelOptions(d) {
+      document.querySelectorAll("[data-set-select] option[data-count]").forEach((o) => {
+        const name = d[`ws.set.${o.value}`];
+        if (name) o.textContent = `${name} · ${o.dataset.count}`;
+      });
+    }
+
     const lang = getLang();
     const dict = await loadDict(lang);
+    labelOptions(dict);
 
     let sets = buildSets(lang);
     const app = mountPronunciation(root, {
@@ -195,6 +206,7 @@ const totalWords = unitSets.reduce((n, u) => n + u.items.length, 0);
         items.forEach((item, i) => (item.translation = next[k][i].translation));
       }
       app.refresh(stringsFrom(nextDict));
+      labelOptions(nextDict);
     });
   </script>
 </Layout>

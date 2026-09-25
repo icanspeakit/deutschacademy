@@ -1,0 +1,228 @@
+---
+// The search overlay behind every [data-nav-search] lens (SiteNav, PracticeHeader).
+//
+// A <dialog>, full-screen on a phone and a panel under the bar on a desktop. The index
+// (/suche.json, see src/lib/searchIndex.js) is fetched the first time it opens, not with
+// the page — it is ~2700 words, and most visits never search.
+//
+// Opens on the lens, on "/" and on Ctrl/⌘+K. Arrow keys move through the results, Enter
+// follows the highlighted one.
+import "../styles/site-search.css";
+---
+<dialog class="ss" id="site-search" aria-label="Suchen" data-i18n-attr="aria-label:nav.search">
+  <div class="ss-panel">
+    <form class="ss-bar" method="dialog" role="search">
+      <svg class="ss-lens" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+        <circle cx="11" cy="11" r="7"></circle><line x1="16.5" y1="16.5" x2="21" y2="21"></line>
+      </svg>
+      <input
+        class="ss-input"
+        type="search"
+        enterkeyhint="search"
+        autocomplete="off"
+        autocapitalize="off"
+        spellcheck="false"
+        placeholder="Wort oder Grammatikthema …"
+        aria-label="Suchen"
+        aria-controls="ss-results"
+        aria-autocomplete="list"
+        data-i18n-attr="placeholder:search.placeholder;aria-label:nav.search"
+        data-ss-input
+      />
+      <button class="ss-close" type="button" data-ss-close aria-label="Schließen" data-i18n-attr="aria-label:search.close">
+        <span data-i18n="search.cancel">Abbrechen</span>
+      </button>
+    </form>
+
+    <div class="ss-body" id="ss-results" role="listbox" data-ss-results>
+      <p class="ss-hint" data-i18n="search.hint">Zum Beispiel: Tisch, Perfekt, der die das, wo oder wohin</p>
+    </div>
+
+    {/* Strings the script needs at render time. Hidden spans rather than a JS table so the
+        i18n pass translates them with everything else. */}
+    <div hidden>
+      <span data-ss-str="topics" data-i18n="search.topics">Themen</span>
+      <span data-ss-str="pages" data-i18n="search.pages">Übungen & Prüfungen</span>
+      <span data-ss-str="words" data-i18n="search.words">Wörter</span>
+      <span data-ss-str="none" data-i18n="search.none">Nichts gefunden. Versuch ein anderes Wort.</span>
+      <span data-ss-str="loading" data-i18n="search.loading">Lädt …</span>
+      <span data-ss-str="hint" data-i18n="search.hint">Zum Beispiel: Tisch, Perfekt, der die das, wo oder wohin</span>
+    </div>
+  </div>
+</dialog>
+
+<script>
+  const dialog = document.getElementById("site-search");
+  const input = dialog.querySelector("[data-ss-input]");
+  const results = dialog.querySelector("[data-ss-results]");
+  const str = (k) => dialog.querySelector(`[data-ss-str="${k}"]`)?.textContent ?? "";
+
+  let index = null;
+  let loading = null;
+  const load = () =>
+    (loading ??= fetch("/suche.json")
+      .then((r) => r.json())
+      .then((data) => {
+        index = prepare(data);
+        render();
+      })
+      .catch(() => { loading = null; }));
+
+  // Umlauts and ß fold both ways, so "praesens", "prasens" and "präsens" all meet.
+  const norm = (s) =>
+    String(s)
+      .toLowerCase()
+      .replace(/ß/g, "ss")
+      .normalize("NFD")
+      .replace(/[̀-ͯ]/g, "")
+      .replace(/ae/g, "a").replace(/oe/g, "o").replace(/ue/g, "u")
+      .replace(/[^\p{L}\p{N}\s-]/gu, " ")
+      .replace(/\s+/g, " ")
+      .trim();
+
+  function prepare({ topics, pages, words }) {
+    // The name and keywords are what a topic is about; the subtitle only mentions things.
+    const withHay = (e) => ({ ...e, n: norm(e.t), hay: norm(`${e.t} ${e.k}`), sub: norm(e.s) });
+    return {
+      topics: topics.map(withHay),
+      pages: pages.map(withHay),
+      words: words.map(([lemma, gender, plural, en, level, href, pos]) => ({
+        lemma, gender, plural, en, level, href, pos,
+        n: norm(lemma),
+        ens: en.split(/[,;/]|\(|\)/).map((p) => norm(p.replace(/^to /, ""))).filter(Boolean),
+      })),
+    };
+  }
+
+  function scoreEntry(e, q, tokens) {
+    if (!tokens.every((t) => e.hay.includes(t))) {
+      // A subtitle hit only counts for a whole phrase, and ranks below any real match.
+      return q.length >= 4 && e.sub.includes(q) ? 20 : 0;
+    }
+    if (e.n === q) return 100;
+    if (e.n.startsWith(q)) return 90;
+    if (e.n.includes(q)) return 75;
+    if (e.hay.split(" ").some((w) => w.startsWith(tokens[0]))) return 50;
+    return 30;
+  }
+
+  const LEVEL_ORDER = ["A1", "A2", "B1", "B2", "C1", "C2"];
+  function scoreWord(w, q) {
+    let s = 0;
+    if (w.n === q) s = 100;
+    else if (w.n.startsWith(q)) s = 80 - Math.min(20, w.n.length - q.length);
+    // Mid-word only for nouns: finds compounds (Schreibtisch) without every "-isch" adjective.
+    else if (q.length >= 3 && w.pos === "noun" && w.n.includes(q)) s = 45;
+    for (const e of w.ens) {
+      if (e === q) s = Math.max(s, 85);
+      else if (e.startsWith(q + " ") || e.startsWith(q)) s = Math.max(s, 55);
+      else if (e.split(" ").some((w) => w.startsWith(q))) s = Math.max(s, 35);
+    }
+    return s ? s - LEVEL_ORDER.indexOf(w.level) * 0.5 : 0;
+  }
+
+  function search(raw) {
+    const q = norm(raw);
+    if (q.length < 2) return null;
+    const tokens = q.split(" ");
+    // "der Tisch" is how a German noun is said; the article narrows nothing for a word match.
+    const wq = q.replace(/^(der|die|das|ein|eine) (?=\S)/, "");
+    const rank = (list, fn, max) =>
+      list.map((e) => [fn(e), e]).filter(([s]) => s > 0).sort((a, b) => b[0] - a[0]).slice(0, max);
+    return {
+      topics: rank(index.topics, (e) => scoreEntry(e, q, tokens), 6),
+      pages: rank(index.pages, (e) => scoreEntry(e, q, tokens), 3),
+      words: rank(index.words, (w) => scoreWord(w, wq), 12),
+    };
+  }
+
+  const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+  const lvl = (l) => (l ? `<span class="ss-level">${esc(l)}</span>` : "");
+
+  function render() {
+    const raw = input.value;
+    if (norm(raw).length < 2) {
+      results.innerHTML = `<p class="ss-hint">${esc(str("hint"))}</p>`;
+      return;
+    }
+    if (!index) {
+      results.innerHTML = `<p class="ss-hint">${esc(str("loading"))}</p>`;
+      load();
+      return;
+    }
+    const r = search(raw);
+    // Sections come in the order of their best hit, so "Tisch" leads with the word and
+    // "Perfekt" with the topic. Pages always go last: they are the fallback.
+    const best = (list) => list[0]?.[0] ?? 0;
+    const groups = [];
+    const topics = r.topics.map(([, e]) => e);
+    const words = r.words.map(([, w]) => w);
+    if (topics.length)
+      groups.push([best(r.topics), section("topics", topics.map((e) =>
+        row(e.h, `<span class="ss-title">${esc(e.t)}</span>${e.s && e.c !== "grammatik" ? `<span class="ss-sub">${esc(e.s)}</span>` : ""}`, lvl(e.l))))]);
+    if (words.length)
+      groups.push([best(r.words), section("words", words.map((w) =>
+        row(w.href,
+          `<span class="ss-title">${w.gender ? `<span class="ss-art ss-art--${esc(w.gender)}">${esc(w.gender)}</span> ` : ""}${esc(w.lemma)}${w.plural ? `<span class="ss-plural">, ${esc(w.plural)}</span>` : ""}</span><span class="ss-sub">${esc(w.en)}</span>`,
+          lvl(w.level))))]);
+    if (r.pages.length)
+      groups.push([-1, section("pages", r.pages.map(([, e]) => row(e.h, `<span class="ss-title">${esc(e.t)}</span>`, "")))]);
+    groups.sort((a, b) => b[0] - a[0]);
+    results.innerHTML = groups.length ? groups.map(([, html]) => html).join("") : `<p class="ss-hint">${esc(str("none"))}</p>`;
+    active = -1;
+  }
+
+  const section = (key, rows) => `<section class="ss-group"><h3 class="ss-head">${esc(str(key))}</h3>${rows.join("")}</section>`;
+  const row = (href, main, side) =>
+    `<a class="ss-row" role="option" href="${esc(href)}"><span class="ss-main">${main}</span>${side}</a>`;
+
+  // Arrow-key selection over the rendered links.
+  let active = -1;
+  function move(d) {
+    const rows = [...results.querySelectorAll(".ss-row")];
+    if (!rows.length) return;
+    rows[active]?.removeAttribute("aria-selected");
+    active = (active + d + rows.length) % rows.length;
+    rows[active].setAttribute("aria-selected", "true");
+    rows[active].scrollIntoView({ block: "nearest" });
+  }
+
+  function open() {
+    if (dialog.open) return;
+    dialog.showModal();
+    document.documentElement.classList.add("ss-lock");
+    input.focus();
+    input.select();
+    load();
+  }
+  function close() { dialog.close(); }
+  dialog.addEventListener("close", () => document.documentElement.classList.remove("ss-lock"));
+
+  let timer;
+  input.addEventListener("input", () => { clearTimeout(timer); timer = setTimeout(render, 60); });
+  input.addEventListener("keydown", (e) => {
+    if (e.key === "ArrowDown") { e.preventDefault(); move(1); }
+    else if (e.key === "ArrowUp") { e.preventDefault(); move(-1); }
+    else if (e.key === "Enter") {
+      e.preventDefault();
+      const target = results.querySelectorAll(".ss-row")[Math.max(active, 0)];
+      if (target) { close(); location.href = target.href; }
+    }
+  });
+  dialog.querySelector("[data-ss-close]").addEventListener("click", close);
+  // A click on the backdrop (the dialog itself, outside the panel) closes it.
+  dialog.addEventListener("click", (e) => { if (e.target === dialog) close(); });
+  results.addEventListener("click", (e) => { if (e.target.closest(".ss-row")) close(); });
+
+  document.addEventListener("click", (e) => {
+    const btn = e.target.closest("[data-nav-search]");
+    if (btn) { e.preventDefault(); open(); }
+  });
+  document.addEventListener("keydown", (e) => {
+    const typing = e.target.closest?.("input, textarea, select, [contenteditable='true']");
+    if ((e.key === "k" && (e.ctrlKey || e.metaKey)) || (e.key === "/" && !typing)) {
+      e.preventDefault();
+      open();
+    }
+  });
+</script>

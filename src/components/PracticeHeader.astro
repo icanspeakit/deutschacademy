@@ -27,6 +27,7 @@ import LanguageSwitcher from "./LanguageSwitcher.astro";
 import ThemeToggle from "./ThemeToggle.astro";
 import NavMenubar from "./NavMenubar.astro";
 import NavDrawer from "./NavDrawer.astro";
+import SiteSearch from "./SiteSearch.astro";
 import AuthStatus from "./auth/AuthStatus.jsx";
 
 interface Props {
@@ -55,6 +56,19 @@ const { title, titleKey, active } = Astro.props;
     {title && <span class="practice-header-title" data-i18n={titleKey}>{title}</span>}
 
     <div class="practice-header-right">
+      <button
+        class="practice-search"
+        type="button"
+        aria-label="Suchen"
+        data-i18n-attr="aria-label:nav.search;title:nav.search"
+        title="Suchen"
+        data-nav-search
+      >
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+          <circle cx="11" cy="11" r="7"></circle>
+          <line x1="16.5" y1="16.5" x2="21" y2="21"></line>
+        </svg>
+      </button>
       <a
         href="/fortschritt"
         class="practice-back practice-dash"
@@ -92,4 +106,5 @@ const { title, titleKey, active } = Astro.props;
 </header>
 
 <NavDrawer />
+<SiteSearch />
 

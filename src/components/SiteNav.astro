@@ -21,6 +21,7 @@ import ThemeToggle from "./ThemeToggle.astro";
 import Icon from "./Icon.astro";
 import NavDrawer from "./NavDrawer.astro";
 import NavMenubar from "./NavMenubar.astro";
+import SiteSearch from "./SiteSearch.astro";
 import NextStepCta from "./NextStepCta.astro";
 import AuthStatus from "./auth/AuthStatus.jsx";
 import "../styles/site-nav.css";
@@ -47,25 +48,23 @@ const { active } = Astro.props;
       {/* One next step from what this browser knows — see NextStepCta.astro. */}
       <NextStepCta variant="header" />
 
-      <div class="lp-nav-utils">
-        {/* TODO: there is no site-wide search yet. The button is here because the
-            cluster's shape depends on it and adding it later would move everything
-            again; wire it to the real thing when one exists (a route or an overlay),
-            and drop `disabled`. */}
-        <button
-          class="lp-nav-icon lp-nav-search"
-          type="button"
-          aria-label="Suchen"
-          data-i18n-attr="aria-label:nav.search"
-          data-nav-search
-          disabled
-        >
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <circle cx="11" cy="11" r="7"></circle>
-            <line x1="16.5" y1="16.5" x2="21" y2="21"></line>
-          </svg>
-        </button>
+      {/* Opens the search overlay (SiteSearch.astro): words, grammar topics, trainers.
+          Outside .lp-nav-utils because the lens stays in the row on a phone, where the
+          utilities move into the drawer. */}
+      <button
+        class="lp-nav-icon lp-nav-search"
+        type="button"
+        aria-label="Suchen"
+        data-i18n-attr="aria-label:nav.search"
+        data-nav-search
+      >
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="11" cy="11" r="7"></circle>
+          <line x1="16.5" y1="16.5" x2="21" y2="21"></line>
+        </svg>
+      </button>
 
+      <div class="lp-nav-utils">
         {/* One click, not two. This used to be the only link inside the avatar menu,
             which meant the most-visited personal page on the site was hidden behind a
             monogram that gives no hint of holding it. It is a destination, so it is a
@@ -117,6 +116,7 @@ const { active } = Astro.props;
 </nav>
 
 <NavDrawer />
+<SiteSearch />
 
 <noscript>
   <style>

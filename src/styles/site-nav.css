@@ -812,9 +812,6 @@
 .lp-nav-icon[href] { text-decoration: none; }
 .lp-nav-icon[aria-current="page"] { color: var(--brand-blue-dark); border-color: var(--brand-blue); }
 .lp-nav-icon svg { width: 17px; height: 17px; }
-/* No search backend yet (see the TODO in SiteNav.astro). Dimmed rather than hidden:
-   the cluster's spacing is designed around it, and hiding it would move the avatar the
-   day search ships. */
 .lp-nav-icon:disabled { opacity: .45; cursor: default; }
 
 /* ---- Right cluster: the avatar and its menu ------------------------------ */
@@ -896,7 +893,6 @@
   /* Same reason the avatar went: the drawer carries its own theme toggle, and two of
      them in one header is one of them being wrong about the state. */
   .lp-nav-theme { display: none; }
-  .lp-nav-search { display: none; }
 }
 
 /* Every new control keeps the same visible focus ring the rest of the nav uses. */

@@ -59,6 +59,21 @@
 .practice-header-right { margin-left: auto; flex: 0 0 auto; display: flex; align-items: center; gap: 16px; }
 .practice-header-utils { display: flex; align-items: center; gap: 16px; }
 .practice-dash { display: inline-flex; align-items: center; }
+/* The search lens (SiteSearch.astro). Bare glyph, like the dashboard icon beside it. */
+.practice-search {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  margin: -4px -6px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--brand-blue-dark);
+  cursor: pointer;
+}
+.practice-search:focus-visible { outline: 2px solid var(--brand-blue); outline-offset: 2px; border-radius: 8px; }
 .practice-dash-icon { display: none; }
 
 /* Desktop: the menu bar fills the middle and the page's own <h1> is two lines below,

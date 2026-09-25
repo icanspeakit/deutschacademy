@@ -1,0 +1,17 @@
+---
+// Restores the side navigation's fold before first paint. Placed directly after the `.nvb`
+// card it folds; src/lib/sideNavFold.js takes over once the page script runs. Without it a
+// learner who folded the list would watch it open and close again on every page.
+---
+<script is:inline>
+  (function () {
+    var root = document.currentScript.previousElementSibling;
+    if (!root || !matchMedia("(min-width: 1001px)").matches) return;
+    var on = false;
+    try { on = localStorage.getItem("da-sidenav-fold") === "1"; } catch (e) {}
+    if (!on) return;
+    root.classList.add("collapsed", "no-anim");
+    var page = root.closest("#vp-page");
+    if (page) page.dataset.fold = "1";
+  })();
+</script>

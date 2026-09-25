@@ -7,15 +7,18 @@ import Layout from "../layouts/Layout.astro";
 import SiteNav from "../components/SiteNav.astro";
 import "../styles/practice.css";
 import "../styles/nav.css";
+import "../styles/lernset-picker.css";
+import "../styles/sidenav.css";
 import "../styles/aussprache.css";
 import Icon from "../components/Icon.astro";
-import packs from "../data/artikel-packs.json";
+import SideNavFold from "../components/SideNavFold.astro";
+import { unitIcon } from "../lib/unitIcon.js";
 import phrases from "../data/wortschatz.json";
 import redemittel from "../data/redemittel.json";
 import { existsSync } from "node:fs";
 import path from "node:path";
 import { slugify, satzSlug } from "../lib/audioSlug.js";
-import { LEVELS, units, asAudioItems } from "../lib/lexicon.js";
+import { LEVELS, LEVEL_NAMES, units, asAudioItems } from "../lib/lexicon.js";
 
 // A recording on disk, by its public path — only what scripts/generate-satz-audio.mjs has
 // actually voiced gets a button, so a half-finished run never shows a silent one.
@@ -76,13 +79,13 @@ const groups = LEVELS.map((level) => ({ level, units: unitSets.filter((u) => u.l
 const firstSet = unitSets[0]?.id ?? PHRASES;
 const totalWords = unitSets.reduce((n, u) => n + u.items.length, 0);
 
-// The menu is the Artikel-Trainer's (ArtikelPicker.astro): a dark rail of level badges
-// beside a panel of that level's topics. Each topic row borrows its icon from the Artikel
-// pack that covers the same lexicon topic, at that level where the pack has its own.
-const iconFor = (u: { topics: string[]; level: string }) => {
-  const pack = (packs as any).topics.find((p: any) => p.topics.some((t: string) => u.topics.includes(t)));
-  return pack?.levels?.[u.level]?.icon ?? pack?.icon ?? "•";
-};
+// The side nav is the one every trainer has (sidenav.css): a rail of level badges beside a
+// panel of that level's topics, each row with the emoji its Lernset wears on Wortschatz.
+const iconFor = unitIcon;
+// A1–B2 always on the rail, so it reads the same as on every other page; a level with no
+// voiced words yet is greyed rather than left out.
+const RAIL_LEVELS = ["A1", "A2", "B1", "B2"];
+const liveLevels = new Set(groups.map((g) => g.level));
 const firstLevel = unitSets.find((u) => u.id === firstSet)?.level ?? groups[0]?.level;
 ---
 <Layout title="Aussprache-Training – DeutschAcademy" description="Hören, nachsprechen und sich selbst aufnehmen — Aussprachetraining mit dem ganzen vertonten Wortschatz, nach Themen.">
@@ -104,23 +107,45 @@ const firstLevel = unitSets.find((u) => u.id === firstSet)?.level ?? groups[0]?.
         <span class="pr-pick-toggle-chev" aria-hidden="true">▾</span>
       </button>
 
-      <div class="nvb pr-nvb" id="pr-nvb">
+      <div class="nvb ls-nvb pr-nvb snav" id="pr-nvb">
+        <!-- The fold tab on the panel's edge: the list goes, the rail stays. -->
+        <button type="button" class="ls-foldtab" data-nvb-collapse aria-label="Liste einklappen" data-i18n-attr="aria-label:ap.list.collapse" aria-controls="pr-pane">
+          <span class="ls-foldtab-txt" data-i18n="tr.topics">Themen</span>
+          <svg class="ls-foldtab-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>
+        </button>
         <div class="nvb-rail" role="tablist" aria-label="Stufe wählen" data-i18n-attr="aria-label:ap.chooseLevel">
-          {groups.map((g) => (
-            <button
-              type="button"
-              role="tab"
-              class:list={["nvb-railbtn", g.level === firstLevel && "active"]}
-              data-pr-rail={g.level}
-              aria-selected={g.level === firstLevel ? "true" : "false"}
-              aria-controls={`pr-pane-${g.level}`}
-              aria-label={`Stufe ${g.level}`}
-              data-i18n-attr={`aria-label:kb.level.${g.level}`}
-            >
-              <span class="nvb-railbadge">{g.level}</span>
-              <span class="nvb-tip" data-i18n="aussprache.levelTip" data-i18n-vars={JSON.stringify({ level: g.level, n: g.units.reduce((n, u) => n + u.items.length, 0) })}>Stufe {g.level} · {g.units.reduce((n, u) => n + u.items.length, 0)} Wörter</span>
-            </button>
-          ))}
+          <button
+            type="button"
+            role="tab"
+            class="nvb-railbtn"
+            data-pr-rail="fortschritt"
+            aria-selected="false"
+            aria-controls="pr-pane-fortschritt"
+            aria-label="Dein Fortschritt"
+            data-i18n-attr="aria-label:sets.prog.title"
+          >
+            <Icon name="target" size={20} />
+            <span class="nvb-tip" data-i18n="sets.prog.title">Dein Fortschritt</span>
+          </button>
+          {RAIL_LEVELS.map((level) => {
+            const live = liveLevels.has(level);
+            return (
+              <button
+                type="button"
+                role="tab"
+                class:list={["nvb-railbtn", level === firstLevel && "active"]}
+                data-pr-rail={live ? level : undefined}
+                aria-disabled={live ? undefined : "true"}
+                aria-selected={level === firstLevel ? "true" : "false"}
+                aria-controls={live ? `pr-pane-${level}` : undefined}
+                aria-label={`Stufe ${level}`}
+                data-i18n-attr={`aria-label:kb.level.${level}`}
+              >
+                <span class="nvb-railbadge">{level}</span>
+                <span class="nvb-tip"><span data-i18n="ap.levelName" data-i18n-vars={JSON.stringify({ level })}>Stufe {level}</span> · <span data-i18n={`level.name.${level}`}>{LEVEL_NAMES[level as keyof typeof LEVEL_NAMES]}</span></span>
+              </button>
+            );
+          })}
           <span class="ls-raildiv" aria-hidden="true"></span>
           <button
             type="button"
@@ -137,11 +162,20 @@ const firstLevel = unitSets.find((u) => u.id === firstSet)?.level ?? groups[0]?.
           </button>
         </div>
 
-        <div class="nvb-panel">
+        <div class="nvb-panel" id="pr-pane">
+          <div class="nvb-section" id="pr-pane-fortschritt" data-pr-pane="fortschritt" hidden>
+            <div class="nvb-panelhead"><h3 data-i18n="sets.prog.title">Dein Fortschritt</h3></div>
+            <div data-snav-overview></div>
+            <a class="snav-more" href="/fortschritt" data-i18n="sets.prog.more">Alles im Fortschritt ansehen →</a>
+          </div>
           {groups.map((g) => (
             <div class="nvb-section" id={`pr-pane-${g.level}`} data-pr-pane={g.level} hidden={g.level !== firstLevel}>
               <div class="nvb-panelhead">
-                <h3 data-i18n="ap.levelName" data-i18n-vars={JSON.stringify({ level: g.level })}>Stufe {g.level}</h3>
+                <h3><span data-i18n="ap.levelName" data-i18n-vars={JSON.stringify({ level: g.level })}>Stufe {g.level}</span><span class="snav-head-name"> · <span data-i18n={`level.name.${g.level}`}>{LEVEL_NAMES[g.level as keyof typeof LEVEL_NAMES]}</span></span></h3>
+              </div>
+              <div class="snav-prog" data-snav-prog={g.level} hidden>
+                <span class="snav-prog-txt" data-snav-prog-txt></span>
+                <span class="snav-prog-bar"><span data-snav-prog-bar></span></span>
               </div>
               <p class="pr-pane-lead" data-i18n="aussprache.levelLead" data-i18n-vars={JSON.stringify({ n: g.units.reduce((n, u) => n + u.items.length, 0) })}>{g.units.reduce((n, u) => n + u.items.length, 0)} Wörter mit Audio. Wähle ein Thema.</p>
               <h4 class="pr-pane-sub" data-i18n="ap.byTopic">Nach Thema</h4>
@@ -149,7 +183,7 @@ const firstLevel = unitSets.find((u) => u.id === firstSet)?.level ?? groups[0]?.
                 <button type="button" class="nvb-item pr-pack" data-set-btn={u.id} aria-selected={u.id === firstSet ? "true" : "false"}>
                   <span class="pr-pack-ic" aria-hidden="true">{iconFor(u)}</span>
                   <span class="pr-pack-name" data-i18n={`ws.set.${u.id}`}>{u.title ?? u.id}</span>
-                  <span class="pr-pack-n">{u.items.length}</span>
+                  <span class="pr-pack-n" data-set-count={u.id}>0/{u.items.length}</span>
                 </button>
               ))}
             </div>
@@ -163,18 +197,19 @@ const firstLevel = unitSets.find((u) => u.id === firstSet)?.level ?? groups[0]?.
               <button type="button" class="nvb-item pr-pack" data-set-btn={s.key} aria-selected="false">
                 <span class="pr-pack-ic" aria-hidden="true">{s.icon}</span>
                 <span class="pr-pack-name">{s.name}</span>
-                <span class="pr-pack-n">{s.items.length}</span>
+                <span class="pr-pack-n" data-set-count={s.key}>0/{s.items.length}</span>
               </button>
             ))}
             <h4 class="pr-pane-sub">Gemischt</h4>
             <button type="button" class="nvb-item pr-pack" data-set-btn={PHRASES} aria-selected="false">
               <span class="pr-pack-ic" aria-hidden="true">💬</span>
               <span class="pr-pack-name">Erste Sätze</span>
-              <span class="pr-pack-n">{sets[PHRASES].length}</span>
+              <span class="pr-pack-n" data-set-count={PHRASES}>0/{sets[PHRASES].length}</span>
             </button>
           </div>
         </div>
       </div>
+      <SideNavFold />
     </aside>
 
     <section class="pr-stage">
@@ -270,7 +305,9 @@ const firstLevel = unitSets.find((u) => u.id === firstSet)?.level ?? groups[0]?.
   <script type="application/json" id="pron-data" set:html={JSON.stringify(sets)}></script>
 
   <script type="module">
-    import { mountPronunciation } from "../lib/pronunciation.js";
+    import { mountPronunciation, readHeard } from "../lib/pronunciation.js";
+    import { mountSideNavFold } from "../lib/sideNavFold.js";
+    import { t } from "../lib/uiText.js";
     import { recordSession } from "../lib/progress.js";
     import { getLang, loadDict, onLangChange } from "../lib/i18n.js";
 
@@ -327,7 +364,67 @@ const firstLevel = unitSets.find((u) => u.id === firstSet)?.level ?? groups[0]?.
         b.setAttribute("aria-selected", String(on));
       });
     }
-    railBtns.forEach((b) => b.addEventListener("click", () => showPane(b.dataset.prRail)));
+    const fold = mountSideNavFold(root.querySelector(".pr-nvb"));
+    railBtns.forEach((b) => b.addEventListener("click", () => {
+      fold?.reveal();
+      showPane(b.dataset.prRail);
+      if (b.dataset.prRail === "fortschritt") paintOverview();
+    }));
+
+    // "x/N gehört" per topic row, per level under its head, and every level at once in
+    // "Dein Fortschritt" — all from the words this browser has heard (pronunciation.js).
+    const levelOfSet = Object.fromEntries(
+      [...root.querySelectorAll("[data-pr-pane]")].flatMap((p) =>
+        [...p.querySelectorAll("[data-set-btn]")].map((b) => [b.dataset.setBtn, p.dataset.prPane]))
+    );
+    const heardCount = (key, saved) => (raw[key] || []).filter((it) => saved[key]?.includes(it.text)).length;
+    function levelTotals() {
+      const saved = readHeard();
+      const out = {};
+      for (const key of Object.keys(raw)) {
+        const lv = levelOfSet[key];
+        if (!/^[AB][12]$/.test(lv || "")) continue;
+        const o = (out[lv] ??= { n: 0, total: 0 });
+        o.n += heardCount(key, saved);
+        o.total += raw[key].length;
+      }
+      return out;
+    }
+    function paintCounts() {
+      const saved = readHeard();
+      root.querySelectorAll("[data-set-count]").forEach((el) => {
+        const key = el.dataset.setCount;
+        el.textContent = `${heardCount(key, saved)}/${(raw[key] || []).length}`;
+      });
+      const totals = levelTotals();
+      root.querySelectorAll("[data-snav-prog]").forEach((el) => {
+        const lv = totals[el.dataset.snavProg];
+        el.hidden = !lv?.n;
+        if (!lv?.n) return;
+        el.querySelector("[data-snav-prog-txt]").textContent = t("aussprache.heardOf", "{n} von {total} gehört", { n: lv.n, total: lv.total });
+        el.querySelector("[data-snav-prog-bar]").style.width = `${Math.round((lv.n / lv.total) * 100)}%`;
+      });
+      if (!root.querySelector("#pr-pane-fortschritt").hidden) paintOverview();
+    }
+    function paintOverview() {
+      const box = root.querySelector("[data-snav-overview]");
+      const totals = levelTotals();
+      if (!Object.values(totals).some((x) => x.n)) {
+        box.innerHTML = `<p class="snav-empty"></p>`;
+        box.firstElementChild.textContent = t("aussprache.prog.empty", "Noch nichts gehört. Sobald du Wörter abspielst, steht hier, wie viele du pro Stufe schon gehört hast.");
+        return;
+      }
+      box.innerHTML = ["A1", "A2", "B1", "B2"].map((lv) => {
+        const x = totals[lv] ?? { n: 0, total: 0 };
+        return `<button type="button" class="snav-lvl" data-snav-lvl="${lv}"${x.total ? "" : " disabled"}>
+          <span class="snav-lvl-name">${lv}</span>
+          <span class="snav-prog-bar"><span style="width:${x.total ? Math.round((x.n / x.total) * 100) : 0}%"></span></span>
+          <span class="snav-lvl-n">${x.n}/${x.total}</span>
+        </button>`;
+      }).join("");
+      box.querySelectorAll("[data-snav-lvl]").forEach((b) => b.addEventListener("click", () => showPane(b.dataset.snavLvl)));
+    }
+    paintCounts();
 
     function setOpen(open) {
       aside.dataset.pickOpen = String(open);
@@ -350,7 +447,7 @@ const firstLevel = unitSets.find((u) => u.id === firstSet)?.level ?? groups[0]?.
     const app = mountPronunciation(root, {
       sets,
       strings: stringsFrom(dict),
-      onHeard: () => recordSession("hoeren"),
+      onHeard: () => { recordSession("hoeren"); paintCounts(); },
       onSetChange: (key) => {
         try { localStorage.setItem(LAST_KEY, key); } catch {}
         markSet(key);

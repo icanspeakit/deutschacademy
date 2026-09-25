@@ -133,11 +133,11 @@ const BEATS = [
     </div>
   </TopicBar>
 
-  <!-- The dashboard's rail, folded to a 64px strip. Opening it overlays the page rather
-       than pushing it, so the exercise column below keeps its full 880px. Above 1100px
-       only — see topic-rail.css. -->
+  <!-- The side nav and the page share one grid (topic-rail.css): the rail is a sticky
+       column on the left, the page centres in what is left. Above 1100px only. -->
+  <div class:list={[!isArtikel && "tr-layout"]}>
   {/* Not on Artikel: its trainer brings its own A1–B2 rail (the noun levels), and two
-      dark A1–B2 rails side by side read as one menu twice. */}
+      A1–B2 rails side by side read as one menu twice. */}
   {!isArtikel && <TopicRail current={topicKey} />}
 
   <!-- Rendered collapsed, then opened by the script if this learner asked for it.
@@ -513,6 +513,7 @@ const BEATS = [
          again. Shown on the live site too. -->
     <button type="button" class="vp-dev-reset" id="vp-dev-reset" title="Tour-Flags löschen und neu laden" data-i18n-attr="title:vp.devReset.title" data-i18n="vp.devReset">↻ Tour neu</button>
   </main>
+  </div>
 
   <script type="application/json" id="topic-data" set:html={JSON.stringify(clientData)}></script>
   <script type="module">

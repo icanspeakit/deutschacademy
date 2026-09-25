@@ -24,10 +24,6 @@
   .vp-page--fit .vp-sheet-head { display: none; }
   .vp-page--fit .vp-rule-card > .vp-sheet-body { display: contents; }
 
-  /* "Stufen ausblenden" had a row to itself. The pivot tab on the column's edge does the
-     same job (≥1180px); between 1001 and 1180 there is no tab, so the pill stays there. */
-  .vp-page--fit .vp-col--ex .vp-ex-toolbar { margin-bottom: var(--space-4); }
-
   .vp-page--fit .vp-col--rule {
     top: calc(var(--fit-nav) + 16px);
     height: var(--fit-h);
@@ -44,13 +40,9 @@
     flex-direction: column;
   }
 }
-/* 1001–1179: the pill row stays, so the card gives its height back to end level with the rail. */
-@media (min-width: 1001px) and (max-width: 1179px) {
-  .vp-page--fit .vp-col--ex > .vp-card { min-height: calc(var(--fit-h) - 46px); }
-}
-@media (min-width: 1180px) {
-  .vp-page--fit .vp-col--ex .vp-ex-toolbar { display: none; }
-}
+/* No toolbar row above the card any more: the column is always there on a desktop and only
+   its list folds, by the tab on its edge (sidenav.css), so "Stufen ausblenden" is gone. */
+.vp-page--fit .vp-col--ex .vp-ex-toolbar { display: none; }
 
 /* ---- The question, centred and large ------------------------------------------------ */
 .vp-page--fit #akk-exercise-root { flex: 1; display: flex; flex-direction: column; }

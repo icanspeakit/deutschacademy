@@ -246,17 +246,6 @@ const freqChart = {
     <div class="vp-sheet-scrim" data-sheet-close aria-hidden="true"></div>
 
     <section class="vp-col vp-col--ex">
-      <div class="vp-ex-toolbar">
-        <button
-          type="button"
-          class="vp-rule-toggle"
-          id="vp-rule-toggle"
-          data-show="Stufen einblenden"
-          data-hide="Stufen ausblenden"
-          data-i18n-attr="data-show:ap.levels.show;data-hide:ap.levels.hide"
-        >Stufen einblenden</button>
-      </div>
-
       <div class="vp-card">
       <div class="akk-mode-row">
         <div class="akk-mode" role="group" aria-label="Übungsmodus" data-i18n-attr="aria-label:akk.mode.ariaLabel">
@@ -330,21 +319,6 @@ const freqChart = {
       level navigation. */}
   <ArtikelRegel />
 
-  <!-- The tab the folded column leaves behind. Outside .vp-col--rule on purpose: that
-       column goes inert when it collapses (see ruleColumn.js), and a control inside it
-       would go inert with it — the one control whose whole job is to bring it back. -->
-  <button
-    type="button"
-    class="vp-rule-pivot"
-    id="vp-rule-pivot"
-    aria-controls="vp-rule-card"
-    aria-expanded="true"
-    title="Stufen einblenden"
-    data-i18n-attr="title:ap.levels.show"
-  >
-    <span class="vp-rule-pivot-chevron" aria-hidden="true"></span>
-    <span class="vp-rule-pivot-label" data-i18n="ap.levels">Stufen</span>
-  </button>
 
   <script type="application/json" id="akk-data" set:html={JSON.stringify(pool)}></script>
   <script type="application/json" id="akk-freq-data" set:html={JSON.stringify(freqChart)}></script>
@@ -354,6 +328,7 @@ const freqChart = {
   <script type="module">
     import { mountPracticeWorkspace, isSoundOn, setSoundOn } from "../lib/practiceWorkspace.js";
     import { mountRuleColumn } from "../lib/ruleColumn.js";
+    import { mountSideNavFold } from "../lib/sideNavFold.js";
     import { mountLeichteSprache } from "../lib/leichteSprache.js";
     import { recordAttempt } from "../lib/progress.js";
     import { mountFreqChart } from "../lib/artikelFreqChart.js";
@@ -588,7 +563,41 @@ const freqChart = {
           btn.classList.toggle("active", lv === level && current.kind === kind && current.id === id);
         });
       });
+      paintLevelLine();
       paintScope();
+    }
+
+    /* Under each level's head: "x von N sicher" and a thin bar — hidden until the learner
+       has answered something at that level, so a first visit shows no zero. */
+    const levelIds = (lv) => pool.filter((q) => q.level === lv).map((q) => q.id);
+    function paintLevelLine() {
+      document.querySelectorAll(".ap-nvb [data-snav-prog]").forEach((el) => {
+        const p = stats(levelIds(el.dataset.snavProg));
+        el.hidden = !p.gesehen;
+        if (!p.gesehen) return;
+        el.querySelector("[data-snav-prog-txt]").textContent = t("ap.sure", "{n} von {total} sicher", { n: p.sicher, total: p.total });
+        el.querySelector("[data-snav-prog-bar]").style.width = `${p.total ? Math.round((p.sicher / p.total) * 100) : 0}%`;
+      });
+      if (!document.getElementById("ap-pane-fortschritt")?.hidden) paintOverview();
+    }
+
+    /* "Dein Fortschritt": every level at once, each row opening its level. */
+    function paintOverview() {
+      const box = document.querySelector(".ap-nvb [data-snav-overview]");
+      if (!box) return;
+      const rows = ["A1", "A2", "B1", "B2"].map((lv) => ({ lv, ids: levelIds(lv) }));
+      const all = rows.map((r) => ({ ...r, p: stats(r.ids) }));
+      if (!all.some((r) => r.p.gesehen)) {
+        box.innerHTML = `<p class="snav-empty">${esc(t("ap.prog.empty", "Noch nichts geübt. Sobald du Artikel wählst, steht hier, wie viele Nomen du pro Stufe sicher kannst."))}</p>`;
+        return;
+      }
+      box.innerHTML = all.map(({ lv, ids, p }) => `
+        <button type="button" class="snav-lvl" data-snav-lvl="${lv}"${ids.length ? "" : " disabled"}>
+          <span class="snav-lvl-name">${lv}</span>
+          <span class="snav-prog-bar"><span style="width:${p.total ? Math.round((p.sicher / p.total) * 100) : 0}%"></span></span>
+          <span class="snav-lvl-n">${p.sicher}/${p.total}</span>
+        </button>`).join("");
+      box.querySelectorAll("[data-snav-lvl]").forEach((b) => b.addEventListener("click", () => setLevel(b.dataset.snavLvl)));
     }
 
     /* The topic bar's "x / n" follows the deck being practised — "0 / 45" in Wohnung & Haus,
@@ -684,6 +693,9 @@ const freqChart = {
         // The Regel is a pane, not a level: showing it must not throw away the session
         // the learner is in the middle of.
         if (key === "regel") { openRegel(); return; }
+        // Pressing a rail entry is asking to see its list, so a folded list opens.
+        fold?.reveal();
+        if (key === "fortschritt") { showPane(key); paintOverview(); return; }
         setLevel(key);
       });
     });
@@ -718,33 +730,9 @@ const freqChart = {
         choose(kind, id, b.dataset.akpLevel);
       }));
 
-    // The fold: the panel goes, the rail stays — the Stufen tab on the panel's edge, as
-    // the Lernset column has it. LernsetPicker.astro does the same for Wortschatz; this
-    // is its twin for the one picker that page's script does not see.
-    const apRoot = document.querySelector(".ap-nvb");
-    const apPage = document.getElementById("vp-page");
-    const FOLD_KEY = "da-artikel-stufen-fold";
-    const foldBtns = Array.from(apRoot.querySelectorAll("[data-nvb-collapse]"));
-    function setFold(on, persist = true) {
-      apRoot.classList.toggle("collapsed", on);
-      apPage.dataset.fold = on ? "1" : "";
-      foldBtns.forEach((b) => {
-        b.setAttribute("aria-expanded", on ? "false" : "true");
-        b.setAttribute("aria-label", on ? t("ap.list.expand", "Liste ausklappen") : t("ap.list.collapse", "Liste einklappen"));
-        b.setAttribute("data-i18n-attr", on ? "aria-label:ap.list.expand" : "aria-label:ap.list.collapse");
-      });
-      if (persist) { try { localStorage.setItem(FOLD_KEY, on ? "1" : "0"); } catch {} }
-    }
-    let folded = false;
-    try { folded = localStorage.getItem(FOLD_KEY) === "1"; } catch {}
-    // Restored without animating: nobody took an action.
-    apRoot.classList.add("no-anim");
-    setFold(folded, false);
-    requestAnimationFrame(() => requestAnimationFrame(() => apRoot.classList.remove("no-anim")));
-    foldBtns.forEach((b) => b.addEventListener("click", (e) => {
-      e.stopPropagation();
-      setFold(!apRoot.classList.contains("collapsed"));
-    }));
+    // The fold: the list goes, the rail stays — one behaviour and one remembered state
+    // for every side nav (src/lib/sideNavFold.js).
+    const fold = mountSideNavFold(document.querySelector(".ap-nvb"), { page: document.getElementById("vp-page") });
 
     // The workspace rebuilds its DOM on every answer, so the switch watches for what
     // arrives rather than painting once — see the MutationObserver note in leichteSprache.js.
@@ -817,8 +805,13 @@ const freqChart = {
     };
 
     ruleCol = mountRuleColumn(document.getElementById("vp-page"), {
-      storageKey: "da-artikel-rule",
+      // On a desktop the column is always there — only its list folds (sideNavFold.js) —
+      // so there is no layout preference to store. On a phone it is a sheet, closed.
+      defaultHidden: ({ wide }) => !wide,
       seenKey: "da-artikel-rule-peek",
+      // The tour opened a hidden column and pointed at the switch that hid it. Neither
+      // exists on a desktop any more; the phone's one-beat telling ("Stufe wählen") stays.
+      intro: !matchMedia("(min-width: 1001px)").matches,
       beats: chartFold ? [chartBeat] : [],
       // Below 1001px the Regel is a bottom sheet rather than an accordion, as the
       // Wortschatz picker is. The table is five rows tall: expanded in place it pushed the

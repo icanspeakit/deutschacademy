@@ -26,6 +26,12 @@ function seededBars(seed, count) {
   return bars;
 }
 
+/** Where the words a learner has heard are kept: `{ setKey: ["der Name", …] }`. */
+export const HEARD_KEY = "da-aussprache-gehoert";
+export function readHeard() {
+  try { return JSON.parse(localStorage.getItem(HEARD_KEY) || "{}") || {}; } catch { return {}; }
+}
+
 export function mountPronunciation(root, options = {}) {
   const { sets, onHeard, onSetChange, strings = {} } = options;
 
@@ -67,9 +73,23 @@ export function mountPronunciation(root, options = {}) {
   // word to word; a word without a voiced sentence just plays the word.
   let inSentence = false;
   // One Set per practice set, created on first visit — the sets come from the lexicon, so
-  // their keys are not known here.
+  // their keys are not known here. Remembered per browser by the words themselves
+  // (HEARD_KEY), not by position, so a set that gains a word keeps what was heard in it;
+  // the side nav's "x/N" per topic reads the same record.
   const heard = {};
-  const heardIn = (key) => (heard[key] ??= new Set());
+  let saved = readHeard();
+  const heardIn = (key) =>
+    (heard[key] ??= new Set(
+      (sets[key] || []).map((it, i) => (saved[key]?.includes(it.text) ? i : -1)).filter((i) => i >= 0)
+    ));
+  function markHeard(key, i) {
+    if (heardIn(key).has(i)) return false;
+    heardIn(key).add(i);
+    saved = readHeard();
+    saved[key] = [...heardIn(key)].map((j) => sets[key]?.[j]?.text).filter(Boolean);
+    try { localStorage.setItem(HEARD_KEY, JSON.stringify(saved)); } catch {}
+    return true;
+  }
 
   const audio = new Audio();
   audio.preload = "none";
@@ -172,7 +192,7 @@ export function mountPronunciation(root, options = {}) {
     u.onstart = () => {
       speaking = true;
       setPlayIcon(true);
-      if (!heardIn(set).has(index)) { heardIn(set).add(index); onHeard?.(); renderRail(); }
+      if (markHeard(set, index)) { onHeard?.(set); renderRail(); }
     };
     u.onend = () => {
       speaking = false;
@@ -209,9 +229,8 @@ export function mountPronunciation(root, options = {}) {
   audio.addEventListener("playing", () => {
     setPlayIcon(true);
     el.status.textContent = "";
-    if (!heardIn(set).has(index)) {
-      heardIn(set).add(index);
-      onHeard?.();
+    if (markHeard(set, index)) {
+      onHeard?.(set);
       renderRail();
     }
   });

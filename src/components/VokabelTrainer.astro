@@ -167,17 +167,6 @@ const languages = ALL_LANGUAGES.filter((l) => langs.includes(l.code));
             <button class="vt-tab" type="button" data-tab="learn" data-i18n="wortschatz.tab.learn">Lernen</button>
             <button class="vt-tab" type="button" data-tab="list" data-i18n="wortschatz.tab.list">Wortliste</button>
           </div>
-
-          <!-- Hidden below 1001px by verben-praepositionen.css: there is no column to
-               slide down there, and .vp-rule-peek is the control instead. -->
-          <button
-            type="button"
-            class="vp-rule-toggle"
-            id="vp-rule-toggle"
-            data-show="Lernsets einblenden"
-            data-hide="Lernsets ausblenden"
-            data-i18n-attr="data-show:sets.show;data-hide:sets.hide"
-          >Lernsets einblenden</button>
         </div>
 
         <div class="vt-toolbar">
@@ -196,29 +185,6 @@ const languages = ALL_LANGUAGES.filter((l) => langs.includes(l.code));
       </div>
     </section>
   </div>
-
-  <!-- What "weggeklappt" leaves behind on a desktop.
-       The grammar pages let the rule column vanish outright, and that is right for an
-       aside: the pill in the toolbar is trace enough for something you consult now and
-       then. This column is navigation — it is how you get to the next Lernset — and a
-       navigation column that disappears reads as a feature that went away. So it folds
-       to a tab at the edge instead, in the place the column just left, and one click
-       brings it back.
-
-       Outside .vp-col--rule on purpose: that column goes inert when it collapses, and a
-       control inside it would go inert with it (see ruleColumn.js). -->
-  <button
-    type="button"
-    class="vp-rule-pivot"
-    id="vp-rule-pivot"
-    aria-controls="vp-rule-card"
-    aria-expanded="true"
-    title="Lernsets einblenden"
-    data-i18n-attr="title:sets.show"
-  >
-    <span class="vp-rule-pivot-chevron" aria-hidden="true"></span>
-    <span class="vp-rule-pivot-label" data-i18n="sets.lernsets">Lernsets</span>
-  </button>
 
   <!-- Dev only, same as the grammar topics: the tour runs once per browser and there is
        no way to un-see it, so there has to be a way to un-remember it. A reload rather
@@ -247,10 +213,14 @@ const languages = ALL_LANGUAGES.filter((l) => langs.includes(l.code));
   // they cannot guess is that it folds away and leaves a tab behind, so that is what the
   // tour shows. On a phone the column starts collapsed like any other and the ordinary
   // telling applies.
+  // On a desktop the column is always there — only its list folds, by the tab on its edge
+  // (src/lib/sideNavFold.js) — so there is no layout preference left to store, and no
+  // desktop tour: the list is on screen, and the tour's second beat pointed at a "hide the
+  // whole column" switch that no longer exists. The phone keeps its one-beat telling.
   mountRuleColumn(document.getElementById("vp-page"), {
-    storageKey: "da-wortschatz-lernsets",
     seenKey: "da-wortschatz-lernsets-seen",
     defaultHidden: ({ wide }) => !wide,
+    intro: !matchMedia("(min-width: 1001px)").matches,
     // Below 1001px the picker is a bottom sheet rather than an accordion — see the long
     // note in ruleColumn.js. Every row in it is a link to another page, so there was
     // never a reason for it to share the screen with the cards.
@@ -288,6 +258,8 @@ const languages = ALL_LANGUAGES.filter((l) => langs.includes(l.code));
     {
       onAnswer: (ok, card) => {
         recordAttempt({ skill: "wortschatz", correct: ok, id: card.front, trackVocab: true });
+        // The side nav's "12/25" per set listens for this.
+        dispatchEvent(new CustomEvent("da:progress", { detail: { topic: "wortschatz", correct: ok } }));
       },
       onSessionStart: () => recordSession("wortschatz"),
     }

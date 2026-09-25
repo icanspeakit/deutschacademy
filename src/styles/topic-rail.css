@@ -1,189 +1,35 @@
-/* Placement for the topic-page rail. Its look is nav.css (.nvb*) — the dashboard's own
- * stylesheet, so the two surfaces cannot drift apart. Only the placement lives here, and
- * the placement is the part that had to be worked out.
+/* Placement of the grammar topics' side nav. Its look is nav.css + sidenav.css — the same
+ * as der/die/das and Wortschatz — so only where it sits lives here.
  *
- * The first attempt put the rail in a grid column beside the page. That took 336px from
- * the exercise column, which dropped from the 880px a topic page gives it to 645 — the
- * rail stealing room from the thing it is meant to sit next to.
- *
- * There is no free margin to move into either: with the rule panel open, .vp-page--split
- * is already ~1400px wide, so on a 1440px screen the content runs edge to edge. Anything
- * beside it has to overlay.
- *
- * So the rail is fixed and starts folded to its 64px icon strip — a state nav.css already
- * supports. Folded it costs nothing and still answers "where am I"; opening it floats the
- * panel over the page instead of pushing it, and the exercise column stays byte-identical
- * to the page without a rail at every width.
+ * A column in the page grid, on the left, sticky under the site nav (decision 1 of
+ * "Seitennavigation vereinheitlichen"). It used to be fixed to the viewport and float over
+ * the page; on a 1280px laptop the open panel covered the exercise. The column is as wide
+ * as the card — 406px open, 66px folded to its rail — and the page beside it keeps its own
+ * max-width and centres in what is left.
  */
-
-.tr-wrap {
-  position: fixed;
-  left: 10px;
-  /* Set by the script: level with the page, rising to 16px as it scrolls. */
-  top: var(--tr-top, 96px);
-  z-index: 40;
-  transition: transform .34s cubic-bezier(.22, 1, .36, 1);
-}
-/* Away: slid out past the left edge by its own width plus the 10px offset, which parks
-   the tab hanging off its right side exactly at the viewport's edge. */
-.tr-wrap[data-tr-state="hidden"] { transform: translateX(calc(-100% - 10px)); }
-/* Its shadow would otherwise leave a dark seam along the viewport's edge. */
-.tr-wrap[data-tr-state="hidden"] .nvb { box-shadow: none; }
-.tr-wrap.no-anim,
-.tr-wrap.no-anim .nvb,
-.tr-wrap.no-anim .nvb-panel { transition: none !important; }
-
-/* The der/die/das look (artikel-t2.css): the rail outlined and filled with the page
-   colour instead of a dark slate bar, and the panel head as a tinted block. The rail only
-   exists above 1100px (see the bottom of this file), so there is no phone case to keep
-   dark. Keep the values in step with artikel-t2.css. */
-.tr-wrap .nvb-rail {
-  background: var(--page-bg);
-  border: 1px solid var(--border-strong);
-  border-right-color: var(--border);
-  border-radius: var(--radius) 0 0 var(--radius);
-  box-sizing: border-box;
-}
-.tr-wrap .nvb.collapsed .nvb-rail { border-radius: var(--radius); }
-.tr-wrap .nvb-railbtn { color: var(--muted); }
-.tr-wrap .nvb-railbtn:hover { color: var(--ink); background: var(--surface-sunken, rgba(0, 0, 0, .05)); }
-.tr-wrap .nvb-railbtn.active { color: #fff; background: var(--brand-blue); }
-.tr-wrap .nvb-panelhead {
-  margin-bottom: 10px;
-  padding: 12px 14px;
-  border-radius: 12px;
-  background: var(--gradient-brand-soft);
-}
-.tr-wrap .nvb-panelhead h3 { flex: 1; text-align: left; font-size: 1.1rem; font-weight: var(--fw-bold, 700); color: var(--brand-blue-dark); }
-.tr-wrap .nvb-collapse { color: var(--brand-blue); }
-
-/* Tall levels (B1 has 14 topics) scroll inside the panel rather than past the screen. */
-.tr-wrap .nvb { max-height: calc(100vh - var(--tr-top, 96px) - 16px); }
-.tr-wrap .nvb-panel { overflow-y: auto; overscroll-behavior: contain; }
-
-/* The pivot — the Wortschatz column's "Lernsets" tab, for the topic rail. On the rail's
-   right edge while it shows; at the viewport's edge when the rail is away. */
-.tr-pivot {
-  position: absolute;
-  left: 100%;
-  top: 24px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-  padding: 18px 8px 20px;
-  border: 1px solid var(--border);
-  border-left: none;
-  border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
-  background: var(--surface-card);
-  box-shadow: 8px 0 24px -16px rgb(15 23 42 / 50%);
-  color: var(--muted);
-  cursor: pointer;
-  transition: color .15s ease, border-color .15s ease, padding .15s ease;
-}
-.tr-pivot:hover,
-.tr-pivot:focus-visible { color: var(--brand-blue-dark); border-color: var(--blue-300); }
-.tr-wrap[data-tr-state="hidden"] .tr-pivot:hover,
-.tr-wrap[data-tr-state="hidden"] .tr-pivot:focus-visible { padding-left: 12px; }
-.tr-pivot-label {
-  writing-mode: vertical-rl;
-  font-family: var(--font-label);
-  font-size: var(--text-xs);
-  font-weight: var(--fw-semibold);
-  letter-spacing: .08em;
-  text-transform: uppercase;
-}
-/* Points left — "this goes away over there" — and right once it has. */
-.tr-pivot-chevron {
-  width: 7px;
-  height: 7px;
-  border-left: 1.5px solid currentColor;
-  border-bottom: 1.5px solid currentColor;
-  transform: rotate(45deg);
-  transition: transform .2s ease;
-}
-.tr-wrap[data-tr-state="hidden"] .tr-pivot-chevron { transform: rotate(-135deg); }
-.tr-wrap .nvb {
-  position: relative;
-  box-shadow: 0 18px 44px -20px rgba(15, 23, 42, .55);
-  /* Height is in here too, but only ever between two pixel values the script pins for
-     the length of the transition — see setFolded() in TopicRail.astro. */
-  transition: width .28s cubic-bezier(.22, 1, .36, 1), height .28s cubic-bezier(.22, 1, .36, 1);
-}
-/* Folded: only the icon strip.
- *
- * Closing used to be the one direction with nothing to watch. Opening had two things
- * going for it — the width transition below and the staggered row entrance nav.css
- * gives .nvb-section--enter — while closing just deleted the panel: nav.css sets
- * `display: none` for .collapsed, and a width that is `auto` when open has no second
- * number to animate back to anyway. Both halves of that are one fix. The open width is
- * pinned so the transition has two numbers, and the panel fades instead of vanishing.
- *
- * 64px strip + 242px panel + the 1px borders on either side.
- */
-.tr-wrap .nvb { width: 308px; }
-.tr-wrap .nvb.collapsed { width: 64px; }
-
-/* nav.css removes the panel outright when folded; here it stays and fades, clipped by
-   .nvb's own overflow:hidden, so the edge slides across it rather than cutting to it.
-   Out of flow while folded, though: in flow it would go on deciding the box's height,
-   and the folded strip would stand 412px tall next to 318px of icons — taller for a
-   B1 panel than an A1 one, which is the strip reporting on a panel nobody can see. */
-.tr-wrap .nvb.collapsed .nvb-panel {
-  display: flex;
-  position: absolute;
-  left: 64px;
-  top: 0;
-  opacity: 0;
-  pointer-events: none;
-  /* Gone before the edge reaches it, rather than being wiped letter by letter — and
-     visibility waits out the width transition so keyboard focus cannot land in a panel
-     that is on its way out. */
-  visibility: hidden;
-  transition: opacity .12s ease-in, visibility 0s linear .28s;
-}
-.tr-wrap .nvb-panel { transition: opacity .16s ease-out .06s; }
-
-@media (prefers-reduced-motion: reduce) {
-  .tr-wrap .nvb,
-  .tr-wrap .nvb-panel,
-  .tr-wrap .nvb.collapsed .nvb-panel { transition: none; }
-}
-
-/* The folded strip is fixed to the viewport while the page is centred, so the page can
-   slide underneath it — and does: opening the rule column widens .vp-page--split, its
-   auto margins shrink, and between 1101px and roughly 1520px they end up narrower than
-   the rail itself. Measured at 1440px the back link started at 58px with the strip
-   reaching 74px, i.e. straight through the text.
-
-   So the rail gets a gutter. Only the shortfall is taken, out of the page's own left
-   padding: where the auto margin already clears the strip — a wide screen, or a narrow
-   one with the rule closed — the max() picks the normal padding and nothing moves.
-   (100vw counts the scrollbar, so the margin is read a few pixels generous; the 10px of
-   air below covers it.) */
 @media (min-width: 1101px) {
-  /* Scoped to a page that actually renders the rail: .vp-page--split is also the exam
-     shell, the Vokabeltrainer and navnew, and none of those has a strip to make room
-     for. Both classes on top of that, because verben-praepositionen.css is loaded after
-     this file and its base `.vp-page { padding: ... }` shorthand would otherwise win on
-     source order. */
-  body:has(.tr-wrap) .vp-page.vp-page--split {
-    /* The rail now sits beside the work, not over it, so the gutter follows its state:
-       10px offset + 308px open / 64px strip + the tab + 32px of air. Hidden, only the
-       tab is left to clear. */
-    --tr-gutter: 384px;
-    padding-left: max(
-      clamp(14px, 4vw, 24px),
-      calc(var(--tr-gutter) - (100vw - min(var(--vp-w), 100vw)) / 2)
-    );
+  .tr-layout {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: start;
+    /* Room for the "Themen" tab, which hangs 18px off the card's right edge. */
+    column-gap: 28px;
+    padding-left: clamp(12px, 2vw, 24px);
   }
-  body:has(.tr-wrap[data-tr-state="fold"]) .vp-page.vp-page--split { --tr-gutter: 140px; }
-  body:has(.tr-wrap[data-tr-state="hidden"]) .vp-page.vp-page--split { --tr-gutter: 64px; }
+  .tr-layout > .vp-page { min-width: 0; width: 100%; }
+  .tr-wrap {
+    position: sticky;
+    /* Under the sticky site nav (69px, see artikel-fit.css), with the page's own gutter. */
+    top: calc(69px + 16px);
+    margin-top: 16px;
+    z-index: 3;
+  }
+  .tr-wrap .nvb { max-height: calc(100vh - 69px - 32px); }
+  .tr-wrap .nvb-panel { overflow-y: auto; overscroll-behavior: contain; }
 }
 
-/* Below this width the rail would overlap the content it is supposed to help with, and
-   SiteNav's drawer already covers navigation at that size. Not rendered rather than
-   squeezed. */
+/* Below this width there is no room beside the exercise and the rule column, and SiteNav's
+   drawer covers navigation. Not rendered rather than squeezed. */
 @media (max-width: 1100px) {
   .tr-wrap { display: none !important; }
 }
@@ -247,21 +93,3 @@
   text-transform: uppercase;
   color: var(--muted-soft);
 }
-.tr-prog-level {
-  display: grid;
-  grid-template-columns: 22px minmax(0, 1fr) 34px;
-  align-items: center;
-  gap: 8px;
-  width: 100%;
-  padding: 7px 6px;
-  border: none;
-  border-radius: 8px;
-  background: none;
-  font: inherit;
-  color: var(--ink);
-  cursor: pointer;
-  text-align: left;
-}
-.tr-prog-level:hover { background: var(--surface); }
-.tr-prog-level-name { font-family: var(--font-label); font-size: var(--text-xs); font-weight: var(--fw-bold); }
-.tr-prog-level-pct { font-size: var(--text-xs); color: var(--muted); text-align: right; font-variant-numeric: tabular-nums; }

@@ -167,8 +167,22 @@
    badges beside a panel of that level's topics. Here it fills the rest of the side
    column and the panel scrolls inside it. */
 .pr-nvb { flex: 1; min-height: 0; margin: 0 var(--space-4) var(--space-4); }
-.pr-nvb .nvb-panel { flex: 1; width: auto; min-width: 0; overflow-y: auto; }
+.pr-nvb .nvb-panel { min-width: 0; overflow-y: auto; }
 .pr-nvb .ls-raildiv { width: 22px; height: 1px; margin: 4px 0; background: rgba(255, 255, 255, .18); }
+/* On a desktop the column is as wide as the side nav every trainer has — 64 + 340 and
+   the card's borders (sidenav.css) — and shrinks to the rail when the list folds. */
+@media (min-width: 1001px) {
+  .pr-shell { grid-template-columns: auto minmax(0, 1fr); }
+  .pr-rail { width: calc(406px + 2 * var(--space-4)); transition: width .34s var(--nv-ease-soft, ease); }
+  .pr-rail:has(.pr-nvb.collapsed) { width: calc(66px + 2 * var(--space-4) + 18px); }
+  .pr-rail:has(.pr-nvb.no-anim) { transition: none; }
+  /* Folded, the page title would stand in a 100px column one word per line. */
+  .pr-rail:has(.pr-nvb.collapsed) .pr-rail-head { visibility: hidden; height: 0; padding: 0; overflow: hidden; }
+  .pr-rail:has(.pr-nvb.collapsed) .pr-nvb { margin-top: var(--space-6); }
+}
+@media (max-width: 1000px) {
+  .pr-nvb .nvb-panel { flex: 1; width: auto; }
+}
 .pr-pane-lead { margin: 0 var(--space-2) var(--space-3); font-size: var(--text-sm); color: var(--muted); line-height: 1.45; }
 .pr-pane-sub {
   margin: var(--space-2) var(--space-2) var(--space-2);

@@ -1,0 +1,210 @@
+/* The side navigation, one look for every page that has one.
+ * ---------------------------------------------------------------------------
+ * der/die/das, Präpositionen, Wortschatz, the grammar topics and Aussprache all carry the
+ * same thing — a rail of levels beside a list — and had grown five looks for it: dark or
+ * outlined rails, floating or flat cards, four widths, three active rows. The decisions in
+ * "Seitennavigation vereinheitlichen" (Sept. 2026) settled one of each; this file is them.
+ * Every root carries `.snav` next to its own classes, so the page-specific stylesheets
+ * keep what is genuinely theirs (the Häufigkeit curve, the Thema/Reihe switch …).
+ *
+ *   - Flat, with a border. No drop shadow (decision 4).
+ *   - Rail 64px + list 340px, long names wrap instead of being cut (decision 5).
+ *   - On a desktop the rail is outlined in the page colour; in the phone sheet it stays
+ *     the dark bar, where it separates the sheet from the page (decision 6).
+ *   - Levels with nothing in them yet are greyed, not left out (decision 7).
+ *   - The list head is a tinted block with "x von N" under it (decision 9).
+ *   - A row: icon · name · x/N in a fixed column (decision 11).
+ *   - The active row: bar on the left, tint, bold (decision 12).
+ */
+
+/* ---- Card ------------------------------------------------------------------------- */
+.snav {
+  --snav-rail: 64px;
+  --snav-list: 340px;
+  --ls-panel-w: var(--snav-list);
+  box-shadow: none;
+}
+
+/* ---- Where it sits ---------------------------------------------------------------- */
+/* A column in the page's grid, on the left, sticky under the topic bar (decision 1). The
+   track is the card's width: 64 + 340 + its two 1px borders, or the rail alone when the
+   list is folded. The split layout (verben-praepositionen.css) reads --rule-w. */
+@media (min-width: 1001px) {
+  .vp-page--split:has(.snav) { --rule-w: 406px; }
+  .vp-page--split:has(.snav)[data-fold="1"] { --rule-w: 66px; }
+}
+
+/* ---- Rail ------------------------------------------------------------------------- */
+@media (min-width: 1001px) {
+  .snav .nvb-rail {
+    background: var(--page-bg);
+    border-right: 1px solid var(--border);
+    box-sizing: border-box;
+  }
+  .snav .nvb-railbtn { color: var(--muted); }
+  .snav .nvb-railbtn:hover { color: var(--ink); background: var(--surface-sunken, rgb(0 0 0 / 5%)); }
+  .snav .nvb-railbtn.active { color: #fff; background: var(--brand-blue); }
+  .snav .nvb-raildot { background: var(--border-strong); }
+  .snav .nvb-rail .ls-raildiv { background: var(--border); }
+}
+/* A level with nothing in it yet: there, so the four levels always read A1–B2, but not
+   pressable. */
+.snav .nvb-railbtn[aria-disabled="true"] { opacity: .38; cursor: default; }
+.snav .nvb-railbtn[aria-disabled="true"]:hover { background: none; }
+
+/* ---- List head -------------------------------------------------------------------- */
+.snav .nvb-panelhead {
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 8px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: var(--gradient-brand-soft);
+}
+.snav .nvb-panelhead h3 {
+  flex: 1;
+  min-width: 0;
+  text-align: start;
+  font-size: 1.05rem;
+  font-weight: var(--fw-bold, 700);
+  color: var(--brand-blue-dark);
+}
+.snav .snav-head-name { font-weight: var(--fw-regular); color: var(--brand-blue); }
+/* The head's own fold chevron is gone: the tab on the panel's edge is the one control. */
+.snav .nvb-collapse { display: none; }
+
+/* "x von N sicher", with a thin bar. Written by each page's script from localStorage; the
+   server renders it empty and hidden, so a first visit shows no zero. */
+.snav-prog { margin: 0 4px 12px; }
+.snav-prog[hidden] { display: none; }
+.snav-prog-txt {
+  display: block;
+  margin-bottom: 5px;
+  font-size: var(--text-xs);
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+.snav-prog-bar {
+  display: block;
+  height: 4px;
+  border-radius: var(--radius-pill);
+  background: var(--surface-sunken, rgb(0 0 0 / 6%));
+  overflow: hidden;
+}
+.snav-prog-bar > span {
+  display: block;
+  width: 0;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--gradient-brand);
+  transition: width .4s var(--nv-ease-soft, ease);
+}
+
+/* ---- "Dein Fortschritt" ------------------------------------------------------------
+   The rail's top entry on every side nav. One row per level: its badge, a bar, the count;
+   pressing a row opens that level. */
+.snav-lvl {
+  display: grid;
+  grid-template-columns: 28px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 9px 8px;
+  border: none;
+  border-radius: 8px;
+  background: none;
+  font: inherit;
+  color: var(--ink);
+  text-align: start;
+  cursor: pointer;
+}
+.snav-lvl:hover { background: var(--surface); }
+.snav-lvl:disabled { opacity: .45; cursor: default; background: none; }
+.snav-lvl-name { font-family: var(--font-label); font-size: var(--text-xs); font-weight: var(--fw-bold, 700); }
+.snav-lvl-n { font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.snav-empty { margin: 0 4px 12px; font-size: var(--text-sm); line-height: 1.5; color: var(--muted); }
+.snav-more {
+  display: block;
+  margin-top: 12px;
+  padding: 10px 8px 0;
+  border-top: 1px solid var(--border);
+  font-size: var(--text-sm);
+  color: var(--brand-blue-dark);
+  text-decoration: none;
+}
+.snav-more:hover { text-decoration: underline; }
+
+/* Small group headings in a flat list ("Nach Thema", "Nach Regel"). */
+.snav .snav-sub {
+  margin: 12px 4px 4px;
+  font-family: var(--font-label);
+  font-size: 11px;
+  font-weight: var(--fw-bold, 700);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--brand-blue);
+}
+
+/* ---- Rows ------------------------------------------------------------------------- */
+.snav .nvb-item {
+  display: grid;
+  grid-template-columns: 26px minmax(0, 1fr) 6ch;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  border-left: 2px solid transparent;
+  /* Square on the left, so the active bar is a straight line and not a bracket. */
+  border-radius: 0 10px 10px 0;
+}
+/* Rows without a leading icon (the Häufigkeit rounds carry a number there, Präpositionen
+   carry nothing) keep the same count column. */
+.snav .nvb-item:not(:has(> :first-child:is(.nv-icon, .akp-pack-ic, .pr-pack-ic, .ls-num))) {
+  grid-template-columns: minmax(0, 1fr) 6ch;
+}
+/* Names wrap rather than end in "…" — "Verben im Präsens: ich lerne, du lernst" is the
+   name, and half of it is not. */
+.snav .nvb-item > span:not(.nv-icon):not(.nv-count):not(.akp-pack-ic):not(.pr-pack-ic):not(.ls-num):not(.akp-pack-state):not(.pr-pack-n) {
+  white-space: normal;
+  overflow: visible;
+  text-overflow: clip;
+  overflow-wrap: anywhere;
+  line-height: 1.3;
+}
+.snav :is(.akp-pack-name, .pr-pack-name) { white-space: normal; overflow: visible; text-overflow: clip; }
+.snav .nvb-item :is(.nv-icon, .akp-pack-ic, .pr-pack-ic) {
+  display: grid;
+  place-items: center;
+  font-size: 18px;
+  line-height: 1;
+}
+/* The count: its own column, right-aligned, tabular — so the numbers stand in a line. */
+.snav .nvb-item :is(.nv-count, .akp-pack-state, .pr-pack-n) {
+  justify-self: end;
+  text-align: end;
+  font-size: 12px;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+/* The active row: a bar on the left, a tint, and the name in bold — readable as "here"
+   without the colour. */
+.snav .nvb-item.active,
+.snav .nvb-item[aria-current="page"] {
+  background: var(--blue-50);
+  border-left-color: var(--brand-blue);
+  color: var(--brand-blue-dark);
+  font-weight: var(--fw-bold, 700);
+}
+.snav .nvb-item.active :is(.akp-pack-name, .pr-pack-name) { font-weight: var(--fw-bold, 700); color: var(--brand-blue-dark); }
+.snav .nvb-item.active :is(.nv-count, .akp-pack-state, .pr-pack-n) { color: var(--brand-blue-dark); }
+
+/* ---- The fold tab ----------------------------------------------------------------- */
+/* Flat like the card it hangs on. */
+.snav .ls-foldtab { box-shadow: none; }
+
+/* ---- Phone ------------------------------------------------------------------------ */
+/* In the sheet the panel is the sheet's width, and the fold does not exist. */
+@media (max-width: 1000px) {
+  .snav .ls-foldtab { display: none; }
+}

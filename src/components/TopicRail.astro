@@ -1,24 +1,26 @@
 ---
-// The dashboard's left rail, on a standalone topic page. Variant C from the /navnew study.
+// The side navigation on a grammar topic page: a rail of levels beside the level's topics.
 //
-// Same markup and the same nav.css the dashboard uses — not a lookalike — with one
-// necessary difference: on /dashboard a row swaps a panel in place, here every row is an
-// <a>, because this is a real route and the next topic is a different page.
+// Same markup and the same stylesheets as the side nav on der/die/das and Wortschatz —
+// nav.css's `.nvb`, lernset-picker.css's fold, sidenav.css's shared look — with one
+// necessary difference: every row is an <a>, because the next topic is a different page.
 //
-// It is FIXED and starts folded to its 64px icon strip. A grid column beside the page was
-// tried first and took 336px from the exercise column, dropping it from 880px to 645 — the
-// rail stealing room from the thing it is meant to sit beside. There is no free margin
-// either: with the rule panel open, .vp-page--split is already ~1400px wide. So opening it
-// floats the panel OVER the page, and the exercise column stays byte-identical to what a
-// topic page gives it at every width.
+// It is a column in the page's grid, sticky under the site nav (decision 1 of
+// "Seitennavigation vereinheitlichen"). It used to float over the page, fixed to the
+// viewport's edge; on a 1280px laptop the open panel then covered the exercise. Folding
+// takes the list away and leaves the rail (decision 3), and the column shrinks with it.
 //
-// Below 1100px the rail is not rendered at all — there it would overlap the content it is
-// supposed to help with, and the drawer in SiteNav already covers that width.
+// Below 1101px it is not rendered: next to the exercise and the rule column there is no
+// room left, and SiteNav's drawer covers navigation at that size.
 import Icon from "./Icon.astro";
-import { grammarCatalog, grammarAt, grammarByKey } from "../lib/grammarCatalog.js";
+import { grammarAt, grammarByKey } from "../lib/grammarCatalog.js";
 import { NAV_LEVELS } from "../lib/catalog.js";
+import { LEVEL_NAMES } from "../lib/lexicon.js";
 import "../styles/nav.css";
+import "../styles/lernset-picker.css";
+import "../styles/sidenav.css";
 import "../styles/topic-rail.css";
+import SideNavFold from "./SideNavFold.astro";
 
 interface Props {
   /** Progress key of the topic this page is showing — the row that reads as current. */
@@ -26,163 +28,152 @@ interface Props {
 }
 const { current } = Astro.props;
 
-// The rail's sections, in the dashboard's order and shape: the course first, the four
-// levels, the exams last.
-const railSections = [
-  {
-    id: "weg",
-    label: "Dein Weg",
-    key: "fortschritt.sec.weg.label",
-    badge: null,
-    icon: "sparkle",
-    overview: { label: "Kursübersicht öffnen →", key: "tr.ov.course", href: "/uebungen" },
-    // No items: this pane reports rather than navigates — see the progress block in the
-    // panel below, which the script fills from the same store as the level bars.
-    progress: true,
-    items: [],
-  },
-  ...NAV_LEVELS.map((level) => ({
-    id: level.toLowerCase(),
-    label: `Stufe ${level}`,
-    key: `fortschritt.sec.${level.toLowerCase()}.label`,
-    badge: level,
-    icon: "book",
-    // No "Stufenübersicht öffnen" button: the panel already is the level's list of
-    // topics, and a full-width gradient button above it outweighed the topics themselves.
-    items: grammarAt(level).map((t) => ({ key: t.key, label: t.name, icon: "book", href: t.href, tasks: t.tasks })),
-  })),
-  {
-    id: "pruefungen",
-    label: "Prüfungen",
-    key: "fortschritt.sec.pruefungen.label",
-    badge: null,
-    icon: "landmark",
-    overview: { label: "Alle Prüfungen öffnen →", key: "tr.ov.exams", href: "/pruefungen" },
-    items: [
-      { key: null, label: "Start Deutsch 1", icon: "document", href: "/start-deutsch-1", meta: "A1" },
-      { key: null, label: "DTZ-Übungssatz", icon: "book-open", href: "/dtz/uebungssatz", meta: "A2/B1" },
-      { key: null, label: "TestDaF", icon: "graduation-cap", href: "/testdaf/uebungssatz", meta: "TDN" },
-      { key: null, label: "Leben in Deutschland", icon: "map-pin", href: "/leben-in-deutschland/test", meta: "Test" },
-    ],
-  },
+const levels = NAV_LEVELS.map((level) => ({
+  id: level.toLowerCase(),
+  level,
+  items: grammarAt(level).map((t) => ({ key: t.key, label: t.name, href: t.href, tasks: t.tasks })),
+}));
+const exams = [
+  { label: "Start Deutsch 1", icon: "document", href: "/start-deutsch-1", meta: "A1" },
+  { label: "DTZ-Übungssatz", icon: "book-open", href: "/dtz/uebungssatz", meta: "A2/B1" },
+  { label: "TestDaF", icon: "graduation-cap", href: "/testdaf/uebungssatz", meta: "TDN" },
+  { label: "Leben in Deutschland", icon: "map-pin", href: "/leben-in-deutschland/test", meta: "Test" },
 ];
 
 // Opens on the level this topic belongs to, so the first thing in the panel is its own
-// row. A topic the catalogue does not know falls back to the course section.
+// row. A topic the catalogue does not know falls back to the progress pane.
 const openSection = grammarByKey(current)?.level?.toLowerCase() ?? "weg";
 ---
-<aside class="tr-wrap" data-rail data-tr-state="open">
-  <div class="nvb" data-nvb>
+<aside class="tr-wrap" data-rail>
+  <div class="nvb ls-nvb snav" data-nvb>
+    <!-- The fold tab on the panel's edge, as on der/die/das ("Stufen") and Wortschatz
+         ("Lernsets"): the list pivots away, the tab stays on the rail. -->
+    <button type="button" class="ls-foldtab" data-nvb-collapse aria-label="Liste einklappen" data-i18n-attr="aria-label:ap.list.collapse" aria-controls="tr-pane">
+      <span class="ls-foldtab-txt" data-i18n="tr.topics">Themen</span>
+      <svg class="ls-foldtab-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>
+    </button>
+
+    <!-- Fixed order, as on every side nav (decision 7): your progress, the four levels,
+         a divider, then what is this page's own. -->
     <div class="nvb-rail" role="tablist" aria-label="Bereich" data-i18n-attr="aria-label:tr.area">
-      {railSections.map((sec) => (
-        <button
-          type="button"
-          class:list={["nvb-railbtn", sec.id === openSection && "active"]}
-          data-rail-sec={sec.id}
-          role="tab"
-          aria-label={sec.label}
-          data-i18n-attr={`aria-label:${sec.key}`}
-        >
-          {sec.badge ? <span class="nvb-railbadge">{sec.badge}</span> : <Icon name={sec.icon} size={20} />}
-          <span class="nvb-raildot" data-rail-secdot={sec.id}></span>
-          <span class="nvb-tip" data-i18n={sec.key}>{sec.label}</span>
-        </button>
-      ))}
+      <button
+        type="button"
+        class:list={["nvb-railbtn", openSection === "weg" && "active"]}
+        data-rail-sec="weg"
+        role="tab"
+        aria-label="Dein Fortschritt"
+        data-i18n-attr="aria-label:sets.prog.title"
+      >
+        <Icon name="target" size={20} />
+        <span class="nvb-tip" data-i18n="sets.prog.title">Dein Fortschritt</span>
+      </button>
+
+      {levels.map((sec) => {
+        const live = sec.items.length > 0;
+        return (
+          <button
+            type="button"
+            class:list={["nvb-railbtn", sec.id === openSection && "active"]}
+            data-rail-sec={live ? sec.id : undefined}
+            aria-disabled={live ? undefined : "true"}
+            role="tab"
+            aria-label={`Stufe ${sec.level}`}
+            data-i18n-attr={`aria-label:kb.level.${sec.level}`}
+          >
+            <span class="nvb-railbadge">{sec.level}</span>
+            <span class="nvb-raildot" data-rail-secdot={sec.id}></span>
+            {/* The level's name, not a count (decision 8). */}
+            <span class="nvb-tip"><span data-i18n="ap.levelName" data-i18n-vars={JSON.stringify({ level: sec.level })}>Stufe {sec.level}</span> · <span data-i18n={`level.name.${sec.level}`}>{LEVEL_NAMES[sec.level as keyof typeof LEVEL_NAMES]}</span></span>
+          </button>
+        );
+      })}
+
+      <span class="ls-raildiv" aria-hidden="true"></span>
+
+      <button
+        type="button"
+        class="nvb-railbtn"
+        data-rail-sec="pruefungen"
+        role="tab"
+        aria-label="Prüfungen"
+        data-i18n-attr="aria-label:fortschritt.sec.pruefungen.label"
+      >
+        <Icon name="landmark" size={20} />
+        <span class="nvb-tip" data-i18n="fortschritt.sec.pruefungen.label">Prüfungen</span>
+      </button>
     </div>
 
-    <div class="nvb-panel">
-      {railSections.map((sec) => (
+    <div class="nvb-panel" id="tr-pane">
+      <!-- Dein Fortschritt: where this learner is, not where they could go. -->
+      <div class="nvb-section" data-rail-secview="weg" hidden={openSection !== "weg"}>
+        <div class="nvb-panelhead"><h3 data-i18n="sets.prog.title">Dein Fortschritt</h3></div>
+        <div class="tr-prog" data-tr-prog>
+          {/* Written by the script — all of it comes from localStorage, so a
+              server-rendered number would be a guess about a stranger. */}
+          <p class="tr-prog-empty" data-tr-prog-empty data-i18n="tr.prog.empty">Noch nichts geübt.</p>
+          <div class="tr-prog-body" data-tr-prog-body hidden>
+            <a class="tr-prog-next" data-tr-prog-next hidden>
+              <span class="tr-prog-kicker" data-i18n="tr.prog.next">Weitermachen</span>
+              <b data-tr-prog-next-title></b>
+            </a>
+            <div class="tr-prog-week" data-tr-prog-week hidden>
+              <p><span data-i18n="tr.prog.week">Diese Woche</span><span data-tr-prog-weekn></span></p>
+              <span class="tr-prog-bar"><span data-tr-prog-weekbar style="width:0%"></span></span>
+            </div>
+            <p class="tr-prog-streak" data-tr-prog-streak hidden></p>
+            <p class="tr-prog-label" data-i18n="tr.prog.byLevel">Grammatik nach Stufe</p>
+            {levels.map((sec) => (
+              <button type="button" class="snav-lvl" data-rail-sec={sec.id} disabled={!sec.items.length}>
+                <span class="snav-lvl-name">{sec.level}</span>
+                <span class="snav-prog-bar"><span data-tr-prog-lvlbar={sec.id}></span></span>
+                <span class="snav-lvl-n" data-tr-prog-lvlpct={sec.id}>0 %</span>
+              </button>
+            ))}
+          </div>
+        </div>
+        <a class="snav-more" href="/uebungen" data-i18n="tr.ov.course">Kursübersicht öffnen →</a>
+      </div>
+
+      {levels.map((sec) => (
         <div class="nvb-section" data-rail-secview={sec.id} hidden={sec.id !== openSection}>
           <div class="nvb-panelhead">
-            <h3 data-i18n={sec.key}>{sec.label}</h3>
-            <button type="button" class="nvb-collapse" data-rail-collapse aria-label="Liste einklappen" title="Einklappen" data-i18n-attr="aria-label:ap.list.collapse;title:vp.rule.collapseShort">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>
-            </button>
+            <h3><span data-i18n="ap.levelName" data-i18n-vars={JSON.stringify({ level: sec.level })}>Stufe {sec.level}</span><span class="snav-head-name"> · <span data-i18n={`level.name.${sec.level}`}>{LEVEL_NAMES[sec.level as keyof typeof LEVEL_NAMES]}</span></span></h3>
           </div>
-
-          <div class="nvb-panelprogress" data-rail-secprog={sec.id} hidden={sec.progress || !sec.items.some((i) => i.tasks)}>
-            <span class="nvb-panelbar"><span data-rail-secbar={sec.id} style="width:0%"></span></span>
-            <span data-rail-secpct={sec.id}>0 %</span>
+          {/* "x von N Aufgaben" — shown once something at this level has been done. */}
+          <div class="snav-prog" data-snav-prog={sec.id} hidden>
+            <span class="snav-prog-txt" data-snav-prog-txt></span>
+            <span class="snav-prog-bar"><span data-snav-prog-bar></span></span>
           </div>
-
-          {sec.progress && (
-            <div class="tr-prog" data-tr-prog>
-              {/* Written by the script — all of it comes from localStorage, so a
-                  server-rendered number would be a guess about a stranger. */}
-              <p class="tr-prog-empty" data-tr-prog-empty data-i18n="tr.prog.empty">Noch nichts geübt.</p>
-              <div class="tr-prog-body" data-tr-prog-body hidden>
-                <a class="tr-prog-next" data-tr-prog-next hidden>
-                  <span class="tr-prog-kicker" data-i18n="tr.prog.next">Weitermachen</span>
-                  <b data-tr-prog-next-title></b>
-                </a>
-                <div class="tr-prog-week" data-tr-prog-week hidden>
-                  <p><span data-i18n="tr.prog.week">Diese Woche</span><span data-tr-prog-weekn></span></p>
-                  <span class="tr-prog-bar"><span data-tr-prog-weekbar style="width:0%"></span></span>
-                </div>
-                <p class="tr-prog-streak" data-tr-prog-streak hidden></p>
-                <p class="tr-prog-label" data-i18n="tr.prog.byLevel">Grammatik nach Stufe</p>
-                {NAV_LEVELS.map((level) => (
-                  <button type="button" class="tr-prog-level" data-rail-sec={level.toLowerCase()}>
-                    <span class="tr-prog-level-name">{level}</span>
-                    <span class="tr-prog-bar"><span data-tr-prog-lvlbar={level.toLowerCase()} style="width:0%"></span></span>
-                    <span class="tr-prog-level-pct" data-tr-prog-lvlpct={level.toLowerCase()}>0 %</span>
-                  </button>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {sec.overview && <a class="nvb-overview" href={sec.overview.href} data-i18n={sec.overview.key}>{sec.overview.label}</a>}
-
           {sec.items.map((item) => (
             <a
               class:list={["nvb-item", item.key === current && "active"]}
               href={item.href}
               aria-current={item.key === current ? "page" : undefined}
-              data-rail-topic={item.key ?? undefined}
-              data-rail-tasks={item.tasks ?? undefined}
+              data-rail-topic={item.key}
+              data-rail-tasks={item.tasks}
             >
-              <span class="nv-icon"><Icon name={item.icon} size={16} /></span>
+              <span class="nv-icon"><Icon name="book" size={16} /></span>
               <span>{item.label}</span>
-              <span class="nv-count" data-rail-count>{item.meta ?? `0/${item.tasks}`}</span>
+              <span class="nv-count" data-rail-count>0/{item.tasks}</span>
             </a>
           ))}
         </div>
       ))}
+
+      <div class="nvb-section" data-rail-secview="pruefungen" hidden>
+        <div class="nvb-panelhead"><h3 data-i18n="fortschritt.sec.pruefungen.label">Prüfungen</h3></div>
+        {exams.map((item) => (
+          <a class="nvb-item" href={item.href}>
+            <span class="nv-icon"><Icon name={item.icon} size={16} /></span>
+            <span>{item.label}</span>
+            <span class="nv-count">{item.meta}</span>
+          </a>
+        ))}
+        <a class="snav-more" href="/pruefungen" data-i18n="tr.ov.exams">Alle Prüfungen öffnen →</a>
+      </div>
     </div>
   </div>
-
-  {/* The pivot: hangs on the rail's edge and takes the whole rail away, and is what is
-      left at the viewport's edge to bring it back. Outside .nvb, which clips. */}
-  <button
-    type="button"
-    class="tr-pivot"
-    data-rail-pivot
-    aria-expanded="true"
-    aria-label="Themen ausblenden"
-    title="Themen ausblenden"
-    data-i18n-attr="aria-label:tr.hide;title:tr.hide"
-  >
-    <span class="tr-pivot-label" data-i18n="tr.topics">Themen</span>
-    <span class="tr-pivot-chevron" aria-hidden="true"></span>
-  </button>
-
-  {/* Restored before first paint, so a learner who folded or hid the rail does not
-      watch it open and then close again on every page. Same three states the
-      Wortschatz column has: open, folded to its strip, or away with only the tab. */}
-  <script is:inline>
-    (function () {
-      var w = document.currentScript.parentElement;
-      var n = w.querySelector("[data-nvb]");
-      var s = "open";
-      try { s = localStorage.getItem("da-topic-rail") || "open"; } catch (e) {}
-      if (s !== "fold" && s !== "hidden") s = "open";
-      w.dataset.trState = s;
-      n.classList.toggle("collapsed", s === "fold");
-      if (s === "hidden") n.inert = true;
-      w.classList.add("no-anim");
-    })();
-  </script>
+  <SideNavFold />
 </aside>
 
 <script>
@@ -190,6 +181,7 @@ const openSection = grammarByKey(current)?.level?.toLowerCase() ?? "weg";
   // disagree about how far a topic got.
   import { getTopicProgress, getProgress, getResume } from "../lib/progress.js";
   import { t, onUiText } from "../lib/uiText.js";
+  import { mountSideNavFold } from "../lib/sideNavFold.js";
 
   const rail = document.querySelector<HTMLElement>("[data-rail]");
   const nvb = rail?.querySelector<HTMLElement>("[data-nvb]");
@@ -211,36 +203,36 @@ const openSection = grammarByKey(current)?.level?.toLowerCase() ?? "weg";
         if (el) el.textContent = `${done}/${tasks}`;
       }
 
-      // Per-section bar and percentage, summed over the rows that carry a task count —
-      // the same arithmetic the dashboard's panel header does.
+      // Per level: "x von N Aufgaben" under the head, the dot on the rail, and the same
+      // numbers again in "Dein Fortschritt".
       for (const view of $$<HTMLElement>("[data-rail-secview]")) {
         const id = view.dataset.railSecview!;
         const rows = Array.from(view.querySelectorAll<HTMLElement>("[data-rail-topic]"));
+        if (!rows.length) continue;
         const total = rows.reduce((n, a) => n + Number(a.dataset.railTasks || 0), 0);
         const done = rows.reduce(
           (n, a) => n + Math.min(prog[a.dataset.railTopic!]?.done ?? 0, Number(a.dataset.railTasks || 0)),
           0
         );
         const pct = total ? Math.round((done / total) * 100) : 0;
-        const bar = rail.querySelector<HTMLElement>(`[data-rail-secbar="${id}"]`);
-        const txt = rail.querySelector<HTMLElement>(`[data-rail-secpct="${id}"]`);
+        const line = view.querySelector<HTMLElement>("[data-snav-prog]");
+        if (line) {
+          line.hidden = !done;
+          line.querySelector("[data-snav-prog-txt]")!.textContent = t("tr.levelDone", "{n} von {total} Aufgaben", { n: done, total });
+          line.querySelector<HTMLElement>("[data-snav-prog-bar]")!.style.width = pct + "%";
+        }
         const dot = rail.querySelector<HTMLElement>(`[data-rail-secdot="${id}"]`);
-        if (bar) bar.style.width = pct + "%";
-        if (txt) txt.textContent = pct + " %";
-        // The same percentage, repeated in "Dein Weg" so that pane answers "how far am I"
-        // for every level at once rather than for the one that happens to be open.
+        if (dot) dot.dataset.state = !total ? "" : pct >= 100 ? "done" : pct > 0 ? "current" : "";
         const lvlBar = rail.querySelector<HTMLElement>(`[data-tr-prog-lvlbar="${id}"]`);
         const lvlPct = rail.querySelector<HTMLElement>(`[data-tr-prog-lvlpct="${id}"]`);
         if (lvlBar) lvlBar.style.width = pct + "%";
         if (lvlPct) lvlPct.textContent = pct + " %";
-        // The same three states the dashboard rail's dot carries.
-        if (dot) dot.dataset.state = !total ? "" : pct >= 100 ? "done" : pct > 0 ? "current" : "";
       }
 
       paintWeg();
     }
 
-    /** "Dein Weg": where this learner is, not where they could go. */
+    /** "Dein Fortschritt": where this learner is, not where they could go. */
     function paintWeg() {
       const box = rail.querySelector<HTMLElement>("[data-tr-prog]");
       if (!box) return;
@@ -283,82 +275,16 @@ const openSection = grammarByKey(current)?.level?.toLowerCase() ?? "weg";
       }
     }
 
-    // The streak line is written here, so a language switch rewrites it.
-    onUiText(() => paintWeg());
+    // Written by script, so a language switch rewrites it.
+    onUiText(() => paint());
 
-    // Folding, both ways, with something to watch in each.
-    //
-    // Width is a plain CSS transition between two pinned numbers (topic-rail.css). Height
-    // cannot be: the panel's content decides it, `auto` has nothing to animate from, and
-    // the two states genuinely differ — 318px of icon strip folded against 412px or more
-    // of open panel. So the height is measured before and after the class flips, pinned
-    // in pixels for the length of the transition, and released afterwards so the box goes
-    // back to sizing itself.
-    let releaseHeight = 0;
-    const calm = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-    /** Transition the box from a height already measured to whatever it is now. */
-    function animateHeight(from: number) {
-      nvb.style.height = "";
-      const to = nvb.getBoundingClientRect().height;
-      window.clearTimeout(releaseHeight);
-      if (Math.round(from) === Math.round(to) || calm()) return;
-      nvb.style.height = from + "px";
-      void nvb.offsetHeight;
-      nvb.style.height = to + "px";
-      releaseHeight = window.setTimeout(() => { nvb.style.height = ""; }, 320);
-    }
-
-    // Three states, remembered: "open", "fold" (the strip only) and "hidden" (the tab at
-    // the viewport's edge). The page makes room for whichever it is — see the gutter in
-    // topic-rail.css — so the rail sits beside the work rather than over it.
-    const KEY = "da-topic-rail";
-    const pivot = rail.querySelector<HTMLButtonElement>("[data-rail-pivot]");
-    const state = () => rail.dataset.trState || "open";
-    function setState(next: string) {
-      rail.dataset.trState = next;
-      nvb.inert = next === "hidden";
-      if (pivot) {
-        const away = next === "hidden";
-        pivot.setAttribute("aria-expanded", String(!away));
-        const label = away ? t("tr.show", "Themen einblenden") : t("tr.hide", "Themen ausblenden");
-        pivot.setAttribute("aria-label", label);
-        pivot.title = label;
-        pivot.setAttribute("data-i18n-attr", away ? "aria-label:tr.show;title:tr.show" : "aria-label:tr.hide;title:tr.hide");
-      }
-      try { localStorage.setItem(KEY, next); } catch {}
-    }
-
-    function setFolded(on: boolean, from = nvb.getBoundingClientRect().height) {
-      if (nvb.classList.contains("collapsed") === on) return;
-      nvb.classList.toggle("collapsed", on);
-      // Measured after the flip: the folded panel is out of flow, so this is the strip.
-      animateHeight(from);
-      setState(on ? "fold" : "open");
-    }
-
-    const fold = () => setFolded(true);
-
-    // The tab: away if the rail is showing (folded or open), back to how it was if not.
-    let before = state() === "hidden" ? "open" : state();
-    pivot?.addEventListener("click", () => {
-      if (state() === "hidden") {
-        nvb.classList.toggle("collapsed", before === "fold");
-        setState(before);
-      } else {
-        before = state();
-        setState("hidden");
-      }
-    });
+    // The fold: one behaviour and one remembered state for every side nav.
+    const fold = mountSideNavFold(nvb);
 
     for (const b of $$<HTMLElement>("[data-rail-sec]")) {
       b.addEventListener("click", () => {
         const id = b.dataset.railSec!;
-        // Before the swap: a three-row level and an eleven-row one are 300px apart, and
-        // the box has to travel that whether it is also folding or just changing content.
-        const from = nvb.getBoundingClientRect().height;
-        const openBefore = rail.querySelector<HTMLElement>("[data-rail-secview]:not([hidden])")?.dataset.railSecview;
-        for (const x of $$<HTMLElement>("[data-rail-sec]")) x.classList.toggle("active", x === b);
+        for (const x of $$<HTMLElement>(".nvb-rail [data-rail-sec]")) x.classList.toggle("active", x.dataset.railSec === id);
         for (const v of $$<HTMLElement>("[data-rail-secview]")) {
           const on = v.dataset.railSecview === id;
           v.hidden = !on;
@@ -369,41 +295,14 @@ const openSection = grammarByKey(current)?.level?.toLowerCase() ?? "weg";
             v.classList.add("nvb-section--enter");
           }
         }
-        // The icon is a toggle: tapping the section already open folds the panel away, so
-        // the strip can be put back to 64px without hunting for the chevron inside the
-        // panel that is covering it.
-        const wasOpenHere = !nvb.classList.contains("collapsed") && id === openBefore;
-        if (nvb.classList.contains("collapsed") === wasOpenHere) animateHeight(from);
-        else setFolded(wasOpenHere, from);
+        // Pressing a rail entry is asking to see its list, so a folded list opens.
+        fold?.reveal();
       });
     }
-
-    for (const b of $$<HTMLElement>("[data-rail-collapse]")) b.addEventListener("click", fold);
 
     // Answers land while the rail is open, so its own row has to move with them.
     addEventListener("da:progress", () => paint());
 
-    // Starts level with the page (below the site nav, the topic bar and the course bar,
-    // whichever of them this page has) and rises with the scroll until it meets the
-    // sticky site nav, like the sticky column on a Wortschatz page.
-    const page = document.getElementById("vp-page");
-    let topQueued = false;
-    function placeTop() {
-      topQueued = false;
-      const start = page ? page.getBoundingClientRect().top + 16 : 96;
-      // The site nav is sticky, so the floor is its bottom edge, not the viewport's.
-      const nav = document.querySelector<HTMLElement>(".lp-nav, .practice-header");
-      const floor = (nav ? Math.max(0, nav.getBoundingClientRect().bottom) : 0) + 16;
-      rail.style.setProperty("--tr-top", Math.max(floor, start) + "px");
-    }
-    placeTop();
-    const queueTop = () => { if (!topQueued) { topQueued = true; requestAnimationFrame(placeTop); } };
-    addEventListener("scroll", queueTop, { passive: true });
-    addEventListener("resize", queueTop);
-
     paint();
-    setState(state());
-    // Restored without animating: nobody took an action.
-    requestAnimationFrame(() => requestAnimationFrame(() => rail.classList.remove("no-anim")));
   }
 </script>

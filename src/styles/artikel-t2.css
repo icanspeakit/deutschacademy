@@ -12,37 +12,17 @@
  *   - "Woher kommt das Wort?": the etymology card above "Wie oft hört man das?".
  */
 
-/* ---- Rail: outline, not a filled bar ------------------------------------------------- */
-/* Desktop only. On a phone the rail is the row of levels across the top of the bottom
-   sheet, and there it keeps its dark fill: a light row on a light sheet lost the A1–B2
-   buttons against the panel under them. */
+/* ---- Rail and card --------------------------------------------------------------------
+   The outlined rail, the flat card and the 64 + 340 width are sidenav.css's now — the
+   same for every side nav. What stays here: the column must not clip the "Stufen" fold
+   tab, which hangs off the card's right edge (artikel-fit.css clips the column). The
+   panel inside scrolls on its own, so the card never needs to. */
 @media (min-width: 1001px) {
-  .vp-page--fit .ap-nvb .nvb-rail {
-    background: var(--page-bg);
-    border: 1px solid var(--border-strong);
-    border-right-color: var(--border);
-    border-radius: var(--radius) 0 0 var(--radius);
-    box-sizing: border-box;
-  }
-  .vp-page--fit .ap-nvb.collapsed .nvb-rail { border-radius: var(--radius); }
-  .vp-page--fit .ap-nvb .nvb-railbtn { color: var(--muted); }
-  .vp-page--fit .ap-nvb .nvb-railbtn:hover { color: var(--ink); background: var(--surface-sunken, rgba(0, 0, 0, .05)); }
-  .vp-page--fit .ap-nvb .nvb-railbtn.active { color: #fff; background: var(--brand-blue); }
-  .vp-page--fit .ap-nvb .ls-raildiv { background: var(--border); border-color: var(--border); }
-  .vp-page--fit .vp-rule-card { border-color: var(--border-strong); }
-
-  /* Floating, like the Themen rail on the other grammar topics (topic-rail.css): the same
-     drop shadow, and only that — its dark fill and colours stay theirs. The column clips
-     its overflow (artikel-fit.css), which would cut the shadow off — and the "Stufen" fold
-     tab, which hangs off the card's right edge. Nothing is clipped here: the panel inside
-     scrolls on its own, so the card never needs to. */
   .vp-page--fit .vp-col--rule { overflow: visible; }
-  .vp-page--fit .vp-rule-card { box-shadow: 0 18px 44px -20px rgba(15, 23, 42, .55); }
+  .vp-page--fit .vp-rule-card { border-color: var(--border-strong); }
 }
 
 /* ---- Panel ---------------------------------------------------------------------------- */
-.vp-page--fit .ap-nvb .nvb-panelhead { padding: 14px 16px; margin-bottom: 10px; }
-.vp-page--fit .ap-nvb .nvb-panelhead h3 { font-size: 1.1rem; font-weight: var(--fw-bold, 700); }
 .vp-page--fit .ap-nvb .ls-lead { font-size: var(--text-sm); line-height: 1.45; color: var(--muted); }
 .vp-page--fit .ap-nvb .akp-go { min-height: 52px; font-size: 1.05rem; font-weight: var(--fw-bold, 700); border-radius: var(--radius-pill); }
 .vp-page--fit .ap-nvb .akp-progress-text { font-size: var(--text-sm); color: var(--ink); }
